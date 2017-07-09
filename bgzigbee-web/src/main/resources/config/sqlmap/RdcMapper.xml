@@ -71,7 +71,7 @@
         `phone`,
         `commit`,
         `powerConsume`,
-        `heigth`,
+        `height`,
         `rentSqm`,
         `infoIntegrity`
         )
