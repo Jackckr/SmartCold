@@ -34,7 +34,7 @@
          $scope.tempType=["","冷藏库","冷冻库","超低温库","恒温库","多温区库"];
          $scope.refreg=["","氨制冷","氟利昂制冷","氨氟都有","其他"];
          $scope.struct=["","土建型","钢结构型"];
-         $scope.saveType=["","货架存放","非货架存放"];
+         $scope.saveType=["","货架存放","非货架存放","堆垛存放","货架和堆垛都有"];
          $scope.isHave=["","有","无"];
          $scope.oSwitch=false;
          $scope.user=window.user;

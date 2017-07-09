@@ -69,6 +69,9 @@
                             ng-options="x.cityID as x.cityName for x in citys"></select>
                 </div>
                 <i class="iconfont fr moreinfo">&#xe697;</i></li>
+
+            <li><label for="name">存放产品</label> <em>*</em>
+                <input type="text" id="name" ng-model="title" placeholder="存放产品"/></li>
             <li><label>求租面积</label>
                 <em>*</em>
                 <input type="number" id="sqm" ng-model="sqm"  placeholder="㎡"/>
@@ -82,16 +85,14 @@
                 </div>
                 <i class="iconfont fr moreinfo">&#xe697;</i></li>
 
-            <!--<li><label for="storageType">经营类型</label>
+            <li><label>经营类型</label>
                 <em>*</em>
                 <div class="mySelect">
-                    <select ng-model="storageType" name="storageType"
+                    <select ng-model="storageType" name="storageType" id="storageType" val="{{storageType}}"
                             ng-change="StorageTypeSelected(storageType)"
                             ng-options="x.id as x.type for x in storageTypes"></select>
                 </div>
-                <i class="iconfont fr moreinfo">&#xe697;</i></li>-->
-
-
+                <i class="iconfont fr moreinfo">&#xe697;</i></li>
 
             <li><label for="price">求租单价<em>*</em></label> <input type="number" id="price" name="unitPrice"
                                                      placeholder="元/天·单位（面议）" ng-model="unitprice"/></li>
@@ -117,8 +118,6 @@
                 </div>
                 <i class="iconfont fr">&#xe63a;</i>
             </li>
-            <li><label for="name">存放产品</label> <em>*</em>
-                <input type="text" id="name" ng-model="title" placeholder="存放产品"/></li>
             <li><label for="phone">联系电话</label>
                 <em>*</em>
                 <input type="text" name="telephone"

@@ -109,12 +109,12 @@
         <p ng-if="vo.lihuoRoom==1"><span>理货区面积</span>{{vo.lihuoArea==0?'未填写':vo.lihuoArea}}</p>
         <p ng-if="vo.lihuoRoom"><span>有无温控</span>{{vo.lihuoTemperCtr==1?'有':'无'}}</p>
         <p ng-hide="vo.coldTruck1==0&&vo.coldTruck2==0&&vo.coldTruck3==0&&vo.coldTruck4==0"><span>冷库容积</span></p>
-        <p ng-if="vo.capacity1*vo.height1>0"><span>8&nbsp;~&nbsp;25℃:</span>{{vo.capacity1*vo.height1}}m³</p>
-        <p ng-if="vo.capacity2*vo.height2>0"><span>2&nbsp;~&nbsp;8℃:</span>{{vo.capacity2*vo.height2}}m³</p>
-        <p ng-if="vo.capacity3*vo.height3>0"><span>-2&nbsp;~&nbsp;-18℃:</span>{{vo.capacity3*vo.height3}}m³</p>
-        <p ng-if="vo.capacity4*vo.height4>0"><span>-18&nbsp;~&nbsp;-30℃:</span>{{vo.capacity4*vo.height4}}m³</p>
-        <p ng-if="vo.capacity5*vo.height5>0"><span>小于&nbsp;-50℃:</span>{{vo.capacity5*vo.height5}}m³</p>
-        <div ng-if="vo.facility" class="flex"><span class="item">周边设施</span><p class="item">{{vo.facility}}</p></div>
+        <p ng-if="vo.capacity1*vo.height1>0"><span>8&nbsp;~&nbsp;25℃:</span>{{(vo.capacity1*vo.height1).toFixed(2)}}m³</p>
+        <p ng-if="vo.capacity2*vo.height2>0"><span>2&nbsp;~&nbsp;8℃:</span>{{(vo.capacity2*vo.height2).toFixed(2)}}m³</p>
+        <p ng-if="vo.capacity3*vo.height3>0"><span>-2&nbsp;~&nbsp;-18℃:</span>{{(vo.capacity3*vo.height3).toFixed(2)}}m³</p>
+        <p ng-if="vo.capacity4*vo.height4>0"><span>-18&nbsp;~&nbsp;-30℃:</span>{{(vo.capacity4*vo.height4).toFixed(2)}}m³</p>
+        <p ng-if="vo.capacity5*vo.height5>0"><span>小于&nbsp;-50℃:</span>{{(vo.capacity5*vo.height5).toFixed(2)}}m³</p>
+        <div ng-if="vo.facility&&vo.facility!='undefined'" class="flex"><span class="item">周边设施</span><p class="item">{{vo.facility}}</p></div>
     </div>
 </div>
 

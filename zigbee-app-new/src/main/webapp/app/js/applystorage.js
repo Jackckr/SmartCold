@@ -53,10 +53,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
     $scope.TemperTypeSelected = function () {   };
    // $scope.StorageTypeSelected = function () {   };
 	// 获取冷库经营类型
-     /*$http.get(ER.root+'/i/rdc/findAllManageType').success(function (data) {
+     $http.get(ER.root+'/i/rdc/findAllManageType').success(function (data) {
 	        $scope.storageTypes = data;
 	        $scope.storageType = data[0].id;
-	 });*/
+	 });
      $http.get(ER.root+'/i/ShareRdcController/getPSFilterData').success(function(data) {
     	$scope.codeLave1 = data.entity.fm;
     	$scope.codeLave2 = data.entity.cl;
@@ -114,9 +114,9 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				$scope.typeText = "出租";
 				$scope.rdcID = $scope.rdcdto.rdcID;
 				$scope.rdcAddress = $scope.rdcdto.address;
-				//$scope.storageType = $scope.rdcdto.codeLave1;
+				$scope.storageType = $scope.rdcdto.codeLave1;
 			}else{
-//				 $scope.storageType =$("#ls_storageType").val();
+				 //$scope.storageType =$("#ls_storageType").val();
 			}
 			if(Date.parse($('#sttime').val().replace(/-/g,"/")) > Date.parse($('#endtime').val().replace(/-/g,"/"))){
 				layer.open({content:'开始时间和结束时间冲突，请更改~',btn: '确定'});
@@ -146,7 +146,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
                     publishunit:3,
                     username:window.user.username,
 					codeLave2 : $scope.temperType,
-					//codeLave1:$scope.storageType,
+					codeLave1:$("#storageType").attr('val'),
 					unit : $scope.unit,
 					sqm:$scope.sqm,
 					unitPrice : $scope.unitprice,
