@@ -299,7 +299,7 @@ function coldValidation(vo) {
     var phoneNumRex =  /^1[34578]\d{9}$/;
     var cellPhoneRex=/^0{1}\d{2,3}-{1}\d{7,8}$/;
     if (!phoneNumRex.test(vo.phoneNum)&&!cellPhoneRex.test(vo.phoneNum)) {
-    	alert_errmsg("联系电话输入有误！");
+    	alert_errmsg("联系电话输入有误！(座机如：021-67189203)");
         return false;
     }
     return true;
@@ -315,6 +315,9 @@ function addColdSubmit() {
     $.each(parnArray, function (index, item) {
         vo[item.name] = item.value;
     });
+    if(vo.lihuoRoom!=1){
+        vo["lihuoArea"]="";
+    }
     var flag = coldValidation(vo);
     if (flag) {
         var formdata = new FormData();
