@@ -129,7 +129,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
         if ($scope.temperType == undefined || $scope.temperType == '') {
             return false;
         }
-        if ($scope.unitprice == undefined || $scope.unitprice == '') {
+        if ($scope.unitprice == undefined) {
             return false;
         }
         if ($scope.sqm == undefined || $scope.sqm == '') {

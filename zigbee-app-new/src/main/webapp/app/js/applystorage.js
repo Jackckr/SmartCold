@@ -95,7 +95,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
         if ($scope.title == undefined || $scope.title == '' ) {  return false; }
         if ($scope.rdcAddress == undefined || $scope.rdcAddress == ''||$scope.rdcAddress == '-') {  return false; }
         if ($scope.temperType == undefined || $scope.temperType == '') {  return false;  }
-       	if ($scope.unitprice == undefined || $scope.unitprice == '') {  return false; }
+       	if ($scope.unitprice == undefined) {  return false; }
         if ($scope.sqm == undefined || $scope.sqm == '') { return false;  }
         if ($scope.telephone.trim() == undefined || $scope.telephone.trim() == '') { return false;  }
         if ($scope.validStartTime == undefined || $scope.validStartTime == '') {  return false;  }
