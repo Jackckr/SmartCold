@@ -145,7 +145,7 @@ $().ready(function () {
             }
         }
         var prices=null;
-        if(rdc.unitPrice==undefined){
+        if(rdc.unitPrice==undefined||rdc.unitPrice==0){
             prices='面议'
         }else{
             prices=rdc.unitPrice+'<br><span>元/㎡/天</span>'
