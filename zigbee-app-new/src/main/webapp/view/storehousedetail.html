@@ -30,7 +30,7 @@
 	        	<div class="txt">{{vo.typeText}}详情</div>
 		    </header>
 		<!-- header end-->
-		<div class="rdcpadding" ng-if="vo.files">
+		<div class="rdcpadding" ng-if="vo.files&&vo.files.length>0">
 			<!--点击图片循环展示-->
 			<div id="she_imglist" class="baguetteBoxOne gallery" ng-if="vo.files">
 				<a ng-repeat="fl in vo.files" href="{{fl}}" data-caption="{{($index+1)+'/'+vo.files.length}}"><img ng-src="{{fl}}"/></a>

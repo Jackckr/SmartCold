@@ -27,7 +27,7 @@
     <div class="txt">冷库详情</div>
 </header>
 <!-- header end-->
-<div class="rdcpadding" ng-if="vo.storagePics">
+<div class="rdcpadding" ng-if="vo.storagePics&&vo.storagePics.length>0">
     <!--点击图片循环展示-->
     <div class="baguetteBoxOne gallery">
         <a ng-repeat="fl in vo.storagePics" href="{{fl.location}}" data-caption="{{($index+1)+'/'+vo.storagePics.length}}"><img
