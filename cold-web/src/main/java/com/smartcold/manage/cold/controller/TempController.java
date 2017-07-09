@@ -45,7 +45,7 @@ public class TempController {
 	
 	@RequestMapping("/ios_getTempByTime")
 	public Object ios_getTempByTime(int oid, String oids,String names, String key, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
-		return this.getTempByTime(oid,StringUtil.getIdS(oids) , StringUtil.splitfhString(names), key, startTime, endTime);
+		return this.getTempByTime(1,oid,StringUtil.getIdS(oids) , StringUtil.splitfhString(names), key, startTime, endTime);
 	}
 	
 	@RequestMapping("/getTempref")
@@ -59,11 +59,12 @@ public class TempController {
 	}
 	
 	@RequestMapping("/getTempByTime")
-	public Object getTempByTime(int oid, int [] oids,String []names, String key, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
+	public Object getTempByTime(Integer index ,int oid, int [] oids,String []names, String key, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
 		if(oid==0||StringUtil.isNull(key)||oids==null || names==null||names.length!=oids.length){return null;};
 		Map<String, List<StorageKeyValue>> tempMap =this.multiValueService.findMultiValueByTime(StorageType.TEMPE.getType(), key,oids,names, startTime,endTime);
 		NewStorageTempDto storageTempDto = new NewStorageTempDto();
 		storageTempDto.setTempMap(tempMap);
+		storageTempDto.setIndex(index);
 		ColdStorageSetEntity coldStorageSetEntity =this.coldSttorageSetDao.findLastNPoint(oid, 1).get(0);
 		storageTempDto.setStartTemperature(coldStorageSetEntity.getStartTemperature());
 		storageTempDto.setTempdiff(coldStorageSetEntity.getTempdiff());

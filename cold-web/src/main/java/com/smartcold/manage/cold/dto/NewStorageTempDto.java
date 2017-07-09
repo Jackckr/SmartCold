@@ -6,6 +6,7 @@ import java.util.Map;
 import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
 
 public class NewStorageTempDto {
+	private Integer index;
 	private String name;
 	private Long systime;
 	private float tempdiff;
@@ -19,6 +20,14 @@ public class NewStorageTempDto {
 
 	public void setSystime(Long systime) {
 		this.systime = systime;
+	}
+
+	public Integer getIndex() {
+		return index;
+	}
+
+	public void setIndex(Integer index) {
+		this.index = index;
 	}
 
 	public float getStartTemperature() {

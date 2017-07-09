@@ -22,63 +22,11 @@ coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$ht
 	$http.get('/i/physicalController/mothCheckup',{params: {"rdcId":$scope.rdcId ,"stTime": $scope.startTime,"edTime": $scope.endTime} }).success(function(data,status,config,header){ if(data.success){ 
 		$scope.pysicaldata=data.entity;
 	}});
-	function printpage(){
-    	$(".chartPart").css('border',0);
-    	$(".textPart p>span,.textPart>ul>li span,.textPart p>strong").addClass('font10');
-    	$.print('#print');}
-    function chanpangstatus(){
-    	$scope.isnotprint=true;
-    	$(".chartPart").css('border','1px solid #eee');
-    	$(".textPart p>span,.textPart>ul>li span,.textPart p>strong").removeClass('font10');
-    }
-	$scope.Preview=function(){ //打印预览
-		  $scope.isnotprint=false;
-		  angular.forEach($scope.charArray,function(item){ 
-			  $("#"+item.dom.id+"_img").html(item.getImage('jpeg').outerHTML);
-			 });
-		  $timeout(printpage,0); $timeout(chanpangstatus,0);//加入js队列
-	 };
-	
-	 $scope.exppdf=function(){
-		  html2canvas($('#print'), {onrendered: function(canvas) {var doc = new jsPDF('p','mm',[1600,canvas.height]); doc.addImage(canvas.toDataURL('img/notice/png'), 'JPEG', 0, 0,1600,canvas.height); doc.save($scope.cuttstorage.name+$scope.titmode[$scope.isreportMoth?0:1]+'分析报告.pdf');  } });   
-	 };
-//	 
-	$scope.getreport=function(){
-		$("#loding").show();
-		if($scope.isreportMoth){
-			var newDate=$("#date04").val().split("-");
-	    	if(newDate.length!=2){ return; }
-	    	var firstDate = new Date();firstDate.setFullYear(newDate[0], newDate[1]-1, 1);
-	    	firstDate.setHours(0); firstDate.setMinutes(0); firstDate.setSeconds(0);//设置上月的第一天
-	    	var endDate = new Date(firstDate);  endDate.setMonth(firstDate.getMonth()+1); 
-	    	endDate.setDate(0);endDate.setHours(23); endDate.setMinutes(59); endDate.setSeconds(59);//设置上月的最后一天
-	    	$scope.endTime=baseTools.formatTime(endDate); $scope.startTime= baseTools.formatTime(firstDate); 
-	    	var newtime=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
-	    	if(newtime==$scope.timeuRange){$("#loding").hide();return;} $scope.timeuRange=newtime;
-		}else{
-			var newDate=$("#date05").val();
-	    	var firstDate = new Date(newDate+' 00:00:00'), endDate =  new Date(newDate+' 23:59:59');  
-	    	endDate.setDate(firstDate.getDate()+7);
-	    	$scope.endTime= baseTools.formatTime(endDate); 
-	    	$scope.startTime= baseTools.formatTime(firstDate); 
-	    	var newtime=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
-	    	if(newtime==$scope.timeuRange){$("#loding").hide();return;}
-	    	$scope.timeuRange=newtime;
-		}
-		 $scope.initdata();
-	};
-	
-	
-	
-	
-	$scope.changestorage=function(index,storageid,$event){
-		$("#loding").show();
-		var em=$($event.target);
-		em.addClass('select').siblings().removeClass('select');
-		$scope.index=index;
-		 $scope.initdata();
-	};
-	
+
+	//1.初始化温度图表====================================================================================================================================================================================
+	/**
+	 * 1.1初始化冷库温度对象集合（基础数据）
+	 */
 	$scope.initTemp=function(){
 			if($rootScope.Tempset&&$rootScope.Tempset[$scope.storageID]){
 		   		 $scope.oids=$rootScope.Tempset[$scope.storageID].oids;
@@ -94,70 +42,82 @@ coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$ht
 		   		 };});	
 		   	};
 	};
-	
+	/**
+	 * 1.2加载数据
+	 */
 	 $scope.loadTemp = function () {
 	    	if($scope.oids.length==0){ $("#loding").hide();return;};
 	    	if($scope.isreportMoth){
-	    		alert($("#date04").val());
-		         $http.get('/i/temp/getTempByTime', { params: {"oid":$scope.cuttstorage.id, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime":$scope.startTime, "endTime":$scope.endTime}}).success(function (result) {
-		        	
-		          });
-		         
+	    		var longmotdata=[];
+	    		  angular.forEach($scope.datemod,function(item,i){
+	    			  $http.get('/i/temp/getTempByTime', { params: {index:i,oid:$scope.cuttstorage.id, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime":item[0], "endTime":item[1]}}).success(function (result) {
+	    					 longmotdata[result.index]=result;
+	    					 if( longmotdata.length==6){
+	    					 var fristdata= longmotdata[0]; longmotdata.shift(); //  	
+	    					  angular.forEach(longmotdata,function(obj,i){
+	    						  angular.forEach(obj.tempMap,function(obj1,i){
+	    							  if(obj1.length>0){
+	    								  fristdata.tempMap[i]=fristdata.tempMap[i].concat(obj1);
+	    							  }
+	    						  });
+	    					  });
+	    					 $scope.initTempAxis(fristdata);
+	    					 }
+			          });
+	    		  });
 	    	}else{
-	    		
 		        $http.get('/i/temp/getTempByTime', { params: {"oid":$scope.cuttstorage.id, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime":$scope.startTime, "endTime":$scope.endTime}}).success(function (result) {
-		        	var xdata=[],yData = [],jxData=[],jxData1=[],jxData2=[], tempMap = result.tempMap;
-		            var datumTemp =  parseFloat(result.startTemperature) + 0.5 * parseFloat(result.tempdiff), datumTemp1 =  datumTemp+2, datumTemp2 = datumTemp-2;//基准温度
-		            $scope.cuttstorage.datumTemp=datumTemp;
-		        	var i= 0,tempList=[],newdata = [],vo=cuttime=null; 
-		            for(var key in tempMap) { 
-		             	 vo=cuttime=null, tempList=tempMap[key], newdata = [];
-		                 if( tempList.length>0){
-			                 for ( i = 0; i < tempList.length; i++) {
-								 vo=tempList[i];
-								 cuttime=baseTools.formatTime(vo.addtime);//new Date().getTime();
-								 xdata.push(cuttime);
-			                	 newdata.push(vo.value);//{ x: cuttime,y: 
-			                	 jxData.push(datumTemp); jxData1.push(datumTemp1); jxData2.push(datumTemp2);
-							}
-		                 }else{
-		                	 xdata.push($scope.startTime); xdata.push($scope.endTime);
-		                	 newdata.push(null); newdata.push(null);
-		                	 jxData.push(datumTemp); jxData.push(datumTemp); jxData1.push(datumTemp1); jxData1.push(datumTemp1); jxData2.push(datumTemp2); jxData2.push(datumTemp2);
-		                 }
-		                yData.push({"name": key, "data": newdata});
-		            } 
-		           
-		            yData.push({ name: '基准温度', color: 'red',dashStyle: 'solid', marker: { symbol: 'circle' },data:jxData});//处理基准温度
-		            yData.push({ name: '报警基线', color: '#f39c12',dashStyle: 'solid', marker: { symbol: 'circle' },data:jxData1,dashStyle:'dash'});//处理基准温度
-		            yData.push({ name: ' ', color: '#f39c12',dashStyle: 'solid', marker: { symbol: 'circle' },data:jxData2,dashStyle:'dash'});//处理基准温度
-		            $scope.initHighchart(datumTemp,xdata,yData);
+		        	$scope.initTempAxis(result);
 		          });
-	    		
 	    	}
-	    	
-	    	
-	    
-	         
-	    };
-
-
-	    /**
-	     * 初始化温度
-	     */
-	    $scope.initHighchart=function(datumTemp,xdata,yData ){
-	    	 $scope.charArray[0]= new Highcharts.Chart('temperatureChart', {
-	    	    title: { text: null,  },
-	    	    subtitle: {  text: null,  },
-	    	    xAxis: {  categories: xdata, tickInterval: 86400000, dateTimeLabelFormats: { week: '%Y-%m-%d'}},
-	    	    yAxis: { title: {text: '温度 (°C)' },  plotLines: [{ value: 0, width: 1,   color: '#808080' }] },
-	    	    tooltip: {  valueSuffix: '°C' },
-	    	    series: yData,
-	    	    credits: { enabled: false }
-	    	});
-	    	$("#loding").hide(); 
-	    };
-	    
+	 };
+	/**
+	 *1.3 数据封装
+	 */
+	$scope.initTempAxis=function(data){
+	        var datumTemp =  parseFloat(data.startTemperature) + 0.5 * parseFloat(data.tempdiff), datumTemp1 =  datumTemp+2, datumTemp2 = datumTemp-2;//基准温度
+	        $scope.cuttstorage.datumTemp=datumTemp;
+	        var yData = [], tempMap = data.tempMap;
+	    	var i= 0,tempList=[],newdata = [],vo=cuttime=lasttime=null;
+	        for(var key in tempMap) { 
+	         	 vo=cuttime=null, tempList=tempMap[key], newdata = [];
+	             if( tempList.length>0){
+	            	 lasttime=new Date(tempList[0].addtime).getTime();;
+	                 for ( i = 0; i < tempList.length; i++) {
+						 vo=tempList[i];
+						 cuttime= new Date(vo.addtime).getTime();
+						 if( cuttime-lasttime>1800000){
+							 newdata.push({x:cuttime+3000,y:null});
+			              }  
+						 newdata.push({x:cuttime,y:vo.value});
+						 lasttime=cuttime;
+					}
+	             }
+	             yData.push({"name": key, "data": newdata,turboThreshold:0});
+	        } 
+	        yData.push({ name: '基准温度', color: 'red',dashStyle: 'solid', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:datumTemp},{ x:endDate.getTime(),y:datumTemp}]});//处理基准温度
+	        yData.push({ name: '报警基线', color: '#f39c12',dashStyle: 'solid', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:datumTemp1},{ x:endDate.getTime(),y:datumTemp1}],dashStyle:'dash'});//处理基准温度
+	        yData.push({ name: ' ', color: '#f39c12',dashStyle: 'solid', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:datumTemp2},{ x:endDate.getTime(),y:datumTemp2}],dashStyle:'dash'});//处理基准温度
+	        console.log(JSON.stringify(yData));
+	        $scope.initHighchart(yData);
+	};
+	/**
+	 * 1.4绘制图表
+	 */
+	$scope.initHighchart=function(yData ){
+		$scope.charArray[0]=  $('#temperatureChart').highcharts({
+			 chart: {  zoomType: 'x'},
+            title: { text: ''  },
+            series:yData,
+            yAxis: {  title: {  text: '温度'  }},
+            xAxis: { type: 'datetime',  tickPixelInterval: 400 ,   labels: {  formatter: function() {   return  Highcharts.dateFormat('%Y-%m-%d', this.value);  }  }  },
+            xDateFormat: '%Y-%m-%d',
+            tooltip: { formatter: function () {  return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' + Highcharts.numberFormat(this.y, 2)+" ℃"; } },
+    	    legend: {enabled: false },
+        });
+		$("#loding").hide(); 
+	};
+//2.告警时长和次数图表====================================================================================================================================================================================
 	$scope.dwrtemplin=function(){
 		$http.get('/i/AnalysisController/getAnalysisDataByKey', { params: {type:1, oid:$scope.cuttstorage.id, keys:'OverTempL1Time,OverTempL2Time,OverTempL3Time,OverTempL1Count,OverTempL2Count,OverTempL3Count', startTime:$scope.startTime, endTime:$scope.endTime}}).success(function (data) {
 			if(data&&data.OverTempL1Time){
@@ -190,8 +150,7 @@ coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$ht
 			}
 		});
 	};
-	
-    
+//3.超温时间和次数图表====================================================================================================================================================================================
 	$scope.overTempAndCount=function(){
 		$http.get('/i/AnalysisController/getAnalysisDataByKey', { params: {type:1, oid:$scope.cuttstorage.id, keys:'ChaoWenShiJian,ChaoWenCiShu,', startTime:$scope.startTime, endTime:$scope.endTime}}).success(function (data) {
 		   var  val=0, ccount=0,ctime=0;
@@ -237,7 +196,7 @@ coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$ht
 			$scope.warninglist=data;
 		});
 	};
-	
+	//初始化系统入口====================================================================================================================================================================================
 	 $scope.initdata=function(){
             $("#loding").show();
 			$scope.cuttstorage=$rootScope.mystorages[$scope.index];
@@ -258,4 +217,65 @@ coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$ht
 	}else{
 		$scope.initdata();
 	}
+	//初始化事件====================================================================================================================================================================================
+	function printpage(){
+    	$(".chartPart").css('border',0);
+    	$(".textPart p>span,.textPart>ul>li span,.textPart p>strong").addClass('font10');
+    	$.print('#print');}
+    function chanpangstatus(){
+    	$scope.isnotprint=true;
+    	$(".chartPart").css('border','1px solid #eee');
+    	$(".textPart p>span,.textPart>ul>li span,.textPart p>strong").removeClass('font10');
+    }
+	$scope.Preview=function(){ //打印预览
+		  $scope.isnotprint=false;
+		  angular.forEach($scope.charArray,function(item){ 
+			  $("#"+item.dom.id+"_img").html(item.getImage('jpeg').outerHTML);
+			 });
+		  $timeout(printpage,0); $timeout(chanpangstatus,0);//加入js队列
+	 };
+	
+	 $scope.exppdf=function(){
+		  html2canvas($('#print'), {onrendered: function(canvas) {var doc = new jsPDF('p','mm',[1600,canvas.height]); doc.addImage(canvas.toDataURL('img/notice/png'), 'JPEG', 0, 0,1600,canvas.height); doc.save($scope.cuttstorage.name+$scope.titmode[$scope.isreportMoth?0:1]+'分析报告.pdf');  } });   
+	 };
+   
+	 /**
+	  * 查询事件
+	  */
+	$scope.getreport=function(){
+		$("#loding").show();
+		if($scope.isreportMoth){
+			var data=$("#date04").val(),newDate=data.split("-");
+	    	if(newDate.length!=2){ return; }
+	    	 firstDate = new Date();firstDate.setFullYear(newDate[0], newDate[1]-1, 1);firstDate.setHours(0); firstDate.setMinutes(0); firstDate.setSeconds(0);//设置上月的第一天
+	    	 endDate = new Date(firstDate);  endDate.setMonth(firstDate.getMonth()+1); endDate.setDate(0);endDate.setHours(23); endDate.setMinutes(59); endDate.setSeconds(59);//设置上月的最后一天
+	    	$scope.endTime=baseTools.formatTime(endDate); $scope.startTime= baseTools.formatTime(firstDate); 
+	    	var newtime=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
+	    	if(newtime==$scope.timeuRange){$("#loding").hide();return;} $scope.timeuRange=newtime;
+	    	$scope.datemod=[[$scope.startTime,data+'-05 23:59:59'],[data+'-06 00:00:00',data+'-10 23:59:59'],[data+'-11 00:00:00',data+'-15 23:59:59'],[data+'-16 00:00:00',data+'-20 23:59:59'],[data+'-21 00:00:00',data+'-25 23:59:59'],[data+'-25 00:00:00',$scope.endTime]];
+		}else{
+			var newDate=$("#date05").val();
+	    	 firstDate = new Date(newDate+' 00:00:00'), endDate =  new Date(newDate+' 23:59:59');  
+	    	endDate.setDate(firstDate.getDate()+7);
+	    	$scope.endTime= baseTools.formatTime(endDate); 
+	    	$scope.startTime= baseTools.formatTime(firstDate); 
+	    	var newtime=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
+	    	if(newtime==$scope.timeuRange){$("#loding").hide();return;}
+	    	$scope.timeuRange=newtime;
+		}
+		 $scope.initdata();
+	};
+	/**
+	 * 切换冷库事件
+	 */
+	$scope.changestorage=function(index,storageid,$event){
+		$("#loding").show();
+		var em=$($event.target);
+		em.addClass('select').siblings().removeClass('select');
+		$scope.index=index;
+		 $scope.initdata();
+	};
+	
+	
+	
 });
