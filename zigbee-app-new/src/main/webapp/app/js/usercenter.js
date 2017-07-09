@@ -6,16 +6,17 @@ app.controller('usercl', function ($http, $location, $scope) {
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     $scope.initdata = function () {
         if (window.user != null) {
-                $http.get(ER.root + "/i/user/isSubmitAuditUser", {params: {userId: window.user.id}}).success(function (data) {
-                    //返回值 // -1：未通过   // 0：未审核过   // 1：已通过   // 2：审核中
-                    $scope.checkState = data.status;
-                    checktoken(null, true,function () {
-                        $scope.$apply(function() {
+            checktoken(null, true);
+            $scope.userinfo = window.user;
+            $scope.usernameObj=($scope.userinfo.username=='' || $scope.userinfo.username == undefined)?$scope.userinfo.nickname:$scope.userinfo.username;
+            $http.get(ER.root + "/i/user/isSubmitAuditUser", {params: {userId: window.user.id}}).success(function (data) {
+                //返回值 // -1：未通过   // 0：未审核过   // 1：已通过   // 2：审核中
+                setTimeout(function () {
+                    $scope.$apply(function () {
                         $scope.user = window.user;
-                        $scope.userinfo = window.user;
-                        $scope.usernameObj=($scope.userinfo.username=='' || $scope.userinfo.username == undefined)?$scope.userinfo.nickname:$scope.userinfo.username;
-                        } );
-                });
+                        $scope.checkState = data.status;
+                    });
+                }, 200);
             });
             return;
         };
