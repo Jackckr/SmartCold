@@ -107,6 +107,7 @@
         <i class="iconfont blue">&#xe60b;</i>
         &nbsp;冷库信息<span class="fr blue" ng-click="on_off($event)">展开</span>
     </h2>
+    <p><span>冷库净高</span>{{vo.height}}m</p>
     <p><span>经营类型</span>{{manageType[vo.manageType]}}</p>
     <p><span>温度类型</span>{{tempType[vo.temperType]}}</p>
     <p><span>存放类型</span>{{saveType[vo.storageType]}}</p>
@@ -134,7 +135,7 @@
         <p ng-if="vo.capacity4*vo.height4>0"><span>-18&nbsp;~&nbsp;-30℃:</span>{{(vo.capacity4*vo.height4).toFixed(2)}}m³</p>
         <p ng-if="vo.capacity5*vo.height5>0"><span>小于&nbsp;-50℃:</span>{{(vo.capacity5*vo.height5).toFixed(2)}}m³</p>
         <div ng-if="vo.facility&&vo.facility!='undefined'" class="flex"><span class="item">周边设施</span><p class="item">{{vo.facility}}</p></div>
-        <div ng-if="vo.remark" class="flex"><span class="item">备注</span><p class="item">{{vo.remark}}</p></div>
+        <div ng-if="vo.remark&&vo.remark!='undefined'" class="flex"><span class="item">备注</span><p class="item">{{vo.remark}}</p></div>
     </div>
 </div>
 
