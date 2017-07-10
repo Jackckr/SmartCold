@@ -12,6 +12,7 @@ header>div{
 }
 footer>div>a p{
     font-size: .65rem;
+    line-height: .8;
 }
 footer{
     height: 2.45rem;

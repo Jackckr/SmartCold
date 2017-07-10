@@ -142,8 +142,7 @@
 				<div class="flex">
 					<div class="item">
 						<span>{{appmode[datatype].lab[1][0]}}</span>
-						{{vo.unitPrice==undefined||vo.unitPrice == '0.00' ?"面议":vo.unitPrice}}{{vo.publishunit!=null?'元/'+oUnit[vo.publishunit]:appmode[datatype].lab[1][1] }}
-						<!--<span ng-if="vo.unitPrice != '0.00'">{{vo.picunit}}</span>-->
+						{{vo.unitPrice==undefined||vo.unitPrice == 0 ?"面议":vo.unitPrice}}<em ng-if="vo.unitPrice!=undefined&&vo.unitPrice != 0">{{vo.publishunit!=null?'元/'+oUnit[vo.publishunit]:appmode[datatype].lab[1][1] }}</em>
 					</div>
 				</div>
 			</div>

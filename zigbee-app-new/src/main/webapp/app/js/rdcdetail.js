@@ -66,6 +66,8 @@
                          location.href='rdcstand.html'
                      }else if(localStorage.isStand==2){
                          location.href='user-mycold.html'
+                     }else{
+                         goback();
                      }
 				 }
              }else{//未登录

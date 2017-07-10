@@ -33,11 +33,11 @@ $().ready(function () {
             $('.listcontain').hide();
             $(this).hide();
         });
-        $("#searchDara_div i").click(function (e) {//搜索
+       /* $("#searchDara_div i").click(function (e) {//搜索
             currentPage = 1;
             ul_select.empty();
             getPageData();
-        });
+        });*/
         $(window).scroll(function () {
             var scrollTop = $(this).scrollTop();
             var scrollHeight = $(document).height();
