@@ -13,6 +13,8 @@
     <link rel="stylesheet" type="text/css" href="../com/css/baguettebox.min.css">
     <link rel="stylesheet" type="text/css" href="../com/css/coldlist.css"/>
     <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="../com/js/jquery.event.drag.js"></script>
+    <script type="text/javascript" src="../com/js/jQuery.touchSlider.js"></script>
     <script type="text/javascript" src="../com/js/angular.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../com/js/layer.js"></script>
@@ -27,11 +29,22 @@
     <div class="txt">冷库详情</div>
 </header>
 <!-- header end-->
-<div class="rdcpadding" ng-if="vo.storagePics&&vo.storagePics.length>0">
+
+<div ng-if="vo.storagePics&&vo.storagePics.length>0">
     <!--点击图片循环展示-->
-    <div class="baguetteBoxOne gallery">
-        <a ng-repeat="fl in vo.storagePics" href="{{fl.location}}" data-caption="{{($index+1)+'/'+vo.storagePics.length}}"><img
-                ng-src="{{fl.location}}"/></a>
+    <div class="main_visual">
+        <div class="flicking_con">
+            <a class="on" href="#@"  ng-repeat="fl in vo.storagePics"></a>
+        </div>
+        <div class="main_image baguetteBoxOne gallery">
+            <ul>
+                <li ng-repeat="fl in vo.storagePics">
+                    <a href="{{fl.location}}" data-caption="{{($index+1)+'/'+vo.storagePics.length}}">
+                        <img  ng-src="{{fl.location}}"/>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 <!--new=========================================-->
@@ -287,5 +300,6 @@
     </ul>
 </section>
 <div class="commentFix"><a href="commentdetail.html?id={{rdcid}}">立即评价</a></div>
+
 </body>
 </html>
