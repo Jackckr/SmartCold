@@ -132,9 +132,9 @@ $().ready(function () {
         if(showDate>=30){
             showTime=Math.floor(showDate/30)+'个月前发布';
         }else{
-            if(showDate>1){
+            if(showDate>1){//1~30天
                 showTime=showDate+'天前发布';
-            }else{
+            }else{//<1天
                 showTime='刚刚发布';
             }
         }
@@ -221,6 +221,12 @@ $().ready(function () {
         initFilter();
         initevg();
     };
+    $("#searchDara_div>input").keypress(function (e) {
+        var eCode = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+        if (eCode == 13) {
+            searchFilters();
+        }
+    });
     searchFilter = function () {//搜索
         if ($("#searchDara_div input").val().trim() != "") {
             currentPage = 1;

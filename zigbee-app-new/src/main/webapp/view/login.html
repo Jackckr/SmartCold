@@ -24,7 +24,11 @@
 <body>
 <header>
     <div class="area fl">
-        <a href="../index.html" onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
+        <a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
+    </div>
+
+    <div class="zoom fr"><!-- <a href="search.html"><i class="iconfont">&#xe62f;</i></a> -->
+        <a href="../index.html"><i class="iconfont blueI">&#xe65a;</i></a>
     </div>
 </header>
 <div class="loginBg">
@@ -122,7 +126,7 @@
                                 } else {
                                     console.log(localStorage.oURL!=''||localStorage.oURL!=undefined||localStorage.oURL!=null)
                                     console.log(localStorage.oURL);
-                                    if(localStorage.oURL!=''||localStorage.oURL!=undefined||localStorage.oURL!=null){
+                                    if(localStorage.oURL){
                                         backUrl=localStorage.oURL;
                                     }else{
                                         backUrl = "../index.html";

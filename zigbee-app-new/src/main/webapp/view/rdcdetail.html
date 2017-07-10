@@ -13,6 +13,8 @@
     <link rel="stylesheet" type="text/css" href="../com/css/baguettebox.min.css">
     <link rel="stylesheet" type="text/css" href="../com/css/coldlist.css"/>
     <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="../com/js/jquery.event.drag.js"></script>
+    <script type="text/javascript" src="../com/js/jQuery.touchSlider.js"></script>
     <script type="text/javascript" src="../com/js/angular.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../com/js/layer.js"></script>
@@ -27,11 +29,22 @@
     <div class="txt">冷库详情</div>
 </header>
 <!-- header end-->
-<div class="rdcpadding" ng-if="vo.storagePics&&vo.storagePics.length>0">
+
+<div ng-if="vo.storagePics&&vo.storagePics.length>0">
     <!--点击图片循环展示-->
-    <div class="baguetteBoxOne gallery">
-        <a ng-repeat="fl in vo.storagePics" href="{{fl.location}}" data-caption="{{($index+1)+'/'+vo.storagePics.length}}"><img
-                ng-src="{{fl.location}}"/></a>
+    <div class="main_visual">
+        <div class="flicking_con">
+            <a class="on" href="#@"  ng-repeat="fl in vo.storagePics"></a>
+        </div>
+        <div class="main_image baguetteBoxOne gallery">
+            <ul>
+                <li ng-repeat="fl in vo.storagePics">
+                    <a href="{{fl.location}}" data-caption="{{($index+1)+'/'+vo.storagePics.length}}">
+                        <img  ng-src="{{fl.location}}"/>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 <!--new=========================================-->
@@ -110,7 +123,11 @@
         <p ng-if="vo.lihuoRoom"><span>有无温控</span>{{vo.lihuoTemperCtr==1?'有':'无'}}</p>
         <p ng-if="vo.storageRefreg"><span>制冷剂类型</span>{{refreg[vo.storageRefreg]}}</p>
         <p ng-if="vo.temperRecord"><span>温度记录</span>{{isHave[vo.temperRecord]}}</p>
-        <p ng-hide="vo.coldTruck1==0&&vo.coldTruck2==0&&vo.coldTruck3==0&&vo.coldTruck4==0"><span>冷库容积</span></p>
+        <p ng-hide="vo.capacity1*vo.height1==0&&
+                    vo.capacity2*vo.height2==0&&
+                    vo.capacity3*vo.height3==0&&
+                    vo.capacity4*vo.height4==0&&
+                    vo.capacity5*vo.height5==0"><span>冷库容积</span></p>
         <p ng-if="vo.capacity1*vo.height1>0"><span>8&nbsp;~&nbsp;25℃:</span>{{(vo.capacity1*vo.height1).toFixed(2)}}m³</p>
         <p ng-if="vo.capacity2*vo.height2>0"><span>2&nbsp;~&nbsp;8℃:</span>{{(vo.capacity2*vo.height2).toFixed(2)}}m³</p>
         <p ng-if="vo.capacity3*vo.height3>0"><span>-2&nbsp;~&nbsp;-18℃:</span>{{(vo.capacity3*vo.height3).toFixed(2)}}m³</p>
@@ -157,14 +174,14 @@
 </div>-->
 
 <!--仓位列表展示-->
-<section class="more" ng-if="rdctotal">
+<section class="more" ng-if="rdctotal" style="margin-top: 0;padding-bottom: .3rem">
     <ul class="listDad clearfix">
         <li class="fl">仓位&nbsp;(<span id="num">{{rdctotal}}</span>)</li>
         <li class="fr"><a href="rentstorage.html?rdcid={{rdcid}}"><i class="iconfont">&#xe697;</i></a></li>
     </ul>
     <div class="coldlist">
         <ul class="imgTable">
-            <li class="imgCell" ng-repeat="rdc in rdcList">
+            <li class="imgCell" ng-repeat="rdc in rdcList" style="background-color: transparent;">
                 <a href="rentstorage.html?id={{rdc.id}}">
                     <img class="fl" ng-src="{{rdc.logo}}">
                     <div>
@@ -185,14 +202,14 @@
     </div>
 </section>
 <!--货品列表展示-->
-<section class="more" ng-if="gdtotal">
+<section class="more" ng-if="gdtotal" style="margin-top: 0;padding-bottom: .3rem">
     <ul class="listDad clearfix">
         <li class="fl">货品&nbsp;(<span id="num">{{gdtotal}}</span>)</li>
         <li class="fr"><a href="salegoodslist.html?rdcid={{rdcid}}"><i class="iconfont">&#xe697;</i></a></li>
     </ul>
     <div class="coldlist">
         <ul class="imgTable">
-            <li class="imgCell" ng-repeat="good in goodList">
+            <li class="imgCell" ng-repeat="good in goodList" style="background-color: transparent;">
                 <a href="storehousedetail.html?id={{good.id}}">
                     <img class="fl" ng-src="{{good.logo}}">
                     <div class="">
@@ -213,14 +230,15 @@
     </div>
 </section>
 <!--车辆列表展示-->
-<section class="more" ng-if="pstotal">
+<!--<section class="more" ng-if="pstotal" style="margin-top: 0;padding-bottom: .3rem">-->
+<section class="more black" style="margin-top: 0;padding-bottom: .3rem">
     <ul class="listDad clearfix">
         <li class="fl">车辆&nbsp;(<span id="num">{{pstotal}}</span>)</li>
         <li class="fr"><a href="coldtransportlist.html?rdcid={{rdcid}}"><i class="iconfont">&#xe697;</i></a></li>
     </ul>
     <div class="coldlist">
         <ul class="imgTable">
-            <li class="imgCell" ng-repeat="ps in pslist">
+            <li class="imgCell" ng-repeat="ps in pslist" style="background-color: transparent;">
                 <a href="storehousedetail.html?id={{ps.id}}">
                     <img class="fl" ng-src="{{ps.logo}}">
                     <div class="">
@@ -282,5 +300,6 @@
     </ul>
 </section>
 <div class="commentFix"><a href="commentdetail.html?id={{rdcid}}">立即评价</a></div>
+
 </body>
 </html>

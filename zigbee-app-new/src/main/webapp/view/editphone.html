@@ -35,31 +35,31 @@
     <button class="mybtn show edit1">修改手机号</button>
     
     <div class="inputs show1">
-		<div class="tel">
+		<div class="tel" style="border-bottom:1px solid #eee;">
 			<i class="iconfont">&#xe608;</i>
-			<input type="tel" value="{{userinfo.telephone.trim()}}" readonly/>
+			<input type="tel" value="{{userinfo.telephone.trim()}}" style="background: transparent" readonly/>
 			<button id="but_vercode" class="idcode fr" ng-click="getVerCode();">获取验证码</button>
 		</div>
-		<div class="tel">
+		<div class="tel" style="border-bottom:1px solid #eee;">
 			<i class="iconfont ">&#xe639;</i>
-			<input type="text" id="code1" placeholder="请输入手机验证码" ng-model="verrcode"  ng-change="veteleCode()"/>
+			<input type="text" id="code1" placeholder="请输入手机验证码" style="background: transparent" ng-model="verrcode"  ng-change="veteleCode()"/>
 		</div>
 	</div>
 	<button id="ver_code_but" class="mybtn edit2 show1 gray" disabled="disabled" >验证</button>	
 	
 	
     <div class="inputs show2">
-		<div class="tel">
+		<div class="tel" style="border-bottom:1px solid #eee;">
 			<form id="datafrom"  onsubmit="return false;">		
 			<input type="hidden" name="id" value="{{userinfo.id}}">
 			<i class="iconfont">&#xe608;</i>
-				<input type="tel" id="telNum" name="telephone" placeholder="请输入新手机号" ng-model="telephone" ng-change="vertelephone();"/>
+				<input type="tel" id="telNum" name="telephone" style="background: transparent" placeholder="请输入新手机号" ng-model="telephone" ng-change="vertelephone();"/>
 			<button id="but_vercode2" class="idcode fr gray " draggable="false" ng-click="getVerCode2();" disabled="disabled" style="background-color: #cccccc;">获取验证码</button>
 			</form>
 		</div>
-		<div class="tel">
+		<div class="tel" style="border-bottom:1px solid #eee;">
 			<i class="iconfont ">&#xe639;</i>
-			<input type="text" id="code2" placeholder="请输入手机验证码" ng-model="verrcode1"  ng-change="veteleCode2()" />
+			<input type="text" id="code2" placeholder="请输入手机验证码" style="background: transparent" ng-model="verrcode1"  ng-change="veteleCode2()" />
 		</div>
 	</div>
 	<p style="color:red;font-size:0.7rem;padding-left:0.9rem;" id="mention1"></p>
