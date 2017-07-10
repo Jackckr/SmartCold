@@ -50,7 +50,7 @@
 			$.post( ER.root+"/i/user/existenceUserName", {userName: $scope.telephone}, function(data) {
                 victdata.extname=!data;
                 $("#mention1").html(data?"该手机已经注册,请更换新手机号~":"");
-                $("#but_vercode2").attr("disabled",data).css("background-color",data?"#ccc":"#438BCB");
+                $("#but_vercode2").attr("disabled",data).css("background-color",data?"#ccc":"#4287ff");
 			});
 		}else{
 			 victdata.victtl=false;

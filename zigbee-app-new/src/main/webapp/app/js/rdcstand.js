@@ -35,6 +35,12 @@ $().ready(function() {
 			$(this).hide();
 		});
    	   /* $("#searchDara_div i").click();*/
+	  $("#searchDara_div>input").keypress(function (e) {
+		  var eCode = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+		  if (eCode == 13) {
+			  searchFilters();
+		  }
+	  });
    	   searchFilter = function(e){//搜索
 	   		if($("#searchDara_div input").val().trim() != ""){
 	   			currentPage=1;
