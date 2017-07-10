@@ -62,15 +62,15 @@
                 </li>
                 <li>
                     <label for="area">总面积<em>*</em></label>
-                    <input type="number" ng-model="area" placeholder="冷库面积(㎡)"/>
+                    <input type="number" step="0.01" ng-model="area" placeholder="冷库面积(㎡)"/>
                 </li>
                 <li>
                     <label for="area">可出租面积<em>*</em></label>
-                    <input type="number" ng-model="rentSqm" placeholder="可出租面积(㎡)"/>
+                    <input type="number" step="0.01" ng-model="rentSqm" placeholder="可出租面积(㎡)"/>
                 </li>
                 <li>
                     <label for="area">冷库净高<em>*</em></label>
-                    <input type="number" ng-model="height" placeholder="冷库净高(m)"/>
+                    <input type="number" step="0.01" ng-model="height" placeholder="冷库净高(m)"/>
                 </li>
                 <li>
                     <label for="operateType">经营类型<em>*</em></label>
@@ -204,7 +204,7 @@
                 </li>
                 <li ng-show="islihuoRoom">
                     <label for="cleanarea">理货区面积</label>                    
-                    <input type="number" ng-model="lihuoArea">
+                    <input type="number" step="0.01" ng-model="lihuoArea">
                 </li>
                 <li>
                     <label for="temperatureTypeCtr">有无温控</label>                    
@@ -235,19 +235,19 @@
                      <label>冷库容积</label>
                     <div>
                         <div>
-							<span class="nowrap">8~25℃</span><input type="number" ng-model="capacity1"><span class="nowrap">面积㎡</span><input type="number" ng-model="height1"><span class="nowrap fr">高m</span>
+							<span class="nowrap">8~25℃</span><input type="number" step="0.01" ng-model="capacity1"><span class="nowrap">面积㎡</span><input type="number" step="0.01" ng-model="height1"><span class="nowrap fr">高m</span>
 						</div>
                         <div>
-							<span class="nowrap">2~8℃</span><input type="number" ng-model="capacity2"><span class="nowrap">面积㎡</span><input type="number" ng-model="height2"><span class="nowrap fr">高m</span>
+							<span class="nowrap">2~8℃</span><input type="number" step="0.01" ng-model="capacity2"><span class="nowrap">面积㎡</span><input type="number" step="0.01" ng-model="height2"><span class="nowrap fr">高m</span>
 						</div>
                         <div>
-                            <span class="nowrap">-2~-18℃</span><input type="number" ng-model="capacity3"><span class="nowrap">面积㎡</span><input type="number" ng-model="height3"><span class="nowrap fr">高m</span>
+                            <span class="nowrap">-2~-18℃</span><input type="number" step="0.01" ng-model="capacity3"><span class="nowrap">面积㎡</span><input type="number" step="0.01" ng-model="height3"><span class="nowrap fr">高m</span>
                         </div>
                         <div>
-                            <span class="nowrap">-18~-30℃</span><input type="number" ng-model="capacity4"><span class="nowrap">面积㎡</span><input type="number" ng-model="height4"><span class="nowrap fr">高m</span>
+                            <span class="nowrap">-18~-30℃</span><input type="number" step="0.01" ng-model="capacity4"><span class="nowrap">面积㎡</span><input type="number" step="0.01" ng-model="height4"><span class="nowrap fr">高m</span>
                         </div>
                         <div>
-                            <span class="nowrap">&lt;-50℃</span><input type="number" ng-model="capacity5"><span class="nowrap">面积㎡</span><input type="number" ng-model="height5"><span class="nowrap fr">高m</span>
+                            <span class="nowrap">&lt;-50℃</span><input type="number" step="0.01" ng-model="capacity5"><span class="nowrap">面积㎡</span><input type="number" step="0.01" ng-model="height5"><span class="nowrap fr">高m</span>
                         </div>
                         <!-- <div style="width: auto"></div> -->
                     </div>
