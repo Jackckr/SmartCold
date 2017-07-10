@@ -71,6 +71,9 @@ body{
 	font-size: .8rem;
 	color: #6ab3de;
 }
+figcaption{
+	font-size: .75rem;
+}
 footer{
 	width: 100%;
     padding: 0 0.9rem;
@@ -83,7 +86,7 @@ footer{
 }
 .line span{
 	display: inline-block;
-	font-size: .6rem;
+	font-size: .65rem;
 	color: #8D8D8E;
 	padding: 0.5rem;
 	background-color: #F4F8FB;

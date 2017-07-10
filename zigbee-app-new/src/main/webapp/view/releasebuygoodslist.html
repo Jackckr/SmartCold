@@ -26,6 +26,7 @@
 <body ng-app="app" ng-controller="ctrl">
   <script>
         $.ajax({ url: ER.root+"/i/UtilController/setVisited",type: "POST",data:{type:8}});
+        localStorage.oURL=document.URL;
     	$(function() {
 			/*$('.toggle').children('div').click(function(){
 				$(this).addClass('current').siblings().removeClass('current');
@@ -74,7 +75,7 @@
      </div>
     <!--coldlist-->
     <div class="coldlist" style="margin-bottom: 3rem;">
-      <div class="nodata" style="background:#F6F5FA;">
+      <div class="nodata">
 			<p class="sorry">抱歉！ 系统未找到您的冷库的信息，如需出租或发布关联库信息请先添加冷库！</p>
 			<p class="sorry">
 				<button class="mybtn" onclick="location.href='releasekutable.html'">添加冷库信息</button>
@@ -135,8 +136,8 @@
                     <label><input type="radio"  ng-model="unit" name="unit"  value="2" />吨</label>
                 </li>
                 <li>
-                    <label for="price">售价</label>
-                    <input type="number" ng-model="unitprice" id="price" placeholder="（元）默认为：面议"/>
+                    <label for="price">售价</label><em>*</em>
+                    <input type="number" ng-model="unitprice" id="price" placeholder="（元）填0为：面议"/>
                 </li>
                 <li>
 					<label for="time">有效开始时间</label><em>*</em>

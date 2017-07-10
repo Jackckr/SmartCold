@@ -44,7 +44,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
     };
     function checkGoodsSubmit(){ // 检查必须填写项    货品
         if ($scope.title == undefined || $scope.title == '' ) {  return false; }
-        if ($scope.unitprice == undefined || $scope.unitprice == '') { return false; }
+        if ($scope.unitprice == undefined) { return false; }
         if ($scope.codeLave11 == undefined || $scope.codeLave11 == '') { return false; }
         if ($scope.sqm == undefined || $scope.sqm == '') {  return false;  }
         if ($scope.telephone.trim() == undefined || $scope.telephone.trim() == '') {  return false; }
@@ -114,7 +114,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
                 unit:"元/吨"
             };
             var sdata  = JSON.stringify(simdata);
-            var data = {data:sdata, "files":null};
+            var data = {data:sdata, "files":$scope.totalfiles};
             Upload.upload({
                 url: ER.root+"/i/ShareRdcController/shareFreeRelease",
                 headers :{ 'Content-Transfer-Encoding': 'utf-8' },

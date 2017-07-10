@@ -28,12 +28,10 @@ var app = angular.module('app', []).controller('findPassword',function($http, $l
 	};
 	$scope.getMobileCode = function(key, telephone, vcid) {//获取验证码
 		$http.get(ER.root+ "/i/ShareRdcController/sharvistPhone.json",{params : {key : 'user_findwpd',telephone : telephone}}).success(function(data) {
-				if (data.success) {$scope.mtvarcode = data.entity;$(vcid).data('vc', true);}
-				//alert(data.message);
-				layer.open({
-    		 	    content: data.message
-    		 	    ,btn: '确定'
-    		 	  });
+				if (data.success) {
+					$scope.vstoken=data.extra;
+					$scope.mtvarcode = data.entity;$(vcid).data('vc', true);}
+				layer.open({  content: data.message ,btn: '确定' });
 		});
 	};
     $scope.veteleCode = function() {// 验证码
@@ -68,7 +66,7 @@ var app = angular.module('app', []).controller('findPassword',function($http, $l
 		var me = "#btn_login"; if ($(me).data('isLoading') === true) return;$(me).text("提交中...");$("#mention2").html(""); //防止再次点击
         $.ajax({
         	type: 'POST',
-        	data: {key:'user_findwpd',username:$scope.telephone,toke:$scope.verrcode,password:$("#txt_repsword").val().trim()},
+        	data: {key:'user_findwpd',username:$scope.telephone,toke:$scope.verrcode,password:$("#txt_repsword").val().trim(),stoken:$scope.vstoken},
             url: ER.root+"/i/user/upPwdByTelephone",
             complete : function(e){$(me).text("确定"); $(me).delay(500).data('isLoading',false);},
             success: function(data){

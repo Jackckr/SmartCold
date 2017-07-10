@@ -9,6 +9,7 @@
 		 $(".myphonedis").show();
 	 };
  }
+ localStorage.oURL=document.URL;
 
  if(id==null||id==''){
 	 	$(document.body).html("");
@@ -34,7 +35,7 @@
          $scope.tempType=["","冷藏库","冷冻库","超低温库","恒温库","多温区库"];
          $scope.refreg=["","氨制冷","氟利昂制冷","氨氟都有","其他"];
          $scope.struct=["","土建型","钢结构型"];
-         $scope.saveType=["","货架存放","非货架存放"];
+         $scope.saveType=["","货架存放","非货架存放","堆垛存放","货架和堆垛都有"];
          $scope.isHave=["","有","无"];
          $scope.oSwitch=false;
          $scope.user=window.user;
@@ -53,6 +54,23 @@
              }else{
                  return false
              };
+         };
+         $scope.goWhere = function () {
+             if($scope.checkUserLogin()){//登录
+                 if(localStorage.gowhere){//从我的html跳转而来
+                     goback();
+                 }else{//
+                     if(localStorage.isStand==0){
+                         location.href='rdclist.html'
+                     }else if(localStorage.isStand==1){
+                         location.href='rdcstand.html'
+                     }else if(localStorage.isStand==2){
+                         location.href='user-mycold.html'
+                     }
+				 }
+             }else{//未登录
+                 goback();
+             }
          };
 		$scope.initdata=function(){
 	       //获得数据

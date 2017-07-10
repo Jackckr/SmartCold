@@ -1,7 +1,8 @@
 /**
  * 冷库列表
  */
-$().ready(function() { 
+$().ready(function() {
+	localStorage.isStand=1;
 	  var maxSize=10;
       var totalPages=  currentPage=  1;  // 当前页
       var isLoadRB=false;  

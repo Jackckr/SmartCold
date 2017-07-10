@@ -2,7 +2,7 @@
  * 冷库列表
  */
 $().ready(function() { 
-	  var maxSize=10;
+	  var maxSize=10; localStorage.isStand=0;
       var totalPages=  currentPage=  1;  // 当前页
       var isLoadRB=false;  
 	  var ul_select=$("#ul_rdcsL_list");
@@ -25,7 +25,7 @@ $().ready(function() {
           });
    		$(".droplist a").click(function(e){//条件过滤
    			$(this).children('i').addClass('current').html('&#xe62e;');
-   			$(this).addClass('current').next('.listcontain').fadeIn().parent().siblings().children('a').removeClass('current').children('i').removeClass('current').html('&#xe62d;').parent().siblings('.listcontain').hide();
+   			$(this).addClass('current').next('.listcontain').slideDown().parent().siblings().children('a').removeClass('current').children('i').removeClass('current').html('&#xe62d;').parent().siblings('.listcontain').hide();
    			$(".backDrop").show();
    		});
    	    $(".backDrop").click(function(){

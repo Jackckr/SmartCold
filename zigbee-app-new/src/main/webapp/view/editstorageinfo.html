@@ -103,10 +103,27 @@ $(function() {
 						   </select>
 						   
 					</div> <i class="iconfont fr moreinfo">&#xe697;</i></li>
+<!--				<li ng-if="typeCode==2"><label>经营类型</label>
+					<em>*</em>
+					<div class="mySelect">
+						<select  id="manageType" ng-model="storageType" name="storageType"
+								ng-change="StorageTypeSelected(storageType)" val="{{storageType}}"
+								ng-options="x.id as x.type for x in storageTypes"></select>
+					</div>
+					<i class="iconfont fr moreinfo">&#xe697;</i></li>-->
+
+				<li ng-if="typeCode==2"><label for="manageType">经营类型</label><!-- ng-if="rdcdto==null||rdcdto==undefined"-->
+					<em>*</em>
+					<div class="mySelect">
+						<!-- 					<select ng-model="manageType" ng-change="ManageTypeSelected(manageType)"  ng-options="x.id as x.type for x in manageTypes"></select> -->
+						<select id="manageType" ng-model="manageType" val="{{manageType}}">
+							<option ng-repeat="x in manageTypes" value="{{x.id}}">{{x.type}}</option>
+						</select>
+					</div> <i class="iconfont fr moreinfo">&#xe697;</i></li>
 				<li ng-if="typeCode==1"><label>可租面积</label> <em>*</em>
 					<input type="number" id="sqm" ng-model="$parent.sqm" style="min-width:4rem;width:4rem;" placeholder="㎡"/></li>
 				<li><label for="price">单价</label> <input type="number" id="price" name="unitPrice"
-					placeholder="元/天·单位（面议）" ng-model="unitprice"/></li>
+					placeholder="元/天（填0为面议）" ng-model="unitprice"/></li>
 				<li><label for="rentdate">租期</label><em>*</em>
 					<div class="mySelect">
 						<select id="rentdate" ng-model="rentdate" name="rentdate"

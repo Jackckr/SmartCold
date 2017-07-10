@@ -109,6 +109,8 @@ public class RdcController {
 
 	@Autowired
 	private OperationLogMapper operationLogMapper;
+	@Autowired
+	private RdcAuthMapper rdcAuthMapper;
 //	private static HashMap<String , Object> cache=new HashMap<String, Object>();
 
 	
@@ -779,6 +781,7 @@ public class RdcController {
 	@RequestMapping(value = "/changeStand", method = RequestMethod.POST)
 	public Object changeStand(int rdcID, int stand) {
 		rdcDao.changeStand(rdcID, stand);
+		rdcAuthMapper.delStandByRdcId(rdcID);
 		return new BaseDto(0);
 	}
 

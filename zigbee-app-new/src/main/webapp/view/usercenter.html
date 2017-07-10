@@ -35,10 +35,12 @@
 			<p class="goApprove" ng-if="user.vipType!=0&&checkState==1"><a href="javascript:;"><i class="iconfont">&#xe61c;</i>已认证</a></p>
 		</div>
 		<div class="topImg" ng-if="userinfo.id==undefined||userinfo.id==null">
-			<div class="userPic">
-				<img src="http://139.196.189.93:8089/app/userimg.jpg">
-			</div>
-			<p><a href="login.html" style="font-weight: 700;color: #000;">未登录</a></p>
+			<a href="login.html" style="display: block;">
+				<div class="userPic">
+					<img src="http://139.196.189.93:8089/app/userimg.jpg">
+				</div>
+				<p style="font-weight: 700;color: #000;">未登录</p>
+			</a>
 		</div>
 		<ul class="list list_icon">
 			<li class="clearfix" ng-login="user-mycold.html">
@@ -54,13 +56,13 @@
 			</li>
 			<li class="clearfix" ng-login="user-mycoldpublish.html">
 				<div class="myicon fl">
-					<i class="iconfont" style="color: #00d042;">&#xe60b;</i>
+					<i class="iconfont" style="color: #00d042;">&#xe610;</i>
 				</div>
 				<div class="rightArrow fr">
 					<a href=""><i class="iconfont">&#xe697;</i></a>
 				</div>
 				<div class="name">
-					<p class="list_name">出租/求租</p>
+					<p class="list_name">出租求租</p>
 				</div>
 			</li>
 			<li class="clearfix" ng-login="user-myrelease.html">

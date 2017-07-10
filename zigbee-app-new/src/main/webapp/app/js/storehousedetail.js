@@ -4,6 +4,7 @@
     $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
     $scope.appmode=[{title:["","货品详情","配送详情","仓位详情"]},{lab:[["数量","吨"],["单价","元/吨"]]},{lab:[["数量","吨"],["单价",""]]},{lab:[["数/质/量",""],["单价","元/吨","元/平方米"]]}];
      $scope.oUnit=['吨','Kg','吨'];
+     localStorage.oURL=document.URL;
     $scope.initdata=function(){
 		$http.get(ER.root+"/i/ShareRdcController/getSEByID.json",  { params: {id:id}  }).success(function(data) { //获得数据
 			if(data.success&&data.entity!=undefined){ 
@@ -77,17 +78,17 @@
                 goback();
 			}else{
                 checkLocal();
-                if($scope.datatype==3){//出租求租
+                if($scope.datatype==3){//1:出租/2:求租
                     if($scope.vo.typeCode==1){
                         location.href='rentstorage.html'
                     }else{
                         location.href='lookstorage.html'
                     }
-                }else if($scope.datatype==1){//出售求购
+                }else if($scope.datatype==1){//1:出售/2:求购
                     if($scope.vo.typeCode==1){
-                        location.href='buygoodslist.html'
-                    }else{
                         location.href='salegoodslist.html'
+                    }else{
+                        location.href='buygoodslist.html'
                     }
                 }
 			}

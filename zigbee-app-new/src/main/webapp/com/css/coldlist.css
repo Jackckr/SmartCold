@@ -744,6 +744,17 @@ section{
 .rentRdc .coldlist li a{
 	padding: .15rem .9rem;
 	box-sizing: border-box;
+	position: relative;
+}
+.rentRdc .coldlist li a .loseEffice{
+	position: absolute;
+	top:0;
+	right:2rem;
+	font-size: 5rem;
+	color: #999;
+}
+.star>i:nth-child(2){
+	margin-right: .2rem;
 }
 .btnFn{
 	border-top: .5px solid #eee;

@@ -3,6 +3,7 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
 	 $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
 	$scope.phoneNum = parseFloat(window.user.telephone.trim());
 	$scope.haveOrNots = [{id: 1,name: "有"},{ id: 2,name: "无"}];
+    localStorage.oURL=document.URL;
     // 获取省列表
 	$.ajax({ url: ER.root+"/i/UtilController/setVisited",type: "POST",data:{type:6}});
     $http.get(ER.root+'/i/city/findProvinceList').success(function (data) {

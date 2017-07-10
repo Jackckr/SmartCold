@@ -126,7 +126,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
         if ($scope.codeLave11 == undefined || $scope.codeLave11 == '') {
             return false;
         }
-        if ($scope.unitprice == undefined || $scope.unitprice == '') {
+        if ($scope.unitprice == undefined) {
             return false;
         }
         if ($scope.sqm == undefined || $scope.sqm == '') {

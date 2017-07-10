@@ -11,18 +11,20 @@
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="Cache" content="no-cache">
     <title>登录</title>
+    <link rel="stylesheet" type="text/css" href="../com/css/baguettebox.min.css">
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/layer.css">
     <link rel="stylesheet" type="text/css" href="../com/css/login.css">
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
+    <script type="text/javascript" src="../com/js/baguettebox.min.js"></script>
     <script type="text/javascript" src="../com/js/layer.js"></script>
     <!-- <script type="text/javascript">if(window.user!=null){window.location.href="../index.html";}</script>-->
 </head>
 <body>
 <header>
     <div class="area fl">
-        <a href="../index.html"><i class="iconfont">&#xe60e;</i></a>
+        <a href="../index.html" onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
     </div>
 </header>
 <div class="loginBg">
@@ -49,13 +51,22 @@
 <!-- 第三方登录暂时不做 -->
  <footer>
     <div class="line"><span>手机版下载或公众号关注</span></div>
-    <div class="three">
-        <div><a href="javascript:;"><img src="../com/img/ios.png" alt=""></a></div>
-        <div><a href="javascript:;"><img src="../com/img/android.png" alt=""></a></div>
-        <div><a href="javascript:;"><img src="../com/img/weixin_lianku.png" alt=""></a></div>
+    <div class="three gallery">
+        <div><a href="../com/img/ios.png" data-caption="iPhone下载" data-font="iPhone下载"><img
+                src="../com/img/ios.png"></a></div>
+        <div><a href="../com/img/android.png" data-caption="Android下载" data-font="Android下载"><img
+                src="../com/img/android.png"></a></div>
+        <div><a href="../com/img/weixin_lianku.png" data-caption="扫码关注链库公众号" data-font="链库公众号"><img
+                src="../com/img/weixin_lianku.png"></a></div>
     </div>
 </footer>
 <script type="text/javascript">
+    $(function(){
+        baguetteBox.run('.gallery', {
+            buttons:'true'
+        });
+        imgBoxHide();
+    })
     if (!navigator.cookieEnabled) { /* alert("请打开手机Cookie"); */
         layer.open({content: '请打开手机Cookie~', btn: '确定'});
     }
@@ -109,10 +120,10 @@
                                 if (window.location.hash != "") {
                                     backUrl = window.location.hash.substring(1);
                                 } else {
-                                    if(localStorage.oURL){
+                                    console.log(localStorage.oURL!=''||localStorage.oURL!=undefined||localStorage.oURL!=null)
+                                    console.log(localStorage.oURL);
+                                    if(localStorage.oURL!=''||localStorage.oURL!=undefined||localStorage.oURL!=null){
                                         backUrl=localStorage.oURL;
-                                    }if(localStorage.usercenter){
-                                        backUrl='usercenter.html';
                                     }else{
                                         backUrl = "../index.html";
                                     };

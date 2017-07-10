@@ -1,7 +1,7 @@
 var app = angular.module('app', []);
 app.controller('usercl', function ($http, $location, $scope) {
     $scope.user = window.user;
-    localStorage.usercenter = 'usercenter';
+    localStorage.oURL = document.URL;
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     $scope.initdata = function () {
