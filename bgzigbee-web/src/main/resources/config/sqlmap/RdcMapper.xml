@@ -20,7 +20,7 @@
 		        AND (name like "%"#{keyword}"%" or username like "%"#{keyword}"%")
 		    </if>
 		 </where>
-         order by `addTime` desc
+         order by r.`updatetime` DESC,r.id DESC
     </select>
 
     <select id="findRDCByRDCId" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.RdcEntity">
@@ -73,7 +73,8 @@
         `powerConsume`,
         `height`,
         `rentSqm`,
-        `infoIntegrity`
+        `infoIntegrity`,
+        `updatetime`
         )
         VALUES
         (
@@ -96,12 +97,14 @@
         #{powerConsume},
         #{height},
         #{rentSqm},
-        #{infoIntegrity}
+        #{infoIntegrity},
+        now()
         );
     </insert>
     <update id="updateRdc" parameterType="com.smartcold.bgzigbee.manage.entity.RdcEntity" >
         update Rdc
         <set >
+			`updatetime`=now(),
             <if test="name != null">
         		name = #{name,jdbcType=VARCHAR},
 			</if>

@@ -58,7 +58,8 @@
         `rentSqm`,
         `openLIne`,
         `infoIntegrity`,
-        `isJoinStand`
+        `isJoinStand`,
+        `updatetime`
         )
         VALUES
         (
@@ -86,12 +87,14 @@
         #{rentSqm},
         #{openLIne},
         #{infoIntegrity},
-        #{isJoinStand}
+        #{isJoinStand},
+        now()
         );
     </insert>
     <update id="updateRdc" parameterType="com.smartcold.zigbee.manage.entity.RdcEntity" >
         update Rdc
         <set >
+            `updatetime`=now(),
             <if test="name != null" >
                 `name` = #{name,jdbcType=VARCHAR},
             </if>
@@ -213,7 +216,7 @@
             <if test="hasCar !=null and  hasCar != ''"> and t.hastruck in(${hasCar}) </if>
         </where>
         ORDER BY
-        r.id DESC
+        r.`updatetime` DESC,r.id DESC
     </select>
     
 	<select id="findRDCByUserId" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcEntityDTO" >
@@ -235,7 +238,7 @@
 	        <if test="keyword != null">
 		        AND r.name like "%"#{keyword}"%"
 		    </if>
-       ORDER BY r.addTime DESC
+       ORDER BY r.`updatetime` DESC,r.id DESC
 	</select>
 	<select id="findRDCById" parameterType="Integer" resultType="map" >
 		 select 
