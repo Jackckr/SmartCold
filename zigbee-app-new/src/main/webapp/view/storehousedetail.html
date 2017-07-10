@@ -12,6 +12,8 @@
         <link rel="stylesheet" type="text/css" href="../com/css/baguettebox.min.css">  
 	    <link type="text/css" rel="stylesheet" href="../com/css/coldlist.css" />
 	    <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
+		<script type="text/javascript" src="../com/js/jquery.event.drag.js"></script>
+		<script type="text/javascript" src="../com/js/jQuery.touchSlider.js"></script>
 	    <script type="text/javascript" src="../com/js/angular.min.js"></script>
 	    <script type="text/javascript" src="../com/js/common.js"></script>
         <script type="text/javascript" src="../com/js/layer.js"></script>
@@ -30,10 +32,21 @@
 	        	<div class="txt">{{vo.typeText}}详情</div>
 		    </header>
 		<!-- header end-->
-		<div class="rdcpadding" ng-if="vo.files&&vo.files.length>0">
+		<div ng-if="vo.files&&vo.files.length>0">
 			<!--点击图片循环展示-->
-			<div id="she_imglist" class="baguetteBoxOne gallery" ng-if="vo.files">
-				<a ng-repeat="fl in vo.files" href="{{fl}}" data-caption="{{($index+1)+'/'+vo.files.length}}"><img ng-src="{{fl}}"/></a>
+			<div id="she_imglist" ng-if="vo.files">
+				<div class="main_visual">
+					<div class="flicking_con">
+						<a class="on" href="#@"  ng-repeat="fl in vo.files"></a>
+					</div>
+					<div class="main_image baguetteBoxOne gallery">
+						<ul>
+							<li ng-repeat="fl in vo.files">
+								<a  href="{{fl}}" data-caption="{{($index+1)+'/'+vo.files.length}}"><img ng-src="{{fl}}"/></a>
+							</li>
+						</ul>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="rdcpadding rdcDetailName">

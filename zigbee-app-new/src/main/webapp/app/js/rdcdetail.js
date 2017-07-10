@@ -119,7 +119,33 @@
 		$scope.isLogin = function (user) {
 	        return undefined!=user && user.id > 0;
 	    }
-		$scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {/*alert("33");*/ baguetteBox.run('.baguetteBoxOne', {buttons:true});imgBoxHide()});
+         /*详情页轮播*/
+         function slideFn() {
+             $dragBln = false;
+             $(".main_image").touchSlider({
+                 flexible: true,
+                 speed: 200,
+                 paging: $(".flicking_con a"),
+                 counter: function (e) {
+                     $(".flicking_con a").removeClass("on").eq(e.current - 1).addClass("on");
+                 }
+             });
+
+             $(".main_image").bind("mousedown", function () {
+                 $dragBln = false;
+             });
+
+             $(".main_image").bind("dragstart", function () {
+                 $dragBln = true;
+             });
+
+             $(".main_image a").click(function () {
+                 if ($dragBln) {
+                     return false;
+                 }
+             });
+         }
+		$scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {slideFn(); baguetteBox.run('.baguetteBoxOne', {buttons:true});imgBoxHide()});
       });
      app.directive('onFinishRenderFilters', function ($timeout) { return { restrict: 'A', link: function(scope, element, attr) {   $timeout(function() { scope.$emit('ngRepeatFinished');  },100); } };});
  }
