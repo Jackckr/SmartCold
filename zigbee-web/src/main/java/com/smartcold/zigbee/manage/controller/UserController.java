@@ -18,7 +18,6 @@ import com.smartcold.zigbee.manage.dto.UploadFileEntity;
 import com.smartcold.zigbee.manage.entity.RdcAuthEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -317,10 +316,10 @@ public class UserController extends BaseController {
 	}
 	@RequestMapping(value = "/upPwdByTelephone")
 	@ResponseBody
-	public ResponseData<String> upPwdByTelephone(HttpServletRequest request,String key,String toke,UserEntity user){
+	public ResponseData<String> upPwdByTelephone(HttpServletRequest request,String key,String toke,String stoken, UserEntity user){
 		if(StringUtil.isnotNull(key)&&StringUtil.isnotNull(toke)){
-			String stoke=request.getSession().getAttribute(key+"shear_yzm")+""; request.getSession().removeAttribute(key+"shear_yzm");  
-			if(toke.equalsIgnoreCase(stoke)){
+			String stoke=request.getSession().getAttribute(key+"shear_yzm")+""; request.getSession().removeAttribute(key+"shear_yzm"); 
+			if(toke.equalsIgnoreCase(stoke)||StringUtil.getToken().equals(stoken)){
 				if(StringUtil.isnotNull(user.getPassword())){user.setPassword(EncodeUtil.encodeByMD5(user.getPassword()));}
 				boolean isok=this.userDao.upPwdByTelephone(user)>0;
 				if(isok){

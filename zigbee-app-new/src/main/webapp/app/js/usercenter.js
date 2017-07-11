@@ -1,7 +1,14 @@
 var app = angular.module('app', []);
+app.config(function ($httpProvider) {
+    if (!$httpProvider.defaults.headers.get) { $httpProvider.defaults.headers.get = {};}    // Initialize get if not there
+    $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+    $httpProvider.defaults.headers.get['Cache-Control'] = 'no-cache';  //禁用IE对ajax的缓存
+    $httpProvider.defaults.headers.get['Pragma'] = 'no-cache';
+});
 app.controller('usercl', function ($http, $location, $scope) {
     $scope.user = window.user;
     localStorage.oURL = document.URL;
+    localStorage.removeItem('goIndex');
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     $scope.initdata = function () {

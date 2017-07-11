@@ -19,6 +19,17 @@ public class TimeUtil {
 	public static SimpleDateFormat	dateFormat	= new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     
 	public static String  getDateTime(){return	TimeUtil.dateFormat.format(new Date());}//获得时间
+	
+	
+	public static int getDay() {
+       return Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+    }
+    public static int getDateHour() {
+        return  Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+    } 
+    public static int getDateMinute() {
+        return  Calendar.getInstance().get(Calendar.MINUTE);
+    }
     /**
      * Date转String
      *

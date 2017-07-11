@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import com.smartcold.zigbee.manage.dao.RdcShareMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import com.smartcold.zigbee.manage.service.CommonService;
 import com.smartcold.zigbee.manage.service.DocLibraryService;
 import com.smartcold.zigbee.manage.service.RdcShareService;
 import com.smartcold.zigbee.manage.service.impl.WebvistsService;
+import com.smartcold.zigbee.manage.util.EncodeUtil;
 import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.StringUtil;
 import com.smartcold.zigbee.manage.util.TelephoneVerifyUtil;
@@ -516,11 +518,10 @@ public class ShareRdcController  {
 				key= key+"";
 				TelephoneVerifyUtil teleVerify = new TelephoneVerifyUtil();
 				String signUpCode =teleVerify.identityVerify(telephone);
-//				request.getSession().setAttribute(key+"shear_id", dataid);
 				request.getSession().setAttribute(key+"shear_yzm", signUpCode);
-//				request.getSession().setAttribute(key+"shear_telephone", telephone);
 				ResponseData<String> instance = ResponseData.getInstance();
 				instance.setSuccess(true);
+				instance.setExtra(StringUtil.getToken());
 				instance.setEntity(signUpCode);
 				instance.setMessage("验证码已发送到您的手机~请注意查收~");
 				return instance;

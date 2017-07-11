@@ -709,9 +709,21 @@ em{
 .jedatebox .next{padding: 0}
 .jedatebox em{color:inherit}
 .jedatebox{
+	width: 90%;
 	left: 50%!important;
 	-webkit-transform: translateX(-50%);
 	transform: translateX(-50%);
+}
+
+.jedateblue .jedatesetm .ymdropul li,
+.jedateblue .jedatesety .ymdropul li{
+	height: 2rem;
+	line-height: 2rem;
+	font-size: .7rem;
+}
+.jedateblue .jedatesety .ymdropul,
+.jedateblue .jedatesetm .ymdropul{
+	height: auto;
 }
 .weekBox{
 	width: 100%;

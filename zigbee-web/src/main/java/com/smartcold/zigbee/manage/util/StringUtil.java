@@ -19,6 +19,9 @@ public class StringUtil
 
 	public static final String	EMPTY_STRING	= "";
 
+	public static 	String getToken(){
+	  return 	EncodeUtil.encodeByMD5("token"+TimeUtil.getDateHour());
+	}
 	/**
 	 * 判断字符串是否为null或者空字符串(即长度为0的字符串)
 	 * 

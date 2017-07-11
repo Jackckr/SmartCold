@@ -6,7 +6,7 @@
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <title>求购货品</title>
-    <link rel="stylesheet" type="text/css" href="../com/datepicker/date.css">
+    <link rel="stylesheet" type="text/css" href="../com/js/jedate/skin/jedate1.css">
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/reset.css">
     <link rel="stylesheet" type="text/css" href="../com/css/layer.css">
@@ -14,8 +14,7 @@
     <link rel="stylesheet" type="text/css" href="../com/css/newRelease.css">
 	<script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
 	<script type="text/javascript" src="../com/js/jquery.city.select.min.js"></script>
-	<script type="text/javascript" src="../com/datepicker/date.js"></script>
-	<script type="text/javascript" src="../com/datepicker/iscroll.js" ></script>
+    <script type="text/javascript" src="../com/js/jedate/jquery.jedate.min.js"></script>
 	<script type="text/javascript" src="../com/js/common.js"></script>
 	<script type="text/javascript" src="../com/js/layer.js"></script>
 	<script src="../bower_components/angular/angular.min.js"></script>
@@ -28,31 +27,13 @@
         $.ajax({ url: ER.root+"/i/UtilController/setVisited",type: "POST",data:{type:8}});
         localStorage.oURL=document.URL;
     	$(function() {
-			/*$('.toggle').children('div').click(function(){
-				$(this).addClass('current').siblings().removeClass('current');
-				if($(this).index()==1){
-				    window.flag2 = 1;
-				    $('#name').attr('placeholder','货品求货')
-                    $(".bossToggle").hide();
-                    
-					/!*$(".main").show();
-					$('.coldlist').hide();*!/
-				}else{
-				window.flag2 = 0;
-				$('#name').attr('placeholder','货品出货')
-                    $(".bossToggle").show();
-					/!*$(".main").hide();
-					$('.coldlist').show();*!/
-				}
-			});*/
+            $.jeDate("#sttime",{format:"YYYY-MM-DD",isTime:false,isinitVal:true,minDate:$.nowDate({DD:0})});
+            $.jeDate("#endtime",{format:"YYYY-MM-DD",isTime:false, isinitVal:true,minDate:$.nowDate({DD:0})});
             $('.radiocar button').click(function(event){
                 $(".main").show();
                 $('.coldlist').hide();
                 $(this).parent().hide()
             });
-            /*date*/
-			 $('#sttime').date();
-			 $('#endtime').date();
 		});
     </script>
     <!-- header -->
@@ -142,7 +123,7 @@
                 <li>
 					<label for="time">有效开始时间</label><em>*</em>
 					<div class="mySelect">
-						<input type="text" placeholder="请选择开始时间" id="sttime" class="kbtn"/>
+						<input type="text" readonly placeholder="请选择开始时间" id="sttime" class="kbtn"/>
 					</div>
 					<i class="iconfont fr">&#xe63a;</i>
 				</li>
@@ -150,7 +131,7 @@
 				<li>
 					<label for="time">有效结束时间</label><em>*</em>
 					<div class="mySelect">
-						<input type="text" placeholder="请选择结束时间" id="endtime" class="kbtn"/>
+						<input type="text" readonly placeholder="请选择结束时间" id="endtime" class="kbtn"/>
 					</div>
 					<i class="iconfont fr">&#xe63a;</i>
 				</li>
