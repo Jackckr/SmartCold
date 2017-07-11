@@ -9,7 +9,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <title>求租冷库</title>
-    <link rel="stylesheet" type="text/css" href="../com/datepicker/date.css">
+    <link rel="stylesheet" type="text/css" href="../com/js/jedate/skin/jedate1.css">
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
     <link rel="stylesheet" type="text/css" href="../com/css/reset.css">
     <link rel="stylesheet" type="text/css" href="../com/css/layer.css">
@@ -19,17 +19,15 @@
     <script type="text/javascript" src="../com/js/jquery.city.select.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../com/js/layer.js"></script>
-    <script type="text/javascript" src="../com/datepicker/iscroll.js"></script>
-    <script type="text/javascript" src="../com/datepicker/date.js"></script>
+    <script type="text/javascript" src="../com/js/jedate/jquery.jedate.min.js"></script>
     <script src="../bower_components/angular/angular.min.js"></script>
     <script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
     <script>
         $.ajax({url: ER.root + "/i/UtilController/setVisited", type: "POST", data: {type: 7}});
         localStorage.oURL=document.URL;
         $(function () {
-            /*date*/
-            $('#sttime').date();
-            $('#endtime').date();
+            $.jeDate("#sttime",{format:"YYYY-MM-DD",isTime:false,isinitVal:true,minDate:$.nowDate({DD:0})});
+            $.jeDate("#endtime",{format:"YYYY-MM-DD",isTime:false, isinitVal:true,minDate:$.nowDate({DD:0})});
         });
     </script>
 </head>

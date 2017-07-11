@@ -7,7 +7,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
     var onoff = true;
 
     $scope.totalfiles = [];
-    $scope.unit = "Kg";
+    $scope.unit = 1;
     $scope.telephone = window.user.telephone.trim();
     if (id) {
         $http.get(ER.root + '/i/ShareRdcController/getRdcByUid', {
