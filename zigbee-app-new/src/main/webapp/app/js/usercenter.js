@@ -11,13 +11,6 @@ app.controller('usercl', function ($http, $location, $scope) {
     localStorage.removeItem('goIndex');
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-    
-    
-    
-    
-    
-    
-    
     $scope.initdata = function () {
         if (window.user != null) {
             checktoken(null, true);
