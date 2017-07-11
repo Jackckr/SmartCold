@@ -5,7 +5,7 @@ var col_userType = function (i) {switch(i){case 0:return '平台用户';case 1:r
 function col_cellStyler(value, row) {
 	return [
 	        '<button class="btn" onclick="user_audit(' , row.id,',',row.audit,',\'',row.username, '\')">审核</button>' , 
-	        '<button class="btn" onclick="user_level(' , row.id,',',row.level,',\'',row.username,'\')">升/降级</button>' , 
+	        '<button class="btn" onclick="user_level(' , row.id,',',row.vipType,',\'',row.username,'\')">升/降级</button>' ,
 	        '<button class="btn btn-delete" onclick="goDeleteUser(' , row.id, ',\'',row.username,'\')">删除</button>'
 	        ].join("");
 	}
@@ -60,7 +60,7 @@ function user_audit(id,audit,username){$("#user_auditForm").form('load',{id:id,o
 function user_upaudit(){$('#user_auditdialog').dialog({closed: true});var id=$("#user_auditForm input[name='id']").val(),oldaudit=$("#user_auditForm input[name='oldaudit']").val(), audit=$("#user_auditForm input[name='audit']:checked").val();if(oldaudit!=audit&&id!=""){$.post('../../i/user/changeAudit', {'userID': id, 'audit': audit}, function () { reloaddata();});}}
 //=====================修改用户级别===============================
 function user_level(id,level,username){$("#user_levelForm").form('load',{id:id,level:level,oldlevel:level,username:username});$('#user_leveldialog').dialog({closed: false});}
-function user_uplevel(){$('#user_leveldialog').dialog({closed: true});var id=$("#user_levelForm input[name='id']").val(),oldlevel=$("#user_levelForm input[name='oldlevel']").val(), level=$("#user_levelForm input[name='level']:checked").val();if(level!=oldlevel&&id!=""){$.post('../../i/user/changeAudit', {'userID': id, 'audit': audit}, function () { reloaddata();});}}
+function user_uplevel(){$('#user_leveldialog').dialog({closed: true});var id=$("#user_levelForm input[name='id']").val(),oldlevel=$("#user_levelForm input[name='oldlevel']").val(), level=$("#user_levelForm input[name='level']:checked").val();if(level!=oldlevel&&id!=""){$.post('../../i/user/changeLevel', {'userID': id, 'vipType': level}, function () { reloaddata();});}}
 
 
 

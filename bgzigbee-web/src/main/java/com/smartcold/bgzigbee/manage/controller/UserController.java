@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Date;
 
+import com.smartcold.bgzigbee.manage.dao.RdcAuthMapper;
 import com.smartcold.bgzigbee.manage.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,8 @@ public class UserController extends BaseController {
 	private UserMapper userDao;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private RdcAuthMapper rdcAuthMapper;
 
 	 //
     @RequestMapping(value = "/getUserByFilter", method = RequestMethod.POST)
@@ -102,8 +105,14 @@ public class UserController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value="/changeLevel", method=RequestMethod.POST)
-	public Object changeLevel(int userID, int level){
-		//userDao.changeAudit(userID, audit);
+	public Object changeLevel(int userID, int vipType){
+		if(vipType==0){
+			rdcAuthMapper.delVipByUid(userID);
+		}
+		UserEntity userEntity = new UserEntity();
+		userEntity.setId(userID);
+		userEntity.setVipType(vipType);
+		userDao.updateUser(userEntity);
 		return new BaseDto(0);
 	}
 	

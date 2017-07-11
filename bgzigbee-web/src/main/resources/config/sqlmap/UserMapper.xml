@@ -46,7 +46,7 @@
          order by `addTime` desc
     </select>
 	 <select id="findUserByFilter" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.UserEntity">
-         SELECT ID,`username` ,`type`,`telephone` ,`email` ,`addTime` ,`audit`  FROM `user` where 1=1  
+         SELECT ID,`username` ,`type`,`telephone` ,`email` ,`addTime` ,`audit`,`vipType`  FROM `user` where 1=1
 			<if test="audit != null">
 			  and  `audit`=#{audit} 
 			</if>
