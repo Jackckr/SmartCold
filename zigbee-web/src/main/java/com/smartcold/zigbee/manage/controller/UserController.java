@@ -78,9 +78,10 @@ public class UserController extends BaseController {
 			return ResponseData.newFailure("用户名和密码不能为空~");
 		}
 	}
-	@RequestMapping(value = "/attestationUser",method = RequestMethod.POST)
+
+	@RequestMapping(value = "/attestationUser")
 	@ResponseBody
-	public ResultDto attestationUser(UserEntity u,@RequestParam(required = false) MultipartFile authfile){
+	public ResultDto attestationUser(UserEntity u,MultipartFile authfile){
 		UserEntity userEntity = userDao.findUserById(u.getId());
 		String fileDataType=u.getType()==1?FileDataMapper.CATEGORY_USERAUTH_PIC:FileDataMapper.CATEGORY_UPAUTH_PIC;
 		int authType=u.getType()==1?3:4;
@@ -126,12 +127,9 @@ public class UserController extends BaseController {
 			}else if (rdcAuthEntities.get(0).getState()==1){
 				result=1;
 			}
-		}else {
-			if (user.getVipType()>0){
+		}
+		if (user.getVipType()>0){
 				result=1;
-			}else {
-				result=0;
-			}
 		}
 		List<HashMap<String, Object>> hashMaps = roleUserMapper.selByUserId(userId);
 		if(hashMaps !=null && hashMaps.size()!=0){
