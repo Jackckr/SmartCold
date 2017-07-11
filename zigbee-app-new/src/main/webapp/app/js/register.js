@@ -1,6 +1,7 @@
 angular.module('myapp', []).controller('oregister',function($http, $location, $scope) {
 	$http.defaults.withCredentials = true;$http.defaults.headers = {'Content-Type' : 'application/x-www-form-urlencoded'};
 	var victdata={victtl:false,extname:false,victyzm:false,victpwd:false,tel:null};
+    localStorage.goIndex=1;
 	$scope.vsphone = function(telephone) {// 验证手机号码
 		var length = (telephone + '').length;
 		var mobile = /^(13[0-9]|14[0-9]|15[0-9]|17[0-9]|18[0-9])\d{8}$/;

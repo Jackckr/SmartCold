@@ -2,6 +2,7 @@ var app = angular.module('app', []);
 app.controller('usercl', function ($http, $location, $scope) {
     $scope.user = window.user;
     localStorage.oURL = document.URL;
+    localStorage.removeItem('goIndex');
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     $scope.initdata = function () {
