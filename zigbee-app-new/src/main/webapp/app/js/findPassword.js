@@ -5,6 +5,7 @@ var app = angular.module('app', []).controller('findPassword',function($http, $l
 		var mobile = /^1[3|4|5|7|8][0-9]\d{4,8}$/;
 		return telephone && length == 11&& mobile.test(telephone);
 	};
+	localStorage.goIndex=1;
 	$scope.vertelephone = function() {// 验证手机号码
 		var ct = $scope.vsphone($scope.telephone);
 		if(ct){

@@ -24,7 +24,7 @@
 <body>
 <header>
     <div class="area fl">
-        <a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
+        <a onclick="gowhere()"><i class="iconfont">&#xe60e;</i></a>
     </div>
 
     <div class="zoom fr"><!-- <a href="search.html"><i class="iconfont">&#xe62f;</i></a> -->
@@ -70,7 +70,14 @@
             buttons:'true'
         });
         imgBoxHide();
-    })
+    });
+    function gowhere() {
+        if(localStorage.goIndex==1){
+            location.href= "../index.html";
+        }else{
+            goback();
+        }
+    }
     if (!navigator.cookieEnabled) { /* alert("请打开手机Cookie"); */
         layer.open({content: '请打开手机Cookie~', btn: '确定'});
     }
@@ -124,8 +131,6 @@
                                 if (window.location.hash != "") {
                                     backUrl = window.location.hash.substring(1);
                                 } else {
-                                    console.log(localStorage.oURL!=''||localStorage.oURL!=undefined||localStorage.oURL!=null)
-                                    console.log(localStorage.oURL);
                                     if(localStorage.oURL){
                                         backUrl=localStorage.oURL;
                                     }else{
