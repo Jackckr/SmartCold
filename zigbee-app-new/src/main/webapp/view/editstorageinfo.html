@@ -9,26 +9,24 @@
 <meta name="viewport"
 	content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
 <title>发布仓库信息修改</title>
+	<link rel="stylesheet" type="text/css" href="../com/js/jedate/skin/jedate1.css">
 <link rel="stylesheet" type="text/css" href="../com/css/common.css">
 	    <link rel="stylesheet" type="text/css" href="../com/css/layer.css">
 	<link rel="stylesheet" type="text/css" href="../com/css/reset.css">
 <link rel="stylesheet" type="text/css" href="../com/css/release.css">
-<link rel="stylesheet" type="text/css" href="../com/datepicker/date.css">
 	<link rel="stylesheet" type="text/css" href="../com/css/newRelease.css">
 <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src="../com/js/jquery.city.select.min.js"></script>
 <script type="text/javascript" src="../com/js/common.js"></script>
         <script type="text/javascript" src="../com/js/layer.js"></script>
-<script type="text/javascript" src="../com/js/jedate/jquery.jedate.js"></script>
-<script type="text/javascript" src="../com/datepicker/date.js"></script>
-<script type="text/javascript" src="../com/datepicker/iscroll.js" ></script>
+	<script type="text/javascript" src="../com/js/jedate/jquery.jedate.min.js"></script>
 <script src="../bower_components/angular/angular.min.js"></script>
 <script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
 <script type="text/javascript" src="../app/js/editshareinfo.js"></script>
 <script type="text/javascript">
-$(function() {			
-	$('#sttime').date();
-	$('#endtime').date();
+$(function() {
+    $.jeDate("#sttime",{format:"YYYY-MM-DD",isTime:false,isinitVal:true,minDate:$.nowDate({DD:0})});
+    $.jeDate("#endtime",{format:"YYYY-MM-DD",isTime:false, isinitVal:true,minDate:$.nowDate({DD:0})});
 });
 </script>
 </head>
@@ -43,7 +41,7 @@ $(function() {
 		<div class="txt" ng-if="typeCode==2">求租仓库信息修改</div>
 	</header>
 	
-	<section class="main maindetail" style="margin-top:2.5rem">
+	<section class="main maindetail">
 	<div class="coldlist" ng-if="rdcsharedto.rdcID!=undefined&&rdcsharedto.rdcID!=0" style="margin-bottom: 0;">
       <ul class="imgTable">
 			<li class="imgCell"><a href="javascript:;"> <img class="fl"

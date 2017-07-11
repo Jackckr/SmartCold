@@ -709,6 +709,7 @@ em{
 .jedatebox .next{padding: 0}
 .jedatebox em{color:inherit}
 .jedatebox{
+	width: 90%;
 	left: 50%!important;
 	-webkit-transform: translateX(-50%);
 	transform: translateX(-50%);
