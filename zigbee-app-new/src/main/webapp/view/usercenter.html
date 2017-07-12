@@ -26,7 +26,7 @@
 		<div class="topImg" ng-show="userinfo.id">
 			<div class="userPic">
 				<img id="user_img" ng-src="{{userinfo.avatar}}">
-				<input id="headImg" type="file" name=""  value="" />
+				<input id="headImg" type="file" name=""  value="" accept="image/gif, image/bmp, image/jpg image/jpeg, image/png"/>
 			</div>
 			<p class="userName" ng-bind="usernameObj"></p>
 			<p class="goApprove" ng-if="user.vipType==0&&checkState==0"><a href="approve.html"><i class="iconfont">&#xe61c;</i>去认证</a></p>
