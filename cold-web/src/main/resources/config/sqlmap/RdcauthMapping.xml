@@ -3,7 +3,7 @@
 <mapper namespace="com.smartcold.manage.cold.dao.olddb.RdcauthMapping">
 
     <select id="getRdcAuthByUid" parameterType="Integer" resultType="Integer">
-      SELECT COUNT(`id`) from `rdcauth` where  `uid`=#{userId} and `state`!=-1;
+      SELECT COUNT(`id`) from `rdcauth` where  `uid`=#{userId} and `state`!=-1 and `type`=0;
     </select>
     
     <insert id="insertCertification" parameterType="RdcAuthEntity" useGeneratedKeys="true" keyProperty="id">

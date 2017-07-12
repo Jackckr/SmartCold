@@ -275,7 +275,7 @@
     		<if test="storageType !=null and  storageType != ''">  and t.storagetype in(${storageType}) </if><!-- 存放类型-->
     		<if test="storagetempertype !=null and  storagetempertype != ''">  and t.storagetempertype in(${storagetempertype}) </if><!-- 温度类型-->
     		<if test="hasCar !=null and  hasCar != ''"> and <if test="hasCar ==1">!</if> ISNULL(t.storagetruck) </if><!-- 有无车辆-->
-       ORDER BY r.addTime DESC
+        ORDER BY r.`updatetime` DESC,r.id DESC
 	</select>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         select
