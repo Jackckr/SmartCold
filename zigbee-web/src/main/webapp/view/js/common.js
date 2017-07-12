@@ -90,4 +90,5 @@ function getDataToForm(inputArr,data) {
 }
 
 $(function () {
+    findUser();
 });

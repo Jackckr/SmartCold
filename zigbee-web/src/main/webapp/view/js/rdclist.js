@@ -57,8 +57,14 @@ function getRdcRentList() {
             rdcRent.audit==2?rdcRentInfo.push('<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>'):rdcRentInfo.push('<b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>');
             if(rdcRent.istemperaturestandard==1){rdcRentInfo.push('<b class="reachStand"><i class="iconfont">&#xe6e9;</i>冷链委温度达标库</b>');}
             rdcRentInfo.push(' <a onclick="realTimeTem('+rdcRent.id+',\''+rdcRent.name+'\')">点击可查看实时库温</a></div><div class="rdcArea"><span>总面积'+rdcRent.sqm+'㎡</span>|<span>'+tempTypeStr+'</span><span>'+manageTypeStr+'</span></div><div class="rdcPosition"><b><i class="iconfont">&#xe648;</i>'+rdcRent.address+'</b></div></div><div class="rdcPrice">');
+            var collectWords='<button class="collect" onclick="collection(this,'+rdcRent.id+')"><i class="iconfont orange">&#xe634;</i>收藏</button>';
+            for(var j=0;j<rdcRent.collectUserIds.length;j++){
+                if(rdcRent.collectUserIds[j]==window.lkuser.id){
+                    collectWords='<button class="collect" onclick="collection(this,'+rdcRent.id+')"><i class="iconfont orange isLike">&#xe637;</i>已收藏</button>';
+                }
+            }
             if(rdcRent.datatype==3&&rdcRent.typecode==1){rdcRentInfo.push('<p>可用面积<i class="orange">'+rdcRent.rentSqm+'</i>㎡</p><p class="rdcPriceNum blue">'+rdcRent.unitPrice+'</p><p>元/㎡/天</p>');}else {rdcRentInfo.push('<h3>暂无信息</h3>');}
-            rdcRentInfo.push('</div><div class="rdcBtn"><button onclick="updateRdc('+rdcRent.id+')" class="collect"><i class="iconfont orange">&#xe634;</i>收藏</button><button class="look"><a href="../html/rdcinfo.html?rdcId='+rdcRent.id+'"><i class="iconfont">&#xe610;</i>查看</a></button></div></li>');
+            rdcRentInfo.push('</div><div class="rdcBtn">'+collectWords+'<button class="look"><a href="../html/rdcinfo.html?rdcId='+rdcRent.id+'"><i class="iconfont">&#xe610;</i>查看</a></button></div></li>');
         });
         $("#rdcRentList").empty().append(rdcRentInfo.join(''));
     }});
@@ -224,6 +230,29 @@ function getHasCar() {
 function getAddStatus() {
     window.sessionStorage.submitRdcStatus=0;
 }
+
+function collection(mark,id) {
+    var olike = $(mark).children('i');
+    if(olike.hasClass('isLike')){//已收藏
+        $.ajax({
+            url:"/i/collect/delByCollect",
+            type:"post",
+            data:{uid: window.lkuser.id,collectId: id, collectType: 1}
+        });
+        olike.html("&#xe634;");
+        olike.removeClass('isLike');
+        console.log(34)
+    }else {//未收藏
+        $.ajax({
+            url:"/i/collect/addCollectRdc",
+            type:"post",
+            data:{uid: window.lkuser.id,collectId: id, collectType: 1}
+        });
+        olike.html("&#xe637;");
+        olike.addClass('isLike');
+        console.log(37)
+    }
+}
 $(function () {
     getRdcRentList();
     getProvinceList();
@@ -237,17 +266,5 @@ $(function () {
     $("#search").bind('click',getKeyword);
     $("#keyword").keydown(function () {if(event.keyCode == "13") {getKeyword();}});
     $("li[type=rdcSqm]").bind('click',getRdcSqm);
-    $(".collect").click(function () {
-        var olike = $(this).children('i');
-        if(olike.hasClass('isLike')){//已收藏
-            olike.html("&#xe634;");
-            olike.removeClass('isLike');
-            console.log(34)
-        }else {//未收藏
-            olike.html("&#xe637;");
-            olike.addClass('isLike');
-            console.log(37)
-        }
-    })
 });
 
