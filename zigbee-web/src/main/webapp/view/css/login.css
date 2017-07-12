@@ -1,6 +1,11 @@
 /*登录注册css*/
 .section{
-    min-height: 360px;
+    min-height: 100%;
+    padding: 180px 0 190px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0 auto;
 }
 .loginBg{
     float: left;
@@ -12,6 +17,16 @@
 .login{
     float: right;
     width: 400px;
+}
+.footer,.header{
+    position: fixed;
+    bottom:0;
+    left:0;
+    z-index:20;
+}
+.header{
+    bottom:auto;
+    top:0;
 }
 .login h2{
     color: #64a9d2;

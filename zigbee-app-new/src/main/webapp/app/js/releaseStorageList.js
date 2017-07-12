@@ -1,6 +1,7 @@
 /**
  * 冷库列表
  */
+localStorage.oURL=document.URL;
 checkLogin();
 $().ready(function() { 
 	  var maxSize=10;

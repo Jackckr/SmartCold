@@ -24,7 +24,6 @@
     <script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
     <script>
         $.ajax({url: ER.root + "/i/UtilController/setVisited", type: "POST", data: {type: 7}});
-        localStorage.oURL=document.URL;
         $(function () {
             $.jeDate("#sttime",{format:"YYYY-MM-DD",isTime:false,isinitVal:true,minDate:$.nowDate({DD:0})});
             $.jeDate("#endtime",{format:"YYYY-MM-DD",isTime:false, isinitVal:true,minDate:$.nowDate({DD:0})});
@@ -35,7 +34,7 @@
 <!-- header -->
 <header>
     <div class="area fl">
-        <a onclick="goback()"><i class="iconfont">&#xe602;</i></a>
+        <a href="release.html"><i class="iconfont">&#xe602;</i></a>
     </div>
     <div class="zoom fr"><a href="../index.html"> <i class="iconfont">&#xe65a;</i> </a></div>
     <div class="txt">求租冷库</div>

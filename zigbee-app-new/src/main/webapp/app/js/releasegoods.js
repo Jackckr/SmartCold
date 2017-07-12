@@ -1,5 +1,5 @@
-checkLogin();
 
+checkLogin();
 angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upload, $http) {
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
