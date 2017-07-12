@@ -70,11 +70,11 @@
 
         <div class="login">
             <h2>用户名密码登录</h2>
-            <form class="layui-form layui-form-pane" action="/i/user/login">
+            <form class="layui-form layui-form-pane">
                 <div class="layui-form-item">
                     <label class="layui-form-label"><i class="iconfont">&#xe63d;</i></label>
                     <div class="layui-input-block">
-                        <input type="text" name="username" lay-verify="username" autocomplete="off" placeholder="请输入用户名" class="layui-input">
+                        <input type="text" name="userName" lay-verify="userName" autocomplete="off" placeholder="请输入用户名" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -157,8 +157,25 @@
 
         //监听提交
         form.on('submit(lianku)', function(data){
-            layer.alert(JSON.stringify(data.field), {
-                title: '最终的提交信息'
+            $.ajax({
+                type: "POST",
+                async:false,
+                dataType: "json",
+                url: "/i/user/login",
+                data:  data.field,
+                beforeSend: function () {
+                    data.elem.innerText='登录中';
+                },
+                success: function (data) {
+                    if(data.success){
+                        window.location.href='../../index.htm';
+                    }else{
+                        layer.alert(data.message, {
+                            title: '登录状态'
+                        });
+                    }
+
+                }
             });
             return false;
         });
