@@ -70,7 +70,7 @@
 
         <div class="login">
             <h2>用户名密码登录</h2>
-            <form class="layui-form layui-form-pane">
+            <form class="layui-form layui-form-pane" action="" onsubmit="return false">
                 <div class="layui-form-item">
                     <label class="layui-form-label"><i class="iconfont">&#xe63d;</i></label>
                     <div class="layui-input-block">
@@ -92,7 +92,7 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <button class="layui-btn" lay-submit="" lay-filter="lianku">登录</button>
+                    <button class="layui-btn" lay-submit="lianku" lay-filter="lianku">登录</button>
                 </div>
             </form>
         </div>
@@ -136,16 +136,16 @@
         var form = layui.form(),layer = layui.layer;
         //自定义验证规则
         form.verify({
-            username: function(value, item){ //value：表单的值、item：表单的DOM对象
+            userName: function(value, item){ //value：表单的值、item：表单的DOM对象
                 if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)){
-                    return '用户名不能有特殊字符';
+                    return '用户名不能为空并且不能有特殊字符';
                 }
                 if(/(^\_)|(\__)|(\_+$)/.test(value)){
                     return '用户名首尾不能出现下划线\'_\'';
                 }
-                if(/^\d+\d+\d$/.test(value)){
+               /* if(/^\d+\d+\d$/.test(value)){
                     return '用户名不能全为数字';
-                }
+                }*/
             }
             //我们既支持上述函数式的方式，也支持下述数组的形式
             //数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
@@ -168,16 +168,30 @@
                 },
                 success: function (data) {
                     if(data.success){
-                        window.location.href='../../index.htm';
-                    }else{
-                        layer.alert(data.message, {
-                            title: '登录状态'
+                        var token = data.message.substr(6);
+                        $.ajax({
+                            type: "GET",
+                            url: "/i/user/findUser",
+                            dataType: "json",
+                            data: {token: token,isupdate: true},
+                            success: function(data) {
+                                if (data && data.id != 0) {
+                                    window.lkuser=data;
+                                    window.sessionStorage.lkuser=JSON.stringify(data);
+                                    window.sessionStorage.longtime=new Date().getTime();
+                                    window.location.href='../../index.htm';
+                                } else {
+                                    window.sessionStorage.removeItem("lkuser");//清除系统user;
+                                }
+                            }
                         });
+                    }else{
+                        layer.alert(data.message, {icon:5});
+                        return false;
                     }
 
                 }
             });
-            return false;
         });
     });
 

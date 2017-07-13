@@ -111,7 +111,7 @@
             <label>冷库图片<em>*</em></label>
             <label class="pic">
                 <input type="file" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="true"
-                       accept="image/gif, image/bmp, image/jpg image/jpeg, image/png" name="files">
+                       accept="image/gif, image/bmp, image/jpg, image/jpeg, image/png" name="files">
             </label>
             <output class="img_list">
 						<span ng-repeat="file in totalfiles">
@@ -134,7 +134,7 @@
                 <li class="black">
                     <label class="pic">
                         <input type="file" ngf-select="addTempStandPic($files)" ng-model="tempStandfile" ngf-multiple="false"
-                               accept="image/gif, image/bmp, image/jpg image/jpeg, image/png"
+                               accept="image/gif, image/bmp, image/jpg, image/jpeg, image/png"
                                name="tempStandfile">
                     </label>
                     <output class="img_list">
@@ -291,7 +291,7 @@
             </label>
             <label class="pic">
                 <input type="file" ngf-select="addHonorFiles($files)" ng-model="honorfiles" ngf-multiple="true"
-                       accept="image/gif, image/bmp, image/jpg image/jpeg, image/png"
+                       accept="image/gif, image/bmp, image/jpg ,image/jpeg, image/png"
                        name="honorfiles">
             </label>
             <output class="img_list">
@@ -304,7 +304,7 @@
             <label>冷库认证</label>
             <label class="pic">
                 <input type="file" ngf-select="addAuditPic($files)" ng-model="auditfile" ngf-multiple="false"
-                       accept="image/gif, image/bmp, image/jpg image/jpeg, image/png" name="auditfile">
+                       accept="image/gif, image/bmp, image/jpg, image/jpeg, image/png" name="auditfile">
             </label>
             <output class="img_list">
 						<span ng-repeat="audit in auditPic">

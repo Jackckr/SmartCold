@@ -7,11 +7,12 @@
 body, div, ul, li, ol, h1, h2, h3, h4, h5, h6, input, textarea, select, p,
 dl, dt, dd, a, img, button, form, table, th, tr, td, tbody, article, aside,
 details, figcaption, figure, footer, header, hgroup, menu, nav, section { margin: 0;padding: 0; border: none;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;-ms-box-sizing: border-box;box-sizing: border-box;}
-body{font: 14px Microsoft YaHei, Arial, sans-serif, '宋体', Tahoma; color: #656565;}
+body{font: 14px Microsoft YaHei, HELVETICA, sans-serif, Arial, Tahoma; color: #656565;}
 em, i{font-style: normal;}
 strong{font-weight: normal;}
-input,textarea,select{width: 100%;padding: 8px 15px; font-size: 14px; line-height: 1.42857143; color: #656565; background-color: #fff; background-image: none; border: 1px solid #ccc; border-radius: 4px; }
-a{cursor: pointer;text-decoration: none; color: #4F4F4F; font-family: Microsoft YaHei, '宋体',Tahoma, Arial, sans-serif;}
+input,textarea,select{width: 100%;padding: 8px 15px; font-size: 14px; line-height: 1.42857143; color: #656565; background-color: #fff;
+    background-image: none; border: 1px solid #ccc; border-radius: 4px; }
+a{cursor: pointer;text-decoration: none; color: #4F4F4F; font-family: Microsoft YaHei,HELVETICA, sans-serif,Tahoma, Arial;}
 a:link{color: #656565; text-decoration: none;}
 a:visited{color: #656565;}
 a:hover{color: #656565; text-decoration: none;}
@@ -20,8 +21,8 @@ table{border: solid 1px #e8eef4; border-collapse: collapse;}
 table td{padding: 5px; border: solid 1px #e8eef4;}
 table th{padding: 6px 5px; text-align: left; background-color: #e8eef4; border: solid 1px #e8eef4;}
 ul, ol,dl,li{list-style: none;}
-h1, h2, h3, h4, h5, h6{font-size: 100%; font-family: Microsoft YaHei;}
-img{border: none;width: 100%;height:100%;}
+h1, h2, h3, h4, h5, h6{font-size: 100%; font-family: Microsoft YaHei,HELVETICA,sans-serif,Tahoma, Arial;}
+img{border: none;width: 100%;}
 /* 设置HTML5元素为块 */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block;  }
 
@@ -57,7 +58,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 html,body,header{
     width: 100%;
-    height: 100%;
     min-width: 600px;
 }
 /*颜色 背景*/

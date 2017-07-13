@@ -100,7 +100,7 @@
                 <li style="border:0;">
                     <label>冷库图片<em>*</em></label>
                     <label class="pic">
-                        <input type="file" accept="image/gif, image/bmp, image/jpg image/jpeg, image/png" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="true" name="files" accept="image/png,image/gif,image/jpeg" >
+                        <input type="file" accept="image/gif, image/bmp, image/jpg ,image/jpeg, image/png" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="true" name="files" accept="image/png,image/gif,image/jpeg" >
                     </label>
                     <label style="font-size: .5rem">
                         <small class="text-warning">上传3-5张实体图片，不能重复上传，每张小于10M</small>
@@ -134,7 +134,7 @@
                         <li ng-if="isJoinStand==1">
                             <label class="pic">
                                 <input type="file" ngf-select="addTempStandPic($files)" ng-model="tempStandfile" ngf-multiple="false"
-                                       accept="image/gif, image/bmp, image/jpg image/jpeg, image/png"
+                                       accept="image/gif, image/bmp, image/jpg, image/jpeg, image/png"
                                        name="tempStandfile">
                             </label>
                             <output class="img_list">
@@ -263,7 +263,7 @@
                     <label>资质荣誉图：
                              <small class="text-warning" style="width: 100px">*最多八张</small>
                              <label class="pic">
-		    					<input type="file" accept="image/gif, image/bmp, image/jpg image/jpeg, image/png" ngf-select="addHonorFiles($files)" ng-model="honorfiles"  ngf-multiple="true" name="honorfiles" accept="image/png,image/gif,image/jpeg">
+		    					<input type="file" accept="image/gif, image/bmp, image/jpg, image/jpeg, image/png" ngf-select="addHonorFiles($files)" ng-model="honorfiles"  ngf-multiple="true" name="honorfiles" accept="image/png,image/gif,image/jpeg">
 						    </label>
                              </label>                 
                 </li>
@@ -287,7 +287,7 @@
                     <label ng-if="auditType==1" class="orange">已通过</label>
                     <label ng-if="auditType==2" class="orange">审核中</label>
                     <label class="pic" ng-if="auditType==0||auditType==-1">
-                        <input type="file" accept="image/gif, image/bmp, image/jpg image/jpeg, image/png" ngf-select="addAuditPic($files)" ng-model="auditfile" ngf-multiple="false" name="auditfile">
+                        <input type="file" accept="image/gif, image/bmp, image/jpg, image/jpeg, image/png" ngf-select="addAuditPic($files)" ng-model="auditfile" ngf-multiple="false" name="auditfile">
                     </label>
                     <output class="img_list">
 						<span ng-repeat="audit in auditPic">

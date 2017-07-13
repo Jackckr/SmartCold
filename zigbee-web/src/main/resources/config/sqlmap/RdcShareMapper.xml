@@ -8,7 +8,7 @@
     </delete>
     <!--     获得睿库信息 -->
 	<select id="getRdcList" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
-	      select    r.id rdcID, t.managetype codeLave1, r.name,r.provinceid,r.cityid, r.address, r.audit from rdc r LEFT JOIN rdcext t on t.RDCID=r.id where 1=1 
+	      select  r.sqm rdcSqm,  r.id rdcID, t.managetype codeLave1, r.name,r.provinceid,r.cityid, r.address, r.audit from rdc r LEFT JOIN rdcext t on t.RDCID=r.id where 1=1
 	      <if test="rdcId==null or rdcId==0">
 	         <if test="userid !=null and  userid != ''"> and r.userid=#{userid} </if> 
 	         <if test="audit !=null and  audit != ''">  and r.audit=#{audit} </if>   

@@ -130,7 +130,7 @@ $().ready(function () {
         }
         var usefulDate = rentDate[rdc.rentdate];
         if (rdc.rentdate == undefined || rdc.rentdate == null || rdc.rentdate == 0) {
-            usefulDate = daysRound + '天'
+            usefulDate = daysRound +1 + '天'
         }
         var collectWords = '<a class="fr noCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe605;</i><em>收藏</em></a>';
         if (rdc.collectUserIds && window.user) {

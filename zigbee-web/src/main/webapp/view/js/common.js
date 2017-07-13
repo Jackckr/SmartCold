@@ -4,6 +4,8 @@
 
 if(sessionStorage.lkuser&&new Date().getTime()-sessionStorage.longtime<(30*60*1000)){
     window.lkuser=JSON.parse(sessionStorage.lkuser);
+    $("#loginUser").show().find('img').attr('src',lkuser.avatar);
+    $("#noLoginUser").hide();
 }else{
     findUser();
 }
@@ -90,5 +92,5 @@ function getDataToForm(inputArr,data) {
 }
 
 $(function () {
-    findUser();
+    //findUser();
 });
