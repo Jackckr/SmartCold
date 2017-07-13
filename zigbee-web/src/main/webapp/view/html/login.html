@@ -64,7 +64,7 @@
         </ul>
     </div>
 </div>
-<div class="section">
+<div class="section loginStyle">
     <div class="loginDiv clearfix">
         <div class="loginBg"></div>
 
@@ -77,21 +77,21 @@
                         <input type="text" name="userName" lay-verify="userName" autocomplete="off" placeholder="请输入用户名" class="layui-input">
                     </div>
                 </div>
-                <div class="layui-form-item">
+                <div class="layui-form-item" style="margin-bottom: 0;">
                     <label class="layui-form-label"><i class="iconfont">&#xe69c;</i></label>
                     <div class="layui-input-block">
                         <input type="password" name="password"lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input">
                     </div>
                 </div>
-                <div class="layui-form-item" style="margin: 0;">
+                <div class="layui-form-item" style="margin-top: 0;">
                     <div class="layui-form-mid layui-word-aux fl">
-                        <a href="javascript:alert('进行中')">忘记密码</a>
+                        <a href="forgetpassword.html">忘记密码</a>
                     </div>
                     <div class="layui-form-mid layui-word-aux fr">
-                        <a href="javascript:alert('进行中')">注册</a>
+                        <a href="register.html">注册</a>
                     </div>
                 </div>
-                <div class="layui-form-item">
+                <div class="layui-form-item btnSubmit">
                     <button class="layui-btn" lay-submit="lianku" lay-filter="lianku">登录</button>
                 </div>
             </form>
@@ -140,8 +140,14 @@
                 if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)){
                     return '用户名不能为空并且不能有特殊字符';
                 }
+                if(!/^[a-zA-Z0-9][a-zA-Z0-9]{2,23}$/.test(value)){
+                    return '用户名不能包含中文和特殊字符，长度不得低于3位~'
+                }
                 if(/(^\_)|(\__)|(\_+$)/.test(value)){
                     return '用户名首尾不能出现下划线\'_\'';
+                }
+                if(value.length>24){
+                    return '用户名长度不能超过24位';
                 }
                /* if(/^\d+\d+\d$/.test(value)){
                     return '用户名不能全为数字';
@@ -150,8 +156,8 @@
             //我们既支持上述函数式的方式，也支持下述数组的形式
             //数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
             ,pass: [
-                /^[\S]{4,12}$/
-                ,'密码必须4到12位，且不能出现空格'
+                /^[\S]{0,15}$/
+                ,'密码必须4到16位，且不能出现空格'
             ]
         });
 
