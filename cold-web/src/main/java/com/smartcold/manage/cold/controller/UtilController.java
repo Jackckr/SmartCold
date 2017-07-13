@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.manage.cold.api.DFSCollectionController;
 import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
-import com.smartcold.manage.cold.jobs.taskutil.QuartzManager;
 import com.smartcold.manage.cold.service.task.WarningTaskService;
 import com.smartcold.manage.cold.service.task.ZsDevService;
 import com.smartcold.manage.cold.util.CacheManager;
@@ -63,15 +62,15 @@ public class UtilController extends BaseController {
 	 public Long [] getSYSMemory()  { Runtime runtime = Runtime.getRuntime();return new Long []{runtime.totalMemory()/1048576,runtime.maxMemory()/1048576,runtime.freeMemory()/1048576};}
 	 //============================
 	 @RequestMapping("/getTempJobList") //获得当前正在监听的冷库
-	 public Object getTempJobList(){return  QuartzManager.tempListen;}
+	 public Object getTempJobList(){return  WarningTaskService.tempListen;}
 	 @RequestMapping("/getTempJobBlacklist") //获得加入黑名单冷库
 	 public Object getTempJobBlacklist(){return  WarningTaskService.Blacklist;}
 	 @RequestMapping("/getRunBlacklist") //获得加入黑名单冷库
 	 public Object getRunBlacklist(){return  WarningTaskService.extBlacklist;}
 	 @RequestMapping("/getColdStatus") //判断指定冷库是否超温
-	 public boolean getColdStatus(int oid )	{ return QuartzManager.tempListen.containsKey(oid);}
+	 public boolean getColdStatus(int oid )	{ return WarningTaskService.tempListen.containsKey(oid);}
 	 @RequestMapping("/getColdAlarmStatus") //判断指定冷库是否超温
-	 public HashMap<String, Boolean> getColdAlarmStatus(int oid )	{ HashMap<String, Boolean> tempHashMap=new HashMap<String, Boolean>();tempHashMap.put("isAlarm",  QuartzManager.tempListen.containsKey(oid));tempHashMap.put("isBlack",  WarningTaskService.extBlacklist.containsKey(oid));	 return   tempHashMap;}
+	 public HashMap<String, Boolean> getColdAlarmStatus(int oid )	{ HashMap<String, Boolean> tempHashMap=new HashMap<String, Boolean>();tempHashMap.put("isAlarm",  WarningTaskService.tempListen.containsKey(oid));tempHashMap.put("isBlack",  WarningTaskService.extBlacklist.containsKey(oid));	 return   tempHashMap;}
 
 	
 }

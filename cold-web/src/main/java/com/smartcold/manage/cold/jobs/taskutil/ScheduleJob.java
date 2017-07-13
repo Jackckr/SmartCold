@@ -8,6 +8,7 @@ import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
  * 功能描述: QuartzJobFactory 
  * Create on MaQiang34 2017-5-11 15:06:34
  */  
+
 public class ScheduleJob {
 	private int oid;
 	private String group;

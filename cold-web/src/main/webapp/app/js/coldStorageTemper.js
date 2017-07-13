@@ -24,6 +24,9 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     		    });	
     	}
     };
+    
+    
+    
     $scope.load = function () {
     	if($scope.oids.length==0){return;};
     	$scope.curtemper = [];
@@ -31,11 +34,11 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
         $http.get('/i/temp/getTempByTime', { params: {"oid": $stateParams.storageID, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime": baseTools.formatTime(startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (result) {
             $scope.isErr=false;$scope.name = result.name;
             $scope.startTime=endTime;
-        	var yData = [],jxData=[], tempMap = result.tempMap,systime=result.systime;
+        	var yData = [],jxData=[], tempMap = result.tempMap,systime=result.systime,lasttime=0;
         	 $scope.datumTemp =  parseFloat(result.startTemperature) + 0.5 * parseFloat(result.tempdiff);//基准温度
         	var i= 0,tempList=newdata = [],vo=cuttime=null; 
             for(var key in tempMap) { 
-             	 vo=cuttime=null, tempList=tempMap[key], newdata = [];
+             	 vo=cuttime=null, tempList=tempMap[key], newdata = [],lasttime=$scope.fstartTime;
                  if( tempList.length>0){
 	                 for ( i = 0; i < tempList.length; i++) {
 						 vo=tempList[i];
@@ -43,6 +46,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
 	                	 newdata.push({ x: cuttime,y: vo.value });
 	                	 jxData.push({x: cuttime,y: $scope.datumTemp});
 					}
+	                if(cuttime-lasttime>120000){ newdata.push({ x: lasttime+60000,y: null }); jxData.push({x: lasttime+60000,y: $scope.datumTemp});} //修正中间数据短传问题1
 	                if( systime-cuttime>1800000&&systime-maxTime<1200000){//大于半个小时。。提醒
 	                	newdata.push({ x: maxTime,y:null }); jxData.push({x: maxTime,y: $scope.datumTemp});
 	                	if(!$scope.isErr){ $scope.isErr=true;}
@@ -63,17 +67,21 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
         $http.get('http://139.224.16.238/i/util/getColdAlarmStatus', { params: {oid: $stateParams.storageID}}).success(function (result) {$scope.isOverTemp=result; });
     };
 
+    $scope.activeLastPointToolip= function(chart) {
+        var points = chart.series[0].points;
+        chart.tooltip.refresh(points[points.length -1]);
+    };
+    
     $scope.refdata=function(){
     	var series =  $scope.chart.series ;
         var endTime =  new Date();
         $http.get('http://139.224.16.238/i/util/getColdAlarmStatus', { params: {oid: $stateParams.storageID}}).success(function (result) {$scope.isOverTemp=result; });
         $http.get('/i/temp/getTempByTime', { params: {"oid": $stateParams.storageID, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime": baseTools.formatTime($scope.startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (result) {
        	  $scope.startTime=endTime;
-         var isadd=false,	tempMap = result.tempMap,index=0;//systime=result.systime,
+         var tempMap = result.tempMap,index=0;//systime=result.systime,
        	 for(var key in tempMap) { 
          	  tempList=tempMap[key],newdata=[];
              if( tempList.length>0){
-            	 isadd=true;
                  for ( var i = 0; i < tempList.length; i++) {
 					 vo=tempList[i];series[index].addPoint([new Date(vo.addtime).getTime(),  vo.value], false, false);
 				 }
@@ -81,11 +89,8 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
              }
              index++;
         }
-       	if(isadd){
        		var bastempLine=series[series.length-1];
-//       		bastempLine.addPoint([$scope.fstartTime-40000,  $scope.datumTemp], false, false);
        		bastempLine.addPoint([endTime.getTime(),  $scope.datumTemp], true, true);
-       	}    
     	});
     };
     $scope.initHighchart=function(datumTemp,yData ){
@@ -100,11 +105,8 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     	        animation: Highcharts.svg,
     	        marginRight: 10,
     	        events: { load: function () { $scope.chart =this;} },
-    	        backgroundColor: {
-    	        	   linearGradient: {x1: 0, y1: 0, x2: 1, y2: 1},
-    	        	   stops: [ [0, 'rgba(0,0,0,0)'],[1, 'rgba(0,0,0,0)'] ]  
-    	        	   },
-    	       borderColor: '#d2d6de', borderWidth: 2, className: 'dark-container', plotBackgroundColor: 'rgba(210, 214, 222, .1)',  plotBorderColor: '#d2d6de', plotBorderWidth: 1
+    	        backgroundColor: { linearGradient: {x1: 0, y1: 0, x2: 1, y2: 1}, stops: [ [0, 'rgba(0,0,0,0)'],[1, 'rgba(0,0,0,0)'] ]   },
+    	        borderColor: '#d2d6de', borderWidth: 2, className: 'dark-container', plotBackgroundColor: 'rgba(210, 214, 222, .1)',  plotBorderColor: '#d2d6de', plotBorderWidth: 1
     	    },
     	    xAxis: { type: 'datetime',  tickPixelInterval: 150  },
     	    yAxis: {

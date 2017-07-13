@@ -6,7 +6,6 @@ coldWeb.controller('overTempCountAndTime', function($rootScope, $scope,$timeout,
 	$scope.endTime = new Date();
 	$scope.startTime = new Date($scope.endTime.getTime() - 30 * 24 * 60 * 60 * 1000);
 	$scope.sumDatavalue={};
-	 
 	$scope.overTempAndCount=function(storage){
 		$http.get('/i/AnalysisController/getAnalysisDataByKey', { params: {type:1, oid:storage.id, keys:'ChaoWenShiJian,ChaoWenCiShu', startTime:baseTools.formatTime($scope.startTime), endTime:baseTools.formatTime($scope.endTime)}}).success(function (data) {
 		   var  val=0, ccount=0,ctime=0;
@@ -234,7 +233,7 @@ coldWeb.controller('overTemperatureYZ', function($rootScope, $scope,$timeout, $l
 	                },
 	                calculable : true,
 	                legend: {
-	                    data:['超温因子','最高温度']
+	                    data:['超温比例','最高温度']
 	                },
 	                xAxis : [
 	                    {
@@ -245,7 +244,7 @@ coldWeb.controller('overTemperatureYZ', function($rootScope, $scope,$timeout, $l
 	                yAxis : [
 	                    {
 	                        type : 'value',
-	                        name : '超温因子',
+	                        name : '超温比例',
 	                        max : 100,
 	                        axisLabel : {
 	                            formatter: '{value} %'
@@ -261,7 +260,7 @@ coldWeb.controller('overTemperatureYZ', function($rootScope, $scope,$timeout, $l
 	                ],
 	                series : [
 	                    {
-	                        name:'超温因子',
+	                        name:'超温比例',
 	                        type:'bar',
 	                        data:yData1
 	                    },
@@ -436,7 +435,7 @@ coldWeb.controller('doorAnalysis', function($rootScope, $scope,$timeout, $locati
             	"startTime": baseTools.formatTime(startTime),
             	"endTime": baseTools.formatTime(endTime),
                 "rdcid": $scope.rdcId,
-                'keys':'DoorTotalTime,DoorOpenTimes'
+                'keys':'DoorTotalTime,DoorOpenTimes,DoorMaxTime'
             } 
 		}).success(function(data,status,config,header){
 			$scope.data = data;

@@ -30,7 +30,7 @@ coldWeb.controller('baoyangReminder', function( $scope, $rootScope,$http ,$timeo
 			   if(sytime<50){
 				   if(sytime<0){$scope.warid.push(obj.id);}else{ $scope.infoids.push(obj.id);}
 			   }
-			   if(sytime<=0){   return '已超保养期'+sytime;} 
+			   if(sytime<=0){   return '已超保养期'+parseInt(sytime);} 
 			   return "还剩  "+ parseInt(sytime)+"小时";
 		 }else{
 			 return "未设置保养时间"; 

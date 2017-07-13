@@ -16,7 +16,6 @@ import com.smartcold.manage.cold.dao.newdb.SysWarningsInfoMapper;
 import com.smartcold.manage.cold.entity.comm.ItemValue;
 import com.smartcold.manage.cold.entity.newdb.SysWarningsInfo;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
-import com.smartcold.manage.cold.jobs.taskutil.QuartzManager;
 import com.smartcold.manage.cold.jobs.taskutil.ScheduleJob;
 import com.smartcold.manage.cold.service.TempWarningService;
 import com.smartcold.manage.cold.util.SetUtil;
@@ -48,31 +47,61 @@ public class WarningTaskService  {
 	public synchronized static void addExtsid(int key) {extsid.add(key);}
 	public synchronized static void clerextsid() {extsid.clear();}
 	public synchronized static HashSet<Integer> getExtsid() {return extsid;}
-
+	  //当前任务
+	public static HashMap<Integer, ScheduleJob> tempListen=new HashMap<Integer, ScheduleJob>();
 	/**
-	 * 每天凌晨1:10点触发
-	 * Task:刪除临时任务
-	 * 重置dev
+	 * 每天凌晨1:5点触发
+	 * 清除黑名单
 	 */
 	@Scheduled(cron = "0 5 1 * * ?")
 	public void delTempTask() {
 		Blacklist.clear();
-		QuartzManager.shutdownJobs();
+		tempListen.clear();
 	}
+	
+	/**
+	 * 每周日晚上1:05执行告警升级
+	 */
 	@Scheduled(cron = "0 5 1  ? * 7")
 	public void delBlacklist() {
 		extBlacklist.clear();
 		System.err.println("今天周天 我要清除任务");
 	}
-
-	
-	/**
-	 * 数据抓取30秒
-	 */
-    @Scheduled(cron="0/30 * * * * ?")
+    /**
+     * 30秒检任务队列
+     */
+	@Scheduled(cron="0/30 * * * * ?")
 	public void checkTempWning() {
     	excute();
 	}
+	
+	public static synchronized void upJob(int key,ScheduleJob job){
+    	tempListen.put(key, job);
+    	if(job.isTask()){
+    		extsid.add(key);
+    	}
+    }
+	/**
+     * 
+     */
+    public static synchronized ScheduleJob getJob(int key) {
+		return tempListen.get(key);
+	}
+	
+    public static synchronized void addJob(int key,ScheduleJob job){
+		tempListen.put(key, job);
+	}
+    /**
+	 * 删除任务
+	 * @param oid
+	 */
+	public static synchronized void removeJob(int key){
+		if(tempListen.containsKey(key)){
+			tempListen.remove(key);
+		}
+	}
+	
+   
     
 	private void addAlercoun(int key){
 		if(extBlacklist.containsKey(key)){
@@ -98,7 +127,7 @@ public class WarningTaskService  {
 		Date sttime = TimeUtil.getBeforeMinute(10);
 		String endtime =TimeUtil.getDateTime();
 		String starttime =TimeUtil.getDateTime(sttime);
-		if(allMonitorTempSet.size()==0||excute>6){
+		if(allMonitorTempSet.size()==0||excute>12){
 			Blacklist.clear();
 			allMonitorTempSet = this.tempWarningServer.getAllMonitorTempSet();//1.获得正常监控温度信息
 		}
@@ -116,17 +145,17 @@ public class WarningTaskService  {
 		    }
 			ItemValue minTempData = this.tempWarningServer.getMAITempData(colditem.getTids(), 0,colditem.getDeviceids(),starttime, endtime);//获得最低温度
 			if(minTempData==null){ Blacklist.add(key);continue;	}//故障  没数据
-			ScheduleJob job = QuartzManager.getJob(key);  long cutttTime=System.currentTimeMillis();
+			ScheduleJob job =getJob(key); 
+			long cutttTime=System.currentTimeMillis();
 			if(minTempData.getValue()<baseTemp){
 				if(job==null){
 				   continue; //
 				 }else{
 					 if(job.getWarcount()<3||(job.getLevel()==4&&job.getWarcount()<6)||(job.getLevel()==3&&job.getWarcount()<12)||(job.getLevel()==2&&job.getWarcount()<18)||(job.getLevel()==1&&job.getWarcount()<24)){ 
-						  QuartzManager.removeJob(key);
+						  removeJob(key);
 					 }else{
 						 job.setTask(true);
-						 job.setCroStartTime(cutttTime+30000);//半分钟后执行
-		    		     QuartzManager.upJob(key, job);
+						 upJob(key, job);
 					}
 				}
 			}else {
@@ -145,7 +174,7 @@ public class WarningTaskService  {
 					 job.setWarcount(1);
 					 job.setLevel(lavel);
 					 job.setColdStorageSetEntity(colditem);
-	           		 QuartzManager.addJob(key,  job);// 
+	           		 addJob(key,  job);// 
 				 }else{
 					 job.setLevel(lavel);
 				     job.setWarcount(job.getWarcount()+1);
@@ -154,22 +183,24 @@ public class WarningTaskService  {
 						 job.setTask(true);
 						 job.setCroStartTime(cutttTime+30000);//半分钟后执行
 					 }
-		    		 QuartzManager.upJob(key, job);
+		    		 upJob(key, job);
 				 }
 			}
 		}
 	}	
 	
-	
+	/**
+	 * 执行数据校验
+	 */
 	private  void excute(){
 	 if(extsid.size()>0){
 		   try {
 		   	HashMap<Integer, SysWarningsInfo> allWarningList=new HashMap<Integer, SysWarningsInfo>();
 			   LinkedList<Integer> newextsid=new LinkedList<Integer>();newextsid.addAll(extsid);clerextsid();
 			   for (Integer key : newextsid) {
-					ScheduleJob job = QuartzManager.getJob(key);
+					ScheduleJob job = getJob(key);
 					if (job == null) {return;}
-					QuartzManager.removeJob(key);// 清除任务
+					removeJob(key);// 清除任务
 					int oldelev = 0;
 					boolean isreturn=false;
 					Date Lt[] = { null, null, null, null, null, null, null };  // 各个级别报警开始时间

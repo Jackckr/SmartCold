@@ -12,9 +12,8 @@ function InitLeftMenu(){var selectedPanelname='';$("#menu").accordion({animate:t
 function logout(){$.messager.confirm('提示','确认退出当前系统?',function(r){if (r){$.ajax({ url: '/i/admin/logout',type: 'GET', success: function(data) { sysuser=undefined; window.sessionStorage.clear();top.location.href = "http://" + location.host + "/login.htm";}});}});}
 function checkuser(){$.ajax({type: "GET",cache: false,dataType: 'json',url:"/i/admin/findAdmin",success: function(data) { if(data.entity==null||data.entity.id==0){$.messager.alert('警告','当前会话已失效！请重新登录！','error');sysuser=undefined;window.sessionStorage.clear();var url = "http://" + location.host + "/login.html"; top.location.href = url; }}});}
 $().ready(function() {
-	$.ajax({type: "GET",cache: false,dataType: 'json',url:"/i/admin/findAdmin",success: function(data) { 
-		sysuser = data.entity;if (sysuser == null || sysuser.id == 0) {var url = "http://" + location.host + "/login.html"; top.location.href = url;  }
-	    $.ajax({type: "GET",cache: false,dataType: 'json',url:"/i/admin/getUserMenu",success: function(data) { 
+	if(window.sessionStorage.sysadmin||window.sessionStorage.asikey){top.location.href = "http://" + location.host + "/login.html"; return;}sysuser=JSON.parse(window.sessionStorage.sysadmin);
+	$.ajax({type: "GET",cache: false,dataType: 'json',url:"/i/admin/getUserMenu",success: function(data) { 
 		   usermenus=data;
 		   if(!usermenus){	window.sessionStorage.clear(); top.location.href = "login.htm";}	 
 		   tabClose();
@@ -24,7 +23,6 @@ $().ready(function() {
 		   $('#navmain li').click(function () { $('#navmain li').removeClass("active"); $(this).addClass("active");RemoveAccordion(); InitLeftMenu(); });
 		   InitLeftMenu();
 	   }});
-	}});
 	setInterval(checkuser,900000);//15分钟检查一次 
 });//初始化数据
 

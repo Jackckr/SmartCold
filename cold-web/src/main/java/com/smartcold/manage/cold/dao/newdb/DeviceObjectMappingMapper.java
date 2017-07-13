@@ -21,8 +21,11 @@ public interface DeviceObjectMappingMapper {
 	
 	public List<DeviceObjectMappingEntity>  findInfoByfilter(HashMap<String, Object> filter);
 	
+	
 	public DeviceObjectMappingEntity findInfoByDeviceId(@Param("deviceId") String deviceId);//数据仅返回1条
 
+	public DeviceObjectMappingEntity findByTypeAndOid(@Param("type") int type, @Param("oid")int oid);
+	
 	public List<DeviceObjectMappingEntity> findByTypeOid(@Param("type") int type, @Param("oid")int oid);
 	
 	public List<DeviceObjectMappingEntity> findByTypeOids(@Param("type") int type, @Param("oid")String oid);

@@ -48,7 +48,7 @@ coldWeb.factory('baseTools',['$rootScope',function(){
 				    calculable : true,
 				    xAxis : [ {type : 'category',  data : xData} ],
 				    yAxis : [{ type : 'value', name : yName + "(" + yUnit + ")", min : yMin ? yMin : 'auto',max : yMax ? yMax : 'auto', minInterval : 1 } ],
-				    series : [ { name:lineName,type: type,data:yData, }]
+				    series : [ { name:lineName,type: type,data:yData }]
 				};
 			return option;
 		}
@@ -161,30 +161,43 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
             $rootScope.toalarmTemp = function () {$state.go('alarmTemp');};
 //            $rootScope.toMap = function () { $state.go('coldStorageMap', {}); };
 //            $rootScope.toReport = function () { var time = 'daily';var item = 'data';$state.go('report', {'time':time,'item':item});};
-        },
+        }
     };
 }]);
 coldWeb.config(function ($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise("/cold360Physical");
+    $urlRouterProvider.otherwise("/preview");
     coldWeb.stateProvider=$stateProvider;
     //index
-    $stateProvider.state('cold360Physical',{
+    $stateProvider
+    .state('preview',{
+		url:'/preview',
+		controller: 'preview',
+	    templateUrl: 'app/template/preview.html'
+    })
+    .state('cold360Physical',{
 		url:'/cold360Physical',
 		controller: 'cold360Physical',
 	    templateUrl: 'app/template/cold360Physical.html'
-    }).state('about',{
-    	url:'/about',
-    	controller: 'base0',
-        templateUrl: 'app/template/about.html'
-    }).state('login',{
-    	url:'/login',
-    	controller: 'login',
-        templateUrl: 'app/template/login.html'
-    }).state('warn', {
-        url: '/warn/:rdcId',
-        controller: 'warn',
-        templateUrl: 'app/template/warn.html'
-    }).state('warncoldAnalysis', {//制冷告警统计
+    })
+//    .state('about',{
+//    	url:'/about',
+//    	controller: 'base0',
+//        templateUrl: 'app/template/about.html'
+//    }).state('login',{
+//    	url:'/login',
+//    	controller: 'login',
+//        templateUrl: 'app/template/login.html'
+//    }).state('warn', {
+//        url: '/warn/:rdcId',
+//        controller: 'warn',
+//        templateUrl: 'app/template/warn.html'
+//    })
+//     .state('coldStorageDiv', {
+//        url: '/coldStorageDiv',
+//        controller: 'coldStorageDiv',
+//        templateUrl: 'app/template/coldStorageDiv.html'
+//    })
+    .state('warncoldAnalysis', {//制冷告警统计
         url: '/warncoldAnalysis/{rdcId}',
         controller: 'warncoldAnalysis',
         templateUrl: 'app/template/warncoldAnalysis.html'
@@ -216,11 +229,9 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/compressorBlower/{rdcId}',
         controller: 'compressorBlower',
         templateUrl: 'app/template/compressorBlower.html'
-    }).state('coldStorageDiv', {
-        url: '/coldStorageDiv',
-        controller: 'coldStorageDiv',
-        templateUrl: 'app/template/coldStorageDiv.html'
-    }).state('rdcPower', {
+    })
+   
+    .state('rdcPower', {
         url: '/rdcPower/:rdcId',
         controller: 'rdcPower',
         templateUrl: 'app/template/rdcPower.html'

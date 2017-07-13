@@ -24,12 +24,11 @@
     <select id="findInfoByDeviceId" resultType="DeviceObjectMappingEntity" parameterType="map">
         SELECT * FROM `deviceObjectMapping` WHERE `deviceid` = #{deviceId} LIMIT 1;
     </select>
-
-    
-    
+     <select id="findByTypeAndOid" resultType="com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity">
+        SELECT * FROM `deviceObjectMapping`  WHERE `type`=#{type} and `deviceid`=#{deviceid} LIMIT 1;
+    </select>
      <select id="findByTypeDeviceId" resultType="com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity">
-        SELECT * FROM `deviceObjectMapping`
-        WHERE `type`=#{type} and `deviceid`=#{deviceid}
+        SELECT * FROM `deviceObjectMapping`  WHERE `type`=#{type} and `deviceid`=#{deviceid}
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
