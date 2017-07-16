@@ -121,7 +121,28 @@ function checktoken(toke,isupdate) {
     });
 }
 
-function setTime(obj){if(_sysconfig.countdown==0){obj.removeAttribute("disabled");obj.style.background="#438BCB";obj.innerHTML="获取验证码";_sysconfig.countdown=60;return;}else{if($(obj).siblings("input").val().length==0){/*alert("输入不能为空哦~");*/layer.open({content: '输入不能为空哦~',btn: '确定'});return false;}else{obj.setAttribute("disabled",true);obj.style.background="#ccc";obj.innerHTML="重新发送("+_sysconfig.countdown+")";_sysconfig.countdown--;}}setTimeout(function(){setTime(obj);},1000);};
+function setTime(obj) {
+    if (_sysconfig.countdown == 0) {
+        obj.removeAttribute("disabled");
+        obj.style.background = "#438BCB";
+        obj.innerHTML = "获取验证码";
+        _sysconfig.countdown = 60;
+        return;
+    } else {
+        if ($(obj).siblings("input").val().length == 0) {/*alert("输入不能为空哦~");*/
+            layer.open({content: '输入不能为空哦~', btn: '确定'});
+            return false;
+        } else {
+            obj.setAttribute("disabled", true);
+            obj.style.background = "#ccc";
+            obj.innerHTML = "重新发送(" + _sysconfig.countdown + ")";
+            _sysconfig.countdown--;
+        }
+    }
+    setTimeout(function () {
+        setTime(obj);
+    }, 1000);
+};
 var util = {
 	setCookie:function(a,b,c){localStorage.setItem(a, b);},getCookie:function(a) {return localStorage.getItem(a);},  delCookie:function(a) {localStorage.removeItem(a);},
 	setimg : function(em, imgid, callback) {
