@@ -30,7 +30,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     $scope.load = function () {
     	if($scope.oids.length==0){return;};
     	$scope.curtemper = [];
-    	$scope.fstartTime= new Date().getTime(), endTime =  new Date(), startTime = new Date(endTime.getTime() - 1.5 * 60 * 60 * 1000), maxTime=endTime.getTime();
+    	$scope.fstartTime= new Date().getTime(), endTime =  new Date(), startTime = new Date(endTime.getTime() - 7*24* 60 * 60 * 1000), maxTime=endTime.getTime();
         $http.get('/i/temp/getTempByTime', { params: {"oid": $stateParams.storageID, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime": baseTools.formatTime(startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (result) {
             $scope.isErr=false;$scope.name = result.name;
             $scope.startTime=endTime;
@@ -57,6 +57,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                 	 newdata.push({ x: startTime.getTime(),y:null });
                 	 newdata.push({ x: maxTime,y:null });
                 	 jxData.push({x:  startTime.getTime(),y: $scope.datumTemp});jxData.push({x:  maxTime,y: $scope.datumTemp});
+                	 $scope.curtemper.push([key,null]);
                  }
                 yData.push({"name": key, "data": newdata });
             } 
@@ -80,21 +81,23 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
        	  $scope.startTime=endTime;
          var tempMap = result.tempMap,index=0;//systime=result.systime,
        	 for(var key in tempMap) { 
-         	  tempList=tempMap[key],newdata=[];
+         	 tempList=tempMap[key],newdata=[];
              if( tempList.length>0){
                  for ( var i = 0; i < tempList.length; i++) {
 					 vo=tempList[i];series[index].addPoint([new Date(vo.addtime).getTime(),  vo.value], false, false);
 				 }
                   $scope.curtemper[index][1]=vo.value;
+                  if($scope.isErr){ $scope.isErr=false;}
              }
              index++;
-        }
-       		var bastempLine=series[series.length-1];
-       		bastempLine.addPoint([endTime.getTime(),  $scope.datumTemp], true, true);
+         }
+       	var bastempLine=series[series.length-1];
+       	bastempLine.addPoint([endTime.getTime(),  $scope.datumTemp], true, false);
+       	
     	});
     };
     $scope.initHighchart=function(datumTemp,yData ){
-    	$('#temperatureChart').highcharts({
+  	  $('#temperatureChart').highcharts({
     		 legend: { enabled: false },
            exporting: {enabled: false},
            credits: { enabled: false },
@@ -106,7 +109,13 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     	        marginRight: 10,
     	        events: { load: function () { $scope.chart =this;} },
     	        backgroundColor: { linearGradient: {x1: 0, y1: 0, x2: 1, y2: 1}, stops: [ [0, 'rgba(0,0,0,0)'],[1, 'rgba(0,0,0,0)'] ]   },
-    	        borderColor: '#d2d6de', borderWidth: 2, className: 'dark-container', plotBackgroundColor: 'rgba(210, 214, 222, .1)',  plotBorderColor: '#d2d6de', plotBorderWidth: 1
+    	        borderColor: '#d2d6de', borderWidth: 2, className: 'dark-container', plotBackgroundColor: 'rgba(210, 214, 222, .1)',  plotBorderColor: '#d2d6de', plotBorderWidth: 1,
+    	        events: {
+    	            load: function () {
+    	            	 $scope.chart=this;
+    	            	  setInterval( function(){$scope.refdata();}, 30000);
+    	            }
+    	        }
     	    },
     	    xAxis: { type: 'datetime',  tickPixelInterval: 150  },
     	    yAxis: {
@@ -121,7 +130,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     	});
     };
     $scope.getTempset(); 
-    clearInterval($rootScope.timeTicket);
-    $rootScope.timeTicket = setInterval(function () { $scope.refdata(); }, 30000);
-    $scope.$on('$destroy',function(){ clearInterval($rootScope.timeTicket);  });
+//    clearInterval($rootScope.timeTicket);
+//    $rootScope.timeTicket = setInterval(function () { $scope.refdata(); }, 30000);
+//    $scope.$on('$destroy',function(){ clearInterval($rootScope.timeTicket);  });
 });
