@@ -121,7 +121,8 @@ html,body,header{
     background-color: #2e3033;
 }
 .section{
-    width: 1210px;
+    /*width: 1210px;*/
+    width: 80%;
     margin: 15px auto;
     background-color: #fff;
     position: relative;
@@ -268,7 +269,7 @@ html,body,header{
 }
 /*版权信息css*/
 #QRcode{
-    padding: 20px 5%;
+    padding: 15px 5%;
 }
 #QRcode ul>li{
     width: 25%;
@@ -298,7 +299,7 @@ html,body,header{
 }
 #QRcode dl li{
     width: 50%;
-    margin-bottom: 20px;
+  /*  margin-bottom: 20px;*/
 }
 #QRcode dl li:last-child{
     padding-right: 5%;
