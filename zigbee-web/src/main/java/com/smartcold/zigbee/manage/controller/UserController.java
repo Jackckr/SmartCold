@@ -11,24 +11,23 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import com.alibaba.fastjson.JSONObject;
-import com.smartcold.zigbee.manage.dao.RdcauthMapping;
-import com.smartcold.zigbee.manage.dao.RoleUserMapper;
-import com.smartcold.zigbee.manage.dto.UploadFileEntity;
-import com.smartcold.zigbee.manage.entity.RdcAuthEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.smartcold.zigbee.manage.dao.FileDataMapper;
+import com.smartcold.zigbee.manage.dao.RdcauthMapping;
+import com.smartcold.zigbee.manage.dao.RoleUserMapper;
 import com.smartcold.zigbee.manage.dao.UserMapper;
 import com.smartcold.zigbee.manage.dto.ResultDto;
 import com.smartcold.zigbee.manage.dto.ResultDtoStr;
+import com.smartcold.zigbee.manage.dto.UploadFileEntity;
 import com.smartcold.zigbee.manage.entity.CookieEntity;
 import com.smartcold.zigbee.manage.entity.FileDataEntity;
+import com.smartcold.zigbee.manage.entity.RdcAuthEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.CookieService;
 import com.smartcold.zigbee.manage.service.DocLibraryService;
@@ -38,8 +37,8 @@ import com.smartcold.zigbee.manage.util.ResponseData;
 import com.smartcold.zigbee.manage.util.SetUtil;
 import com.smartcold.zigbee.manage.util.StringUtil;
 import com.smartcold.zigbee.manage.util.TelephoneVerifyUtil;
+import com.smartcold.zigbee.manage.util.TimeUtil;
 import com.taobao.api.ApiException;
-import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -210,7 +209,7 @@ public class UserController extends BaseController {
 		return false;
 	}
 	
-	
+	@Deprecated
 	@RequestMapping(value = "/telephoneVerify", method = RequestMethod.POST)
 	@ResponseBody
 	public Object telephoneVerify(HttpServletRequest request, String telephone) throws ApiException {
@@ -222,6 +221,32 @@ public class UserController extends BaseController {
 		}
 		return new ResultDto(-1, "请填写手机号");
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value="telephoneSIDVerify")
+	@ResponseBody
+	public ResponseData<String> telephoneSIDVerify(HttpServletRequest request,String telephone){
+		try {
+			if(StringUtil.isnotNull(telephone)){
+				TelephoneVerifyUtil teleVerify = new TelephoneVerifyUtil();
+				String signUpCode =teleVerify.identityVerify(telephone);
+				ResponseData<String> instance = ResponseData.getInstance();
+				instance.setSuccess(true);
+				instance.setExtra(StringUtil.getToken());
+				instance.setEntity(signUpCode+TimeUtil.getLongtime());
+				instance.setMessage("验证码已发送到您的手机~请注意查收~");
+				return instance;
+			}
+			return  ResponseData.newFailure("请输入有效的手机号码~");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ResponseData.newFailure("未知异常~");
+	}
+	
 	
 	@RequestMapping(value = "/getVerCode", method = RequestMethod.POST)
 	@ResponseBody

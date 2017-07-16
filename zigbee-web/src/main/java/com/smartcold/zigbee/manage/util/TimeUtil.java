@@ -20,6 +20,14 @@ public class TimeUtil {
     
 	public static String  getDateTime(){return	TimeUtil.dateFormat.format(new Date());}//获得时间
 	
+	public static Long getLongtime(){return Long.parseLong( (System.currentTimeMillis()+"").substring(0, 10));}
+	/**
+	 * 获得16进制 Linux时间
+	 * @return
+	 */
+	public static String getHextime(){
+		return Integer.toHexString( (int) (System.currentTimeMillis() / 1000)).toUpperCase();
+	}
 	
 	public static int getDay() {
        return Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
