@@ -83,14 +83,11 @@
 .rdcAdd table,.rdcAdd table td{
     border: none;
     padding: 8px 0;
-    text-align: right;
-}
-.rdcAdd table tr td:last-child{
-    text-align: left;
 }
 .rdcAdd table tr td:first-child{
     min-width:200px;
     vertical-align: top;
+    text-align: right;
 }
 .rdcAdd table caption{
     text-align: center;

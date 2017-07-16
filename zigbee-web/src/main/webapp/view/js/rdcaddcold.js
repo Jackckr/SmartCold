@@ -217,6 +217,7 @@ function updateColdSubmit() {
 function getStorageManage() {
     var manageList=[];
     $.ajax({url:"/i/rdc/findAllManageType",type:"get",success:function (data) {
+        supportForeach();
         data.forEach(function (val, index) {
             manageList.push('<option value="'+val.id+'">'+val.type+'</option>');
         });
@@ -229,6 +230,7 @@ function getStructures() {
     var structures=[];
     $.ajax({url:"/i/rdc/findAllStorageStructureType",type:"get",success:function (data) {
         structures.push('<option value="0"></option>');
+        supportForeach();
         data.forEach(function (val, index) {
             structures.push('<option value="'+val.id+'">'+val.type+'</option>');
         });
@@ -240,6 +242,7 @@ function getStructures() {
 function getTemperTypes() {
     var temperTypes=[];
     $.ajax({url:"/i/rdc/findAllTemperType",type:"get",success:function (data) {
+        supportForeach();
         data.forEach(function (val, index) {
             temperTypes.push('<option value="'+val.id+'">'+val.type+'</option>');
         });
@@ -251,6 +254,7 @@ function getTemperTypes() {
 function getStorageTypes() {
     var storageTypes=[];
     $.ajax({url:"/i/rdc/findAllStorageType",type:"get",success:function (data) {
+        supportForeach();
         data.forEach(function (val, index) {
             storageTypes.push('<option value="'+val.id+'">'+val.type+'</option>');
         });
@@ -263,6 +267,7 @@ function getStorageRefregs() {
     var storageRefregs=[];
     $.ajax({url:"/i/rdc/findAllStorageRefreg",type:"get",success:function (data) {
         storageRefregs.push('<option value="0"></option>');
+        supportForeach();
         data.forEach(function (val, index) {
             storageRefregs.push('<option value="'+val.id+'">'+val.type+'</option>');
         });
@@ -275,6 +280,7 @@ function getStorageRefregs() {
 function getProvinceList() {
     var provinceList=[];
     $.ajax({url:"/i/city/findProvinceList",type:"get",success:function (data) {
+        supportForeach();
         data.forEach(function (val, index) {
             provinceList.push('<option value="'+val.provinceId+'">'+val.provinceName+'</option>');
         });
@@ -285,6 +291,7 @@ function getProvinceList() {
 function initCityList(proId) {
     var cityList=[];
     $.ajax({url:"/i/city/findCitysByProvinceId",async: false,type:"get",data:{"provinceID":proId},success:function (data) {
+        supportForeach();
         data.forEach(function (val, index) {
             cityList.push('<option value="'+val.cityID+'">'+val.cityName+'</option>');
         });

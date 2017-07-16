@@ -40,6 +40,7 @@ function getRdcRentList() {
         pagination.pageCount=data.totalPages;
         if(pagination.pageCount==-1||pagination.oldPageCount!=pagination.pageCount){flushPage();}
         var rdcRentList=data.data;
+        supportForeach();
         rdcRentList.forEach(function (rdcRent, index) {
             var tempTypeStr=rdcRent.tempTypeStr?rdcRent.tempTypeStr:"";
             var manageTypeStr=rdcRent.manageTypeStr?rdcRent.manageTypeStr:"";
@@ -110,6 +111,7 @@ function getProvinceList() {
     var provinceArr=[];
     $.ajax({url:"/i/city/findProvinceList",type:"get",success:function (data) {
         provinceArr.push('<option value="">全部</option>');
+        supportForeach();
         data.forEach(function (val, index) {
             provinceArr.push('<option value="'+val.provinceId+'">'+val.provinceName+'</option>');
         });

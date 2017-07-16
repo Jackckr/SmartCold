@@ -26,29 +26,34 @@ function getRdcInfo() {
     var otherInfo=[];
     var manageType=[""];
     $.ajax({url:"/i/rdc/findAllManageType",type:"get",success:function (data) {
+        supportForeach();
         data.forEach(function (val, index) {
             manageType.push(val.type);
         });}});
     var tempType=[""];
     $.ajax({url:"/i/rdc/findAllTemperType",type:"get",success:function (data) {
+        supportForeach();
         data.forEach(function (val, index) {
             tempType.push(val.type);
         });
     }});
     var refreg=[""];
     $.ajax({url:"/i/rdc/findAllStorageRefreg",type:"get",success:function (data) {
+        supportForeach();
         data.forEach(function (val, index) {
             refreg.push(val.type);
         });
     }});
     var struct=[""];
     $.ajax({url:"/i/rdc/findAllStorageStructureType",type:"get",success:function (data) {
+        supportForeach();
         data.forEach(function (val, index) {
             struct.push(val.type);
         });
     }});
     var saveType=[""];
     $.ajax({url:"/i/rdc/findAllStorageType",type:"get",success:function (data) {
+        supportForeach();
         data.forEach(function (val, index) {
             saveType.push(val.type);
         });

@@ -157,6 +157,7 @@ html,body,header{
     text-indent: 150px;
     font-size: 20px;
     line-height:86px;
+    font-weight: 700;
 }
 .nav h1{
     display: inline-block;
@@ -339,6 +340,8 @@ html,body,header{
     top: 0;
     opacity: 0;
     width: 100%!important;
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
 }
 
 .ofile:hover {

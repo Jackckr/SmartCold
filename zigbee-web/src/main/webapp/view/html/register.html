@@ -168,23 +168,33 @@
         });
     }
     $("#getCode").click(function(){//发送验证码
-        if(phoneReg.test($('input[name=telephone]').val().trim())){
-            $('input[name=telephone]').addClass('layui-disabled').attr('readonly','readonly');
-            $(this).addClass('layui-disabled').attr('disabled','disabled');
-            $.post('/i/user/telephoneVerify',{
-                telephone:$('input[name=telephone]').val().trim()
-            }, function(data){
-                layer.tips(data.message, '#verifyCode', {
-                    tips: [1, '#0FA6D8'] //还可配置颜色
-                });
-            });
-        }else{
-            layer.tips('请输入正确的手机号', '#verifyCode', {
+        if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test($("#username").val())){
+            layer.tips('用户名不能为空并且不能有特殊字符', '#username', {
                 tips: [1, '#0FA6D8'] //还可配置颜色
             });
+            return false
+        }else if(!/^[a-zA-Z0-9][a-zA-Z0-9]{2,23}$/.test($("#username").val())){
+            layer.tips('用户名不能包含中文和特殊字符，长度不得低于3位~', '#username', {
+                tips: [1, '#0FA6D8'] //还可配置颜色
+            });
+            return false
+        }else{
+            if(phoneReg.test($('input[name=telephone]').val().trim())){
+                $('input[name=telephone]').addClass('layui-disabled').attr('readonly','readonly');
+                $(this).addClass('layui-disabled').attr('disabled','disabled');
+                $.post('/i/user/telephoneVerify',{
+                    telephone:$('input[name=telephone]').val().trim()
+                }, function(data){
+                    layer.tips(data.message, '#verifyCode', {
+                        tips: [1, '#0FA6D8'] //还可配置颜色
+                    });
+                });
+            }else{
+                layer.tips('请输入正确的手机号', '#verifyCode', {
+                    tips: [1, '#0FA6D8'] //还可配置颜色
+                });
+            }
         }
-
-
     });
     layui.use(['form'], function(){
         var form = layui.form(),layer = layui.layer;
@@ -236,11 +246,22 @@
                 url: "/i/user/signup?",
                 data: data.field,
                 success: function (data) {
-                    layer.alert(data.message, {icon:6});//1:对号，2:叉号，3：问号，4：锁，5：哭脸，6：笑脸，7：叹号
+                    layer.alert(data.message, {
+                        icon: 6 //1:对号，2:叉号，3：问号，4：锁，5：哭脸，6：笑脸，7：叹号
+                        ,closeBtn: 0
+                    }, function(index){
+                        if(data.status == 0){
+                            window.location.href = "http://" + window.location.host + "/view/html/login.html";
+                            window.event.returnValue=false;
+                        }else{
+                            layer.close(index)
+                        }
+                    });
+                   /* layer.alert(data.message, {icon:6});//1:对号，2:叉号，3：问号，4：锁，5：哭脸，6：笑脸，7：叹号
                     if(data.status == "0"){
                         window.location.href = "http://" + window.location.host + "/view/html/login.html";
                         window.event.returnValue=false;
-                    }
+                    }*/
                 },
                 error:function(){
                     layer.alert("系统错误", {icon:5});
