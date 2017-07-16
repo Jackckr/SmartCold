@@ -31,7 +31,7 @@ $("#loginUser").hover(function () {
 })
 $(document).scroll(function () {//吸附导航
     var sTop = document.body.scrollTop || document.documentElement.scrollTop;
-    var oTop = 86;
+    var oTop = 116;
     if(sTop>oTop){
         $('.header').addClass('fixed');
         $('.header').next().css('marginTop',oTop);
