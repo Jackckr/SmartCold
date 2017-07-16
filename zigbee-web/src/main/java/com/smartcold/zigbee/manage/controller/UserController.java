@@ -221,9 +221,8 @@ public class UserController extends BaseController {
 		}
 		return new ResultDto(-1, "请填写手机号");
 	}
-	
-	/**
-	 * 
+	//=======================================================================找回密码=====================================================================================
+	 /* 
 	 * @return
 	 */
 	@RequestMapping(value="telephoneSIDVerify")
@@ -235,8 +234,8 @@ public class UserController extends BaseController {
 				String signUpCode =teleVerify.identityVerify(telephone);
 				ResponseData<String> instance = ResponseData.getInstance();
 				instance.setSuccess(true);
-				instance.setExtra(StringUtil.getToken());
-				instance.setEntity(signUpCode+TimeUtil.getLongtime());
+				instance.setEntity(EncodeUtil.encodeByMD5(signUpCode+TimeUtil.getDay()));
+				instance.setExtra(signUpCode+TimeUtil.getLongtime());
 				instance.setMessage("验证码已发送到您的手机~请注意查收~");
 				return instance;
 			}
@@ -247,6 +246,23 @@ public class UserController extends BaseController {
 		return ResponseData.newFailure("未知异常~");
 	}
 	
+	@RequestMapping(value = "/resetPwdByUserName")
+	@ResponseBody
+	public ResponseData<String> resetPwdByUserName(HttpServletRequest request,String toke,String stoken, UserEntity user){
+		if(StringUtil.isnotNull(toke)&&StringUtil.isnotNull(stoken)&&stoken.equals(EncodeUtil.encodeByMD5(toke+TimeUtil.getDay()))){
+			user.setPassword(EncodeUtil.encodeByMD5(user.getPassword()));
+				boolean isok=this.userDao.upPwdByUserNameAndtelephone(user)>0;
+				if(isok){
+					return ResponseData.newSuccess("密码修改重置成功！");
+				}else{
+					return ResponseData.newFailure("用户名和手机号不匹配！");
+				}
+			}else{
+				return ResponseData.newFailure("非法操作！");			
+			}
+	}
+	
+	//============================================================================================================================================================
 	
 	@RequestMapping(value = "/getVerCode", method = RequestMethod.POST)
 	@ResponseBody
@@ -339,12 +355,14 @@ public class UserController extends BaseController {
 		UserEntity	new_user=this.userDao.findUserById(ol_user.getId());
 		return pwd.equals(new_user.getPassword());
 	}
+	
+	@Deprecated
 	@RequestMapping(value = "/upPwdByTelephone")
 	@ResponseBody
 	public ResponseData<String> upPwdByTelephone(HttpServletRequest request,String key,String toke,String stoken, UserEntity user){
 		if(StringUtil.isnotNull(key)&&StringUtil.isnotNull(toke)){
 			String stoke=request.getSession().getAttribute(key+"shear_yzm")+""; request.getSession().removeAttribute(key+"shear_yzm"); 
-			if(toke.equalsIgnoreCase(stoke)||StringUtil.getToken().equals(stoken)){
+			if(toke.equalsIgnoreCase(stoke)||StringUtil.getToken().equals(stoken)||stoken.equals(EncodeUtil.encodeByMD5(toke+TimeUtil.getDateHour()))){
 				if(StringUtil.isnotNull(user.getPassword())){user.setPassword(EncodeUtil.encodeByMD5(user.getPassword()));}
 				boolean isok=this.userDao.upPwdByTelephone(user)>0;
 				if(isok){

@@ -52,6 +52,9 @@
     <update id="upPwdByTelephone" parameterType="com.smartcold.zigbee.manage.entity.UserEntity" >
         update user set password   =#{password} where  username=#{username} ;
     </update>
+    <update id="upPwdByUserNameAndtelephone" parameterType="com.smartcold.zigbee.manage.entity.UserEntity" >
+        update `user` set `password`   =#{password} where  `username`=#{username} and `telephone`=#{telephone}  ;
+    </update>
     <select id="existenceUserName" parameterType="map" resultType="int">
 		SELECT COUNT(*) FROM user u  WHERE u.`username` = #{username};
 	</select>

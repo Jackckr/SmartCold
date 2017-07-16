@@ -18,6 +18,13 @@ public interface UserMapper {
 	
 	public int upPwdByTelephone(UserEntity userEntity);
 	
+	/**
+	 * 根据用户名和电话找回密码
+	 * @param userEntity
+	 * @return
+	 */
+	public int upPwdByUserNameAndtelephone(UserEntity userEntity);
+	
 	public int existenceUserName(@Param("username")String username);
 	
 	public void addmsg(@Param("userName")String userName,@Param("telephone")String telephone,@Param("corporateName")String corporateName,@Param("note")String note);

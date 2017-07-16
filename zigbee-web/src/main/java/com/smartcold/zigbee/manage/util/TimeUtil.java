@@ -20,6 +20,7 @@ public class TimeUtil {
     
 	public static String  getDateTime(){return	TimeUtil.dateFormat.format(new Date());}//获得时间
 	
+	
 	public static Long getLongtime(){return Long.parseLong( (System.currentTimeMillis()+"").substring(0, 10));}
 	/**
 	 * 获得16进制 Linux时间
