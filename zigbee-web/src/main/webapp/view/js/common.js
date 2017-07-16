@@ -4,7 +4,7 @@
 
 if(sessionStorage.lkuser&&new Date().getTime()-sessionStorage.longtime<(30*60*1000)){
     window.lkuser=JSON.parse(sessionStorage.lkuser);
-    $("#loginUser").show().find('img').attr('src',lkuser.avatar);
+    $("#loginUser").show().find('img').attr({'src':lkuser.avatar,'title':lkuser.username});
     $("#noLoginUser").hide();
 }else{
     findUser();
@@ -34,10 +34,10 @@ $(document).scroll(function () {//吸附导航
     var oTop = 86;
     if(sTop>oTop){
         $('.header').addClass('fixed');
-        $(".banner").css('marginTop',oTop);
+        $('.header').next().css('marginTop',oTop);
     }else{
         $('.header').removeClass('fixed');
-        $(".banner").css('marginTop',0);
+        $('.header').next().css('marginTop',0);
     }
 });
 /*获取URL参数*/
@@ -54,7 +54,7 @@ function findUser() {
             window.sessionStorage.lkuser=JSON.stringify(data);
             window.sessionStorage.longtime=new Date().getTime();
             // $("#loginUser").show().find('.username').html(data.username);
-            $("#loginUser").show().find('img').attr('src',data.avatar);
+            $("#loginUser").show().find('img').attr({'src':data.avatar,'title':data.username});
             $("#noLoginUser").hide();
         }else {
             window.sessionStorage.removeItem("lkuser");//清除系统user;

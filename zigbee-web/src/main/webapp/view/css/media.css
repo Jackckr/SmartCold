@@ -35,6 +35,10 @@
     .section{
         width: 1210px;
     }
+    .loginBg {
+        width: 477.6px!important;
+        height: 200px!important;
+    }
 }
 @media only screen and (max-width: 980px){
     .login,.loginBg{

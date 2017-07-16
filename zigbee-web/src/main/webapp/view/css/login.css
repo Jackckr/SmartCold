@@ -62,3 +62,6 @@
 .layui-input{
     line-height: 1.75;
 }
+#getCode.layui-disabled:hover{
+    border-color: #C9C9C9;
+}

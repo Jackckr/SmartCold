@@ -154,7 +154,7 @@
 <script src="../plugins/layui.all.js"></script>
 <script src="../js/common.js"></script>
 <script>
-    var phoneReg=/^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/
+    var phoneReg=/^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
     function userNameExist(value) {//用户名检查
         $.post('/i/user/userNameVerify',{
             username:value
@@ -169,8 +169,8 @@
     }
     $("#getCode").click(function(){//发送验证码
         if(phoneReg.test($('input[name=telephone]').val().trim())){
-            $('input[name=telephone]').attr('readonly','readonly');
-            $(this).attr('disabled','disabled');
+            $('input[name=telephone]').addClass('layui-disabled').attr('readonly','readonly');
+            $(this).addClass('layui-disabled').attr('disabled','disabled');
             $.post('/i/user/telephoneVerify',{
                 telephone:$('input[name=telephone]').val().trim()
             }, function(data){
@@ -203,7 +203,7 @@
                 if(value.length>24){
                     return '用户名长度不能超过24位';
                 }
-                userNameExist(value)//检查用户名重复
+                userNameExist(value)//检查用户名重复hh
             }
             //我们既支持上述函数式的方式，也支持下述数组的形式
             //数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
