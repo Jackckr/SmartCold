@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -221,7 +222,7 @@ public class UserController extends BaseController {
 		}
 		return new ResultDto(-1, "请填写手机号");
 	}
-	//=======================================================================找回密码=====================================================================================
+	//=======================================================================找回密码Start=====================================================================================
 	 /* 
 	 * @return
 	 */
@@ -230,12 +231,12 @@ public class UserController extends BaseController {
 	public ResponseData<String> telephoneSIDVerify(HttpServletRequest request,String telephone){
 		try {
 			if(StringUtil.isnotNull(telephone)){
+				
 				TelephoneVerifyUtil teleVerify = new TelephoneVerifyUtil();
-				String signUpCode =teleVerify.identityVerify(telephone);
+				String code =teleVerify.identityVerify(telephone);
 				ResponseData<String> instance = ResponseData.getInstance();
 				instance.setSuccess(true);
-				instance.setEntity(EncodeUtil.encodeByMD5(signUpCode+TimeUtil.getDay()));
-				instance.setExtra(signUpCode+TimeUtil.getLongtime());
+				instance.setEntity(StringUtil.md5Code(code));
 				instance.setMessage("验证码已发送到您的手机~请注意查收~");
 				return instance;
 			}
@@ -249,8 +250,10 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/resetPwdByUserName")
 	@ResponseBody
 	public ResponseData<String> resetPwdByUserName(HttpServletRequest request,String toke,String stoken, UserEntity user){
-		if(StringUtil.isnotNull(toke)&&StringUtil.isnotNull(stoken)&&stoken.equals(EncodeUtil.encodeByMD5(toke+TimeUtil.getDay()))){
-			user.setPassword(EncodeUtil.encodeByMD5(user.getPassword()));
+		if(StringUtil.isnotNull(toke)&&StringUtil.isnotNull(stoken)){
+			   if(!StringUtil.vifCode(toke,stoken)){ return ResponseData.newFailure("验证码错误！");		 }
+			   if(!StringUtil.visStoken(toke, stoken)){return ResponseData.newFailure("非法操作！请刷新页面重新操作！");	 }
+			   user.setPassword(EncodeUtil.encodeByMD5(user.getPassword()));
 				boolean isok=this.userDao.upPwdByUserNameAndtelephone(user)>0;
 				if(isok){
 					return ResponseData.newSuccess("密码修改重置成功！");
@@ -262,7 +265,7 @@ public class UserController extends BaseController {
 			}
 	}
 	
-	//============================================================================================================================================================
+	//=======================================================================找回密码ENd=====================================================================================
 	
 	@RequestMapping(value = "/getVerCode", method = RequestMethod.POST)
 	@ResponseBody
@@ -287,6 +290,7 @@ public class UserController extends BaseController {
 		}
 		return new ResultDto(-1, "请填写手机号");
 	}
+	//============================================================================================================================================================
 	
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	@ResponseBody

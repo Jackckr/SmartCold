@@ -7,6 +7,7 @@ package com.smartcold.zigbee.manage.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 /*
@@ -22,6 +23,17 @@ public class StringUtil
 	public static 	String getToken(){
 	  return 	EncodeUtil.encodeByMD5("token"+TimeUtil.getDateHour());
 	}
+	
+	/**
+	 * 加密校验
+	 * @param stoken
+	 * ABCD->5D6B0eb27525f059327b8581809345b92f0cC72A
+	 * @return
+	 */
+	public static boolean  vifCode(String code,String stoken){return code.equals(getCode(stoken)); }
+	public static boolean  visStoken(String code,String stoken){return  stoken.substring(4, stoken.length()-4).equals(EncodeUtil.encodeByMD5(code+TimeUtil.getDay()));  }
+	public static String  getCode(String stoken){int length=stoken.length();return stoken.substring(length-1,stoken.length())+stoken.substring(3,4)+stoken.substring(length-4,length-3)+stoken.substring(1,2); }
+	public static String  md5Code(String Code){ char[] charArray = Code.toCharArray();Random r=new Random(); return r.nextInt(10)+""+charArray[3]+r.nextInt(10)+ charArray[1]+EncodeUtil.encodeByMD5(Code+TimeUtil.getDay())+ charArray[2]+r.nextInt(10)+r.nextInt(10)+ charArray[0];}
 	/**
 	 * 判断字符串是否为null或者空字符串(即长度为0的字符串)
 	 * 
