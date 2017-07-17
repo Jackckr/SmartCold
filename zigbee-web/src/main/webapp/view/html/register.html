@@ -74,7 +74,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label"><i class="iconfont">&#xe63d;</i></label>
                     <div class="layui-input-block">
-                        <input type="text" name="username" id="username" lay-verify="userName" autocomplete="off" placeholder="请输入用户名" class="layui-input">
+                        <input type="text" name="username" id="username" lay-verify="userName" onblur="userNameExist()" autocomplete="off" placeholder="请输入用户名" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -154,16 +154,19 @@
 <script src="../plugins/layui.all.js"></script>
 <script src="../js/common.js"></script>
 <script>
-    var phoneReg=/^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
-    function userNameExist(value) {//用户名检查
+    var phoneReg=/^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/,usefulName=false;
+    function userNameExist() {//用户名检查
         $.post('/i/user/userNameVerify',{
-            username:value
+            username:$("#username").val()
         }, function(data){
             if(!data){
                 layer.tips('用户名已存在', '#username', {
                     tips: [1, '#0FA6D8'] //还可配置颜色
                 });
+                usefulName=false;
                 return false
+            }else{
+                usefulName=true
             }
         });
     }
@@ -213,7 +216,9 @@
                 if(value.length>24){
                     return '用户名长度不能超过24位';
                 }
-                userNameExist(value)//检查用户名重复hh
+                if(!usefulName){
+                    return '用户名已存在,请更换~'
+                }//检查用户名重复hh
             }
             //我们既支持上述函数式的方式，也支持下述数组的形式
             //数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
@@ -238,6 +243,9 @@
             }else if($('#agreement').is(':checked')==false){
                 layer.alert('请确认您已同意链库使用协议', {icon:6});
                 return false
+            }else if(!usefulName){
+                layer.alert('用户名已存在,请更换', {icon:6});
+                return false
             }
             $.ajax({
                 type: "POST",
@@ -257,11 +265,6 @@
                             layer.close(index)
                         }
                     });
-                   /* layer.alert(data.message, {icon:6});//1:对号，2:叉号，3：问号，4：锁，5：哭脸，6：笑脸，7：叹号
-                    if(data.status == "0"){
-                        window.location.href = "http://" + window.location.host + "/view/html/login.html";
-                        window.event.returnValue=false;
-                    }*/
                 },
                 error:function(){
                     layer.alert("系统错误", {icon:5});

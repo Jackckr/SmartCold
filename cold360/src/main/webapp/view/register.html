@@ -29,11 +29,14 @@
 		<!-- header end-->
 		<section>
 			<div class="inputBd">
-	    		<input type="tel" id="telNum" name="telephone" placeholder="请输入正确的手机号" ng-model="telephone" ng-change="vertelephone();"/>
+				<input type="text" id="username" placeholder="请输入用户名" ng-model="username"/>
+			</div>
+			<div class="inputBd">
+	    		<input type="tel" id="telNum" name="telephone" maxlength="11" placeholder="请输入正确的手机号" ng-model="telephone" ng-change="vertelephone();"/>
 				<button id="but_vercode" class="idcode getNum fr gray "  ng-click="getVerCode();" disabled="disabled" style="background-color: #cccccc;color: white !important;">获取验证码</button>
 	    	</div>
 	    	<div class="inputBd">
-	    		<input type="text" id="code2" placeholder="请输入手机验证码" ng-model="verrcode"  ng-change="veteleCode()" />
+	    		<input type="text" id="code2" maxlength="4" placeholder="请输入手机验证码" ng-model="verrcode"  ng-change="veteleCode()" />
 	    	</div>
 	    	<div class="inputBd">
 	    		<input type="password" name="" id="txt_password" ng-blur="checkpwd()" value="" placeholder="密码为6-16位数字、英文两种的组合"/>
