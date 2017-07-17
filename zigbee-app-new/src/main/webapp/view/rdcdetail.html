@@ -55,7 +55,7 @@
             <em ng-if="vo.audit==2"><i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i></em>
             <em ng-if="vo.istemperaturestandard==1"><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i></em>
             <em ng-if="vo.audit!=2"><i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i></em>
-            <em ng-if="user.vipType!=0&&user"><a class="blue" href="coldStorageAuth.html?id={{rdcid}}" style="font-size: .6rem">认证该冷库</a></em>
+            <em ng-if="user&&user.vipType>0&&vo.userid!=user.id"><a class="blue" href="coldStorageAuth.html?id={{rdcid}}" style="font-size: .6rem">认证该冷库</a></em>
         </div>
     </div>
     <div class="flex" ng-if="user&&user.vipType!=0">
