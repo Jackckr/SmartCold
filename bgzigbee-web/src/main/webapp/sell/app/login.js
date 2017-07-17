@@ -67,7 +67,7 @@ function login() {
         error: function() {  clsyle("#ui", 2, '服务异常！'); },
         success: function(data) {
         	if (data.success) {
-        		window.sessionStorage.sysadmin=data.entity.user;
+        		window.sessionStorage.sysadmin=JSON.stringify(data.entity.user);
 				window.sessionStorage.asikey=data.entity.token;
 			    document.cookie = data.entity.token;
                 window.location.href = "main.htm";
