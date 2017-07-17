@@ -205,7 +205,6 @@ function checkuser() {
     });
 }
 $().ready(function () {
-    debugger;
     if (!window.sessionStorage.sysadmin || !window.sessionStorage.asikey) {
         top.location.href = "http://" + location.host + "/login.html";
         return;
