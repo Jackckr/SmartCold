@@ -185,7 +185,11 @@
                                     window.lkuser=data;
                                     window.sessionStorage.lkuser=JSON.stringify(data);
                                     window.sessionStorage.longtime=new Date().getTime();
-                                    window.location.href='../../index.htm';
+                                    if(localStorage.OURL){
+                                        window.location.href=localStorage.OURL;
+                                    }else{
+                                        window.location.href='../../index.htm';
+                                    }
                                 } else {
                                     window.sessionStorage.removeItem("lkuser");//清除系统user;
                                 }

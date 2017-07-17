@@ -65,3 +65,67 @@
 #getCode.layui-disabled:hover{
     border-color: #C9C9C9;
 }
+/*冷库认证*/
+.loginDiv>.txt-left{
+    width: 56%;
+    line-height: 2;
+    padding: 0 2%;
+}
+.loginDiv>.fr{
+    width:38%;
+    height: 300px;
+    padding: 20px;
+}
+.upFile{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    text-align: center;
+    border: 2px dashed #4090db;
+}
+.upFile>input{
+    width: 100%;
+    height: 100%;
+    position: relative;
+    cursor: pointer;
+    opacity: 0;
+    z-index: 2;
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+}
+.upFile>i{
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 5em;
+    line-height: 3;
+    z-index:0;
+    color: #228fea;
+}
+.upFile>i:before{
+    content: '上传营业执照';
+    position: absolute;
+    bottom:20%;
+    left: 50%;
+    background: #228fea;
+    line-height:2.5;
+    width: 150px;
+    border-radius: 20px;
+    margin-left: -75px;
+    color: #fff;
+    font-size: 14px;
+}
+.fileImg{
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
+.fileImg>img{
+    height: 100%;
+}

@@ -13,9 +13,7 @@ strong{font-weight: normal;}
 input,textarea,select{width: 100%;padding: 8px 15px; font-size: 14px; line-height: 1.42857143; color: #656565; background-color: #fff;
     background-image: none; border: 1px solid #ccc; border-radius: 4px; }
 a{cursor: pointer;text-decoration: none; color: #4F4F4F; font-family: Microsoft YaHei,HELVETICA, sans-serif,Tahoma, Arial;}
-a:link{color: #656565; text-decoration: none;}
-a:visited{color: #656565;}
-a:hover{color: #656565; text-decoration: none;}
+a:hover{color: #2763cc; text-decoration: none;}
 a:active{color: #656565;}
 table{border: solid 1px #e8eef4; border-collapse: collapse;}
 table td{padding: 5px; border: solid 1px #e8eef4;}

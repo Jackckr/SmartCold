@@ -6,12 +6,12 @@ var qrcode = new QRCode(document.getElementById("qrcode"), {
 
 function makeCode () {
     var elText = document.URL;
-   // var ret = 'http://m.liankur.com/view/rdcdetail.html?'+elText.split("?")[1];
+   var ret = 'http://m.liankur.com/view/rdcdetail.html?id='+elText.split("=")[1];
     if (!elText) {
         layer.alert("二维码生成失败……", {icon:5});
         return;
     }
-    qrcode.makeCode(elText);
+    qrcode.makeCode(ret);
 }
 makeCode ();
 /*生成二维码 end*/
@@ -19,6 +19,7 @@ makeCode ();
 /*功能组件*/
 var rdcId;
 var user=window.sessionStorage.lkuser;
+localStorage.OURL=document.URL;
 function getRdcInfo() {
     var smallImg=[];
     var bigImg=[];
@@ -78,14 +79,14 @@ function getRdcInfo() {
         if(rdc.audit==2){baseInfo.push('<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>')}else{baseInfo.push('<b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>')};
         if(rdc.istemperaturestandard==1){baseInfo.push('&nbsp;<b class="reachStand"><i class="iconfont">&#xe6e9;</i>冷链委温度达标库</b>');}
         if(!window.lkuser){//没有登录
-            baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%</td></tr>' +
+            baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%<a class="blue" style="margin-left: 20px" href="approve.html?id='+rdc.rdcId+'">认证该冷库</a></td></tr>' +
                 '<tr><td>地址</td><td>'+rdc.address+'</td> </tr>' +
                 '<tr><td>您还未登录</td><td><a style="color:#2763cc;" href="login.html">去登录</a></td> </tr></table>');
         }else if(window.lkuser && window.lkuser.vipType==0) {//没有实名认证
-            baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%</td></tr>' +
+            baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%<a class="blue" style="margin-left: 20px" href="approve.html?id='+rdc.rdcId+'">认证该冷库</a></td></tr>' +
                 '<tr><td>地址</td><td>'+rdc.address+'</td> </tr></table>');
         }else if(window.lkuser && window.lkuser.vipType>0){//实名认证
-            baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%</td></tr>' +
+            baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%<a class="blue" style="margin-left: 20px" href="approve.html?id='+rdc.rdcId+'">认证该冷库</a></td></tr>' +
                 '<tr><td>地址</td><td>'+rdc.address+'</td> </tr> ' +
                 '<tr> <td>价格</td> <td>'+price+'</td> </tr> ' +
                 '<tr> <td>总面积/空置面积</td> <td>'+rdc.area+'㎡/'+rentSqm+'</td> </tr>' +
@@ -94,19 +95,40 @@ function getRdcInfo() {
                 // ' <tr> <td colspan="2"> <button class="oBtn">预约订库</button> </td> </tr> </table>');
         }
         if(window.lkuser && window.lkuser.vipType>0){
+           // var structure=null, platform=null, lihuoRoom=null, lihuoArea=null, lihuoTemperCtr=null, storageRefreg=null, temperRecord=null,facility=null,remark=null;
+            rdc.structure==0?structure='':structure='<td> <span>建筑结构：</span>'+struct[rdc.structure]+' </td>';
+            rdc.platform==0?platform='':platform='<td> <span>是否有封闭月台：</span>'+isHave[rdc.platform]+' </td>';
+            rdc.lihuoRoom==0?lihuoRoom='':lihuoRoom='<td> <span>是否有理货区：</span>'+isHave[rdc.lihuoRoom]+'</td>';
+            rdc.lihuoArea==0?lihuoArea='':lihuoArea='<td> <span>理货区面积：</span>'+rdc.lihuoArea+'㎡ </td>';
+            rdc.lihuoTemperCtr==0?lihuoTemperCtr='':lihuoTemperCtr=' <td> <span>理货区有无温控：</span>'+isHave[rdc.lihuoTemperCtr]+' </td>';
+            rdc.storageRefreg==0?storageRefreg='':storageRefreg='<td> <span>制冷剂类型：</span>'+refreg[rdc.storageRefreg]+' </td>';
+            rdc.temperRecord==0?temperRecord='':temperRecord='<td> <span>有无温度记录：</span>'+isHave[rdc.temperRecord]+' </td>';
+            rdc.temperRecord==0?temperRecord='':temperRecord='<td> <span>有无温度记录：</span>'+isHave[rdc.temperRecord]+' </td>';
+            rdc.facility==""||rdc.facility=="undefined"?facility='':facility='<td> <span>周边设施：</span>'+rdc.facility+' </td>';
+            rdc.remark==""||rdc.remark=="undefined"?remark='':remark='<td> <span>备注：</span>'+rdc.remark+' </td>';
+            rdc.coldTruck1==0?coldTruck1='':coldTruck1='<td> <span>小于1.8T：</span>'+rdc.coldTruck1+' 辆</td>';
+            rdc.height1*rdc.capacity1==0?capacity1='':capacity1='<td> <span>8 ~ 25℃：</span> '+(rdc.height1*rdc.capacity1)+'m³</td> ';
+            rdc.coldTruck2==0?coldTruck2='':coldTruck2='<td> <span>1.8 ～ 6T：</span>'+rdc.coldTruck2+' 辆</td>';
+            rdc.height2*rdc.capacity2==0?capacity2='':capacity2='<td> <span>2 ~ 8℃：</span> '+(rdc.height2*rdc.capacity2)+'m³</td> ';
+            rdc.coldTruck3==0?coldTruck3='':coldTruck3='<td> <span>6 ～ 14T：</span>'+rdc.coldTruck3+' 辆</td>';
+            rdc.height3*rdc.capacity3==0?capacity3='':capacity3='<td> <span>-2 ~ -18℃：</span> '+(rdc.height3*rdc.capacity3)+'m³</td> ';
+            rdc.coldTruck4==0?coldTruck4='':coldTruck4='<td> <span>大于14T：</span>'+rdc.coldTruck4+' 辆</td>';
+            rdc.height4*rdc.capacity4==0?capacity4='':capacity4='<td> <span>-18 ~ -30℃：</span> '+(rdc.height4*rdc.capacity4)+'m³</td> ';
+            rdc.height5*rdc.capacity5==0?capacity5='':capacity5='<tr> <td></td> <td> <span>小于-50℃：</span>'+(rdc.height5*rdc.capacity5)+'m³ </td></tr>';
+
             otherInfo.push('<table><caption>仓库信息</caption><tbody>' +
                 '<tr><td><span>冷库经营类型：</span>'+manageType[rdc.manageType]+' </td> <td> <span>冷库温度类型：</span>'+tempType[rdc.temperType]+' </td> </tr> ' +
-                '<tr> <td> <span>商品存放类型：</span>'+saveType[rdc.storageType]+'</td> <td> <span>建筑结构：</span>'+struct[rdc.structure]+' </td> </tr> ' +
-                '<tr> <td> <span>是否有封闭月台：</span>'+isHave[rdc.platform]+' </td> <td> <span>是否有理货区：</span>'+isHave[rdc.lihuoRoom]+'</td> </tr>' +
-                ' <tr> <td> <span>理货区面积：</span>'+rdc.lihuoArea+'㎡ </td> <td> <span>理货区有无温控：</span>'+isHave[rdc.lihuoTemperCtr]+' </td> ' +
-                '</tr> <tr> <td> <span>制冷剂类型：</span>'+refreg[rdc.storageRefreg]+' </td> <td> <span>有无温度记录：</span>'+isHave[rdc.temperRecord]+' </td> </tr> ' +
-                '<tr> <td> <span>周边设施：</span>'+facility+' </td> <td> <span>备注：</span>'+remark+' </td> </tr>' +
-                ' <tr> <td> <span>冷藏车数量：</span> </td> <td> <span>冷库容积：</span> </td> </tr> ' +
-                '<tr> <td> <span>小于1.8T：</span>'+rdc.coldTruck1+' 辆</td> <td> <span>8 ~ 25℃：</span> '+(rdc.height1*rdc.capacity1)+'m³</td> </tr> ' +
-                '<tr> <td> <span>1.8 ～ 6T：</span> '+rdc.coldTruck2+'辆</td> <td> <span>2 ~ 8℃：</span> '+(rdc.height2*rdc.capacity2)+'m³</td></tr>' +
-                ' <tr> <td> <span>6 ～ 14T：</span> '+rdc.coldTruck3+'辆</td> <td> <span>-2 ~ -18℃：</span> '+(rdc.height3*rdc.capacity3)+'m³</td> </tr> ' +
-                '<tr> <td> <span>大于14T：</span>'+rdc.coldTruck4+'辆</td> <td> <span>-18 ~ -30℃：</span>'+(rdc.height4*rdc.capacity4)+'m³ </td> </tr> ' +
-                '<tr> <td> </td> <td> <span>小于-50℃：</span>'+(rdc.height5*rdc.capacity5)+'m³ </td> </tr> </tbody></table>');
+                '<tr><td> <span>商品存放类型：</span>'+saveType[rdc.storageType]+'</td> '+structure+' </tr> ' +
+                '<tr>'+platform + lihuoRoom +'</tr>'+
+                '<tr>'+lihuoArea+lihuoTemperCtr +'</tr>'+
+                '<tr>'+storageRefreg+temperRecord+'</tr>'+
+                '<tr>'+facility+remark+'</tr>' +
+                '<tr> <td> <span>冷藏车数量：</span> </td> <td> <span>冷库容积：</span> </td> </tr> ' +
+                '<tr>'+coldTruck1+capacity1+'</tr> ' +
+                '<tr>'+coldTruck2+capacity2+'</tr> ' +
+                '<tr>'+coldTruck3+capacity3+'</tr> ' +
+                '<tr>'+coldTruck4+capacity4+'</tr> ' +
+                ''+capacity5+'</tbody></table>');
         }else {
             otherInfo.push('<table><caption>仓库信息</caption><tbody><tr><td><b>认证用户方可看到更多信息</b>　<a onclick="alert(1)"  style="color:#2763cc;">实名认证</a></td></tr></tbody></table>');
         }
