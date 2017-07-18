@@ -221,4 +221,25 @@ function checkMobile(str) {
        return false
    }
 }
-
+/*分享功能*/
+function weixinShare() {
+    var wx='<div class="wxShare"><span class="bgClose" onclick="bgClose(this)"></span></div>';
+    var web='<div class="webShare"><span class="bgClose" onclick="bgClose(this)"></span></div>';
+    if(isWeiXin()){//微信浏览器
+        $("body").append(wx);
+    }else{//手机浏览器
+        $("body").append(web);
+       // alert(window.navigator.userAgent)
+    }
+}
+function bgClose(ops) {
+    $(ops).parent('div').hide();
+}
+function isWeiXin(){
+    var ua = window.navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i) == 'micromessenger'||ua.match(/QQ/i) == 'qq'){
+        return true;
+    }else{
+        return false;
+    }
+}
