@@ -74,11 +74,26 @@ public class CompanyController extends BaseController {
         return new PageInfo<Company>(companyDao.findAllCompany(keyword));
     }
 
+    @RequestMapping(value = "/newFindCompanyList", method = RequestMethod.POST)
+    @ResponseBody
+    public Object newFindCompanyList(int page, int rows, String keyword) {
+        PageHelper.startPage(page, rows);
+        PageInfo pageInfo=new PageInfo<Company>(companyDao.findAllCompany(keyword));
+        return TableData.newSuccess(pageInfo);
+    }
+
     @RequestMapping(value = "/findCompanyById", method = RequestMethod.POST)
     @ResponseBody
     public Object findCompanyById(@RequestParam(value = "companyId", required = false) Integer companyId) {
         Company company = companyDao.selectByPrimaryKey(companyId);
         return company;
+    }
+
+    @RequestMapping(value = "/updateCompanyById", method = RequestMethod.POST)
+    @ResponseBody
+    public Object updateCompanyById(Company company) {
+        companyDao.updateByPrimaryKeySelective(company);
+        return new ResultDto(1,"修改成功！");
     }
 
     @RequestMapping(value = "/deleteCompany", method = RequestMethod.GET)
@@ -88,7 +103,7 @@ public class CompanyController extends BaseController {
         return new BaseDto(0);
     }
 
-    @RequestMapping(value = "/deleteByCompanyIDs", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/deleteByCompanyIDs")
     @ResponseBody
     public Object deleteByCompanyIDs(Integer[] companyIDs) {
         for (Integer companyID : companyIDs) {
