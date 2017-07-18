@@ -52,6 +52,7 @@ coldWeb.factory('baseTools',['$rootScope',function(){
 				};
 			return option;
 		}
+		
 	};
 }]);
 
@@ -165,7 +166,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
     };
 }]);
 coldWeb.config(function ($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise("/preview");
+    $urlRouterProvider.otherwise("/cold360Physical");
     coldWeb.stateProvider=$stateProvider;
     //index
     $stateProvider
@@ -178,25 +179,16 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
 		url:'/cold360Physical',
 		controller: 'cold360Physical',
 	    templateUrl: 'app/template/cold360Physical.html'
+    }).state('powerAnalysis',{ //分析--->电耗分析=============================================================f
+		url:'/powerAnalysis/{rdcId}',
+		controller: 'powerAnalysis',
+	    templateUrl: 'app/template/powerAnalysis.html'
+    }).state('waterAnalysis',{// //分析--->水耗分析=============================================================f
+    	url:'/waterAnalysis/{rdcId}',
+    	controller: 'waterAnalysis',
+    	templateUrl: 'app/template/waterAnalysis.html'
     })
-//    .state('about',{
-//    	url:'/about',
-//    	controller: 'base0',
-//        templateUrl: 'app/template/about.html'
-//    }).state('login',{
-//    	url:'/login',
-//    	controller: 'login',
-//        templateUrl: 'app/template/login.html'
-//    }).state('warn', {
-//        url: '/warn/:rdcId',
-//        controller: 'warn',
-//        templateUrl: 'app/template/warn.html'
-//    })
-//     .state('coldStorageDiv', {
-//        url: '/coldStorageDiv',
-//        controller: 'coldStorageDiv',
-//        templateUrl: 'app/template/coldStorageDiv.html'
-//    })
+    //
     .state('warncoldAnalysis', {//制冷告警统计
         url: '/warncoldAnalysis/{rdcId}',
         controller: 'warncoldAnalysis',
@@ -283,11 +275,19 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url: '/monthReport/{rdcId}',
     	controller: 'monthReport',
         templateUrl: 'app/template/monthReport.html'
-    }).state('monthReport2',{//分析  -分析报告--jhy--2017-06-19 新版
-        url: '/monthReport2/{rdcId}',
-        controller: 'monthReport2',
-        templateUrl: 'app/template/monthReport2.html'
-    }).state('cpswaterCost',{//
+    })
+    //============================================================分析报告================================================================
+    .state('tempReport',{//温度分析报告  -分析报告--jhy--2017-06-19 新版
+        url: '/tempReport/{rdcId}',
+        controller: 'tempReport',
+        templateUrl: 'app/template/tempReport.html'
+    }).state('basicReport',{//基本版析报告  -分析报告--jhy--2017-06-19 新版
+        url: '/basicReport/{rdcId}',
+        controller: 'basicReport',
+        templateUrl: 'app/template/basicReport.html'
+    })
+    
+    .state('cpswaterCost',{//
     	url: '/cpswaterCost/{groupID}',
     	controller: 'cpswaterCost',
         templateUrl: 'app/template/waterCostGroup.html'

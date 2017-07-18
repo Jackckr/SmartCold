@@ -30,7 +30,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     $scope.load = function () {
     	if($scope.oids.length==0){return;};
     	$scope.curtemper = [];
-    	$scope.fstartTime= new Date().getTime(), endTime =  new Date(), startTime = new Date(endTime.getTime() - 7*24* 60 * 60 * 1000), maxTime=endTime.getTime();
+    	$scope.fstartTime= new Date().getTime(), endTime =  new Date(), startTime = new Date(endTime.getTime() - 1.5* 60 * 60 * 1000), maxTime=endTime.getTime();
         $http.get('/i/temp/getTempByTime', { params: {"oid": $stateParams.storageID, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime": baseTools.formatTime(startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (result) {
             $scope.isErr=false;$scope.name = result.name;
             $scope.startTime=endTime;
@@ -59,7 +59,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                 	 jxData.push({x:  startTime.getTime(),y: $scope.datumTemp});jxData.push({x:  maxTime,y: $scope.datumTemp});
                 	 $scope.curtemper.push([key,null]);
                  }
-                yData.push({"name": key, "data": newdata });
+                yData.push({"name": key, "data": newdata,turboThreshold:0 });
             } 
             yData.push({ name: '基准温度', color: 'red',dashStyle: 'solid', marker: { symbol: 'circle' },data: jxData});//处理基准温度
             $scope.initHighchart( $scope.datumTemp,yData);

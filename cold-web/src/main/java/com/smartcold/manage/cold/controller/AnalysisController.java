@@ -76,6 +76,19 @@ public class AnalysisController {
 		return coldStorageDoorSetDao.findValidByRdcId(rdcId);
 	}
 
+	
+	@RequestMapping(value = "/getAnalysisDataByKey", method = RequestMethod.GET)
+	@ResponseBody
+	public Object getAnalysisDataByKey(int type, int oid, String keys,@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
+		return this.coldStorageAnalysisService.findValueByDateKeys(type, oid, Arrays.asList(keys.split(",")), startTime, endTime);
+	}
+	
+	@RequestMapping(value = "/getAnalysisDataByDate", method = RequestMethod.GET)
+	@ResponseBody
+	public Object getAnalysisDataByDate(int type, int oid, String keys,@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
+		return this.coldStorageAnalysisService.findDVDataByDate(type, oid, Arrays.asList(keys.split(",")), startTime, endTime);
+	}
+	
 	/**
 	 * 获得风机
 	 * 
@@ -508,11 +521,7 @@ public class AnalysisController {
 		ExportExcelUtil.expExcel(response, fileName, title, mode, colmode, shelName, expdata);
 	}
 	
-	@RequestMapping(value = "/getAnalysisDataByKey", method = RequestMethod.GET)
-	@ResponseBody
-	public Object getAnalysisDataByKey(int type, int oid, String keys,@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
-		return this.coldStorageAnalysisService.findValueByDateKeys(type, oid, Arrays.asList(keys.split(",")), startTime, endTime);
-	}
+
 	
 
 }

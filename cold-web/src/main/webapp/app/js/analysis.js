@@ -29,36 +29,19 @@ coldWeb.controller('overTempCountAndTime', function($rootScope, $scope,$timeout,
 						time.unshift(val);
 				 });
 		     }
-			 emid="Chart_"+storage.id;
 			 $scope.sumDatavalue[storage.id]=[ccount,ctime];// $scope.sumDatavalue[0]=[ccount,ctime];
-			 $scope.dwoverTempAndCount(emid, xAxis, count, time);
+			 $scope.dwoverTempAndCount("Chart_"+storage.id, xAxis, count, time);
 		});
 	};
 //	
 	 $scope.dwoverTempAndCount=function(emid,xAxis,count,time){
 		  var option={
-				  tooltip : { trigger: 'axis' },
-	                toolbox: {
-	                    show : false,
-	                    feature : {
-	                        mark : {show: true},
-	                        dataView : {show: true, readOnly: false},
-	                        magicType: {show: true, type: ['line', 'bar']},
-	                        restore : {show: true},
-	                        saveAsImage : {show: true}
-	                    }
-	                },
+				    tooltip : { trigger: 'axis' },
 	                calculable : true,
 	                legend: { data:['超温时间','超温次数'] },
 	                xAxis : [ { type : 'category', data : xAxis }  ],
-	                yAxis : [
-	                    { type : 'value',name : '超温时间(分钟)', max : 1500 },
-	                    { type : 'value', name : '超温次数(次)' }
-	                ],
-	                series : [
-	                    {name:'超温时间', type:'bar', data:time, tooltip: {  valueSuffix: '分钟' }},
-	                    {name:'超温次数', type:'line', yAxisIndex: 1, data:count,tooltip: {  valueSuffix: ' 次'}  }
-	                ]
+	                yAxis : [ { type : 'value',name : '超温时间(分钟)', max : 1500 }, { type : 'value', name : '超温次数(次)' } ],
+	                series :[ {name:'超温时间', type:'bar', data:time, tooltip: {  valueSuffix: '分钟' }}, {name:'超温次数', type:'line', yAxisIndex: 1, data:count,tooltip: {  valueSuffix: ' 次'}  } ]
 		  };
 		  var chart = echarts.init(document.getElementById(emid));
 		  chart.setOption(option);
@@ -83,104 +66,9 @@ coldWeb.controller('overTempCountAndTime', function($rootScope, $scope,$timeout,
 
 
 
-//coldWeb.controller('overTemperatureTime', function($rootScope, $scope,$timeout, $location, $http,$stateParams,baseTools){
-//   	$scope.load = function(){
-//   		$scope.rdcId = $stateParams.rdcId,  $scope.showMap=new Array();
-//		var endTime = new Date(),startTime = new Date(endTime.getTime() - 30 * 24 * 60 * 60 * 1000);
-//        $http.get('/i/coldStorage/findAnalysisByRdcidKeysDate',{
-//            params: {
-//            	"startTime": baseTools.formatTime(startTime),
-//            	"endTime": baseTools.formatTime(endTime),
-//                "rdcid": $scope.rdcId,
-//                'keys':'OverTempL1Time,OverTempL2Time,OverTempL3Time'
-//            } 
-//		}).success(function(data,status,config,header){
-//				$scope.data = data;
-//				angular.forEach(data,function(storage,key){
-//					$timeout(function(){		
-//					xData = [],series = [], chartId = key + "_Chart";
-//					if(storage.OverTempL1Time&&storage.OverTempL2Time&&storage.OverTempL3Time){
-//						var L1=[],L2=[],L3=[],totaL1time=0,totaL2time=0,totaL3time=0;
-//						angular.forEach(storage.OverTempL1Time,function(item){xData.unshift(baseTools.formatTime(item['date']).split(" ")[0]);L1.unshift(item.value);totaL1time+=item.value;});
-//						angular.forEach(storage.OverTempL2Time,function(item){L2.unshift(item.value );totaL2time+=item.value;});
-//						angular.forEach(storage.OverTempL3Time,function(item){L3.unshift(item.value);totaL3time+=item.value;});
-//						series.push({name:'危险超温告警', type:'bar',  data:L1,color:'#dd4b39'});
-//						series.push({name:'严重超温告警', type:'bar',  data:L2,color:'#f39c12'});
-//						series.push({name:'正常超温告警', type:'bar',  data:L3,color:'#00c0ef'});
-//						$scope.showMap[key]=[totaL1time,totaL2time,totaL3time];
-//					}
-//	               var chart = echarts.init(document.getElementById(chartId));
-//						option = {
-//								legend: {data:['危险超温告警','严重超温告警','正常超温告警']},
-//							    tooltip : { trigger: 'axis' },
-//							    toolbox: {
-//							        show : true,
-//							        feature : {  dataView : {show: true, readOnly: false}, magicType : {show: true, type: ['line', 'bar']},restore : {show: true}, saveAsImage : {show: true}}
-//							    },
-//							    calculable : true,
-//							    xAxis  : [{ type : 'category', data : xData}],
-//							    yAxis  : [{type : 'value' }],
-//							    series : series
-//							};
-//						chart.setOption(option);
-//					},0);
-//				});
-//		});
-//	};
-//	$scope.load();
-//});
-
-//coldWeb.controller('overTemperatureCount', function($rootScope, $scope,$timeout, $location, $http,$stateParams,baseTools){
-//   	$scope.load = function(){
-//   		$scope.rdcId = $stateParams.rdcId,  $scope.showMap={};
-//		var endTime = new Date(), startTime = new Date(endTime.getTime() - 30 * 24 * 60 * 60 * 1000);
-//		$http.get('/i/coldStorage/findAnalysisByRdcidKeysDate',{
-//            params: {
-//            	"startTime": baseTools.formatTime(startTime),
-//            	"endTime": baseTools.formatTime(endTime),
-//                "rdcid": $scope.rdcId,
-//                'keys':'OverTempL1Count,OverTempL2Count,OverTempL3Count'
-//            } 
-//		}).success(function(data,status,config,header){
-//				$scope.data = data;
-//				angular.forEach(data,function(storage,key){
-//					$timeout(function(){		
-//					xData = [],series = [], chartId = key + "_Chart";
-//					if(storage.OverTempL1Count&&storage.OverTempL2Count&&storage.OverTempL3Count){
-//						var L1=[],L2=[],L3=[],totaL1time=0,totaL2time=0,totaL3time=0;
-//						angular.forEach(storage.OverTempL1Count,function(item){
-//							xData.unshift(baseTools.formatTime(item['date']).split(" ")[0]);
-//							L1.unshift(item.value);
-//							totaL1time+=item.value;});
-//						angular.forEach(storage.OverTempL2Count,function(item){L2.unshift(item.value );totaL2time+=item.value;});
-//						angular.forEach(storage.OverTempL3Count,function(item){L3.unshift(item.value);totaL3time+=item.value;});
-//						series.push({name:'危险超温告警次数', type:'bar',  data:L1,color:'#dd4b39'});
-//						series.push({name:'严重超温告警次数', type:'bar',  data:L2,color:'#f39c12'});
-//						series.push({name:'正常超温告警次数', type:'bar',  data:L3,color:'#00c0ef'});
-//						$scope.showMap[key]=[totaL1time,totaL2time,totaL3time];
-//					}
-//	               var chart = echarts.init(document.getElementById(chartId));
-//						option = {
-//								legend: {data:['危险超温告警次数','严重超温告警次数','正常超温告警次数']},
-//							    tooltip : { trigger: 'axis' },
-//							    toolbox: {
-//							        show : true,
-//							        feature : {  dataView : {show: true, readOnly: false}, magicType : {show: true, type: ['line', 'bar']},restore : {show: true}, saveAsImage : {show: true}}
-//							    },
-//							    calculable : true,
-//							    xAxis  : [{ type : 'category', data : xData}],
-//							    yAxis  : [{type : 'value' }],
-//							    series : series
-//							};
-//						chart.setOption(option);
-//					},0);
-//				});
-//		});
-//	};
-//	$scope.load();
-//});
-
-
+/**
+ * 超温比例
+ */
 coldWeb.controller('overTemperatureYZ', function($rootScope, $scope,$timeout, $location, $http,$stateParams,baseTools){
 	 $scope.load = function(){
 		$scope.rdcId = $stateParams.rdcId;
@@ -216,61 +104,14 @@ coldWeb.controller('overTemperatureYZ', function($rootScope, $scope,$timeout, $l
 						yData1.unshift(storage['ChaoWenYinZi'][index]['value'])
 						yData2.unshift(storage['MaxTemp'][index]['value'])
 						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
-					})
+					});
 					option = {
-	                tooltip : {
-	                    trigger: 'axis'
-	                },
-	                toolbox: {
-	                    show : false,
-	                    feature : {
-	                        mark : {show: true},
-	                        dataView : {show: true, readOnly: false},
-	                        magicType: {show: true, type: ['line', 'bar']},
-	                        restore : {show: true},
-	                        saveAsImage : {show: true}
-	                    }
-	                },
-	                calculable : true,
-	                legend: {
-	                    data:['超温比例','最高温度']
-	                },
-	                xAxis : [
-	                    {
-	                        type : 'category',
-	                        data : xData
-	                    }
-	                ],
-	                yAxis : [
-	                    {
-	                        type : 'value',
-	                        name : '超温比例',
-	                        max : 100,
-	                        axisLabel : {
-	                            formatter: '{value} %'
-	                        }
-	                    },
-	                    {
-	                        type : 'value',
-	                        name : '最高温度',
-	                        axisLabel : {
-	                            formatter: '{value} °C'
-	                        }
-	                    }
-	                ],
-	                series : [
-	                    {
-	                        name:'超温比例',
-	                        type:'bar',
-	                        data:yData1
-	                    },
-	                    {
-	                        name:'最高温度',
-	                        type:'line',
-	                        yAxisIndex: 1,
-	                        data:yData2
-	                    }
-	                ]
+						    calculable : true,
+			                tooltip : { trigger: 'axis' },
+			                legend: { data:['超温比例','最高温度'] },
+			                xAxis : [  {type : 'category',  data : xData} ],
+			                yAxis : [  {type : 'value', name : '超温比例', max : 100, axisLabel : {  formatter: '{value} %' } },{ type : 'value',name : '最高温度', axisLabel : {formatter: '{value} °C' } }],
+			                series: [  { name:'超温比例', type:'bar', data:yData1}, { name:'最高温度', type:'line', yAxisIndex: 1, data:yData2 } ]
 	            };
 					chart.setOption(option);
 				})
@@ -280,6 +121,99 @@ coldWeb.controller('overTemperatureYZ', function($rootScope, $scope,$timeout, $l
 	
 	$scope.load();
 });
+
+/**
+ * 30电耗
+ */
+coldWeb.controller('powerAnalysis', function($rootScope, $scope,$timeout, $location, $http,$stateParams,baseTools){
+	$scope.rdcId = $stateParams.rdcId,
+	$scope.endTime = new Date(),$scope.startTime = new Date($scope.endTime.getTime() - 30 * 24 * 60 * 60 * 1000);
+	$scope.tolpwc={};
+	$scope.initdata=function(){
+		  angular.forEach($rootScope.powers,function(power){ 
+			  $scope.initchardata(power.id,power.name);
+		  });
+	};
+	$scope.initchardata=function(oid,name){
+		$http.get('/i/AnalysisController/getAnalysisDataByDate', { params: {type:10, oid:oid, keys:'TotalPWC', startTime:baseTools.formatTime($scope.startTime), endTime:baseTools.formatTime($scope.endTime)}}).success(function (data) {
+			var  tolpwc=0, datalist=	data['TotalPWC'],xAxis=[],ydate=[];
+		    if(datalist.length>0){
+		    	 angular.forEach(datalist,function(item,index){ 
+		    		   tolpwc+= item['value']; 
+		    		   ydate.push(item['value']);
+		    		   xAxis.push(baseTools.formatTime(item['date']).split(" ")[0]);
+				 });
+		    	 $scope.tolpwc[oid]=tolpwc;
+		     }
+		    $scope.dwoverChar("Chart_"+oid,name,xAxis,ydate);
+		});
+	};
+
+	 $scope.dwoverChar=function(emid,name,xData,yData){
+		 var chart = echarts.init(document.getElementById(emid));
+		 var option=baseTools.getEchartSingleOption("", xData, yData, "日耗电量", "kw.h", "日耗电量", "bar");
+		 option.color= ['#ff7f50'];//#1e90ff','#22bb22','#4b0082','#d2691e'
+		 chart.setOption(option);
+	  };
+	 if($rootScope.powers==undefined){
+		  $scope.changepowers=function(){
+			   if($rootScope.powers!=undefined){
+				   initdatawatch();//销毁监听
+				   $scope.initdata();
+			   }
+		    };
+		  initdatawatch= $scope.$watch('powers', $scope.changepowers,true);//监听冷库变化
+	}else{
+		$scope.initdata();
+	}
+});
+/**
+ * 30水耗
+ */
+coldWeb.controller('waterAnalysis', function($rootScope, $scope,$timeout, $location, $http,$stateParams,baseTools){
+	$scope.rdcId = $stateParams.rdcId,
+	$scope.endTime = new Date(),$scope.startTime = new Date($scope.endTime.getTime() - 30 * 24 * 60 * 60 * 1000);
+	$scope.tolpwc={};
+	$scope.initdata=function(){
+		  angular.forEach($rootScope.compressorGroups,function(item){ 
+			  $scope.initchardata(item.id,item.name);
+		  });
+	};
+	$scope.initchardata=function(oid,name){
+		$http.get('/i/AnalysisController/getAnalysisDataByDate', { params: {type:10, oid:oid, keys:'WaterCost', startTime:baseTools.formatTime($scope.startTime), endTime:baseTools.formatTime($scope.endTime)}}).success(function (data) {
+			var  tolpwc=0, datalist=	data['WaterCost'],xAxis=[],ydate=[];
+		    if(datalist.length>0){
+		    	 angular.forEach(datalist,function(item,index){ 
+		    		   tolpwc+= item['value']; 
+		    		   ydate.push(item['value']);
+		    		   xAxis.push(baseTools.formatTime(item['date']).split(" ")[0]);
+				 });
+		    	 $scope.tolpwc[oid]=tolpwc;
+		     }
+		    $scope.dwoverChar("Chart_"+oid,name,xAxis,ydate);
+		});
+	};
+
+	 $scope.dwoverChar=function(emid,name,xData,yData){
+		 var chart = echarts.init(document.getElementById(emid));
+		 var option=baseTools.getEchartSingleOption("", xData, yData, "日耗水量", "T", "日耗水量", "bar");
+		  option.color= ['#ff7f50'];
+		  chart.setOption(option);
+	  };
+	 if($rootScope.compressorGroups==undefined){
+		  $scope.changecompressorGroups=function(){
+			   if($rootScope.compressorGroups!=undefined){
+				   initdatawatch();//销毁监听
+				   $scope.initdata();
+			   }
+		    };
+		  initdatawatch= $scope.$watch('compressorGroups', $scope.changecompressorGroups,true);//监听冷库变化
+	}else{
+		$scope.initdata();
+	}
+});
+
+
 
 coldWeb.controller('BWYZ', function($rootScope, $scope,$timeout, $location, $http,$stateParams,baseTools){
 	$scope.load = function(){
@@ -314,8 +248,7 @@ coldWeb.controller('BWYZ', function($rootScope, $scope,$timeout, $location, $htt
 						xData.unshift(baseTools.formatTime(item['date']).split(" ")[0])
 						console.log(chartId)
 					})
-					chart.setOption(baseTools.getEchartSingleOption("", 
-							xData, yData, "保温因子", "τ", "τ", "bar"));
+					chart.setOption(baseTools.getEchartSingleOption("", xData, yData, "保温因子", "τ", "τ", "bar"));
 					
 				},0)
 			})
@@ -626,16 +559,6 @@ coldWeb.controller('runningAnalysis', function($rootScope, $scope,$timeout, $loc
 		                tooltip : {
 		                    trigger: 'axis'
 		                },
-		                toolbox: {
-		                    show : false,
-		                    feature : {
-		                        mark : {show: true},
-		                        dataView : {show: true, readOnly: false},
-		                        magicType: {show: true, type: ['line', 'bar']},
-		                        restore : {show: true},
-		                        saveAsImage : {show: true}
-		                    }
-		                },
 		                calculable : true,
 		                legend: {
 		                    data:['运行时长','运行次数']
@@ -678,8 +601,7 @@ coldWeb.controller('runningAnalysis', function($rootScope, $scope,$timeout, $loc
 		                ]
 		            };
 					chart1.setOption(option)
-					chart2.setOption(baseTools.getEchartSingleOption("", 
-							xData, yData3, "平均运行时间", "m", "m", "bar"))
+					chart2.setOption(baseTools.getEchartSingleOption("", xData, yData3, "平均运行时间", "m", "m", "bar"))
 				},0)
 			})
 		})

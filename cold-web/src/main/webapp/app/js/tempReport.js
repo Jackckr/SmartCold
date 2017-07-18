@@ -1,9 +1,8 @@
-
 /**
  * Created by maqiang34 on 16/10/18.
  * 月分析报表
  */
-coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$http ,$timeout,baseTools) {
+coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http ,$timeout,$state,baseTools) {
 	$scope.colors= ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'];  Highcharts.setOptions({  global: {useUTC: false } ,colors:$scope.colors });
 	$scope.isreportMoth=false;  $scope.isnotprint=false; $scope.charArray=[];
 	$scope.titmode=["月度","七天"], $scope.fontcol=['red' ,'#ED561B' ,'#058DC7' ];
@@ -98,7 +97,6 @@ coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$ht
 	        yData.push({ name: '基准温度', color: 'red',dashStyle: 'solid', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:datumTemp},{ x:endDate.getTime(),y:datumTemp}]});//处理基准温度
 	        yData.push({ name: '报警基线', color: '#f39c12',dashStyle: 'solid', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:datumTemp1},{ x:endDate.getTime(),y:datumTemp1}],dashStyle:'dash'});//处理基准温度
 	        yData.push({ name: ' ', color: '#f39c12',dashStyle: 'solid', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:datumTemp2},{ x:endDate.getTime(),y:datumTemp2}],dashStyle:'dash'});//处理基准温度
-	        console.log(JSON.stringify(yData));
 	        $scope.initHighchart(yData);
 	};
 	/**
@@ -110,14 +108,64 @@ coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$ht
             title: { text: ''  },
             series:yData,
             yAxis: {  title: {  text: '温度'  }},
-            xAxis: { type: 'datetime',  tickPixelInterval: 400 ,   labels: {  formatter: function() {   return  Highcharts.dateFormat('%Y-%m-%d', this.value);  }  }  },
+            xAxis: { type: 'datetime',  	minRange:  86400000,labels: {  formatter: function() {   return  Highcharts.dateFormat('%Y-%m-%d', this.value);  }  }  },//minRange:  86400000--间隔为每天显示, tickPixelInterval: 400 , 
             xDateFormat: '%Y-%m-%d',
             tooltip: { formatter: function () {  return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' + Highcharts.numberFormat(this.y, 2)+" ℃"; } },
     	    legend: {enabled: false },
+    	    credits: { enabled: false},
         });
 		$("#loding").hide(); 
 	};
-//2.告警时长和次数图表====================================================================================================================================================================================
+	//2.超温时间和次数图表====================================================================================================================================================================================
+	$scope.overTempAndCount=function(){
+		$http.get('/i/AnalysisController/getAnalysisDataByDate', { params: {type:1, oid:$scope.cuttstorage.id, keys:'ChaoWenShiJian,ChaoWenCiShu,', startTime:$scope.startTime, endTime:$scope.endTime}}).success(function (data) {
+		   var  val=0, ccount=0,ctime=0, date=0;
+			var otlist=	data['ChaoWenShiJian'],oclist=	data['ChaoWenCiShu'];
+		     var xAxis=[],countmode={}, count=[],time=[];
+		     angular.forEach(oclist,function(item){
+		    	 ccount+=item['value']; 
+		    	 countmode[baseTools.formatTime(item['date']).split(" ")[0]]=item['value'] ;
+		     });
+			 angular.forEach(otlist,function(item){ 
+				    val=parseFloat((item['value'] / 60).toFixed()), ctime+=val, date = baseTools.formatTime(item['date']).split(" ")[0];
+				    xAxis.push(date);
+				    time.push(val);
+				    count.push(countmode[date]?countmode[date]:val>0?1:0);
+			 });
+			 $scope.sumDatavalue[0]=[ccount,ctime];// $scope.sumDatavalue[0]=[ccount,ctime];
+			 $scope.dwoverTempAndCount(xAxis, count, time);
+		});
+	};
+	
+	 $scope.dwoverTempAndCount=function(xAxis,count,time){
+		 $scope.charArray[3]= $('#tempovertime').highcharts({
+		        chart: { zoomType: 'x' },
+		        title: { text: '' },
+		        subtitle: { text: '' },
+		        credits: { enabled: false},
+		        xAxis: [{ categories: xAxis, crosshair: true }],
+		        yAxis: [{
+		            labels: {  format: '{value}次' },
+		            title: { text: '超温次数(次）'  },
+		            opposite: true,min:0
+		        }, {
+		            gridLineWidth: 0,
+		            title: { text: '超温时长(分钟)' },
+		            labels: { format: '{value}分钟' }
+		        }],
+		        tooltip: {  shared: true },
+		        series: 
+		         [{ name: '超温时长',type: 'column',yAxis: 1, data: time, tooltip: {  valueSuffix: '分钟' } ,min:0},
+		          { name: '超温次数', type: 'spline', data: count,tooltip: {  valueSuffix: ' 次'} }]
+		    });
+	  };
+		
+	$scope.initTempWarningmsg=function(){
+		$http.get('/i/AlarmController/getOverTempByTime', { params: {rdcId:$scope.rdcId,  oid:$scope.cuttstorage.id,level:1, startTime:$scope.startTime, endTime:$scope.endTime}}).success(function (data) {
+			$scope.warninglist=data;
+		});
+	};
+//3.告警时长和次数图表====================================================================================================================================================================================
 	$scope.dwrtemplin=function(){
 		$http.get('/i/AnalysisController/getAnalysisDataByKey', { params: {type:1, oid:$scope.cuttstorage.id, keys:'OverTempL1Time,OverTempL2Time,OverTempL3Time,OverTempL1Count,OverTempL2Count,OverTempL3Count', startTime:$scope.startTime, endTime:$scope.endTime}}).success(function (data) {
 			if(data&&data.OverTempL1Time){
@@ -128,12 +176,15 @@ coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$ht
 				angular.forEach(data.OverTempL3Count,function(obj,i){l3count.unshift(obj.value);l3tailcount+=obj.value;});
 				angular.forEach(data.OverTempL1Count,function(obj,i){l1count.unshift(obj.value); l1tailcount+=obj.value;});
 				angular.forEach(data.OverTempL1Time,function(obj,i){xdata.unshift(baseTools.formatTime(obj.date).split(" ")[0]);l1time.unshift(obj.value);l1tailtime+=obj.value;});
-		    	var score=100-l1tailcount*10-l2tailcount/4*5-l3tailcount/8*2;
+		    	var score=100-l1tailcount*10- parseInt(l2tailcount/4)*5- parseInt(l3tailcount/8)*2;
 				$scope.cuttstorage.l1tailtime=l1tailtime;
 				$scope.cuttstorage.l1tailcount=l1tailcount;
 				$scope.cuttstorage.score=score<0?0:score;
 				 $scope.charArray[1]= 	$('#tempwarning').highcharts({
 			        title: { text: null},
+			        chart: {
+			            type: 'column'
+			        },
 			        xAxis: [{  categories: xdata, crosshair: true }],
 			        yAxis: [{ title: { text: '报警次数 (次)' }, opposite: true },{ title: { text: '报警时长(m)', } } ],
 			        tooltip: { shared: true },
@@ -150,52 +201,7 @@ coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$ht
 			}
 		});
 	};
-//3.超温时间和次数图表====================================================================================================================================================================================
-	$scope.overTempAndCount=function(){
-		$http.get('/i/AnalysisController/getAnalysisDataByKey', { params: {type:1, oid:$scope.cuttstorage.id, keys:'ChaoWenShiJian,ChaoWenCiShu,', startTime:$scope.startTime, endTime:$scope.endTime}}).success(function (data) {
-		   var  val=0, ccount=0,ctime=0;
-			var otlist=	data['ChaoWenShiJian'],oclist=	data['ChaoWenCiShu'];
-		     var xAxis=[],count=[],time=[];
-			 angular.forEach(otlist,function(item){ 
-				    val=parseFloat((item['value'] / 60).toFixed());
-				   ctime+=val;
-				    xAxis.unshift(baseTools.formatTime(item['date']).split(" ")[0]);
-					time.unshift(val);
-			 });
-			 angular.forEach(oclist,function(item){ccount+=item['value']; count.unshift(item['value'] ); });
-			 $scope.sumDatavalue[0]=[ccount,ctime];// $scope.sumDatavalue[0]=[ccount,ctime];
-			 $scope.dwoverTempAndCount(xAxis, count, time);
-		});
-	};
-	
-	 $scope.dwoverTempAndCount=function(xAxis,count,time){
-		 $scope.charArray[3]= $('#tempovertime').highcharts({
-		        chart: { zoomType: 'xy' },
-		        title: { text: '' },
-		        subtitle: { text: '' },
-		        credits: { enabled: false},
-		        xAxis: [{ categories: xAxis, crosshair: true }],
-		        yAxis: [{
-		            labels: {  format: '{value}次' },
-		            title: { text: '超温次数(次）'  },
-		            opposite: true
-		        }, {
-		            gridLineWidth: 0,
-		            title: { text: '超温时长(m)' },
-		            labels: { format: '{value}分钟' }
-		        }],
-		        tooltip: {  shared: true },
-		        series: 
-		         [{ name: '超温时长',type: 'column',yAxis: 1, data: time, tooltip: {  valueSuffix: 'm' } },
-		          { name: '超温次数', type: 'spline', data: count,tooltip: {  valueSuffix: ' 次'} }]
-		    });
-	  };
-		
-	$scope.initTempWarningmsg=function(){
-		$http.get('/i/AlarmController/getOverTempByTime', { params: {rdcId:$scope.rdcId,  oid:$scope.cuttstorage.id,level:1, startTime:$scope.startTime, endTime:$scope.endTime}}).success(function (data) {
-			$scope.warninglist=data;
-		});
-	};
+
 	//初始化系统入口====================================================================================================================================================================================
 	 $scope.initdata=function(){
             $("#loding").show();
@@ -275,7 +281,11 @@ coldWeb.controller('monthReport2', function( $scope, $rootScope,$stateParams,$ht
 		$scope.index=index;
 		 $scope.initdata();
 	};
-	
+	$scope.changeversions=function(index,url,$event){
+		var em=$($event.target); em.addClass('select').siblings().removeClass('select');
+		$state.go(url, {'rdcId':$scope.rdcId });
+		
+	};
 	
 	
 });
