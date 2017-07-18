@@ -15,8 +15,7 @@
 		FROM
 			`smartcold`.`coldstorageset` cs 
 		WHERE
-			cs.`startTemperature` != 0
-		AND cs.`tempdiff` != 0  ;
+			 cs.`tempdiff` != 0  ;
 	</select>
 	
 	<select id="getMAITempData" parameterType="map" resultType="com.smartcold.manage.cold.entity.comm.ItemValue">

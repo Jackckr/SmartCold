@@ -6,12 +6,19 @@
 coldWeb.controller('basicReport', function( $scope, $rootScope,$stateParams,$http ,$timeout,baseTools) {
 	$scope.isnotprint=true;$scope.isloaderr=false;//当前是否是打印状态和加载状态
 	$scope.rdcId = $stateParams.rdcId;
+	
+	
+	
+	$scope.isreportMoth=false; 
+	$scope.titmode=["月度","七天"], $scope.fontcol=['red' ,'#ED561B' ,'#058DC7' ];
+	
 	$("#loding").show(); $scope.loadindex=0;//已完成加载数据
 	$scope.charArray={},$scope.charrestmsg={};//图表信息,分析信息
 	$("#date04").jeDate({isinitVal:true,festival:false, ishmsVal:false,isToday:false, initAddVal:[-30],minDate: '2016-05-01 23:59:59', maxDate: $.nowDate(-30),  format:"YYYY-MM",zIndex:100});
+	$("#date05").jeDate({  isinitVal:true, initAddVal:[-7], festival: true, format: 'YYYY-MM-DD',maxDate: $.nowDate(-7),});
 	
-	var firstDate = new Date(); firstDate.setMonth(firstDate.getMonth()-1); firstDate.setDate(1);firstDate.setHours(0);firstDate.setMinutes(0);firstDate.setSeconds(0);//设置上月的第一天
-	var endDate = new Date(firstDate); endDate.setMonth(firstDate.getMonth()+1); endDate.setDate(0);endDate.setHours(23);endDate.setMinutes(59);endDate.setSeconds(59);//设置上月的最后一天
+	var firstDate = new Date(); firstDate.setDate(firstDate.getDate()-7);firstDate.setHours(0);firstDate.setMinutes(0);firstDate.setSeconds(0);//设置上月的第一天
+	var endDate = new Date(); endDate.setHours(23);endDate.setMinutes(59);endDate.setSeconds(59);//设置上月的最后一天
 	$scope.endTime=baseTools.formatTime(endDate); $scope.startTime= baseTools.formatTime(firstDate); $scope.timeuRange=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
 	//数据模型
 	var mode={url:["/i/coldStorage/findAnalysisByRdcidKeysDate","/i/coldStorage/findDoorSisByRdcidKeyDate"],
@@ -69,8 +76,8 @@ coldWeb.controller('basicReport', function( $scope, $rootScope,$stateParams,$htt
 	//
 	$scope.initlineChar = function(){//初始化折现图
 		 $scope.toolchart(0,mode.url[0], 'tempertureId', '超温时长(min/day)', 'ChaoWenShiJian', 60, " 平均日超温时长");//超温时长0
-    	 $scope.toolchart(1,mode.url[0], 'cwyzId', '超温因子(ε)', 'ChaoWenYinZi', 1, " 平均日超温因子");//超温因子1
-	     $scope.toolchart(2,mode.url[0], 'bwyzId', '保温因子(τ)', 'BaoWenYinZi', 1, " 平均日保温因子");//保温因子2
+    	 $scope.toolchart(1,mode.url[0], 'cwyzId', '超温比例(ε)', 'ChaoWenYinZi', 1, " 平均日超温因子");//超温因子1
+//	     $scope.toolchart(2,mode.url[0], 'bwyzId', '保温因子(τ)', 'BaoWenYinZi', 1, " 平均日保温因子");//保温因子2
 	     $scope.toolchart(3,mode.url[0], 'openDoorTimesId', '日开门次数', 'DoorOpenTimes', 1, " 平均日开门次数");//开门次数3
 	     $scope.toolchart(4,mode.url[1], 'singleOpenDoorId', '单次开门时长', 'AvgTime', 60, " 平均日单次开门时长");//4
 	     $scope.toolchart(5,mode.url[0], 'goodsId', '货物因子', 'GoodsLiuTongYinZi', 1, " 月平均货物因子为");//4
@@ -148,28 +155,25 @@ coldWeb.controller('basicReport', function( $scope, $rootScope,$stateParams,$htt
     };
     
     //
-    $scope.initTempwring=function(){
-    	var oids=[];angular.forEach($rootScope.mystorages,function(storage){ oids.push(storage.id); });oids=oids.join(",");
-    	$http.get('/i/AlarmController/getOverTempByFilter',{params: {rdcId: $scope.rdcId, oids:oids, startTime: $scope.startTime,endTime: $scope.endTime}}).success(function(data,status,config,header){
-    		if(data.success){
-    			var xdata=[],sdata1=[],sdata2=[];
-    			$.each(data.entity, function(i, vo){ xdata.push(i); sdata1.push(vo[0]);sdata2.push(vo[1]);});
-    	    	var tempwarning = echarts.init(document.getElementById('tempwarningId'));
-    	        var option = {
-    	        	    tooltip: { trigger: 'axis', axisPointer: {type: 'cross',crossStyle: { color: '#999' } }},
-    	        	    legend: {  data:['次数','时长']},
-    	        	    xAxis: [ { type: 'category', data: xdata, axisPointer: {type: 'shadow' }} ],
-    	        	    series: [{name:'次数',type:'bar', data:sdata1},{name:'时长',type:'line',yAxisIndex: 1, data:sdata2 }],
-    	        	    yAxis:[{type:"value",name:"次数/次",min:0,max:250,interval:50,axisLabel:{formatter:"{value}"}},{type:"value",name:"时长/min",min:0,max:25,interval:5,axisLabel:{formatter:"{value}"}}]
-    	        	};
-    	        tempwarning.setOption(option);
-    		}
-    	});
-    	
-    	
-    	
-    	
-    };
+//    $scope.initTempwring=function(){
+//    	var oids=[];angular.forEach($rootScope.mystorages,function(storage){ oids.push(storage.id); });oids=oids.join(",");
+//    	$http.get('/i/AlarmController/getOverTempByFilter',{params: {rdcId: $scope.rdcId, oids:oids, startTime: $scope.startTime,endTime: $scope.endTime}}).success(function(data,status,config,header){
+//    		if(data.success){
+//    			var xdata=[],sdata1=[],sdata2=[];
+//    			$.each(data.entity, function(i, vo){ xdata.push(i); sdata1.push(vo[0]);sdata2.push(vo[1]);});
+//    	    	var tempwarning = echarts.init(document.getElementById('tempwarningId'));
+//    	        var option = {
+//    	        	    tooltip: { trigger: 'axis', axisPointer: {type: 'cross',crossStyle: { color: '#999' } }},
+//    	        	    legend: {  data:['次数','时长']},
+//    	        	    xAxis: [ { type: 'category', data: xdata, axisPointer: {type: 'shadow' }} ],
+//    	        	    series: [{name:'次数',type:'bar', data:sdata1},{name:'时长',type:'line',yAxisIndex: 1, data:sdata2 }],
+//    	        	    yAxis:[{type:"value",name:"次数/次",min:0,max:250,interval:50,axisLabel:{formatter:"{value}"}},{type:"value",name:"时长/min",min:0,max:25,interval:5,axisLabel:{formatter:"{value}"}}]
+//    	        	};
+//    	        tempwarning.setOption(option);
+//    		}
+//    	});
+//    	
+//    };
     //============================================================================看不懂==============================================================================
     $scope.initcompruntime=function(){
 			var option6 = {
@@ -227,13 +231,13 @@ coldWeb.controller('basicReport', function( $scope, $rootScope,$stateParams,$htt
     	    $scope.initWaterCostsis();
     	    $scope.initQEsis();
     	    $scope.initcompruntime();
-    	    $scope.changeStorages=function(){
-    			   if($rootScope.mystorages!=undefined){
-    				   $scope.initTempwring();//超温告警
-    			   }
-    		    };
+//    	    $scope.changeStorages=function(){
+//    			   if($rootScope.mystorages!=undefined){
+//    				   $scope.initTempwring();//超温告警
+//    			   }
+//    		    };
     		
-    		  $scope.$watch('mystorages', $scope.changeStorages,true);//监听冷库变化
+//    		  $scope.$watch('mystorages', $scope.changeStorages,true);//监听冷库变化
     	   
     };
     $scope.initdata();

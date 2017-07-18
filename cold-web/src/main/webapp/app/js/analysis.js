@@ -151,7 +151,7 @@ coldWeb.controller('powerAnalysis', function($rootScope, $scope,$timeout, $locat
 
 	 $scope.dwoverChar=function(emid,name,xData,yData){
 		 var chart = echarts.init(document.getElementById(emid));
-		 var option=baseTools.getEchartSingleOption("", xData, yData, "日耗电量", "kw.h", "日耗电量", "bar");
+		 var option=baseTools.getEchartSingleOption("", xData, yData, "日耗电量", "kw.h", "日耗电量", "bar",0);
 		 option.color= ['#ff7f50'];//#1e90ff','#22bb22','#4b0082','#d2691e'
 		 chart.setOption(option);
 	  };
@@ -196,7 +196,7 @@ coldWeb.controller('waterAnalysis', function($rootScope, $scope,$timeout, $locat
 
 	 $scope.dwoverChar=function(emid,name,xData,yData){
 		 var chart = echarts.init(document.getElementById(emid));
-		 var option=baseTools.getEchartSingleOption("", xData, yData, "日耗水量", "T", "日耗水量", "bar");
+		 var option=baseTools.getEchartSingleOption("", xData, yData, "日耗水量", "T", "日耗水量", "bar",0);
 		  option.color= ['#ff7f50'];
 		  chart.setOption(option);
 	  };

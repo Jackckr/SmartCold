@@ -175,6 +175,24 @@
 			 <scope>system</scope>
 	          <systemPath>${project.basedir}/lib/QRCode.jar</systemPath>
 		</dependency>  
+		
+		
+		<!-- IE8json -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.7.4</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>2.7.4</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-annotations</artifactId>
+		    <version>2.7.4</version>
+		</dependency>
 		<!-- 支持短信验证  -->
 	    <dependency>
 	      <groupId>org.taobao.sdk</groupId>

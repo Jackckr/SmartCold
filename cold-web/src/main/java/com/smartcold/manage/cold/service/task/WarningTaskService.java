@@ -31,7 +31,7 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 
  * 仅238执行
  **/
-//@Service
+@Service
 public class WarningTaskService  {
 	@Autowired
 	private TempWarningService tempWarningServer;
@@ -40,10 +40,10 @@ public class WarningTaskService  {
  
 	private static int excute=0;
     private static 	List<ColdStorageSetEntity> allMonitorTempSet=Lists.newArrayList();
-    public static 	HashSet<Integer> Blacklist=new HashSet<Integer>();
+    public static 	HashSet<Integer> Blacklist=new HashSet<Integer>();//黑名单(错误配置，温度)
     public static 	HashMap<Integer,Integer> extBlacklist=new HashMap<Integer,Integer>();
 	
-    private static HashSet<Integer> extsid=new HashSet<Integer>();
+    private static HashSet<Integer> extsid=new HashSet<Integer>();//需要执行的
 	public synchronized static void addExtsid(int key) {extsid.add(key);}
 	public synchronized static void clerextsid() {extsid.clear();}
 	public synchronized static HashSet<Integer> getExtsid() {return extsid;}
@@ -57,6 +57,7 @@ public class WarningTaskService  {
 	public void delTempTask() {
 		Blacklist.clear();
 		tempListen.clear();
+		extBlacklist.clear();
 	}
 	
 	/**
@@ -64,7 +65,6 @@ public class WarningTaskService  {
 	 */
 	@Scheduled(cron = "0 5 1  ? * 7")
 	public void delBlacklist() {
-		extBlacklist.clear();
 		System.err.println("今天周天 我要清除任务");
 	}
     /**
@@ -128,13 +128,12 @@ public class WarningTaskService  {
 		String endtime =TimeUtil.getDateTime();
 		String starttime =TimeUtil.getDateTime(sttime);
 		if(allMonitorTempSet.size()==0||excute>12){
-			Blacklist.clear();
 			allMonitorTempSet = this.tempWarningServer.getAllMonitorTempSet();//1.获得正常监控温度信息
 		}
 		int key=0;float baseTemp=0;
 		for (ColdStorageSetEntity colditem : allMonitorTempSet) {
 			key=colditem.getId();//冷库id
-			if(Blacklist.contains(key)||extBlacklist.containsKey(key)&&extBlacklist.get(key)>5){continue;}
+			if(Blacklist.contains(key)){continue;}//||(extBlacklist.containsKey(key)&&extBlacklist.get(key)>5)
 			if(StringUtil.isNull(colditem.getTids())){ Blacklist.add(key);  continue;}//过滤无效数据
 		    baseTemp=	colditem.getTempdiff()/2+colditem.getStartTemperature()+2;
 		    colditem.setBaseTemp(baseTemp);//计算基线温度
@@ -144,7 +143,7 @@ public class WarningTaskService  {
 		    	 String newdeviceid="";for (String dev : split) {newdeviceid+="'"+dev+"',";}newdeviceid=newdeviceid.substring(0,newdeviceid.length()-1);colditem.setDeviceids(newdeviceid);
 		    }
 			ItemValue minTempData = this.tempWarningServer.getMAITempData(colditem.getTids(), 0,colditem.getDeviceids(),starttime, endtime);//获得最低温度
-			if(minTempData==null){ Blacklist.add(key);continue;	}//故障  没数据
+			if(minTempData==null){ continue;	}//故障  没数据
 			ScheduleJob job =getJob(key); 
 			long cutttTime=System.currentTimeMillis();
 			if(minTempData.getValue()<baseTemp){

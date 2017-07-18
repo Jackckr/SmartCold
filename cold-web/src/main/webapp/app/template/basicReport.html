@@ -1,18 +1,107 @@
 <link type="text/css" rel="stylesheet" href="assets/plugins/jedate/skin/jedate.css">
 <script type="text/javascript" src="assets/plugins/jedate/jquery.jedate.js"></script>
-<style>.jedateblue .jedatebot .jedatebtn span{  width:46%!important;  }  </style>
+<script type="text/javascript" src="assets/js/html2canvas.js"></script>
+<script type="text/javascript" src="assets/js/jspdf.debug.js"></script>
+
+
+<style>
+	.jedateblue .jedatebot .jedatebtn span{  width:46%!important;  }
+	.coldName li { background: none; }
+	.coldName li {
+    list-style-type: none;
+    border: 2px solid #ccc;
+    margin-top: 5px;
+    cursor: pointer;
+    padding: 3px 20px;
+   }
+	
+
+.coldName li.select:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background: url(../assets/img/icon-right.png);
+}
+	.coldName li.select {
+    border-color: #0095ff!important;
+    padding: 3px 20px;
+    position: relative;
+}
+.box {
+    border: 1px solid #ccc;
+}
+.print_name>div{
+	border-bottom:1px solid #666;
+}
+	.print_name>div>span{
+	height:22px;
+	display:inline-block;
+	position: relative;
+	}
+	.print_name>div>span:before{
+		content: "";
+		width: 100%;
+		height: 6px;
+		position: absolute;
+		bottom: -12px;
+		left: 0;
+	background: #fff;
+		
+	}
+	.warnmsgs{
+		position: relative;
+		margin-top: -42px;
+		left: 20px;
+		float: left;
+		    font-weight: 900;
+    color: #333333;
+	}
+	.warnmsgs er{
+	color: red;
+	}
+	.chart_gap>p>span{width: auto;}
+</style>
 <div id="rpt_asis_coment" class="page-content" style="padding: 0 10px" >
 	<div class="page-header row" style="padding: 5px 0px">
 	  <div class="col-lg-4">
-	  	&nbsp;&nbsp;月报表
+	  	&nbsp;&nbsp;{{isreportMoth?titmode[0]:titmode[1]}}报表
 	  <button class="btn btn-info myPrint" ng-click="Preview()"> 打印预览 </button>
+	  <button class="btn btn-info myPrint" ng-click="exppdf()"> 导出PDF </button>
 	  </div>
 	  <div class="col-lg-4"></div>
 	  	<div class="col-lg-4 text-right" style="color:#333;font-size: 14px;line-height: 2;">
-	  	     <input class="datainp wicon" id="date04" type="text" placeholder="YYYY-MM"  readonly>
-	      <button class="btn btn-info myPrint" ng-click="getreport()">查询 </button>
+	  	  <button class="btn btn-info myPrint" ng-click="isreportMoth=true" class="">月报</button>
+	      <button class="btn btn-info myPrint" ng-click="isreportMoth=false" >周报</button>
+	  	     <span ng-show="isreportMoth">
+	  	        <input class="datainp wicon" id="date04" type="text" placeholder="YYYY-MM"  readonly>
+	  	    </span>
+	  	   <span ng-show="!isreportMoth">
+	  	                 <input class="datainp wicon" id="date05" type="text"  readonly>
+	  	    </span>
+	           <button class="btn btn-info myPrint" ng-click="getreport()">查询 </button>
 	  	</div>
 	</div>
+	<div class="version">
+		<div class="clearfix">
+			<span class="pull-left" style="margin-top: 11px;">选择版本</span>
+			<ul class="coldName version_choice clearfix pull-left">
+				<li class="select" ng-click="changeversions(0,'tempReport',$event)">温度版</li>
+				<li class=""       ng-click="changeversions(1,'basicReport',$event)">基本版</li>
+				<li class=""       ng-click="changeversions(2,'',$event)">聪慧版</li>
+				<li class="grey">智能版</li>
+				<li class="grey">维护版</li>
+			</ul>
+		</div>
+		<div class="clearfix">
+			<span class="pull-left" style="margin-top: 11px;">选择冷库</span>
+			<ul class="coldName clearfix pull-left">
+				<li ng-repeat="storage in mystorages" ng-click="changestorage($index,storage.id,$event)" class="{{$index==0?'select':'' }} " >{{storage.name}}</li>
+			</ul>
+		</div>
+ 	</div>
 	<div id="print" ng-show="!isloaderr">
 		<div class="print_header">
 	        <h3>
@@ -98,19 +187,19 @@
 	    <!-- 温度分析部分 -->
 	    <div class="print_part chart_gap">
 	    	<h4><strong>DC(冷库)月度运行分析详情技术附件及结论:</strong></h4>
-	    	<p class="tac w60"><span class="bgBlue">超温告警</span></p>
-	    	<div class="clearfix">
-	    		<div class="chartPart w60">
-	    			<div id="tempwarningId" class="chartHight" ng-show="isnotprint"></div>
-	    			<div id="tempwarningId_img"  ng-show="!isnotprint"></div>
-	    		</div>
-	    		<div class="textPart w40">
-	    			<p><strong>超温告警（综合大数据纵环比分析）</strong></p>
+<!-- 	    	<p class="tac w60"><span class="bgBlue">超温告警</span></p> -->
+<!-- 	    	<div class="clearfix"> -->
+<!-- 	    		<div class="chartPart w60"> -->
+<!-- 	    			<div id="tempwarningId" class="chartHight" ng-show="isnotprint"></div> -->
+<!-- 	    			<div id="tempwarningId_img"  ng-show="!isnotprint"></div> -->
+<!-- 	    		</div> -->
+<!-- 	    		<div class="textPart w40"> -->
+<!-- 	    			<p><strong>超温告警（综合大数据纵环比分析）</strong></p> -->
 <!-- 	    			<p ng-repeat="obj in charrestmsg[0]"><span >{{obj.msg}}</span></p> -->
 <!-- 	    			<p><span class="intro">**判断优良标准逻辑：平均每天75min以下“优良”，75~120min属“一般”，150min以上属“不理想”**</span></p> -->
-	    		</div>
-	    	</div>
-	    	<hr>
+<!-- 	    		</div> -->
+<!-- 	    	</div> -->
+<!-- 	    	<hr> -->
 	    	<p class="tac w60"><span class="bgBlue">温度分析</span></p>
 	    	<div class="clearfix">
 	    		<div class="chartPart w60">
@@ -135,18 +224,49 @@
 <!-- 	    			<p><span class="intro">**判断优良标准逻辑：平均每天2.0以下“优良”，2.0~5属“一般”，5以上属“不理想”**<span ></p> -->
 	    		</div>
 	    	</div>
-	    	<hr>
-	    	<div class="clearfix">
-	    		<div class="chartPart w60">
-	    			<div id="bwyzId" class="chartHight" ng-show="isnotprint"></div>
-	    			<div id="bwyzId_img"  ng-show="!isnotprint"></div>
+	    	
+	    	
+	    	
+	    	  <!-- 能耗分析部分 -->
+	    <hr>
+	    <div class="print_part chart_gap">
+	    	<p class="tac w60"><span class="bgRed">能耗分析</span></p>
+	    	<div class="clearfix partP">
+	    		<div class="chartPart w50">
+	    			<div id="electricId" class="chartHight w100" ng-show="isnotprint"></div>
+	    			<div id="electricId_img" class=" w100" ng-show="!isnotprint"></div>
 	    		</div>
-	    		<div class="textPart w40">
-	    			<p><strong>保温因子（综合大数据纵环比分析）</strong></p>
-	    			<p ng-repeat="obj in charrestmsg[2]"><span >{{obj.msg}}</span></p>
-<!-- 	    			<p><span class="intro">**判断优良标准逻辑：平均每天0.1以下“优良”，0.1~0.15属“一般”，0.15以上属“不理想”**</span></p> -->
+	    		<div class="chartPart w50">
+	    			<div id="waterId" class="chartHight w100" ng-show="isnotprint"></div>
+	    			<div id="waterId_img" class=" w100"  ng-show="!isnotprint"></div>
 	    		</div>
+	    		<div class="textPart w100">
+	    			<p class="w50" style="margin-top: 20px;margin-right: 100px;"><strong>本DC（冷库）的月累计能耗统计</strong></p>
+    				<ul class="w50"> 
+    					<li ng-repeat="obj in charrestmsg[9]">
+    						<span >{{obj.name}}-累计电耗-{{obj.value  | number:2}}kwh</span>
+						</li>
+    				</ul>
+    				<ul class="w50"> 
+						<li ng-repeat="obj in charrestmsg[10]">
+    						<span >{{obj.name}}-累计水耗-{{obj.value | number:2}}t</span>
+						</li>
+    				</ul>
+				</div>
 	    	</div>
+	    </div>
+<!-- 	    	<hr> -->
+<!-- 	    	<div class="clearfix"> -->
+<!-- 	    		<div class="chartPart w60"> -->
+<!-- 	    			<div id="bwyzId" class="chartHight" ng-show="isnotprint"></div> -->
+<!-- 	    			<div id="bwyzId_img"  ng-show="!isnotprint"></div> -->
+<!-- 	    		</div> -->
+<!-- 	    		<div class="textPart w40"> -->
+<!-- 	    			<p><strong>保温因子（综合大数据纵环比分析）</strong></p> -->
+<!-- 	    			<p ng-repeat="obj in charrestmsg[2]"><span >{{obj.msg}}</span></p> -->
+<!-- 	    			<p><span class="intro">**判断优良标准逻辑：平均每天0.1以下“优良”，0.1~0.15属“一般”，0.15以上属“不理想”**</span></p> -->
+<!-- 	    		</div> -->
+<!-- 	    	</div> -->
 	    </div>
 	    <!-- 运管分析部分 -->
 	    <hr>
@@ -224,34 +344,7 @@
 	    		</div>
 	    	</div>
 	    </div>
-	    <!-- 能耗分析部分 -->
-	    <hr>
-	    <div class="print_part chart_gap">
-	    	<p class="tac w60"><span class="bgRed">能耗分析</span></p>
-	    	<div class="clearfix partP">
-	    		<div class="chartPart w50">
-	    			<div id="electricId" class="chartHight w100" ng-show="isnotprint"></div>
-	    			<div id="electricId_img" class=" w100" ng-show="!isnotprint"></div>
-	    		</div>
-	    		<div class="chartPart w50">
-	    			<div id="waterId" class="chartHight w100" ng-show="isnotprint"></div>
-	    			<div id="waterId_img" class=" w100"  ng-show="!isnotprint"></div>
-	    		</div>
-	    		<div class="textPart w100">
-	    			<p class="w50" style="margin-top: 20px;margin-right: 100px;"><strong>本DC（冷库）的月累计能耗统计</strong></p>
-    				<ul class="w50"> 
-    					<li ng-repeat="obj in charrestmsg[9]">
-    						<span >{{obj.name}}-累计电耗-{{obj.value  | number:2}}kwh</span>
-						</li>
-    				</ul>
-    				<ul class="w50"> 
-						<li ng-repeat="obj in charrestmsg[10]">
-    						<span >{{obj.name}}-累计水耗-{{obj.value | number:2}}t</span>
-						</li>
-    				</ul>
-				</div>
-	    	</div>
-	    </div>
+	  
 	    <!-- 能效分析部分 -->
 	    <hr>
 	    <div class="print_part chart_gap">
