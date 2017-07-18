@@ -129,3 +129,20 @@
 .fileImg>img{
     height: 100%;
 }
+/*实名认证css*/
+.authen .layui-form-item{
+    width: 70%;
+}
+.authen .layui-tab > p{
+    margin:15px 0;
+}
+.authen .layui-form-item .layui-form-label{
+     width: 150px;
+}
+.authen .layui-form-item .layui-input-block{
+    margin-left: 180px;
+}
+.imgShow{
+    max-width: 300px;
+    height: 150px;
+}

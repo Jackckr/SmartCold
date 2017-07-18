@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>链库-实名认证</title>
+    <meta charset="utf-8" name="keywords" content="链库,冷链物流,冷库360,冷库监控,冷库智能管理,冷库能效评估"/>
+    <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
+    <link rel="shortcut icon" href="../img/favicon.ico" />
+    <!--引入样式包-->
+    <link rel="stylesheet" href="../plugins/css/layui.css" />
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/media.css" />
+    <link rel="stylesheet" href="../css/login.css" />
+</head>
+<body>
+<!--header 导航栏-->
+<div class="header">
+    <div class="hotLine">
+        <h2 class="fl">全国最大的冷库数据与交易平台</h2>
+        <div class="fr">
+            <span>客服热线：<span class="orange">400-853-5606</span></span>
+            <a href="#QRcode">
+                APP下载<i class="iconfont orange">&#xe642;</i>
+            </a>
+        </div>
+    </div>
+    <div class="nav">
+        <h1 class="fl"><a href="../../index.htm" target="_blank">找冷库&nbsp;&nbsp;上链库</a></h1>
+        <ul id="noLoginUser" class="fr navLogin">
+            <li><a href="login.html"><i class="iconfont">&#xe715;</i>&nbsp;登录</a></li>
+            <li><a href="register.html"><i class="iconfont">&#xe60f;</i>&nbsp;注册</a></li>
+        </ul>
+        <div id="loginUser" class="fr">
+            <div class="nameDiv">
+                <img src="">
+            </div>
+            <dl class="hide">
+                <li><a href="usercenter.html">个人中心</a></li>
+                <li><a onclick="logout()">退出</a></li>
+            </dl>
+        </div>
+        <div class="navSmall fr"><!--小屏幕显示-->
+            <span><i class="iconfont">&#xe62d;</i></span>
+            <ul class="navUlList">
+                <li><a href="../../index.htm">首　　页</a></li>
+                <li><a href="rdclist.html">冷库商情</a></li>
+                <li><a href="rdcprice.html">冷库价格</a></li>
+                <li><a href="rdcmatch.html">需求匹配</a></li>
+                <li><a href="rdctrace.html">温度追溯</a></li>
+                <li><a href="http://www.smartcold.org.cn/">冷库360</a></li>
+                <li><a href="rdccooperation.html">企业专区</a></li>
+            </ul>
+        </div>
+        <ul class="fr navUl">
+            <li><a href="../../index.htm">首　　页</a></li>
+            <li><a href="rdclist.html">冷库商情</a></li>
+            <li><a href="rdcprice.html">冷库价格</a></li>
+            <li><a href="rdcmatch.html">需求匹配</a></li>
+            <li><a href="rdctrace.html">温度追溯</a></li>
+            <li><a href="http://www.smartcold.org.cn/">冷库360</a></li>
+            <li><a href="rdccooperation.html">企业专区</a></li>
+        </ul>
+    </div>
+</div>
+<div class="section loginStyle authen">
+    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+        <ul class="layui-tab-title">
+            <li class="layui-this">个人用户</li>
+            <li>企业用户</li>
+        </ul>
+        <p class="orange">我们承诺：您提交的资料只会用于认证审核，请放心。</p>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <form class="layui-form personForm" onsubmit="return false">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">个人姓名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="realname" placeholder="请输入个人姓名" class="layui-input nameInput">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">身份证号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="idCard" id="idCard" maxlength="18" placeholder="请输入身份证号" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">上传手持身份证正面照</label>
+                        <div class="layui-input-block">
+                            <input type="file" name="IDimg" accept="image/gif, image/bmp, image/jpg,image/jpeg, image/png" id="idImg">
+                        </div>
+                    </div>
+                    <div class="layui-form-item hide">
+                        <label class="layui-form-label"></label>
+                        <div class="layui-input-block">
+                            <img class="imgShow">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" id="personSubmit">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="layui-tab-item">
+                <form class="layui-form firmForm" onsubmit="return false">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">企业名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="companyName" placeholder="请输入企业名称" class="layui-input nameInput">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">上传企业营业执照照片</label>
+                        <div class="layui-input-block">
+                            <input type="file" name="firmImg" id="firmImg"  accept="image/gif, image/bmp, image/jpg,image/jpeg, image/png">
+                        </div>
+                    </div>
+                    <div class="layui-form-item hide">
+                        <label class="layui-form-label"></label>
+                        <div class="layui-input-block">
+                            <img class="imgShow">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" id="firmSubmit">立即提交</button>
+                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--版权区域-->
+<div class="footer" id="QRcode">
+    <dl class="clearfix">
+        <li class="fl">
+            <p><a href="aboutlianku.html">关于我们</a></p>
+            <p>©2016 Smartcold    沪ICP备 16004753</p>
+            <p>为了您可以获取更佳的浏览效果</p>
+            <p>本站推荐使用
+                <a href="http://sw.bos.baidu.com/sw-search-sp/software/ba34c905dbdd4/ChromeStandalone_57.0.2987.98_Setup.exe">谷歌浏览器
+                </a>、<a href="http://sw.bos.baidu.com/sw-search-sp/software/4cee66da4242e/Firefox_52.0.1.6284_setup.exe">火狐浏览器
+                </a>或者<a href="http://down.360safe.com/se/360se8.1.1.250.exe">360浏览器极速模式</a>
+            </p>
+        </li>
+        <li class="fr">
+            <div class="codeImg">
+                <img src="../img/ios.png" alt="开小差了~~~">
+                <p>iPhone下载</p>
+            </div>
+            <div class="codeImg">
+
+                <img src="../img/android.png" alt="开小差了~~~">
+                <p>Android下载</p>
+            </div>
+            <div class="codeImg">
+                <img src="../img/weixin_lianku.jpg" alt="开小差了~~~">
+                <p>链库公众号</p>
+            </div>
+        </li>
+    </dl>
+</div>
+<script src="../plugins/jquery-1.12.0.min.js"></script>
+<script src="../plugins/layui.all.js"></script>
+<script src="../js/common.js"></script>
+<script>
+$(function(){
+    checkLogin();
+    var flag=false,flagId=false;
+    $(".nameInput").blur(function(){
+        var oVal = $(this).val();
+        if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(oVal)){
+            layer.alert('名称不能为空并且不能有特殊字符',{'icon':6});
+            flag=false;
+            return false;
+        }else{
+            flag=true
+        }
+    });
+    $("#idCard").blur(function(){
+        var oVal = $(this).val();
+        if(!/(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(oVal)){
+            layer.alert('身份证号格式错误',{'icon':6});
+            flagId=false
+        }else{
+            flagId=true
+        }
+    });
+    $("button[type='reset']").click(function () {
+        $(this).parents('form').find('.imgShow').parents('.layui-form-item').hide();
+    });
+    $("input[type='file']").change(function () {
+        var oFile = $(this)[0].files[0];
+        rdcAuditPic=oFile;
+        var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/i;
+        var msg = "*.gif,*.jpg,*.jpeg,*.png,*.bmp";
+        if (!rFilter.test(oFile.type)) {
+            layer.open({content : "格式错误~请选择格式为" + msg + "的图片~",btn : '确定'}); return;
+        }else if(oFile.size > 10485760){
+            layer.open({content : "最大只能上传10M的图片",btn : '确定'}); return;
+        }
+        $(this).parents('form').find('.layui-form-item').next('.layui-form-item').show();
+        var oImage = $(this).parents('form').find('.imgShow')[0];
+        var oReader = new FileReader();
+        oReader.onload = function(e) {oImage.src = e.target.result;};
+        oReader.readAsDataURL(oFile);
+    });
+    $("#personSubmit").click(function() {
+        if(!flag){
+            layer.alert('请输入名字',{'icon':6});
+            return false
+        }
+        if(!flagId){
+            layer.alert('身份证号格式错误',{'icon':6});
+            return false
+        }
+        if(!$("#idImg")[0].files[0]){
+            layer.alert('请先上传手持身份证正面照',{'icon':6});
+            return false
+        }
+        var formData = new FormData();
+        formData.append("realname", $("input[name='realname']").val());
+        formData.append("idCard",  $("input[name='idCard']").val());
+        formData.append("authfile", $("#idImg")[0].files[0]);
+        formData.append("id", lkuser.id);
+        formData.append("type", 1);
+        $.ajax({
+            url: "/i/user/attestationUser",
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                layer.alert(data.message, {
+                    icon: 6 //1:对号，2:叉号，3：问号，4：锁，5：哭脸，6：笑脸，7：叹号
+                    ,closeBtn: 0
+                }, function(index){
+                    if(data.status==1){
+                        window.location.href = "http://" + window.location.host + "/index.htm";
+                        window.event.returnValue=false;
+                    }else{
+                        layer.close(index)
+                    }
+                });
+            }
+        });
+    })
+    $("#firmSubmit").click(function() {
+        if(!flag){
+            layer.alert('请输入名字',{'icon':6});
+            return false
+        }
+        if(!$("#firmImg")[0].files[0]){
+            layer.alert('请先上传营业执照图片',{'icon':6});
+            return false
+        }
+        var formData = new FormData();
+        formData.append("companyName", $("input[name='companyName']").val());
+        formData.append("authfile", $("#firmImg")[0].files[0]);
+        formData.append("id", lkuser.id);
+        formData.append("type", 2);
+        $.ajax({
+            url: "/i/user/attestationUser",
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                layer.alert(data.message, {
+                    icon: 6 //1:对号，2:叉号，3：问号，4：锁，5：哭脸，6：笑脸，7：叹号
+                    ,closeBtn: 0
+                }, function(index){
+                    if(data.status==1){
+                        window.location.href = "http://" + window.location.host + "/index.htm";
+                        window.event.returnValue=false;
+                    }else{
+                        layer.close(index)
+                    }
+                });
+            }
+        });
+    })
+})
+</script>
+</body>
+</html>

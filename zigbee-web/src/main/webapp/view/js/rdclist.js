@@ -236,6 +236,7 @@ function getAddStatus() {
 }
 
 function collection(mark,id) {
+    checkLogin();
     var olike = $(mark).children('i');
     if(olike.hasClass('isLike')){//已收藏
         $.ajax({
@@ -245,7 +246,6 @@ function collection(mark,id) {
         });
         olike.html("&#xe634;");
         olike.removeClass('isLike');
-        console.log(34)
     }else {//未收藏
         $.ajax({
             url:"/i/collect/addCollectRdc",
@@ -254,7 +254,6 @@ function collection(mark,id) {
         });
         olike.html("&#xe637;");
         olike.addClass('isLike');
-        console.log(37)
     }
 }
 $(function () {

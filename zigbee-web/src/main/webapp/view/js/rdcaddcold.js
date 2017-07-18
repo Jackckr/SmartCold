@@ -8,8 +8,9 @@ var auditPicOriginal=0;
 var standPicOriginal=0;
 var addRdcFlag = true;
 var delIds=[];
-var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/i;
+var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/;
 var msg = "*.gif,*.jpg,*.jpeg,*.png,*.bmp";
+checkLogin();
 /*冷库图片change*/
 function storagePicChange(e) {
     var files = e.files;
