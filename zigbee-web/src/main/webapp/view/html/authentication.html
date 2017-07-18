@@ -73,11 +73,13 @@
         <p class="orange">我们承诺：您提交的资料只会用于认证审核，请放心。</p>
         <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
-                <form class="layui-form personForm" onsubmit="return false">
+                <form class="layui-form personForm"  enctype="multipart/form-data" action="/i/user/attestationUser" method="post" onsubmit="return false">
                     <div class="layui-form-item">
                         <label class="layui-form-label">个人姓名</label>
                         <div class="layui-input-block">
                             <input type="text" name="realname" placeholder="请输入个人姓名" class="layui-input nameInput">
+                            <input type="hidden" name="id" class="userId">
+                            <input type="hidden" name="type" class="flagType">
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -89,7 +91,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">上传手持身份证正面照</label>
                         <div class="layui-input-block">
-                            <input type="file" name="IDimg" accept="image/gif, image/bmp, image/jpg,image/jpeg, image/png" id="idImg">
+                            <input type="file" name="authfile" accept="image/gif, image/bmp, image/jpg,image/jpeg, image/png" id="idImg">
                         </div>
                     </div>
                     <div class="layui-form-item hide">
@@ -112,6 +114,8 @@
                         <label class="layui-form-label">企业名称</label>
                         <div class="layui-input-block">
                             <input type="text" name="companyName" placeholder="请输入企业名称" class="layui-input nameInput">
+                            <input type="hidden" name="id" class="userId">
+                            <input type="hidden" name="type" class="flagType">
                         </div>
                     </div>
 
@@ -169,12 +173,15 @@
     </dl>
 </div>
 <script src="../plugins/jquery-1.12.0.min.js"></script>
+<script src="../plugins/jqueryForm/jquery.form.js"></script>
 <script src="../plugins/layui.all.js"></script>
 <script src="../js/common.js"></script>
 <script>
 $(function(){
     checkLogin();
     var flag=false,flagId=false;
+    $('.personForm').find('.userId').val(lkuser.id);
+    $('.personForm').find('.flagType').val(1);
     $(".nameInput").blur(function(){
         var oVal = $(this).val();
         if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(oVal)){
@@ -197,23 +204,37 @@ $(function(){
     $("button[type='reset']").click(function () {
         $(this).parents('form').find('.imgShow').parents('.layui-form-item').hide();
     });
+
     $("input[type='file']").change(function () {
-        var oFile = $(this)[0].files[0];
-        rdcAuditPic=oFile;
-        var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/i;
-        var msg = "*.gif,*.jpg,*.jpeg,*.png,*.bmp";
-        if (!rFilter.test(oFile.type)) {
-            layer.open({content : "格式错误~请选择格式为" + msg + "的图片~",btn : '确定'}); return;
-        }else if(oFile.size > 10485760){
+        var fileImg = $(this).parents('form').find('.imgShow');
+        var explorer = navigator.userAgent;
+        var imgSrc = $(this)[0].value;
+        if(fileImg.context.size> 10485760){
             layer.open({content : "最大只能上传10M的图片",btn : '确定'}); return;
         }
         $(this).parents('form').find('.layui-form-item').next('.layui-form-item').show();
-        var oImage = $(this).parents('form').find('.imgShow')[0];
-        var oReader = new FileReader();
-        oReader.onload = function(e) {oImage.src = e.target.result;};
-        oReader.readAsDataURL(oFile);
+        if (explorer.indexOf('MSIE') >= 0) {
+            if (!/\.(jpg|jpeg|png|JPG|PNG|JPEG)$/.test(imgSrc)) {
+                imgSrc = "";
+                fileImg.attr("src","http://139.196.189.93:8089/app/rdcHeader.jpg");
+                return false;
+            }else{
+                fileImg.attr("src",imgSrc);
+            }
+        }else{
+            if (!/\.(jpg|jpeg|png|JPG|PNG|JPEG)$/.test(imgSrc)) {
+                imgSrc = "";
+                fileImg.attr("src","http://139.196.189.93:8089/app/rdcHeader.jpg");
+                return false;
+            }else{
+                var file = $(this)[0].files[0];
+                var url = URL.createObjectURL(file);
+                fileImg.attr("src",url);
+            }
+        }
+
     });
-    $("#personSubmit").click(function() {
+    $("#personSubmit").click(function(){
         if(!flag){
             layer.alert('请输入名字',{'icon':6});
             return false
@@ -222,39 +243,25 @@ $(function(){
             layer.alert('身份证号格式错误',{'icon':6});
             return false
         }
-        if(!$("#idImg")[0].files[0]){
+        if(!$("#idImg")[0].value){
             layer.alert('请先上传手持身份证正面照',{'icon':6});
             return false
         }
-        var formData = new FormData();
-        formData.append("realname", $("input[name='realname']").val());
-        formData.append("idCard",  $("input[name='idCard']").val());
-        formData.append("authfile", $("#idImg")[0].files[0]);
-        formData.append("id", lkuser.id);
-        formData.append("type", 1);
-        $.ajax({
-            url: "/i/user/attestationUser",
-            type: 'POST',
-            data: formData,
-            async: false,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                layer.alert(data.message, {
-                    icon: 6 //1:对号，2:叉号，3：问号，4：锁，5：哭脸，6：笑脸，7：叹号
-                    ,closeBtn: 0
-                }, function(index){
-                    if(data.status==1){
-                        window.location.href = "http://" + window.location.host + "/index.htm";
-                        window.event.returnValue=false;
-                    }else{
-                        layer.close(index)
-                    }
-                });
-            }
-        });
+        $(".personForm").ajaxForm(function(data) {  //有a时则a是返回值
+            layer.alert(data.message, {
+                icon: 6 //1:对号，2:叉号，3：问号，4：锁，5：哭脸，6：笑脸，7：叹号
+                ,closeBtn: 0
+            }, function(index){
+                if(data.status==1){
+                    window.location.href = "http://" + window.location.host + "/index.htm";
+                    window.event.returnValue=false;
+                }else{
+                    layer.close(index)
+                }
+            });  //layer提示层
+        }).submit();
     })
+
     $("#firmSubmit").click(function() {
         if(!flag){
             layer.alert('请输入名字',{'icon':6});
@@ -264,33 +271,19 @@ $(function(){
             layer.alert('请先上传营业执照图片',{'icon':6});
             return false
         }
-        var formData = new FormData();
-        formData.append("companyName", $("input[name='companyName']").val());
-        formData.append("authfile", $("#firmImg")[0].files[0]);
-        formData.append("id", lkuser.id);
-        formData.append("type", 2);
-        $.ajax({
-            url: "/i/user/attestationUser",
-            type: 'POST',
-            data: formData,
-            async: false,
-            cache: false,
-            contentType: false,
-            processData: false,
-            success: function (data) {
-                layer.alert(data.message, {
-                    icon: 6 //1:对号，2:叉号，3：问号，4：锁，5：哭脸，6：笑脸，7：叹号
-                    ,closeBtn: 0
-                }, function(index){
-                    if(data.status==1){
-                        window.location.href = "http://" + window.location.host + "/index.htm";
-                        window.event.returnValue=false;
-                    }else{
-                        layer.close(index)
-                    }
-                });
-            }
-        });
+        $(".firmForm").ajaxForm(function(data) {  //有a时则a是返回值
+            layer.alert(data.message, {
+                icon: 6 //1:对号，2:叉号，3：问号，4：锁，5：哭脸，6：笑脸，7：叹号
+                ,closeBtn: 0
+            }, function(index){
+                if(data.status==1){
+                    window.location.href = "http://" + window.location.host + "/index.htm";
+                    window.event.returnValue=false;
+                }else{
+                    layer.close(index)
+                }
+            });  //layer提示层
+        }).submit();
     })
 })
 </script>
