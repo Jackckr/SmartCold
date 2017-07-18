@@ -134,7 +134,7 @@ function getRdcInfo() {
                 '<tr>'+coldTruck4+capacity4+'</tr> ' +
                 ''+capacity5+'</tbody></table>');
         }else {
-            otherInfo.push('<table><caption>仓库信息</caption><tbody><tr><td><b>认证用户方可看到更多信息</b>　<a onclick="alert(1)"  style="color:#2763cc;">实名认证</a></td></tr></tbody></table>');
+            otherInfo.push('<table><caption>仓库信息</caption><tbody><tr><td><b>认证用户方可看到更多信息</b>　<a href="../html/authentication.html" style="color:#2763cc;">实名认证</a></td></tr></tbody></table>');
         }
         $("#baseInfo").empty().append(baseInfo.join(''));
         $("#divimginfog_imgPlayer").empty().append(bigImg.join(''));

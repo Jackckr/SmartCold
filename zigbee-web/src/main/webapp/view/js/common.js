@@ -2,14 +2,26 @@
  * Created by wellsea on 6/21/0021.
  */
 
-if(sessionStorage.lkuser&&new Date().getTime()-sessionStorage.longtime<(30*60*1000)){
-    window.lkuser=JSON.parse(sessionStorage.lkuser);
-    $("#loginUser").show().find('img').attr({'src':lkuser.avatar,'title':lkuser.username});
+if (sessionStorage.lkuser && new Date().getTime() - sessionStorage.longtime < (30 * 60 * 1000)) {
+    window.lkuser = JSON.parse(sessionStorage.lkuser);
+    $("#loginUser").show().find('img').attr({'src': lkuser.avatar, 'title': lkuser.username});
     $("#noLoginUser").hide();
-}else{
+} else {
     findUser();
 }
-
+function checkLogin(msg, callback) {//检查是否登录
+    if (window.lkuser != null) {
+        if (callback) {
+            callback();
+        }
+        return true;
+    } else {
+        localStorage.OURL=document.URL;
+        window.lkuser = null;
+        window.location.href = "login.html";
+        return false;
+    }
+}
 var sUserAgent = navigator.userAgent.toLowerCase();
 var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
 var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
@@ -21,9 +33,10 @@ var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
 var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
 /*document.writeln("您的浏览设备为：");*/
 if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
-    window.location.href="http://m.liankur.com"; /* 链接到不同的网址  这个是手机的 */
+    window.location.href = "http://m.liankur.com";
+    /* 链接到不同的网址  这个是手机的 */
 }
-$('.navSmall').hover(function() {//导航下拉菜单
+$('.navSmall').hover(function () {//导航下拉菜单
     $(this).children('ul').stop().toggle();
 });
 $("#loginUser").hover(function () {
@@ -32,42 +45,46 @@ $("#loginUser").hover(function () {
 $(document).scroll(function () {//吸附导航
     var sTop = document.body.scrollTop || document.documentElement.scrollTop;
     var oTop = 116;
-    if(sTop>oTop){
+    if (sTop > oTop) {
         $('.header').addClass('fixed');
-        $('.header').next().css('marginTop',oTop);
-    }else{
+        $('.header').next().css('marginTop', oTop);
+    } else {
         $('.header').removeClass('fixed');
-        $('.header').next().css('marginTop',0);
+        $('.header').next().css('marginTop', 15);
     }
 });
 /*获取URL参数*/
 function getUrlParam(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
     var r = window.location.search.substr(1).match(reg);
-    if (r != null) return unescape(r[2]); return null;
+    if (r != null) return unescape(r[2]);
+    return null;
 }
 /*获取用户对象*/
 function findUser() {
-    $.ajax({url:"/i/user/findUser",type:"get",dataType:"json",success:function (data) {
-        if (data.username&&data.id!=0){
-            window.lkuser=data;
-            window.sessionStorage.lkuser=JSON.stringify(data);
-            window.sessionStorage.longtime=new Date().getTime();
-            // $("#loginUser").show().find('.username').html(data.username);
-            $("#loginUser").show().find('img').attr({'src':data.avatar,'title':data.username});
-            $("#noLoginUser").hide();
-        }else {
-            window.sessionStorage.removeItem("lkuser");//清除系统user;
-            $("#noLoginUser").show();
-            $("#loginUser").hide();
+    $.ajax({
+        url: "/i/user/findUser", type: "get", dataType: "json", success: function (data) {
+            if (data.username && data.id != 0) {
+                window.lkuser = data;
+                window.sessionStorage.lkuser = JSON.stringify(data);
+                window.sessionStorage.longtime = new Date().getTime();
+                // $("#loginUser").show().find('.username').html(data.username);
+                $("#loginUser").show().find('img').attr({'src': data.avatar, 'title': data.username});
+                $("#noLoginUser").hide();
+            } else {
+                window.sessionStorage.removeItem("lkuser");//清除系统user;
+                $("#noLoginUser").show();
+                $("#loginUser").hide();
+            }
         }
-    }});
+    });
 }
 /*登出系统*/
 function logout() {
-    $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/logout'}).success(function(data){});
+    $.ajax({type: "GET", cache: false, dataType: 'json', url: '/i/user/logout'}).success(function (data) {
+    });
     window.sessionStorage.removeItem("lkuser");//清除系统user;
-    window.location.href="../../index.htm";
+    window.location.href = "../../index.htm";
 };
 /*判断数组中是否有重复元素*/
 Array.prototype.contains = function (obj) {
@@ -80,12 +97,12 @@ Array.prototype.contains = function (obj) {
     return -1;
 }
 /*将所有数据赋值给form表单*/
-function getDataToForm(inputArr,data) {
-    var nameArr=[];
-    $.each(inputArr,function (index,item) {
-        if (nameArr.contains($(item).attr("name"))==-1){
+function getDataToForm(inputArr, data) {
+    var nameArr = [];
+    $.each(inputArr, function (index, item) {
+        if (nameArr.contains($(item).attr("name")) == -1) {
             nameArr.push($(item).attr("name"));
-            var val= eval("data."+$(item).attr("name"));
+            var val = eval("data." + $(item).attr("name"));
             $(item).val(val);
         }
     });

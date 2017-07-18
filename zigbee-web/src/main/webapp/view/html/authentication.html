@@ -173,12 +173,14 @@
 <script src="../js/common.js"></script>
 <script>
 $(function(){
+    checkLogin();
     var flag=false,flagId=false;
     $(".nameInput").blur(function(){
         var oVal = $(this).val();
-        if(!oVal){
-            layer.alert('请输入名字',{'icon':6});
-            flag=false
+        if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(oVal)){
+            layer.alert('名称不能为空并且不能有特殊字符',{'icon':6});
+            flag=false;
+            return false;
         }else{
             flag=true
         }
@@ -191,6 +193,9 @@ $(function(){
         }else{
             flagId=true
         }
+    });
+    $("button[type='reset']").click(function () {
+        $(this).parents('form').find('.imgShow').parents('.layui-form-item').hide();
     });
     $("input[type='file']").change(function () {
         var oFile = $(this)[0].files[0];
