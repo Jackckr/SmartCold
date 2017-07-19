@@ -103,7 +103,7 @@ function flushPage() {
                 pagination.oldPageCount=pagination.pageCount;
                 getRdcRentList();
                 if(first!=true){
-                    window.scroll(0,0);//跳到顶部
+                    window.scroll(0,300);//跳到顶部
                 }
             }
         });

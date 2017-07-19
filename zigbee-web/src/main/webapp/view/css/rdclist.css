@@ -167,6 +167,7 @@ i.right{right: 20px;}
 .rdcImg{
     position: relative;
     margin-right: 10px;
+    overflow: hidden;
 }
 .rdcImg a{
     display: block;
@@ -210,7 +211,7 @@ i.right{right: 20px;}
     font-size: 12px;
 }
 .rdcInfo{
-    width: 40%;
+    width: 36%;
     line-height: 2.2;
 }
 .rdcApprove a:hover{
