@@ -28,19 +28,20 @@
     .filterBox>ul>li.activeA:before{
         border: none;
     }
-    .login,.loginBg{
-        float: none!important;
+    /*.login,.loginBg{
+        //float: none!important;
         margin: 0 auto 30px;
-    }
+    }*/
     .section{
         width: 1210px;
     }
+}
+@media only screen and (max-width: 980px){
+
     .loginBg {
         width: 477.6px!important;
         height: 200px!important;
     }
-}
-@media only screen and (max-width: 980px){
     .login,.loginBg{
         float: none!important;
         margin: 0 auto 30px;

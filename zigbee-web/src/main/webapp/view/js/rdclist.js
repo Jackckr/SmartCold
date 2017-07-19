@@ -21,7 +21,6 @@ $(".typeList li").click(function () {
         }
     }
 });
-jQuery(".picScroll-left").slide({easing:"linear",mainCell:".bd ul",autoPage:true,effect:"leftLoop",autoPlay:true,vis:5});
 
 /*功能组件*/
 var pagination={pageCount:-1,oldPageCount:-1};
@@ -97,15 +96,20 @@ function flushPage() {
         laypage({
             cont: 'demo2'
             ,pages: pagination.pageCount
+            ,skip:true
             ,skin: '#1E9FFF',
-            jump:function (obj) {
+            jump:function (obj,first) {
                 screenParam.pageNum=obj.curr;
                 pagination.oldPageCount=pagination.pageCount;
                 getRdcRentList();
+                if(first!=true){
+                    window.scroll(0,0);//跳到顶部
+                }
             }
         });
     });
 }
+
 /*初始化省市列表*/
 function getProvinceList() {
     var provinceArr=[];
@@ -269,5 +273,35 @@ $(function () {
     $("#search").bind('click',getKeyword);
     $("#keyword").keydown(function () {if(event.keyCode == "13") {getKeyword();}});
     $("li[type=rdcSqm]").bind('click',getRdcSqm);
+    var counts=0;
+    var mytimer;
+    var myclone=$('.lists ul li:lt(4)').clone(true);
+    $('.lists ul').append(myclone)
+    function mynext(){
+        counts++;
+        if (counts>4) {
+            $('.lists ul').css('left', 0);
+            counts=1;
+        };
+        var moves=counts*-1200;
+        $('.lists ul').stop().animate({'left': moves}, 300)
+    }
+    $('.adbanner .right').click(mynext);
+    mytimer=setInterval(mynext,4000);
+    $('.lists').hover(function() {
+        clearInterval(mytimer);
+    }, function() {
+        clearInterval(mytimer);
+        mytimer=setInterval(mynext,4800);
+    });
+    $('.adbanner .left').click(function(){
+        counts--;
+        if (counts<0) {
+            $('.lists ul').css('left', -4800);
+            counts=3;
+        };
+        var moves=counts*-1200;
+        $('.lists ul').stop().animate({'left': moves},300)
+    })
 });
 
