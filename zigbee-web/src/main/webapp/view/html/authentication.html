@@ -179,6 +179,16 @@
 <script>
 $(function(){
     checkLogin();
+    if(lkuser.vipType==1||lkuser.vipType==2){
+        layer.alert("您已经实名认证过。返回首页！", {
+            icon: 6 //1:对号，2:叉号，3：问号，4：锁，5：哭脸，6：笑脸，7：叹号
+            ,closeBtn: 0
+        }, function(index){
+            window.location.href = "http://" + window.location.host + "/index.htm";
+            window.event.returnValue=false;
+           return false
+        });
+    }
     var flag=false,flagId=false;
     $('.personForm').find('.userId').val(lkuser.id);
     $('.personForm').find('.flagType').val(1);
@@ -271,7 +281,7 @@ $(function(){
             layer.alert('请先上传营业执照图片',{'icon':6});
             return false
         }
-        $(".firmForm").ajaxForm(function(data) {  //有a时则a是返回值
+        $(".firmForm").ajaxForm(function(data) {
             layer.alert(data.message, {
                 icon: 6 //1:对号，2:叉号，3：问号，4：锁，5：哭脸，6：笑脸，7：叹号
                 ,closeBtn: 0
