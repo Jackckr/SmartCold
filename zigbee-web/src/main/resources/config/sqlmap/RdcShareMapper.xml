@@ -324,7 +324,10 @@
     <select id="getUnitPriceByRdcId" resultType="java.lang.Double">
 		SELECT unitPrice FROM `shared_info` WHERE 	`rdcId`=#{rdcId} and `datatype`=3 and `typecode`=1 order by `id` desc limit 0,1
 	</select>
-	<insert id="addshareInfo" parameterType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
+    <select id="getSharedInfoEntity" resultType="com.smartcold.zigbee.manage.entity.SharedInfoEntity">
+		SELECT * FROM `shared_info` WHERE rdcId=#{rdcId} AND datatype=3 AND typecode=1 ORDER BY id desc limit 1
+	</select>
+    <insert id="addshareInfo" parameterType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
 	     <selectKey resultType="java.lang.Short" order="AFTER" keyProperty="id">
            SELECT LAST_INSERT_ID() AS id
           </selectKey>

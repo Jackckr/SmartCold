@@ -4,6 +4,7 @@ package com.smartcold.zigbee.manage.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.smartcold.zigbee.manage.entity.SharedInfoEntity;
 import org.apache.ibatis.annotations.Param;
 
 import com.github.pagehelper.Page;
@@ -84,4 +85,5 @@ public interface RdcShareMapper {
 
 	 Page<RdcShareDTO> getNewSERDCListByPage(Map<String, Object> parameters);
 
+	 SharedInfoEntity getSharedInfoEntity(int rdcId);
 }
