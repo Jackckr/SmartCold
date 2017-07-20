@@ -189,7 +189,7 @@ a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-
 			</section>
 			<section class="sidebar">
 				<ul id="lfmenu" class="sidebar-menu text-white my_sidebar">
-					<li id="ml_acl1" class="treeview"><a href="#/cold360Physical"><i class="icon iconfont" style="color:#ffffff"></i> <span class="menu-title text-white" style="font-size: large">体检</span></a></li>
+					<li id="ml_acl1" class="treeview"><a href="#/cold360Physical"><i class="iconfont" style="color:#ffffff">&#xe71b;</i><span class="menu-title text-white" style="font-size: large">体检</span></a></li>
 					<!--1. 监控 -->
 					<li mid="ml_acl1" class="treeview"><a href=""><i class="icon iconfont" style="color:#ffffff"></i> <span class="menu-title text-white" style="font-size: large">监控</span></a>
 						<ul class="treeview-menu">
@@ -213,10 +213,10 @@ a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-
 									</li>
 								</ul>
 							</li>
-							<li mid="ml_acl30" class="treeview"><a href="#/about"> <i class="icon iconfont"></i><span class="menu-title">运管</span><i class="fa fa-angle-left pull-right"></i> </a>
+							<li mid="ml_acl30" class="treeview"><a href="#/about"> <i class="iconfont">&#xe7c1;</i><span class="menu-title">运管</span><i class="fa fa-angle-left pull-right"></i> </a>
 								<ul class="treeview-menu">
 										       <!-- 门  二级菜单 -->
-												<li mid="ml_acl30" class="treeview"><a href="#/about"><i class="icon iconfont"></i><span class="menu-title">门</span><i class="fa fa-angle-left pull-right"></i></a>
+												<li mid="ml_acl30" class="treeview"><a href="#/about"><i class="iconfont">&#xe76d;</i><span class="menu-title">门</span><i class="fa fa-angle-left pull-right"></i></a>
 													<ul class="treeview-menu">
 														<li mid="ml_acl31"><a><i class="fa fa-circle-o"></i>冷库门<i 	class="fa fa-angle-left pull-right"></i></a>
 															<ul class="treeview-menu">
@@ -267,7 +267,7 @@ a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-
 									<li mid="ml_acl112" onclick="activeLi(this)"><a href="#/overTemperatureYZ/{{rdcId}}"><i class="fa fa-circle-o"></i>超温比例统计</a></li>
 								</ul>
 							</li>
-							<li mid="ml_acl20" ><a href="#"><i class="icon iconfont"></i><span class="menu-title">能耗分析</span><i 	class="fa fa-angle-left pull-right"></i></a>
+							<li mid="ml_acl20" ><a href="#"><i class="iconfont">&#xe7cf;</i><span class="menu-title">能耗分析</span><i 	class="fa fa-angle-left pull-right"></i></a>
 								<ul class="treeview-menu">
 									<li mid="ml_acl21" onclick="activeLi(this)"><a href="#/powerAnalysis/{{rdcId}}"><i class="fa fa-circle-o"></i>电耗分析</a></li>
 									<li mid="ml_acl22" onclick="activeLi(this)"><a href="#/waterAnalysis/{{rdcId}}"><i class="fa fa-circle-o"></i>水耗分析</a></li>
@@ -298,7 +298,7 @@ a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-
 						<ul mid="mlul3" class="treeview-menu">
 <!-- 	                                <li mid="ml_acl211" ><a 	href="#/"><i class="icon iconfont"></i><span class="menu-title ">温度报警</span><i class="fa fa-angle-left pull-right"></i></a> -->
 <!-- 		                                 <ul class="treeview-menu" > -->
-                                           <li mid="ml_acl211" onclick="activeLi(this)"><a 	href="#/alarmTemp"><i class="icon iconfont"></i><span class="menu-title">温度报警</span></a></li> 
+                                           <li mid="ml_acl211" onclick="activeLi(this)"><a 	href="#/alarmTemp"><i class="iconfont">&#xe6f2;</i><span class="menu-title">温度报警</span></a></li>
 <!-- 										</ul> -->
 <!-- 									</li> -->
 <!-- 									 <li id="ml_acl211" onclick="activeLi(this)" ><a href="#"><i class="icon iconfont" ></i><span class="menu-title">运管报警</span></a></li> -->
@@ -311,14 +311,14 @@ a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-
 
 						<ul class="treeview-menu" ng-if="user.type==2">
 					       <li  onclick="activeLi(this)"><a href="#/maintenancenotice"><i class="icon iconfont"></i><span class="menu-title">维修状态</span></a></li> 
-					       <li  onclick="activeLi(this)"><a ng-click="tomaintenancehist()" ><i class="icon iconfont"></i><span class="menu-title">维修历史</span></a></li> 
+					       <li  onclick="activeLi(this)"><a ng-click="tomaintenancehist()" ><i class="iconfont">&#xe7a4;</i><span class="menu-title">维修历史</span></a></li>
 						   <li  onclick="activeLi(this)"><a href="#/baoyangReminder"><i class="icon iconfont">   </i><span class="menu-title">设备保养提醒</span></a></li>
 						   <li  onclick="activeLi(this)"><a href="#/baoyangReminder"><i class="icon iconfont">   </i><span class="menu-title">巡检与回访</span></a></li>
 						</ul> 
 						<ul class="treeview-menu" ng-if="user.type!=2">
 						   <li onclick="activeLi(this)"><a ng-click="tomaintenancealarm()"><i class="icon iconfont"></i><span class="menu-title">维修告警</span></a></li>  
 <!-- 					       <li onclick="activeLi(this)"><a href="#/maintenancenotice"><i class="icon iconfont"></i><span class="menu-title">维修管理</span></a></li>  -->
-						    <li  onclick="activeLi(this)"><a ng-click="tomaintenancehist()" ><i class="icon iconfont"></i><span class="menu-title">维修历史</span></a></li> 
+						    <li  onclick="activeLi(this)"><a ng-click="tomaintenancehist()" ><i class="iconfont">&#xe7a4;</i><span class="menu-title">维修历史</span></a></li>
 						   <li onclick="activeLi(this)"><a href="#/baoyangReminder"><i class="icon iconfont"></i><span class="menu-title">机组维护提醒</span></a></li>
 						</ul> 
 					</li>
