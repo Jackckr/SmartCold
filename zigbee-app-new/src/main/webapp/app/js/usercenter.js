@@ -39,7 +39,7 @@ app.controller('usercl', function ($http, $location, $scope) {
         $scope.user = window.user = null;
         util.delCookie("token");
         localStorage.clear();
-        window.location.reload()
+        window.location.reload();
     };
     $scope.savedata = function (name, value) {
         var formdata = new FormData();

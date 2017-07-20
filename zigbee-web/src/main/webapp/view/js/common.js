@@ -83,8 +83,8 @@ function findUser() {
 function logout() {
     $.ajax({type: "GET", cache: false, dataType: 'json', url: '/i/user/logout'}).success(function (data) {
     });
-    localStorage.removeItem('OURL');
-    window.sessionStorage.removeItem("lkuser");//清除系统user;
+    localStorage.clear();
+    sessionStorage.clear();//清除系统user;
     window.location.href = "../../index.htm";
 };
 /*判断数组中是否有重复元素*/
