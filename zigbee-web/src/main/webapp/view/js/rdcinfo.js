@@ -140,6 +140,11 @@ function getRdcInfo() {
         }
         $("#baseInfo").empty().append(baseInfo.join(''));
         $("#divimginfog_imgPlayer").empty().append(bigImg.join(''));
+        layer.photos({
+            photos: '#divimginfog_imgPlayer'
+            //,anim:3//0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+        });
+
         $("#divpageinfog_imgPlayer").empty().append(smallImg.join(''));
         $("#otherInfo").empty().append(otherInfo.join(''));
         /*缩略图轮播*/
