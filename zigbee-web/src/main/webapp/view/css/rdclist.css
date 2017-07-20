@@ -4,7 +4,57 @@
 *   date:2017-06-26
 *   mark:cold list
 */
-
+.layui-laypage input{
+    width: 80px;
+    padding: 0;
+}
+.adbanner{
+    padding: 30px 5%;
+    position: relative;
+}
+.lists{
+    width: 100%;
+    height: 151px;
+    overflow: hidden;
+    position: relative;
+}
+.lists ul {
+    width: 9999px;
+    height: 151px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.lists ul li{
+    float: left;
+    width: 300px;
+    padding:0 10px;
+    margin-right: 1px;
+}
+.lists ul li a{
+    border:1px solid #f9f9fb;
+    padding: 3px;
+    display: inline-block;
+    transition: all 1s;
+}
+.lists ul li a:hover{
+    border-color: #ff4400;
+}
+.adbanner i{
+    width: 26px;
+    height: 62px;
+    position: absolute;
+    top: 50%;
+    margin-top: -31px;
+    color: #cccccc;
+    text-align: center;;
+    font-size: 24px;
+    line-height: 62px;
+    cursor: pointer;
+}
+i.left{left: 20px;}
+i.right{right: 20px;}
+.adbanner i:hover{color: #4790ff;}
 .oFilter .select{
     width: 20%;
 }
@@ -41,6 +91,7 @@
     background-color: #fbfbfb;
     border-top: 2px solid #186eff;
     position: relative;
+    margin-bottom: 30px;
 }
 .typeList{
     padding: 8px 0;
@@ -116,6 +167,7 @@
 .rdcImg{
     position: relative;
     margin-right: 10px;
+    overflow: hidden;
 }
 .rdcImg a{
     display: block;
@@ -159,7 +211,7 @@
     font-size: 12px;
 }
 .rdcInfo{
-    width: 40%;
+    width: 36%;
     line-height: 2.2;
 }
 .rdcApprove a:hover{

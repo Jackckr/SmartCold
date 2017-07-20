@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.smartcold.zigbee.manage.entity.FileDataEntity;
+import com.smartcold.zigbee.manage.entity.SharedInfoEntity;
 import com.smartcold.zigbee.manage.service.FtpService;
 
 public class RdcEntityDTO {
@@ -75,6 +76,7 @@ public class RdcEntityDTO {
     private int typecode;
     private double unitPrice;
     private int shareStauts;
+    private SharedInfoEntity sharedInfoEntity;
 	public FileDataEntity getStoragePic() {
 		return storagePic;
 	}
@@ -359,5 +361,13 @@ public class RdcEntityDTO {
 
     public void setCollectUserIds(List<Integer> collectUserIds) {
         this.collectUserIds = collectUserIds;
+    }
+
+    public SharedInfoEntity getSharedInfoEntity() {
+        return sharedInfoEntity;
+    }
+
+    public void setSharedInfoEntity(SharedInfoEntity sharedInfoEntity) {
+        this.sharedInfoEntity = sharedInfoEntity;
     }
 }

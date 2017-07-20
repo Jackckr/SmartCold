@@ -21,7 +21,6 @@ $(".typeList li").click(function () {
         }
     }
 });
-jQuery(".picScroll-left").slide({easing:"linear",mainCell:".bd ul",autoPage:true,effect:"leftLoop",autoPlay:true,vis:5});
 
 /*功能组件*/
 var pagination={pageCount:-1,oldPageCount:-1};
@@ -44,10 +43,10 @@ function getRdcRentList() {
         rdcRentList.forEach(function (rdcRent, index) {
             var tempTypeStr=rdcRent.tempTypeStr?rdcRent.tempTypeStr:"";
             var manageTypeStr=rdcRent.manageTypeStr?rdcRent.manageTypeStr:"";
-            rdcRentInfo.push('<li><div class="rdcImg"><a href="../html/rdcinfo.html?rdcId='+rdcRent.id+'"><img src="'+rdcRent.logo+'" alt=""></a>');
+            rdcRentInfo.push('<li><div class="rdcImg"><a href="rdcinfo.html?rdcId='+rdcRent.id+'"><img src="'+rdcRent.logo+'" alt=""></a>');
             if(rdcRent.istemperaturestandard==1){rdcRentInfo.push('<i>温度达标冷库</i>');}
-            rdcRentInfo.push('</div><div class="rdcInfo"><div class="rdcTxt clearfix"><span class="rdcName omg fl"><a href="../html/rdcinfo.html?rdcId='+rdcRent.id+'">'+rdcRent.name+'</a></span><span class="infoPercenty fl">信息完整度:<b>'+rdcRent.infoIntegrity+'%</b></span><ul class="stars clearfix fl">');
-            for(var i=0;i<10;i++){
+            rdcRentInfo.push('</div><div class="rdcInfo"><div class="rdcTxt clearfix"><span class="rdcName omg fl"><a href="rdcinfo.html?rdcId='+rdcRent.id+'">'+rdcRent.name+'</a></span><span class="infoPercenty fl">信息完整度:<b>'+rdcRent.infoIntegrity+'%</b></span><ul class="stars clearfix fl">');
+            for(var i=0;i<5;i++){
                 if(i<rdcRent.rdcscore){
                     rdcRentInfo.push('<li><i class="iconfont">&#xe60c;</i></li>');
                 }else {
@@ -66,8 +65,8 @@ function getRdcRentList() {
                    }
                }
             }
-            if(rdcRent.datatype==3&&rdcRent.typecode==1){rdcRentInfo.push('<p>可用面积<i class="orange">'+rdcRent.rentSqm+'</i>㎡</p><p class="rdcPriceNum blue">'+rdcRent.unitPrice+'</p><p>元/㎡/天</p>');}else {rdcRentInfo.push('<h3>暂无信息</h3>');}
-            rdcRentInfo.push('</div><div class="rdcBtn">'+collectWords+'<button class="look"><a href="../html/rdcinfo.html?rdcId='+rdcRent.id+'"><i class="iconfont">&#xe610;</i>查看</a></button></div></li>');
+            if(rdcRent.sharedInfoEntity&&rdcRent.sharedInfoEntity.datatype==3&&rdcRent.sharedInfoEntity.typecode==1){rdcRentInfo.push('<p>可用面积<i class="orange">'+rdcRent.sharedInfoEntity.sqm+'</i>㎡</p><p class="rdcPriceNum blue">'+rdcRent.sharedInfoEntity.unitPrice+'</p><p>元/㎡/天</p>');}else {rdcRentInfo.push('<h3>暂无信息</h3>');}
+            rdcRentInfo.push('</div><div class="rdcBtn">'+collectWords+'<button class="look"><a href="rdcinfo.html?rdcId='+rdcRent.id+'"><i class="iconfont">&#xe610;</i>查看</a></button></div></li>');
         });
         $("#rdcRentList").empty().append(rdcRentInfo.join(''));
     }});
@@ -97,15 +96,20 @@ function flushPage() {
         laypage({
             cont: 'demo2'
             ,pages: pagination.pageCount
+            ,skip:true
             ,skin: '#1E9FFF',
-            jump:function (obj) {
+            jump:function (obj,first) {
                 screenParam.pageNum=obj.curr;
                 pagination.oldPageCount=pagination.pageCount;
                 getRdcRentList();
+                if(first!=true){
+                    window.scroll(0,300);//跳到顶部
+                }
             }
         });
     });
 }
+
 /*初始化省市列表*/
 function getProvinceList() {
     var provinceArr=[];
@@ -269,5 +273,35 @@ $(function () {
     $("#search").bind('click',getKeyword);
     $("#keyword").keydown(function () {if(event.keyCode == "13") {getKeyword();}});
     $("li[type=rdcSqm]").bind('click',getRdcSqm);
+    var counts=0;
+    var mytimer;
+    var myclone=$('.lists ul li:lt(4)').clone(true);
+    $('.lists ul').append(myclone)
+    function mynext(){
+        counts++;
+        if (counts>4) {
+            $('.lists ul').css('left', 0);
+            counts=1;
+        };
+        var moves=counts*-1200;
+        $('.lists ul').stop().animate({'left': moves}, 300)
+    }
+    $('.adbanner .right').click(mynext);
+    mytimer=setInterval(mynext,4000);
+    $('.lists').hover(function() {
+        clearInterval(mytimer);
+    }, function() {
+        clearInterval(mytimer);
+        mytimer=setInterval(mynext,4800);
+    });
+    $('.adbanner .left').click(function(){
+        counts--;
+        if (counts<0) {
+            $('.lists ul').css('left', -4800);
+            counts=3;
+        };
+        var moves=counts*-1200;
+        $('.lists ul').stop().animate({'left': moves},300)
+    })
 });
 

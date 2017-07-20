@@ -295,9 +295,9 @@
     white-space:nowrap;
     border-bottom: 1px solid #f2f2f2;
 }
-.txtlist li>a:hover{
+/*.txtlist li>a:hover{
     color: #f57e1e;
-}
+}*/
 .txtlist a span{
     display: inline-block;
     margin-right:1em;
@@ -426,6 +426,7 @@ i.right{right: 20px;}
     vertical-align: middle;
     height: inherit;
     margin: 0;
+    overflow: hidden;
 }
 .list2 .imglist li a{
     width: 186px;

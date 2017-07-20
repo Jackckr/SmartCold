@@ -15,7 +15,11 @@
 }
  .rdcInfoRight{
      padding-left: 20px;
-     margin-right: 110px;
+     white-space: normal;
+     word-wrap: break-word;
+     word-break: break-word;
+     width:375px;
+    /* margin-right: 110px;*/
  }
 .rdcInfoRight h2{
     font-size: 18px;
@@ -51,17 +55,21 @@
 }
 .rdcInfoTxt table,.rdcInfoTxt table caption{
     width: 100%;
-    border:1px solid #ccc;
+    border:none;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+}
+
+.rdcInfoTxt{
+    border: 1px solid #ccc;
 }
 .rdcInfoTxt table caption{
     background-color:#f4f4f4;
     font-weight: 700;
     text-align: left;
     padding: 8px 20px;
-    border-bottom: 0;
+    border-bottom: 1px solid #ccc;
 }
 .rdcInfoTxt table td{
     padding: 5px 0 5px 20px;

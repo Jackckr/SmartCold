@@ -109,7 +109,7 @@
                 </form>
             </div>
             <div class="layui-tab-item">
-                <form class="layui-form firmForm" onsubmit="return false">
+                <form class="layui-form firmForm" enctype="multipart/form-data" action="/i/user/attestationUser" method="post" onsubmit="return false">
                     <div class="layui-form-item">
                         <label class="layui-form-label">企业名称</label>
                         <div class="layui-input-block">
@@ -122,7 +122,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">上传企业营业执照照片</label>
                         <div class="layui-input-block">
-                            <input type="file" name="firmImg" id="firmImg"  accept="image/gif, image/bmp, image/jpg,image/jpeg, image/png">
+                            <input type="file" name="authfile" id="firmImg"  accept="image/gif, image/bmp, image/jpg,image/jpeg, image/png">
                         </div>
                     </div>
                     <div class="layui-form-item hide">
@@ -179,9 +179,20 @@
 <script>
 $(function(){
     checkLogin();
+    if(lkuser.vipType==1||lkuser.vipType==2){
+        layer.alert("您已经实名认证过。返回首页！", {
+            icon: 6 //1:对号，2:叉号，3：问号，4：锁，5：哭脸，6：笑脸，7：叹号
+            ,closeBtn: 0
+        }, function(index){
+            window.location.href = "http://" + window.location.host + "/index.htm";
+            window.event.returnValue=false;
+           return false
+        });
+    }
     var flag=false,flagId=false;
-    $('.personForm').find('.userId').val(lkuser.id);
+    $('.personForm,.firmForm').find('.userId').val(lkuser.id);
     $('.personForm').find('.flagType').val(1);
+    $('.firmForm').find('.flagType').val(2);
     $(".nameInput").blur(function(){
         var oVal = $(this).val();
         if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(oVal)){
@@ -209,26 +220,28 @@ $(function(){
         var fileImg = $(this).parents('form').find('.imgShow');
         var explorer = navigator.userAgent;
         var imgSrc = $(this)[0].value;
-        if(fileImg.context.size> 10485760){
-            layer.open({content : "最大只能上传10M的图片",btn : '确定'}); return;
-        }
+
         $(this).parents('form').find('.layui-form-item').next('.layui-form-item').show();
         if (explorer.indexOf('MSIE') >= 0) {
-            if (!/\.(jpg|jpeg|png|JPG|PNG|JPEG)$/.test(imgSrc)) {
+            if (!/\.(jpg|jpeg|png|JPG|PNG|JPEG|gif|GIF|bmp|BMP)$/.test(imgSrc)) {
                 imgSrc = "";
                 fileImg.attr("src","http://139.196.189.93:8089/app/rdcHeader.jpg");
-                return false;
+                return false
             }else{
                 fileImg.attr("src",imgSrc);
             }
         }else{
-            if (!/\.(jpg|jpeg|png|JPG|PNG|JPEG)$/.test(imgSrc)) {
+            if (!/\.(jpg|jpeg|png|JPG|PNG|JPEG|gif|GIF|bmp|BMP)$/.test(imgSrc)) {
                 imgSrc = "";
                 fileImg.attr("src","http://139.196.189.93:8089/app/rdcHeader.jpg");
-                return false;
+                return false
             }else{
                 var file = $(this)[0].files[0];
                 var url = URL.createObjectURL(file);
+                if(file.size> 10485760){
+                    layer.open({content : "最大只能上传10M的图片",btn : '确定'});
+                    return false
+                }
                 fileImg.attr("src",url);
             }
         }
@@ -267,11 +280,11 @@ $(function(){
             layer.alert('请输入名字',{'icon':6});
             return false
         }
-        if(!$("#firmImg")[0].files[0]){
+        if(!$("#firmImg")[0].value){
             layer.alert('请先上传营业执照图片',{'icon':6});
             return false
         }
-        $(".firmForm").ajaxForm(function(data) {  //有a时则a是返回值
+        $(".firmForm").ajaxForm(function(data) {
             layer.alert(data.message, {
                 icon: 6 //1:对号，2:叉号，3：问号，4：锁，5：哭脸，6：笑脸，7：叹号
                 ,closeBtn: 0

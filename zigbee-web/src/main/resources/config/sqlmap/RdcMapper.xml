@@ -178,6 +178,7 @@
 	</select>
     <resultMap id="rdcLidMap" type="com.smartcold.zigbee.manage.dto.RdcEntityDTO">
         <result property="id" column="id"/>
+        <association property="sharedInfoEntity" column="id" select="com.smartcold.zigbee.manage.dao.RdcShareMapper.getSharedInfoEntity"/>
         <collection property="collectUserIds" column="id" select="com.smartcold.zigbee.manage.dao.CollectMapper.getUsersIdByRdcId"/>
     </resultMap>
     <select id="getNewRdcList" parameterType="map" resultMap="rdcLidMap">
@@ -192,11 +193,6 @@
         st.type tempTypeStr,
         sm.type manageTypeStr,
         t.rdcscore,
-        (SELECT datatype FROM `shared_info` s WHERE s.rdcId=r.id AND s.datatype=3 AND s.typecode=1 ORDER BY s.id limit 1) AS datatype,
-        (SELECT typecode FROM `shared_info` s WHERE s.rdcId=r.id AND s.datatype=3 AND s.typecode=1 ORDER BY s.id limit 1) AS typecode,
-        (SELECT sqm FROM `shared_info` s WHERE s.rdcId=r.id AND s.datatype=3 AND s.typecode=1 ORDER BY s.id limit 1) AS rentSqm,
-        (SELECT unitPrice FROM `shared_info` s WHERE s.rdcId=r.id AND s.datatype=3 AND s.typecode=1 ORDER BY s.id limit 1) AS unitPrice,
-        (SELECT stauts FROM `shared_info` s WHERE s.rdcId=r.id AND s.datatype=3 AND s.typecode=1 ORDER BY s.id limit 1) AS shareStauts,
         (SELECT location FROM filedata f WHERE f.belongid = r.id AND f.category='storagePic' ORDER BY id DESC LIMIT 1 ) as logo
         FROM
         rdc r

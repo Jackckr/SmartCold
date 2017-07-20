@@ -139,6 +139,7 @@
                                 }
                                 window.location.href = backUrl;
                                 window.Event.returnValue = false;
+                                localStorage.removeItem('oURL');
                             } else {
                                 window.user = null;
                                 window.localStorage.removeItem("lkuser");
