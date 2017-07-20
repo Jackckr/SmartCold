@@ -4,6 +4,7 @@ $(function () {
     //自定义一个变量，用来模拟不断改变的下标，默认值要和页面一致
     var num=0;
     var timer;
+    localStorage.removeItem('OURL');
     //封装跳转下一张的功能
     var liLen = $('.imgList li').length-1;
     function nextFn(event) {

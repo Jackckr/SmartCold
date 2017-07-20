@@ -43,9 +43,9 @@ function getRdcRentList() {
         rdcRentList.forEach(function (rdcRent, index) {
             var tempTypeStr=rdcRent.tempTypeStr?rdcRent.tempTypeStr:"";
             var manageTypeStr=rdcRent.manageTypeStr?rdcRent.manageTypeStr:"";
-            rdcRentInfo.push('<li><div class="rdcImg"><a href="../html/rdcinfo.html?rdcId='+rdcRent.id+'"><img src="'+rdcRent.logo+'" alt=""></a>');
+            rdcRentInfo.push('<li><div class="rdcImg"><a href="rdcinfo.html?rdcId='+rdcRent.id+'"><img src="'+rdcRent.logo+'" alt=""></a>');
             if(rdcRent.istemperaturestandard==1){rdcRentInfo.push('<i>温度达标冷库</i>');}
-            rdcRentInfo.push('</div><div class="rdcInfo"><div class="rdcTxt clearfix"><span class="rdcName omg fl"><a href="../html/rdcinfo.html?rdcId='+rdcRent.id+'">'+rdcRent.name+'</a></span><span class="infoPercenty fl">信息完整度:<b>'+rdcRent.infoIntegrity+'%</b></span><ul class="stars clearfix fl">');
+            rdcRentInfo.push('</div><div class="rdcInfo"><div class="rdcTxt clearfix"><span class="rdcName omg fl"><a href="rdcinfo.html?rdcId='+rdcRent.id+'">'+rdcRent.name+'</a></span><span class="infoPercenty fl">信息完整度:<b>'+rdcRent.infoIntegrity+'%</b></span><ul class="stars clearfix fl">');
             for(var i=0;i<5;i++){
                 if(i<rdcRent.rdcscore){
                     rdcRentInfo.push('<li><i class="iconfont">&#xe60c;</i></li>');
@@ -66,7 +66,7 @@ function getRdcRentList() {
                }
             }
             if(rdcRent.sharedInfoEntity&&rdcRent.sharedInfoEntity.datatype==3&&rdcRent.sharedInfoEntity.typecode==1){rdcRentInfo.push('<p>可用面积<i class="orange">'+rdcRent.sharedInfoEntity.sqm+'</i>㎡</p><p class="rdcPriceNum blue">'+rdcRent.sharedInfoEntity.unitPrice+'</p><p>元/㎡/天</p>');}else {rdcRentInfo.push('<h3>暂无信息</h3>');}
-            rdcRentInfo.push('</div><div class="rdcBtn">'+collectWords+'<button class="look"><a href="../html/rdcinfo.html?rdcId='+rdcRent.id+'"><i class="iconfont">&#xe610;</i>查看</a></button></div></li>');
+            rdcRentInfo.push('</div><div class="rdcBtn">'+collectWords+'<button class="look"><a href="rdcinfo.html?rdcId='+rdcRent.id+'"><i class="iconfont">&#xe610;</i>查看</a></button></div></li>');
         });
         $("#rdcRentList").empty().append(rdcRentInfo.join(''));
     }});

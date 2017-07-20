@@ -83,6 +83,7 @@ function findUser() {
 function logout() {
     $.ajax({type: "GET", cache: false, dataType: 'json', url: '/i/user/logout'}).success(function (data) {
     });
+    localStorage.removeItem('OURL');
     window.sessionStorage.removeItem("lkuser");//清除系统user;
     window.location.href = "../../index.htm";
 };
@@ -95,6 +96,16 @@ Array.prototype.contains = function (obj) {
         }
     }
     return -1;
+}
+function watchNavigator() {///监测浏览器版本
+    if(navigator.appName == "Microsoft Internet Explorer"){
+        if(navigator.appVersion.match(/7./i)=="7."|| navigator.appVersion.match(/8./i)=="8."|| navigator.appVersion.match(/9./i)=="9."){
+            console.log(navigator.appVersion+'--it is IE');
+            alert('您的浏览器版本过低，可能部分功能不能完美实现。请更换网页底部推荐的浏览器，来获取更佳体验！')
+        }
+    }else{
+        console.log(navigator.appVersion+'--it is perfect!');
+    }
 }
 /*将所有数据赋值给form表单*/
 function getDataToForm(inputArr, data) {
