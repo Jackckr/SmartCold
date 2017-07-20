@@ -246,6 +246,15 @@ public class UserController extends BaseController {
 		}
 		return ResponseData.newFailure("未知异常~");
 	}
+
+	@RequestMapping(value = "resetPhoneById")
+	@ResponseBody
+	public ResponseData<String> resetPhoneById(String toke,String stoken, UserEntity user){
+		if(!StringUtil.visStoken(toke, stoken)){return ResponseData.newFailure("非法操作！请刷新页面重新操作！");	 }
+		user.setAvatar(null);
+		this.userDao.updateUser(user);
+		return ResponseData.newSuccess("手机号重置成功！");
+	}
 	
 	@RequestMapping(value = "/resetPwdByUserName")
 	@ResponseBody
@@ -408,4 +417,9 @@ public class UserController extends BaseController {
 		return ResponseData.newSuccess();
 	}
 
+	@RequestMapping(value="/findUserById")
+	@ResponseBody
+	public UserEntity findUserById(int userId){
+		return this.userDao.findUserById(userId);
+	}
 }

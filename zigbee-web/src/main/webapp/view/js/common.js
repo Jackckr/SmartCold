@@ -60,6 +60,24 @@ function getUrlParam(name) {
     if (r != null) return unescape(r[2]);
     return null;
 }
+/*截取验证码*/
+function getVailCode(code) {
+    var codes=[];
+    codes.push(code[code.length-1]);
+    codes.push(code[3]);
+    codes.push(code[code.length-4]);
+    codes.push(code[1]);
+    return codes.join('');
+}
+
+
+/*刷新缓存用户信息*/
+function flushUser(id) {
+    $.ajax({url:"/i/user/findUserById",type:"post",data:{"userId":id},success:function (data) {
+        window.sessionStorage.lkuser=JSON.stringify(data);
+    }});
+}
+
 /*获取用户对象*/
 function findUser() {
     $.ajax({
