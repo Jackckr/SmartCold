@@ -3,7 +3,7 @@
  * Created by maqiang34 on 16/10/18.
  * 基本版月分析报表
  */
-coldWeb.controller('basicReport', function( $scope, $rootScope,$stateParams,$http ,$timeout,baseTools) {
+coldWeb.controller('basicReport', function( $scope, $rootScope,$stateParams,$http ,$state,$timeout,baseTools) {
 	$scope.isnotprint=true;$scope.isloaderr=false;//当前是否是打印状态和加载状态
 	$scope.rdcId = $stateParams.rdcId;
 	
@@ -348,4 +348,11 @@ coldWeb.controller('basicReport', function( $scope, $rootScope,$stateParams,$htt
     // 使用刚指定的配置项和数据显示图表。
     myCharts.setOption(option);
     window.onresize = myCharts.resize;
+    
+    
+    $scope.changeversions=function(index,url,$event){
+		var em=$($event.target); em.addClass('select').siblings().removeClass('select');
+		$state.go(url, {'rdcId':$scope.rdcId });
+		
+	};
 });

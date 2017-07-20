@@ -79,13 +79,16 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 					      			$rootScope.aclmap[obj.id]=obj.acl;
 					      			if(obj.acl){
 					      				
-					      				if(!obj.hasnode){  
+//					      				if(!obj.hasnode){  
+//					      					debugger;
+//					      					coldWeb.stateProvider;
 					      					// 技术原因，无法处理(本想动态创建coldWeb)
 //					      					coldWeb.stateProvider.state(obj.controller,{url:obj.tourl,controller: obj.controller,  templateUrl: obj.templateUrl });
-					      				}
+//					      				}
 					      			}else{
-					      				$("#ml_acl"+obj.id).addClass("quanxian");$("#ml_acl"+obj.id+" *").addClass("quanxian");$("#ml_acl"+obj.id+" *").attr("disabled",true); 
-					      				if($rootScope.user.type!=0){$("#ml_acl"+obj.id).addClass("hide");}
+					      				$("#lfmenu [mid=ml_acl"+obj.id+"]").addClass("quanxian");
+					      				$("#lfmenu [mid=ml_acl"+obj.id+"]").addClass("quanxian");$("#ml_acl"+obj.id+" *").attr("disabled",true); 
+					      				if($rootScope.user.type!=0){$("#lfmenu [mid=ml_acl"+obj.id+"]").addClass("hide");}
 					      			}
 					      		});
 					      		$("#lefaside").removeClass("hide");
@@ -285,7 +288,12 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/basicReport/{rdcId}',
         controller: 'basicReport',
         templateUrl: 'app/template/basicReport.html'
+    }).state('wiseReport',{//基本版析报告  -分析报告--jhy--2017-06-19 新版
+        url: '/wiseReport/{rdcId}',
+        controller: 'wiseReport',
+        templateUrl: 'app/template/wiseReport.html'
     })
+    
     
     .state('cpswaterCost',{//
     	url: '/cpswaterCost/{groupID}',

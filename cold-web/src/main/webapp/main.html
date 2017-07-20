@@ -191,38 +191,38 @@ a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-
 				<ul id="lfmenu" class="sidebar-menu text-white my_sidebar">
 					<li id="ml_acl1" class="treeview"><a href="#/cold360Physical"><i class="icon iconfont" style="color:#ffffff"></i> <span class="menu-title text-white" style="font-size: large">体检</span></a></li>
 					<!--1. 监控 -->
-					<li id="ml_acl1" class="treeview"><a href=""><i class="icon iconfont" style="color:#ffffff"></i> <span class="menu-title text-white" style="font-size: large">监控</span></a>
+					<li mid="ml_acl1" class="treeview"><a href=""><i class="icon iconfont" style="color:#ffffff"></i> <span class="menu-title text-white" style="font-size: large">监控</span></a>
 						<ul class="treeview-menu">
-							<li id="ml_acl10" class="treeview"><a href=""> <i class="icon iconfont"></i><span class="menu-title">温度</span><i class="fa fa-angle-left pull-right"></i></a>
+							<li mid="ml_acl10" class="treeview"><a href=""> <i class="icon iconfont"></i><span class="menu-title">温度</span><i class="fa fa-angle-left pull-right"></i></a>
 								<ul class="treeview-menu">
 									<li ng-repeat="storage in mystorages" onclick="activeLi(this)"><a href="#/coldStorageTemper/{{storage.id}}"> <i class="fa fa-circle-o"></i>{{storage.name}} </a></li>
 								</ul>
 						    </li>
-							<li id="ml_acl20" class="treeview"><a href="#/about"> <i class="icon iconfont"></i><span class="menu-title">能耗</span><i class="fa fa-angle-left pull-right"></i> </a>
+							<li mid="ml_acl20" class="treeview "><a href="#/about"> <i class="icon iconfont"></i><span class="menu-title">能耗</span><i class="fa fa-angle-left pull-right"></i> </a>
 								<ul class="treeview-menu">
-									<li id="ml_acl21" class="treeview"><a href="#/about"> <i class="icon iconfont">&#xe689;</i> <span class="menu-title">耗电量</span><i class="fa fa-angle-left pull-right"> </i> </a>
+									<li mid="ml_acl21" class="treeview"><a href="#/about"> <i class="icon iconfont">&#xe689;</i> <span class="menu-title">耗电量</span><i class="fa fa-angle-left pull-right"> </i> </a>
 										<ul class="treeview-menu">
 											<li ng-repeat="power in powers" onclick="activeLi(this)"><a 	href="#/power/{{power.id}}"><i class="fa fa-circle-o"></i>{{power.name}}</a> </li>
 										</ul>
 									</li>
 									<!-- 耗水量二级菜单 -->
-									<li id="ml_acl22"><a href="#"><i class="icon iconfont"></i><span class="menu-title">耗水量</span><i class="fa fa-angle-left pull-right"></i></a>
+									<li mid="ml_acl22"><a href="#"><i class="icon iconfont"></i><span class="menu-title">耗水量</span><i class="fa fa-angle-left pull-right"></i></a>
 										<ul class="treeview-menu">
 											<li ng-repeat="compressorGroup in compressorGroups" onclick="activeLi(this)"><a href="#/cpswaterCost/{{compressorGroup.id}}" class="omg" title="{{compressorGroup.name}}"><i class="fa fa-circle-o"></i> {{compressorGroup.name}}</a></li>
 										</ul>
 									</li>
 								</ul>
 							</li>
-							<li id="ml_acl20" class="treeview"><a href="#/about"> <i class="icon iconfont"></i><span class="menu-title">运管</span><i class="fa fa-angle-left pull-right"></i> </a>
+							<li mid="ml_acl30" class="treeview"><a href="#/about"> <i class="icon iconfont"></i><span class="menu-title">运管</span><i class="fa fa-angle-left pull-right"></i> </a>
 								<ul class="treeview-menu">
 										       <!-- 门  二级菜单 -->
-												<li id="ml_acl30" class="treeview"><a href="#/about"><i class="icon iconfont"></i><span class="menu-title">门</span><i class="fa fa-angle-left pull-right"></i></a>
+												<li mid="ml_acl30" class="treeview"><a href="#/about"><i class="icon iconfont"></i><span class="menu-title">门</span><i class="fa fa-angle-left pull-right"></i></a>
 													<ul class="treeview-menu">
-														<li id="ml_acl31"><a><i class="fa fa-circle-o"></i>冷库门<i 	class="fa fa-angle-left pull-right"></i></a>
+														<li mid="ml_acl31"><a><i class="fa fa-circle-o"></i>冷库门<i 	class="fa fa-angle-left pull-right"></i></a>
 															<ul class="treeview-menu">
 																<li ng-repeat="storage in hasDoorStorages" onclick="activeLi(this)"><a ng-click="toMyStorageDoor(storage.id)"> <i class="fa fa-circle-o"></i>{{storage.name}} </a></li>
 															</ul></li>
-														<li id="ml_acl32"><a><i class="fa fa-circle-o"></i>月台门<i 	class="fa fa-angle-left pull-right"></i></a>
+														<li mid="ml_acl32"><a><i class="fa fa-circle-o"></i>月台门<i 	class="fa fa-angle-left pull-right"></i></a>
 															<ul class="treeview-menu">
 																<li ng-repeat="platformDoor in platformDoors" onclick="activeLi(this)"><a href="#/platformDoor/{{platformDoor.id}}"> <i class="fa fa-circle-o"></i>{{platformDoor.name}}</a></li>
 															</ul></li>
@@ -230,94 +230,82 @@ a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-
 												</li>
 												<!-- 门  二级菜单end -->
 												<!-- 库内设施  二级菜单 -->
-												<li id="ml_acl40" class="treeview"><a href="#/about"><i class="icon iconfont"></i><span class="menu-title">库内设施</span><i class="fa fa-angle-left pull-right"></i></a>
+												<li mid="ml_acl40" class="treeview"><a href="#/about"><i class="icon iconfont"></i><span class="menu-title">库内设施</span><i class="fa fa-angle-left pull-right"></i></a>
 													<ul class="treeview-menu">
-														<li id="ml_acl41" onclick="activeLi(this)"><a href="#/otherDevice"><i class="fa fa-circle-o"></i>其他设施</a></li>
-														<li id="ml_acl42" onclick="activeLi(this)"><a href="#/lightGroup"><i class="fa fa-circle-o"></i>照明</a></li>
+														<li mid="ml_acl41" onclick="activeLi(this)"><a href="#/otherDevice"><i class="fa fa-circle-o"></i>其他设施</a></li>
+														<li mid="ml_acl42" onclick="activeLi(this)"><a href="#/lightGroup"><i class="fa fa-circle-o"></i>照明</a></li>
 													</ul></li>
 												<!-- 库内设施  二级菜单 end-->
-												<li id="ml_acl50" class="treeview"><a href="#/about"><i class="icon iconfont"></i><span class="menu-title">货物</span><i class="fa fa-angle-left pull-right"></i></a>
+												<li mid="ml_acl50" class="treeview"><a href="#/about"><i class="icon iconfont"></i><span class="menu-title">货物</span><i class="fa fa-angle-left pull-right"></i></a>
 													<ul class="treeview-menu">
-														<li id="ml_acl51" onclick="activeLi(this)"><a href="#/coldStorageInOutGoods"><i class="fa fa-circle-o"></i>货物流通量及温度</a></li>
+														<li mid="ml_acl51" onclick="activeLi(this)"><a href="#/coldStorageInOutGoods"><i class="fa fa-circle-o"></i>货物流通量及温度</a></li>
 													</ul>
 												</li>
 								</ul>
 							</li>
-							<li id="ml_acl60" class="treeview"><a href="#/about"><i class="icon iconfont"></i><span class="menu-title">制冷系统</span><i class="fa fa-angle-left pull-right"></i></a>
+							<li mid="ml_acl60" class="treeview"><a href="#/about"><i class="icon iconfont"></i><span class="menu-title">制冷系统</span><i class="fa fa-angle-left pull-right"></i></a>
 								<ul class="treeview-menu">
-									<li id="ml_acl61"><a><i class="fa fa-circle-o"></i>制冷机组<i 	class="fa fa-angle-left pull-right"></i></a>
+									<li mid="ml_acl61"><a><i class="fa fa-circle-o"></i>制冷机组<i 	class="fa fa-angle-left pull-right"></i></a>
 										<ul class="treeview-menu" style="display: none;">
 											<li ng-repeat="compressorGroup in compressorGroups" onclick="activeLi(this)" title="{{compressorGroup.name}}"><a href="" class="omg" ng-click="toMyCompressor(compressorGroup.id)"> <i class="fa fa-circle-o"></i> {{compressorGroup.name}}</a></li>
 										</ul>
 									</li>
 									<!-- <li><a><i class="fa fa-circle-o"></i>冷凝系统</a></li> -->
-									<li id="ml_acl62" onclick="activeLi(this)"><a href="#/compressorBlower/{{rdcId}}"><i class="fa fa-circle-o"></i>蒸发系统(冷风机)</a></li>
+									<li mid="ml_acl62" onclick="activeLi(this)"><a href="#/compressorBlower/{{rdcId}}"><i class="fa fa-circle-o"></i>蒸发系统(冷风机)</a></li>
 								</ul>
 							</li>
-							<li id="ml_acl70" onclick="activeLi(this)"><a href="#/historyData"><i class="icon iconfont"></i><span class="menu-title">历史曲线查询</span></a></li>
-							<li id="ml_acl80" onclick="activeLi(this)"><a href="#/exphistoryData" ng-click=""><i class="icon iconfont"></i><span class="menu-title">历史数据导出</span></a></li>
+							<li mid="ml_acl70" onclick="activeLi(this)"><a href="#/historyData"><i class="icon iconfont"></i><span class="menu-title">历史曲线查询</span></a></li>
+							<li mid="ml_acl80" onclick="activeLi(this)"><a href="#/exphistoryData" ng-click=""><i class="icon iconfont"></i><span class="menu-title">历史数据导出</span></a></li>
 						</ul>
 					</li>
 					<!--2.分析及报告 -->
-					<li id="ml_acl100" class="treeview"><a href=""><i class="icon iconfont" style="color:#ffffff"></i> <span class="menu-title text-white" style="font-size: large">分析及报告</span></a>
+					<li mid="ml_acl100" class="treeview"><a href=""><i class="icon iconfont" style="color:#ffffff"></i> <span class="menu-title text-white" style="font-size: large">分析及报告</span></a>
 						<ul id="mlul2" class="treeview-menu">
-							<li id="ml_acl110"><a href="#"><i class="icon iconfont"></i><span class="menu-title">温度分析</span><i 	class="fa fa-angle-left pull-right"></i></a>
+							<li mid="ml_acl110"><a href="#"><i class="icon iconfont"></i><span class="menu-title">温度分析</span><i 	class="fa fa-angle-left pull-right"></i></a>
 								<ul class="treeview-menu">
-									<li id="ml_acl111" onclick="activeLi(this)"><a href="#/overTempCountAndTime/{{rdcId}}"><i class="fa fa-circle-o"></i>超温时长及次数统计</a></li>
-									<li id="ml_acl112" onclick="activeLi(this)"><a href="#/overTemperatureYZ/{{rdcId}}"><i class="fa fa-circle-o"></i>超温比例统计</a></li>
+									<li mid="ml_acl111" onclick="activeLi(this)"><a href="#/overTempCountAndTime/{{rdcId}}"><i class="fa fa-circle-o"></i>超温时长及次数统计</a></li>
+									<li mid="ml_acl112" onclick="activeLi(this)"><a href="#/overTemperatureYZ/{{rdcId}}"><i class="fa fa-circle-o"></i>超温比例统计</a></li>
 								</ul>
 							</li>
-							<li id="ml_acl110"><a href="#"><i class="icon iconfont"></i><span class="menu-title">能耗分析</span><i 	class="fa fa-angle-left pull-right"></i></a>
+							<li mid="ml_acl20" ><a href="#"><i class="icon iconfont"></i><span class="menu-title">能耗分析</span><i 	class="fa fa-angle-left pull-right"></i></a>
 								<ul class="treeview-menu">
-									<li id="ml_acl111" onclick="activeLi(this)"><a href="#/powerAnalysis/{{rdcId}}"><i class="fa fa-circle-o"></i>电耗分析</a></li>
-									<li id="ml_acl112" onclick="activeLi(this)"><a href="#/waterAnalysis/{{rdcId}}"><i class="fa fa-circle-o"></i>水耗分析</a></li>
+									<li mid="ml_acl21" onclick="activeLi(this)"><a href="#/powerAnalysis/{{rdcId}}"><i class="fa fa-circle-o"></i>电耗分析</a></li>
+									<li mid="ml_acl22" onclick="activeLi(this)"><a href="#/waterAnalysis/{{rdcId}}"><i class="fa fa-circle-o"></i>水耗分析</a></li>
 								</ul>
 							</li>
-							
 							<!-- 运管分析 -->
-							<li id="ml_acl120"><a href="#"><i class="icon iconfont"></i><span
-									class="menu-title">运管分析</span><i
-									class="fa fa-angle-left pull-right"></i></a>
+							<li mid="ml_acl120"><a href="#"><i class="icon iconfont"></i><span class="menu-title">运管分析</span><i class="fa fa-angle-left pull-right"></i></a>
 								<ul class="treeview-menu">
-									<li id="ml_acl121" onclick="activeLi(this)"><a
-										href="#/doorAnalysis/{{rdcId}}"><i class="fa fa-circle-o"></i>冷库门运行分析</a></li>
-									<li id="ml_acl122" onclick="activeLi(this)"><a
-										href="#/goodsYzAnalysis/{{rdcId}}"><i
-											class="fa fa-circle-o"></i>货物因子分析</a></li>
-									<li id="ml_acl123" onclick="activeLi(this)"><a
-										href="#/hotAnalysis"><i class="fa fa-circle-o"></i>冷库日热量分析</a></li>
-								</ul></li>
+									<li mid="ml_acl121" onclick="activeLi(this)"><a href="#/doorAnalysis/{{rdcId}}"><i class="fa fa-circle-o"></i>冷库门运行分析</a></li>
+									<li mid="ml_acl122" onclick="activeLi(this)"><a href="#/goodsYzAnalysis/{{rdcId}}"><i class="fa fa-circle-o"></i>货物因子分析</a></li>
+									<li mid="ml_acl123" onclick="activeLi(this)"><a href="#/hotAnalysis"><i class="fa fa-circle-o"></i>冷库日热量分析</a></li>
+								</ul>
+							</li>
 							<!-- 运管分析end -->
 							<!-- 制冷系统分析 -->
-							<li id="ml_acl130"><a href="#"><i class="icon iconfont"></i><span
-									class="menu-title">制冷系统分析</span><i
-									class="fa fa-angle-left pull-right"></i></a>
+							<li mid="ml_acl130"><a href="#"><i class="icon iconfont"></i><span class="menu-title">制冷系统分析</span><i class="fa fa-angle-left pull-right"></i></a>
 								<ul class="treeview-menu">
-									<li id="ml_acl131" onclick="activeLi(this)"><a
-										href="#/runningAnalysis/{{rdcId}}"><i
-											class="fa fa-circle-o"></i>运行分析</a></li>
-									<li id="ml_acl132" onclick="activeLi(this)"><a
-										href="#/coolingAnalysis/{{rdcId}}"><i
-											class="fa fa-circle-o"></i>效率分析</a></li>
-									
-								</ul></li>
+									<li mid="ml_acl131" onclick="activeLi(this)"><a href="#/runningAnalysis/{{rdcId}}"><i 	class="fa fa-circle-o"></i>运行分析</a></li>
+									<li mid="ml_acl132" onclick="activeLi(this)"><a href="#/coolingAnalysis/{{rdcId}}"><i class="fa fa-circle-o"></i>效率分析</a></li>
+								</ul>
+							</li>
 							<!-- 制冷系统分析end -->
-							<li id="ml_acl140" onclick="activeLi(this)"><a href="#/reportsAnalysis/{{rdcId}}"><i class="icon iconfont"></i><span class="menu-title">报表功能</span></a></li>
-							<li id="ml_acl150" onclick="activeLi(this)"><a href="#/tempReport/{{rdcId}}"><i class="icon iconfont"></i><span class="menu-title">分析报告</span></a></li>
-						</ul></li>
-					<li id="ml_acl200" class="treeview"><a href="#/about"><i
-							class="icon iconfont" style="color:#ffffff"></i> <span
-							class="menu-title text-white" style="font-size: large">报警管理</span></a>
-						<ul id="mlul3" class="treeview-menu">
-	                                <li id="ml_acl211" ><a 	href="#/"><i class="icon iconfont"></i><span class="menu-title ">温度报警</span><i class="fa fa-angle-left pull-right"></i></a>
-		                                 <ul class="treeview-menu" >
-                                           <li id="ml_acl211" onclick="activeLi(this)"><a 	href="#/alarmTemp"><i class="icon iconfont"></i><span class="menu-title">温度报警</span></a></li> 
-										</ul>
-									</li>
+							<li mid="ml_acl140" onclick="activeLi(this)"><a href="#/reportsAnalysis/{{rdcId}}"><i class="icon iconfont"></i><span class="menu-title">报表功能</span></a></li>
+							<li mid="ml_acl150" onclick="activeLi(this)"><a href="#/tempReport/{{rdcId}}"><i class="icon iconfont"></i><span class="menu-title">分析报告</span></a></li>
+						</ul>
+					</li>
+					<li mid="ml_acl200" class="treeview"><a href="#/about"><i class="icon iconfont" style="color:#ffffff"></i> <span 	class="menu-title text-white" style="font-size: large">报警管理</span></a>
+						<ul mid="mlul3" class="treeview-menu">
+<!-- 	                                <li mid="ml_acl211" ><a 	href="#/"><i class="icon iconfont"></i><span class="menu-title ">温度报警</span><i class="fa fa-angle-left pull-right"></i></a> -->
+<!-- 		                                 <ul class="treeview-menu" > -->
+                                           <li mid="ml_acl211" onclick="activeLi(this)"><a 	href="#/alarmTemp"><i class="icon iconfont"></i><span class="menu-title">温度报警</span></a></li> 
+<!-- 										</ul> -->
+<!-- 									</li> -->
 <!-- 									 <li id="ml_acl211" onclick="activeLi(this)" ><a href="#"><i class="icon iconfont" ></i><span class="menu-title">运管报警</span></a></li> -->
 <!-- 									 <li id="ml_acl211" onclick="activeLi(this)"> <a href="#"><i class="icon iconfont" ></i><span class="menu-title">制冷报警</span></a></li> -->
-						</ul></li>
-					<li id="ml_acl300" class="treeview"><a href="#/about"><i
+						</ul>
+					</li>
+					<li mid="ml_acl300" class="treeview"><a href="#/about"><i
 							class="icon iconfont" style="color:#ffffff"></i> <span
 							class="menu-title text-white" style="font-size: large">维护管理</span></a>
 
@@ -334,9 +322,7 @@ a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-
 						   <li onclick="activeLi(this)"><a href="#/baoyangReminder"><i class="icon iconfont"></i><span class="menu-title">机组维护提醒</span></a></li>
 						</ul> 
 					</li>
-					<li id="ml_acl400" class="treeview"><a href="#designStorage"><i
-							class="icon iconfont" style="color:#ffffff"></i> <span
-							id="mlul5" class="menu-title text-white" style="font-size: large">选型</span></a></li>
+					<li mid="ml_acl400" class="treeview"><a href="#designStorage"><i class="icon iconfont" style="color:#ffffff"></i> <span id="mlul5" class="menu-title text-white" style="font-size: large">选型</span></a></li>
 				</ul>
 			</section>
 		</aside>
@@ -450,6 +436,7 @@ a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-
 		document.write("<scr"+"ipt src=\"app/js/waterCostGroup.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"app/js/monthReport.js\"></sc"+"ript>");
         document.write("<scr"+"ipt src=\"app/js/tempReport.js\"></sc"+"ript>");
+        document.write("<scr"+"ipt src=\"app/js/wiseReport.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"app/js/baoyangWeixiuApply.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"app/js/baoyangWeixiuRecords.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"app/js/cold360Physical.js\"></sc"+"ript>");

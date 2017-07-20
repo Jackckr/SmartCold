@@ -138,7 +138,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	};
 	
 	 $scope.dwoverTempAndCount=function(xAxis,count,time){
-		 $scope.charArray[3]= $('#tempovertime').highcharts({
+		 $scope.charArray[1]= $('#tempovertime').highcharts({
 		        chart: { zoomType: 'x' },
 		        title: { text: '' },
 		        subtitle: { text: '' },
@@ -180,7 +180,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 				$scope.cuttstorage.l1tailtime=l1tailtime;
 				$scope.cuttstorage.l1tailcount=l1tailcount;
 				$scope.cuttstorage.score=score<0?0:score;
-				 $scope.charArray[1]= 	$('#tempwarning').highcharts({
+				 $scope.charArray[2]= 	$('#tempwarning').highcharts({
 			        title: { text: null},
 			        chart: {
 			            type: 'column'
@@ -236,7 +236,14 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	$scope.Preview=function(){ //打印预览
 		  $scope.isnotprint=false;
 		  angular.forEach($scope.charArray,function(item){ 
-			  $("#"+item.dom.id+"_img").html(item.getImage('jpeg').outerHTML);
+			  
+			    var imgURL = item.getDataURL('png');//获取base64编码
+//			                var obj={};
+//			                obj["imgsURl"]=imgURL;
+//			                obj["name"]="ysj";
+//			                RunJavaMethodTrans("com.amarsoft.app.als.formatdoc.ahzxreport.ChangeToPhoto", "PersonTaxInfo", JSON.stringify({"data":obj}));
+//			                $(item.selector+"_img")
+			  $(item.selector+"_img").html("<img src="+imgURL+" title='超温时长(min/day)'>");
 			 });
 		  $timeout(printpage,0); $timeout(chanpangstatus,0);//加入js队列
 	 };
@@ -284,7 +291,6 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	$scope.changeversions=function(index,url,$event){
 		var em=$($event.target); em.addClass('select').siblings().removeClass('select');
 		$state.go(url, {'rdcId':$scope.rdcId });
-		
 	};
 	
 	

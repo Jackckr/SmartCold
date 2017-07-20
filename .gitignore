@@ -94,3 +94,8 @@ cold-web/src/main/resources/log4j.properties
 zigbee-web/src/main/resources/log4j.properties
 bgzigbee-web/src/main/resources/log4j.properties
 Servers
+cold-web/target
+zigbee-web/target
+zigbee-web/target
+bgzigbee-web/target
+

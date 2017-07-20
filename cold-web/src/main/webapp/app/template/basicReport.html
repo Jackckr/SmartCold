@@ -88,19 +88,19 @@
 		<div class="clearfix">
 			<span class="pull-left" style="margin-top: 11px;">选择版本</span>
 			<ul class="coldName version_choice clearfix pull-left">
-				<li class="select" ng-click="changeversions(0,'tempReport',$event)">温度版</li>
-				<li class=""       ng-click="changeversions(1,'basicReport',$event)">基本版</li>
-				<li class=""       ng-click="changeversions(2,'',$event)">聪慧版</li>
+				<li class=""             ng-click="changeversions(0,'tempReport',$event)">温度版</li>
+				<li class="select"       ng-click="changeversions(1,'basicReport',$event)">基本版</li>
+				<li class=""             ng-click="changeversions(2,'wiseReport',$event)">聪慧版</li>
 				<li class="grey">智能版</li>
 				<li class="grey">维护版</li>
 			</ul>
 		</div>
-		<div class="clearfix">
-			<span class="pull-left" style="margin-top: 11px;">选择冷库</span>
-			<ul class="coldName clearfix pull-left">
-				<li ng-repeat="storage in mystorages" ng-click="changestorage($index,storage.id,$event)" class="{{$index==0?'select':'' }} " >{{storage.name}}</li>
-			</ul>
-		</div>
+<!-- 		<div class="clearfix"> -->
+<!-- 			<span class="pull-left" style="margin-top: 11px;">选择冷库</span> -->
+<!-- 			<ul class="coldName clearfix pull-left"> -->
+<!-- 				<li ng-repeat="storage in mystorages" ng-click="changestorage($index,storage.id,$event)" class="{{$index==0?'select':'' }} " >{{storage.name}}</li> -->
+<!-- 			</ul> -->
+<!-- 		</div> -->
  	</div>
 	<div id="print" ng-show="!isloaderr">
 		<div class="print_header">
