@@ -126,6 +126,7 @@
     width: 20px;
     margin: 0;
     padding:0;
+    height: initial;
 }
 /*文字+输入框*/
 .oInline{
