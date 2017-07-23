@@ -72,9 +72,9 @@ function initForm() {
 }
 
 function getCode(type) {
-    var phoneRex=/^1[34578]\d{9}$/;
+    var phoneRex = /^1[34578]\d{9}$/;
     var phone = type == 1 ? $("#oldPhone").val().trim() : $("#newPhone").val().trim();
-    if (!phoneRex.test(phone)){
+    if (!phoneRex.test(phone)) {
         layer.open({content: "请输入正确格式的手机号！", btn: '确定'});
         return;
     }
@@ -82,11 +82,11 @@ function getCode(type) {
         $('#oldPhone').attr('readonly', 'readonly');
         $('#oldPhoneBtn').attr('disabled', 'disabled').css('backgroundColor', '#cccccc');
     } else {
-        if($("#newPhone").val().trim()==$("#oldPhone").val().trim()){
+        if ($("#newPhone").val().trim() == $("#oldPhone").val().trim()) {
             layer.open({content: "新手机号不能与旧手机号相同！", btn: '确定'});
             return;
         }
-        if(window.oldCode!=$("#oldCode").val()){
+        if (window.oldCode != $("#oldCode").val()) {
             layer.open({content: "验证码输入有误！", btn: '确定'});
             return;
         }
@@ -98,7 +98,7 @@ function getCode(type) {
             if (data.success) {
                 var code = getVailCode(data.entity);
                 type == 1 ? window.oldCode = code : window.newCode = code;
-                window.stoken=data.entity;
+                window.stoken = data.entity;
                 layer.open({content: data.message, btn: '确定'});
             }
         }
@@ -106,15 +106,84 @@ function getCode(type) {
 }
 
 function updateTelephone() {
-    if(window.newCode!=$("#newCode").val()){
+    if (window.newCode != $("#newCode").val()) {
         layer.open({content: "验证码输入有误！", btn: '确定'});
         return;
     }
-    $.ajax({url:"/i/user/resetPhoneById",type:"post",data:{telephone:$("#newPhone").val().trim(),id:window.lkuser.id,toke:$("#newCode").val(),stoken:window.stoken},success:function (data) {
-        layer.open({content: "保存成功！", btn: '确定'});
-        flushUser(window.lkuser.id);
-        window.location.reload();
-    }});
+    $.ajax({
+        url: "/i/user/resetPhoneById",
+        type: "post",
+        data: {
+            telephone: $("#newPhone").val().trim(),
+            id: window.lkuser.id,
+            toke: $("#newCode").val(),
+            stoken: window.stoken
+        },
+        success: function (data) {
+            layer.open({content: "保存成功！", btn: '确定',yes:function () {
+                flushUser(window.lkuser.id);
+                window.location.reload();
+            }});
+        }
+    });
+}
+
+function checkOldPwd() {
+
+}
+
+function check(ckolpwd) {
+    if (ckolpwd) {
+        var password = $("#new_password").val().trim();
+        var repsword = $("#new_repassword").val().trim();
+        if (password.length == "") {
+            layer.open({content: "密码不能为空~", btn: '确定'});
+            return false;
+        } else if (/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$/.test(password)) {
+            if (password != repsword) {
+                layer.open({content: "两次密码输入不一致，请重新输入", btn: '确定'});
+                return false;
+            }
+        } else {
+            layer.open({content: "密码长度6-12位,必须是数字字母组合", btn: '确定'});
+            return false;
+        }
+    } else {
+        layer.open({content: "旧密码输入有误，请重新输入", btn: '确定'});
+        return false;
+    }
+    return true;
+}
+
+function updatePwd() {
+    $.ajax({
+        url: "/i/user/checkOldPassword",
+        type: "post",
+        data: {pwd: $("#old_password").val().trim()},
+        success: function (data) {
+            var check2 = check(data);
+            if (check2) {
+                var formdata = new FormData();
+                formdata.append("id", window.lkuser.id);
+                formdata.append("password", $("#new_password").val().trim());
+                $.ajax({
+                    type: 'POST',
+                    url:"/i/user/updateUser",
+                    data: formdata, processData: false, contentType: false,
+                    success: function (data) {
+                        if (!data) {/* alert("修改失败~请稍后重试~"); */
+                            layer.open({content: '修改失败~请稍后重试~~', btn: '确定'});
+                        } else {
+                            layer.open({content: '修改成功!请重新登录', btn: '确定',yes:function () {
+                                logout();
+                                window.location.href="login.html";
+                            }});
+                        }
+                    }
+                });
+            }
+        }
+    });
 }
 
 function saveUser() {

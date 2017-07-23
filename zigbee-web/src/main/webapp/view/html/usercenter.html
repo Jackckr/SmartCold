@@ -196,29 +196,28 @@
                             </form>
                         </div>
                         <div class="layui-tab-item">
-                            <form class="layui-form">
+                            <form class="layui-form" onsubmit="return false">
                                 <div>
                                     <label class="layui-form-label">原始密码</label>
                                     <div class="layui-input-inline">
-                                        <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                                        <input id="old_password" type="password" lay-verify="required" placeholder="请输入原密码" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                                 <div>
                                     <label class="layui-form-label">新密码</label>
                                     <div class="layui-input-inline">
-                                        <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                                        <input id="new_password" type="password" lay-verify="required" placeholder="请输入新密码" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                                 <div>
                                     <label class="layui-form-label">确认新密码</label>
                                     <div class="layui-input-inline">
-                                        <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                                        <input id="new_repassword" type="password" lay-verify="required" placeholder="请确认新密码" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                                 <div>
                                     <div class="layui-input-block">
-                                        <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
-                                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        <button onclick="updatePwd()" class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
                                     </div>
                                 </div>
                             </form>
