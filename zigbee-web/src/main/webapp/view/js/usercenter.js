@@ -128,10 +128,6 @@ function updateTelephone() {
     });
 }
 
-function checkOldPwd() {
-
-}
-
 function check(ckolpwd) {
     if (ckolpwd) {
         var password = $("#new_password").val().trim();
@@ -200,9 +196,10 @@ function saveUser() {
         processData: false,
         contentType: false,
         success: function (data) {
-            layer.open({content: "保存成功！", btn: '确定'});
-            flushUser(window.lkuser.id);
-            window.location.reload();
+            layer.open({content: "保存成功！", btn: '确定',yes:function () {
+                flushUser(window.lkuser.id);
+                window.location.reload();
+            }});
         }
     });
 }
