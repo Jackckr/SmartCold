@@ -136,3 +136,17 @@ footer .item>a i{
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
     opacity: 0;
 }
+/*图片水印*/
+/*
+.gallery li>a:before,
+#baguetteBox-overlay .full-image figure:before{
+    content: '链库http://www.liankur.com';
+    position: absolute;
+    left:.3rem;
+    bottom:1rem;
+    font-size: .7rem;
+    color: #eee;
+    z-index:20;
+    padding: .2rem 1rem;
+    background-color: rgba(0,0,0,.4);
+}*/

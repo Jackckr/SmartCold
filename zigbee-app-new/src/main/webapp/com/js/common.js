@@ -237,7 +237,8 @@ function bgClose(ops) {
 }
 function isWeiXin(){
     var ua = window.navigator.userAgent.toLowerCase();
-    if(ua.match(/MicroMessenger/i) == 'micromessenger'||ua.match(/QQ/i) == 'qq'){
+    if(ua.match(/MicroMessenger/i) == 'micromessenger'||ua.match(/QQ/i) == 'qq'&&ua.match(/QQ/i) == 'mqq'){
+        alert(ua)
         return true;
     }else{
         return false;
