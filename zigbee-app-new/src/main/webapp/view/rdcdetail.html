@@ -47,6 +47,23 @@
         </div>
     </div>
 </div>
+<div ng-if="vo.storagePics.length==0">
+    <!--点击图片循环展示-->
+    <div class="main_visual">
+        <div class="flicking_con">
+            <a class="on" href="#@"></a>
+        </div>
+        <div class="main_image baguetteBoxOne gallery">
+            <ul>
+                <li>
+                    <a href="http://139.196.189.93:8089/app/rdcHeader.jpg" data-caption="这是默认图片哦~冷库主比较懒，没有上传冷库图片了呢">
+                        <img  ng-src="http://139.196.189.93:8089/app/rdcHeader.jpg"/>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 <!--new=========================================-->
 <div class="rdcpadding rdcDetailName">
     <h1>{{vo.name}}</h1>
@@ -58,11 +75,11 @@
             <em ng-if="user&&user.vipType>0&&vo.userid!=user.id"><a class="blue" href="coldStorageAuth.html?id={{rdcid}}" style="font-size: .6rem">认证该冷库</a></em>
         </div>
     </div>
-    <div class="flex" ng-if="user&&user.vipType!=0">
+    <div class="flex" ng-if="user&&user.vipType!=0 || user&&user.id==vo.userid">
         <div class="item"><span>联系电话</span><b class="blue">
             <!--<a href="login.html" class="blue" ng-if="checkUserLogin()==false">登录后显示</a>
             <a href="login.html" class="grey" ng-if="user.vipType==0">实名认证后可见</a>-->
-            <em ng-if="user.vipType!=0">{{vo.phoneNum}}</em>
+            <em ng-if="user.vipType!=0 || user.id==vo.userid">{{vo.phoneNum}}</em>
         </b></div>
         <div class="item">
             <ul class='star fl' value="{{vo.score}}">
@@ -76,7 +93,7 @@
         </div>
     </div>
 </div>
-<div class="rdcpadding rdcDetailMainInfo" ng-if="user&&user.vipType!=0">
+<div class="rdcpadding rdcDetailMainInfo" ng-if="user&&user.vipType!=0 || user&&user.id==vo.userid">
     <div class="flex">
         <div class="item"><span>总面积</span>{{vo.area}}㎡</div>
         <div class="item"><span>空置面积</span>{{vo.rentSqm}}㎡</div>
@@ -88,7 +105,7 @@
         <div class="item"><span>信息完整度</span>{{vo.infoIntegrity}}%</div>
     </div>
 </div>
-<div class="rdcpadding" ng-if="user">
+<div class="rdcpadding" ng-if="user || user.id==vo.userid">
     <div class="flex">
         <div class="item flex">
             <span class="item">地址</span>
@@ -96,13 +113,13 @@
         </div>
     </div>
 </div>
-<div class="rdcpadding" ng-if="user&&user.vipType==0">
+<div class="rdcpadding" ng-if="user&&user.vipType==0&&user.id!=vo.userid">
     <h1>认证用户方可看到更多信息！<b><a href="approve.html" class="blue">去实名认证</a></b></h1>
 </div>
 <div class="rdcpadding" ng-show="user==null">
     <h1>登录之后可看到更多信息！<b><a href="login.html" class="blue">去登录</a></b></h1>
 </div>
-<div class="rdcpadding rdcDetailOtherInfo" ng-if="user&&user.vipType!=0">
+<div class="rdcpadding rdcDetailOtherInfo" ng-if="user&&user.vipType!=0 || user&&user.id==vo.userid">
     <h2>
         <i class="iconfont blue">&#xe60b;</i>
         &nbsp;冷库信息<span class="fr blue" ng-click="on_off($event)">展开</span>
@@ -138,41 +155,6 @@
         <div ng-if="vo.remark&&vo.remark!='undefined'" class="flex"><span class="item">备注</span><p class="item">{{vo.remark}}</p></div>
     </div>
 </div>
-
-<!--<div class="rdcpadding">
-    <ul class="infolist clearfix">
-        <li><span class="type">经营类型：</span><span class="text"></span></li>
-        <li><span class="type">温度类型：</span><span class="text">{{vo.storagetempertype}}</span></li>
-        <li><span class="type">存放类型：</span><span class="text">{{vo.storagetype}}</span></li>
-        <li><span class="type">面积：</span><span class="text">{{vo.sqm}}㎡</span></li>
-        &lt;!&ndash; <li ng-if="vo.capacity!=0"><span class="type">吨位：</span><span class="text">{{vo.capacity}}</span></li> &ndash;&gt;
-        <li class="myphone"><span class="type">电话：</span><span class="text">{{vo.cellphone}}</span></li>
-        <li class="myphonedis"><span class="type">电话：</span><span style="color:#438BCB;" class="text"
-                                                                  onclick="gologin()">请登录显示</span></li>
-        &lt;!&ndash; <li><span class="type">冷链设施：</span><span class="text">{{vo.storagetruck!=null?'自有冷藏车':'无'}}</span></li> &ndash;&gt;
-    </ul>
-    &lt;!&ndash;双箭头下拉&ndash;&gt;
-    <ul class="infolist nextList clearfix black">
-        <li><span class="type">冷藏车数量：</span></li>
-        <li><span class="type">　&lt;!&ndash;纯粹为了占位，请勿删除：&ndash;&gt;</span><span class="text"></span></li>
-        <li><span class="type compare">&lt;1.8T:</span><span class="type numl">{{vo.storagetruck0}}</span><span
-                class="type">辆</span></li>
-        <li><span class="type compare">1.8T-6T:</span><span class="type numl">{{vo.storagetruck1}}</span><span
-                class="type">辆</span></li>
-        <li><span class="type compare">6T-14T:</span><span class="type numl">{{vo.storagetruck2}}</span><span
-                class="type">辆</span></li>
-        <li><span class="type compare">&gt;14T:</span><span class="type numl">{{vo.storagetruck3}}</span><span
-                class="type">辆</span></li>
-        <li ng-if="vo.struct"><span class="type">建筑结构：</span><span class="text">{{vo.struct}}</span></li>
-        <li><span class="type">添加时间：</span><span class="text">{{vo.addtime }}</span></li>
-        &lt;!&ndash;                  <li ng-if="vo.storagetype"><span class="type">冷库类型：</span><span class="text">{{vo.storagetype}}</span></li>  &ndash;&gt;
-        <li ng-if="vo.coldtype"><span class="type">存储类型：</span><span class="text">{{vo.coldtype}}</span></li>
-        <li ng-if="auth_show" style="width: 100%;"><a href="coldStorageAuth.html?id={{rdcid}}" class="mybtn"
-                                                      style="margin: 0;display: block;width: 100%;line-height: 1.8;background: #0CB78A;">冷库认证</a>
-        </li>
-    </ul>
-    <div class="next"><i class="iconfont">&#xe68b;</i></div>
-</div>-->
 
 <!--仓位列表展示-->
 <section class="more" ng-if="rdctotal" style="margin-top: 0;padding-bottom: .3rem">

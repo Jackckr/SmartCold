@@ -122,13 +122,14 @@
                        id="phone" ng-model="telephone"/></li>
            <li><label for="note">备注</label> <input type="text" id="note"
                                                     placeholder="（选填）" ng-model="note" name="note"/></li>
-            <!--  <li><label class="pic"> <input input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"
-                                            ngf-multiple="true" name="files"/>-->
-           <!-- </label> <span id="">上传图片<small class="text-warning" style="width: 100px">(最多十张)</small></span><br>
+              <li><label class="pic"> <input input type="file" id="files" ngf-select="addFiles($files)" ng-model="files"
+                                             accept="image/gif, image/bmp, image/jpg,image/jpeg, image/png"
+                                            ngf-multiple="true" name="files"/>
+            </label> <span id="">上传图片<small class="text-warning" style="width: 100px">(最多十张)</small></span><br>
                 <output id="img_list1" class="img_list"><span ng-repeat="honorfile in totalfiles">
                     <img class="thumb" ngf-src="honorfile" title="{{honorfile.name}}"><i ng-click="drophonor(honorfile)">×</i></span>
                 </output>
-            </li>-->
+            </li>
         </ul>
     </form>
     <button class="mybtn" ng-click="submit()">确认发布</button>

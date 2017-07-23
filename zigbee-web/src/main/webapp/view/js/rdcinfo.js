@@ -77,7 +77,7 @@ function getRdcInfo() {
         }
         baseInfo.push('<h2><b class="blue">'+rdc.name+'</b>');
         var auditButton="";
-        if(window.lkuser && window.lkuser.vipType>0&&window.lkuser.id!=rdc.userid){
+        if(window.lkuser && window.lkuser.vipType>0&&window.lkuser&&window.lkuser.id!=rdc.userid){
             auditButton='<a class="blue" style="margin-left: 20px" href="approve.html?id='+rdc.rdcId+'">认证该冷库</a>';
         }
         if(rdc.audit==2){baseInfo.push('<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>')}else{baseInfo.push('<b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>')};
@@ -86,10 +86,10 @@ function getRdcInfo() {
             baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%</td></tr>' +
                 '<tr><td>地址</td><td>'+rdc.address+'</td> </tr>' +
                 '<tr><td>您还未登录</td><td><a style="color:#2763cc;" href="login.html">去登录</a></td> </tr></table>');
-        }else if(window.lkuser && window.lkuser.vipType==0) {//没有实名认证
+        }else if(window.lkuser && window.lkuser.vipType==0||window.lkuser&&window.lkuser.id==rdc.userid) {//没有实名认证
             baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%</td></tr>' +
                 '<tr><td>地址</td><td>'+rdc.address+'</td> </tr></table>');
-        }else if(window.lkuser && window.lkuser.vipType>0){//实名认证
+        }else if(window.lkuser && window.lkuser.vipType>0||window.lkuser&&window.lkuser.id==rdc.userid){//实名认证
             baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%'+auditButton+'</td></tr>' +
                 '<tr><td>地址</td><td>'+rdc.address+'</td> </tr> ' +
                 '<tr> <td>价格</td> <td>'+price+'</td> </tr> ' +
@@ -98,7 +98,7 @@ function getRdcInfo() {
                 ' <tr> <td>实时温度</td> <td class="blue"><span style="cursor: pointer;" onclick="realTimeTem('+rdc.id+',\''+rdc.name+'\')">点击查看实时温度</span></td> </tr> </table>');
                 // ' <tr> <td colspan="2"> <button class="oBtn">预约订库</button> </td> </tr> </table>');
         }
-        if(window.lkuser && window.lkuser.vipType>0){
+        if(window.lkuser && window.lkuser.vipType>0||window.lkuser&&window.lkuser.id==rdc.userid){
            // var structure=null, platform=null, lihuoRoom=null, lihuoArea=null, lihuoTemperCtr=null, storageRefreg=null, temperRecord=null,facility=null,remark=null;
             rdc.structure==0?structure='':structure='<td> <span>建筑结构：</span>'+struct[rdc.structure]+' </td>';
             rdc.platform==0?platform='':platform='<td> <span>是否有封闭月台：</span>'+isHave[rdc.platform]+' </td>';
@@ -133,13 +133,18 @@ function getRdcInfo() {
                 '<tr>'+coldTruck3+capacity3+'</tr> ' +
                 '<tr>'+coldTruck4+capacity4+'</tr> ' +
                 ''+capacity5+'</tbody></table>');
-        }else if(window.lkuser && window.lkuser.vipType==0){
+        }else if(window.lkuser && window.lkuser.vipType==0&&window.lkuser&&window.lkuser.id!=rdc.userid){
             otherInfo.push('<table><caption>仓库信息</caption><tbody><tr><td><b>认证用户方可看到更多信息</b>　<a href="../html/authentication.html" style="color:#2763cc;">实名认证</a></td></tr></tbody></table>');
         }else{
             otherInfo.push('<table><caption>仓库信息</caption><tbody><tr><td><b>您还未登录</b>　<a href="../html/login.html" style="color:#2763cc;">去登录</a></td></tr></tbody></table>');
         }
         $("#baseInfo").empty().append(baseInfo.join(''));
         $("#divimginfog_imgPlayer").empty().append(bigImg.join(''));
+        layer.photos({
+            photos: '#divimginfog_imgPlayer'
+            //,anim:3//0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+        });
+
         $("#divpageinfog_imgPlayer").empty().append(smallImg.join(''));
         $("#otherInfo").empty().append(otherInfo.join(''));
         /*缩略图轮播*/

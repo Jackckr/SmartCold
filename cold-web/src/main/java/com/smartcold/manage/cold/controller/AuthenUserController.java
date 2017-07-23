@@ -102,7 +102,7 @@ public class AuthenUserController {
 			         auchedata.setImgurl(dir + File.separator + fileName);
 			        }
 			        this.rdcauthMapping.insertCertification(auchedata);//插入认证信息
-			        msg="尊敬的用户，您的申请已提交成功，受理编号为<span id=\"proNo\">"+auchedata.getId()+"</span>。";
+			        msg="尊敬的用户，您的申请已提交成功，受理编号为"+auchedata.getId()+"。";
 			}else {
 				
 			    MessageRecord msgMessageRecord = new MessageRecord();

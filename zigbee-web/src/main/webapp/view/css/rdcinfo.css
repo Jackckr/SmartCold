@@ -126,6 +126,7 @@
     width: 20px;
     margin: 0;
     padding:0;
+    height: initial;
 }
 /*文字+输入框*/
 .oInline{
@@ -192,6 +193,7 @@
     position: relative;
     border: 1px solid #eee;
     margin: 0 10px 3px 0;
+    overflow: hidden;
 }
 .imgBox i{
     position: absolute;
