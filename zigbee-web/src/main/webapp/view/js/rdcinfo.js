@@ -189,6 +189,9 @@ function realTimeTem(rdcId,rdcName) {
 }
 
 $(function () {
+    if(window.lkuser){
+        flushUser(window.lkuser.id);
+    }
     rdcId = getUrlParam("rdcId");
     getRdcInfo();
 });

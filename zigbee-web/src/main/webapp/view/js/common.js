@@ -75,6 +75,7 @@ function getVailCode(code) {
 function flushUser(id) {
     $.ajax({url:"/i/user/findUserById",type:"post",data:{"userId":id},success:function (data) {
         window.sessionStorage.lkuser=JSON.stringify(data);
+        window.lkuser = JSON.parse(sessionStorage.lkuser);
     }});
 }
 
