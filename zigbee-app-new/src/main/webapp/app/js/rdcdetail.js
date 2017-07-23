@@ -147,7 +147,7 @@
                  }
              });
          }
-		$scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {slideFn(); baguetteBox.run('.baguetteBoxOne', {buttons:true});imgBoxHide()});
+		$scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) { baguetteBox.run('.baguetteBoxOne', {buttons:true});imgBoxHide();slideFn();});
       });
      app.directive('onFinishRenderFilters', function ($timeout) { return { restrict: 'A', link: function(scope, element, attr) {   $timeout(function() { scope.$emit('ngRepeatFinished');  },100); } };});
  }

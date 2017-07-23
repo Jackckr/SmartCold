@@ -4,6 +4,7 @@
  * 月分析报表
  */
 coldWeb.controller('wiseReport', function( $scope, $rootScope,$stateParams,$http,$state ,$timeout,baseTools) {
+	if($rootScope.aclmap&&!$rootScope.aclmap[20]){return;}
 	$scope.isnotprint=true;$scope.isloaderr=false;//当前是否是打印状态和加载状态
 	$scope.rdcId = $stateParams.rdcId;
 	$scope.isreportMoth=false; 
@@ -30,7 +31,7 @@ coldWeb.controller('wiseReport', function( $scope, $rootScope,$stateParams,$http
 			getpieoption:function(title,unit,ldata,sData){return {title :{ text: title,  x:'center', y : 10 },tooltip:{trigger: 'item',formatter: function (obj) {return obj.name +":"+obj.value.toFixed(2)+ unit+' 占比：' + obj.percent + '%';} },legend: {x:'right',orient:'vertical',y: 30,data:ldata}, series : [ {type:'pie',radius : '55%',center: ['50%', '60%'],data:sData, precision: 2, itemStyle: {normal: {label: {show: true, position: 'top',formatter: function (obj) {return obj.name +":"+obj.value.toFixed(2)+ unit+' 占比：' + obj.percent + '%';}}} },}]};},
 			getlineoption:function(title,ldata,xData,seriesdata){return {series : seriesdata, tooltip : { trigger : 'axis' }, grid : { x:40,y2 : 30, width : '88%' ,height:'67%'},legend : { data : ldata, y : 35 },title : { text : title, x : 'center', y : 5 },yAxis : [ { type : 'value', axisLabel : { formatter : '{value}' } } ],xAxis : [ { type : 'category',splitLine:{show:false}, axisLabel : {rotate : '60',interval : 0},data :xData}]};}
 	};
-	$scope.toolchart = function(index,url,emid,title,keys,nuit,msge ){
+	$scope.toolchart = function(index,url,emid,title,keys,nuit,msge,sunit ){
 		$http.get(url,{params: {  "rdcid": $scope.rdcId,'keys':keys,"startTime": $scope.startTime,"endTime": $scope.endTime}}).success(function(data,status,config,header){
 			++$scope.loadindex;
 			if(data!=null){
@@ -41,7 +42,7 @@ coldWeb.controller('wiseReport', function( $scope, $rootScope,$stateParams,$http
 					angular.forEach(storage[keys],function(item){  var val=item['value']/nuit ;  yData.unshift(val); sumval+=val;  });
 					var avg=(sumval/storage[keys].length).toFixed(2);
 					if(!isNaN(avg)){
-						  restmsg.push({name :name,avgval:avg,msg:name+msge+avg+mode.tmg[index]+util.getMsg(index,avg)}); 
+						  restmsg.push({name :name,avgval:avg,msg:name+msge+avg+sunit+" "+mode.tmg[index]+util.getMsg(index,avg)}); 
 						  seriesdata.push({name : name,type : 'line',data : yData, markLine: { data: [  {type: 'average', name: '平均值'}]}});
 					}
 				});
@@ -74,12 +75,12 @@ coldWeb.controller('wiseReport', function( $scope, $rootScope,$stateParams,$http
 	};
 	//
 	$scope.initlineChar = function(){//初始化折现图
-		 $scope.toolchart(0,mode.url[0], 'tempertureId', '超温时长(min/day)', 'ChaoWenShiJian', 60, " 平均日超温时长");//超温时长0
-    	 $scope.toolchart(1,mode.url[0], 'cwyzId', '超温比例(ε)', 'ChaoWenYinZi', 1, " 平均日超温因子");//超温因子1
+		 $scope.toolchart(0,mode.url[0], 'tempertureId', '超温时长(min/day)', 'ChaoWenShiJian', 60, " 平均日超温时长","分钟");//超温时长0
+    	 $scope.toolchart(1,mode.url[0], 'cwyzId', '超温比例(ε)', 'ChaoWenYinZi', 1, " 平均日超温因子",'');//超温因子1
 //	     $scope.toolchart(2,mode.url[0], 'bwyzId', '保温因子(τ)', 'BaoWenYinZi', 1, " 平均日保温因子");//保温因子2
-	     $scope.toolchart(3,mode.url[0], 'openDoorTimesId', '日开门次数', 'DoorOpenTimes', 1, " 平均日开门次数");//开门次数3
-	     $scope.toolchart(4,mode.url[1], 'singleOpenDoorId', '单次开门时长', 'AvgTime', 60, " 平均日单次开门时长");//4
-	     $scope.toolchart(5,mode.url[0], 'goodsId', '货物因子', 'GoodsLiuTongYinZi', 1, " 月平均货物因子为");//4
+	     $scope.toolchart(3,mode.url[0], 'openDoorTimesId', '日开门次数', 'DoorOpenTimes', 1, " 平均日开门次数",'次');//开门次数3
+	     $scope.toolchart(4,mode.url[1], 'singleOpenDoorId', '单次开门时长', 'AvgTime', 60, " 平均日单次开门时长",'分钟');//4
+	     $scope.toolchart(5,mode.url[0], 'goodsId', '货物因子', 'GoodsLiuTongYinZi', 1, " 月平均货物因子为",'');//4
 //	     $scope.toolchart(6,mode.url[0], 'ysjRunningTimeId', '压缩机运行时间', 'GoodsLiuTongYinZi', 1, " 压缩机运行时间");//-----没做
 //	     $scope.toolchart(7,mode.url[0], 'onOffCycleId', '设备开关周期', 'GoodsLiuTongYinZi', 1, " 设备开关周期");//4-----没做
 //	     $scope.toolchart(7,mode.url[0], 'onOffCycleId', '设备开关周期', 'GoodsLiuTongYinZi', 1, " 设备开关周期");//4-----没做
@@ -205,7 +206,7 @@ coldWeb.controller('wiseReport', function( $scope, $rootScope,$stateParams,$http
     	    $scope.initWaterCostsis();
     	    $scope.initQEsis();
     	    $scope.initcompruntime();
-    	   
+    	    $timeout($("#loding").hide(),0);
     };
     $scope.initdata();
     
@@ -219,16 +220,27 @@ coldWeb.controller('wiseReport', function( $scope, $rootScope,$stateParams,$http
     	$(".textPart p>span,.textPart>ul>li span,.textPart p>strong").removeClass('font10');
     }
     $scope.getreport=function(){
-    	var newDate=$("#date04").val().split("-");
-    	if(newDate.length!=2){ return; }
-    	var firstDate = new Date();firstDate.setFullYear(newDate[0], newDate[1]-1, 1);
-    	firstDate.setHours(0); firstDate.setMinutes(0); firstDate.setSeconds(0);//设置上月的第一天
-    	var endDate = new Date(firstDate);  endDate.setMonth(firstDate.getMonth()+1); 
-    	endDate.setDate(0);endDate.setHours(23); endDate.setMinutes(59); endDate.setSeconds(59);//设置上月的最后一天
-    	$scope.endTime=baseTools.formatTime(endDate); $scope.startTime= baseTools.formatTime(firstDate); 
-    	var newtime=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
-    	if(newtime==$scope.timeuRange){return;} $scope.timeuRange=newtime;
-    	 $scope.initdata();
+    	$("#loding").show();
+		if($scope.isreportMoth){
+			var data=$("#date04").val(),newDate=data.split("-");
+	    	if(newDate.length!=2){ return; }
+	    	 firstDate = new Date();firstDate.setFullYear(newDate[0], newDate[1]-1, 1);firstDate.setHours(0); firstDate.setMinutes(0); firstDate.setSeconds(0);//设置上月的第一天
+	    	 endDate = new Date(firstDate);  endDate.setMonth(firstDate.getMonth()+1); endDate.setDate(0);endDate.setHours(23); endDate.setMinutes(59); endDate.setSeconds(59);//设置上月的最后一天
+	    	$scope.endTime=baseTools.formatTime(endDate); $scope.startTime= baseTools.formatTime(firstDate); 
+	    	var newtime=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
+	    	if(newtime==$scope.timeuRange){$("#loding").hide();return;} $scope.timeuRange=newtime;
+	    	$scope.datemod=[[$scope.startTime,data+'-05 23:59:59'],[data+'-06 00:00:00',data+'-10 23:59:59'],[data+'-11 00:00:00',data+'-15 23:59:59'],[data+'-16 00:00:00',data+'-20 23:59:59'],[data+'-21 00:00:00',data+'-25 23:59:59'],[data+'-25 00:00:00',$scope.endTime]];
+		}else{
+			var newDate=$("#date05").val();
+	    	 firstDate = new Date(newDate+' 00:00:00'), endDate =  new Date(newDate+' 23:59:59');  
+	    	endDate.setDate(firstDate.getDate()+7);
+	    	$scope.endTime= baseTools.formatTime(endDate); 
+	    	$scope.startTime= baseTools.formatTime(firstDate); 
+	    	var newtime=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
+	    	if(newtime==$scope.timeuRange){$("#loding").hide();return;}
+	    	$scope.timeuRange=newtime;
+		}
+		 $scope.initdata();
     };
     $scope.changeversions=function(index,url,$event){
 		var em=$($event.target); em.addClass('select').siblings().removeClass('select');
