@@ -305,6 +305,7 @@ html,body,header{
 }
 #QRcode dl li p{
     line-height:2.2;
+    color: #656565;
 }
 #QRcode dl li p a{
     color: #f57e1e;
@@ -347,4 +348,7 @@ html,body,header{
     border-color: #78C3F3;
     color: #004974;
     text-decoration: none;
+}
+body{
+    overflow-x: hidden;
 }
