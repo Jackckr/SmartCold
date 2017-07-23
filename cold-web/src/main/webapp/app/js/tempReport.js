@@ -289,6 +289,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 		 $scope.initdata();
 	};
 	$scope.changeversions=function(index,url,$event){
+		if((index==1||index==2)&&!$rootScope.aclmap[20]){ return ;}
 		var em=$($event.target); em.addClass('select').siblings().removeClass('select');
 		$state.go(url, {'rdcId':$scope.rdcId });
 	};

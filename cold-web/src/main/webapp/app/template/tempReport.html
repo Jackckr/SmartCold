@@ -89,8 +89,8 @@
 			<span class="pull-left" style="margin-top: 11px;">选择版本</span>
 			<ul class="coldName version_choice clearfix pull-left">
 				<li class="select" ng-click="changeversions(0,'tempReport',$event)">温度版</li>
-				<li class=""       ng-click="changeversions(1,'basicReport',$event)">基本版</li>
-				<li class=""       ng-click="changeversions(2,'wiseReport',$event)">聪慧版</li>
+				<li class="{{aclmap[20]?'':'grey'}}"       ng-click="changeversions(1,'basicReport',$event)">基本版</li>
+				<li class="{{aclmap[20]?'':'grey'}}"       ng-click="changeversions(2,'wiseReport',$event)">聪慧版</li>
 				<li class="grey">智能版</li>
 				<li class="grey">维护版</li>
 			</ul>

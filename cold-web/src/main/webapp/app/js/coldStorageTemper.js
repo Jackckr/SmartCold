@@ -77,12 +77,12 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     	var series =  $scope.chart.series ;
         var endTime =  new Date();
         $http.get('http://139.224.16.238/i/util/getColdAlarmStatus', { params: {oid: $stateParams.storageID}}).success(function (result) {$scope.isOverTemp=result; });
-        $http.get('/i/temp/getTempByTime', { params: {"oid": $stateParams.storageID, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime": baseTools.formatTime($scope.startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (result) {
-       	  $scope.startTime=endTime;
+        $http.get('/i/temp/getTempref', { params: {"oid": $stateParams.storageID, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime": baseTools.formatTime($scope.startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (result) {
          var tempMap = result.tempMap,index=0;//systime=result.systime,
        	 for(var key in tempMap) { 
          	 tempList=tempMap[key],newdata=[];
              if( tempList.length>0){
+            	 $scope.startTime=endTime;
                  for ( var i = 0; i < tempList.length; i++) {
 					 vo=tempList[i];series[index].addPoint([new Date(vo.addtime).getTime(),  vo.value], false, false);
 				 }
@@ -113,7 +113,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     	        events: {
     	            load: function () {
     	            	 $scope.chart=this;
-    	            	  setInterval( function(){$scope.refdata();}, 30000);
+    	            	  //setInterval( function(){$scope.refdata();}, 30000);
     	            }
     	        }
     	    },
@@ -130,7 +130,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     	});
     };
     $scope.getTempset(); 
-//    clearInterval($rootScope.timeTicket);
-//    $rootScope.timeTicket = setInterval(function () { $scope.refdata(); }, 30000);
-//    $scope.$on('$destroy',function(){ clearInterval($rootScope.timeTicket);  });
+    clearInterval($rootScope.timeTicket);
+    $rootScope.timeTicket = setInterval(function () { $scope.refdata(); }, 30000);
+    $scope.$on('$destroy',function(){ clearInterval($rootScope.timeTicket);  });
 });

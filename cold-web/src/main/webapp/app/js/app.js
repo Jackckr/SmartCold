@@ -78,16 +78,14 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 					      		angular.forEach(data.aclml,function(obj,i){ 
 					      			$rootScope.aclmap[obj.id]=obj.acl;
 					      			if(obj.acl){
-					      				
 //					      				if(!obj.hasnode){  
-//					      					debugger;
-//					      					coldWeb.stateProvider;
 					      					// 技术原因，无法处理(本想动态创建coldWeb)
 //					      					coldWeb.stateProvider.state(obj.controller,{url:obj.tourl,controller: obj.controller,  templateUrl: obj.templateUrl });
 //					      				}
 					      			}else{
 					      				$("#lfmenu [mid=ml_acl"+obj.id+"]").addClass("quanxian");
-					      				$("#lfmenu [mid=ml_acl"+obj.id+"]").addClass("quanxian");$("#ml_acl"+obj.id+" *").attr("disabled",true); 
+					      				$("#lfmenu [mid=ml_acl"+obj.id+"] *").addClass("quanxian");
+					      				$("#lfmenu [mid=ml_acl"+obj.id+"] *").attr("disabled",true); 
 					      				if($rootScope.user.type!=0){$("#lfmenu [mid=ml_acl"+obj.id+"]").addClass("hide");}
 					      			}
 					      		});
