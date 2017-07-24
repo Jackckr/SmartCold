@@ -23,7 +23,7 @@ function getRdcShare() {
     $.ajax({url:"/i/ShareRdcController/getSERdc",type:"post",data:{"dataType":3,"typeCode":2},success:function (data) {
         var rdcRent=[];
         for(var i=0;i<data.length;i++){
-            if(i<=5){
+            if(i<=9){
                 rdcRent.push('<li><a href="javascript:;"><span>'+(i+1)+'</span>['+data[i].detlAddress+'] '+data[i].title+'，联系电话['+data[i].telephone+']</a></li>');
             }
         }
@@ -82,7 +82,7 @@ function initechardata(){
 }
 
 function resizeChart() {
-  for (var i = 0; i < chartArry.length; int++) {chartArry[i].resize(); }
+  for (var i = 0; i < chartArry.length; i++) {chartArry[i].resize(); }
 }
 
 
