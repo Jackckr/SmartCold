@@ -105,6 +105,7 @@ function getRdcInfo() {
                     '<tr><td>地址</td><td>'+rdc.address+'</td> </tr> ' +
                     '<tr> <td>价格</td> <td>'+price+'</td> </tr> ' +
                     '<tr> <td>总面积/空置面积</td> <td>'+rdc.area+'㎡/'+rentSqm+'</td> </tr>' +
+                    '<tr> <td>冷库净高</td> <td>'+rdc.height+' m</td> </tr>' +
                     ' <tr> <td>联系电话</td> <td class="orange"> <b>'+rdc.phoneNum+'</b></td> </tr>' +
                     ' <tr> <td>实时温度</td> <td class="blue"><span style="cursor: pointer;" onclick="realTimeTem('+rdc.id+',\''+rdc.name+'\')">点击查看实时温度</span></td> </tr> </table>');
                 // ' <tr> <td colspan="2"> <button class="oBtn">预约订库</button> </td> </tr> </table>');
@@ -135,14 +136,14 @@ function getRdcInfo() {
             rdc.facility==""||rdc.facility=="undefined"?facility='':facility='<td> <span>周边设施：</span>'+rdc.facility+' </td>';
             rdc.remark==""||rdc.remark=="undefined"?remark='':remark='<td> <span>备注：</span>'+rdc.remark+' </td>';
             rdc.coldTruck1==0?coldTruck1='':coldTruck1='<td> <span>小于1.8T：</span>'+rdc.coldTruck1+' 辆</td>';
-            rdc.height1*rdc.capacity1==0?capacity1='':capacity1='<td> <span>8 ~ 25℃：</span> '+(rdc.height1*rdc.capacity1)+'m³</td> ';
+            rdc.height1*rdc.capacity1==0?capacity1='':capacity1='<td> <span>8 ~ 25℃：</span> '+(rdc.height1*rdc.capacity1).toFixed(2)+'m³</td> ';
             rdc.coldTruck2==0?coldTruck2='':coldTruck2='<td> <span>1.8 ～ 6T：</span>'+rdc.coldTruck2+' 辆</td>';
-            rdc.height2*rdc.capacity2==0?capacity2='':capacity2='<td> <span>2 ~ 8℃：</span> '+(rdc.height2*rdc.capacity2)+'m³</td> ';
+            rdc.height2*rdc.capacity2==0?capacity2='':capacity2='<td> <span>2 ~ 8℃：</span> '+(rdc.height2*rdc.capacity2).toFixed(2)+'m³</td> ';
             rdc.coldTruck3==0?coldTruck3='':coldTruck3='<td> <span>6 ～ 14T：</span>'+rdc.coldTruck3+' 辆</td>';
-            rdc.height3*rdc.capacity3==0?capacity3='':capacity3='<td> <span>-2 ~ -18℃：</span> '+(rdc.height3*rdc.capacity3)+'m³</td> ';
+            rdc.height3*rdc.capacity3==0?capacity3='':capacity3='<td> <span>-2 ~ -18℃：</span> '+(rdc.height3*rdc.capacity3).toFixed(2)+'m³</td> ';
             rdc.coldTruck4==0?coldTruck4='':coldTruck4='<td> <span>大于14T：</span>'+rdc.coldTruck4+' 辆</td>';
-            rdc.height4*rdc.capacity4==0?capacity4='':capacity4='<td> <span>-18 ~ -30℃：</span> '+(rdc.height4*rdc.capacity4)+'m³</td> ';
-            rdc.height5*rdc.capacity5==0?capacity5='':capacity5='<tr> <td></td> <td> <span>小于-50℃：</span>'+(rdc.height5*rdc.capacity5)+'m³ </td></tr>';
+            rdc.height4*rdc.capacity4==0?capacity4='':capacity4='<td> <span>-18 ~ -30℃：</span> '+(rdc.height4*rdc.capacity4).toFixed(2)+'m³</td> ';
+            rdc.height5*rdc.capacity5==0?capacity5='':capacity5='<tr> <td></td> <td> <span>小于-50℃：</span> '+(rdc.height5*rdc.capacity5).toFixed(2)+'m³ </td></tr>';
 
             otherInfo.push('<table><caption>仓库信息</caption><tbody>' +
                 '<tr><td><span>冷库经营类型：</span>'+manageType[rdc.manageType]+' </td> <td> <span>冷库温度类型：</span>'+tempType[rdc.temperType]+' </td> </tr> ' +
@@ -189,9 +190,9 @@ function realTimeTem(rdcId,rdcName) {
 }
 
 $(function () {
-    if(window.lkuser){
+   /* if(window.lkuser){
         flushUser(window.lkuser.id);
-    }
+    }*/
     rdcId = getUrlParam("rdcId");
     getRdcInfo();
 });

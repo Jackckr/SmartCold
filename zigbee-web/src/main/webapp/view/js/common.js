@@ -72,12 +72,14 @@ function getVailCode(code) {
 
 
 /*刷新缓存用户信息*/
-function flushUser(id) {
-    $.ajax({url:"/i/user/findUserById",type:"post",data:{"userId":id},success:function (data) {
-        window.sessionStorage.lkuser=JSON.stringify(data);
-        window.lkuser = JSON.parse(sessionStorage.lkuser);
-    }});
-}
+/*function flushUser(id) {*/
+    if(window.lkuser){
+        $.ajax({url:"/i/user/findUserById",type:"post",data:{"userId":lkuser.id},success:function (data) {
+            //window.sessionStorage.lkuser=JSON.stringify(data);
+            window.lkuser = data;
+        }});
+    }
+/*}*/
 
 /*获取用户对象*/
 function findUser() {
