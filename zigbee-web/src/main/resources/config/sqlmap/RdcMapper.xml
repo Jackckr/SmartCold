@@ -276,8 +276,11 @@
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         select
         <include refid="Base_Column_List" />,
-        (SELECT location FROM filedata f WHERE f.belongid = r.id AND f.category IN ('honorPic','storagePic') ORDER BY id DESC LIMIT 1 ) as logo
+        (SELECT location FROM filedata f WHERE f.belongid = r.id AND f.category='storagePic' ORDER BY id DESC LIMIT 1 ) as logo
         from Rdc r
         where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="getById" resultType="com.smartcold.zigbee.manage.entity.RdcEntity">
+        SELECT * FROM  `rdc` WHERE `id`=#{id}
     </select>
 </mapper>

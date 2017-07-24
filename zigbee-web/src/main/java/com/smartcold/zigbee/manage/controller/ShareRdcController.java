@@ -7,8 +7,10 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import com.smartcold.zigbee.manage.dao.RdcMapper;
 import com.smartcold.zigbee.manage.dao.RdcShareMapper;
 
+import com.smartcold.zigbee.manage.entity.RdcEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,6 +49,9 @@ public class ShareRdcController  {
 
 	@Autowired
 	private RdcShareMapper rdcShareMapper;
+	@Autowired
+	private RdcMapper rdcMapper;
+
 	/**
 	 * @author MaQiang
 	 * @date 2016年6月28日16:00:58
@@ -413,6 +418,18 @@ public class ShareRdcController  {
 		filter.put("audit", audit);
 		filter.put("goodtype", goodtype);
 		PageInfo<RdcShareDTO> data = this.rdcShareService.newGetSERDCList(pageNum, pageSize, filter);
+		for (RdcShareDTO rdcShareDTO:data.getList()){
+			RdcEntity rdc = rdcMapper.getById(rdcShareDTO.getRdcID());
+			if(rdc!=null){
+				rdcShareDTO.setAudit(rdc.getAudit());
+				rdcShareDTO.setIstemperaturestandard(rdc.getIstemperaturestandard());
+				rdcShareDTO.setAddress(rdc.getAddress());
+				rdcShareDTO.setName(rdc.getName());
+				rdcShareDTO.setColdtype(rdc.getColdtype());
+				rdcShareDTO.setRdcSqm(rdc.getSqm()+"");
+				rdcShareDTO.setInfoIntegrity(rdc.getInfoIntegrity());
+			}
+		}
 		return ResponseData.newSuccess(data);
 	}
 	

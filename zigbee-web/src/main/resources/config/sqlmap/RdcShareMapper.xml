@@ -286,21 +286,11 @@
 		s.publishunit,
 		st.type codeLave2,
 		sm.type codeLave1,
-		t.rdcscore,
-		date_format(s.validStartTime,'%Y-%m-%d') validStartTime,
-		date_format(s.validEndTime,'%Y-%m-%d') validEndTime,
-		r.audit,
-		r.istemperaturestandard,
-		r.address,
-		r.name,
-		r.coldtype,
-		r.sqm rdcSqm,
-		r.infoIntegrity,
+		validStartTime,
+		validEndTime,
 		(SELECT location FROM filedata f WHERE f.belongid = s.id AND f.category ='sharePic' ORDER BY id DESC LIMIT 1 ) as logo
 		FROM
 		shared_info s
-		LEFT JOIN rdc r ON s.rdcID = r.id
-		LEFT JOIN rdcext t on s.rdcID=t.RDCID
 		LEFT JOIN storagetempertype st on st.id=s.codeLave2
 		LEFT JOIN storagemanagetype sm on sm.id=s.codeLave1
 		<where>
@@ -309,9 +299,6 @@
 			<if test="provinceid !=null and  provinceid != ''"> and s.provinceid=#{provinceid}</if>
 			<if test="managetype !=null and  managetype != ''"> and s.codeLave1 IN  (${managetype})</if>
 			<if test="storagetempertype !=null and  storagetempertype != ''"> and s.codeLave2 in (${storagetempertype})</if>
-			<if test="istemperaturestandard !=null and istemperaturestandard!=''">and r.istemperaturestandard in (${istemperaturestandard})</if>
-			<if test="audit !=null and audit!=''"> and r.audit in (${audit})</if>
-			<if test="goodSaveType !=null and goodSaveType!=''">and t.storagetype in (${goodSaveType})</if>
 			<if test="dataType != null and dataType!=''">and s.dataType=#{dataType}</if>
 			<if test="typeCode !=null and typeCode!=''">and s.typeCode=#{typeCode}</if>
 			<if test="goodtype !=null and goodtype!=''">and s.codeLave1=#{goodtype}</if>
