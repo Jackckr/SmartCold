@@ -5,6 +5,8 @@
 *   mark:所有媒体查询文件都在此处
 *   媒体查询兼容性：i9+
 */
+.navUl li:nth-child(3),
+.navSmall li:nth-child(3),
 .navUl li:nth-child(5),
 .navSmall li:nth-child(5){
     display: none;
