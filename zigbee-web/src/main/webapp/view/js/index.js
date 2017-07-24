@@ -49,7 +49,17 @@ $(function () {
         $('.imgList li').eq(num).stop().fadeIn(500);
     });
 });
-
+$(document).scroll(function () {//吸附导航
+    var sTop = document.body.scrollTop || document.documentElement.scrollTop;
+    var oTop = 116;
+    if (sTop > oTop) {
+        $('.header').addClass('fixed');
+        $('.header').next().css('marginTop', oTop);
+    } else {
+        $('.header').removeClass('fixed');
+        $('.header').next().css('marginTop', 0);
+    }
+});
 /*
  *点击banner 图上筛选条件js
  */
