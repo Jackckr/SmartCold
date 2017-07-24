@@ -101,8 +101,8 @@ function flushPage() {
             jump:function (obj,first) {
                 screenParam.pageNum=obj.curr;
                 pagination.oldPageCount=pagination.pageCount;
-                getRdcRentList();
                 if(first!=true){
+                    getRdcRentList();
                     window.scroll(0,300);//跳到顶部
                 }
             }

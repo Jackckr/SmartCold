@@ -12,4 +12,6 @@ public interface StorageManageTypeMapper {
 
     List<StorageManageTypeEntity> findAll();
 
+    String getTypeById(int id);
+
 }

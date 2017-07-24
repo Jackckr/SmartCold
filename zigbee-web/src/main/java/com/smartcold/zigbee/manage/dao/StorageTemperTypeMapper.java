@@ -12,4 +12,6 @@ public interface StorageTemperTypeMapper {
 
     List<StorageTemperTypeEntity> findAll();
 
+    String findTypeById(int id);
+
 }

@@ -8,5 +8,8 @@
 		SELECT *
 		FROM `storagemanagetype` order by `id` ASC
 	</select>
+	<select id="getTypeById" resultType="java.lang.String">
+		SELECT `type` FROM  `storagemanagetype` WHERE `id`=#{id}
+	</select>
 
 </mapper>
