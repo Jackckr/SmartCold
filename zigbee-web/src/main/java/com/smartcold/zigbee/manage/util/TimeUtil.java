@@ -31,7 +31,7 @@ public class TimeUtil {
 	}
 	
 	public static int getDay() {
-       return Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+		return Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
     }
     public static int getDateHour() {
         return  Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
