@@ -8,5 +8,8 @@
 		SELECT *
 		FROM `storagetempertype` order by `id` ASC
 	</select>
+    <select id="findTypeById" resultType="java.lang.String">
+		SELECT `type` FROM `storagetempertype` WHERE `id`=#{id}
+	</select>
 
 </mapper>
