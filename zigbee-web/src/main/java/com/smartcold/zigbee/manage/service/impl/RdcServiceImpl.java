@@ -79,6 +79,8 @@ public class RdcServiceImpl implements RdcService {
 
     @Autowired
     private RdcauthMapping rdcauthMapping;
+    @Autowired
+    private CollectMapper collectMapper;
 
     @Override
     public List<RdcEntity> findRdcList() {
@@ -558,17 +560,28 @@ public class RdcServiceImpl implements RdcService {
         log.info("delete " + nums + " rows rdcExt by rdcID:" + rdcID);
         nums = rdcDao.deleteByRdcID(rdcID);
         log.info("delete " + nums + " rows rdc by rdcID:" + rdcID);
+        nums = rdcauthMapping.delByRdcId(rdcID);
+        log.info("delete " + nums + " rows rdcaudit by rdcID:" + rdcID);
+        nums =rdcShareMapper.delByRdcId(rdcID);
+        log.info("delete " + nums + " rows rdcShare by rdcID:" + rdcID);
+        nums =collectMapper.delByRdcId(rdcID);
+        log.info("delete " + nums + " rows collect by rdcID:" + rdcID);
         //删除图片
         List<FileDataEntity> fileDataEntities = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_STORAGE_PIC);
         List<FileDataEntity> arrangePic = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_ARRANGE_PIC);
+        List<FileDataEntity> hornor = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_HONOR_PIC);
         if (!CollectionUtils.isEmpty(arrangePic)) {
             fileDataEntities.addAll(arrangePic);
+        }
+        if (!CollectionUtils.isEmpty(hornor)) {
+            fileDataEntities.addAll(hornor);
         }
         for (FileDataEntity item : fileDataEntities) {
             ftpService.deleteByLocation(item.getLocation());
         }
         nums = fileDataDao.deleteByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_STORAGE_PIC);
         nums += fileDataDao.deleteByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_ARRANGE_PIC);
+        nums+= fileDataDao.deleteByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_HONOR_PIC);
         log.info("delete " + nums + " rows FileData by rdcID:" + rdcID);
         return true;
     }

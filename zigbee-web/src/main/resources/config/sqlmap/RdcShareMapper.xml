@@ -6,7 +6,10 @@
     <delete id="delShareInfoByid" parameterType="int">
        DELETE from shared_info  where id=${id} and releaseID=${uid};
     </delete>
-    <!--     获得睿库信息 -->
+	<delete id="delByRdcId">
+		DELETE FROM `shared_info` WHERE `rdcID`=#{rdcId}
+	</delete>
+	<!--     获得睿库信息 -->
 	<select id="getRdcList" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
 	      select  r.sqm rdcSqm,  r.id rdcID, t.managetype codeLave1, r.name,r.provinceid,r.cityid, r.address, r.audit from rdc r LEFT JOIN rdcext t on t.RDCID=r.id where 1=1
 	      <if test="rdcId==null or rdcId==0">
