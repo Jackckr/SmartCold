@@ -362,7 +362,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				return false
 			}
 			if(checkCarSubmit()){
-				if(parseFloat($scope.unitprice).toFixed(2).length>11){
+                if($scope.title.length<6||$scope.title.length>24){
+                    layer.open({content: '描述文字长度范围是6~24位，请检查~', btn: '确定'});
+                    return;
+                }else if(parseFloat($scope.unitprice).toFixed(2).length>11){
 					layer.open({content:'单价不合法哦~',btn: '确定'});return;
 		        }else if($scope.telephone.trim().length != 11){
 		        	layer.open({content:'手机号码有误哦~',btn: '确定'});return;
@@ -435,7 +438,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				return false
 			}
 			if(checkGoodsSubmit()){
-				if($scope.sqm.length > 11){
+                if($scope.title.length<6||$scope.title.length>24){
+                    layer.open({content: '描述文字长度范围是6~24位，请检查~', btn: '确定'});
+                    return;
+                }else if($scope.sqm.length > 11){
 		        	layer.open({content:'数量不合法哦~',btn: '确定'});return;
 		        }else if(parseFloat($scope.unitprice).toFixed(2).length>11){
 					layer.open({content:'单价不合法哦~',btn: '确定'});return;
@@ -512,7 +518,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				return false
 			}
 			if(checkStorageSubmit()){
-				if($scope.rdcsharedto.rdcSqm<$scope.sqm){
+                if($scope.title.length<6||$scope.title.length>24){
+                    layer.open({content: '描述文字长度范围是6~24位，请检查~', btn: '确定'});
+                    return;
+                }else if($scope.rdcsharedto.rdcSqm<$scope.sqm){
                     layer.open({content:'可出租面积不能大于关联冷库的总面积~',btn: '确定'});return;
 				}
 				if($scope.sqm.length > 11){
