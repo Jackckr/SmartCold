@@ -209,7 +209,7 @@ layui.use(['jquery', 'form'], function () {
     $form = $('form');
     checkLogin(1, getProvinceList);
     $("#reset").bind("click", function () {
-        location.reload();
+        //location.reload();
         initForm();
     });
 });
