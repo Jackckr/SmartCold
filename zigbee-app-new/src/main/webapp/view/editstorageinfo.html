@@ -65,7 +65,7 @@ $(function() {
 		<form id="release_item_from" name="itemform" >
 			<ul class="houseinfo">
 				<li  ng-if="typeCode==1"><label for="name">描述</label> <em>*</em><input type="text" id="name" ng-model="$parent.title"
-					placeholder="出租仓位" /></li>
+					placeholder="出租仓位描述（6~24位）" /></li>
 
 				<li ng-if="typeCode==2" style="border: 0;line-height: 0"><label>求租地区</label></li>
 				<li class="offershow" ng-if="typeCode==2">
@@ -145,7 +145,7 @@ $(function() {
 					<i class="iconfont fr">&#xe63a;</i>
 				</li>
 				<li  ng-if="typeCode==2"><label for="name">存放产品</label> <em>*</em><input type="text" id="title" ng-model="$parent.title"
-																						 placeholder="存放产品" /></li>
+																						 placeholder="存放产品描述（6~24位）" /></li>
 				<li><label for="phone">联系电话</label>
 				<em>*</em>
 				<input type="text" name="telephone"
