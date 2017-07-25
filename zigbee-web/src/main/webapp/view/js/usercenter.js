@@ -197,7 +197,7 @@ function saveUser() {
         contentType: false,
         success: function (data) {
             layer.open({content: "保存成功！", btn: '确定',yes:function () {
-                flushUser(window.lkuser.id);
+                //flushUser (window.lkuser.id);
                 window.location.reload();
             }});
         }

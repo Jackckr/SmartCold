@@ -307,7 +307,6 @@
 			<if test="managetype !=null and  managetype != ''"> and s.codeLave1 IN  (${managetype})</if>
 			<if test="storagetempertype !=null and  storagetempertype != ''"> and s.codeLave2 in (${storagetempertype})</if>
 			<if test="goodtype !=null and goodtype!=''">and s.codeLave1=#{goodtype}</if>
-			<if test="dataType !='3' and typeCode!='1'">and r.name is not null</if>
 		</where>
 		GROUP BY
 		s.id
