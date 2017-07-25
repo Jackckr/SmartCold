@@ -8,4 +8,6 @@ public interface RdcAuthMapper {
     void delStandByRdcId(int rdcId);
     /*通过userid删除vip信息*/
     void delVipByUid(int userId);
+
+    int delByRdcId(int rdcId);
 }

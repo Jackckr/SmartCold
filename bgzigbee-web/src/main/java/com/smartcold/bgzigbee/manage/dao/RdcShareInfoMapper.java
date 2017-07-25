@@ -17,4 +17,6 @@ public interface RdcShareInfoMapper {
     RdcSharedInfoEntity findShareInfoById(Integer id);
 
     void delShareInfoById(Integer id);
+
+    int delByRdcId(int rdcId);
 }

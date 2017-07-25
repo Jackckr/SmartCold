@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smartcold.bgzigbee.manage.dao.CollectMapper" >
+    <delete id="delByRdcId">
+        DELETE FROM `collect` WHERE (`collectId`=#{rdcId} AND `collectType`=1) OR (`collectType`=2 AND `collectId` IN(SELECT s.`id` FROM `shared_info` s WHERE s.`rdcID`=#{rdcId}))
+    </delete>
+</mapper>
