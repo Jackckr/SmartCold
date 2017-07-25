@@ -96,6 +96,7 @@ i.right{right: 20px;}
     width: 120px;
     text-align: right;
     padding: 3px 15px ;
+    margin: 5px 10px 5px 0;
 }
 .typeList ul{
     padding-left: 150px;

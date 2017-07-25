@@ -4,53 +4,246 @@
 *   date:2017-7-25
 *   mark:rdcmatch list
 */
-.btnGroup{
+.btnGroup {
     height: 36px;
 }
-.btnGroup button{
+
+.btnGroup button {
     height: 36px;
     line-height: 36px;
+    float: left;
     width: 120px;
     text-align: center;
     display: inline-block;
     background-color: #fff;
     margin-right: 20px;
     border: 1px solid #cfcfcf;
+    border-radius: 3px;
 }
-.btnGroup button:last-child{
+
+.btnGroup button:last-child {
+    float: right;
     margin: 0;
     background-color: #f8bf3a;
     border-color: #f8bf3a;
 }
-.btnGroup button:last-child>a{
+
+.btnGroup button:last-child > a {
     letter-spacing: 0;
     color: #fff;
 }
-.btnGroup button:last-child:hover{
+
+.btnGroup button:last-child:hover {
     border-color: #f8bf3a;
     background-color: #ff9600;
 }
-.btnGroup button:last-child>a:hover{
+
+.btnGroup button:last-child > a:hover {
     color: #fff;
 }
 
-.btnGroup button>a{
+.btnGroup button > a {
     display: block;
     width: 100%;
     height: 100%;
     letter-spacing: 3px;
 }
-.btnGroup button:hover{
+
+.btnGroup button:hover {
     border-color: #186efe;
 }
-.active{
-    background-color: #186efe!important;
-    color: #fff!important;
-    border-color: #186efe!important;
+
+.active {
+    background-color: #186efe !important;
+    color: #fff !important;
+    border-color: #186efe !important;
 }
-.active>a{
-    color: #fff!important;
+
+.active > a {
+    color: #fff !important;
 }
-.btnGroup button.active:hover{
+
+.btnGroup button.active:hover {
     border-color: transparent;
+}
+
+/*筛选区域css*/
+.filter {
+    width: 100%;
+    border: 1px solid #ddd;
+    margin: 15px 0;
+    border-top: 2px solid #186efe;
+}
+
+.filterHeader {
+    padding: 5px 20px;
+    background-color: #efefef;
+}
+
+.filterHeader > .fl > label {
+    width: 200px;
+    display: inline-block;
+}
+
+.filterHeader > .fl > label > select {
+    width: 75%;
+}
+
+.filterHeader > .fr {
+    position: relative;
+    width: 30%;
+}
+
+.filterHeader > .fr > input {
+    padding-right: 20px;
+}
+
+.filterHeader > .fr > .zoom {
+    position: absolute;
+    top: 8px;
+    right: 5px;
+    font-size: 20px;
+    color: #186efe;
+    cursor: pointer;
+}
+
+.filterBody {
+    background-color: #fbfbfb;
+}
+
+.typeList {
+    padding: 8px 0;
+    border-bottom: 1px dashed #eee;
+}
+
+.typeList span {
+    width: 120px;
+    text-align: right;
+    padding: 3px 15px;
+    margin: 5px 10px 5px 0;
+}
+
+.typeList ul {
+    padding-left: 150px;
+}
+
+.typeList ul li {
+    padding: 3px 15px;
+    margin: 5px 10px 5px 0;
+    cursor: pointer;
+    float: left;
+    border: 1px solid #ddd;
+}
+
+.typeList ul li:hover {
+    color: #186eff;
+}
+
+.typeList ul li.activeType {
+    color: #fff;
+    background-color: #186eff;
+    border-radius: 2px;
+    border-color: #186eff;
+}
+
+/*信息主体css*/
+.msgHeader {
+    background-color: #efefef;
+    color: #333;
+    font-weight: 700;
+    line-height: 36px;
+}
+
+.msgInfo ul > li {
+    padding: 5px;
+    width: 13%;
+    float: left;
+    text-align: center;
+}
+.goodsToggle .msgInfo ul > li{
+    width: 10%;
+}
+.msgInfo ul > li:first-child{
+    width: 10%;
+}
+.msgInfo ul > li:last-child{
+    width: 18%;
+}
+.msgBody{
+    border-bottom: 8px solid #f7f7f7;
+}
+.msgBody li{
+    line-height: 58px;
+}
+.msgInfo ul > li.msgTitle {
+    width: 20%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+    line-height:normal ;
+}
+.msgInfo .msgHeader > li.msgTitle{
+    line-height: 36px;
+}
+.msgInfo ul > li.msgTitle>p:first-child{
+    margin-bottom: 20px;
+}
+.msgInfo ul > li>img{
+    width:80px;
+    height: 60px;
+}
+.msgInfo ul > li >button{
+    display: inline-block;
+    padding: 5px 10px;
+    border:1px solid #186eff;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 3px;
+    cursor: pointer
+}
+.msgInfo ul > li >button i{
+    margin: 2px 3px 0 0;
+    display: inline-block;
+}
+.msgInfo ul > li >.look{
+    background-color: #186eff;
+    color: #fff;
+}
+.msgInfo ul > li >.collect{
+    color: #f57f1f;
+    border-color: #f57f1f;
+}
+/*模态框*/
+.infoModal{
+    width: 100%;
+    padding: 20px;
+}
+.infoImg{
+    width: 100%;
+    overflow: hidden;
+}
+.infoImg li{
+    float: left;
+    width: 30%;
+    margin-right:3%;
+}
+.infoModal h3{
+    font-size: 16px;
+    margin: 10px 0;
+}
+.infoModal ol li{
+    height: 30px;
+    line-height: 30px;
+    border-bottom:1px dashed #ccc;
+}
+.infoModal ol li>div{
+    float: left;
+}
+.infoModal ol li>div:first-child{
+    width: 150px;
+}
+.listPage{
+    margin: 0 auto;
+    text-align: center;
 }
