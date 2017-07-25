@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>链库-出租冷库</title>
+    <title>链库-求租冷库</title>
     <meta charset="utf-8" name="keywords" content="链库,冷链物流,冷库360,冷库监控,冷库智能管理,冷库能效评估"/>
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -65,66 +65,37 @@
     </div>
 </div>
 <div class="section aboutRdc">
-    <h1 class="orange" ><i class="iconfont">&#xe659;</i><b>发布出租冷库</b></h1>
+    <h1 class="orange" ><i class="iconfont" style="font-size: 24px;">&#xe675;</i><b>发布求租冷库</b></h1>
     <hr>
-    <div class="rentRdc">
-        <!--有关联库-->
-        <div class="rdcList">
-            <ul class="clearfix">
-                <li>
-                    <img src="../img/ad3.png" alt="">
-                </li>
-                <li>
-                    上海长宁天山路冷库
-                </li>
-                <li>
-                    <i class="iconfont orange">&#xe61c;</i>天山路600号捷运大厦
-                </li>
-                <li>
-                    <button class="oBtn" onclick="aboutRdcRelease()">发布</button>
-                </li>
-            </ul>
-            <ul class="clearfix">
-                <li>
-                    <img src="../img/ad1.png" alt="">
-                </li>
-                <li>
-                    合肥众萃RDC
-                </li>
-                <li>
-                    <i class="iconfont orange">&#xe61c;</i>长江中路366号
-                </li>
-                <li>
-                    <button class="oBtn" onclick="aboutRdcRelease()">发布</button>
-                </li>
-            </ul>
-        </div>
-        <!--没有库，去添加冷库-->
-        <div class="noRdc hide">
-            <h1 class="txt-center">您还没有关联冷库，去创建自己的冷库吧~</h1>
-            <div class="txt-center"><button class="oBtn" onclick="location.href='rdcaddcold.html'">添加冷库</button></div>
-        </div>
-    </div>
 </div>
-<div class="section rdcAdd hide">
+<div class="section rdcAdd">
     <form id="submitRdc" onsubmit="return false">
-        <p>
-            上海长宁天山路冷库
-            <span><i class="iconfont orange">&#xe61c;</i>天山路600号捷运大厦</span>
-        </p>
-        <ul class="infoImg clearfix" id="infoImg">
-            <li><img src="../img/image0.jpg" alt=""></li>
-            <li><img src="../img/image1.jpg" alt=""></li>
-            <li><img src="../img/image0.jpg" alt=""></li>
-        </ul>
         <table>
             <tbody>
             <tr>
-                <td>描述：<b class="blue">*</b></td>
-                <td><input type="text" name="name" id="name" placeholder="出租冷库描述（6~24个字符）" ></td>
+                <td>求租省份：<b class="blue">*</b></td>
+                <td>
+                    <select name="provinceId" id="provinceId"  name="province" id="province">
+                    </select>
+                </td>
             </tr>
             <tr>
-                <td>温度类型：<b class="blue">*</b></td>
+                <td>求租城市：<b class="blue">*</b></td>
+                <td>
+                    <select  name="cityId" id="cityId">
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>存放产品：<b class="blue">*</b></td>
+                <td><input type="text" name="name" id="name" placeholder="存放产品描述（6~24个字符）" ></td>
+            </tr>
+            <tr>
+                <td>求租面积：<b class="blue">*</b></td>
+                <td><input name="rentSqm" type="number" placeholder="只能输数字/㎡,没有填写0" ></td>
+            </tr>
+            <tr>
+                <td>求租库型：<b class="blue">*</b></td>
                 <td>
                     <select name="temperType" id="temperType"  placeholder="可多选" >
                         <option value="低温库">低温库</option>
@@ -133,8 +104,13 @@
                 </td>
             </tr>
             <tr>
-                <td>可出租面积：<b class="blue">*</b></td>
-                <td><input name="rentSqm" type="number" placeholder="只能输数字/㎡,没有填写0" ></td>
+                <td>经营类型：<b class="blue">*</b></td>
+                <td>
+                    <select name="manageType" id="manageType" >
+                        <option value="仓储型">仓储型</option>
+                        <option value="中央厨房型">中央厨房型</option>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <td>单价：<b class="blue">*</b></td>
@@ -190,61 +166,6 @@
                 </td>
             </tr>
             <!--上传图片end-->
-            <!--<tr>
-                <td>省：<b class="blue">*</b></td>
-                <td>
-                    <select name="provinceId" id="provinceId"  name="province" id="province">
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>市：<b class="blue">*</b></td>
-                <td>
-                    <select  name="cityId" id="cityId">
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>地理位置：<b class="blue">*</b></td>
-                <td><input name="address" id="address" type="text" placeholder="请输入冷库地址" ></td>
-            </tr>-->
-            <!--<tr>
-                <td>总面积：<b class="blue">*</b></td>
-                <td><input name="area" id="area" type="number" placeholder="请输入冷库面积(只能输数字)/㎡" ></td>
-            </tr>
-            <tr>
-                <td>可出租面积：<b class="blue">*</b></td>
-                <td><input name="rentSqm" type="number" placeholder="请输入冷库可出租面积(只能输数字)/㎡,没有填写0" ></td>
-            </tr>
-            <tr>
-                <td>冷库净高：<b class="blue">*</b></td>
-                <td><input name="height" id="rdcHeight" type="number" placeholder="请输入冷库净高(只能输数字)/m" ></td>
-            </tr>
-            <tr>
-                <td>经营类型：<b class="blue">*</b></td>
-                <td>
-                    <select name="manageType" id="manageType" >
-
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>商品存放类型：<b class="blue">*</b></td>
-                <td>
-                    <select name="storageType" id="storageType" >
-
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>温度类型：<b class="blue">*</b></td>
-                <td>
-                    <select name="temperType" id="temperType"  placeholder="可多选" >
-
-                    </select>
-                </td>
-            </tr>-->
-
             </tbody>
             <!--以上为必填项====================================================================-->
             <tfoot>

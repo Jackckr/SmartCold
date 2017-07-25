@@ -159,6 +159,7 @@
     width: 13%;
     float: left;
     text-align: center;
+    margin: 8px 0;
 }
 .goodsToggle .msgInfo ul > li{
     width: 10%;
