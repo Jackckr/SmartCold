@@ -730,6 +730,11 @@ section{
 .lookRdc .coldlist li a .flex h4{
 	font-weight: 400;
 	width: 5rem;
+	overflow : hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
 }
 .lookRdc .coldlist li a .flex .item:nth-child(1),
 .lookRdc .coldlist li a .flex .item:nth-child(2){

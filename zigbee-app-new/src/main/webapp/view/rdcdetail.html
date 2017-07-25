@@ -111,7 +111,7 @@
 <div class="rdcpadding" ng-if="user || user.id==vo.userid">
     <div class="flex">
         <div class="item flex">
-            <span class="item"><i class="iconfont" style="font-size: .8rem">&#xe648;</i></span>
+            <span class="item">地址</span>
             <p class="item">{{vo.address}}</p>
         </div>
     </div>
@@ -267,14 +267,14 @@
             <p class='ellipsis'>{{(eva.commerName.trim()==undefined ||
                 eva.commerName.trim()=="")?eva.nickname:eva.commerName}}</p>
             <div class="equal clearfix">
-                <!--<span class="fl">打分</span>
+                <span class="fl">打分</span>
                 <ul class='star fl'>
                     <li class="{{eva.grade>=1?'filled':''}}">★</li>
                     <li class="{{eva.grade>=2?'filled':''}}">★</li>
                     <li class="{{eva.grade>=3?'filled':''}}">★</li>
                     <li class="{{eva.grade>=4?'filled':''}}">★</li>
                     <li class="{{eva.grade>=5?'filled':''}}">★</li>
-                </ul>-->
+                </ul>
                 <span class="fr">{{eva.addTime}}</span>
             </div>
             <p class="commentTxt">{{eva.content}}</p>

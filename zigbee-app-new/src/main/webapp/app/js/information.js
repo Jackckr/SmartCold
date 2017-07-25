@@ -6,7 +6,9 @@ var cundex=0,maxSize=10, isLoadRB=false;
 var lilist=[{categoryID:1},{categoryID:2},{categoryID:3}];
 var pageinf=[{totalPages:-1,currentPage:1},{totalPages:-1,currentPage:1},{totalPages:-1,currentPage:1}];
 function gethtml(news){
-	  return '<li><a href="newsdetail.html?id='+news.id+'"class="clearfix"><div class="imgFl fl" style="background:#eee url('+news.coverpic+') center no-repeat;background-size:cover;"></div> <div class="newsTxt"><p class="newsTitle">'+news.title+'</p><p class="newsDate">'+formatCSTDate(news.posttime,"yyyy-MM-dd")+'</p></div></a></li>';
+	  return '<li><a href="newsdetail.html?id='+news.id+'"class="clearfix"><div class="imgFl fl" style="background:#eee url('+news.coverpic+') center no-repeat;' +
+		  'background-size:cover;"></div> <div class="newsTxt"><p class="newsTitle">'+news.title+'</p>' +
+		  '<p class="newsDate">'+formatCSTDate(news.posttime,"yyyy-MM-dd")+'</p></div></a></li>';
 };
 
 function getPageData(){//启用无限加载
