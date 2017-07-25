@@ -21,7 +21,7 @@
 			    });
 			 } });
 		 }else{
-			 $("#user_sex").val(window.user.sex);
+			// $("#user_sex").val(window.user.sex);
 			 $scope.userinfo=window.user;
 		 }
 	};
@@ -31,7 +31,7 @@
 			var value=$("input[type='file']")[0].files[0];
 			$scope.savedata("fileData",value);
 		});
-		$("#user_sex").change(function() {
+		/*$("#user_sex").change(function() {
 			if(this.name&&this.name!=''&&this.value&&this.value!=''){$scope.savedata(this.name,this.value);}
 		});
 		$("#sl_hometownid").change(function() {
@@ -41,7 +41,7 @@
 		$("#sl_addressid").change(function() {
 			var value=this.value.split(":")[1];
 			if(this.name&&this.name!=''&&value&&value!='')$scope.savedata(this.name,value);
-		});
+		});*/
 	};
 	$scope.savedata=function(name,value){
         var formdata = new FormData();
