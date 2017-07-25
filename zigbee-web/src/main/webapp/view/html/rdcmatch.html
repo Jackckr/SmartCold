@@ -70,7 +70,7 @@
         <button><a href="javascript:;">求租</a></button>
         <button><a href="javascript:;">出售</a></button>
         <button><a href="javascript:;">求购</a></button>
-        <button><a href="javascript:;">免费发布信息</a></button>
+        <button><a href="rdcrelease.html">免费发布信息</a></button>
     </div>
     <!--出租求租html*********************************************************************-->
     <div class="rdcMatch rentToggle">
@@ -400,22 +400,27 @@
     $(function () {
         $(".btnGroup button").click(function () {
             var oIndex = $(this).index();
-            $(this).addClass('active').siblings().removeClass('active');
-            if (oIndex < 2) {
-                $(".rentToggle").show().siblings('.goodsToggle').hide();//加载出租求租列表
-                if (oIndex == 0) {
-                    console.log('初始化出租列表');
-                } else if (oIndex == 1) {
-                    console.log('初始化求租列表');
+            if(oIndex<4){
+                $(this).addClass('active').siblings().removeClass('active');
+                if (oIndex < 2) {
+                    $(".rentToggle").show().siblings('.goodsToggle').hide();//加载出租求租列表
+                    if (oIndex == 0) {
+                        console.log('初始化出租列表');
+                    } else if (oIndex == 1) {
+                        console.log('初始化求租列表');
+                    }
+                } else if(oIndex<4){
+                    $(".goodsToggle").show().siblings('.rentToggle').hide();//加载出售求购列表
+                    if (oIndex == 2) {
+                        console.log('初始化出售列表');
+                    } else if (oIndex == 3) {
+                        console.log('初始化求购列表');
+                    }
                 }
-            } else {
-                $(".goodsToggle").show().siblings('.rentToggle').hide();//加载出售求购列表
-                if (oIndex == 2) {
-                    console.log('初始化出售列表');
-                } else if (oIndex == 3) {
-                    console.log('初始化求购列表');
-                }
+            }else{
+                console.log('发布共享信息');
             }
+
         });
         $(".typeList li").click(function () {
             var oIndex = $(this).index();
