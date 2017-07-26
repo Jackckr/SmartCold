@@ -245,8 +245,6 @@ function changePage() {
         laypage({
             cont: 'page1'
             , pages: pagination.pageCount
-            , first: false
-            , last: false
             ,jump: function (obj,first) {
                 pageCurrent = obj.curr;
                 pagination.oldPageCount = pagination.pageCount;
@@ -272,7 +270,8 @@ function deleteRdc(rdcID){//删除
             success: function(data){
                 if(data.status == 0){
                     layer.alert('删除成功', {
-                        skin: 'layui-layer-molv' //样式类名
+                        icon:'6'
+                        ,skin: 'layui-layer-molv' //样式类名
                         ,closeBtn: 0
                     }, function(index){
                         getRdcList();
@@ -294,7 +293,7 @@ function deleteRdc(rdcID){//删除
 var rentDate=['','1个月以下','1~3个月','3~6个月','6~9个月','1年以上','两年以上','三年以上','五年以上'];
 function info(id) {//冷库详情
     $.get('/i/ShareRdcController/getSEByID.json',{id: id}, function (data) {
-        var obj = data.entity,address='',len=0;
+        var obj = data.entity,address='',len=null;
         obj.files==undefined?len=0:len=obj.files.length;
         var imglist='<ul id="infoImg" class="infoImg clearfix layer-photos-demo">',i=0;
         for(i; i<len; i++){
@@ -302,7 +301,26 @@ function info(id) {//冷库详情
         }
         imglist=imglist+'</ul>';
         if(len==0){imglist=''}
-        obj.typeCode==1?address=obj.address:address=obj.detlAddress;
+        if(obj.typeCode==1){//出租
+            if(obj.audit==2){
+                oaudit='<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>'
+            }else{
+                oaudit='<b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>'
+            }
+            if(obj.istemperaturestandard==1){
+                isStand='<b class="reachStand"><i class="iconfont">&#xe6e9;</i>冷链委温度达标库</b>'
+            }else{
+                isStand='未达标';
+            }
+            address=obj.address;
+            rentRdcLi = '<li><div>关联冷库：</div><div>'+obj.name+'</div></li>' +
+                        '<li><div>是否认证：</div><div>'+oaudit+'</div></li>' +
+                        '<li><div>是否达标：</div><div>'+isStand+'</div></li>' +
+                        '<li><div>信息完整度：</div><div>'+obj.infoIntegrity+'%</div></li>';
+        }else{//求租
+            rentRdcLi='';
+            address=obj.detlAddress;
+        }
         layer.open({
             type: 1
             , title: obj.typeText+'详情'
@@ -310,8 +328,8 @@ function info(id) {//冷库详情
             , shadeClose: true
             , shade: 0.6
             , maxmin: true
-            , content: '<div class="infoModal">'+imglist+'<h3 class="orange">基本信息</h3><ol>' +
-            '<li><div>描述：</div><div>'+address+'</div></li>' +
+            , content: '<div class="infoModal">'+imglist+'<h3 class="orange">基本信息</h3>' +
+            '<ol>'+rentRdcLi+'<li><div>描述：</div><div>'+address+'</div></li>' +
             '<li><div>地址：</div><div>'+obj.title+'</div></li>' +
             '<li><div>电话：</div><div>'+obj.telephone+'</div></li>' +
             '<li><div>'+obj.typeText+'面积：</div><div>'+obj.sqm+'㎡</div></li>' +
@@ -339,8 +357,6 @@ function changePageRent() {
         laypage({
             cont: 'page2'
             , pages: pagination.pageCount
-            , first: false
-            , last: false
             ,jump: function (obj,first) {
                 pageCurrent = obj.curr;
                 pagination.oldPageCount = pagination.pageCount;
@@ -398,14 +414,15 @@ function deleteRent(id){//删除
         $.ajax({
             type: "POST",
             url: "/i/ShareRdcController/delShareInfoByUid",
-            data: {rdcID:id,uid:window.lkuser.id},
+            data: {id:id,uid:window.lkuser.id},
             success: function(data){
                 if(data.success){
                     layer.alert('删除成功', {
-                        skin: 'layui-layer-molv' //样式类名
+                        icon:'6'
+                        ,skin: 'layui-layer-molv' //样式类名
                         ,closeBtn: 0
                     }, function(index){
-                        getRdcList();
+                        getRentList();
                         layer.close(index);
                     });
                 }else{
