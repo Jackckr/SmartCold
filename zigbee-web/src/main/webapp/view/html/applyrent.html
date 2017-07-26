@@ -92,7 +92,7 @@
             </tr>
             <tr>
                 <td>求租面积：<b class="blue">*</b></td>
-                <td><input name="rentSqm" type="number" placeholder="只能输数字/㎡,没有填写0" ></td>
+                <td><input name="rentSqm" type="number" step="0.01" placeholder="只能输数字/㎡,没有填写0" ></td>
             </tr>
             <tr>
                 <td>求租库型：<b class="blue">*</b></td>
@@ -114,7 +114,7 @@
             </tr>
             <tr>
                 <td>单价：<b class="blue">*</b></td>
-                <td><input name="rentSqm" type="number" placeholder="元/天（填0为面议）"></td>
+                <td><input name="rentSqm" type="number" step="0.01" placeholder="元/天（填0为面议）"></td>
             </tr>
             <tr>
                 <td>租期：<b class="blue">*</b></td>
@@ -215,10 +215,6 @@
             //,anim:3//0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
         });
     });
-    function aboutRdcRelease(){
-        $('.aboutRdc').hide().siblings('.rdcAdd').show();
-    }
-
 </script>
 </body>
 </html>
