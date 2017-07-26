@@ -80,6 +80,10 @@
     .rdcInfoRight table td{
         max-width: inherit;
     }
+    .oList li{
+        width: 100%;
+        margin: 0 0 20px 0;
+    }
 }
 
 

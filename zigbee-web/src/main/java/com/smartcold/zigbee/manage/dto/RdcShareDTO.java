@@ -64,7 +64,7 @@ public class RdcShareDTO {
 	private int audit;//审核状态：-1未通过，0待审核，1通过审核
 	private  List<String> files;//图片组
 	private  List<FileDataEntity> fileList;//图片组
-	private String logo = "app/img/rdcHeader.jpg";// +FtpService.READ_URL+ logo
+	private String logo = "http://139.196.189.93:8089/app/rdcHeader.jpg";// +FtpService.READ_URL+ logo
 	private int istemperaturestandard;
 	private int rdcscore;
 	private int infoIntegrity;

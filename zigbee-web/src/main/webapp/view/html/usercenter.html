@@ -11,8 +11,8 @@
     <!--引入样式包-->
     <link rel="stylesheet" href="../plugins/css/layui.css" />
     <link rel="stylesheet" href="../css/common.css" />
-    <link rel="stylesheet" href="../css/media.css" />
     <link rel="stylesheet" href="../css/usercenter.css" />
+    <link rel="stylesheet" href="../css/media.css" />
 </head>
 <body>
 <!--header 导航栏-->
@@ -76,17 +76,17 @@
             </p>
         </div>
         <ul class="tabNav">
-            <li class="current"><i class="iconfont">&#xe63c;</i>个人信息</li>
-            <li><i class="iconfont">&#xe656;</i>我的冷库</li>
-            <li><i class="iconfont">&#xe61d;</i>出租求租</li>
-            <li><i class="iconfont">&#xe605;</i>我的货源</li>
-            <li><i class="iconfont">&#xe60c;</i>我的收藏</li>
-            <li><i class="iconfont">&#xe629;</i>联系我们</li>
+            <li class="current"><a href="#user"><i class="iconfont">&#xe63c;</i>个人信息</a></li>
+            <li><a href="#myRdc"><i class="iconfont">&#xe656;</i>我的冷库</a></li>
+            <li><a href="#rent"><i class="iconfont">&#xe61d;</i>出租求租</a></li>
+            <li><a href="#goods"><i class="iconfont">&#xe605;</i>我的货源</a></li>
+            <li><a href="#collect"><i class="iconfont">&#xe60c;</i>我的收藏</a></li>
+            <li><a href="#about"><i class="iconfont">&#xe629;</i>联系我们</a></li>
         </ul>
     </div>
     <div class="userBox">
         <ol class="userInfo">
-            <li>
+            <li id="user">
                 <h3><i class="iconfont">&#xe63c;</i>个人信息</h3>
                 <div class="layui-tab">
                     <ul class="layui-tab-title">
@@ -225,19 +225,113 @@
                     </div>
                 </div>
             </li>
-            <li>
+            <li id="myRdc">
                 <h3><i class="iconfont">&#xe656;</i>我的冷库</h3>
+                <div class="search rdcSearch">
+                    <div class="layui-input-inline">
+                        <input type="text" name="keyword" placeholder="请输入关键词" onblur="search()" class="layui-input">
+                    </div>
+                    <button class="layui-btn" onclick="search()">搜索</button>
+                </div>
+                <!--列表区域-->
+                <ul class="oList clearfix" id="rdcList"></ul>
+                <div id="page1" class="page"></div>
             </li>
-            <li>
+            <li id="rent">
                 <h3><i class="iconfont">&#xe61d;</i>出租求租</h3>
+                <div class="search">
+                    <div class="layui-input-inline">
+                        <input type="text" name="keyword" placeholder="请输入关键词" onkeyup="getRdcList()" class="layui-input">
+                    </div>
+                    <button class="layui-btn" onclick="getRdcList()">搜索</button>
+                </div>
+                <!--列表区域-->
+                <ul class="oList clearfix" id="rentList"></ul>
+                <div id="page2" class="page"></div>
             </li>
-            <li>
+            <li id="goods">
                 <h3><i class="iconfont">&#xe605;</i>我的货源</h3>
+                <div class="search">
+                    <div class="layui-input-inline">
+                        <input type="text" name="keyword" placeholder="请输入关键词" autocomplete="off" class="layui-input">
+                    </div>
+                    <button class="layui-btn">搜索</button>
+                </div>
+                <!--列表区域-->
+                <ul class="oList clearfix">
+                    <li>
+                        <div class="oImg fl"><img src="../img/findpassword.png" alt=""></div>
+                        <div class="oTxt fl">
+                            <h2 class="omg blue">上海合肥众萃rdc</h2>
+                            <h4 class="omg"><i class="iconfont orange">&#xe61c;</i>天山路600号捷运大厦</h4>
+                            <p class="omg">2017-07-26 10:20:22</p>
+                            <div class="txt-right">
+                                <button class="layui-btn layui-btn-normal layui-btn-small"><a href="">查看</a></button>
+                                <button class="layui-btn layui-btn-small"><a href="">修改</a></button>
+                                <button class="layui-btn layui-btn-danger layui-btn-small">删除</button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
             </li>
-            <li>
+            <li id="collect">
                 <h3><i class="iconfont">&#xe60c;</i>我的收藏</h3>
+                <div class="layui-tab">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">冷库冷库</li>
+                        <li >需求收藏</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <div class="search">
+                                <div class="layui-input-inline">
+                                    <input type="text" name="keyword" placeholder="请输入关键词" autocomplete="off" class="layui-input">
+                                </div>
+                                <button class="layui-btn">搜索</button>
+                            </div>
+                            <!--列表区域-->
+                            <ul class="oList clearfix">
+                                <li>
+                                    <div class="oImg fl"><img src="../img/findpassword.png" alt=""></div>
+                                    <div class="oTxt fl">
+                                        <h2 class="omg blue">上海合肥众萃rdc</h2>
+                                        <h4 class="omg"><i class="iconfont orange">&#xe61c;</i>天山路600号捷运大厦</h4>
+                                        <p class="omg">2017-07-26 10:20:22</p>
+                                        <div class="txt-right">
+                                            <button class="layui-btn layui-btn-normal layui-btn-small"><a href="">查看</a></button>
+                                            <button class="layui-btn layui-btn-danger layui-btn-small"><a href="">取消收藏</a></button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="layui-tab-item">
+                            <div class="search">
+                                <div class="layui-input-inline">
+                                    <input type="text" name="keyword" placeholder="请输入关键词" autocomplete="off" class="layui-input">
+                                </div>
+                                <button class="layui-btn">搜索</button>
+                            </div>
+                            <!--列表区域-->
+                            <ul class="oList clearfix">
+                                <li>
+                                    <div class="oImg fl"><img src="../img/banner1.png" alt=""></div>
+                                    <div class="oTxt fl">
+                                        <h2 class="omg blue">领鲜物流冷酷集团</h2>
+                                        <h4 class="omg"><i class="iconfont orange">&#xe61c;</i>天安门1000号</h4>
+                                        <p class="omg">2017-06-26 10:20:22</p>
+                                        <div class="txt-right">
+                                            <button class="layui-btn layui-btn-normal layui-btn-small"><a href="">查看</a></button>
+                                            <button class="layui-btn layui-btn-danger layui-btn-small"><a href="">取消收藏</a></button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </li>
-            <li class="customer">
+            <li id="about" class="customer">
                 <h3><i class="iconfont">&#xe629;</i>联系我们</h3>
                 <p>手机网址：<a href="http://m.liankur.com" target="_blank" class="blue">http://m.liankur.com</a></p>
                 <p>官方网址：<a href="http://www.liankur.com" target="_blank" class="blue">http://www.liankur.com</a></p>
@@ -334,14 +428,7 @@
 <script src="../js/usercenter.js"></script>
 <script>
 $(function () {
-    $('.tabNav>li').click(function () {
-        var oIndex = $(this).index();
-        $(this).addClass('current').siblings('li').removeClass('current');
-        $(".userInfo>li").eq(oIndex).show().siblings('li').hide();
-    })
-    layui.use('element', function(){
-        var element = layui.element();
-    });
+
 });
 </script>
 </body>

@@ -1,10 +1,16 @@
 var $form;
 var form;
 var $;
+var oFile;
+/**
+*
+* 个人信息
+ *
+* */
 /*获得所有的省市*/
 function getProvinceList() {
     var provinceList = [];
-    $.ajax({
+    /*$.ajax({
         url: "/i/city/findProvinceList", type: "get", success: function (data) {
             provinceList.push('<option value=""></option>');
             supportForeach();
@@ -16,9 +22,10 @@ function getProvinceList() {
             form.render();
             initForm();
         }
-    });
+    });*/
+    form.render();
+    initForm();
 }
-var oFile;
 function changePic(em) {
     oFile = $(em)[0].files[0];
     var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/i;
@@ -40,7 +47,6 @@ function changePic(em) {
 function initUpdatePhone() {
     $("#oldPhone").val(window.lkuser.telephone).attr('readonly', 'readonly');
 }
-
 function initForm() {
     $.ajax({
         url: "/i/user/findUserById", type: "post", data: {"userId": window.lkuser.id}, success: function (data) {
@@ -70,7 +76,6 @@ function initForm() {
         }
     });
 }
-
 function getCode(type) {
     var phoneRex = /^1[34578]\d{9}$/;
     var phone = type == 1 ? $("#oldPhone").val().trim() : $("#newPhone").val().trim();
@@ -104,7 +109,6 @@ function getCode(type) {
         }
     });
 }
-
 function updateTelephone() {
     if (window.newCode != $("#newCode").val()) {
         layer.open({content: "验证码输入有误！", btn: '确定'});
@@ -127,7 +131,6 @@ function updateTelephone() {
         }
     });
 }
-
 function check(ckolpwd) {
     if (ckolpwd) {
         var password = $("#new_password").val().trim();
@@ -150,7 +153,6 @@ function check(ckolpwd) {
     }
     return true;
 }
-
 function updatePwd() {
     $.ajax({
         url: "/i/user/checkOldPassword",
@@ -181,7 +183,6 @@ function updatePwd() {
         }
     });
 }
-
 function saveUser() {
     var formData = new FormData();
     var serializeArray = $("#userInfo").serializeArray();
@@ -203,13 +204,211 @@ function saveUser() {
         }
     });
 }
-layui.use(['jquery', 'form'], function () {
+var pageCurrent = 1;
+var pagination={pageCount:-1,oldPageCount:-1};
+/**
+*
+* 我的冷库列表
+*
+* */
+function getRdcList() {
+    var rdcList = [];
+    window.sessionStorage.submitRdcStatus=1;//进入修改页面
+    $.get('/i/rdc/findRDCDTOByUserId',
+        {
+            userID: window.lkuser.id,
+            keyword: $(".rdcSearch input").val().trim(),
+            pageNum: pageCurrent,
+            pageSize: 10
+        }, function (data) {
+            pagination.pageCount = data.totalPages;
+            if (pagination.pageCount == -1 || pagination.oldPageCount != pagination.pageCount) {
+                changePage();
+            }
+            var rdc = data.data;
+            $.each(rdc, function (index, item) {
+                rdcList.push('<li><div class="oImg fl"><img src="' + item.logo + '" alt=""></div>' +
+                    '<div class="oTxt fl"><h2 class="omg"><a class="blue" href="rdcinfo.html?rdcId=' + item.id + '">' + item.name + '</a></h2>' +
+                    '<h4 class="omg"><i class="iconfont orange">&#xe61c;</i>' + item.address + '</h4>' +
+                    '<p class="omg">' + item.addtime + '</p><div class="txt-right">' +
+                    '<button class="layui-btn layui-btn-normal layui-btn-small"><a href="rdcinfo.html?rdcId=' + item.id + '">查看</a></button>' +
+                    '<button class="layui-btn layui-btn-small"><a href="rdcaddcold.html?rdcId=' + item.id + '">修改</a></button>' +
+                    '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteRdc('+item.id+')"><a href="javascript:;">删除</a></button></div></div></li>')
+            });
+            $("#rdcList").empty().append(rdcList.join(''));
+    });
+}
+function changePage() {
+    layui.use(['laypage', 'layer'], function () {
+        var laypage = layui.laypage
+            , layer = layui.layer;
+        laypage({
+            cont: 'page1'
+            , pages: pagination.pageCount
+            , first: false
+            , last: false
+            ,jump: function (obj,first) {
+                pageCurrent = obj.curr;
+                pagination.oldPageCount = pagination.pageCount;
+                if(first!=true){
+                    getRdcList();
+                    window.scroll(0,0);//跳到顶部
+                }
+            }
+        });
+    });
+}
+function search() {//搜索
+    pageCurrent=1;
+    getRdcList();
+}
+function deleteRdc(rdcID){//删除
+    var r=confirm("删除冷库？");
+    if(r){
+        $.ajax({
+            type: "POST",
+            url: "/i/rdc/deleteByRdcID",
+            data: {rdcID:rdcID,uid:window.lkuser.id},
+            success: function(data){
+                if(data.status==0){
+                    layer.alert('删除成功', {
+                        skin: 'layui-layer-molv' //样式类名
+                        ,closeBtn: 0
+                    }, function(index){
+                        getRdcList();
+                        layer.close(index);
+                    });
+                }else{
+                    layer.alert('删除失败，请稍后重试');
+                }
+            }
+        });
+    }
+}
+/**
+*
+* 出租求租列表
+*
+* */
+var modalHtml = '<div class="infoModal"><ul id="infoImg" class="infoImg clearfix layer-photos-demo">' +
+    '<li><img src="../img/image0.jpg" alt=""></li>' +
+    '<li><img src="../img/image1.jpg" alt=""></li>' +
+    '<li><img src="../img/image0.jpg" alt=""></li></ul><h3 class="orange">基本信息</h3><ol>' +
+    '<li><div>数量：</div><div>23.00吨</div></li>' +
+    '<li><div>有效期：</div><div>3~6个月</div></li>' +
+    '<li><div>备注：</div><div>快捷方式的客服给会计是大法官客家话</div></li></ol></div>';
+function info() {
+    layer.open({
+        type: 1 //此处以iframe举例
+        , title: '详情'
+        , area: ['60%', '50%']
+        , shadeClose: true
+        , shade: 0.6
+        , maxmin: true
+        , content: modalHtml
+        , btn: ['关闭'] //只是为了演示
+        , yes: function () {
+            layer.closeAll();
+        }
+    });
+    layer.photos({
+        photos: '#infoImg'
+    });
+};
+function changePageRent() {
+    layui.use(['laypage', 'layer'], function () {
+        var laypage = layui.laypage
+            , layer = layui.layer;
+        laypage({
+            cont: 'page2'
+            , pages: pagination.pageCount
+            , first: false
+            , last: false
+            ,jump: function (obj,first) {
+                pageCurrent = obj.curr;
+                pagination.oldPageCount = pagination.pageCount;
+                if(first!=true){
+                    getRentList();
+                    window.scroll(0,0);//跳到顶部
+                }
+            }
+        });
+    });
+}
+function getRentList() {
+    var rentList=[];
+    $.get('/i/ShareRdcController/newGetSEListByUID',
+        {
+            userID: window.lkuser.id,
+            username:window.lkuser.name,
+            dataType:3,
+            pageNum: pageCurrent,
+            pageSize: 10,
+            keyword: $(".rdcSearch input").val().trim()
+        }, function (data) {
+            pagination.pageCount = data.totalPages;
+            if (pagination.pageCount == -1 || pagination.oldPageCount != pagination.pageCount) {
+                changePageRent();
+            }
+            var rent = data.data;
+            $.each(rent, function (index, item) {
+                rentList.push('<li><div class="oImg fl"><img src="'+item.logo + '" alt="图片跑丢了~"></div>' +
+                    '<div class="oTxt fl"><h2 class="omg"><a class="blue" href="rdcinfo.html?rdcId=' + item.id + '">['+item.typeText+']' + item.title + '</a></h2>' +
+                    '<h4 class="omg"><i class="iconfont orange">&#xe61c;</i>' + item.detlAddress + '</h4>' +
+                    '<p class="omg">' + item.updatetime + '</p><div class="txt-right">' +
+                    '<button class="layui-btn layui-btn-normal layui-btn-small"><a onclick="info('+item+')">查看</a></button>' +
+                    '<button class="layui-btn layui-btn-small"><a href="javascript:;">修改</a></button>' +
+                    '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteRdc('+item.id+')"><a href="javascript:;">删除</a></button></div></div></li>')
+            });
+            $("#rentList").empty().append(rentList.join(''));
+        });
+}
+layui.use(['jquery', 'form', 'element', ], function () {
+    var element = layui.element();
     $ = layui.jquery;
     form = layui.form();
     $form = $('form');
-    checkLogin(1, getProvinceList);
+    checkLogin(1, initForm);
     $("#reset").bind("click", function () {
-        //location.reload();
         initForm();
     });
+    $('.tabNav>li').click(function () {
+        pageCurrent=1;
+        var oIndex = $(this).index();
+        $(this).addClass('current').siblings('li').removeClass('current');
+        $(".userInfo>li").eq(oIndex).show().siblings('li').hide();
+        switch(oIndex)
+        {
+        case 0://个人信息
+            initForm();
+            break;
+        case 1://我的冷库
+            getRdcList();
+            break;
+        case 2://出租求租
+            getRentList();
+            break;
+        default:
+            return
+        }
+    })
 });
+var userinfo={
+    initUser: function () {
+        initForm();
+    },
+    initRdc: function () {
+        pageCurrent=1;
+        getRdcList();
+    },
+    initRent: function () {
+        getRentList();
+    },
+    initGoods: function () {
+        getGoodsList();
+    },
+    initCollect: function () {
+        getCollectList();
+    }
+    
+}

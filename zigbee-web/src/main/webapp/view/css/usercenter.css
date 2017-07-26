@@ -56,11 +56,15 @@
     cursor: pointer;
     font-weight: 700;
 }
-.tabNav li.current{
+.tabNav li>a{
+    display: block;
+    height:100%;
+}
+.tabNav li.current>a{
     color: #186eff;
     position: relative;
 }
-.tabNav li.current:before{
+.tabNav li.current>a:before{
     content: '';
     position: absolute;
     top:50%;
@@ -152,4 +156,50 @@ label>em{
 .customer>p{
     line-height: 30px;
     margin-top: 15px;
+}
+/*我的冷库*/
+.search{
+    margin: 20px 0;
+    height: 40px;
+}
+.oList li{
+    float: left;
+    width: 49%;
+    padding: 10px 15px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: #f8f8f8;
+    margin-bottom: 20px;
+}
+.oList li:nth-child(2n+1){
+    margin-right: 2%;
+}
+.oImg{
+    width: 25%;
+    height: 80px;
+    overflow: hidden;
+}
+.oTxt{
+    margin-left: 5%;
+    width: 70%;
+}
+.oTxt h4,
+.oTxt p{
+    font-size: 12px;
+    margin: 5px 0;
+}
+.oTxt h4>i{
+    font-size: 14px;
+}
+.oTxt button{
+    padding:0;
+}
+.oTxt button>a{
+    display: block;
+    color: #fff;
+    padding:0 8px;
+}
+.page{
+    text-align: center;
 }
