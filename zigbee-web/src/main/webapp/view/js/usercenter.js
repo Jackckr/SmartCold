@@ -263,14 +263,14 @@ function search() {//搜索
     getRdcList();
 }
 function deleteRdc(rdcID){//删除
-    var r=confirm("删除冷库？");
+    var r=confirm("删除该条数据？");
     if(r){
         $.ajax({
             type: "POST",
             url: "/i/rdc/deleteByRdcID",
             data: {rdcID:rdcID,uid:window.lkuser.id},
             success: function(data){
-                if(data.status==0){
+                if(data.status == 0){
                     layer.alert('删除成功', {
                         skin: 'layui-layer-molv' //样式类名
                         ,closeBtn: 0
@@ -285,36 +285,53 @@ function deleteRdc(rdcID){//删除
         });
     }
 }
+
 /**
 *
 * 出租求租列表
 *
 * */
-var modalHtml = '<div class="infoModal"><ul id="infoImg" class="infoImg clearfix layer-photos-demo">' +
-    '<li><img src="../img/image0.jpg" alt=""></li>' +
-    '<li><img src="../img/image1.jpg" alt=""></li>' +
-    '<li><img src="../img/image0.jpg" alt=""></li></ul><h3 class="orange">基本信息</h3><ol>' +
-    '<li><div>数量：</div><div>23.00吨</div></li>' +
-    '<li><div>有效期：</div><div>3~6个月</div></li>' +
-    '<li><div>备注：</div><div>快捷方式的客服给会计是大法官客家话</div></li></ol></div>';
-function info() {
-    layer.open({
-        type: 1 //此处以iframe举例
-        , title: '详情'
-        , area: ['60%', '50%']
-        , shadeClose: true
-        , shade: 0.6
-        , maxmin: true
-        , content: modalHtml
-        , btn: ['关闭'] //只是为了演示
-        , yes: function () {
-            layer.closeAll();
+var rentDate=['','1个月以下','1~3个月','3~6个月','6~9个月','1年以上','两年以上','三年以上','五年以上'];
+function info(id) {//冷库详情
+    $.get('/i/ShareRdcController/getSEByID.json',{id: id}, function (data) {
+        var obj = data.entity,address='',len=0;
+        obj.files==undefined?len=0:len=obj.files.length;
+        var imglist='<ul id="infoImg" class="infoImg clearfix layer-photos-demo">',i=0;
+        for(i; i<len; i++){
+            imglist = imglist + '<li><img src="'+obj.files[i]+'"></li>'
         }
+        imglist=imglist+'</ul>';
+        if(len==0){imglist=''}
+        obj.typeCode==1?address=obj.address:address=obj.detlAddress;
+        layer.open({
+            type: 1
+            , title: obj.typeText+'详情'
+            , area: ['60%', '50%']
+            , shadeClose: true
+            , shade: 0.6
+            , maxmin: true
+            , content: '<div class="infoModal">'+imglist+'<h3 class="orange">基本信息</h3><ol>' +
+            '<li><div>描述：</div><div>'+address+'</div></li>' +
+            '<li><div>地址：</div><div>'+obj.title+'</div></li>' +
+            '<li><div>电话：</div><div>'+obj.telephone+'</div></li>' +
+            '<li><div>'+obj.typeText+'面积：</div><div>'+obj.sqm+'㎡</div></li>' +
+            '<li><div>单价：</div><div>'+obj.unitPrice+obj.unit+'</div></li>' +
+            '<li><div>有效期：</div><div>'+rentDate[obj.rentdate]+'</div></li>' +
+            '<li><div>开始时间：</div><div>'+obj.validStartTime+'</div></li>' +
+            '<li><div>结束时间：</div><div>'+obj.validEndTime+'</div></li>' +
+            '<li><div>温度类型：</div><div>'+obj.codeLave2+'</div></li>' +
+            '<li><div>经营类型：</div><div>'+obj.codeLave1+'</div></li>' +
+            '<li><div>备注：</div><div>'+obj.note+'</div></li></ol></div>'
+            , btn: ['关闭'] //只是为了演示
+            , yes: function () {
+                layer.closeAll();
+            }
+        });
+        layer.photos({
+            photos: '#infoImg'
+        });
     });
-    layer.photos({
-        photos: '#infoImg'
-    });
-};
+}
 function changePageRent() {
     layui.use(['laypage', 'layer'], function () {
         var laypage = layui.laypage
@@ -346,23 +363,63 @@ function getRentList() {
             pageSize: 10,
             keyword: $(".rdcSearch input").val().trim()
         }, function (data) {
-            pagination.pageCount = data.totalPages;
-            if (pagination.pageCount == -1 || pagination.oldPageCount != pagination.pageCount) {
-                changePageRent();
+            if(data.success){
+                pagination.pageCount = data.totalPages;
+                if (pagination.pageCount == -1 || pagination.oldPageCount != pagination.pageCount) {
+                    changePageRent();
+                }
+                var rent = data.data;
+                $.each(rent, function (index, item) {
+                    rentList.push('<li><div class="oImg fl"><img src="'+item.logo + '" alt="图片跑丢了~"></div>' +
+                        '<div class="oTxt fl"><h2 class="omg"><a class="blue" onclick="info('+item.id+')">['+item.typeText+']' + item.title + '</a></h2>' +
+                        '<h4 class="omg"><i class="iconfont orange">&#xe61c;</i>' + item.detlAddress + '</h4>' +
+                        '<p class="omg">' + item.updatetime + '</p><div class="txt-right">' +
+                        '<button class="layui-btn layui-btn-normal layui-btn-small"><a onclick="info('+item.id+')">查看</a></button>' +
+                        '<button class="layui-btn layui-btn-small"><a href="javascript:;">修改</a></button>' +
+                        '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteRent('+item.id+')"><a href="javascript:;">删除</a></button></div></div></li>')
+                });
+                $("#rentList").empty().append(rentList.join(''));
+            }else{
+                layer.alert(data.message, {
+                    icon:6,
+                    skin: 'layui-layer-molv' //样式类名
+                    ,closeBtn: 0
+                }, function(index){
+                    sessionStorage.clear();
+                    window.location.href='login.html';
+                    layer.close(index);
+                });
             }
-            var rent = data.data;
-            $.each(rent, function (index, item) {
-                rentList.push('<li><div class="oImg fl"><img src="'+item.logo + '" alt="图片跑丢了~"></div>' +
-                    '<div class="oTxt fl"><h2 class="omg"><a class="blue" href="rdcinfo.html?rdcId=' + item.id + '">['+item.typeText+']' + item.title + '</a></h2>' +
-                    '<h4 class="omg"><i class="iconfont orange">&#xe61c;</i>' + item.detlAddress + '</h4>' +
-                    '<p class="omg">' + item.updatetime + '</p><div class="txt-right">' +
-                    '<button class="layui-btn layui-btn-normal layui-btn-small"><a onclick="info('+item+')">查看</a></button>' +
-                    '<button class="layui-btn layui-btn-small"><a href="javascript:;">修改</a></button>' +
-                    '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteRdc('+item.id+')"><a href="javascript:;">删除</a></button></div></div></li>')
-            });
-            $("#rentList").empty().append(rentList.join(''));
         });
 }
+function deleteRent(id){//删除
+    var r=confirm("删除该条数据？");
+    if(r){
+        $.ajax({
+            type: "POST",
+            url: "/i/ShareRdcController/delShareInfoByUid",
+            data: {rdcID:id,uid:window.lkuser.id},
+            success: function(data){
+                if(data.success){
+                    layer.alert('删除成功', {
+                        skin: 'layui-layer-molv' //样式类名
+                        ,closeBtn: 0
+                    }, function(index){
+                        getRdcList();
+                        layer.close(index);
+                    });
+                }else{
+                    layer.alert('删除失败，请稍后重试');
+                }
+            }
+        });
+    }
+}
+/**
+*
+* 出售求购列表
+*
+* */
 layui.use(['jquery', 'form', 'element', ], function () {
     var element = layui.element();
     $ = layui.jquery;
