@@ -51,30 +51,37 @@ function initrdclist(){
 	$('#addstorageShareInfodialog').dialog('open');
 }
 function add_storageSharinfo(){
-	 var vo ={}, formdata = new FormData(),input = $("input[type='file']"), parnArray = $("#addstorageForm").serializeArray();
-     $.each(input,function(index,item){  for (var i = 0; i < item.files.length; i++) { formdata.append('fileData['+i+']',item.files[0]); }});
-     $.each(parnArray,function(index,item){  vo[item.name] = item.value; });
-     if(vo.rdcId!=slrdc.id){ $.messager.alert('错误', '请选择完整的冷库信息！', 'error'); return;}
-     vo.detlAddress=slrdc.address;
-     vo.provinceid=slrdc.provinceid;
-     vo.cityId= slrdc.cityId;
-     vo.uid= slrdc.userId;
-     if(!vo.uid){vo.uid=1;};
-     formdata.append("data",JSON.stringify(vo));
-     $.ajax({
-           url: "../../i/rdcShareInfo/shareFreeRelease",
-           data: formdata,
-           processData: false,
-           contentType: false,
-           type: 'POST',
-           success: function(data){
-        	   $("#addstorageForm").clear();
-        	   $('#addstorageShareInfodialog').dialog('close');
-        	   $.messager.alert('', '删除冷库共享信息失败！', 'error');
-              
-           }
-      });
-	
+    $.ajax({
+        url:"/i/user/getUsernameById",
+        type:"post",
+        data:{userId:slrdc.userId},
+        success:function (data) {
+            var vo ={}, formdata = new FormData(),input = $("input[type='file']"), parnArray = $("#addstorageForm").serializeArray();
+            $.each(input,function(index,item){  for (var i = 0; i < item.files.length; i++) { formdata.append('fileData['+i+']',item.files[0]); }});
+            $.each(parnArray,function(index,item){  vo[item.name] = item.value; });
+            if(vo.rdcId!=slrdc.id){ $.messager.alert('错误', '请选择完整的冷库信息！', 'error'); return;}
+            vo.detlAddress=slrdc.address;
+            vo.provinceid=slrdc.provinceid;
+            vo.cityId= slrdc.cityId;
+            vo.uid= slrdc.userId;
+            if(!vo.uid){vo.uid=1;}
+            vo.username=data;
+            formdata.append("data",JSON.stringify(vo));
+            $.ajax({
+                url: "../../i/rdcShareInfo/shareFreeRelease",
+                data: formdata,
+                processData: false,
+                contentType: false,
+                type: 'POST',
+                success: function(data){
+                    $("#addstorageForm").form('clear');
+                    $('#addstorageShareInfodialog').dialog('close');
+                    $.messager.alert('', '删除冷库共享信息失败！', 'error');
+
+                }
+            });
+        }
+    });
 }
 
 //===================================================================================
@@ -130,12 +137,9 @@ function dl(id) {
 //初始化数据
 $().ready(function() {
     init_table();
-    initrdclist();
     $('#sel_type').combobox({onChange:function(val){ queryParams.type=val;  reloaddata(queryParams);}});
     $('#sel_stauts').combobox({onChange:function(val){ queryParams.stauts=val;  reloaddata(queryParams);}});
     $('#fddata').searchbox({searcher:function(value){queryParams.keyword=value;  reloaddata(queryParams);}});
     $('#sel_rdc_slid').combobox({valueField: 'id',textField: 'name',onSelect:function(record){slrdc=record; }});
     $('#sel_temperType_slid').combobox({valueField: 'id',textField: 'type',onSelect:function(record){this.dataval= record.id}});
-
-    
 });//初始化数据

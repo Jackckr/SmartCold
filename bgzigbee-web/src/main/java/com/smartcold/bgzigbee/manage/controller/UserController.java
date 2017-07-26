@@ -196,4 +196,14 @@ public class UserController extends BaseController {
 		userDao.updateUser(userEntity);
 		return new ResultDto(1,"认证成功！");
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "/getUsernameById")
+	public String getUsernameById(int userId) {
+		UserEntity user = userDao.findUserById(userId);
+		if(user!=null){
+			return user.getUsername();
+		}
+		return "";
+	}
 }

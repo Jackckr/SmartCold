@@ -80,116 +80,47 @@
                 <div class="fl">
                     <label>
                         区域　
-                        <select name="province" id="province">
-                            <option value="">请选择市</option>
-                            <option value="杭州">杭州</option>
-                            <option value="宁波">宁波</option>
-                            <option value="温州">温州</option>
-                            <option value="温州">台州</option>
-                            <option value="温州">绍兴</option>
+                        <select name="province" id="coldProvince">
+
                         </select>
                     </label>
                 </div>
                 <div class="fr">
-                    <input type="text" placeholder="请输入关键词">
-                    <i class="iconfont zoom">&#xe609;</i>
+                    <input id="keyword" type="text" placeholder="请输入关键词">
+                    <i id="search" class="iconfont zoom">&#xe609;</i>
                 </div>
             </div>
             <div class="filterBody">
                 <div class="typeList clearfix">
                     <span class="fl">经营类型:</span>
-                    <ul class="clearfix">
-                        <li type="manage" value="0" class="activeType">不限</li>
-                        <li type="manage" value="1">产地型</li>
-                        <li type="manage" value="2">市场型</li>
-                        <li type="manage" value="3">仓储型</li>
-                        <li type="manage" value="4">配送型</li>
-                        <li type="manage" value="5">生产型</li>
-                        <li type="manage" value="6">中央厨房</li>
-                        <li type="manage" value="7">医药型</li>
-                        <li type="manage" value="8">其他</li>
+                    <ul class="clearfix" id="manageType">
                     </ul>
                 </div>
                 <div class="typeList clearfix">
                     <span class="fl">冷库温度类型:</span>
-                    <ul class="clearfix">
-                        <li type="temp" value="0" class="activeType">不限</li>
-                        <li type="temp" value="1">冷藏库</li>
-                        <li type="temp" value="2">冷冻库</li>
-                        <li type="temp" value="3">超低温库</li>
-                        <li type="temp" value="4">恒温库</li>
-                        <li type="temp" value="5">多温区库</li>
+                    <ul class="clearfix" id="temperType">
                     </ul>
                 </div>
                 <div class="typeList clearfix">
                     <span class="fl">吨位/面积·㎡:</span>
                     <ul class="clearfix">
-                        <li type="temp" value="0" class="activeType">不限</li>
-                        <li value="<1000">1000以下</li>
-                        <li value="1000~3000">1000~3000</li>
-                        <li value="3000~6000">3000~6000</li>
-                        <li value="6000~12000">6000~12000</li>
-                        <li value="12000~20000">12000~20000</li>
-                        <li value=">20000">20000以上</li>
+                        <li type="sqm" value="0" class="activeType">不限</li>
+                        <li type="sqm" value="1">1000以下</li>
+                        <li type="sqm" value="2">1000~3000</li>
+                        <li type="sqm" value="3">3000~6000</li>
+                        <li type="sqm" value="4">6000~12000</li>
+                        <li type="sqm" value="5">12000~20000</li>
+                        <li type="sqm" value="6">20000以上</li>
                     </ul>
                 </div>
             </div>
         </div>
         <!--信息主体-->
-        <div class="msgInfo">
-            <ul class="msgHeader clearfix">
-                <li></li>
-                <li class="msgTitle">冷库信息</li>
-                <li>面积·㎡</li>
-                <li>单价·元/天/㎡</li>
-                <li>温度类型</li>
-                <li>租期</li>
-                <li>操作</li>
-            </ul>
-            <ul class="msgBody clearfix">
-                <li>
-                    <img src="../img/ad4.png" alt="">
-                </li>
-                <li class="msgTitle">
-                    <p>上海闵行三鲁公路冷库出租</p>
-                    <p>
-                        <i class="iconfont">&#xe648;</i>
-                        闵行三鲁公路
-                    </p>
-                </li>
-                <li>36000000.36</li>
-                <li>100.36</li>
-                <li>低温库</li>
-                <li>3~6个月</li>
-                <li>
-                    <button class="look" onclick="info()"><i class="iconfont">&#xe610;</i>查看</button>
-                    <button class="collect" onclick="collection(this)"><i class="iconfont orange">&#xe634;</i>收藏
-                    </button>
-                </li>
-            </ul>
-            <ul class="msgBody clearfix">
-                <li>
-                    <img src="../img/ad4.png" alt="">
-                </li>
-                <li class="msgTitle">
-                    <p>上海闵行三鲁公路冷库出租</p>
-                    <p>
-                        <i class="iconfont">&#xe648;</i>
-                        闵行三鲁公路
-                    </p>
-                </li>
-                <li>36000000.36</li>
-                <li>100.36</li>
-                <li>低温库</li>
-                <li>3~6个月</li>
-                <li>
-                    <button class="look" onclick="info()"><i class="iconfont">&#xe610;</i>查看</button>
-                    <button class="collect" onclick="collection(this)"><i class="iconfont orange">&#xe634;</i>收藏
-                    </button>
-                </li>
-            </ul>
-            <div id="listPage" class="listPage"></div>
+        <div class="msgInfo" id="coldList">
+
+
         </div>
+        <div id="coldPage" class="listPage"></div>
     </div>
     <!--出租求租html end*********************************************************************-->
     <!--出售求购html*********************************************************************-->
@@ -200,13 +131,8 @@
                 <div class="fl">
                     <label>
                         区域　
-                        <select name="province" id="province">
-                            <option value="">请选择市</option>
-                            <option value="杭州">杭州</option>
-                            <option value="宁波">宁波</option>
-                            <option value="温州">温州</option>
-                            <option value="温州">台州</option>
-                            <option value="温州">绍兴</option>
+                        <select name="province" id="goodsProvince">
+
                         </select>
                     </label>
                 </div>
@@ -291,7 +217,7 @@
                     </button>
                 </li>
             </ul>
-            <div id="listPage2" class="listPage"></div>
+            <div id="listPage" class="listPage"></div>
         </div>
     </div>
 </div>
@@ -396,96 +322,6 @@
 <script src="../plugins/jquery-1.12.0.min.js"></script>
 <script src="../plugins/layui.all.js"></script>
 <script src="../js/common.js"></script>
-<script>
-    $(function () {
-        $(".btnGroup button").click(function () {
-            var oIndex = $(this).index();
-            if(oIndex<4){
-                $(this).addClass('active').siblings().removeClass('active');
-                if (oIndex < 2) {
-                    $(".rentToggle").show().siblings('.goodsToggle').hide();//加载出租求租列表
-                    if (oIndex == 0) {
-                        console.log('初始化出租列表');
-                    } else if (oIndex == 1) {
-                        console.log('初始化求租列表');
-                    }
-                } else if(oIndex<4){
-                    $(".goodsToggle").show().siblings('.rentToggle').hide();//加载出售求购列表
-                    if (oIndex == 2) {
-                        console.log('初始化出售列表');
-                    } else if (oIndex == 3) {
-                        console.log('初始化求购列表');
-                    }
-                }
-            }else{
-                console.log('发布共享信息');
-            }
-
-        });
-        $(".typeList li").click(function () {
-            var oIndex = $(this).index();
-            if (oIndex == 0) {//不限
-                $(this).addClass('activeType').siblings('li').removeClass('activeType');
-            } else {
-                $(this).toggleClass('activeType');
-                if ($(this).hasClass('activeType') == false && $(this).siblings('li').hasClass('activeType') == false) {
-                    $(this).parent().children().eq(0).addClass('activeType');
-                } else {
-                    $(this).parent().children().eq(0).removeClass('activeType');
-                }
-            }
-        });
-    });
-    layui.use(['laypage', 'layer'], function () {
-        var laypage = layui.laypage, layer = layui.layer;
-        laypage({
-            cont: 'listPage'
-            , pages: 100
-            , skin: '#1E9FFF'
-        });
-        laypage({
-            cont: 'listPage2'
-            , pages: 100
-            , skin: '#1E9FFF'
-        });
-    });
-    function collection(ops) {
-        var olike = $(ops).children('i');
-        if (olike.hasClass('isLike')) {//已收藏
-            olike.html("&#xe634;");
-            olike.removeClass('isLike');
-        } else {//未收藏
-            olike.html("&#xe637;");
-            olike.addClass('isLike');
-        }
-    }
-    var modalHtml = '<div class="infoModal"><ul id="infoImg" class="infoImg clearfix layer-photos-demo">' +
-        '<li><img src="../img/image0.jpg" alt=""></li>' +
-        '<li><img src="../img/image1.jpg" alt=""></li>' +
-        '<li><img src="../img/image0.jpg" alt=""></li></ul><h3 class="orange">基本信息</h3><ol>' +
-        '<li><div>数量：</div><div>23.00吨</div></li>' +
-        '<li><div>有效期：</div><div>3~6个月</div></li>' +
-        '<li><div>备注：</div><div>快捷方式的客服给会计是大法官客家话</div></li></ol></div>';
-
-    function info() {
-        layer.open({
-            type: 1 //此处以iframe举例
-            , title: '冷库详情'
-            , area: ['60%', '50%']
-            , shadeClose: true
-            , shade: 0.6
-            , maxmin: true
-            , content: modalHtml
-            , btn: ['关闭'] //只是为了演示
-            , yes: function () {
-                layer.closeAll();
-            }
-        });
-        layer.photos({
-            photos: '#infoImg'
-            //,anim:3//0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
-        });
-    }
-</script>
+<script src="../js/rdcmatch.js"></script>
 </body>
 </html>

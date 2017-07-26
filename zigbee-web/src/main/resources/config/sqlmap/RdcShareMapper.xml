@@ -287,6 +287,7 @@
 		s.rentdate,
 		s.username,
 		s.publishunit,
+		s.codeLave2,
 		validStartTime,
 		validEndTime,
 		r.audit,
@@ -306,7 +307,7 @@
 			<if test="provinceid !=null and  provinceid != ''"> and s.provinceid=#{provinceid}</if>
 			<if test="managetype !=null and  managetype != ''"> and s.codeLave1 IN  (${managetype})</if>
 			<if test="storagetempertype !=null and  storagetempertype != ''"> and s.codeLave2 in (${storagetempertype})</if>
-			<if test="goodtype !=null and goodtype!=''">and s.codeLave1=#{goodtype}</if>
+			<if test="goodtype !=null and goodtype!=''">and s.codeLave1 in (${goodtype})</if>
 		</where>
 		GROUP BY
 		s.id

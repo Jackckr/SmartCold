@@ -72,7 +72,7 @@
             <tr><td>备注:</td><td id="share_note"></td></tr>
         </table>
 </div>
-<div id="addstorageShareInfodialog" class="easyui-dialog" title="发布冷库共享信息" style="width:600px;height:400px;min-width: 540px;padding: 10px;" data-options="title:'发布冷库信息',iconCls:'main_share',modal: true,closed: true,width:600,height:180,buttons: [{text:'发布',iconCls:'icon-ok1',handler:add_storageSharinfo},{text:'取消',iconCls:'icon-cancel2',handler:function(){$('#addstorageShareInfodialog').dialog('close');}}]">
+<div id="addstorageShareInfodialog" class="easyui-dialog" title="发布冷库共享信息" style="width:600px;height:400px;min-width: 540px;padding: 10px;" data-options="title:'发布冷库信息',iconCls:'main_share',modal:false,closed:true,width:600,height:180,buttons: [{text:'发布',iconCls:'icon-ok1',handler:add_storageSharinfo},{text:'取消',iconCls:'icon-cancel2',handler:function(){$('#addstorageShareInfodialog').dialog('close');}}]">
     <form id="addstorageForm" class="easyui-form" method="post" data-options="novalidate:true">
             <table>
 	    		<tr>
@@ -80,9 +80,9 @@
 	    			<td>
 	    			    <input type="hidden" name="dataType" value="3"   >
 				        <input type="hidden" name="typeCode" value="1"   >
-				        <input type="hidden" name="typeText" value="租">
-				        <input type="hidden" name="rdcflag"  value="0"     >
-	    			
+				        <input type="hidden" name="typeText" value="出租">
+				        <input type="hidden" name="rdcflag"  value="0" >
+
 	    			 <select id="sel_rdc_slid" name="rdcId" class="easyui-combobox" data-options="valueField:'id', textField:'text', panelHeight:'200'"></select>
 	    			</td>
 	    		</tr>
@@ -93,7 +93,7 @@
 	    		<tr>
 	    			<td>冷库类型:</td>
 	    			<td>
-	    			   <select id="sel_temperType_slid" name="temperType" class="easyui-combobox" data-options="valueField:'id', textField:'text', panelHeight:'200'"></select>
+	    			   <select id="sel_temperType_slid" name="codeLave2" class="easyui-combobox" data-options="valueField:'id', textField:'text', panelHeight:'200'"></select>
 	    			</td>
 	    		</tr>
 	    		<tr>

@@ -64,11 +64,6 @@ function getRdcRentList() {
         $("#rdcRentList").empty().append(rdcRentInfo.join(''));
     }});
 }
-/*进入修改rdc*/
-function updateRdc(rdcId) {
-    window.sessionStorage.submitRdcStatus=1;
-    window.location.href="/view/html/rdcaddcold.html?rdcId="+rdcId;
-}
 /*点击查看实时库温*/
 function realTimeTem(rdcId,rdcName) {
     layer.open({
@@ -131,6 +126,7 @@ function getManageType() {
         index==-1?storageManage.push($(this).val()):storageManage.splice(index,1);
         screenParam.managetype=storageManage.join();
     }
+    screenParam.pageNum=1;
     getRdcRentList();
 }
 /*获得冷库温度类型*/
@@ -143,6 +139,7 @@ function getTempType() {
         index==-1?storageTemp.push($(this).val()):storageTemp.splice(index,1);
         screenParam.storagetempertype=storageTemp.join();
     }
+    screenParam.pageNum=1;
     getRdcRentList();
 }
 /*获得达标冷库*/
@@ -155,6 +152,7 @@ function getTempStandard() {
         index==-1?tempStandard.push($(this).val()):tempStandard.splice(index,1);
         screenParam.istemperaturestandard=tempStandard.join();
     }
+    screenParam.pageNum=1;
     getRdcRentList();
 }
 /*获得冷库认证*/
@@ -169,6 +167,7 @@ function getAudit() {
         screenParam.audit=audit.join();
         if(audit.contains(-2)!=-1){audit.splice(audit.contains(-1),3);}
     }
+    screenParam.pageNum=1;
     getRdcRentList();
 }
 /*获得商品存放类型*/
@@ -181,11 +180,13 @@ function getGoodSave() {
         index==-1?goodSave.push($(this).val()):goodSave.splice(index,1);
         screenParam.goodSaveType=goodSave.join();
     }
+    screenParam.pageNum=1;
     getRdcRentList();
 }
 /*获取关键字*/
 function getKeyword() {
     screenParam.keyword=$("#keyword").val();
+    screenParam.pageNum=1;
     getRdcRentList();
 }
 /*获取冷库总面积*/
