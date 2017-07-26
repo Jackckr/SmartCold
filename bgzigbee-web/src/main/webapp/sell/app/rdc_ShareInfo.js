@@ -57,7 +57,7 @@ function add_storageSharinfo(){
         data:{userId:slrdc.userId},
         success:function (data) {
             var vo ={}, formdata = new FormData(),input = $("input[type='file']"), parnArray = $("#addstorageForm").serializeArray();
-            $.each(input,function(index,item){  for (var i = 0; i < item.files.length; i++) { formdata.append('fileData['+i+']',item.files[0]); }});
+            $.each(input,function(index,item){  for (var i = 0; i < item.files.length; i++) { formdata.append('fileData['+i+']',item.files[i]); }});
             $.each(parnArray,function(index,item){  vo[item.name] = item.value; });
             if(vo.rdcId!=slrdc.id){ $.messager.alert('错误', '请选择完整的冷库信息！', 'error'); return;}
             vo.detlAddress=slrdc.address;
