@@ -7,6 +7,9 @@
     <delete id="delShareInfoById">
         DELETE FROM `shared_info` WHERE `id`=#{id}
     </delete>
+    <delete id="delByRdcId">
+        DELETE FROM `shared_info` WHERE `rdcID`=#{rdcId}
+    </delete>
     <select id="findShareInfo" resultMap="shareInfo">
         SELECT * FROM `shared_info` AS s LEFT JOIN `rdc` AS r  ON s.`rdcID`=r.`id`
         <where>

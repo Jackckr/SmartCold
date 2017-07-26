@@ -6,7 +6,10 @@
     <delete id="delShareInfoByid" parameterType="int">
        DELETE from shared_info  where id=${id} and releaseID=${uid};
     </delete>
-    <!--     获得睿库信息 -->
+	<delete id="delByRdcId">
+		DELETE FROM `shared_info` WHERE `rdcID`=#{rdcId}
+	</delete>
+	<!--     获得睿库信息 -->
 	<select id="getRdcList" parameterType="map" resultType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
 	      select  r.sqm rdcSqm,  r.id rdcID, t.managetype codeLave1, r.name,r.provinceid,r.cityid, r.address, r.audit from rdc r LEFT JOIN rdcext t on t.RDCID=r.id where 1=1
 	      <if test="rdcId==null or rdcId==0">
@@ -286,17 +289,23 @@
 		s.publishunit,
 		validStartTime,
 		validEndTime,
+		r.audit,
+		r.istemperaturestandard,
+		r.address,
+		r.name,
+		r.coldtype,
+		r.sqm rdcSqm,
+		r.infoIntegrity,
 		(SELECT location FROM filedata f WHERE f.belongid = s.id AND f.category ='sharePic' ORDER BY id DESC LIMIT 1 ) as logo
 		FROM
-		shared_info s
+		shared_info s LEFT JOIN `rdc` r ON r.`id`=s.`rdcID`
 		<where>
+			s.dataType=#{dataType} and s.typeCode=#{typeCode}
 			<if test="sqm !=null and  sqm != ''"> and ${sqm} </if>
 			<if test="keyword !=null and  keyword != ''"> and s.title like '%${keyword}%' </if>
 			<if test="provinceid !=null and  provinceid != ''"> and s.provinceid=#{provinceid}</if>
 			<if test="managetype !=null and  managetype != ''"> and s.codeLave1 IN  (${managetype})</if>
 			<if test="storagetempertype !=null and  storagetempertype != ''"> and s.codeLave2 in (${storagetempertype})</if>
-			<if test="dataType != null and dataType!=''">and s.dataType=#{dataType}</if>
-			<if test="typeCode !=null and typeCode!=''">and s.typeCode=#{typeCode}</if>
 			<if test="goodtype !=null and goodtype!=''">and s.codeLave1=#{goodtype}</if>
 		</where>
 		GROUP BY

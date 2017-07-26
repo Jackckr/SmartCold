@@ -18,6 +18,8 @@ public interface RdcShareInfoMapper {
 
     public void delShareInfoById(Integer id);
     
+    int delByRdcId(int rdcId);
+    
     /**
 	   * 更新发布消息
 	   * @param rdcShareDTO
@@ -32,4 +34,6 @@ public interface RdcShareInfoMapper {
 	 public int updateshareInfo(RdcShareDTO rdcShareDTO);
 	 
 	 public  List<RdcSharedInfoEntity> findShareInfo(@Param("type") String type,@Param("stauts") String stauts,@Param("keyword")String keyword,@Param("startTime") Date sTime,@Param("endTime") Date eTime);
+
+   
 }

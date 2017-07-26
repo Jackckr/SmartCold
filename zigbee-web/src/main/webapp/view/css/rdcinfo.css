@@ -84,6 +84,15 @@
 /*
 *添加冷库
 **/
+.section>h1.orange{
+    font-size: 16px;
+}
+.section>h1.orange>button{
+    font-size: 14px;
+}
+.section>h1.orange i{
+    margin-right:8px;
+}
 .rdcAdd table,.rdcAdd table caption{
     width: 100%;
     position: relative;
@@ -96,6 +105,7 @@
     min-width:200px;
     vertical-align: top;
     text-align: right;
+    line-height: 36px;
 }
 .rdcAdd table caption{
     text-align: center;
@@ -127,6 +137,11 @@
     margin: 0;
     padding:0;
     height: initial;
+}
+.rdcImg label>.numInput{
+    width: 100%;
+    padding: 0 15px;
+    height: 38px;
 }
 /*文字+输入框*/
 .oInline{
@@ -217,3 +232,40 @@
 /*
 *添加冷库end
 **/
+/*
+*需求匹配发布
+*/
+.rdcList ul{
+    border-bottom: 8px solid #f7f7f7;
+}
+.rdcList ul > li{
+    float: left;
+    width: 10%;
+    line-height: 58px;
+    margin: 8px 0;
+}
+.rdcList ul > li:nth-child(2),
+.rdcList ul > li:nth-child(3){
+    width: 40%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+}
+.rdcList ul > li>img{
+    width:80px;
+    height: 60px;
+}
+.noRdc h1{
+    margin: 30px 0;
+}
+.infoImg{
+    width: 100%;
+    overflow: hidden;
+    margin: 8px 0;
+}
+.infoImg li{
+    float: left;
+    width: 30%;
+    margin-right:3%;
+}

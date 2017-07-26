@@ -668,6 +668,8 @@ em{
 .newsTitle{
 	font-size: 0.7rem;
 	line-height: 1.525;
+	padding-left: 3px;
+	text-align: center;
 	overflow : hidden;
     text-overflow: ellipsis;
   	display: -webkit-box;

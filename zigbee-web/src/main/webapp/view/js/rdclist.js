@@ -46,22 +46,15 @@ function getRdcRentList() {
             rdcRentInfo.push('<li><div class="rdcImg"><a href="rdcinfo.html?rdcId='+rdcRent.id+'"><img src="'+rdcRent.logo+'" alt=""></a>');
             if(rdcRent.istemperaturestandard==1){rdcRentInfo.push('<i>温度达标冷库</i>');}
             rdcRentInfo.push('</div><div class="rdcInfo"><div class="rdcTxt clearfix"><span class="rdcName omg fl"><a href="rdcinfo.html?rdcId='+rdcRent.id+'">'+rdcRent.name+'</a></span><span class="infoPercenty fl">信息完整度:<b>'+rdcRent.infoIntegrity+'%</b></span><ul class="stars clearfix fl">');
-            for(var i=0;i<5;i++){
-                if(i<rdcRent.rdcscore){
-                    rdcRentInfo.push('<li><i class="iconfont">&#xe60c;</i></li>');
-                }else {
-                    rdcRentInfo.push('<li><i class="iconfont">&#xe604;</i></li>');
-                }
-            }
             rdcRentInfo.push('</ul></div><div class="rdcApprove">');
             rdcRent.audit==2?rdcRentInfo.push('<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>'):rdcRentInfo.push('<b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>');
             if(rdcRent.istemperaturestandard==1){rdcRentInfo.push('<b class="reachStand"><i class="iconfont">&#xe6e9;</i>冷链委温度达标库</b>');}
             rdcRentInfo.push(' <a onclick="realTimeTem('+rdcRent.id+',\''+rdcRent.name+'\')">点击可查看实时库温</a></div><div class="rdcArea"><span>总面积'+rdcRent.sqm+'㎡</span>|<span>'+tempTypeStr+'</span><span>'+manageTypeStr+'</span></div><div class="rdcPosition"><b><i class="iconfont">&#xe648;</i>'+rdcRent.address+'</b></div></div><div class="rdcPrice">');
-            var collectWords='<button class="collect" onclick="collection(this,'+rdcRent.id+')"><i class="iconfont orange">&#xe634;</i>收藏</button>';
+            var collectWords='<button class="collect" onclick="collection(this,'+rdcRent.id+')"><i class="iconfont orange">&#xe634;</i><em>收藏</em></button>';
             for(var j=0;j<rdcRent.collectUserIds.length;j++){
                if(window.lkuser){
                    if(rdcRent.collectUserIds[j]==window.lkuser.id){
-                       collectWords='<button class="collect" onclick="collection(this,'+rdcRent.id+')"><i class="iconfont orange isLike">&#xe637;</i>已收藏</button>';
+                       collectWords='<button class="collect" onclick="collection(this,'+rdcRent.id+')"><i class="iconfont orange isLike">&#xe637;</i><em>已收藏</em></button>';
                    }
                }
             }
@@ -250,6 +243,7 @@ function collection(mark,id) {
         });
         olike.html("&#xe634;");
         olike.removeClass('isLike');
+        $(mark).children('em').html('收藏');
     }else {//未收藏
         $.ajax({
             url:"/i/collect/addCollectRdc",
@@ -258,6 +252,7 @@ function collection(mark,id) {
         });
         olike.html("&#xe637;");
         olike.addClass('isLike');
+        $(mark).children('em').html('已收藏');
     }
 }
 $(function () {
@@ -273,35 +268,5 @@ $(function () {
     $("#search").bind('click',getKeyword);
     $("#keyword").keydown(function () {if(event.keyCode == "13") {getKeyword();}});
     $("li[type=rdcSqm]").bind('click',getRdcSqm);
-    var counts=0;
-    var mytimer;
-    var myclone=$('.lists ul li:lt(4)').clone(true);
-    $('.lists ul').append(myclone)
-    function mynext(){
-        counts++;
-        if (counts>4) {
-            $('.lists ul').css('left', 0);
-            counts=1;
-        };
-        var moves=counts*-1200;
-        $('.lists ul').stop().animate({'left': moves}, 300)
-    }
-    $('.adbanner .right').click(mynext);
-    mytimer=setInterval(mynext,4000);
-    $('.lists').hover(function() {
-        clearInterval(mytimer);
-    }, function() {
-        clearInterval(mytimer);
-        mytimer=setInterval(mynext,4800);
-    });
-    $('.adbanner .left').click(function(){
-        counts--;
-        if (counts<0) {
-            $('.lists ul').css('left', -4800);
-            counts=3;
-        };
-        var moves=counts*-1200;
-        $('.lists ul').stop().animate({'left': moves},300)
-    })
 });
 

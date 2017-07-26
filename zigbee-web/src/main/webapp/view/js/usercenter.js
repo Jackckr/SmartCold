@@ -197,7 +197,7 @@ function saveUser() {
         contentType: false,
         success: function (data) {
             layer.open({content: "保存成功！", btn: '确定',yes:function () {
-                flushUser(window.lkuser.id);
+                //flushUser (window.lkuser.id);
                 window.location.reload();
             }});
         }
@@ -209,7 +209,7 @@ layui.use(['jquery', 'form'], function () {
     $form = $('form');
     checkLogin(1, getProvinceList);
     $("#reset").bind("click", function () {
-        location.reload();
+        //location.reload();
         initForm();
     });
 });

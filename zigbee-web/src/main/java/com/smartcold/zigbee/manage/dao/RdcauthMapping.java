@@ -23,4 +23,6 @@ public interface RdcauthMapping {
     List<RdcAuthEntity> selAuditRdcId(@Param("rdcId") int rdcId,@Param("userId") int userId);
     /*通过冷库id查询该冷库申请的达标认证*/
     List<RdcAuthEntity> selStandRdcId(int rdcId);
+    /*通过rdcId删除相关认证消息*/
+    int delByRdcId(int rdcId);
 }

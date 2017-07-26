@@ -86,4 +86,6 @@ public interface RdcShareMapper {
 	 Page<RdcShareDTO> getNewSERDCListByPage(Map<String, Object> parameters);
 
 	 SharedInfoEntity getSharedInfoEntity(int rdcId);
+
+	 int delByRdcId(int rdcId);
 }

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>链库-出租冷库</title>
+    <meta charset="utf-8" name="keywords" content="链库,冷链物流,冷库360,冷库监控,冷库智能管理,冷库能效评估"/>
+    <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
+    <link rel="shortcut icon" href="../img/favicon.ico" />
+    <!--引入样式包-->
+    <link rel="stylesheet" href="../plugins/css/layui.css"/>
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/rdcinfo.css" />
+    <link rel="stylesheet" href="../css/media.css" />
+</head>
+<body>
+<!--=============================header 导航栏========================-->
+<div class="header">
+    <div class="hotLine">
+        <h2 class="fl">全国最大的冷库数据与交易平台</h2>
+        <div class="fr">
+            <span>客服热线：<span class="orange">400-853-5606</span></span>
+            <a href="#QRcode">
+                APP下载<i class="iconfont orange">&#xe642;</i>
+            </a>
+        </div>
+    </div>
+    <div class="nav">
+        <h1 class="fl"><a href="liankur.com">找冷库&nbsp;&nbsp;上链库</a></h1>
+        <ul id="noLoginUser" class="fr navLogin">
+            <li><a href="login.html"><i class="iconfont">&#xe715;</i>&nbsp;登录</a></li>
+            <li><a href="register.html"><i class="iconfont">&#xe60f;</i>&nbsp;注册</a></li>
+        </ul>
+        <div id="loginUser" class="fr">
+            <div class="nameDiv">
+                <img src="" onclick="window.location.href='usercenter.html'">
+            </div>
+            <dl class="hide">
+                <li><a href="usercenter.html">个人中心</a></li>
+                <li><a onclick="logout()">退出</a></li>
+            </dl>
+        </div>
+        <div class="navSmall fr"><!--小屏幕显示-->
+            <span><i class="iconfont">&#xe62d;</i></span>
+            <ul class="navUlList">
+                <li><a href="../../index.htm">首　　页</a></li>
+                <li><a href="rdclist.html">冷库商情</a></li>
+                <li><a href="rdcprice.html">冷库价格</a></li>
+                <li><a href="rdcmatch.html">需求匹配</a></li>
+                <li><a href="rdctrace.html">温度追溯</a></li>
+                <li><a href="http://www.smartcold.org.cn/">冷库360</a></li>
+                <li><a href="rdccooperation.html">企业专区</a></li>
+            </ul>
+        </div>
+        <ul class="fr navUl">
+            <li><a href="../../index.htm">首　　页</a></li>
+            <li><a href="rdclist.html">冷库商情</a></li>
+            <li><a href="rdcprice.html">冷库价格</a></li>
+            <li><a href="rdcmatch.html">需求匹配</a></li>
+            <li><a href="rdctrace.html">温度追溯</a></li>
+            <li><a href="http://www.smartcold.org.cn/">冷库360</a></li>
+            <li><a href="rdccooperation.html">企业专区</a></li>
+        </ul>
+    </div>
+</div>
+<div class="section aboutRdc">
+    <h1 class="orange" ><i class="iconfont">&#xe659;</i><b>发布出租冷库</b></h1>
+    <hr>
+    <div class="rentRdc">
+        <!--有关联库-->
+        <div class="rdcList">
+            <ul class="clearfix">
+                <li>
+                    <img src="../img/ad3.png" alt="">
+                </li>
+                <li>
+                    上海长宁天山路冷库
+                </li>
+                <li>
+                    <i class="iconfont orange">&#xe61c;</i>天山路600号捷运大厦
+                </li>
+                <li>
+                    <button class="oBtn" onclick="aboutRdcRelease()">发布</button>
+                </li>
+            </ul>
+            <ul class="clearfix">
+                <li>
+                    <img src="../img/ad1.png" alt="">
+                </li>
+                <li>
+                    合肥众萃RDC
+                </li>
+                <li>
+                    <i class="iconfont orange">&#xe61c;</i>长江中路366号
+                </li>
+                <li>
+                    <button class="oBtn" onclick="aboutRdcRelease()">发布</button>
+                </li>
+            </ul>
+        </div>
+        <!--没有库，去添加冷库-->
+        <div class="noRdc hide">
+            <h1 class="txt-center">您还没有关联冷库，去创建自己的冷库吧~</h1>
+            <div class="txt-center"><button class="oBtn" onclick="location.href='rdcaddcold.html'">添加冷库</button></div>
+        </div>
+    </div>
+</div>
+<div class="section rdcAdd hide">
+    <form id="submitRdc" onsubmit="return false">
+        <p>
+            上海长宁天山路冷库
+            <span><i class="iconfont orange">&#xe61c;</i>天山路600号捷运大厦</span>
+        </p>
+        <ul class="infoImg clearfix" id="infoImg">
+            <li><img src="../img/image0.jpg" alt=""></li>
+            <li><img src="../img/image1.jpg" alt=""></li>
+            <li><img src="../img/image0.jpg" alt=""></li>
+        </ul>
+        <table>
+            <tbody>
+            <tr>
+                <td>描述：<b class="blue">*</b></td>
+                <td><input type="text" name="name" id="name" placeholder="出租冷库描述（6~24个字符）" ></td>
+            </tr>
+            <tr>
+                <td>温度类型：<b class="blue">*</b></td>
+                <td>
+                    <select name="temperType" id="temperType"  placeholder="可多选" >
+                        <option value="低温库">低温库</option>
+                        <option value="高温库">高温库</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>可出租面积：<b class="blue">*</b></td>
+                <td><input name="rentSqm" type="number" step="0.01" placeholder="只能输数字/㎡,没有填写0" ></td>
+            </tr>
+            <tr>
+                <td>单价：<b class="blue">*</b></td>
+                <td><input name="rentSqm" type="number" step="0.01" placeholder="元/天（填0为面议）"></td>
+            </tr>
+            <tr>
+                <td>租期：<b class="blue">*</b></td>
+                <td>
+                    <select name="date">
+                        <option value="1-3个月">1-3个月</option>
+                        <option value="3-6个月">3-6个月</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>有效开始时间：<b class="blue">*</b></td>
+                <td>
+                    <input type="text" name="date" lay-verify="date" placeholder="yyyy-mm-dd" readonly
+                           autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})">
+                </td>
+            </tr>
+            <tr>
+                <td>有效结束时间：<b class="blue">*</b></td>
+                <td>
+                    <input type="text" name="date" lay-verify="date" placeholder="yyyy-mm-dd" readonly
+                           autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})">
+                </td>
+            </tr>
+            <tr>
+                <td>联系电话：<b class="blue">*</b></td>
+                <td><input type="tel" placeholder="请输入联系电话" name="phoneNum" id="phoneNum"></td>
+            </tr>
+            <tr>
+                <td>备注：</td>
+                <td>
+                    <textarea placeholder="备注" name="remark" id="remark"></textarea>
+                </td>
+            </tr>
+            <!--上传图片-->
+            <tr>
+                <td>冷库图片：</td>
+                <td class="rdcImg">
+                    <a href="javascript:;" class="ofile">
+                        <input type="file" id="storageFile"
+                               accept="image/gif, image/bmp, image/jpg, image/jpeg, image/png" multiple>上传图片</a>
+                    <span>最多10张(上传冷库实体图片，图片每张小于10M)</span>
+                </td>
+            </tr>
+            <tr class="imgTd">
+                <td colspan="2">
+                    <ul class="clearfix" id="storagePics">
+                    </ul>
+                </td>
+            </tr>
+            <!--上传图片end-->
+            </tbody>
+            <!--以上为必填项====================================================================-->
+            <tfoot>
+                 <tr id="submitButton"><td colspan="2"><button class="oBtn">提交</button></td></tr>
+            </tfoot>
+        </table>
+    </form>
+
+</div>
+<!--===========================版权区域===============================-->
+<div class="footer" id="QRcode">
+    <dl class="clearfix">
+        <li class="fl">
+            <p>©2016 Smartcold    沪ICP备 16004753</p>
+            <p>为了您可以获取更佳的浏览效果</p>
+            <p>本站推荐使用
+                <a href="http://sw.bos.baidu.com/sw-search-sp/software/ba34c905dbdd4/ChromeStandalone_57.0.2987.98_Setup.exe">谷歌浏览器
+                </a>、<a href="http://sw.bos.baidu.com/sw-search-sp/software/4cee66da4242e/Firefox_52.0.1.6284_setup.exe">火狐浏览器
+                </a>或者<a href="http://down.360safe.com/se/360se8.1.1.250.exe">360浏览器极速模式</a>
+            </p>
+        </li>
+        <li class="fr">
+            <div class="codeImg">
+                <img src="../img/ios.png" alt="开小差了~~~">
+                <p>iPhone下载</p>
+            </div>
+            <div class="codeImg">
+
+                <img src="../img/android.png" alt="开小差了~~~">
+                <p>Android下载</p>
+            </div>
+            <div class="codeImg">
+                <img src="../img/weixin_lianku.jpg" alt="开小差了~~~">
+                <p>链库公众号</p>
+            </div>
+        </li>
+    </dl>
+</div>
+<script src="../plugins/jquery-1.12.0.min.js"></script>
+<script src="../plugins/layui.all.js"></script>
+<script src="../js/common.js"></script>
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function() {
+        var form = layui.form() , layer = layui.layer , laydate = layui.laydate;
+        layer.photos({
+            photos: '#infoImg'
+            //,anim:3//0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+        });
+    });
+    function aboutRdcRelease(){
+        $('.aboutRdc').children('.rentRdc').hide().parent('.aboutRdc').siblings('.rdcAdd').show();
+    }
+
+</script>
+</body>
+</html>

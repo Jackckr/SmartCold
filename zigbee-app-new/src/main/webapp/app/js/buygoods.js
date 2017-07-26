@@ -78,7 +78,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
             return false
         }
         if(checkGoodsSubmit()){
-            if($scope.sqm.toString().length > 11){
+            if($scope.title.length<6||$scope.title.length>24){
+                layer.open({content: '描述文字长度范围是6~24位，请检查~', btn: '确定'});
+                return;
+            }else if($scope.sqm.toString().length > 11){
                 layer.open({content:'数量不合法哦~',btn: '确定'});return;
             }else if($scope.unitprice == undefined || $scope.unitprice == null || $scope.unitprice == ""){
                 $scope.unitprice = "";

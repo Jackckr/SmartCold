@@ -9,7 +9,6 @@
     padding: 0;
 }
 .adbanner{
-    padding: 30px 5%;
     position: relative;
 }
 .lists{
@@ -27,13 +26,11 @@
 }
 .lists ul li{
     float: left;
-    width: 300px;
-    padding:0 10px;
-    margin-right: 1px;
+    width: 200px;
+    padding: 0 5px;
 }
 .lists ul li a{
-    border:1px solid #f9f9fb;
-    padding: 3px;
+    border:1px solid #eee;
     display: inline-block;
     transition: all 1s;
 }
@@ -41,15 +38,13 @@
     border-color: #ff4400;
 }
 .adbanner i{
-    width: 26px;
-    height: 62px;
+    height: 150px;
     position: absolute;
-    top: 50%;
-    margin-top: -31px;
+    top: 0;
     color: #cccccc;
     text-align: center;;
-    font-size: 24px;
-    line-height: 62px;
+    font-size: 3em;
+    line-height: 190px;
     cursor: pointer;
 }
 i.left{left: 20px;}
@@ -91,7 +86,7 @@ i.right{right: 20px;}
     background-color: #fbfbfb;
     border-top: 2px solid #186eff;
     position: relative;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
 }
 .typeList{
     padding: 8px 0;
@@ -101,6 +96,7 @@ i.right{right: 20px;}
     width: 120px;
     text-align: right;
     padding: 3px 15px ;
+    margin: 5px 10px 5px 0;
 }
 .typeList ul{
     padding-left: 150px;

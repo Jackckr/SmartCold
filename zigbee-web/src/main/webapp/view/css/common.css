@@ -11,16 +11,16 @@ body{font: 14px Microsoft YaHei, HELVETICA, sans-serif, Arial, Tahoma; color: #6
 em, i{font-style: normal;}
 strong{font-weight: normal;}
 input[type='text'],input[type='number'],input[type='tel'],input[type='email'],textarea,select{width: 100%;padding: 0 15px;height: 38px;font-size: 14px; line-height: 1.42857143; color: #656565; background-color: #fff;
-    background-image: none; border: 1px solid #ccc; border-radius: 4px; }
+    background-image: none; border: 1px solid #ccc; border-radius: 4px;resize: vertical; }
 a{cursor: pointer;text-decoration: none; color: #4F4F4F; font-family: Microsoft YaHei,HELVETICA, sans-serif,Tahoma, Arial;}
-a:hover{color: #2763cc; text-decoration: none;}
+a:hover{color: #186efe; text-decoration: none;}
 a:active{color: #656565;}
 table{border: solid 1px #e8eef4; border-collapse: collapse;}
 table td{padding: 5px; border: solid 1px #e8eef4;}
 table th{padding: 6px 5px; text-align: left; background-color: #e8eef4; border: solid 1px #e8eef4;}
 ul, ol,dl,li{list-style: none;}
 h1, h2, h3, h4, h5, h6{font-size: 100%; font-family: Microsoft YaHei,HELVETICA,sans-serif,Tahoma, Arial;}
-img{border: none;width: 100%;height: 100%;}
+img{border: none;width: 100%;height: 100%;vertical-align: middle;}
 /* 设置HTML5元素为块 */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block;  }
 

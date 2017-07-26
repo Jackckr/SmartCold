@@ -192,7 +192,6 @@
         r.infoIntegrity,
         st.type tempTypeStr,
         sm.type manageTypeStr,
-        t.rdcscore,
         (SELECT location FROM filedata f WHERE f.belongid = r.id AND f.category='storagePic' ORDER BY id DESC LIMIT 1 ) as logo
         FROM
         rdc r

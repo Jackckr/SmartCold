@@ -106,7 +106,7 @@ $().ready(function () {
                 $("#ul_mtty_list").append(mtlist.join(""));
                 $("#ul_stty_list").append(stlist.join(""));
 //  					 $("#filter_section li").click(function(event) {addfilter(this);});
-                $("#ul_mtty_list li,#ul_stty_list li,#ul_sqm_list li").click(function (event) {
+                $("#ul_mtty_list li,#ul_stty_list li,#ul_sqm_list li,#ulApprove li").click(function (event) {
                     addfilter(this);
                 });
             }
@@ -114,12 +114,13 @@ $().ready(function () {
     };
     getFilter = function (pageNum, pageSize) {
         var sqm = $("#ul_sqm_list li.active").attr("value");//面积
-
+        var audit = $("#ulApprove li.active").attr("value");//认证
+        audit==-2?audit='-2,-1,0,1':audit;
         var smty = $("#ul_stty_list li.active").attr("value");//温度
         var sety = $("#ul_mtty_list li.active").attr("value");//经营类型
         var adds = $("#ul_address_list li.active").attr("value");////地区
         var keyword = $("#searchDara_div input").val().trim();////关键字搜索
-        var _options = {sqm: sqm, storagetempertype: smty, managetype: sety, provinceid: adds, keyword: keyword};
+        var _options = {sqm: sqm, storagetempertype: smty, managetype: sety,audit:audit, provinceid: adds, keyword: keyword};
         var _filter = {pageNum: pageNum, pageSize: pageSize};
         jQuery.extend(_filter, _options);
         return _filter;

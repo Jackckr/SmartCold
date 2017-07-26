@@ -7,4 +7,7 @@
     <delete id="delVipByUid">
         DELETE FROM `rdcauth` WHERE `uid`=#{userId} and (`type`=3 or `type`=4) and `ishandle`=1
     </delete>
+    <delete id="delByRdcId">
+        DELETE FROM `shared_info` WHERE `rdcID`=#{rdcId}
+    </delete>
 </mapper>

@@ -421,22 +421,13 @@ public class ShareRdcController  {
 		filter.put("goodtype", goodtype);
 		PageInfo<RdcShareDTO> data = this.rdcShareService.newGetSERDCList(pageNum, pageSize, filter);
 		for (RdcShareDTO rdcShareDTO:data.getList()){
-			RdcEntity rdc = rdcMapper.getById(rdcShareDTO.getRdcID());
-			if(rdc!=null){
-				rdcShareDTO.setAudit(rdc.getAudit());
-				rdcShareDTO.setIstemperaturestandard(rdc.getIstemperaturestandard());
-				rdcShareDTO.setAddress(rdc.getAddress());
-				rdcShareDTO.setName(rdc.getName());
-				rdcShareDTO.setColdtype(rdc.getColdtype());
-				rdcShareDTO.setRdcSqm(rdc.getSqm()+"");
-				rdcShareDTO.setInfoIntegrity(rdc.getInfoIntegrity());
-				if(StringUtil.isnotNull(rdcShareDTO.getCodeLave2())){
-					rdcShareDTO.setCodeLave2(storageTemperTypeMapper.findTypeById(Integer.parseInt(rdcShareDTO.getCodeLave2())));
-				}
-				if(StringUtil.isnotNull(rdcShareDTO.getCodeLave1())){
-					rdcShareDTO.setCodeLave1(storageManageTypeMapper.getTypeById(Integer.parseInt(rdcShareDTO.getCodeLave1())));
-				}
+			if(StringUtil.isnotNull(rdcShareDTO.getCodeLave2())){
+				rdcShareDTO.setCodeLave2(storageTemperTypeMapper.findTypeById(Integer.parseInt(rdcShareDTO.getCodeLave2())));
 			}
+			if(StringUtil.isnotNull(rdcShareDTO.getCodeLave1())){
+				rdcShareDTO.setCodeLave1(storageManageTypeMapper.getTypeById(Integer.parseInt(rdcShareDTO.getCodeLave1())));
+			}
+
 		}
 		return ResponseData.newSuccess(data);
 	}
