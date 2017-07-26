@@ -76,7 +76,7 @@ function add_storageSharinfo(){
                 success: function(data){
                     $("#addstorageForm").form('clear');
                     $('#addstorageShareInfodialog').dialog('close');
-                    $.messager.alert('', '删除冷库共享信息失败！', 'error');
+                    $.messager.alert('', '发布成功！', 'info');
 
                 }
             });
