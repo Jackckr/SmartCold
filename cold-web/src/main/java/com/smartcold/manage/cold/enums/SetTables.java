@@ -11,6 +11,8 @@ public enum SetTables {
 
 	TEMPE(18, "tempset", "温度"),
 	
+	HUMIDITY(19, "tempset", "湿度"),
+	
 	DOORSET(2, "coldstoragedoorset", "冷库门"),
 
 	COMPRESSORGROUPSET(3, "compressorgroupset", "压缩机组"),

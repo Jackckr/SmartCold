@@ -15,6 +15,9 @@ public interface RdcMapper {
 	List<RdcEntity> findRDCByRDCId(@Param("rdcID") int rdcID);
 	
 	List<HashMap<String,Object>> getRdcByName(@Param("keyword")String keyword);
+	
+	
+	List<HashMap<String,Object>> findRdcListbyName(@Param("keyword")String keyword,@Param("row")int row);
 
 	int insertRdc(RdcEntity rdc);
 

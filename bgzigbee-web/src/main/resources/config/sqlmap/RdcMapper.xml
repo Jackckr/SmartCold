@@ -7,6 +7,10 @@
        SELECT `id`,`name` text FROM  `rdc`   where
        <if test="keyword != null">  (name like "%"#{keyword}"%" or id like "%"#{keyword}"%") AND </if>   id in (SELECT `rdcid`  FROM `sc360`.deviceobjectmapping GROUP BY `rdcid` )  LIMIT 20;
    </select>
+    <select id="findRdcListbyName" parameterType="map" resultType="map">
+       SELECT `id`,`name` text FROM  `rdc`   
+       <if test="keyword != null and keyword != ''"> where (name like "%"#{keyword}"%" or id like "%"#{keyword}"%") </if>  LIMIT #{row};
+   </select>
     
 
     <select id="findRdcList" parameterType="int" resultType="com.smartcold.bgzigbee.manage.entity.RdcEntity">

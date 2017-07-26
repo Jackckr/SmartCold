@@ -47,10 +47,9 @@ import com.smartcold.bgzigbee.manage.service.RdcService;
 @Controller
 @RequestMapping(value = "/rdc")
 public class RdcController {
-	private static final Logger log = LoggerFactory.getLogger(RdcController.class);
 	private static String baseDir = "picture";
 
-	private Gson gson = new Gson();
+	
 
 	@Autowired
 	private RdcMapper rdcDao;
@@ -111,16 +110,24 @@ public class RdcController {
 	private OperationLogMapper operationLogMapper;
 	@Autowired
 	private RdcAuthMapper rdcAuthMapper;
-//	private static HashMap<String , Object> cache=new HashMap<String, Object>();
+	
+	private Gson gson = new Gson();
+	
+	private static final Logger log = LoggerFactory.getLogger(RdcController.class);
+
 
 	
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findRdcList() {
-//		if(cache.containsKey("findRdcList")){return cache.get("findRdcList");}
 		 List<RdcEntity> findRdcList = rdcService.findRdcList();
-//		 cache.put("findRdcList", findRdcList);
 		 return findRdcList;
+	}
+	
+	@RequestMapping(value = "/findRdcBykeyword", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findRdcBykeyword(String  keyword) {
+		return rdcDao.findRdcListbyName(keyword,10);
 	}
 
 	@RequestMapping(value = "/getRdcDTOByPage", method = RequestMethod.POST)

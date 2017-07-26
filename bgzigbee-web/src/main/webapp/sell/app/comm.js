@@ -1,4 +1,4 @@
-﻿if(!window.sessionStorage.asikey||parent==null||parent.sysuser==undefined||parent.sysuser.token==undefined){ $.messager.alert('警告','当前会话已失效！请重新登录！','error');parent.sysuser=undefined;window.sessionStorage.clear(); window.location.href = window.location.host+"/login.htm"; }else{sysuser=parent.sysuser;}
+﻿//if(!window.sessionStorage.asikey||parent==null||parent.sysuser==undefined||parent.sysuser.token==undefined){ $.messager.alert('警告','当前会话已失效！请重新登录！','error');parent.sysuser=undefined;window.sessionStorage.clear(); window.location.href = window.location.host+"/login.htm"; }else{sysuser=parent.sysuser;}
 var  curr_time = new Date(), timefile, objtree,objTable,tablesize, stablesize,systoken=undefined,sys={imgrooturl:"http://139.196.189.93:8089/"};
 var tool={
     col_format:function(val){ if(val==null){val=new Date();} return new Date(val).Format("yyyy-MM-dd hh:mm:ss");},//格式化时间

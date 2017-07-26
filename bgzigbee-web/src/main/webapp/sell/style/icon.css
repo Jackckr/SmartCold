@@ -21,8 +21,10 @@
 .icon-sel{background:url('icons/7.png') no-repeat;}                                  /*默认查看*/
 .icon_filter{background: url(img/icons.png) no-repeat scroll -1201px -602px rgba(0, 0, 0, 0);}
 
+
 .icon_add   {background:url('icons/1.png') no-repeat;}                               /*添加按钮1*/
 .icon_add1  {background:url('icons/1_1.png') no-repeat;}                             /*添加按钮2*/
+.icon_add2   {background: url(img/icons.png) no-repeat scroll -871px 0px rgba(0, 0, 0, 0);}                               /*添加按钮1*/
 .icon_rem   {background:url('icons/2.png') no-repeat;}                               /*删除按钮1*/
 .icon_rem2  {background:url('icons/2_1.png') no-repeat;}                             /*删除按钮2*/
 .icon-delete{ background:url('icons/delete.png') no-repeat center center;}           /*删除按钮3*/
@@ -32,6 +34,7 @@
 .icon-cancel{ background:url('icons/cancel.png') no-repeat center center; }           /*取消按钮1*/            
 .icon-cancel1 {background: url(img/icons.png) no-repeat scroll -991px -661px rgba(0, 0, 0, 0);}
 .icon-cancel2 {background: url(img/icons.png) no-repeat scroll -421px -691px rgba(0, 0, 0, 0);}
+
 
 
 /*=====================================main导航=====================================================*/

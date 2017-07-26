@@ -27,6 +27,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -401,6 +402,11 @@ public class RdcServiceImpl implements RdcService {
 		nums += fileDataDao.deleteByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_ARRANGE_PIC);
 		log.info("delete "+nums+" rows FileData by rdcID:"+rdcID);
 		return true;
+	}
+
+	@Override
+	public List<HashMap<String,Object>> findRdcListbyName(String keyword, int rows) {
+		return this.rdcDao.findRdcListbyName(keyword, rows);
 	}
 
 }

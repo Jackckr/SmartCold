@@ -1,5 +1,6 @@
 package com.smartcold.bgzigbee.manage.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,8 +21,10 @@ public interface RdcService {
 	public final Gson gson = new Gson();
 
 	List<RdcEntity> findRdcList();
-
+	
 	List<RdcDTO> findAllRdcDtos();
+	
+	List<HashMap<String,Object>> findRdcListbyName(String keyword,int rows);
 
 	List<RdcAddDTO> findRDCDTOByRDCId(@RequestParam int rdcID);
 
