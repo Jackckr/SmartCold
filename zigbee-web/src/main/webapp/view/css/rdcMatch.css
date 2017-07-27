@@ -166,6 +166,7 @@
 }
 .msgInfo ul > li:first-child{
     width: 10%;
+    overflow: hidden;
 }
 .msgInfo ul > li:last-child{
     width: 18%;
@@ -210,6 +211,7 @@
 .msgInfo ul > li >.look{
     background-color: #186eff;
     color: #fff;
+    margin-right: 10px;
 }
 .msgInfo ul > li >.collect{
     color: #f57f1f;
