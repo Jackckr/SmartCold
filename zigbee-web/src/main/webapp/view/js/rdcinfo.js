@@ -52,11 +52,12 @@ function getRdcInfo() {
             struct.push(val.type);
         });
     }});
-    var saveType=[""];
+    var saveType={};
     $.ajax({url:"/i/rdc/findAllStorageType",type:"get",success:function (data) {
         supportForeach();
+        saveType[0]="";
         data.forEach(function (val, index) {
-            saveType.push(val.type);
+            saveType[val.id]=val.type;
         });
     }});
     var isHave=["","有","无"];
