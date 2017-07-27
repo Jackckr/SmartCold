@@ -2,13 +2,13 @@
   <div class="cold_bg" style="height:100%;">
   		<h1>{{msg}}</h1>
   		<div class="radius_bg">  			
-  			<a href="#/cold360Physical/{{rdcId}}" ng-click="physical()">一键检测<i class="icon iconfont">&#xe62f;</i></a>
+  			<a href="#" ng-click="physical()">一键检测<i class="icon iconfont">&#xe62f;</i></a>
   		</div>
   </div>
 </div>
 <div id="physicalstep2" class="sys_group black"  >
 	<div class="page-header goback">
-<!-- 		<a href="#/cold360Physical" ng-click="showpage(1);"><i class="icon iconfont">&#xe64a;</i> 返回</a> -->
+<!-- 		<a href="#" ng-click="showpage(1);"><i class="icon iconfont">&#xe64a;</i> 返回</a> -->
     </div>
 	<!-- 温度系统 -->
 	<div class="box bg-gray wobble animated">
@@ -21,7 +21,7 @@
 	   			<div class="circle fontBlue">
 	   				{{data.avgTempScores}}<span>分</span>
 	   			</div>
-	   			<a href="#/cold360Physical" ng-click="showsg(3,'grouppan1')"><button class="btn bgBlue">查看详情</button></a>
+	   			<a href="#" ng-click="showsg(3,'grouppan1')"><button class="btn bgBlue">查看详情</button></a>
 	   		</div>
 	   		<!-- 建议安装设备 -->
 	   		<div class="noDevice " ng-if="!data.ishasTempDEV">
@@ -41,7 +41,7 @@
 	   			<div class="circle fontGold">
 	   				{{data.avgTransportScores}}<span>分</span>
 	   			</div>
-	   			<a href="#/cold360Physical" ng-click="showsg(3,'grouppan2')"><button class="btn bgGold">查看详情</button></a>
+	   			<a href="#" ng-click="showsg(3,'grouppan2')"><button class="btn bgGold">查看详情</button></a>
 	   		</div>
 	   		<!-- 建议安装设备 -->
 	   		<div class="noDevice " ng-if="!data.ishasTempDEV">
@@ -74,7 +74,7 @@
 </div>
 <div id="physicalstep3" class="score_list black" >
 	<div class="page-header goback">
-		<a href="#/cold360Physical" ng-click="showpage(2);"><i class="icon iconfont">&#xe64a;</i> 返回</a>
+		<a href="#" ng-click="showpage(2);"><i class="icon iconfont">&#xe64a;</i> 返回</a>
     </div>
 	<!-- 温度系统 -->
 	<div id="phsg_sour3">

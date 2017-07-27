@@ -114,7 +114,7 @@
 	    	<h2 class="tac"><strong>冷库综合运行系统月度分析报告</strong></h2>
 	    	<div class="print_name clearfix">
 	    		<div class="pull-left">
-	    			<span>客户名称：</span><input type="text" value="{{pysicaldata.compName}}" readonly="readonly">
+	    			<span>客户名称：</span><input type="text" value="{{compName}}" readonly="readonly">
 	    		</div>
 	    		<div class="pull-left">
 	    			<span>DC(冷库)名称：</span><input type="text" value="{{vm.choserdc.name}}" readonly="readonly">
@@ -126,56 +126,56 @@
 	    	</div>
 	    </div>
 	    <!-- DC(冷库)综合评分分值（满分为100分）  -->
-	    <div class="print_part">
-	    	<h4><strong>DC(冷库)综合评分分值(满分为100分):</strong></h4>
-			<div id="physicalstep2" class="sys_group">
+<!-- 	    <div class="print_part"> -->
+<!-- 	    	<h4><strong>DC(冷库)综合评分分值(满分为100分):</strong></h4> -->
+<!-- 			<div id="physicalstep2" class="sys_group"> -->
 				<!-- 温度系统 -->
-				<div class="box bg-gray" ng-if="pysicaldata.ishasTempDEV">
-					<div class="box-header with-border">
-						<h3 class="box-title">温度系统</h3>
-					</div>
-					<div class="box-body">
+<!-- 				<div class="box bg-gray" ng-if="pysicaldata.ishasTempDEV"> -->
+<!-- 					<div class="box-header with-border"> -->
+<!-- 						<h3 class="box-title">温度系统</h3> -->
+<!-- 					</div> -->
+<!-- 					<div class="box-body"> -->
 						<!-- 有设备 -->
-						<div class="haveDevice">
-							<div class="circle nobg fontBlue">
-								<img class="no-print" src="../../assets/img/blue_circle.png" height="160" width="160" alt="">
-								{{pysicaldata.avgTempScores}}<span>分</span>
-							</div>
-						</div>
-					</div>
-				</div>
+<!-- 						<div class="haveDevice"> -->
+<!-- 							<div class="circle nobg fontBlue"> -->
+<!-- 								<img class="no-print" src="../../assets/img/blue_circle.png" height="160" width="160" alt=""> -->
+<!-- 								{{pysicaldata.avgTempScores}}<span>分</span> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 				<!-- 运管系统 -->
-				<div class="box bg-gray" ng-if="pysicaldata.ishasTempDEV">
-					<div class="box-header with-border">
-						<h3 class="box-title">运管系统</h3>
-					</div>
-					<div class="box-body">
+<!-- 				<div class="box bg-gray" ng-if="pysicaldata.ishasTempDEV"> -->
+<!-- 					<div class="box-header with-border"> -->
+<!-- 						<h3 class="box-title">运管系统</h3> -->
+<!-- 					</div> -->
+<!-- 					<div class="box-body"> -->
 						<!-- 有设备 -->
-						<div class="haveDevice">
-							<div class="circle nobg fontGold">
-								<img class="no-print" src="../../assets/img/gold_circle.png" height="160" width="160" alt="图片丢失了~">
-								{{pysicaldata.avgTransportScores}}<span>分</span>
-							</div>
-						</div>
-					</div>
-				</div>
+<!-- 						<div class="haveDevice"> -->
+<!-- 							<div class="circle nobg fontGold"> -->
+<!-- 								<img class="no-print" src="../../assets/img/gold_circle.png" height="160" width="160" alt="图片丢失了~"> -->
+<!-- 								{{pysicaldata.avgTransportScores}}<span>分</span> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 				<!-- 制冷系统 -->
-				<div class="box bg-gray" ng-if="pysicaldata.ishasplc">
-					<div class="box-header with-border">
-						<h3 class="box-title">制冷系统</h3>
-					</div>
-					<div class="box-body">
+<!-- 				<div class="box bg-gray" ng-if="pysicaldata.ishasplc"> -->
+<!-- 					<div class="box-header with-border"> -->
+<!-- 						<h3 class="box-title">制冷系统</h3> -->
+<!-- 					</div> -->
+<!-- 					<div class="box-body"> -->
 						<!-- 有设备 -->
-						<div class="haveDevice ">
-							<div class="circle nobg fontGreen">
-								<img class="no-print" src="../../assets/img/green_circle.png" height="160" width="160" alt="">
-								{{pysicaldata.coldStorage}}<span>分</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+<!-- 						<div class="haveDevice "> -->
+<!-- 							<div class="circle nobg fontGreen"> -->
+<!-- 								<img class="no-print" src="../../assets/img/green_circle.png" height="160" width="160" alt=""> -->
+<!-- 								{{pysicaldata.coldStorage}}<span>分</span> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
 		
 		<!-- DC(冷库)月度运行状况分析结论  -->
 		<div class="print_part partP">

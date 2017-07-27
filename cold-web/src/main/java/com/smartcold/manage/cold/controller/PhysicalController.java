@@ -1,32 +1,35 @@
 package com.smartcold.manage.cold.controller;
 
 import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smartcold.manage.cold.dao.newdb.DeviceObjectMappingMapper;
 import com.smartcold.manage.cold.dao.newdb.QuantityMapper;
-import com.smartcold.manage.cold.dao.olddb.ColdStorageDoorSetMapper;
 import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
 import com.smartcold.manage.cold.dao.olddb.WeightSetMapper;
-import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
+import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 import com.smartcold.manage.cold.entity.olddb.CompressorSetEntity;
 import com.smartcold.manage.cold.entity.olddb.WeightSetEntity;
-import com.smartcold.manage.cold.service.StorageService;
+import com.smartcold.manage.cold.enums.SetTables;
+import com.smartcold.manage.cold.service.ColdStorageAnalysisService;
 import com.smartcold.manage.cold.util.ResponseData;
 import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.StringUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 
 /**
- * 体检Controller
- * 
+ * 体检
+ *  old:2016年9月24日-- 谭总
+ *  new：2017年7月27日14:24:42-- 孔院
  * @author MaQiang
  *
  */
@@ -36,21 +39,28 @@ public class PhysicalController {
 	@Autowired
 	private QuantityMapper quantityMapper;
 	@Autowired
-	private StorageService storageService;
-	@Autowired
 	private WeightSetMapper weightSetMapper;
 	@Autowired
 	private ColdStorageSetMapper coldsetServer;
 	@Autowired
-	private ColdStorageDoorSetMapper coldStorageDoorSetMapper;
-	@Autowired
-	private DeviceObjectMappingMapper deviceObjectMappingDao;
-    private 	DecimalFormat    df   = new DecimalFormat("######0.00"); 
-    
-    
+	private ColdStorageAnalysisService coldStorageAnalysisService;
+	
+    private final static 	DecimalFormat df = new DecimalFormat("######0.00");
     
     /**
-	 * 获得机组运行状态
+	 * 获得集团名称 
+	 * @param rdcId
+	 * @return
+	 */
+	@RequestMapping(value = "/getCompNameByRdcId")
+	@ResponseBody
+	public String mothCheckup(int rdcId) {
+		return this.quantityMapper.getCompNameByRdcId(rdcId);//查询集团名称
+	}
+    
+    /**
+	 * 获得机组运剩余运行时间
+	 * 保养提醒模块
 	 * @param oids:压缩机组id集合
 	 * @return
 	 */
@@ -85,143 +95,82 @@ public class PhysicalController {
 	@ResponseBody
 	public ResponseData<HashMap<String, Object>> checkup(Integer rdcId) {
 		if(rdcId==null){ return ResponseData.newFailure("0");}//0.非法请求
+		Date startTime = TimeUtil.getBeforeDay(30),endTime = TimeUtil.getBeforeDay(0);
 		String stTime = TimeUtil.getFormatDate(TimeUtil.getBeforeDay(30))+" 00:00:00";
 		String edTime = TimeUtil.getFormatDate(TimeUtil.getBeforeDay(0))+ " 23:59:59";
-		HashMap<String, Object> resMap = getPysicalInfo(rdcId,  stTime, edTime);
-		return ResponseData.newSuccess(resMap);
-	}
-	/**
-	 * 获得月体检报告
-	 * @param rdcId
-	 * @return
-	 */
-	@RequestMapping(value = "/mothCheckup")
-	@ResponseBody
-	public ResponseData<HashMap<String, Object>> mothCheckup(Integer rdcId,String stTime,String edTime ) {
-		if(rdcId==null){ return ResponseData.newFailure("0");}//0.非法请求
-		HashMap<String, Object> resMap = getPysicalInfo(rdcId,  stTime, edTime);
-		resMap.put("compName", this.quantityMapper.getCompNameByRdcId(rdcId));//查询集团名称
-		return ResponseData.newSuccess(resMap);
-	}
-	
-	private HashMap<String, Object> getPysicalInfo(Integer rdcId,  String stTime, String edTime) {
-		boolean ishasTempDEV=false;boolean ishasplc=false;
 		HashMap<String, Object> resMap=new HashMap<String, Object>();
 		WeightSetEntity weightSet = this.weightSetMapper.getWeightSet(rdcId);//占比
 		if(weightSet==null){weightSet=new WeightSetEntity(0,2,10,10,2,3,0,30,5,1);};
-		List<ColdStorageSetEntity> coldStorageSetList = coldsetServer.findByRdcId(rdcId);
-		if(SetUtil.isnotNullList(coldStorageSetList)){	//1.2检查冷库信息 
-			Integer oid= coldStorageSetList.get(0).getId();
-//			 ishasplc=	this.hasplc(1, "coldstorage", oid, "Temp", stTime, edTime);//plc
-//			 ishasTempDEV= this.hasdev(1, "coldstorage", oid, "Temp", stTime, edTime);//1.1检查温度是否有设备
-			if(ishasTempDEV){ //2.2檢查設備(进行评估冷库)
-				double sumtempS = 0; double sumsransportS=0; 
-				HashMap<Integer, Object> tempScores=new HashMap<Integer, Object>();
-				HashMap<Integer, Object> transportScores=new HashMap<Integer, Object>();
-				for (ColdStorageSetEntity obj : coldStorageSetList) {
-					int tempS = this.getTempScores( stTime, edTime, obj, weightSet);
-					int sransportS=this.getTransportScores(stTime, edTime, obj, weightSet);
-					sumtempS+=tempS; sumsransportS+=sransportS;
-					tempScores.put(obj.getId(), new Object[]{getColorVal(tempS),Double.parseDouble(df.format( tempS))});//1.获取冷库的分数
-					transportScores.put(obj.getId(),new Object[]{getColorVal(sransportS),Double.parseDouble(df.format(sransportS)) });//2.运管分数
-					
-				}
-				resMap.put("TempScores",tempScores );
-				resMap.put("TransportScores",transportScores );
-				resMap.put("avgTempScores",(int)sumtempS/coldStorageSetList.size());
-				resMap.put("avgTransportScores",(int)sumsransportS/coldStorageSetList.size() );
-	        }
-			if(ishasplc){
-				int coldStorage = this.getColdStorageScores(stTime, edTime, rdcId, weightSet);
-				resMap.put("coldStorage",coldStorage );
+		List<ColdStorageSetEntity> coldStorageSetList =this.coldsetServer.findByRdcId(rdcId);
+		if(SetUtil.isnotNullList(coldStorageSetList)){
+			double sumtempS = 0; double sumtranS=0; 
+			HashMap<Integer, Object> tempScores=new HashMap<Integer, Object>();
+			HashMap<Integer, Object> transportScores=new HashMap<Integer, Object>();
+			for (ColdStorageSetEntity item : coldStorageSetList) {
+			     int tempS = this.getTempScores(startTime, endTime, item, weightSet); //当前冷库分数
+			 	 int tranS = this.getTransportScores(stTime, edTime, item, weightSet);//运管
+			 	 sumtempS+=sumtempS;sumtranS+=tranS;
+			 	 tempScores.put(item.getId(), new Object[]{getColorVal(tempS),Double.parseDouble(df.format( tempS))});//1.获取冷库的分数
+				 transportScores.put(item.getId(),new Object[]{getColorVal(tranS),Double.parseDouble(df.format(tranS)) });//2.运管分数
 			}
+			resMap.put("TempScores",tempScores );
+			resMap.put("TransportScores",transportScores );
+			resMap.put("avgTempScores",(int)sumtempS/coldStorageSetList.size());
+			resMap.put("avgTransportScores",(int)sumtranS/coldStorageSetList.size() );
+			resMap.put("cooling", this.getColdStorageScores(stTime, edTime, rdcId, weightSet));//制冷分数
 		}
-		resMap.put("ishasplc", ishasplc);
-		resMap.put("ishasTempDEV", ishasTempDEV);
-		return resMap;
-	}
-	private int  getColorVal(int tempS ){
-		if( tempS >=70&&tempS<=99){
-			return Integer.parseInt((tempS+"").substring(0,1)+"0");
-		}else if(tempS>=100){
-			return 100;
-		}
-		return 60;
+		return null;
 	}
 	
-	/**
-	 * 判斷是否有设备
-	 * @param type
-	 * @param table
-	 * @param oid
-	 * @param key
-	 * @param stTime
-	 * @param edTime
-	 * @return
-	 */
-//	private boolean hasdev(int type,String table,int oid,String key, String stTime, String edTime){
-//		List<DeviceObjectMappingEntity> deviceList = deviceObjectMappingDao.findByTypeOid(type, oid);
-//		if (SetUtil.isnotNullList(deviceList)) {
-//			return true;// return this.quantityMapper.getCountBydevkey(deviceEntity.getDeviceid(), key, stTime, edTime)>0;//最终看使用哪种
-//		} else {
-//			return this.quantityMapper.getCountBykey(oid, table, key, stTime, edTime)!=null;
-//		}
-//	}
-//	private boolean hasplc(int type,String table,int oid,String key, String stTime, String edTime){
-//		List<DeviceObjectMappingEntity> deviceList = deviceObjectMappingDao.findByTypeOid(type, oid);
-//		if (SetUtil.isNullList(deviceList)) {
-//			return this.quantityMapper.getCountBykey(oid, table, key, stTime, edTime)!=null;
-//		} else {
-//			return false;
-//		}
-//	}
-	
-    /**
-     * 根据id对冷库评分
-     * @param key
-     * @param type
-     * @param stTime
-     * @param edTime
-     * @param obj
-     * @param weightSet
-     * //Ct=100-超温因子*20-（Tmax-Tset-Tdiff）*2-保温因子*10-1/温度周期因子（降温部分）*10
-     * @return
-     */
-	private int getTempScores(String stTime,String edTime,ColdStorageSetEntity obj,WeightSetEntity weightSet){
+	  /**
+	  * 根据id对冷库评分
+	  * @param key
+	  * @param type
+	  * @param stTime
+	  * @param edTime
+	  * @param obj
+	  * @param weightSet
+	  * //Ct=100-超温因子*20-（Tmax-Tset-Tdiff）*2-保温因子*10-1/温度周期因子（降温部分）*10
+	  * @return
+	  */
+	private int getTempScores(Date startTime,Date endTime,ColdStorageSetEntity obj,WeightSetEntity weightSet){
 		try {
-			double chaowenyinzi=0;double baowenyinzi=0;double jiangwenyinzi=0;double temcuf=0;
-			Double maxtemp=this.quantityMapper.getSisBayKey(1,obj.getId(), "MaxTemp", stTime, edTime);
-			if(maxtemp!=null&&maxtemp!=0){temcuf=(maxtemp-obj.getStartTemperature()-obj.getTempdiff()); if(temcuf>0){temcuf=temcuf*weightSet.getFactor2();}else{temcuf=0;}}
-			List<HashMap<String, Object>> avgTempYinZi = this.quantityMapper.getAVGTempYinZi(obj.getId(), stTime, edTime);
-			for (HashMap<String, Object> hashMap : avgTempYinZi) {
-				if(hashMap.containsKey("ChaoWenYinZi")){
-					chaowenyinzi=(Double) hashMap.get("ChaoWenYinZi");
-					if(chaowenyinzi>0){chaowenyinzi=chaowenyinzi*weightSet.getFactor1();}else{chaowenyinzi=0;}
-				}else if(hashMap.containsKey("BaoWenYinZi")){
-					baowenyinzi=(Double) hashMap.get("BaoWenYinZi");
-					if(baowenyinzi>0){baowenyinzi=baowenyinzi*weightSet.getFactor3();}else{baowenyinzi=0;}
-				}else if(hashMap.containsKey("JiangWenYinZi")){
-					jiangwenyinzi=(Double) hashMap.get("JiangWenYinZi");
-					if(jiangwenyinzi!=0&&jiangwenyinzi>0){jiangwenyinzi=1/jiangwenyinzi*weightSet.getFactor4();}else{jiangwenyinzi=0;}
+			  double L1=0,L2=0,L3=0; 
+			  List<String> keylist = Arrays.asList("OverTempL1Count,OverTempL2Count,OverTempL3Count".split(","));
+			  Map<String, List<ColdStorageAnalysisEntity>> overTempMap = this.coldStorageAnalysisService.findDVDataByDate(SetTables.STORAGESET.getType(), obj.getId(),keylist , startTime, endTime);
+			  //开始计算分数
+			  List<ColdStorageAnalysisEntity> anaysislist = overTempMap.get("OverTempL1Count");
+			  if(SetUtil.isnotNullList(anaysislist)){
+				for (ColdStorageAnalysisEntity coldStorageAnalysisEntity : anaysislist) {
+					L1+=coldStorageAnalysisEntity.getValue();
 				}
-			}
-			return (int)Math.abs(100-chaowenyinzi-temcuf-baowenyinzi-jiangwenyinzi);
+			  }
+			  anaysislist = overTempMap.get("OverTempL2Count");
+			  if(SetUtil.isnotNullList(anaysislist)){
+				  for (ColdStorageAnalysisEntity coldStorageAnalysisEntity : anaysislist) {
+					  L2+=coldStorageAnalysisEntity.getValue();
+				  }
+			  }
+			  anaysislist = overTempMap.get("OverTempL3Count");
+			  if(SetUtil.isnotNullList(anaysislist)){
+				  for (ColdStorageAnalysisEntity coldStorageAnalysisEntity : anaysislist) {  L3+=coldStorageAnalysisEntity.getValue(); }
+			  }
+			 return (int)(100-L1*10- (int)(L2/4)*5- (int)(L3/8*2));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-        return 65;
+     return 65;
 	}
-
 	/**
-     * 运管分析
-     * @param key
-     * @param type
-     * @param stTime
-     * @param edTime
-     * @param obj
-     * @param weightSet
-     * @return
-     */
+	  * 运管分析
+	  * @param key
+	  * @param type
+	  * @param stTime
+	  * @param edTime
+	  * @param obj
+	  * @param weightSet
+	  * @return
+	  */
 	private int getTransportScores(String stTime,String edTime,ColdStorageSetEntity obj,WeightSetEntity weightSet){
 		try {
 			double emgodunit=0;
@@ -238,10 +187,11 @@ public class PhysicalController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-        return 45;
+     return 45;
 	}
-	/**
-	 * 机组分析
+	
+	
+	/* 机组分析
 	 * @param key
 	 * @param type
 	 * @param stTime
@@ -251,8 +201,8 @@ public class PhysicalController {
 	 * @return
 	 * GoodsHeat
 	 */
-	private int getColdStorageScores(String stTime,String edTime,Integer rdcId,WeightSetEntity weightSet){
-		double qe=0;double	hwarcount=0;double	lwarcount=0;
+	private int[] getColdStorageScores(String stTime,String edTime,Integer rdcId,WeightSetEntity weightSet){
+		double qe=0,hwarcount=0,	lwarcount=0;int ishasplc=0;
 		List<HashMap<String, Object>> sumElist = this.quantityMapper.getsumEByRdcid(rdcId, stTime,edTime);
 		List<HashMap<String, Object>> sumQlist = this.quantityMapper.getsumQByRdcid(rdcId, stTime,edTime);
 		List<HashMap<String, Object>> warCounList = this.quantityMapper.getWarCountByTime(rdcId, stTime, edTime);
@@ -261,9 +211,11 @@ public class PhysicalController {
 			for (HashMap<String, Object> hashMap : sumQlist) { allsumq+=(Double) hashMap.get("sumq");}
 			for (HashMap<String, Object> hashMap : sumElist) { allsume+=(Double) hashMap.get("sume"); }
 			if(allsume!=0&&allsumq!=0){qe=(allsumq/allsume)* weightSet.getCrew1();}
-			if(qe<0){return 0;}else if(qe>=100){qe=75;}//
+			if(qe<0){return new int[]{1,0};}else if(qe>=100){qe=75;}//
+			ishasplc=1;
 		}
 		if(SetUtil.isnotNullList(warCounList)){
+			ishasplc=1;
 			for (HashMap<String, Object> hashMap : warCounList) {
 				if(hashMap.containsKey("HighWarningCount")){
 					hwarcount=(Double) hashMap.get("val")*weightSet.getCrew2();
@@ -274,6 +226,17 @@ public class PhysicalController {
 		}
 		int soure= (int) (100-qe-hwarcount-lwarcount);
 		if(soure<35){soure=35;}
-		return soure;
+		return new int[]{ishasplc,soure};
 	}
+
+	private int  getColorVal(int tempS ){
+		if( tempS >=70&&tempS<=99){
+			return Integer.parseInt((tempS+"").substring(0,1)+"0");
+		}else if(tempS>=100){
+			return 100;
+		}
+		return 60;
+	}
+	
+
 }

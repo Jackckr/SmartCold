@@ -18,15 +18,15 @@ coldWeb.controller('cold360Physical', function( $scope, $rootScope, $stateParams
 	//体检
 	$scope.physical=function(){ $("#loding").show(); $timeout($scope.pysical,1500); };
 	$scope.pysical=function(){
-		$http.get('/i/physicalController/checkup',{params: {"rdcId":$scope.rdcId } }).success(function(data,status,config,header){
-			 $("#loding").hide();
-		      if(data.success){
-		    	  window.localStorage['physicalday'+$scope.rdcId]=new Date();
-		    	  $scope.data=data.entity;
-		    	  $scope.showpage(2);
-		      }
-		      //else{alert(msg.errmsg[data.message]);}//	var msg={errmsg:{'0':"非法请求","-1":"你还没有冷库信息！","-2":"没有设备","-3":"没有配置！"}};
-		 });
+//		$http.get('/i/physicalController/checkup',{params: {"rdcId":$scope.rdcId } }).success(function(data,status,config,header){
+//			 $("#loding").hide();
+//		      if(data.success){
+//		    	  window.localStorage['physicalday'+$scope.rdcId]=new Date();
+//		    	  $scope.data=data.entity;
+//		    	  $scope.showpage(2);
+//		      }
+//		      //else{alert(msg.errmsg[data.message]);}//	var msg={errmsg:{'0':"非法请求","-1":"你还没有冷库信息！","-2":"没有设备","-3":"没有配置！"}};
+//		 });
 	};
 	$scope.showsg=function(i,em){
 		if(em){

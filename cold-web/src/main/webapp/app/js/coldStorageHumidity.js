@@ -31,7 +31,7 @@ coldWeb.controller('coldStorageHumidity', function ($scope, $location, $statePar
     	if($scope.oids.length==0){return;};
     	$scope.curtemper = [];
     	$scope.fstartTime= new Date().getTime(), endTime =  new Date(), startTime = new Date(endTime.getTime() - 1.5* 60 * 60 * 1000), maxTime=endTime.getTime();
-        $http.get('/i/temp/getTempByTime', { params: {"oid": $stateParams.storageID, oids:$scope.oids,names:$scope.names, 'key':'HR', "startTime": baseTools.formatTime(startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (result) {
+        $http.get('/i/temp/getTempByTime', { params: {"oid": $stateParams.storageID, oids:$scope.oids,names:$scope.names, 'key':'RH', "startTime": baseTools.formatTime(startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (result) {
             $scope.isErr=false;$scope.name = result.name;
             $scope.startTime=endTime;
         	var yData = [],jxData=[], tempMap = result.tempMap,systime=result.systime,lasttime=0;
@@ -77,7 +77,7 @@ coldWeb.controller('coldStorageHumidity', function ($scope, $location, $statePar
     	var series =  $scope.chart.series ;
         var endTime =  new Date();
 //        $http.get('http://139.224.16.238/i/util/getColdAlarmStatus', { params: {oid: $stateParams.storageID}}).success(function (result) {$scope.isOverTemp=result; });
-        $http.get('/i/temp/getTempref', { params: {"oid": $stateParams.storageID, oids:$scope.oids,names:$scope.names, 'key':'HR', "startTime": baseTools.formatTime($scope.startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (result) {
+        $http.get('/i/temp/getTempref', { params: {"oid": $stateParams.storageID, oids:$scope.oids,names:$scope.names, 'key':'RH', "startTime": baseTools.formatTime($scope.startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (result) {
          var tempMap = result.tempMap,index=0;//systime=result.systime,
        	 for(var key in tempMap) { 
          	 tempList=tempMap[key],newdata=[];

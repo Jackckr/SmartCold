@@ -13,6 +13,10 @@
         SELECT * FROM `deviceObjectMapping`  WHERE `type`=#{type} and `oid` in(${oid})
     </select>
     
+    <select id="findInfoByRdcId" parameterType="Integer" resultType="com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity" >
+          select *  from `deviceobjectmapping` d WHERE d.`rdcid`=#{rdcid};
+    </select>
+    
     <select id="findInfoByfilter" parameterType="map" resultType="com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity" >
            select *  from `deviceobjectmapping` d WHERE 1=1 
          <if test="type!=null "> and d.`type` in(${type})</if> 
@@ -68,5 +72,9 @@
     <select id="getZSLowPower" resultType="map" parameterType="map">
      SELECT `deviceid` ,`value`  from devstatus where   `key`='DU' and `value`&lt;4 and LENGTH(`deviceid`)>8 and `addtime` >#{starttime} GROUP BY `deviceid`   ;
     </select>
+    <select id="getplcByrdcid" parameterType="map" resultType="Integer">
+     SELECT count(id) FROM `smartcold`.`spidercollectionconfig` where `rdcid` =#{rdcId};
+    </select>
+    
    
 </mapper>

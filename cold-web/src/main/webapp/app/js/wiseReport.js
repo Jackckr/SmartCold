@@ -59,13 +59,16 @@ coldWeb.controller('wiseReport', function( $scope, $rootScope,$stateParams,$http
 		});
 	};
 	//===================================================================================工具类end==================================================================================
-	//1.系统评分
+	//1.获得冷库公司名称--》原来是系统评分
 	$scope.pysical=function(){
 		//获得分析结果
-		
-		$http.get('/i/physicalController/mothCheckup',{params: {"rdcId":$scope.rdcId ,"stTime": $scope.startTime,"edTime": $scope.endTime} }).success(function(data,status,config,header){ if(data.success){ 
-			++$scope.loadindex;$scope.pysicaldata=data.entity;
-		}});
+//		$http.get('/i/physicalController/mothCheckup',{params: {"rdcId":$scope.rdcId ,"stTime": $scope.startTime,"edTime": $scope.endTime} }).success(function(data,status,config,header){ if(data.success){ 
+//			++$scope.loadindex;$scope.pysicaldata=data.entity;
+//		}});
+		$http.get('/i/physicalController/getCompNameByRdcId',{params: {"rdcId":$scope.rdcId } }).success(function(data,status,config,header){
+			++$scope.loadindex;
+			$scope.compName=data?data:$rootScope.vm.choserdc.name;
+		});
 	};
 	$scope.initRdcreportsis=function(){
 		//获得分析结果
