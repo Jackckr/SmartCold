@@ -56,30 +56,33 @@ function add_storageSharinfo(){
         type:"post",
         data:{userId:slrdc.userId},
         success:function (data) {
-            var vo ={}, formdata = new FormData(),input = $("input[type='file']"), parnArray = $("#addstorageForm").serializeArray();
-            $.each(input,function(index,item){  for (var i = 0; i < item.files.length; i++) { formdata.append('fileData['+i+']',item.files[i]); }});
-            $.each(parnArray,function(index,item){  vo[item.name] = item.value; });
-            if(vo.rdcId!=slrdc.id){ $.messager.alert('错误', '请选择完整的冷库信息！', 'error'); return;}
-            vo.detlAddress=slrdc.address;
-            vo.provinceid=slrdc.provinceid;
-            vo.cityId= slrdc.cityId;
-            vo.uid= slrdc.userId;
-            if(!vo.uid){vo.uid=1;}
-            vo.username=data;
-            formdata.append("data",JSON.stringify(vo));
-            $.ajax({
-                url: "../../i/rdcShareInfo/shareFreeRelease",
-                data: formdata,
-                processData: false,
-                contentType: false,
-                type: 'POST',
-                success: function(data){
-                    $("#addstorageForm").form('clear');
-                    $('#addstorageShareInfodialog').dialog('close');
-                    $.messager.alert('', '发布成功！', 'info');
+            $.ajax({url:"/i/rdc/findExtByRdcId",type:"get",data:{rdcId:slrdc.id},success:function (rdcext) {
+                var vo ={}, formdata = new FormData(),input = $("input[type='file']"), parnArray = $("#addstorageForm").serializeArray();
+                $.each(input,function(index,item){  for (var i = 0; i < item.files.length; i++) { formdata.append('fileData['+i+']',item.files[i]); }});
+                $.each(parnArray,function(index,item){  vo[item.name] = item.value; });
+                if(vo.rdcId!=slrdc.id){ $.messager.alert('错误', '请选择完整的冷库信息！', 'error'); return;}
+                vo.detlAddress=slrdc.address;
+                vo.provinceid=slrdc.provinceid;
+                vo.cityId= slrdc.cityId;
+                vo.uid= slrdc.userId;
+                vo.codeLave1=rdcext.managetype;
+                if(!vo.uid){vo.uid=1;}
+                vo.username=data;
+                formdata.append("data",JSON.stringify(vo));
+                $.ajax({
+                    url: "../../i/rdcShareInfo/shareFreeRelease",
+                    data: formdata,
+                    processData: false,
+                    contentType: false,
+                    type: 'POST',
+                    success: function(result){
+                        $("#addstorageForm").form('clear');
+                        $('#addstorageShareInfodialog').dialog('close');
+                        $.messager.alert('', '发布成功！', 'info');
+                    }
+                });
+            }});
 
-                }
-            });
         }
     });
 }

@@ -826,6 +826,12 @@ public class RdcController {
 		return storageHonorDao.findAll();
 	}
 
+	@RequestMapping(value = "/findExtByRdcId", method = RequestMethod.GET)
+	@ResponseBody
+	public RdcExtEntity findExtByRdcId(int rdcId) {
+		return rdcExtDao.findRDCExtByRDCId(rdcId).get(0);
+	}
+
 	@RequestMapping(value = "/updateHonorPic", method = RequestMethod.POST)
 	@ResponseBody
 	public Object updateHonorPic(int rdcId, int[] honorPic) {
