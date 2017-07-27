@@ -294,6 +294,20 @@ var rentDate=['','1个月以下','1~3个月','3~6个月','6~9个月','1年以上
 function info(id) {//冷库详情
     $.get('/i/ShareRdcController/getSEByID.json',{id: id}, function (data) {
         var obj = data.entity,address='',len=null;
+        var oStart=new Date(obj.validStartTime).getTime(),oEnd=new Date(obj.validEndTime).getTime(),today=new Date().getTime();
+        var deadline=oEnd-oStart;
+        var days    = deadline / 1000 / 60 / 60 / 24;
+        var daysRound   = Math.floor(days);//租期
+        var hours    = deadline/ 1000 / 60 / 60 - (24 * daysRound);
+        var hoursRound   = Math.floor(hours);
+        var minutes   = deadline / 1000 /60 - (24 * 60 * daysRound) - (60 * hoursRound);
+        var minutesRound  = Math.floor(minutes);
+        var showDate=Math.floor((today-oStart)/ 1000 / 60 / 60 / 24);
+        var showTime=null;
+        var usefulDate = rentDate[obj.rentdate];
+        if(obj.rentdate==undefined || obj.rentdate==null || obj.rentdate==0){
+            usefulDate = daysRound+1+'天'
+        }
         obj.files==undefined?len=0:len=obj.files.length;
         var imglist='<ul id="infoImg" class="infoImg clearfix layer-photos-demo">',i=0;
         for(i; i<len; i++){
@@ -301,6 +315,9 @@ function info(id) {//冷库详情
         }
         imglist=imglist+'</ul>';
         if(len==0){imglist=''}
+        obj.note==undefined?note='无':note=obj.note;
+        obj.codeLave2==undefined?temType='无':temType=obj.codeLave2;
+        obj.codeLave1==undefined?manageType='无':manageType=obj.codeLave1;
         if(obj.typeCode==1){//出租
             if(obj.audit==2){
                 oaudit='<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>'
@@ -329,17 +346,18 @@ function info(id) {//冷库详情
             , shade: 0.6
             , maxmin: true
             , content: '<div class="infoModal">'+imglist+'<h3 class="orange">基本信息</h3>' +
-            '<ol>'+rentRdcLi+'<li><div>描述：</div><div>'+address+'</div></li>' +
-            '<li><div>地址：</div><div>'+obj.title+'</div></li>' +
+            '<ol>'+rentRdcLi+'<li><div>描述：</div><div>'+obj.title+'</div></li>' +
+            '<li><div>地址：</div><div>'+address+'</div></li>' +
             '<li><div>电话：</div><div>'+obj.telephone+'</div></li>' +
+            '</ol><h3 class="orange">其他信息</h3><ol>' +
             '<li><div>'+obj.typeText+'面积：</div><div>'+obj.sqm+'㎡</div></li>' +
             '<li><div>单价：</div><div>'+obj.unitPrice+obj.unit+'</div></li>' +
-            '<li><div>有效期：</div><div>'+rentDate[obj.rentdate]+'</div></li>' +
+            '<li><div>有效期：</div><div>'+usefulDate+'</div></li>' +
             '<li><div>开始时间：</div><div>'+obj.validStartTime+'</div></li>' +
             '<li><div>结束时间：</div><div>'+obj.validEndTime+'</div></li>' +
-            '<li><div>温度类型：</div><div>'+obj.codeLave2+'</div></li>' +
-            '<li><div>经营类型：</div><div>'+obj.codeLave1+'</div></li>' +
-            '<li><div>备注：</div><div>'+obj.note+'</div></li></ol></div>'
+            '<li><div>温度类型：</div><div>'+temType+'</div></li>' +
+            '<li><div>经营类型：</div><div>'+manageType+'</div></li>' +
+            '<li><div>备注：</div><div>'+note+'</div></li></ol></div>'
             , btn: ['关闭'] //只是为了演示
             , yes: function () {
                 layer.closeAll();
@@ -434,9 +452,10 @@ function deleteRent(id){//删除
 }
 /**
 *
-* 出售求购列表
+* 我的货源列表
 *
 * */
+
 layui.use(['jquery', 'form', 'element', ], function () {
     var element = layui.element();
     $ = layui.jquery;
