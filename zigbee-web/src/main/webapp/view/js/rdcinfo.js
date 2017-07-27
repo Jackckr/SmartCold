@@ -134,8 +134,8 @@ function getRdcInfo() {
             rdc.storageRefreg==0?storageRefreg='':storageRefreg='<td> <span>制冷剂类型：</span>'+refreg[rdc.storageRefreg]+' </td>';
             rdc.temperRecord==0?temperRecord='':temperRecord='<td> <span>有无温度记录：</span>'+isHave[rdc.temperRecord]+' </td>';
             rdc.temperRecord==0?temperRecord='':temperRecord='<td> <span>有无温度记录：</span>'+isHave[rdc.temperRecord]+' </td>';
-            rdc.facility==""||rdc.facility=="undefined"?facility='':facility='<td> <span>周边设施：</span>'+rdc.facility+' </td>';
-            rdc.remark==""||rdc.remark=="undefined"?remark='':remark='<td> <span>备注：</span>'+rdc.remark+' </td>';
+            rdc.facility==""||rdc.facility=="undefined"?facility='':facility='<td colspan="2"> <span>周边设施：</span>'+rdc.facility+' </td>';
+            rdc.remark==""||rdc.remark=="undefined"?remark='':remark='<td colspan="2"> <span>备注：</span>'+rdc.remark+' </td>';
             rdc.coldTruck1==0?coldTruck1='':coldTruck1='<td> <span>小于1.8T：</span>'+rdc.coldTruck1+' 辆</td>';
             rdc.height1*rdc.capacity1==0?capacity1='':capacity1='<td> <span>8 ~ 25℃：</span> '+(rdc.height1*rdc.capacity1).toFixed(2)+'m³</td> ';
             rdc.coldTruck2==0?coldTruck2='':coldTruck2='<td> <span>1.8 ～ 6T：</span>'+rdc.coldTruck2+' 辆</td>';
@@ -152,13 +152,12 @@ function getRdcInfo() {
                 '<tr>'+platform + lihuoRoom +'</tr>'+
                 '<tr>'+lihuoArea+lihuoTemperCtr +'</tr>'+
                 '<tr>'+storageRefreg+temperRecord+'</tr>'+
-                '<tr>'+facility+remark+'</tr>' +
                 '<tr> <td> <span>冷藏车数量：</span> </td> <td> <span>冷库容积：</span> </td> </tr> ' +
                 '<tr>'+coldTruck1+capacity1+'</tr> ' +
                 '<tr>'+coldTruck2+capacity2+'</tr> ' +
                 '<tr>'+coldTruck3+capacity3+'</tr> ' +
                 '<tr>'+coldTruck4+capacity4+'</tr> ' +
-                ''+capacity5+'</tbody></table>');
+                capacity5+'<tr>'+facility+'</tr><tr>'+remark+'</tr>' +'</tbody></table>');
         }else if(window.lkuser && window.lkuser.vipType==0&&window.lkuser&&window.lkuser.id!=rdc.userid){
             otherInfo.push('<table><caption>仓库信息</caption><tbody><tr><td><b>认证用户方可看到更多信息</b>　<a href="../html/authentication.html" style="color:#2763cc;">实名认证</a></td></tr></tbody></table>');
         }else{

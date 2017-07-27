@@ -369,9 +369,6 @@ body{
     height: 200px;
     overflow: hidden;
 }
-.infoImg li>img{
-    height:auto;
-}
 .infoModal h3{
     font-size: 16px;
     margin-bottom:10px;
@@ -390,9 +387,21 @@ body{
     width: 150px;
     text-align: right;
     margin-right: 10px;
+    vertical-align: top;
 }
 .listPage{
     margin: 0 auto;
     text-align: center;
+}
+.infoModal ol:last-child{
+    border-bottom:1px dashed #ccc;
+}
+.infoModal ol:last-child li:last-child{
+    display: table;
+    border-bottom: none;
+}
+.infoModal ol:last-child li:last-child>div{
+    display: table-cell;
+    vertical-align: top;
 }
 /*模态框*/

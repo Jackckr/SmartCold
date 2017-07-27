@@ -188,6 +188,7 @@ label>em{
 .oTxt p{
     font-size: 12px;
     margin: 5px 0;
+    min-height: 13px;
 }
 .oTxt h4>i{
     font-size: 14px;

@@ -253,98 +253,37 @@
                 </div>
                 <!--列表区域-->
                 <ul class="oList clearfix" id="rdcList"></ul>
-                <div id="page1" class="page"></div>
+                <div id="page0" class="page"></div>
             </li>
             <li id="rent">
                 <h3><i class="iconfont">&#xe61d;</i>出租求租</h3>
                 <!--列表区域-->
-                <ul class="oList clearfix" id="rentList"></ul>
-                <div id="page2" class="page"></div>
+                <ul class="oList clearfix" id="sharelist1"></ul>
+                <div id="page1" class="page"></div>
             </li>
             <li id="goods">
                 <h3><i class="iconfont">&#xe605;</i>我的货源</h3>
-                <div class="search">
-                    <div class="layui-input-inline">
-                        <input type="text" name="keyword" placeholder="请输入关键词" autocomplete="off" class="layui-input">
-                    </div>
-                    <button class="layui-btn">搜索</button>
-                </div>
                 <!--列表区域-->
-                <ul class="oList clearfix">
-                    <li>
-                        <div class="oImg fl"><img src="../img/findpassword.png" alt=""></div>
-                        <div class="oTxt fl">
-                            <h2 class="omg blue">上海合肥众萃rdc</h2>
-                            <h4 class="omg"><i class="iconfont orange">&#xe61c;</i>天山路600号捷运大厦</h4>
-                            <p class="omg">2017-07-26 10:20:22</p>
-                            <div class="txt-right">
-                                <button class="layui-btn layui-btn-normal layui-btn-small"><a href="">查看</a></button>
-                                <button class="layui-btn layui-btn-small"><a href="">修改</a></button>
-                                <button class="layui-btn layui-btn-danger layui-btn-small">删除</button>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+                <ul class="oList clearfix" id="sharelist2"></ul>
+                <div id="page2" class="page"></div>
             </li>
             <li id="collect">
                 <h3><i class="iconfont">&#xe60c;</i>我的收藏</h3>
                 <div class="layui-tab">
                     <ul class="layui-tab-title">
-                        <li class="layui-this">冷库冷库</li>
-                        <li>需求收藏</li>
+                        <li class="layui-this" onclick="getCollectList(0,3,3)">冷库冷库</li>
+                        <li onclick="getCollectList(1,4,4)">需求收藏</li>
                     </ul>
                     <div class="layui-tab-content">
                         <div class="layui-tab-item layui-show">
-                            <div class="search">
-                                <div class="layui-input-inline">
-                                    <input type="text" name="keyword" placeholder="请输入关键词" autocomplete="off"
-                                           class="layui-input">
-                                </div>
-                                <button class="layui-btn">搜索</button>
-                            </div>
                             <!--列表区域-->
-                            <ul class="oList clearfix">
-                                <li>
-                                    <div class="oImg fl"><img src="../img/findpassword.png" alt=""></div>
-                                    <div class="oTxt fl">
-                                        <h2 class="omg blue">上海合肥众萃rdc</h2>
-                                        <h4 class="omg"><i class="iconfont orange">&#xe61c;</i>天山路600号捷运大厦</h4>
-                                        <p class="omg">2017-07-26 10:20:22</p>
-                                        <div class="txt-right">
-                                            <button class="layui-btn layui-btn-normal layui-btn-small"><a href="">查看</a>
-                                            </button>
-                                            <button class="layui-btn layui-btn-danger layui-btn-small"><a
-                                                    href="">取消收藏</a></button>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                            <ul class="oList clearfix" id="sharelist3"></ul>
+                            <div id="page3" class="page"></div>
                         </div>
                         <div class="layui-tab-item">
-                            <div class="search">
-                                <div class="layui-input-inline">
-                                    <input type="text" name="keyword" placeholder="请输入关键词" autocomplete="off"
-                                           class="layui-input">
-                                </div>
-                                <button class="layui-btn">搜索</button>
-                            </div>
                             <!--列表区域-->
-                            <ul class="oList clearfix">
-                                <li>
-                                    <div class="oImg fl"><img src="../img/banner1.png" alt=""></div>
-                                    <div class="oTxt fl">
-                                        <h2 class="omg blue">领鲜物流冷酷集团</h2>
-                                        <h4 class="omg"><i class="iconfont orange">&#xe61c;</i>天安门1000号</h4>
-                                        <p class="omg">2017-06-26 10:20:22</p>
-                                        <div class="txt-right">
-                                            <button class="layui-btn layui-btn-normal layui-btn-small"><a href="">查看</a>
-                                            </button>
-                                            <button class="layui-btn layui-btn-danger layui-btn-small"><a
-                                                    href="">取消收藏</a></button>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                            <ul class="oList clearfix" id="sharelist4"></ul>
+                            <div id="page4" class="page"></div>
                         </div>
                     </div>
                 </div>
