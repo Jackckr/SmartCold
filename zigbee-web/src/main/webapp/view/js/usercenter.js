@@ -255,6 +255,14 @@ function deleteData(id,i,flag){//flag转为收藏而设立
             success: function(data){
                 if(data.status == 0 || data.success || data.status == 1){
                     data.message==undefined?messages='恭喜你，删除成功~':messages=data.message;
+                   /* layer.msg(messages, {
+                        icon: 6,
+                        anim:6,
+                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                    }, function(){
+                        initFn(i,flag);
+                        layer.close(index);
+                    });*/
                     layer.alert(messages, {
                         icon:'6'
                         ,skin: 'layui-layer-molv' //样式类名
@@ -398,7 +406,7 @@ function info(id,datatype,typecode) {
                 , maxmin: true
                 , content: '<div class="infoModal">'+imglist+'<h3 class="orange">基本信息</h3>' +
                 '<ol><li><div>描述：</div><div>'+obj.title+'</div></li>'+rentRdcLi+
-                '<li><div>地址：</div><div>'+address+'</div></li>' +
+                '<li><div>地址：</div><div>'+obj.detlAddress+'</div></li>' +
                 '<li><div>电话：</div><div>'+obj.telephone+'</div></li>' +
                 '</ol><h3 class="orange">其他信息</h3><ol>' +
                 '<li><div>'+obj.typeText+'面积：</div><div>'+obj.sqm+'㎡</div></li>' +
