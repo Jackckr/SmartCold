@@ -420,14 +420,16 @@ public class ShareRdcController  {
 		filter.put("audit", audit);
 		filter.put("goodtype", goodtype);
 		PageInfo<RdcShareDTO> data = this.rdcShareService.newGetSERDCList(pageNum, pageSize, filter);
-		for (RdcShareDTO rdcShareDTO:data.getList()){
-			if(StringUtil.isnotNull(rdcShareDTO.getCodeLave2())){
-				rdcShareDTO.setCodeLave2(storageTemperTypeMapper.findTypeById(Integer.parseInt(rdcShareDTO.getCodeLave2())));
-			}
-			if(StringUtil.isnotNull(rdcShareDTO.getCodeLave1())){
-				rdcShareDTO.setCodeLave1(storageManageTypeMapper.getTypeById(Integer.parseInt(rdcShareDTO.getCodeLave1())));
-			}
+		if(Integer.parseInt(dataType)==3){
+			for (RdcShareDTO rdcShareDTO:data.getList()){
+				if(StringUtil.isnotNull(rdcShareDTO.getCodeLave2())){
+					rdcShareDTO.setCodeLave2(storageTemperTypeMapper.findTypeById(Integer.parseInt(rdcShareDTO.getCodeLave2())));
+				}
+				if(StringUtil.isnotNull(rdcShareDTO.getCodeLave1())){
+					rdcShareDTO.setCodeLave1(storageManageTypeMapper.getTypeById(Integer.parseInt(rdcShareDTO.getCodeLave1())));
+				}
 
+			}
 		}
 		return ResponseData.newSuccess(data);
 	}

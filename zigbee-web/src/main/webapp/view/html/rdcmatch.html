@@ -86,8 +86,8 @@
                     </label>
                 </div>
                 <div class="fr">
-                    <input id="keyword" type="text" placeholder="请输入关键词">
-                    <i id="search" class="iconfont zoom">&#xe609;</i>
+                    <input class="keyword" id="keyword" type="text" placeholder="请输入关键词">
+                    <i name="search" id="search" class="iconfont zoom">&#xe609;</i>
                 </div>
             </div>
             <div class="filterBody">
@@ -137,88 +137,23 @@
                     </label>
                 </div>
                 <div class="fr">
-                    <input type="text" placeholder="请输入关键词">
-                    <i class="iconfont zoom">&#xe609;</i>
+                    <input id="goodsKeyword" class="keyword" type="text" placeholder="请输入关键词">
+                    <i name="search" class="iconfont zoom">&#xe609;</i>
                 </div>
             </div>
             <div class="filterBody">
                 <div class="typeList clearfix">
                     <span class="fl">品类:</span>
-                    <ul class="clearfix">
-                        <li value="0" class="activeType">不限</li>
-                        <li value="1">冻品（肉类、水产）/-15~-18℃</li>
-                        <li value="2">速冻调制食品/-15~-18℃</li>
-                        <li value="3">雪糕、冰淇淋/-22~-25℃</li>
-                        <li value="4">鲜品（鱼、肉）/-1~1℃</li>
-                        <li value="5">鲜品（果、蔬、鲜花）/0~5℃</li>
-                        <li value="6">熟制品/0~5℃</li>
-                        <li value="7">蛋奶制品/2~5℃</li>
-                        <li value="8">酒、饮料/5~20℃</li>
-                        <li value="9">糖果、果酱/10~18℃</li>
-                        <li value="10">金枪鱼/-50~-55℃</li>
-                        <li value="11">其它/</li>
+                    <ul class="clearfix" id="goodsType">
                     </ul>
                 </div>
             </div>
         </div>
         <!--信息主体-->
-        <div class="msgInfo">
-            <ul class="msgHeader clearfix">
-                <li></li>
-                <li class="msgTitle">货品信息</li>
-                <li>数量</li>
-                <li>单价</li>
-                <li>品类</li>
-                <li>有效期</li>
-                <li>报价截止日</li>
-                <li>操作</li>
-            </ul>
-            <ul class="msgBody clearfix">
-                <li>
-                    <img src="../img/ad3.png" alt="">
-                </li>
-                <li class="msgTitle">
-                    <p>售卖苹果</p>
-                    <p>
-                        <i class="iconfont">&#xe648;</i>
-                        闵行三鲁公路
-                    </p>
-                </li>
-                <li>3000Kg</li>
-                <li>20元/kg</li>
-                <li>水果</li>
-                <li>6~9个月</li>
-                <li>2017-3-20 23:00:00</li>
-                <li>
-                    <button class="look" onclick="info()"><i class="iconfont">&#xe610;</i>查看</button>
-                    <button class="collect" onclick="collection(this)"><i class="iconfont orange">&#xe634;</i>收藏
-                    </button>
-                </li>
-            </ul>
-            <ul class="msgBody clearfix">
-                <li>
-                    <img src="../img/ad2.png" alt="">
-                </li>
-                <li class="msgTitle">
-                    <p>上海闵行三鲁公路冷库出租</p>
-                    <p>
-                        <i class="iconfont">&#xe648;</i>
-                        闵行三鲁公路
-                    </p>
-                </li>
-                <li>3000Kg</li>
-                <li>20元/kg</li>
-                <li>水果</li>
-                <li>6~9个月</li>
-                <li>2017-3-20 23:00:00</li>
-                <li>
-                    <button class="look" onclick="info()"><i class="iconfont">&#xe610;</i>查看</button>
-                    <button class="collect" onclick="collection(this)"><i class="iconfont orange">&#xe634;</i>收藏
-                    </button>
-                </li>
-            </ul>
-            <div id="listPage" class="listPage"></div>
+        <div id="goodsList" class="msgInfo">
+
         </div>
+        <div id="goodsPage" class="listPage"></div>
     </div>
 </div>
 <!--<div class="infoModal">
