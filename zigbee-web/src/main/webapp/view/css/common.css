@@ -352,3 +352,56 @@ html,body,header{
 body{
     overflow-x: hidden;
 }
+/*模态框*/
+.infoModal{
+    width: 100%;
+    padding: 10px 20px;
+}
+.infoImg{
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+.infoImg li{
+    float: left;
+    width: 30%;
+    margin-right:3%;
+    height: 200px;
+    overflow: hidden;
+}
+.infoModal h3{
+    font-size: 16px;
+    margin-bottom:10px;
+    line-height: 2;
+    border-bottom: 3px solid #ccc;
+}
+.infoModal ol li{
+    height: 30px;
+    line-height: 30px;
+    border-bottom:1px dashed #ccc;
+}
+.infoModal ol li>div{
+    display: inline-block;
+}
+.infoModal ol li>div:first-child{
+    width: 150px;
+    text-align: right;
+    margin-right: 10px;
+    vertical-align: top;
+}
+.listPage{
+    margin: 0 auto;
+    text-align: center;
+}
+.infoModal ol:last-child{
+    border-bottom:1px dashed #ccc;
+}
+.infoModal ol:last-child li:last-child{
+    display: table;
+    border-bottom: none;
+}
+.infoModal ol:last-child li:last-child>div{
+    display: table-cell;
+    vertical-align: top;
+}
+/*模态框*/

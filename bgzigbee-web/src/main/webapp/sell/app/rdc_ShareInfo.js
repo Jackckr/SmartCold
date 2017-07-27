@@ -77,6 +77,10 @@ function add_storageSharinfo(){
                     type: 'POST',
                     success: function(result){
                         $("#addstorageForm").form('clear');
+                        $("input[name=dataType]").val(3);
+                        $("input[name=typeCode]").val(1);
+                        $("input[name=typeText]").val('出租');
+                        $("input[name=rdcflag]").val(0);
                         $('#addstorageShareInfodialog').dialog('close');
                         $.messager.alert('', '发布成功！', 'info');
                     }

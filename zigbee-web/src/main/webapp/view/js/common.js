@@ -70,6 +70,12 @@ function getVailCode(code) {
     return codes.join('');
 }
 
+/*清除显示undefined*/
+function clearUndefined(word) {
+    return word?word:"";
+}
+
+
 
 /*刷新缓存用户信息*/
 /*function flushUser(id) {*/

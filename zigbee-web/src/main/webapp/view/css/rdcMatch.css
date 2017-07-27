@@ -166,6 +166,7 @@
 }
 .msgInfo ul > li:first-child{
     width: 10%;
+    overflow: hidden;
 }
 .msgInfo ul > li:last-child{
     width: 18%;
@@ -210,48 +211,9 @@
 .msgInfo ul > li >.look{
     background-color: #186eff;
     color: #fff;
+    margin-right: 10px;
 }
 .msgInfo ul > li >.collect{
     color: #f57f1f;
     border-color: #f57f1f;
-}
-/*模态框*/
-.infoModal{
-    width: 100%;
-    padding: 20px;
-}
-.infoImg{
-    width: 100%;
-    height: 200px;
-    overflow: hidden;
-}
-.infoImg li{
-    float: left;
-    width: 30%;
-    margin-right:3%;
-    height: 200px;
-    overflow: hidden;
-}
-.infoImg li>img{
-    height:auto;
-}
-.infoModal h3{
-    font-size: 16px;
-    margin: 10px 0;
-}
-.infoModal ol li{
-    height: 30px;
-    line-height: 30px;
-    border-bottom:1px dashed #ccc;
-}
-.infoModal ol li>div{
-    float: left;
-}
-.infoModal ol li>div:first-child{
-    width: 150px;
-    text-align: right;
-}
-.listPage{
-    margin: 0 auto;
-    text-align: center;
 }
