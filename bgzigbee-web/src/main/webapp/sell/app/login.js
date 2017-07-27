@@ -75,9 +75,6 @@ function login() {
 			} else {
 				clsyle("#ui", 4, data.message);
 			}
-        	
-        	
-        	
         }
     });
 

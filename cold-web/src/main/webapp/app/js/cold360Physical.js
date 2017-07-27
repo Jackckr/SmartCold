@@ -3,15 +3,14 @@
  * Created by maqiang34 on 16/10/18.
  * 360体检
  */
-coldWeb.controller('cold360Physical', function( $scope, $rootScope,$http,$timeout,baseTools ) {
+coldWeb.controller('cold360Physical', function( $scope, $rootScope, $stateParams,$http,$timeout,baseTools ) {
 	//初始化页面
-	$scope.pageindex=1;
-	$scope.rdcId=$rootScope.rdcId;
+	$scope.rdcid = $stateParams.rdcId;
 	$scope.cwheight=$(".content-wrapper").height();
 	$(".mainHeight").height($scope.cwheight); 
 	$scope.physicalday= window.localStorage['physicalday'+$scope.rdcId];
 	if($scope.physicalday){
-		var date1=new Date($scope.physicalday); var date2=new Date(); var date3=date2.getTime()-date1.getTime();  var days=Math.floor(date3/(86400000)) ; 
+		var date1=new Date($scope.physicalday), date2=new Date(), date3=date2.getTime()-date1.getTime(),days=Math.floor(date3/(86400000)) ; 
 		if(days==0){$scope.msg='上次体检时间：'+baseTools.formatTime( $scope.physicalday);}else if(days<2){$scope.msg='系统已经'+days+"天未体检了,建议体检";}else {$scope.msg='系统已经很久未体检了,建议体检';}
 	}else{
 		$scope.msg='您的冷库还没有体检哦，建议立即体检！';
@@ -19,9 +18,6 @@ coldWeb.controller('cold360Physical', function( $scope, $rootScope,$http,$timeou
 	//体检
 	$scope.physical=function(){ $("#loding").show(); $timeout($scope.pysical,1500); };
 	$scope.pysical=function(){
-		if($scope.rdcId==undefined){
-			$scope.rdcId=window.sessionStorage.smrdcId;
-		}
 		$http.get('/i/physicalController/checkup',{params: {"rdcId":$scope.rdcId } }).success(function(data,status,config,header){
 			 $("#loding").hide();
 		      if(data.success){

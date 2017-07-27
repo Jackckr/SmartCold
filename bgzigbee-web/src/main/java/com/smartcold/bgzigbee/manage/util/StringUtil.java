@@ -268,11 +268,10 @@ public class StringUtil
 	}
 	
 	
-	public synchronized static boolean verifyToken(String token){
-		   if(isnotNull(token)){
-			   String mdtokn = EncodeUtil.encodeByMD5("token"+TimeUtil.getDateHour());
-			   return mdtokn.equals(token);
-		   }
-		   return false;
+	public  static boolean verifyToken(String token){
+		  return EncodeUtil.encodeByMD5("token"+TimeUtil.getDateHour()).equals(token);
+	}
+	public static String  getToken(String token){
+		return EncodeUtil.encodeByMD5(token+TimeUtil.getDateHour());
 	}
 }

@@ -103,7 +103,9 @@ public class AdminController extends BaseController {
 				admin.setAcl(null);
 				HashMap<String, Object> resdata=new HashMap<String, Object>();
 				resdata.put("user", admin);
+				resdata.put("SID", request.getSession().getId());
 				resdata.put("token", String.format("token=%s", cookie));
+				resdata.put("sltoken", StringUtil.getToken(admin.getAdminname()));
 				return	ResponseData.newSuccess(resdata);
 			}
 			return ResponseData.newFailure("用户名或者密码不正确！");

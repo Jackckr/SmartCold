@@ -112,8 +112,8 @@ public class PhysicalController {
 		List<ColdStorageSetEntity> coldStorageSetList = coldsetServer.findByRdcId(rdcId);
 		if(SetUtil.isnotNullList(coldStorageSetList)){	//1.2检查冷库信息 
 			Integer oid= coldStorageSetList.get(0).getId();
-			 ishasplc=	this.hasplc(1, "coldstorage", oid, "Temp", stTime, edTime);//plc
-			 ishasTempDEV= this.hasdev(1, "coldstorage", oid, "Temp", stTime, edTime);//1.1检查温度是否有设备
+//			 ishasplc=	this.hasplc(1, "coldstorage", oid, "Temp", stTime, edTime);//plc
+//			 ishasTempDEV= this.hasdev(1, "coldstorage", oid, "Temp", stTime, edTime);//1.1检查温度是否有设备
 			if(ishasTempDEV){ //2.2檢查設備(进行评估冷库)
 				double sumtempS = 0; double sumsransportS=0; 
 				HashMap<Integer, Object> tempScores=new HashMap<Integer, Object>();
@@ -159,22 +159,22 @@ public class PhysicalController {
 	 * @param edTime
 	 * @return
 	 */
-	private boolean hasdev(int type,String table,int oid,String key, String stTime, String edTime){
-		List<DeviceObjectMappingEntity> deviceList = deviceObjectMappingDao.findByTypeOid(type, oid);
-		if (SetUtil.isnotNullList(deviceList)) {
-			return true;// return this.quantityMapper.getCountBydevkey(deviceEntity.getDeviceid(), key, stTime, edTime)>0;//最终看使用哪种
-		} else {
-			return this.quantityMapper.getCountBykey(oid, table, key, stTime, edTime)!=null;
-		}
-	}
-	private boolean hasplc(int type,String table,int oid,String key, String stTime, String edTime){
-		List<DeviceObjectMappingEntity> deviceList = deviceObjectMappingDao.findByTypeOid(type, oid);
-		if (SetUtil.isNullList(deviceList)) {
-			return this.quantityMapper.getCountBykey(oid, table, key, stTime, edTime)!=null;
-		} else {
-			return false;
-		}
-	}
+//	private boolean hasdev(int type,String table,int oid,String key, String stTime, String edTime){
+//		List<DeviceObjectMappingEntity> deviceList = deviceObjectMappingDao.findByTypeOid(type, oid);
+//		if (SetUtil.isnotNullList(deviceList)) {
+//			return true;// return this.quantityMapper.getCountBydevkey(deviceEntity.getDeviceid(), key, stTime, edTime)>0;//最终看使用哪种
+//		} else {
+//			return this.quantityMapper.getCountBykey(oid, table, key, stTime, edTime)!=null;
+//		}
+//	}
+//	private boolean hasplc(int type,String table,int oid,String key, String stTime, String edTime){
+//		List<DeviceObjectMappingEntity> deviceList = deviceObjectMappingDao.findByTypeOid(type, oid);
+//		if (SetUtil.isNullList(deviceList)) {
+//			return this.quantityMapper.getCountBykey(oid, table, key, stTime, edTime)!=null;
+//		} else {
+//			return false;
+//		}
+//	}
 	
     /**
      * 根据id对冷库评分

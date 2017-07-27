@@ -31,6 +31,8 @@
 .menu-title { margin-left: 10px; font-weight: 500; color: white;}
 a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-events:none}.iconfont{font-style:normal;font-size:1pc;font-family:iconfont!important;-webkit-font-smoothing:antialiased;-webkit-text-stroke-width:.2px;-moz-osx-font-smoothing:grayscale}.omg{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tooltip-inner{background:rgba(0,0,0,.8);color:#fff;text-align:left}.angucomplete-dropdown{padding:0 0 0 6px;width:230px;max-height:280px;font-size:9pt}.quanxian{cursor:not-allowed}.quanxian:hover>a:hover,.quanxian>a,.quanxian>a i,.quanxian>a span{color:#444!important;pointer-events:none}.skin-blue .sidebar-menu>li.quanxian:hover>a{background:transparent!important;border-left-color:transparent!important}
 
+
+
 </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini" oncontextmenu=self.event.returnValue=false onselectstart="return false">
@@ -41,7 +43,7 @@ a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-
 				<span class="ringBox"><i class="iconfont">&#xe6f0;</i></span>
 				<span>{{alarmMsgCount.alarmCount}}</span>
 			</div>
-			<a href="#/cold360Physical" class="logo"> 
+			<a href="#/preview" class="logo"> 
 				<span class="logo-mini"><span class="glyphicon glyphicon-home"></span></span> 
 				<span class="logo-lg"><b><span class="glyphicon glyphicon-home"></span>&nbsp;SMART</b>COLD</span>
 			</a>
@@ -189,13 +191,18 @@ a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-
 			</section>
 			<section class="sidebar">
 				<ul id="lfmenu" class="sidebar-menu text-white my_sidebar">
-					<li  class="treeview"><a href="#/cold360Physical"><i class="iconfont" style="color:#ffffff">&#xe71b;</i><span class="menu-title text-white" style="font-size: large">体检</span></a></li>
+					<li  class="treeview"><a href="#/cold360Physical/{{rdcId}}"><i class="iconfont" style="color:#ffffff">&#xe71b;</i><span class="menu-title text-white" style="font-size: large">体检</span></a></li>
 					<!--1. 监控 -->
 					<li mid="ml_acl1" class="treeview"><a href=""><i class="icon iconfont" style="color:#ffffff"></i> <span class="menu-title text-white" style="font-size: large">监控</span></a>
 						<ul class="treeview-menu">
 							<li mid="ml_acl10" class="treeview"><a href=""> <i class="icon iconfont"></i><span class="menu-title">温度</span><i class="fa fa-angle-left pull-right"></i></a>
 								<ul class="treeview-menu">
 									<li ng-repeat="storage in mystorages" onclick="activeLi(this)"><a href="#/coldStorageTemper/{{storage.id}}"> <i class="fa fa-circle-o"></i>{{storage.name}} </a></li>
+								</ul>
+						    </li>
+							<li mid="ml_acl90" class="treeview"><a href=""> <i class="icon iconfont">&#xe7fa;</i><span class="menu-title">湿度</span><i class="fa fa-angle-left pull-right"></i></a>
+								<ul class="treeview-menu">
+									<li ng-repeat="storage in mystorages" onclick="activeLi(this)"><a href="#/coldStorageHumidity/{{storage.id}}"> <i class="fa fa-circle-o"></i>{{storage.name}} </a></li>
 								</ul>
 						    </li>
 							<li mid="ml_acl20" class="treeview "><a href="#/about"> <i class="icon iconfont"></i><span class="menu-title">能耗</span><i class="fa fa-angle-left pull-right"></i> </a>
@@ -412,6 +419,7 @@ a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-
 		document.write("<scr"+"ipt src=\"app/js/coldStorageMonitor.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"app/js/coldStorageDoor.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"app/js/coldStorageTemper.js\"></sc"+"ript>");
+		document.write("<scr"+"ipt src=\"app/js/coldStorageHumidity.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"app/js/coldStorageInOutGoods.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"app/js/compressorMonitor.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"app/js/compressorPressure.js\"></sc"+"ript>");

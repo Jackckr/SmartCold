@@ -7,12 +7,12 @@
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
-    <link rel="shortcut icon" href="../img/favicon.ico" />
+    <link rel="shortcut icon" href="../img/favicon.ico"/>
     <!--引入样式包-->
-    <link rel="stylesheet" href="../plugins/css/layui.css" />
-    <link rel="stylesheet" href="../css/common.css" />
-    <link rel="stylesheet" href="../css/usercenter.css" />
-    <link rel="stylesheet" href="../css/media.css" />
+    <link rel="stylesheet" href="../plugins/css/layui.css"/>
+    <link rel="stylesheet" href="../css/common.css"/>
+    <link rel="stylesheet" href="../css/usercenter.css"/>
+    <link rel="stylesheet" href="../css/media.css"/>
 </head>
 <body>
 <!--header 导航栏-->
@@ -104,14 +104,17 @@
                                         <img id="headerPic" src="../img/register.png" alt="">
                                         <label for="headerEdit">
                                             更改头像
-                                            <input type="file" onchange="changePic(this)"  accept="image/gif, image/bmp, image/jpg,image/jpeg, image/png" id="headerEdit">
+                                            <input type="file" onchange="changePic(this)"
+                                                   accept="image/gif, image/bmp, image/jpg,image/jpeg, image/png"
+                                                   id="headerEdit">
                                         </label>
                                     </div>
                                 </div>
                                 <div>
                                     <label class="layui-form-label">昵称<em>*</em></label>
                                     <div class="layui-input-inline">
-                                        <input type="text" name="nickname" required  lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input">
+                                        <input type="text" name="nickname" required lay-verify="required"
+                                               placeholder="请输入昵称" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                                 <!--<div>
@@ -163,34 +166,44 @@
                                 <div style="height: 38px;">
                                     <label class="layui-form-label">原手机号</label>
                                     <div class="layui-input-inline clearfix">
-                                        <input id="oldPhone" type="text" name="title"  lay-verify="required" placeholder="请输入原手机号" autocomplete="off" class="layui-input"
+                                        <input id="oldPhone" type="text" name="title" lay-verify="required"
+                                               placeholder="请输入原手机号" autocomplete="off" class="layui-input"
                                                style="width: 70%;display: inline-block">
-                                        <button id="oldPhoneBtn" onclick="getCode(1)" class="layui-btn layui-btn-primary fr getCode omg">获取验证码</button>
+                                        <button id="oldPhoneBtn" onclick="getCode(1)"
+                                                class="layui-btn layui-btn-primary fr getCode omg">获取验证码
+                                        </button>
                                     </div>
                                 </div>
                                 <div>
                                     <label class="layui-form-label">验证码</label>
                                     <div class="layui-input-inline">
-                                        <input id="oldCode" maxlength="4" type="text" name="title" lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+                                        <input id="oldCode" maxlength="4" type="text" name="title" lay-verify="required"
+                                               placeholder="请输入验证码" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                                 <div>
                                     <label class="layui-form-label">新手机号</label>
                                     <div class="layui-input-inline clearfix">
-                                        <input id="newPhone" type="text" name="title" lay-verify="required" placeholder="请输入新手机号" autocomplete="off" class="layui-input"
+                                        <input id="newPhone" type="text" name="title" lay-verify="required"
+                                               placeholder="请输入新手机号" autocomplete="off" class="layui-input"
                                                style="width: 70%;display: inline-block">
-                                        <button id="newPhoneBtn" onclick="getCode(2)" class="layui-btn layui-btn-primary fr getCode omg">获取验证码</button>
+                                        <button id="newPhoneBtn" onclick="getCode(2)"
+                                                class="layui-btn layui-btn-primary fr getCode omg">获取验证码
+                                        </button>
                                     </div>
                                 </div>
                                 <div>
                                     <label class="layui-form-label">验证码</label>
                                     <div class="layui-input-inline">
-                                        <input id="newCode" type="text" name="title" maxlength="4"  lay-verify="required" placeholder="请输入验证码" autocomplete="off" class="layui-input">
+                                        <input id="newCode" type="text" name="title" maxlength="4" lay-verify="required"
+                                               placeholder="请输入验证码" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                                 <div>
                                     <div class="layui-input-block">
-                                        <button onclick="updateTelephone()" class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                                        <button onclick="updateTelephone()" class="layui-btn" lay-submit
+                                                lay-filter="formDemo">立即提交
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -200,24 +213,29 @@
                                 <div>
                                     <label class="layui-form-label">原始密码</label>
                                     <div class="layui-input-inline">
-                                        <input id="old_password" type="password" lay-verify="required" placeholder="请输入原密码" autocomplete="off" class="layui-input">
+                                        <input id="old_password" type="password" lay-verify="required"
+                                               placeholder="请输入原密码" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                                 <div>
                                     <label class="layui-form-label">新密码</label>
                                     <div class="layui-input-inline">
-                                        <input id="new_password" type="password" lay-verify="required" placeholder="请输入新密码" autocomplete="off" class="layui-input">
+                                        <input id="new_password" type="password" lay-verify="required"
+                                               placeholder="请输入新密码" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                                 <div>
                                     <label class="layui-form-label">确认新密码</label>
                                     <div class="layui-input-inline">
-                                        <input id="new_repassword" type="password" lay-verify="required" placeholder="请确认新密码" autocomplete="off" class="layui-input">
+                                        <input id="new_repassword" type="password" lay-verify="required"
+                                               placeholder="请确认新密码" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                                 <div>
                                     <div class="layui-input-block">
-                                        <button onclick="updatePwd()" class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                                        <button onclick="updatePwd()" class="layui-btn" lay-submit
+                                                lay-filter="formDemo">立即提交
+                                        </button>
                                     </div>
                                 </div>
                             </form>
@@ -273,13 +291,14 @@
                 <div class="layui-tab">
                     <ul class="layui-tab-title">
                         <li class="layui-this">冷库冷库</li>
-                        <li >需求收藏</li>
+                        <li>需求收藏</li>
                     </ul>
                     <div class="layui-tab-content">
                         <div class="layui-tab-item layui-show">
                             <div class="search">
                                 <div class="layui-input-inline">
-                                    <input type="text" name="keyword" placeholder="请输入关键词" autocomplete="off" class="layui-input">
+                                    <input type="text" name="keyword" placeholder="请输入关键词" autocomplete="off"
+                                           class="layui-input">
                                 </div>
                                 <button class="layui-btn">搜索</button>
                             </div>
@@ -292,8 +311,10 @@
                                         <h4 class="omg"><i class="iconfont orange">&#xe61c;</i>天山路600号捷运大厦</h4>
                                         <p class="omg">2017-07-26 10:20:22</p>
                                         <div class="txt-right">
-                                            <button class="layui-btn layui-btn-normal layui-btn-small"><a href="">查看</a></button>
-                                            <button class="layui-btn layui-btn-danger layui-btn-small"><a href="">取消收藏</a></button>
+                                            <button class="layui-btn layui-btn-normal layui-btn-small"><a href="">查看</a>
+                                            </button>
+                                            <button class="layui-btn layui-btn-danger layui-btn-small"><a
+                                                    href="">取消收藏</a></button>
                                         </div>
                                     </div>
                                 </li>
@@ -302,7 +323,8 @@
                         <div class="layui-tab-item">
                             <div class="search">
                                 <div class="layui-input-inline">
-                                    <input type="text" name="keyword" placeholder="请输入关键词" autocomplete="off" class="layui-input">
+                                    <input type="text" name="keyword" placeholder="请输入关键词" autocomplete="off"
+                                           class="layui-input">
                                 </div>
                                 <button class="layui-btn">搜索</button>
                             </div>
@@ -315,8 +337,10 @@
                                         <h4 class="omg"><i class="iconfont orange">&#xe61c;</i>天安门1000号</h4>
                                         <p class="omg">2017-06-26 10:20:22</p>
                                         <div class="txt-right">
-                                            <button class="layui-btn layui-btn-normal layui-btn-small"><a href="">查看</a></button>
-                                            <button class="layui-btn layui-btn-danger layui-btn-small"><a href="">取消收藏</a></button>
+                                            <button class="layui-btn layui-btn-normal layui-btn-small"><a href="">查看</a>
+                                            </button>
+                                            <button class="layui-btn layui-btn-danger layui-btn-small"><a
+                                                    href="">取消收藏</a></button>
                                         </div>
                                     </div>
                                 </li>
@@ -329,7 +353,8 @@
                 <h3><i class="iconfont">&#xe629;</i>联系我们</h3>
                 <p>手机网址：<a href="http://m.liankur.com" target="_blank" class="blue">http://m.liankur.com</a></p>
                 <p>官方网址：<a href="http://www.liankur.com" target="_blank" class="blue">http://www.liankur.com</a></p>
-                <p>360网址：<a href="http://www.smartcold.org.cn" target="_blank" class="blue">http://www.smartcold.org.cn</a></p>
+                <p>360网址：<a href="http://www.smartcold.org.cn" target="_blank"
+                            class="blue">http://www.smartcold.org.cn</a></p>
                 <p>联系电话：<i class="orange">400-853-5606</i></p>
                 <p>办公时间：周一至周五，09:30~17:30</p>
                 <p>办公时间：周一至周五，09:30~17:30</p>
@@ -391,7 +416,7 @@
     <dl class="clearfix">
         <li class="fl">
             <p><a href="aboutlianku.html">关于链库</a></p>
-            <p>©2016 Smartcold    沪ICP备 16004753</p>
+            <p>©2016 Smartcold 沪ICP备 16004753</p>
             <p>为了您可以获取更佳的浏览效果</p>
             <p>本站推荐使用
                 <a href="http://sw.bos.baidu.com/sw-search-sp/software/ba34c905dbdd4/ChromeStandalone_57.0.2987.98_Setup.exe">谷歌浏览器
@@ -421,9 +446,9 @@
 <script src="../js/common.js"></script>
 <script src="../js/usercenter.js"></script>
 <script>
-$(function () {
+    $(function () {
 
-});
+    });
 </script>
 </body>
 </html>

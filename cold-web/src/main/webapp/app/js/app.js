@@ -167,7 +167,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
     };
 }]);
 coldWeb.config(function ($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise("/cold360Physical");
+    $urlRouterProvider.otherwise("/preview");
     coldWeb.stateProvider=$stateProvider;
     //index
     $stateProvider
@@ -177,7 +177,7 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
 	    templateUrl: 'app/template/preview.html'
     })
     .state('cold360Physical',{
-		url:'/cold360Physical',
+		url:'/cold360Physical/{rdcId}',
 		controller: 'cold360Physical',
 	    templateUrl: 'app/template/cold360Physical.html'
     }).state('powerAnalysis',{ //分析--->电耗分析=============================================================f
@@ -214,6 +214,10 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/coldStorageTemper/:storageID',
         controller: 'coldStorageTemper',
         templateUrl: 'app/template/coldStorageTemper.html'
+    }).state('coldStorageHumidity', {
+        url: '/coldStorageHumidity/:storageID',
+        controller: 'coldStorageHumidity',
+        templateUrl: 'app/template/coldStorageHumidity.html'
     }).state('compressorPressure', {
         url: '/compressorPressure/:compressorID',
         controller: 'compressorPressure',
