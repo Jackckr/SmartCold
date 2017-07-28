@@ -225,6 +225,7 @@ function initGoodsList() {
 var addUrl=['rdcrelease.html','applyrent.html','salegoods.html','applygoods.html'];
 function toAddInfo() {
     if(checkLogin()){
+        sessionStorage.submitRdcStatus=0;
         var url;
         if(screenParam.dataType==3){
             url=screenParam.typeCode==1?addUrl[0]:addUrl[1];
