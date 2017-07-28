@@ -175,3 +175,12 @@ function supportForeach() {
         };
     }
 }
+/*safari时间不支持解决*/
+var formatTime = {
+    standTime:function (date) {
+        return new Date(Date.parse(date.replace(/-/g, "/")))
+    },
+    mseconds:function (date) {
+        return new Date(Date.parse(date.replace(/-/g, "/"))).getTime()
+    }
+};

@@ -255,14 +255,6 @@ function deleteData(id,i,flag){//flag转为收藏而设立
             success: function(data){
                 if(data.status == 0 || data.success || data.status == 1){
                     data.message==undefined?messages='恭喜你，删除成功~':messages=data.message;
-                   /* layer.msg(messages, {
-                        icon: 6,
-                        anim:6,
-                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                    }, function(){
-                        initFn(i,flag);
-                        layer.close(index);
-                    });*/
                     layer.alert(messages, {
                         icon:'6'
                         ,skin: 'layui-layer-molv' //样式类名
@@ -304,9 +296,9 @@ function getShareList(datatype, pageId, domId) {
                         '<div class="oTxt fl"><h2 class="omg"><a class="blue" onclick="info(' + item.id +','+ datatype+ ')">[' + item.typeText + ']' + item.title + '</a></h2>' +
                         '<h4 class="omg"><i class="iconfont orange">&#xe61c;</i>' + item.detlAddress + '</h4>' +
                         '<p class="omg">' + item.updatetime + '</p><div class="txt-right">' +
-                        '<button class="layui-btn layui-btn-normal layui-btn-small"><a onclick="info(' + item.id +','+ datatype+')">查看</a></button>' +
-                        '<button class="layui-btn layui-btn-small"><a href="javascript:;">修改</a></button>' +
-                        '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteData(' + item.id + ',' + 1 + ')"><a href="javascript:;">删除</a></button></div></div></li>')
+                        '<button class="layui-btn layui-btn-normal layui-btn-small" onclick="info(' + item.id +','+ datatype+')">查看</button>' +
+                        '<button class="layui-btn layui-btn-small">修改</button>' +
+                        '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteData(' + item.id + ',' + 1 + ')">删除</button></div></div></li>')
                 });
                 $("#sharelist"+domId).empty().append(oList.join(''));
             } else {
@@ -326,15 +318,22 @@ function getShareList(datatype, pageId, domId) {
 function info(id,datatype,typecode) {
     $.get('/i/ShareRdcController/getSEByID.json',{id: id}, function (data) {
         var obj = data.entity,address='',len=null;
-        var oStart=new Date(obj.validStartTime).getTime(),oEnd=new Date(obj.validEndTime).getTime(),today=new Date().getTime();
-        var deadline=oEnd-oStart;
-        var days    = deadline / 1000 / 60 / 60 / 24;
-        var daysRound   = Math.floor(days);//租期
-        var hours    = deadline/ 1000 / 60 / 60 - (24 * daysRound);
-        var hoursRound   = Math.floor(hours);
+        var oStart=formatTime.mseconds(obj.validStartTime);
+        var oEnd=formatTime.mseconds(obj.validEndTime);
+        var deadline = oEnd - oStart;
+        var days = deadline / 1000 / 60 / 60 / 24;
+        var daysRound = Math.floor(days);
         var usefulDate = rentDate[obj.rentdate];
-        if(obj.rentdate==undefined || obj.rentdate==null || obj.rentdate==0){
-            usefulDate = daysRound+1+'天'
+        if (obj.rentdate == undefined || obj.rentdate == null || obj.rentdate == 0) {
+            if(daysRound<30){
+                usefulDate = daysRound +1 + '天'
+            }else{
+                if(daysRound/30>12){
+                    usefulDate = (daysRound/30/12).toFixed(1) + '年'
+                }else{
+                    usefulDate = (daysRound/30).toFixed(1) + '个月'
+                }
+            }
         }
         obj.files==undefined?len=0:len=obj.files.length;
         var imglist='<ul id="infoImg" class="infoImg clearfix layer-photos-demo">',i=0;
@@ -361,9 +360,9 @@ function info(id,datatype,typecode) {
             if(!obj.name){
                 rentRdcLi = '';
             }else{
-                rentRdcLi = '<li><div>关联冷库：</div><div>'+obj.name+'</div></li>' +
-                    '<li><div>是否认证：</div><div>'+oaudit+'</div></li>' +
-                    '<li><div>是否达标：</div><div>'+isStand+'</div></li>' +
+                rentRdcLi = '<li><div>关联冷库：</div><div>'+obj.name+'</div></li>' ,
+                    '<li><div>是否认证：</div><div>'+oaudit+'</div></li>' ,
+                    '<li><div>是否达标：</div><div>'+isStand+'</div></li>' ,
                     '<li><div>信息完整度：</div><div>'+obj.infoIntegrity+'%</div></li>';
             }
             address=obj.detlAddress;
@@ -449,13 +448,13 @@ function getRdcList() {
             }
             var rdc = data.data;
             $.each(rdc, function (index, item) {
-                rdcList.push('<li><div class="oImg fl"><img src="' + item.logo + '" alt=""></div>' +
-                    '<div class="oTxt fl"><h2 class="omg"><a class="blue" href="rdcinfo.html?rdcId=' + item.id + '">' + item.name + '</a></h2>' +
-                    '<h4 class="omg"><i class="iconfont orange">&#xe61c;</i>' + item.address + '</h4>' +
-                    '<p class="omg">' + item.addtime + '</p><div class="txt-right">' +
-                    '<button class="layui-btn layui-btn-normal layui-btn-small"><a href="rdcinfo.html?rdcId=' + item.id + '">查看</a></button>' +
-                    '<button class="layui-btn layui-btn-small"><a href="rdcaddcold.html?rdcId=' + item.id + '">修改</a></button>' +
-                    '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteData('+item.id+','+0+')"><a href="javascript:;">删除</a></button></div></div></li>')
+                rdcList.push('<li><div class="oImg fl"><img src="'+item.logo+'" alt=""></div>',
+                    '<div class="oTxt fl"><h2 class="omg"><a class="blue" href="rdcinfo.html?rdcId='+item.id + '">'+ item.name+'</a></h2>' ,
+                    '<h4 class="omg"><i class="iconfont orange">&#xe61c;</i>'+item.address+'</h4>' ,
+                    '<p class="omg">' + item.addtime + '</p><div class="txt-right">' ,
+                    '<button class="layui-btn layui-btn-normal layui-btn-small" onclick="location.href=\'rdcinfo.html?rdcId='+item.id+'\'">查看</button>' ,
+                    '<button class="layui-btn layui-btn-small" onclick="location.href=\'rdcaddcold.html?rdcId='+item.id+'\'">修改</button>' ,
+                    '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteData('+item.id+','+0+')">删除</button></div></div></li>')
             });
             $("#rdcList").empty().append(rdcList.join(''));
     });
@@ -469,7 +468,7 @@ function search() {//搜索
 * 我的收藏
 *
 * */
-var collectUrl = ['/i/collect/getCollectRdc','/i/collect/getCollectShared']
+var collectUrl = ['/i/collect/getCollectRdc','/i/collect/getCollectShared'];
 function getCollectList(flag,pageId,domId){
     var collectList = [];
     $.get(collectUrl[flag],
@@ -487,41 +486,40 @@ function getCollectList(flag,pageId,domId){
                 $.each(data, function (index, item) {
                     var itemlist = item.rdcEntity;
                     if(itemlist){
-                        collectList.push('<li><div class="oImg fl"><img src="' + itemlist.logo + '" alt=""></div>' +
-                            '<div class="oTxt fl"><h2 class="omg"><a class="blue" href="rdcinfo.html?rdcId=' + itemlist.id + '">' + itemlist.name + '</a></h2>' +
-                            '<h4 class="omg"><i class="iconfont orange">&#xe61c;</i>' + itemlist.address + '</h4>' +
-                            '<p class="omg">' + itemlist.addtime + '</p><div class="txt-right">' +
-                            '<button class="layui-btn layui-btn-normal layui-btn-small"><a href="rdcinfo.html?rdcId=' + itemlist.id + '">查看</a></button>' +
-                            '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteData('+item.id+','+3+','+flag+')"><a href="javascript:;">取消收藏</a></button></div></div></li>')
+                        collectList.push('<li><div class="oImg fl"><img src="' , itemlist.logo , '" alt=""></div>' ,
+                            '<div class="oTxt fl"><h2 class="omg"><a class="blue" href="rdcinfo.html?rdcId=' , itemlist.id , '">' , itemlist.name , '</a></h2>' ,
+                            '<h4 class="omg"><i class="iconfont orange">&#xe61c;</i>' , itemlist.address , '</h4>' ,
+                            '<p class="omg">' , itemlist.addtime , '</p><div class="txt-right">' ,
+                            '<button class="layui-btn layui-btn-normal layui-btn-small" onclick="location.href=\'rdcinfo.html?rdcId='+itemlist.id+'\'">查看</button>' ,
+                            '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteData('+item.id+','+3+','+flag+')">取消收藏</button></div></div></li>')
                     }else{
-                        collectList.push('<li><div class="oImg fl"><img src="http://139.196.189.93:8089/app/rdcHeader.jpg" alt=""></div>' +
-                            '<div class="oTxt fl"><h2 class="omg"><a class="blue">该条内容已被删除~</a></h2>' +
-                            '<h4 class="omg"></h4><p class="omg"></p><div class="txt-right">' +
-                            '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteData('+item.id+','+3+','+flag+')"><a href="javascript:;">取消收藏</a></button></div></div></li>')
+                        collectList.push('<li><div class="oImg fl"><img src="http://139.196.189.93:8089/app/rdcHeader.jpg" alt=""></div>' ,
+                            '<div class="oTxt fl"><h2 class="omg"><a class="blue">该条内容已被删除~</a></h2>' ,
+                            '<h4 class="omg"></h4><p class="omg"></p><div class="txt-right">' ,
+                            '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteData('+item.id+','+3,','+flag+')">取消收藏</button></div></div></li>')
                     }
                 });
             }else{//收藏需求匹配
                 $.each(data, function (index, item) {
                     var itemlist = item.rdcShareDTO;
                     if(itemlist){
-                        collectList.push('<li><div class="oImg fl"><img src="' + itemlist.logo + '" alt="图片跑丢了~"></div>' +
-                            '<div class="oTxt fl"><h2 class="omg"><a class="blue" onclick="info(' + itemlist.id +','+ itemlist.dataType+ ','+itemlist.typeCode+')">' +
-                            '[' + itemlist.typeText + ']' + itemlist.title + '</a></h2>' +
-                            '<h4 class="omg"><i class="iconfont orange">&#xe61c;</i>' + itemlist.detlAddress + '</h4>' +
-                            '<p class="omg">' + itemlist.validEndTime + '</p><div class="txt-right">' +
-                            '<button class="layui-btn layui-btn-normal layui-btn-small">' +
-                            '<a onclick="info(' + itemlist.id +','+ itemlist.dataType+ ','+itemlist.typeCode+')">查看</a></button>' +
-                            '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteData('+item.id+','+3+','+flag+')"><a href="javascript:;">取消收藏</a></button></div></div></li>')
+                        collectList.push('<li><div class="oImg fl"><img src="' , itemlist.logo , '" alt="图片跑丢了~"></div>' ,
+                            '<div class="oTxt fl"><h2 class="omg"><a class="blue" onclick="info(' , itemlist.id ,',', itemlist.dataType, ',',itemlist.typeCode,')">' ,
+                            '[' , itemlist.typeText , ']' , itemlist.title , '</a></h2>' ,
+                            '<h4 class="omg"><i class="iconfont orange">&#xe61c;</i>' , itemlist.detlAddress , '</h4>' ,
+                            '<p class="omg">' , itemlist.validEndTime , '</p><div class="txt-right">' ,
+                            '<button class="layui-btn layui-btn-normal layui-btn-small" onclick="info('+itemlist.id+','+itemlist.dataType+','+itemlist.typeCode+')">查看</button>' ,
+                            '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteData('+item.id+','+3+','+flag+')">取消收藏</button></div></div></li>')
                     }else{
-                        collectList.push('<li><div class="oImg fl"><img src="http://139.196.189.93:8089/app/rdcHeader.jpg" alt=""></div>' +
-                            '<div class="oTxt fl"><h2 class="omg"><a class="blue">该条内容已被删除~</a></h2>' +
-                            '<h4 class="omg"></h4><p class="omg"></p><div class="txt-right">' +
-                            '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteData('+item.id+','+3+','+flag+')"><a href="javascript:;">取消收藏</a></button></div></div></li>')
+                        collectList.push('<li><div class="oImg fl"><img src="http://139.196.189.93:8089/app/rdcHeader.jpg" alt=""></div>' ,
+                            '<div class="oTxt fl"><h2 class="omg"><a class="blue">该条内容已被删除~</a></h2>' ,
+                            '<h4 class="omg"></h4><p class="omg"></p><div class="txt-right">' ,
+                            '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteData('+item.id+','+3+','+flag+')">取消收藏</button></div></div></li>')
                     }
 
                 });
             }
-            $("#sharelist"+domId).empty().append(collectList.join(''));
+            $("#sharelist",domId).empty().append(collectList.join(''));
         });
 }
 layui.use(['jquery', 'form', 'element', ], function () {
@@ -530,13 +528,14 @@ layui.use(['jquery', 'form', 'element', ], function () {
     form = layui.form();
     $form = $('form');
     localStorage.OURL=document.URL;
-    checkLogin(1, initForm);
+    checkLogin(1, null);
     $("#reset").bind("click", function () {
         initForm();
     });
     $('.tabNav>li').click(function () {
         pageCurrent = 1;pagination={pageCount:-1,oldPageCount:-1};
         var oIndex = $(this).index();
+        localStorage.liIndex=oIndex;
         $(this).addClass('current').siblings('li').removeClass('current');
         $(".userInfo>li").eq(oIndex).show().siblings('li').hide();
         switch(oIndex)
@@ -560,4 +559,23 @@ layui.use(['jquery', 'form', 'element', ], function () {
             return
         }
     })
+    var hash = location.hash;
+    if(localStorage.liIndex&&hash){
+        pageCurrent = 1;pagination={pageCount:-1,oldPageCount:-1};
+        $(".tabNav li").eq(localStorage.liIndex).addClass('current').siblings('li').removeClass('current');
+        $(".userInfo>li").eq(localStorage.liIndex).show().siblings('li').hide();
+        if(hash=='#user'||hash==''){
+            initForm();
+        }else if(hash=='#myRdc'){
+            getRdcList();
+        }else if(hash=='#rent'){
+            getShareList(3,1,1);
+        }else if(hash=='#goods'){
+            getShareList(1,2,2);
+        }else if(hash=='#collect'){
+            getCollectList(0,3,3);
+        }
+    }else{
+        initForm();
+    }
 });

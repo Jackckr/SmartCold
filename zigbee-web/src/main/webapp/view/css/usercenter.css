@@ -193,14 +193,6 @@ label>em{
 .oTxt h4>i{
     font-size: 14px;
 }
-.oTxt button{
-    padding:0;
-}
-.oTxt button>a{
-    display: block;
-    color: #fff;
-    padding:0 8px;
-}
 .page{
     text-align: center;
 }
