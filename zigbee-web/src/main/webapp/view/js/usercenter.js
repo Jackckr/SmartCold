@@ -1,7 +1,4 @@
-var $form;
-var form;
-var $;
-var oFile;
+var $form, form, $, oFile;
 /**
 *
 * 个人信息
@@ -558,7 +555,7 @@ layui.use(['jquery', 'form', 'element', ], function () {
         default:
             return
         }
-    })
+    });
     var hash = location.hash;
     if(localStorage.liIndex&&hash){
         pageCurrent = 1;pagination={pageCount:-1,oldPageCount:-1};

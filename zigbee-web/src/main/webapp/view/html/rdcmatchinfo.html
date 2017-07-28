@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>链库-需求匹配</title>
+    <title>链库-需求匹配详情</title>
     <meta charset="utf-8" name="keywords" content="链库,冷链物流,冷库360,冷库监控,冷库智能管理,冷库能效评估"/>
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -64,117 +64,10 @@
         </ul>
     </div>
 </div>
-<div class="section clearfix">
-    <div class="btnGroup">
-        <button class="active"><a href="#coldList">出租</a></button>
-        <button><a href="#applyList">求租</a></button>
-        <button><a href="#goodsList">出售</a></button>
-        <button><a href="#applygoodsList">求购</a></button>
-        <button><a onclick="toAddInfo()" href="#">免费发布信息</a></button>
-    </div>
-    <!--出租求租html*********************************************************************-->
-    <div class="rdcMatch rentToggle">
-        <!--筛选条件-->
-        <div class="filter">
-            <div class="filterHeader clearfix">
-                <div class="fl">
-                    <label>
-                        区域　
-                        <select name="province" id="coldProvince">
 
-                        </select>
-                    </label>
-                </div>
-                <div class="fr">
-                    <input class="keyword" id="keyword" type="text" placeholder="请输入关键词">
-                    <i name="search" id="search" class="iconfont zoom">&#xe609;</i>
-                </div>
-            </div>
-            <div class="filterBody">
-                <div class="typeList clearfix">
-                    <span class="fl">经营类型:</span>
-                    <ul class="clearfix" id="manageType">
-                    </ul>
-                </div>
-                <div class="typeList clearfix">
-                    <span class="fl">冷库温度类型:</span>
-                    <ul class="clearfix" id="temperType">
-                    </ul>
-                </div>
-                <div class="typeList clearfix">
-                    <span class="fl">吨位/面积·㎡:</span>
-                    <ul class="clearfix">
-                        <li type="sqm" value="0" class="activeType">不限</li>
-                        <li type="sqm" value="1">1000以下</li>
-                        <li type="sqm" value="2">1000~3000</li>
-                        <li type="sqm" value="3">3000~6000</li>
-                        <li type="sqm" value="4">6000~12000</li>
-                        <li type="sqm" value="5">12000~20000</li>
-                        <li type="sqm" value="6">20000以上</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!--信息主体-->
-        <div class="msgInfo" id="coldList"></div>
-        <div class="msgInfo hide" id="applyList"></div>
-        <div id="coldPage" class="listPage"></div>
-    </div>
-    <!--出租求租html end*********************************************************************-->
-    <!--出售求购html*********************************************************************-->
-    <div class="rdcMatch goodsToggle hide">
-        <!--筛选条件-->
-        <div class="filter">
-            <div class="filterHeader clearfix">
-                <div class="fl">
-                    <label>
-                        区域　
-                        <select name="province" id="goodsProvince">
+<div class="section" id="localHtml">
 
-                        </select>
-                    </label>
-                </div>
-                <div class="fr">
-                    <input id="goodsKeyword" class="keyword" type="text" placeholder="请输入关键词">
-                    <i name="search" class="iconfont zoom">&#xe609;</i>
-                </div>
-            </div>
-            <div class="filterBody">
-                <div class="typeList clearfix">
-                    <span class="fl">品类:</span>
-                    <ul class="clearfix" id="goodsType">
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!--信息主体-->
-        <div id="goodsList" class="msgInfo"></div>
-        <div id="applygoodsList" class="msgInfo hide"></div>
-        <div id="goodsPage" class="listPage"></div>
-    </div>
 </div>
-<!--<div class="infoModal">
-    <ul class="infoImg clearfix">
-        <li><img src="../img/image0.jpg" alt=""></li>
-        <li><img src="../img/image1.jpg" alt=""></li>
-        <li><img src="../img/image0.jpg" alt=""></li>
-    </ul>
-    <h3 class="orange">基本信息</h3>
-    <ol>
-        <li>
-            <div>数量：</div>
-            <div>23.00吨</div>
-        </li>
-        <li>
-            <div>有效期：</div>
-            <div>3~6个月</div>
-        </li>
-        <li>
-            <div>备注：</div>
-            <div>快捷方式的客服给会计是大法官客家话</div>
-        </li>
-    </ol>
-</div>-->
 <!--版权区域-->
 <div class="footer" id="QRcode">
     <!--<ul class="clearfix">
@@ -254,6 +147,70 @@
 <script src="../plugins/jquery-1.12.0.min.js"></script>
 <script src="../plugins/layui.all.js"></script>
 <script src="../js/common.js"></script>
-<script src="../js/rdcmatch.js"></script>
+<script>
+    $(function(){
+        function infoMsg(id) {
+            $.ajax({url:"/i/ShareRdcController/getSEByID.json",type:"get",data:{id:id},success:function (data) {
+                var share=data.entity;
+                var modalHtml=['<div class="infoModal"><ul id="infoImg" class="infoImg clearfix layer-photos-demo">'];
+                if(share.files){
+                    $.each(share.files,function (index, file) {
+                        modalHtml.push('<li><img src="'+file+'" alt=""></li>');
+                    });
+                }else {
+                    modalHtml.push('<li><img src="'+share.logo+'" alt=""></li>');
+                }
+                var phone;
+                if(window.lkuser){
+                    phone=share.telephone;
+                }else {
+                    localStorage.OURL=window.location.href;
+                    phone='<a href="login.html" class="blue">登录后显示</a>';
+                }
+                modalHtml.push('</ul><h3 class="orange">基本信息</h3><ol><li><div>描述:</div><div>'+share.title+'</div></li><li><div>联系电话:</div><div class="orange">'+phone+'</div></li>');
+                if(share.rdcID&&share.rdcID!=0){
+                    var isAudit='<b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>';
+                    var isStand='';
+                    if(share.audit==2){isAudit='<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>';}
+                    if(share.istemperaturestandard==1){isStand='<b class="reachStand"><i class="iconfont">&#xe6e9;</i>冷链委温度达标库</b>';}
+                    modalHtml.push('<li><div>关联冷库:</div><div>'+share.name+'</div>'+isAudit+isStand+'</li>');
+                    modalHtml.push('<li><div>地址:</div><div>'+share.address+'</div></li>');
+                    modalHtml.push('<li><div>信息完整度:</div><div>'+share.infoIntegrity+'%</div></li></ol>');
+
+                }
+                modalHtml.push('<h3 class="orange">其他信息</h3><ol>');
+                var note=clearUndefined(share.note);
+                if(share.dataType==3){
+                    if(share.typeCode==1){
+                        modalHtml.push('<li><div>出租面积:</div><div>'+share.sqm+'㎡</div></li>');
+                    }else {
+                        modalHtml.push('<li><div>求租面积:</div><div>'+share.sqm+'㎡</div></li>');
+                    }
+                    modalHtml.push('<li><div>单价:</div><div>'+share.unitPrice+'元/天·平方米</div></li>');
+                    modalHtml.push('<li><div>租期:</div><div>'+rentDates[share.rentdate]+'</div></li>');
+                    modalHtml.push('<li><div>经营类型:</div><div>'+share.codeLave1+'</div></li>');
+                    modalHtml.push('<li><div>温度类型:</div><div>'+share.codeLave2+'</div></li>');
+                }
+                if(share.dataType==1){
+                    modalHtml.push('<li><div>品类:</div><div>'+share.codeLave1+'</div></li>');
+                    modalHtml.push('<li><div>数量:</div><div>'+share.sqm+unitPush[share.publishunit]+'</div></li>');
+                    modalHtml.push('<li><div>单价:</div><div>'+share.unitPrice+'元/'+unitPush[share.publishunit]+'</div></li>');
+                }
+                modalHtml.push('<li><div>开始时间:</div><div>'+share.validStartTime+'</div></li>');
+                modalHtml.push('<li><div>结束时间:</div><div>'+share.validEndTime+'</div></li>');
+                modalHtml.push('<li><div>备注:</div><div>'+note+'</div></li></ol></div>');
+                $('#localHtml').html(modalHtml.join(''));
+                layer.photos({
+                    photos: '#infoImg'
+                });
+            }});
+        }
+        var elText = document.URL;
+        var ret = elText.split("=")[1];
+        var rentDates=['','1个月以下','1~3个月','3~6个月','6~9个月','1年以上','两年以上','三年以上','五年以上'];
+        var unitPush=['吨','kg','吨'];
+        infoMsg(ret)
+    })
+</script>
 </body>
 </html>

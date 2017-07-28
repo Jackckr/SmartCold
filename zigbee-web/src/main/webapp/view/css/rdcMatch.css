@@ -216,4 +216,5 @@
 .msgInfo ul > li >.collect{
     color: #f57f1f;
     border-color: #f57f1f;
+    width: 84px;
 }
