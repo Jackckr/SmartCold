@@ -223,10 +223,31 @@ function getGoodsType() {
 
 /*初始化出售求购列表*/
 function initGoodsList() {
-    var goodsArr=['<ul class="msgHeader clearfix"><li></li><li class="msgTitle">货品信息</li><li>数量</li><li>单价</li><li>品类</li><li>有效期</li><li>报价截止日</li><li>操作</li></ul>'];
+    var goodsArr=['<ul class="msgHeader clearfix"><li></li><li class="msgTitle">货品信息</li><li>数量</li><li>单价</li><li>品类</li><li>发布时间</li><li>报价截止日</li><li>操作</li></ul>'];
     $.ajax({url:"/i/ShareRdcController/newGetSERDCList",async:false,type:"post",data:screenParam,success:function (data) {
         pagination.pageCount=data.totalPages;
         $.each(data.data, function (index, goods) {
+            var oStart = new Date(goods.validStartTime).getTime(), oEnd = new Date(goods.validEndTime).getTime(),
+                today = new Date().getTime();
+            var deadline = oEnd - oStart;
+            var days = deadline / 1000 / 60 / 60 / 24;
+            var daysRound = Math.floor(days);//租期
+            var hours = deadline / 1000 / 60 / 60 - (24 * daysRound);
+            var hoursRound = Math.floor(hours);
+            var minutes = deadline / 1000 / 60 - (24 * 60 * daysRound) - (60 * hoursRound);
+            var minutesRound = Math.floor(minutes);
+            var seconds = deadline / 1000 - (24 * 60 * 60 * daysRound) - (60 * 60 * hoursRound) - (60 * minutesRound);
+            var showDate = Math.floor((today - oStart) / 1000 / 60 / 60 / 24);
+            var showTime = null;
+            if (showDate >= 30) {
+                showTime = Math.floor(showDate / 30) + '个月前发布';
+            } else {
+                if (showDate > 1) {
+                    showTime = showDate + '天前发布';
+                } else {
+                    showTime = '刚刚发布';
+                }
+            }
             var collectWords='<button class="collect" onclick="collection(this,'+goods.id+')"><i class="iconfont orange">&#xe634;</i><em>收藏</em></button>';
             for(var j=0;j<goods.collectUserIds.length;j++){
                 if(window.lkuser){
@@ -235,7 +256,7 @@ function initGoodsList() {
                     }
                 }
             }
-            goodsArr.push('<ul class="msgBody clearfix"><li><img src="'+goods.logo+'" alt=""></li><li class="msgTitle"><p>'+goods.title+'</p><p><i class="iconfont">&#xe648;</i>'+goods.detlAddress+'</p></li><li>'+goods.sqm+unitPush[goods.publishunit]+'</li><li>'+goods.unitPrice+'元/'+unitPush[goods.publishunit]+'</li><li>'+goodsAllType[goods.codeLave1]+'</li><li>'+rentDates[goods.rentdate]+'</li><li>'+goods.validEndTime+'</li><li><button class="look" onclick="showRdcDetail('+goods.id+')"><i class="iconfont">&#xe610;</i>查看</button>'+collectWords+'</li></ul>');
+            goodsArr.push('<ul class="msgBody clearfix"><li><img src="'+goods.logo+'" alt=""></li><li class="msgTitle"><p>'+goods.title+'</p><p><i class="iconfont">&#xe648;</i>'+goods.detlAddress+'</p></li><li>'+goods.sqm+unitPush[goods.publishunit]+'</li><li>'+goods.unitPrice+'元/'+unitPush[goods.publishunit]+'</li><li>'+goodsAllType[goods.codeLave1]+'</li><li>'+showTime+'</li><li>'+goods.validEndTime+'</li><li><button class="look" onclick="showRdcDetail('+goods.id+')"><i class="iconfont">&#xe610;</i>查看</button>'+collectWords+'</li></ul>');
         });
         $("#goodsList").empty().append(goodsArr.join(''));
         if (pagination.oldPageCount==-1||pagination.oldPageCount!=pagination.pageCount){flushPage('goodsPage');}
@@ -244,10 +265,20 @@ function initGoodsList() {
 
 
 
-
-
-
-
+/*跳至发布页面*/
+var addUrl=['rdcrelease.html','applyrent.html','salegoods.html','applygoods.html'];
+function toAddInfo() {
+    if(checkLogin()){
+        var url;
+        if(screenParam.dataType==3){
+            url=screenParam.typeCode==1?addUrl[0]:addUrl[1];
+        }
+        if(screenParam.dataType==1){
+            url=screenParam.typeCode==1?addUrl[2]:addUrl[3];
+        }
+        window.location.href=url;
+    }
+}
 
 /*清除筛选数据*/
 function clearParam() {
@@ -308,14 +339,14 @@ $(function () {
                 $(".goodsToggle").show().siblings('.rentToggle').hide();//加载出售求购列表
                 if (oIndex == 2) {
                     //console.log('初始化出售列表');
-                    clearParam();
                     screenParam.dataType=1;
                     screenParam.typeCode=1;
+                    clearParam();
                 } else if (oIndex == 3) {
                     //console.log('初始化求购列表');
-                    clearParam();
                     screenParam.dataType=1;
                     screenParam.typeCode=2;
+                    clearParam();
                 }
             }
         }else{
