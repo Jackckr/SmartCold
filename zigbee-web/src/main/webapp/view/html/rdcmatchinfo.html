@@ -65,9 +65,15 @@
     </div>
 </div>
 
-<div class="section" id="localHtml">
-
+<div class="section clearfix" style="position: relative;">
+    <div class="fl" id="localHtml" style="width: 83%"></div>
+    <div class="rdcCode">
+        <div id="qrcode"></div>
+        <p>扫一扫</p>
+        <p class="orange">分享给好友</p>
+    </div>
 </div>
+
 <!--版权区域-->
 <div class="footer" id="QRcode">
     <!--<ul class="clearfix">
@@ -145,6 +151,7 @@
     </dl>
 </div>
 <script src="../plugins/jquery-1.12.0.min.js"></script>
+<script src="../plugins/qrcode.min.js"></script>
 <script src="../plugins/layui.all.js"></script>
 <script src="../js/common.js"></script>
 <script>
@@ -167,14 +174,14 @@
                     localStorage.OURL=window.location.href;
                     phone='<a href="login.html" class="blue">登录后显示</a>';
                 }
-                modalHtml.push('</ul><h3 class="orange">基本信息</h3><ol><li><div>描述:</div><div>'+share.title+'</div></li><li><div>联系电话:</div><div class="orange">'+phone+'</div></li>');
+                modalHtml.push('</ul><h3 class="orange">基本信息</h3><ol><li><div>'+share.typeText+'描述:</div><div>'+share.title+'</div></li>' +
+                    '<li><div>地址:</div><div>'+share.detlAddress+'</div></li><li><div>联系电话:</div><div class="orange">'+phone+'</div></li>');
                 if(share.rdcID&&share.rdcID!=0){
                     var isAudit='<b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>';
                     var isStand='';
                     if(share.audit==2){isAudit='<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>';}
                     if(share.istemperaturestandard==1){isStand='<b class="reachStand"><i class="iconfont">&#xe6e9;</i>冷链委温度达标库</b>';}
                     modalHtml.push('<li><div>关联冷库:</div><div>'+share.name+'</div>'+isAudit+isStand+'</li>');
-                    modalHtml.push('<li><div>地址:</div><div>'+share.address+'</div></li>');
                     modalHtml.push('<li><div>信息完整度:</div><div>'+share.infoIntegrity+'%</div></li></ol>');
 
                 }
@@ -209,7 +216,23 @@
         var ret = elText.split("=")[1];
         var rentDates=['','1个月以下','1~3个月','3~6个月','6~9个月','1年以上','两年以上','三年以上','五年以上'];
         var unitPush=['吨','kg','吨'];
-        infoMsg(ret)
+        infoMsg(ret);
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+            width : 88,
+            height : 88
+        });
+
+        function makeCode () {
+            var elText = document.URL;
+            var ret = 'http://192.168.1.114:8066/view/storehousedetail.html?id='+elText.split("=")[1];
+            if (!elText) {
+                layer.alert("二维码生成失败……", {icon:5});
+                return;
+            }
+            qrcode.makeCode(ret);
+        }
+        makeCode ();
+        /*生成二维码 end*/
     })
 </script>
 </body>

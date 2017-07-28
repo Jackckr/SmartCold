@@ -66,8 +66,10 @@ $(function() {
 			<ul class="houseinfo">
 				<li  ng-if="typeCode==1"><label for="name">描述</label> <em>*</em><input type="text" id="name" ng-model="$parent.title"
 					placeholder="出租仓位描述（6~24位）" /></li>
-
-				<li ng-if="typeCode==2" style="border: 0;line-height: 0"><label>求租地区</label></li>
+				<li  ng-if="typeCode==2"><label for="name">标题</label> <em>*</em><input type="text" id="title" ng-model="$parent.title"
+																						 placeholder="描述（6~24位）" /></li>
+				<li  ng-if="typeCode==2"><label>存放产品</label> <em>*</em><input type="text" ng-model="$parent.codeLave4"
+																						 placeholder="存放产品描述（2~24位）" /></li>
 				<li class="offershow" ng-if="typeCode==2">
                     <label for="province">省</label><em>*</em>
                     <div class="mySelect">
@@ -144,8 +146,7 @@ $(function() {
 					</div>
 					<i class="iconfont fr">&#xe63a;</i>
 				</li>
-				<li  ng-if="typeCode==2"><label for="name">存放产品</label> <em>*</em><input type="text" id="title" ng-model="$parent.title"
-																						 placeholder="存放产品描述（6~24位）" /></li>
+
 				<li><label for="phone">联系电话</label>
 				<em>*</em>
 				<input type="text" name="telephone"

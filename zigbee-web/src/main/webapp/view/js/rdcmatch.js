@@ -277,11 +277,11 @@ $(function () {
             $('.btnGroup button').eq(oIndex).addClass('active').siblings().removeClass('active');
             if (oIndex < 2) {
                 $(".rentToggle").show().siblings('.goodsToggle').hide();//加载出租求租列表
-                if (oIndex == 0 && hash == '#coldList') {
+                if (oIndex == 0 && hash == '#coldLists') {
                     //console.log('初始化出租列表');
                     screenParam.dataType=3;
                     screenParam.typeCode=1;
-                } else if (oIndex == 1 && hash == '#applyList') {
+                } else if (oIndex == 1 && hash == '#applyLists') {
                     //console.log('初始化求租列表');
                     screenParam.dataType=3;
                     screenParam.typeCode=2;
@@ -291,11 +291,11 @@ $(function () {
                 initRentRdc();
             } else if(oIndex<4){
                 $(".goodsToggle").show().siblings('.rentToggle').hide();//加载出售求购列表
-                if (oIndex == 2 && hash == '#goodsList') {
+                if (oIndex == 2 && hash == '#goodsLists') {
                     //console.log('初始化出售列表');
                     screenParam.dataType=1;
                     screenParam.typeCode=1;
-                } else if (oIndex == 3 && hash == '#applygoodsList') {
+                } else if (oIndex == 3 && hash == '#applygoodsLists') {
                     //console.log('初始化求购列表');
                     screenParam.dataType=1;
                     screenParam.typeCode=2;
@@ -339,6 +339,7 @@ $(function () {
                     screenParam.dataType=1;
                     screenParam.typeCode=2;
                 }
+                initColdParam();
                 clearParam();
                 initGoodsParam();
             }

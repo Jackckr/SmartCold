@@ -93,6 +93,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    
     function checkStorageSubmit(){ // 检查必须填写项   仓库
         if ($scope.title == undefined || $scope.title == '' ) {  return false; }
+        if ($scope.codeLave4 == undefined || $scope.codeLave4 == '' ) {  return false; }
         if ($scope.rdcAddress == undefined || $scope.rdcAddress == ''||$scope.rdcAddress == '-') {  return false; }
         if ($scope.temperType == undefined || $scope.temperType == '') {  return false;  }
        	if ($scope.unitprice == undefined) {  return false; }
@@ -127,8 +128,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				return false
 			}
 			if(checkStorageSubmit()){
-                if($scope.title.length<6||$scope.title.length>24){
-                    layer.open({content: '描述文字长度范围是6~24位，请检查~', btn: '确定'});
+                if($scope.title.length<6||$scope.title.length>24||$scope.codeLave4.length<2||$scope.codeLave4.length>24){
+                    layer.open({content: '描述文字长度范围不符合要求，请检查~', btn: '确定'});
                     return;
                 }else if($scope.sqm.toString().length > 11){
 		        	layer.open({content:'数量不合法哦~',btn: '确定'});return;
@@ -148,6 +149,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
                     rentdate:$scope.rentdate,
                     publishunit:3,
                     username:window.user.username,
+					codeLave4 : $scope.codeLave4,
 					codeLave2 : $scope.temperType,
 					codeLave1:$("#storageType").attr('val'),
 					unit : $scope.unit,

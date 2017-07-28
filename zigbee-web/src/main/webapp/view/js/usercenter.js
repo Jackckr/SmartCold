@@ -292,8 +292,9 @@ function getShareList(datatype, pageId, domId) {
                     oList.push('<li><div class="oImg fl"><img src="' + item.logo + '" alt="图片跑丢了~"></div>' +
                         '<div class="oTxt fl"><h2 class="omg"><a class="blue" onclick="info(' + item.id +','+ datatype+ ')">[' + item.typeText + ']' + item.title + '</a></h2>' +
                         '<h4 class="omg"><i class="iconfont orange">&#xe61c;</i>' + item.detlAddress + '</h4>' +
-                        '<p class="omg">' + item.updatetime + '</p><div class="txt-right">' +
-                        '<button class="layui-btn layui-btn-normal layui-btn-small" onclick="info(' + item.id +','+ datatype+')">查看</button>' +
+                        '<p class="omg">' + formatDateTime(item.updatetime) + '</p><div class="txt-right">' +
+                        /*'<button class="layui-btn layui-btn-normal layui-btn-small" onclick="info(' + item.id +','+ datatype+')">查看</button>' +*/
+                        '<button class="layui-btn layui-btn-normal layui-btn-small" onclick="location.href=\'rdcmatchinfo.html?id='+item.id+'\'">查看</button>' +
                         '<button class="layui-btn layui-btn-small">修改</button>' +
                         '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteData(' + item.id + ',' + 1 + ')">删除</button></div></div></li>')
                 });
@@ -448,7 +449,7 @@ function getRdcList() {
                 rdcList.push('<li><div class="oImg fl"><img src="'+item.logo+'" alt=""></div>',
                     '<div class="oTxt fl"><h2 class="omg"><a class="blue" href="rdcinfo.html?rdcId='+item.id + '">'+ item.name+'</a></h2>' ,
                     '<h4 class="omg"><i class="iconfont orange">&#xe61c;</i>'+item.address+'</h4>' ,
-                    '<p class="omg">' + item.addtime + '</p><div class="txt-right">' ,
+                    '<p class="omg">' + formatDateTime(item.addtime) + '</p><div class="txt-right">' ,
                     '<button class="layui-btn layui-btn-normal layui-btn-small" onclick="location.href=\'rdcinfo.html?rdcId='+item.id+'\'">查看</button>' ,
                     '<button class="layui-btn layui-btn-small" onclick="location.href=\'rdcaddcold.html?rdcId='+item.id+'\'">修改</button>' ,
                     '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteData('+item.id+','+0+')">删除</button></div></div></li>')
@@ -483,10 +484,10 @@ function getCollectList(flag,pageId,domId){
                 $.each(data, function (index, item) {
                     var itemlist = item.rdcEntity;
                     if(itemlist){
-                        collectList.push('<li><div class="oImg fl"><img src="' , itemlist.logo , '" alt=""></div>' ,
-                            '<div class="oTxt fl"><h2 class="omg"><a class="blue" href="rdcinfo.html?rdcId=' , itemlist.id , '">' , itemlist.name , '</a></h2>' ,
-                            '<h4 class="omg"><i class="iconfont orange">&#xe61c;</i>' , itemlist.address , '</h4>' ,
-                            '<p class="omg">' , itemlist.addtime , '</p><div class="txt-right">' ,
+                        collectList.push('<li><div class="oImg fl"><img src="'+itemlist.logo + '" alt=""></div>' ,
+                            '<div class="oTxt fl"><h2 class="omg"><a class="blue" href="rdcinfo.html?rdcId='+ itemlist.id + '">' + itemlist.name + '</a></h2>' ,
+                            '<h4 class="omg"><i class="iconfont orange">&#xe61c;</i>' + itemlist.address + '</h4>' ,
+                            '<p class="omg">' + formatDateTime(itemlist.addtime)+ '</p><div class="txt-right">' ,
                             '<button class="layui-btn layui-btn-normal layui-btn-small" onclick="location.href=\'rdcinfo.html?rdcId='+itemlist.id+'\'">查看</button>' ,
                             '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteData('+item.id+','+3+','+flag+')">取消收藏</button></div></div></li>')
                     }else{
@@ -500,11 +501,11 @@ function getCollectList(flag,pageId,domId){
                 $.each(data, function (index, item) {
                     var itemlist = item.rdcShareDTO;
                     if(itemlist){
-                        collectList.push('<li><div class="oImg fl"><img src="' , itemlist.logo , '" alt="图片跑丢了~"></div>' ,
-                            '<div class="oTxt fl"><h2 class="omg"><a class="blue" onclick="info(' , itemlist.id ,',', itemlist.dataType, ',',itemlist.typeCode,')">' ,
-                            '[' , itemlist.typeText , ']' , itemlist.title , '</a></h2>' ,
-                            '<h4 class="omg"><i class="iconfont orange">&#xe61c;</i>' , itemlist.detlAddress , '</h4>' ,
-                            '<p class="omg">' , itemlist.validEndTime , '</p><div class="txt-right">' ,
+                        collectList.push('<li><div class="oImg fl"><img src="' +itemlist.logo + '" alt="图片跑丢了~"></div>' ,
+                            '<div class="oTxt fl"><h2 class="omg"><a class="blue" onclick="info(' + itemlist.id +','+ itemlist.dataType+ ','+itemlist.typeCode+')">' ,
+                            '[' + itemlist.typeText + ']'+ itemlist.title + '</a></h2>' ,
+                            '<h4 class="omg"><i class="iconfont orange">&#xe61c;</i>' + itemlist.detlAddress + '</h4>' ,
+                            '<p class="omg">' +itemlist.validEndTime + '</p><div class="txt-right">' ,
                             '<button class="layui-btn layui-btn-normal layui-btn-small" onclick="info('+itemlist.id+','+itemlist.dataType+','+itemlist.typeCode+')">查看</button>' ,
                             '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteData('+item.id+','+3+','+flag+')">取消收藏</button></div></div></li>')
                     }else{
@@ -516,7 +517,7 @@ function getCollectList(flag,pageId,domId){
 
                 });
             }
-            $("#sharelist",domId).empty().append(collectList.join(''));
+            $("#sharelist"+domId).empty().append(collectList.join(''));
         });
 }
 layui.use(['jquery', 'form', 'element', ], function () {

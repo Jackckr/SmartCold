@@ -50,7 +50,11 @@
         <input type="hidden" id="rdcflag" ng-model="rdcflag" value="0">
         <ul class="houseinfo">
             <!---->
-            <li style="border: 0;line-height: 0"><label>求租地区</label></li>
+            <li><label for="name">标题</label> <em>*</em>
+                <input type="text" id="name" ng-model="title" placeholder="描述（6~24字）"/></li>
+            <li><label>存放产品</label> <em>*</em>
+                <input type="text"  ng-model="codeLave4" placeholder="存放产品描述（2~24字）"/></li>
+
             <li><label for="province">省</label>
                 <em>*</em>
                 <div class="mySelect">
@@ -67,9 +71,6 @@
                             ng-options="x.cityID as x.cityName for x in citys"></select>
                 </div>
                 <i class="iconfont fr moreinfo">&#xe697;</i></li>
-
-            <li><label for="name">存放产品</label> <em>*</em>
-                <input type="text" id="name" ng-model="title" placeholder="存放产品描述（6~24字）"/></li>
             <li><label>求租面积</label>
                 <em>*</em>
                 <input type="number" id="sqm" ng-model="sqm"  placeholder="㎡"/>

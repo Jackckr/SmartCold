@@ -127,6 +127,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    	 $scope.codeLave11 = $scope.rdcsharedto.codeLave1;
 	         $scope.codeLave22 = $scope.rdcsharedto.codeLave2;
 	    	 $scope.codeLave33 = $scope.rdcsharedto.codeLave3;
+	    	 $scope.codeLave4 = $scope.rdcsharedto.codeLave4;
 	    	 $scope.stprovinceID = $scope.rdcsharedto.stprovinceID;
 	    	 $scope.stcityID = $scope.rdcsharedto.stcityID;
 	    	 $scope.toprovinceID = $scope.rdcsharedto.toprovinceID;
@@ -276,6 +277,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    function checkStorageSubmit(){
 	        // 检查必须填写项   仓库
 	        if ($scope.title == undefined || $scope.title == '' ) {return false; }
+	        if ($scope.codeLave4 == undefined || $scope.codeLave4 == '' ) {return false; }
 	        //if ($scope.detlAddress == undefined || $scope.detlAddress == ''||$scope.detlAddress == '-') {return false;}
 	        if ($scope.temperType == undefined || $scope.temperType == '') { return false;}
 	        if($scope.rdcsharedto.rdcID==null||$scope.rdcsharedto.rdcID==undefined){
@@ -518,8 +520,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				return false
 			}
 			if(checkStorageSubmit()){
-                if($scope.title.length<6||$scope.title.length>24){
-                    layer.open({content: '描述文字长度范围是6~24位，请检查~', btn: '确定'});
+                if($scope.title.length<6||$scope.title.length>24||$scope.codeLave4.length<2||$scope.codeLave4.length>24){
+                    layer.open({content: '描述文字长度范围不符合要求，请检查~', btn: '确定'});
                     return;
                 }else if($scope.rdcsharedto.rdcSqm<$scope.sqm){
                     layer.open({content:'可出租面积不能大于关联冷库的总面积~',btn: '确定'});return;
@@ -542,6 +544,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					provinceid : $scope.provinceId,
 					cityid : parseInt($("#city").attr("val")),//$scope.cityId,city
 					codeLave2 : $scope.temperType,
+                	codeLave4 : $scope.codeLave4,
 					codeLave1:parseInt($("#manageType").attr("val")),
 					unit : $scope.unit,
 					sqm:$scope.sqm,

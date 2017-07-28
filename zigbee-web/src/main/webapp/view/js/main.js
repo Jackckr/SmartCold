@@ -1,4 +1,4 @@
- var chartArry=[], colorList = ['#C1232B','#B5C334','#FCCE10','#E87C25','#27727B', '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD','#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'];
+ var chartArry=[], colorList = ['','#C1232B','#B5C334','#FCCE10','#E87C25','#27727B', '#FE8463','#9BCA63','#FAD860','#F3A43B','#60C0DD','#D7504B','#C6E579','#F4E001','#F0805A','#26C0C0'];
 
 function getRdcShare() {
     $.ajax({url:"/i/ShareRdcController/getSERdc",type:"post",data:{"dataType":3,"typeCode":1},success:function (data) {
@@ -14,7 +14,8 @@ function getRdcShare() {
                 if(data[i].audit==2){rightRdcLease.push('<b class="approve fr"><i class="iconfont">&#xe6ac;</i>已认证</b>');}else{rightRdcLease.push('<b class="reachStand fr"><i class="iconfont">&#xe63b;</i>未认证</b>');}
                 rightRdcLease.push('</div><div class="city"><p class="omg"><i class="iconfont fl">&#xe61c;</i>'+data[i].detlAddress+'</p><p>可租面积：'+data[i].sqm+'㎡</p></div></a></li>');
             }else {
-                leftRdclease.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'"><span>'+(i-5)+'</span>['+data[i].name+'] 有'+data[i].sqm+'㎡冷库可用来出租，联系电话['+data[i].telephone+']</a></li>');
+                leftRdclease.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'"><span>'+(i-5)+'</span>' +
+                    '['+data[i].name+'] 有'+data[i].sqm+'㎡冷库可用来出租，联系电话['+data[i].telephone+']</a></li>');
             }
         }
         $("#rightRdcLeaseUl").empty().append(rightRdcLease.join(''));
@@ -50,7 +51,7 @@ function getRdcShare() {
 }
 function dwrechar(index,em,title,data,type){
 	     var xdata=[],ydata=[];
-	     for (var i = 0; i < data.length; i++) { xdata.push( data[i]['date']); ydata.push( data[i]['value']);}
+	     for (var i = 1; i < data.length; i++) { xdata.push( data[i]['date']); ydata.push( data[i]['value']);}
  	     chartArry[index]= echarts.init(document.getElementById(em));
 	     var option1 = {
 	        title: {  text: title,left:'center', textStyle:{  fontWeight:'400' } },
@@ -65,20 +66,20 @@ function dwrechar(index,em,title,data,type){
 	        yAxis: { axisLabel:{textStyle: {color: '#66d1f7'  } }, axisLine:{ lineStyle:{ color:'#f4f4f4', }}, splitLine:{ lineStyle:{  color:'#f4f4f4', } } },
 	        series: [{  type: type,  data: ydata,  barWidth:30 }]
 	    };
-	    if(type=='bar'){ option1.series[0].itemStyle= {  normal: {  color: function(params) { return colorList[params.dataIndex];} }  };  }else{ option1.series[0].itemStyle={ normal: { color:'#ff916c' }  }; option1.series[0].smooth= true;}
+	   // if(type=='bar'){ option1.series[0].itemStyle= {  normal: {  color: function(params) { return colorList[params.dataIndex];} }  };  }else{ option1.series[0].itemStyle={ normal: { color:'#ff916c' }  }; option1.series[0].smooth= true;}
 	    chartArry[index].setOption(option1);
 }
 
 
 function initechardata(){
 	var startTime=new Date(),endTime=new Date();startTime.setFullYear(endTime.getFullYear()-1);
-	 $.ajax({url:"/i/DataAnalysis/getDataAnalysisBykey",type:"post",data:{type:1,key:'price',startTime:startTime,endTime:endTime},success:function (data) {  dwrechar(0,'main1','全国冷库价格趋势图',data,'bar'); }});
+	// $.ajax({url:"/i/DataAnalysis/getDataAnalysisBykey",type:"post",data:{type:1,key:'price',startTime:startTime,endTime:endTime},success:function (data) {  dwrechar(0,'main1','全国冷库价格趋势图',data,'bar'); }});
 	 $.ajax({url:"/i/DataAnalysis/getDataAnalysisBykey",type:"post",data:{type:1,key:'boom',startTime:startTime,endTime:endTime},success:function (data) {  dwrechar(1,'main2','全国冷库价格趋势图',data,'line'); }});
 	 $.ajax({url:"/i/DataAnalysis/getDataAnalysisBykey",type:"post",data:{type:1,key:'energy',startTime:startTime,endTime:endTime},success:function (data) {  dwrechar(1,'main3','全国冷库能耗势图',data,'line'); }});
 }
 
 function resizeChart() {
-  for (var i = 0; i < chartArry.length; i++) {chartArry[i].resize(); }
+  for (var i = 1; i < chartArry.length; i++) {chartArry[i].resize(); }
 }
 
 
