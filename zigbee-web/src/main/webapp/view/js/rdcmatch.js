@@ -127,16 +127,65 @@ function initRentRdc() {
                     }
                 }
             }
-            rentRdcArr.push('<ul class="msgBody clearfix"><li><img src="'+rentRdc.logo+'" alt=""></li><li class="msgTitle"><p>'+rentRdc.title+'</p><p><i class="iconfont">&#xe648;</i>'+rentRdc.detlAddress+'</p></li><li>'+rentRdc.sqm+'</li><li>'+rentRdc.unitPrice+'</li><li>'+rentRdc.codeLave2+'</li><li>'+rentDates[rentRdc.rentdate]+'</li>' +
+            var oStart=formatTime.mseconds(rentRdc.validStartTime);
+            var oEnd=formatTime.mseconds(rentRdc.validEndTime);
+            var today=new Date().getTime();
+            var deadline = oEnd - oStart;
+            var days = deadline / 1000 / 60 / 60 / 24;
+            var daysRound = Math.floor(days);//租期
+            var showDate = Math.floor((today - oStart) / 1000 / 60 / 60 / 24);
+            var showTime = null;
+            var usefulDate = rentDates[rentRdc.rentdate];//有效期
+            if (rentRdc.rentdate == undefined || rentRdc.rentdate == null || rentRdc.rentdate == 0) {
+                if(daysRound<=30){
+                    usefulDate = '1个月以下';
+                }else{
+                    if(daysRound/30>=12){
+                        if(daysRound/30>=12){
+                            usefulDate='1年以上'
+                        }else if(daysRound/30>=24){
+                            usefulDate='两年以上'
+                        }else if(daysRound/30>=36){
+                            usefulDate='三年以上'
+                        }else{
+                            usefulDate='五年以上'
+                        }
+                        usefulDate = (daysRound/30/12).toFixed(1) + '年'
+                    }else{
+                        if(daysRound/30<3){
+                            usefulDate='1~3个月'
+                        }else if(daysRound/30<6){
+                            usefulDate='3~6个月'
+                        }else if(daysRound/30<9){
+                            usefulDate='6~9个月'
+                        }else if(daysRound/30<12){
+                            usefulDate='9~12个月'
+                        }
+                    }
+                }
+            }
+            rentRdcArr.push('<ul class="msgBody clearfix"><li><img src="'+rentRdc.logo+'" alt=""></li><li class="msgTitle"><p>'+rentRdc.title+'</p>' +
+                '<p><i class="iconfont">&#xe648;</i>'+rentRdc.detlAddress+'</p></li><li>'+rentRdc.sqm+'</li><li>'+rentRdc.unitPrice+'</li>' +
+                '<li>'+rentRdc.codeLave2+'</li><li>'+usefulDate+'</li>' +
                 '<li><button class="look" onclick="location.href=\'rdcmatchinfo.html?id='+rentRdc.id+'\'"><i class="iconfont">&#xe610;</i>查看</button>'+collectWords+'</li></ul>');
         });
         //rentRdcArr.push('<div id="coldPage" class="listPage"></div>');
-        if(screenParam.typeCode==1){//出租
-            $("#coldList").show().empty().append(rentRdcArr.join(''));
-            $("#applyList").hide();
-        }else{//求租
-            $("#applyList").show().empty().append(rentRdcArr.join(''));
-            $("#coldList").hide();
+        if(rentRdcArr.length>1){
+            if(screenParam.typeCode==1){//出租
+                $("#coldList").show().empty().append(rentRdcArr.join(''));
+                $("#applyList").hide();
+            }else{//求租
+                $("#applyList").show().empty().append(rentRdcArr.join(''));
+                $("#coldList").hide();
+            }
+        }else{
+            if(screenParam.typeCode==1){//出租
+                $("#coldList").show().empty().append('<div class="nodata"><img src="../img/nodata.png" alt=""><p>暂无数据~</p></div>');
+                $("#applyList").hide();
+            }else{//求租
+                $("#applyList").show().empty().append('<div class="nodata"><img src="../img/nodata.png" alt=""><p>暂无数据~</p></div>');
+                $("#coldList").hide();
+            }
         }
         if (pagination.oldPageCount==-1||pagination.oldPageCount!=pagination.pageCount){flushPage('coldPage');}
     }});
@@ -228,12 +277,22 @@ function initGoodsList() {
                 '<li>'+goods.unitPrice+'元/'+unitPush[goods.publishunit]+'</li><li>'+goodsAllType[goods.codeLave1]+'</li><li>'+validStartTime+'</li><li>'+validEndTime+'</li>' +
                 '<li><button class="look" onclick="location.href=\'rdcmatchinfo.html?id='+goods.id+'\'"><i class="iconfont">&#xe610;</i>查看</button>'+collectWords+'</li></ul>');
         });
-        if(screenParam.typeCode==1){//出售
-            $("#goodsList").show().empty().append(goodsArr.join(''));
-            $("#applygoodsList").hide();
-        }else{//求租
-            $("#applygoodsList").show().empty().append(goodsArr.join(''));
-            $("#goodsList").hide();
+        if(goodsArr.length>1){
+            if(screenParam.typeCode==1){//出售
+                $("#goodsList").show().empty().append(goodsArr.join(''));
+                $("#applygoodsList").hide();
+            }else{//求租
+                $("#applygoodsList").show().empty().append(goodsArr.join(''));
+                $("#goodsList").hide();
+            }
+        }else{
+            if(screenParam.typeCode==1){
+                $("#goodsList").show().empty().append('<div class="nodata"><img src="../img/nodata.png" alt=""><p>暂无数据~</p></div>');
+                $("#applygoodsList").hide();
+            }else{//求租
+                $("#applygoodsList").show().empty().append('<div class="nodata"><img src="../img/nodata.png" alt=""><p>暂无数据~</p></div>');
+                $("#goodsList").hide();
+            }
         }
         if (pagination.oldPageCount==-1||pagination.oldPageCount!=pagination.pageCount){flushPage('goodsPage');}
     }});

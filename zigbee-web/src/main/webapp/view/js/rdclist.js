@@ -61,7 +61,12 @@ function getRdcRentList() {
             if(rdcRent.sharedInfoEntity&&rdcRent.sharedInfoEntity.datatype==3&&rdcRent.sharedInfoEntity.typecode==1){rdcRentInfo.push('<p>可用面积<i class="orange">'+rdcRent.sharedInfoEntity.sqm+'</i>㎡</p><p class="rdcPriceNum blue">'+rdcRent.sharedInfoEntity.unitPrice+'</p><p>元/㎡/天</p>');}else {rdcRentInfo.push('<h3>暂无信息</h3>');}
             rdcRentInfo.push('</div><div class="rdcBtn">'+collectWords+'<button class="look"><a href="rdcinfo.html?rdcId='+rdcRent.id+'"><i class="iconfont">&#xe610;</i>查看</a></button></div></li>');
         });
-        $("#rdcRentList").empty().append(rdcRentInfo.join(''));
+        if(rdcRentInfo.length){
+            $("#rdcRentList").empty().append(rdcRentInfo.join(''));
+        }else{
+            $("#rdcRentList").empty().append('<li class="nodata"><img src="../img/nodata.png" alt=""><p>暂无数据~</p></li>')
+        }
+
     }});
 }
 /*点击查看实时库温*/
