@@ -201,7 +201,9 @@ function showImg() {
 }
 
 $(function () {
-    getRdcList();
+    if(checkLogin()){
+        getRdcList();
+    }
 });
 
 

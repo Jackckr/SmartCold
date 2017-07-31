@@ -263,7 +263,9 @@ function noRdcRelease(){//不关联库发布
 
 
 $(function () {
-    getRdcList();
+    if(checkLogin()){
+        getRdcList();
+    }
 });
 
 

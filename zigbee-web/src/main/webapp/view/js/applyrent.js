@@ -170,5 +170,7 @@ function getCitys(mark) {
 }
 
 $(function () {
-   initRdcInfo();
+    if(checkLogin()){
+        initRdcInfo();
+    }
 });
