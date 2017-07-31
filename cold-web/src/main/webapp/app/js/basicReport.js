@@ -60,7 +60,7 @@ coldWeb.controller('basicReport', function( $scope, $rootScope,$stateParams,$htt
 	$scope.pysical=function(){
 		$http.get('/i/physicalController/getCompNameByRdcId',{params: {"rdcId":$scope.rdcId } }).success(function(data,status,config,header){
 			++$scope.loadindex;
-			$scope.compName=data?data:$rootScope.vm.choserdc.name;
+			$scope.compName=(data.message&&data.message!=""&&data.message!="null")?data.message:$rootScope.vm.choserdc.name;
 		});
 	};
 	$scope.initRdcreportsis=function(){

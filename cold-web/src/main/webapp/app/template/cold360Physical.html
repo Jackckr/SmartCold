@@ -2,7 +2,7 @@
   <div class="cold_bg" style="height:100%;">
   		<h1>{{msg}}</h1>
   		<div class="radius_bg">  			
-  			<a href="#" ng-click="physical()">一键检测<i class="icon iconfont">&#xe62f;</i></a>
+  			<a href="#/cold360Physical/{{rdcId}}" ng-click="physical()">一键检测<i class="icon iconfont">&#xe62f;</i></a>
   		</div>
   </div>
 </div>
@@ -17,14 +17,14 @@
 	    </div>
 	    <div class="box-body">
 	   		<!-- 有设备 -->
-	   		<div class="haveDevice" ng-if="data.ishasTempDEV">
+	   		<div class="haveDevice" ng-if="data.hastemp">
 	   			<div class="circle fontBlue">
 	   				{{data.avgTempScores}}<span>分</span>
 	   			</div>
-	   			<a href="#" ng-click="showsg(3,'grouppan1')"><button class="btn bgBlue">查看详情</button></a>
+	   			<a href="#/cold360Physical/{{rdcId}}" ng-click="showsg(3,'grouppan1')"><button class="btn bgBlue">查看详情</button></a>
 	   		</div>
 	   		<!-- 建议安装设备 -->
-	   		<div class="noDevice " ng-if="!data.ishasTempDEV">
+	   		<div class="noDevice " ng-if="!data.hastemp">
 	   			<div class="circle bluePlus"></div>
 	   			<a href="javascript:;"><button class="btn bgBlue disabled">建议安装监控设备</button></a>
 	   		</div>
@@ -37,14 +37,14 @@
 	    </div>
 	    <div class="box-body">
 			<!-- 有设备 -->
-	   		<div class="haveDevice" ng-if="data.ishasTempDEV">
+	   		<div class="haveDevice" ng-if="data.hastran">
 	   			<div class="circle fontGold">
 	   				{{data.avgTransportScores}}<span>分</span>
 	   			</div>
-	   			<a href="#" ng-click="showsg(3,'grouppan2')"><button class="btn bgGold">查看详情</button></a>
+	   			<a href="#/cold360Physical/{{rdcId}}" ng-click="showsg(3,'grouppan2')"><button class="btn bgGold">查看详情</button></a>
 	   		</div>
 	   		<!-- 建议安装设备 -->
-	   		<div class="noDevice " ng-if="!data.ishasTempDEV">
+	   		<div class="noDevice " ng-if="!data.hastran">
 	   			<div class="circle goldPlus"></div>
 	   			<a href="javascript:;"><button class="btn bgGold disabled">建议安装监控设备</button></a>
 	   		</div>
@@ -57,13 +57,13 @@
 	    </div>
 	    <div class="box-body">
    			<!-- 有设备 -->
-	   		<div class="haveDevice " ng-if="data.ishasplc">
+	   		<div class="haveDevice " ng-if="data.hascool">
 	   			<div class="circle fontGreen">
-	   				{{data.coldStorage}}<span>分</span>
+	   				{{data.cooling}}<span>分</span>
 	   			</div>
 	   		</div>
 	   		<!-- 建议安装设备 -->
-	   		<div class="noDevice " ng-if="!data.ishasplc">
+	   		<div class="noDevice " ng-if="!data.hascool">
 	   			<div class="circle greenPlus"></div>
 	   			<a href="javascript:;"><button class="btn bgGreen disabled">建议安装监控设备</button></a>
 	   		</div>
@@ -74,7 +74,7 @@
 </div>
 <div id="physicalstep3" class="score_list black" >
 	<div class="page-header goback">
-		<a href="#" ng-click="showpage(2);"><i class="icon iconfont">&#xe64a;</i> 返回</a>
+		<a href="#/cold360Physical/{{rdcId}}" ng-click="showpage(2);"><i class="icon iconfont">&#xe64a;</i> 返回</a>
     </div>
 	<!-- 温度系统 -->
 	<div id="phsg_sour3">

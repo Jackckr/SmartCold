@@ -54,8 +54,8 @@ public class PhysicalController {
 	 */
 	@RequestMapping(value = "/getCompNameByRdcId")
 	@ResponseBody
-	public String mothCheckup(int rdcId) {
-		return this.quantityMapper.getCompNameByRdcId(rdcId);//查询集团名称
+	public ResponseData<String> getCompNameByRdcId(int rdcId) {
+		return ResponseData.newSuccess( this.quantityMapper.getCompNameByRdcId(rdcId));
 	}
     
     /**
@@ -106,20 +106,27 @@ public class PhysicalController {
 			double sumtempS = 0; double sumtranS=0; 
 			HashMap<Integer, Object> tempScores=new HashMap<Integer, Object>();
 			HashMap<Integer, Object> transportScores=new HashMap<Integer, Object>();
+			boolean hastemp=false,hastran=false;
 			for (ColdStorageSetEntity item : coldStorageSetList) {
-			     int tempS = this.getTempScores(startTime, endTime, item, weightSet); //当前冷库分数
-			 	 int tranS = this.getTransportScores(stTime, edTime, item, weightSet);//运管
-			 	 sumtempS+=sumtempS;sumtranS+=tranS;
-			 	 tempScores.put(item.getId(), new Object[]{getColorVal(tempS),Double.parseDouble(df.format( tempS))});//1.获取冷库的分数
-				 transportScores.put(item.getId(),new Object[]{getColorVal(tranS),Double.parseDouble(df.format(tranS)) });//2.运管分数
+			     int[] tempS = this.getTempScores(startTime, endTime, item, weightSet); //当前冷库分数
+			 	 int[] tranS = this.getTransportScores(stTime, edTime, item, weightSet);//运管
+			 	 sumtempS+=tempS[1];sumtranS+=tranS[1];
+			 	 if(!hastemp&&tempS[0]==1){hastemp=true; }
+			 	 if(!hastran&&tranS[0]==1){hastran=true; }
+			 	 tempScores.put(item.getId(), new Object[]{getColorVal(tempS[1]),Double.parseDouble(df.format( tempS[1]))});//1.获取冷库的分数
+				 transportScores.put(item.getId(),new Object[]{getColorVal(tranS[1]),Double.parseDouble(df.format(tranS[1])) });//2.运管分数
 			}
+			int[] cooling = this.getColdStorageScores(stTime, edTime, rdcId, weightSet);
+			resMap.put("hastemp", hastemp);
+			resMap.put("hastran", hastran);
+			resMap.put("hascool", cooling[0]==1?true:false);
 			resMap.put("TempScores",tempScores );
 			resMap.put("TransportScores",transportScores );
 			resMap.put("avgTempScores",(int)sumtempS/coldStorageSetList.size());
 			resMap.put("avgTransportScores",(int)sumtranS/coldStorageSetList.size() );
-			resMap.put("cooling", this.getColdStorageScores(stTime, edTime, rdcId, weightSet));//制冷分数
+			resMap.put("cooling", cooling[1]);//制冷分数
 		}
-		return null;
+		return ResponseData.newSuccess(resMap);
 	}
 	
 	  /**
@@ -133,33 +140,36 @@ public class PhysicalController {
 	  * //Ct=100-超温因子*20-（Tmax-Tset-Tdiff）*2-保温因子*10-1/温度周期因子（降温部分）*10
 	  * @return
 	  */
-	private int getTempScores(Date startTime,Date endTime,ColdStorageSetEntity obj,WeightSetEntity weightSet){
+	private int[] getTempScores(Date startTime,Date endTime,ColdStorageSetEntity obj,WeightSetEntity weightSet){
+		double L1=0,L2=0,L3=0; int ishasplc=0;
 		try {
-			  double L1=0,L2=0,L3=0; 
 			  List<String> keylist = Arrays.asList("OverTempL1Count,OverTempL2Count,OverTempL3Count".split(","));
 			  Map<String, List<ColdStorageAnalysisEntity>> overTempMap = this.coldStorageAnalysisService.findDVDataByDate(SetTables.STORAGESET.getType(), obj.getId(),keylist , startTime, endTime);
 			  //开始计算分数
 			  List<ColdStorageAnalysisEntity> anaysislist = overTempMap.get("OverTempL1Count");
 			  if(SetUtil.isnotNullList(anaysislist)){
+				  ishasplc=1;
 				for (ColdStorageAnalysisEntity coldStorageAnalysisEntity : anaysislist) {
 					L1+=coldStorageAnalysisEntity.getValue();
 				}
 			  }
 			  anaysislist = overTempMap.get("OverTempL2Count");
 			  if(SetUtil.isnotNullList(anaysislist)){
+				  ishasplc=1;
 				  for (ColdStorageAnalysisEntity coldStorageAnalysisEntity : anaysislist) {
 					  L2+=coldStorageAnalysisEntity.getValue();
 				  }
 			  }
 			  anaysislist = overTempMap.get("OverTempL3Count");
 			  if(SetUtil.isnotNullList(anaysislist)){
+				  ishasplc=1;
 				  for (ColdStorageAnalysisEntity coldStorageAnalysisEntity : anaysislist) {  L3+=coldStorageAnalysisEntity.getValue(); }
 			  }
-			 return (int)(100-L1*10- (int)(L2/4)*5- (int)(L3/8*2));
+			 return new int[]{ishasplc,(int)(100-L1*10- (int)(L2/4)*5- (int)(L3/8*2))};
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-     return 65;
+     return new int[]{ishasplc,65};
 	}
 	/**
 	  * 运管分析
@@ -171,23 +181,24 @@ public class PhysicalController {
 	  * @param weightSet
 	  * @return
 	  */
-	private int getTransportScores(String stTime,String edTime,ColdStorageSetEntity obj,WeightSetEntity weightSet){
+	private int[] getTransportScores(String stTime,String edTime,ColdStorageSetEntity obj,WeightSetEntity weightSet){
+		double emgodunit=0; int ishasplc=0;
 		try {
-			double emgodunit=0;
 			Double doorAvgTime	=this.quantityMapper.getSisBayKey(1,obj.getId(), "DoorAvgTime", stTime, edTime);//获得平均开门时间
-			if(doorAvgTime!=null&&doorAvgTime>0){doorAvgTime=(doorAvgTime/3600)*weightSet.getTransport1();}else{doorAvgTime=new Double(0);}
+			if(doorAvgTime!=null&&doorAvgTime>0){doorAvgTime=(doorAvgTime/3600)*weightSet.getTransport1();ishasplc=1;}else{doorAvgTime=new Double(0);}
 			List<HashMap<String, Object>> goodQuantit = this.quantityMapper.getGoodQuantit(obj.getId(), stTime, edTime);
 			if (SetUtil.isnotNullList(goodQuantit)&&goodQuantit.get(0)!=null) {
+				ishasplc=1;
 			  Double  temp=	 (Double) goodQuantit.get(0).get("temp");
 			  Double quantit=(Double) goodQuantit.get(0).get("quantit");
 			  emgodunit= quantit*(temp-obj.getStartTemperature())*weightSet.getTransport2();
 			  if(emgodunit<0){emgodunit=0;}
 			}
-		  return (int)Math.abs(100-doorAvgTime-emgodunit);
+		  return new int[]{ishasplc,(int)Math.abs(100-doorAvgTime-emgodunit)};
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-     return 45;
+     return new int[]{1,45};
 	}
 	
 	

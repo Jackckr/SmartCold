@@ -18,8 +18,8 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	$scope.timeuRange=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
 	$scope.sumDatavalue=[[0,0],[0,0]];
 	$scope.oids=[],$scope.names=[];//当前登陆tempid;
-	$http.get('/i/physicalController/getCompNameByRdcId',{params: {"rdcId":$scope.rdcId } }).success(function(data,status,config,header){
-		$scope.compName=data?data:$rootScope.vm.choserdc.name;
+	$http.get('/i/physicalController/getCompNameByRdcId',{params: {"rdcId":$scope.rdcId } }).success(function(data){
+		$scope.compName=(data.message&&data.message!=""&&data.message!="null")?data.message:$rootScope.vm.choserdc.name;
 	});
 	//1.初始化温度图表====================================================================================================================================================================================
 	/**
