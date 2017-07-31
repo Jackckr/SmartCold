@@ -371,7 +371,6 @@ body{
 }
 .infoImg li:last-child{
     margin-right: 0;
-    float: right;
 }
 .infoModal h3{
     font-size: 16px;
