@@ -1,7 +1,7 @@
 /**
  * Created by wellsea on 6/21/0021.
  */
-
+//layer icon: --1:对号，2:叉号，3：问号，4：锁，5：哭脸，6：笑脸，7：叹号
 if (sessionStorage.lkuser && new Date().getTime() - sessionStorage.longtime < (30 * 60 * 1000)) {
     window.lkuser = JSON.parse(sessionStorage.lkuser);
     $("#loginUser").show().find('img').attr({'src': lkuser.avatar, 'title': lkuser.username});

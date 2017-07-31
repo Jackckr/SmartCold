@@ -100,9 +100,9 @@ function getRdcInfo() {
                 ' <tr> <td>实时温度</td> <td class="blue"><span style="cursor: pointer;" onclick="realTimeTem('+rdc.id+',\''+rdc.name+'\')">点击查看实时温度</span></td> </tr> </table>');
         }else{//不是自己的冷库
             if(rdc.openLIne&&rdc.openLIne==1){//公开温度曲线
-                openLIne='<tr> <td>实时温度</td> <td><span style="cursor: pointer;" onclick="realTimeTem('+rdc.id+',\''+rdc.name+'\')">点击查看实时温度</span></td> </tr>';
+                openLIne='<tr> <td>实时温度</td> <td class="blue"><span style="cursor: pointer;" onclick="realTimeTem('+rdc.id+',\''+rdc.name+'\')">点击查看实时温度</span></td> </tr>';
             }else{
-                openLIne='<tr> <td>实时温度</td> <td class="blue">该冷库主尚未公开温度曲线</td> </tr>';
+                openLIne='<tr> <td>实时温度</td> <td>该冷库主尚未公开温度曲线</td> </tr>';
             }
             if(window.lkuser.vipType==0) {//没有实名认证
                 baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%</td></tr>' +

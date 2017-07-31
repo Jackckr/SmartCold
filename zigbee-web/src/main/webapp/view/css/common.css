@@ -400,3 +400,16 @@ body{
     padding-left: 10px;
 }
 /*模态框*/
+.nodata{
+    border: none!important;
+    text-align: center;
+    margin: 20px auto;
+    font-size: 14px;
+    background-color:transparent!important;
+    width: 100%!important;
+}
+.nodata>img{
+    width: 319px;
+    height:222px;
+    vertical-align: middle;
+}
