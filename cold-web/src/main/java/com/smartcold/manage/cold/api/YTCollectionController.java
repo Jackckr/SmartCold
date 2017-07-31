@@ -17,7 +17,7 @@ import com.smartcold.manage.cold.dto.DataResultDto;
 import com.smartcold.manage.cold.util.TimeUtil;
 
 /**
- * WT数据协议接口
+ * YT(便利店)数据协议接口
  * @author Administrator
  *
  */
@@ -46,7 +46,7 @@ public class YTCollectionController extends BaseController {
 			System.err.println("收到YT数据："+data);
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.err.println("系统在："+TimeUtil.getDateTime()+"检测到QT数据解析异常：\r\n"+data);
+			System.err.println("系统在："+TimeUtil.getDateTime()+"YT检测到数据解析异常：\r\n"+data);
 			return new DataResultDto(500);
 		}
 		return new DataResultDto(200);

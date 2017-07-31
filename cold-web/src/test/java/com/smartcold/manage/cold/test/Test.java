@@ -21,7 +21,7 @@ public class Test {
 	public static void test1(){
 
 		  boolean	isSaveDU=false;
-		String devData="[{\"devid\":\"00210005\",\"datas\":{\"time\":1494729138,\"Temp\":27.82,\"AU\":0,\"BU\":0,\"CU\":0,\"AI\":0,\"BI\":0,\"CI\":0,\"PWC\":0,\"Switch\":1,\"DU\":4.26,\"BSI\":-47.5,\"apid\":\"00200001\",\"MSI\":22}},{\"devid\":\"00210001\",\"datas\":{\"time\":1494729139,\"Temp\":27.82,\"AU\":0,\"BU\":0,\"CU\":0,\"AI\":0,\"BI\":0,\"CI\":0,\"PWC\":0,\"Switch\":1,\"DU\":4.17,\"BSI\":-56.5,\"apid\":\"00200001\",\"MSI\":22}},{\"devid\":\"00210003\",\"datas\":{\"time\":1494729142,\"Temp\":27.82,\"AU\":0,\"BU\":0,\"CU\":0,\"AI\":0,\"BI\":0,\"CI\":0,\"PWC\":0,\"Switch\":1,\"DU\":4.23,\"BSI\":-48,\"apid\":\"00200001\",\"MSI\":22}},{\"devid\":\"00210006\",\"datas\":{\"time\":1494729130,\"Temp\":27.82,\"AU\":0,\"BU\":0,\"CU\":0,\"AI\":0,\"BI\":0,\"CI\":0,\"PWC\":0,\"Switch\":1,\"DU\":4.26,\"BSI\":-45,\"apid\":\"00200001\",\"MSI\":22}},{\"devid\":\"00210002\",\"datas\":{\"time\":1494729141,\"Temp\":27.82,\"AU\":0,\"BU\":0,\"CU\":0,\"AI\":0,\"BI\":0,\"CI\":0,\"PWC\":0,\"Switch\":1,\"DU\":4.21,\"BSI\":-41.5,\"apid\":\"00200001\",\"MSI\":22}},{\"devid\":\"00210004\",\"datas\":{\"time\":1494729144,\"Temp\":27.82,\"AU\":0,\"BU\":0,\"CU\":0,\"AI\":0,\"BI\":0,\"CI\":0,\"PWC\":0,\"Switch\":1,\"DU\":4.17,\"BSI\":-50.5,\"apid\":\"00200001\",\"MSI\":22}}]";
+		String devData="[{'devid':'00210005','datas':{'time':1494729138,'Temp':27.82,'AU':0,'BU':0,'CU':0,'AI':0,'BI':0,'CI':0,'PWC':0,'Switch':1,'DU':4.26,'BSI':-47.5,'apid':'00200001','MSI':22}},{'devid':'00210001','datas':{'time':1494729139,'Temp':27.82,'AU':0,'BU':0,'CU':0,'AI':0,'BI':0,'CI':0,'PWC':0,'Switch':1,'DU':4.17,'BSI':-56.5,'apid':'00200001','MSI':22}},{'devid':'00210003','datas':{'time':1494729142,'Temp':27.82,'AU':0,'BU':0,'CU':0,'AI':0,'BI':0,'CI':0,'PWC':0,'Switch':1,'DU':4.23,'BSI':-48,'apid':'00200001','MSI':22}},{'devid':'00210006','datas':{'time':1494729130,'Temp':27.82,'AU':0,'BU':0,'CU':0,'AI':0,'BI':0,'CI':0,'PWC':0,'Switch':1,'DU':4.26,'BSI':-45,'apid':'00200001','MSI':22}},{'devid':'00210002','datas':{'time':1494729141,'Temp':27.82,'AU':0,'BU':0,'CU':0,'AI':0,'BI':0,'CI':0,'PWC':0,'Switch':1,'DU':4.21,'BSI':-41.5,'apid':'00200001','MSI':22}},{'devid':'00210004','datas':{'time':1494729144,'Temp':27.82,'AU':0,'BU':0,'CU':0,'AI':0,'BI':0,'CI':0,'PWC':0,'Switch':1,'DU':4.17,'BSI':-50.5,'apid':'00200001','MSI':22}}]";
 		Calendar calendar = Calendar.getInstance();
 		int hours = calendar.get(Calendar.HOUR_OF_DAY); // 时
 		int minutes = calendar.get(Calendar.MINUTE);    // 分
@@ -36,7 +36,7 @@ public class Test {
 			devid=Integer.parseInt(zsDevDataEntity.getDevid())+"";
 			Integer type = 18;//无效设备
 			if(type==null||type==-1){continue;}//无效设备
-			apid=((Integer)datas.get("apid"))+"";
+			apid=datas.get("apid")+"";
 			date =new Date( (Integer)datas.get("time")*1000L);
 			switch (type) {
 			case 18://温度
@@ -60,14 +60,16 @@ public class Test {
 			if(isSaveDU){//保存设备电压
 				dusiList.add(new StorageDataCollectionEntity(apid, devid,"DU", datas.get("DU") , date));
 				dusiList.add(new StorageDataCollectionEntity(apid, devid,"BSI",datas.get("BSI"), date));
+				
 			}
+			System.err.println(dataList.toString());
 		}
 		
 	}
 	
 	private static void test2(){
 		  Gson gson = new Gson();
-		String data="{\"apID\": \"AP10\", \"infos\": [{\"devID\": \"69\", \"Temp\": \"00.00\", \"AU\": \"00.00\", \"AI\": \"00.00\", \"BU\": \"00.00\", \"BI\": \"00.00\", \"CU\": \"00.00\", \"CI\": \"00.00\", \"PWC\": \"00.00\", \"Switch\": \"1\", \"time\": \"1498012780\"}]}";
+		String data="{'apID': 'AP10', 'infos': [{'devID': '69', 'Temp': '00.00', 'AU': '00.00', 'AI': '00.00', 'BU': '00.00', 'BI': '00.00', 'CU': '00.00', 'CI': '00.00', 'PWC': '00.00', 'Switch': '1', 'time': '1498012780'}]}";
 		Map<String, Object> dataCollectionBatchEntity = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 		if(dataCollectionBatchEntity.containsKey("infos")){
 			String apID = dataCollectionBatchEntity.get("apID").toString();
@@ -86,10 +88,12 @@ public class Test {
 	}
 	
 	public static void main(String[] args) {
-		test2();
+		test1();
 	}
 	
 
+	
+	
 
 	
 }

@@ -167,7 +167,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
     };
 }]);
 coldWeb.config(function ($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise("/preview");
+    $urlRouterProvider.otherwise("/cold360Physical");
     coldWeb.stateProvider=$stateProvider;
     //index
     $stateProvider

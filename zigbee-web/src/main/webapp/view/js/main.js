@@ -24,7 +24,7 @@ function getRdcShare() {
     $.ajax({url:"/i/ShareRdcController/getSERdc",type:"post",data:{"dataType":3,"typeCode":2},success:function (data) {
         var rdcRent=[];
         for(var i=0;i<data.length;i++){
-            if(i<=9){
+            if(i<=6){
                 rdcRent.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'"><span>'+(i+1)+'</span>['+data[i].detlAddress+'] '+data[i].title+'，联系电话['+data[i].telephone+']</a></li>');
             }
         }

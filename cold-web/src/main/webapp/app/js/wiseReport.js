@@ -14,6 +14,7 @@ coldWeb.controller('wiseReport', function( $scope, $rootScope,$stateParams,$http
 	$scope.charArray={},//图表对象
 	$scope.charressum={},//图表数据
 	$scope.charrestmsg={};
+	$scope.charresttit={};
 	$("#date04").jeDate({isinitVal:true,festival:false, ishmsVal:false,isToday:false, initAddVal:[-30],minDate: '2016-05-01 23:59:59', maxDate: $.nowDate(-30),  format:"YYYY-MM",zIndex:100});
 	$("#date05").jeDate({  isinitVal:true, initAddVal:[-7], festival: true, format: 'YYYY-MM-DD',maxDate: $.nowDate(-7),});
 	
@@ -32,6 +33,7 @@ coldWeb.controller('wiseReport', function( $scope, $rootScope,$stateParams,$http
 			getlineoption:function(title,ldata,xData,seriesdata){return {series : seriesdata, tooltip : { trigger : 'axis' }, grid : { x:40,y2 : 30, width : '88%' ,height:'67%'},legend : { data : ldata, y : 35 },title : { text : title, x : 'center', y : 5 },yAxis : [ { type : 'value', axisLabel : { formatter : '{value}' } } ],xAxis : [ { type : 'category',splitLine:{show:false}, axisLabel : {rotate : '60',interval : 0},data :xData}]};}
 	};
 	$scope.toolchart = function(index,url,emid,title,keys,nuit,msge,sunit ){
+		$scope.charresttit[index]=[msge,sunit];
 		$http.get(url,{params: {  "rdcid": $scope.rdcId,'keys':keys,"startTime": $scope.startTime,"endTime": $scope.endTime}}).success(function(data,status,config,header){
 			++$scope.loadindex;
 			if(data!=null){
@@ -42,7 +44,7 @@ coldWeb.controller('wiseReport', function( $scope, $rootScope,$stateParams,$http
 					angular.forEach(storage[keys],function(item){  var val=item['value']/nuit ;  yData.unshift(val); sumval+=val;  });
 					var avg=(sumval/storage[keys].length).toFixed(2);
 					if(!isNaN(avg)){
-						  restmsg.push({name :name,avgval:avg,msg:name+msge+avg+sunit+" "+mode.tmg[index]+util.getMsg(index,avg)}); 
+						  restmsg.push({name :name,avgval:avg,msge:msge,sunit:sunit,tit:mode.tmg[index],asis:util.getMsg(index,avg),msg:name+msge+avg+sunit+" "+mode.tmg[index]+util.getMsg(index,avg)}); 
 						  seriesdata.push({name : name,type : 'line',data : yData, markLine: { data: [  {type: 'average', name: '平均值'}]}});
 					}
 				});
@@ -52,6 +54,7 @@ coldWeb.controller('wiseReport', function( $scope, $rootScope,$stateParams,$http
 					myChart.setOption(util.getlineoption(title, ldata, xData, seriesdata));
 					$scope.charArray[index]=myChart;
 					$scope.charrestmsg[index]=restmsg;
+					
 				}else{
 					$scope.loadindex=11; //$scope.isloaderr=true;
 				}
@@ -62,12 +65,9 @@ coldWeb.controller('wiseReport', function( $scope, $rootScope,$stateParams,$http
 	//1.获得冷库公司名称--》原来是系统评分
 	$scope.pysical=function(){
 		//获得分析结果
-//		$http.get('/i/physicalController/mothCheckup',{params: {"rdcId":$scope.rdcId ,"stTime": $scope.startTime,"edTime": $scope.endTime} }).success(function(data,status,config,header){ if(data.success){ 
-//			++$scope.loadindex;$scope.pysicaldata=data.entity;
-//		}});
 		$http.get('/i/physicalController/getCompNameByRdcId',{params: {"rdcId":$scope.rdcId } }).success(function(data,status,config,header){
 			++$scope.loadindex;
-			$scope.compName=data?data:$rootScope.vm.choserdc.name;
+			$scope.compName=(data.message&&data.message!=""&&data.message!="null")?data.message:$rootScope.vm.choserdc.name;
 		});
 	};
 	$scope.initRdcreportsis=function(){
@@ -88,7 +88,7 @@ coldWeb.controller('wiseReport', function( $scope, $rootScope,$stateParams,$http
 //	     $scope.toolchart(7,mode.url[0], 'onOffCycleId', '设备开关周期', 'GoodsLiuTongYinZi', 1, " 设备开关周期");//4-----没做
 //	     $scope.toolchart(7,mode.url[0], 'onOffCycleId', '设备开关周期', 'GoodsLiuTongYinZi', 1, " 设备开关周期");//4-----没做
 	};       
-	
+//	
 	$scope.initQsis=function(){//8
 		$http.get('/i/AnalysisController/getQAnalysisByMonth',{params: {rdcId:$scope.rdcId,"stTime": $scope.startTime,"edTime": $scope.endTime}} ).success(function(data,status,headers,config){
 			++$scope.loadindex;if(data!=null){
@@ -204,12 +204,12 @@ coldWeb.controller('wiseReport', function( $scope, $rootScope,$stateParams,$http
     	    $scope.pysical();
     	    $scope.initRdcreportsis();
     	    $scope.initlineChar();
-    	    $scope.initQsis();
+//    	    $scope.initQsis();
     	    $scope.initPowersis();
     	    $scope.initWaterCostsis();
-    	    $scope.initQEsis();
+//    	    $scope.initQEsis();
     	    $scope.initcompruntime();
-    	    $timeout($("#loding").hide(),0);
+    	    $timeout($("#loding").hide,4000);
     };
     $scope.initdata();
     

@@ -81,7 +81,10 @@ public class DFSCollectionController extends BaseController {
 		    	if(name.indexOf("警")>-1){wardataList.add(new WarningsInfo(name,Integer.parseInt(rdcid),1,date));continue;}
 		    	newdata = config.get(name);if(newdata==null){ continue;}
 		    	if(unitConvers.containsKey(name)){
-				      counsValue(unitConvers, newdata, info, name);//  加入转换对象
+				     if(! counsValue(unitConvers, newdata, info, name)){//  加入转换对象
+				    	 continue;//转换异常
+				     }
+				     
 		    	}else{
 		    		 newdata.setValue(info.get("currentvalue"));
 					 newdata.setTime( info.get("lasttime"));
@@ -134,7 +137,7 @@ public class DFSCollectionController extends BaseController {
 	 * @param info
 	 * @param name
 	 */
-	private static void counsValue(HashMap<String, ConversionEntity> unitConvers,DFSDataCollectionEntity newdata, Map<String, String> info,String name) {
+	private static boolean counsValue(HashMap<String, ConversionEntity> unitConvers,DFSDataCollectionEntity newdata, Map<String, String> info,String name) {
 		String val=null;String[] key_val =null;ConversionEntity conversionEntity=null;
 			 val = info.get("currentvalue");
 		    		 try {
@@ -143,32 +146,35 @@ public class DFSCollectionController extends BaseController {
 						case 1://换算
 							val= (Double.parseDouble(val)*Double.parseDouble(conversionEntity.getMapping()))+"";
 							newdata.setValue(val);
-							break;
+							return true;
 						case 2://switch
 							 key_val = conversionEntity.getUnit().get(val);
 							 if(key_val!=null){
 								    newdata.setKey(key_val[0]);
 									newdata.setValue(key_val[1]);
+									return true;
 							 }else{
 								 System.err.println("进入风机转换1：转换异常"+val);
+								 return false;
 							 }
-							break;
 						case 3://指向
 							ConversionEntity conversionEntity2 = unitConvers.get(conversionEntity.getMapping());//映射解析对象  减少内存
 							key_val = conversionEntity2.getUnit().get(val);
 							if(key_val!=null){
 								newdata.setKey(key_val[0]);
 								newdata.setValue(key_val[1]);
+								return true;
 							}else{
 								 System.err.println("进入风机转换2：转换异常"+val);
+								 return false;
 							}
-							break;	
 						default:
-							break;
+							return false;
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
 						System.err.println("转换出错！");
+						return false;
 					}
 	} 
 	
