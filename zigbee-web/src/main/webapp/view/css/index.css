@@ -21,11 +21,11 @@
 }
 .imgList li img{
     position: absolute;
-    width: 1920px;
+   /* width: 1920px;*/
     height: 200px;
     left: 50%;
     top: 0;
-    margin-left: -960px;
+    margin-left: -50%;
 }
 .dianList{
     height: 16px;
@@ -202,7 +202,8 @@
 }
 .imglist li{
     width: 32%;
-   /* height: 237px;*/
+    /*height: 237px; */
+    height: 164px;
     margin-right: 1%;
     margin-bottom: 15px;
     padding-bottom:10px;

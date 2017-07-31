@@ -37,9 +37,9 @@
         //float: none!important;
         margin: 0 auto 30px;
     }*/
-    .section{
+    /*.section{
         width: 1210px;
-    }
+    }*/
 }
 @media only screen and (max-width: 980px){
 
@@ -51,9 +51,9 @@
         float: none!important;
         margin: 0 auto 30px;
     }
-    .section{
+   /* .section{
         width: 96%;
-    }
+    }*/
     .imglist,.txtlist{
         width: 100%;
     }

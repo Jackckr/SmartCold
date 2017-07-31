@@ -119,8 +119,8 @@ html,body,header{
     background-color: #2e3033;
 }
 .section{
-    /*width: 1210px;*/
-    width: 80%;
+    width: 1280px;
+    /*width: 80%;*/
     margin: 15px auto;
     background-color: #fff;
     position: relative;
