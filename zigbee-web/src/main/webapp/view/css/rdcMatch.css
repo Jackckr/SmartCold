@@ -175,7 +175,7 @@
     border-bottom: 8px solid #f7f7f7;
 }
 .msgBody li{
-    line-height: 58px;
+   /* line-height: 58px;*/
 }
 .msgInfo ul > li.msgTitle {
     width: 20%;

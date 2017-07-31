@@ -273,6 +273,7 @@ $(function () {
     var hash = location.hash;
     if(localStorage.shareIndex&&hash){//刷新页面记录刷新之前位置
         var oIndex = localStorage.shareIndex;
+        clearParam();
         if(oIndex<4){
             $('.btnGroup button').eq(oIndex).addClass('active').siblings().removeClass('active');
             if (oIndex < 2) {
@@ -286,7 +287,6 @@ $(function () {
                     screenParam.dataType=3;
                     screenParam.typeCode=2;
                 }
-                clearParam();
                 initColdParam();
                 initRentRdc();
             } else if(oIndex<4){
@@ -300,11 +300,11 @@ $(function () {
                     screenParam.dataType=1;
                     screenParam.typeCode=2;
                 }
-                clearParam();
                 initGoodsParam();
             }
         }else{
-            console.log('发布共享信息');
+            initColdParam();
+            initRentRdc();
         }
     }else{
         initColdParam();
