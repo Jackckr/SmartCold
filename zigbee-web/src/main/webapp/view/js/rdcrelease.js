@@ -109,7 +109,9 @@ function submitAdd() {
             data:formData,success:function (data) {
             layer.close(ii);
             if(data.success){
-                layer.alert(data.message, {icon: 1});
+                layer.alert(data.message, {icon: 1},function () {
+                    window.location.href = "rdcmatch.html";
+                });
             }else {
                 layer.alert(data.message, {icon: 2});
             }
