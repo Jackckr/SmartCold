@@ -48,6 +48,7 @@ function searchData() {  queryParams.startTime=$("#startTime").val(); queryParam
 //1.发布冷库===================================================================================
 function initrdclist(){
 	chanrdc();initTempTpe();//-- 租期1.1个月以下2.1~3 3.3~6 4.6~9 5.一年以上 6.两年以上 7.三年以上 8.五年以上
+    loadProvince();getStorageManage();
 	$('#addstorageShareInfodialog').dialog('open');
 }
 function add_storageSharinfo(){
@@ -61,11 +62,13 @@ function add_storageSharinfo(){
                 $.each(input,function(index,item){  for (var i = 0; i < item.files.length; i++) { formdata.append('fileData['+i+']',item.files[i]); }});
                 $.each(parnArray,function(index,item){  vo[item.name] = item.value; });
                 if(vo.rdcId!=slrdc.id){ $.messager.alert('错误', '请选择完整的冷库信息！', 'error'); return;}
-                vo.detlAddress=slrdc.address;
-                vo.provinceid=slrdc.provinceid;
-                vo.cityId= slrdc.cityId;
+                if(slrdc.name.trim()!='无'){
+                    vo.codeLave1=rdcext.managetype;
+                    vo.detlAddress=slrdc.address;
+                    vo.provinceid=slrdc.provinceid;
+                    vo.cityId= slrdc.cityId;
+                }
                 vo.uid= slrdc.userId;
-                vo.codeLave1=rdcext.managetype;
                 if(!vo.uid){vo.uid=1;}
                 vo.username=data;
                 formdata.append("data",JSON.stringify(vo));
@@ -90,7 +93,49 @@ function add_storageSharinfo(){
         }
     });
 }
+/*获得冷库经营类型*/
+function getStorageManage() {
+    var manageList=[];
+    $.ajax({url:"/i/rdc/findAllManageType",type:"get",success:function (data) {
+        data.forEach(function (val, index) {
+            manageList.push('<option value="'+val.id+'">'+val.type+'</option>');
+        });
+        $("#sel_manage_slid").empty().append(manageList.join(''));
+        $("#sel_manage_slid").combobox({});
+    }});
+}
 
+/*加载省*/
+function loadProvince() {
+    $.ajax({
+        url: "/i/city/findProvinceList",
+        type: "get",
+        success: function (data) {
+            var option = "";
+            for (var i = 0; i < data.length; i++) {
+                option += "<option value='" + data[i].provinceId + "'>" + data[i].provinceName + "</option>";
+            }
+            $("#sel_province_slid").empty().append(option);
+            $("#sel_province_slid").combobox({});
+        }
+    });
+}
+/*通过省id加载市*/
+function loadCityByProId(id) {
+    $.ajax({
+        url: "/i/city/findCitysByProvinceId",
+        data: {"provinceID": id},
+        type: "get",
+        success: function (data) {
+            var option = "";
+            for (var i = 0; i < data.length; i++) {
+                option += "<option value='" + data[i].cityID + "'>" + data[i].cityName + "</option>";
+            }
+            $("#sel_city_slid").empty().append(option);
+            $("#sel_city_slid").combobox({});
+        }
+    });
+}
 //===================================================================================
 /*批量删除*/
 function delRdcShares() {
@@ -149,4 +194,5 @@ $().ready(function() {
     $('#fddata').searchbox({searcher:function(value){queryParams.keyword=value;  reloaddata(queryParams);}});
     $('#sel_rdc_slid').combobox({valueField: 'id',textField: 'name',onSelect:function(record){slrdc=record; }});
     $('#sel_temperType_slid').combobox({valueField: 'id',textField: 'type',onSelect:function(record){this.dataval= record.id}});
+    $("#sel_province_slid").combobox({onSelect: function (record) {loadCityByProId(record.value);}});
 });//初始化数据
