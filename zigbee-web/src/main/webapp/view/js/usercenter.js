@@ -296,7 +296,7 @@ function getShareList(datatype, pageId, domId) {
                         '<h4 class="omg"><i class="iconfont orange">&#xe61c;</i>' + item.detlAddress + '</h4>' +
                         '<p class="omg">' + formatDateTime(item.updatetime) + '</p><div class="txt-right">' +
                         '<button class="layui-btn layui-btn-normal layui-btn-small" onclick="location.href=\'rdcmatchinfo.html?id='+item.id+'\'">查看</button>' +
-                        '<button class="layui-btn layui-btn-small">修改</button>' +
+                        '<button class="layui-btn layui-btn-small" onclick="goRentRdc('+item.id+','+item.typeCode+')">修改</button>' +
                         '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteData(' + item.id + ',' + 1 + ')">删除</button></div></div></li>')
                 });
                 if(oList.length){
@@ -317,6 +317,17 @@ function getShareList(datatype, pageId, domId) {
                 });
             }
         });
+}
+
+
+/*进入修改冷库发布页面*/
+function goRentRdc(id,type) {
+    sessionStorage.submitRdcStatus=1;
+    if(type==1){
+        window.location.href='rdcrelease.html?shareId='+id;
+    }else {
+        window.location.href='applyrent.html?shareId='+id;
+    }
 }
 /**
 *
@@ -358,6 +369,8 @@ function search() {//搜索
     pageCurrent=1;
     getRdcList();
 }
+
+
 /*
 *
 * 我的收藏

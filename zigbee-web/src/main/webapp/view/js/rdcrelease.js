@@ -23,7 +23,7 @@ function rentRdcPicChange(e) {
 function showSelectPics() {
     var storagePicImg=[];
     for(var i=0;i<rentRdcOriginalLent;i++){
-        storagePicImg.push('<li class="imgBox"><img src="'+rentRdcPics[i].location+'" alt=""><i onclick="delrentRdcPic('+i+','+rentRdcPics[i].id+')">&times;</i></li>');
+        storagePicImg.push('<li class="imgBox"><img src="'+rentRdcPics[i].location+'" alt=""><i onclick="delrentRdcPic('+i+','+rentRdcPics[i].id+',\''+rentRdcPics[i].location+'\')">&times;</i></li>');
     }
     if(rentRdcPics.length!=rentRdcOriginalLent){
         for(var i=rentRdcOriginalLent;i<rentRdcPics.length;i++){
@@ -38,7 +38,7 @@ function showSelectPics() {
     }
 }
 /*删除显示图片*/
-function delrentRdcPic(index,id) {
+function delrentRdcPic(index,id,location) {
     if(index+1>rentRdcOriginalLent){
         rentRdcPics.splice(index,1);
         showSelectPics();
@@ -48,10 +48,9 @@ function delrentRdcPic(index,id) {
             shade: false //不显示遮罩
         }, function(e){
             rentRdcPics.splice(index,1);
-            if(id){
+            if(id&&location){
                 rentRdcOriginalLent--;
-                $.ajax({url:"/i/rdc/deleteStoragePic",type:"post",data:{belongid:2132,category:'sharePic',id:213213,location:'http',name:'213',type:'123123'},success:function (data) {
-
+                $.ajax({url:"/i/rdc/deleteStoragePic",type:"post",data:{id:id,location:location},success:function (data) {
                 }});
             }
             showSelectPics();
@@ -103,7 +102,9 @@ function submitAdd() {
         var formData = new FormData();
         formData.append('data',JSON.stringify(vo));
         $.each(rentRdcPics,function (index, file) {
-            formData.append('file'+index,file);
+            if(index>=rentRdcOriginalLent){
+                formData.append('file'+index,file);
+            }
         });
         formData.append('uid',window.lkuser.id);
         $.ajax({url:"/i/ShareRdcController/shareFreeRelease",type:"post",processData: false, contentType: false,
@@ -178,15 +179,32 @@ function getRdcList() {
         $("#noRdc").attr('class','noRdc hide');
     }});
 }
-/*触发发布信息页*/
-function aboutRdcRelease(rdcId){
-    if(sessionStorage.submitRdcStatus==0){
-        $('.aboutRdc').children('.rentRdc').hide().parent('.aboutRdc').siblings('.rdcAdd').show();
-        initRdcInfo(rdcId);
-    }else {
-        //修改入口
-    }
 
+/*初始化修改信息*/
+function initUpdateInfo(id) {
+    $.ajax({url:"/i/ShareRdcController/getSEByIDForEdit",type:"get",data:{id:id},success:function (data) {
+        var share=data.entity;
+        initRdcInfo(share.rdcID);
+        getDataToForm($("#submitRdc [name]"),share);
+        rentRdcOriginalLent=share.fileList.length;
+        $.each(share.fileList,function (index, file) {
+            rentRdcPics.push(file);
+        });
+        showSelectPics();
+    }});
+}
+
+/*触发发布信息页*/
+function aboutRdcRelease(id){
+    if(sessionStorage.submitRdcStatus==0){//添加
+        $('.aboutRdc').children('.rentRdc').hide().parent('.aboutRdc').siblings('.rdcAdd').show();
+        initRdcInfo(id);
+    }else {//修改
+        $('.aboutRdc').children('.rentRdc').hide().parent('.aboutRdc').siblings('.rdcAdd').show();
+        $("#pageFlag").html('修改出租冷库');
+        $("#submitRdc").append('<input type="hidden" name="id" value="'+id+'"/>');
+        initUpdateInfo(id);
+    }
 }
 
 /*图片放大特效*/
@@ -203,6 +221,10 @@ function showImg() {
 $(function () {
     if(checkLogin()){
         getRdcList();
+        if(sessionStorage.submitRdcStatus==1){
+            var urlParam = getUrlParam("shareId");
+            aboutRdcRelease(urlParam);
+        }
     }
 });
 

@@ -691,7 +691,7 @@ public class RdcController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/deleteStoragePic", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/deleteStoragePic")
 	public Object deleteStoragePic(FileDataEntity filedata) {
 		boolean deleted = ftpService.deleteFile(filedata.getLocation());
 		if (deleted) {
