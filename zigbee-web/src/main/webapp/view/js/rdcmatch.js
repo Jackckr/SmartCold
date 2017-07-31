@@ -301,17 +301,15 @@ function initGoodsList() {
 /*跳至发布页面*/
 var addUrl=['rdcrelease.html','applyrent.html','salegoods.html','applygoods.html'];
 function toAddInfo() {
-    if(checkLogin()){
-        sessionStorage.submitRdcStatus=0;
-        var url;
-        if(screenParam.dataType==3){
-            url=screenParam.typeCode==1?addUrl[0]:addUrl[1];
-        }
-        if(screenParam.dataType==1){
-            url=screenParam.typeCode==1?addUrl[2]:addUrl[3];
-        }
-        window.location.href=url;
+    sessionStorage.submitRdcStatus=0;
+    var url;
+    if(screenParam.dataType==3){
+        url=screenParam.typeCode==1?addUrl[0]:addUrl[1];
     }
+    if(screenParam.dataType==1){
+        url=screenParam.typeCode==1?addUrl[2]:addUrl[3];
+    }
+    window.location.href=url;
 }
 
 /*清除筛选数据*/
