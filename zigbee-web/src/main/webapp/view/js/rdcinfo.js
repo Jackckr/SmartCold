@@ -99,6 +99,11 @@ function getRdcInfo() {
                 ' <tr> <td>联系电话</td> <td class="orange"> <b>'+rdc.phoneNum+'</b></td> </tr>' +
                 ' <tr> <td>实时温度</td> <td class="blue"><span style="cursor: pointer;" onclick="realTimeTem('+rdc.id+',\''+rdc.name+'\')">点击查看实时温度</span></td> </tr> </table>');
         }else{//不是自己的冷库
+            if(rdc.openLIne&&rdc.openLIne==1){//公开温度曲线
+                openLIne='<tr> <td>实时温度</td> <td><span style="cursor: pointer;" onclick="realTimeTem('+rdc.id+',\''+rdc.name+'\')">点击查看实时温度</span></td> </tr>';
+            }else{
+                openLIne='<tr> <td>实时温度</td> <td class="blue">该冷库主尚未公开温度曲线</td> </tr>';
+            }
             if(window.lkuser.vipType==0) {//没有实名认证
                 baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%</td></tr>' +
                     '<tr><td>地址</td><td>'+rdc.address+'</td> </tr></table>');
@@ -108,23 +113,10 @@ function getRdcInfo() {
                     '<tr> <td>价格</td> <td>'+price+'</td> </tr> ' +
                     '<tr> <td>总面积/空置面积</td> <td>'+rdc.area+'㎡/'+rentSqm+'</td> </tr>' +
                     '<tr> <td>冷库净高</td> <td>'+rdc.height+' m</td> </tr>' +
-                    ' <tr> <td>联系电话</td> <td class="orange"> <b>'+rdc.phoneNum+'</b></td> </tr>' +
-                    ' <tr> <td>实时温度</td> <td class="blue"><span style="cursor: pointer;" onclick="realTimeTem('+rdc.id+',\''+rdc.name+'\')">点击查看实时温度</span></td> </tr> </table>');
-                // ' <tr> <td colspan="2"> <button class="oBtn">预约订库</button> </td> </tr> </table>');
+                    ' <tr> <td>联系电话</td> <td class="orange"> <b>'+rdc.phoneNum+'</b></td> </tr>' +openLIne+'</table>');
             }
         }
-       /* if(window.lkuser.vipType==0||window.lkuser.id==rdc.userid) {//没有实名认证
-            baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%</td></tr>' +
-                '<tr><td>地址</td><td>'+rdc.address+'</td> </tr></table>');
-        }else if(window.lkuser.vipType>0||window.lkuser.id==rdc.userid){//实名认证
-            baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%'+auditButton+'</td></tr>' +
-                '<tr><td>地址</td><td>'+rdc.address+'</td> </tr> ' +
-                '<tr> <td>价格</td> <td>'+price+'</td> </tr> ' +
-                '<tr> <td>总面积/空置面积</td> <td>'+rdc.area+'㎡/'+rentSqm+'</td> </tr>' +
-                ' <tr> <td>联系电话</td> <td class="orange"> <b>'+rdc.phoneNum+'</b></td> </tr>' +
-                ' <tr> <td>实时温度</td> <td class="blue"><span style="cursor: pointer;" onclick="realTimeTem('+rdc.id+',\''+rdc.name+'\')">点击查看实时温度</span></td> </tr> </table>');
-                // ' <tr> <td colspan="2"> <button class="oBtn">预约订库</button> </td> </tr> </table>');
-        }*/
+
         if(window.lkuser && window.lkuser.vipType>0||window.lkuser&&window.lkuser.id==rdc.userid){
            // var structure=null, platform=null, lihuoRoom=null, lihuoArea=null, lihuoTemperCtr=null, storageRefreg=null, temperRecord=null,facility=null,remark=null;
             rdc.structure==0?structure='':structure='<td> <span>建筑结构：</span>'+struct[rdc.structure]+' </td>';

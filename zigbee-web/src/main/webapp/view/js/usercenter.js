@@ -506,7 +506,7 @@ function getCollectList(flag,pageId,domId){
                             '[' + itemlist.typeText + ']'+ itemlist.title + '</a></h2>' ,
                             '<h4 class="omg"><i class="iconfont orange">&#xe61c;</i>' + itemlist.detlAddress + '</h4>' ,
                             '<p class="omg">' +itemlist.validEndTime + '</p><div class="txt-right">' ,
-                            '<button class="layui-btn layui-btn-normal layui-btn-small" onclick="info('+itemlist.id+','+itemlist.dataType+','+itemlist.typeCode+')">查看</button>' ,
+                            '<button class="layui-btn layui-btn-normal layui-btn-small" onclick="location.href=\'rdcmatchinfo.html?id='+itemlist.id+'\'">查看</button>' ,
                             '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteData('+item.id+','+3+','+flag+')">取消收藏</button></div></div></li>')
                     }else{
                         collectList.push('<li><div class="oImg fl"><img src="http://139.196.189.93:8089/app/rdcHeader.jpg" alt=""></div>' ,
@@ -534,6 +534,7 @@ layui.use(['jquery', 'form', 'element', ], function () {
         pageCurrent = 1;pagination={pageCount:-1,oldPageCount:-1};
         var oIndex = $(this).index();
         localStorage.liIndex=oIndex;
+        window.scroll(0,120);//跳到顶部
         $(this).addClass('current').siblings('li').removeClass('current');
         $(".userInfo>li").eq(oIndex).show().siblings('li').hide();
         switch(oIndex)

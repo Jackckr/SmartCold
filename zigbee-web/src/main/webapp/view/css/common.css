@@ -98,7 +98,6 @@ html,body,header{
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
-
 }
 .item{
     -webkit-flex: 1;
@@ -110,6 +109,7 @@ html,body,header{
 /*公共头部和版权*/
 .header{
     width: 100%;
+    min-width:1210px;
     height: 116px;
     background: #2763cc;
 }
@@ -119,7 +119,7 @@ html,body,header{
     background-color: #2e3033;
 }
 .section{
-    width: 1280px;
+    width: 1210px;
     /*width: 80%;*/
     margin: 15px auto;
     background-color: #fff;
@@ -168,7 +168,6 @@ html,body,header{
     height: 86px;
 }
 .navUl li a:hover,
-.navSmall:hover,
 .navUl li.activeNav a,
 .navUlList li.activeNav{
     background-color: #186eff;
@@ -193,14 +192,6 @@ html,body,header{
     display: none;
 }
 .navLogin i{font-size: 18px}
-.navSmall span{
-    display: block;
-    text-align: center;
-    width: 100px;
-    height: 86px;
-    line-height: 86px;
-    color: #fff;
-}
 .navUlList{
     position: fixed;
     left: 0;

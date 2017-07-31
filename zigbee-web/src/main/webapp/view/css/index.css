@@ -11,6 +11,7 @@
 }
 .banner{
     position: relative;
+    min-width: 1210px;
 }
 .imgList li{
     position: absolute;
@@ -337,6 +338,14 @@
     overflow: hidden;
     text-align: center;
 }
+.bigAd{
+    overflow: hidden;
+}
+.bigAd img{
+    width: auto;
+    height:65px;
+}
+
 .adDouble ul li a{
     display: inline-block;
     padding: 0;
@@ -345,7 +354,7 @@
 }
 .chartList li{
     margin-right: 0;
-    height: 170px;
+    height: auto;
     margin-left: 1%;
 }
 .adOne ul li{
