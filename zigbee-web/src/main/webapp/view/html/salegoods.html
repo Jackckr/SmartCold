@@ -61,100 +61,76 @@
     <hr>
     <div class="rentRdc">
         <!--有关联库-->
-        <div class="rdcList">
-            <ul class="clearfix">
-                <li>
-                    <img src="../img/ad3.png" alt="">
-                </li>
-                <li>
-                    上海长宁天山路冷库
-                </li>
-                <li>
-                    <i class="iconfont orange">&#xe61c;</i>天山路600号捷运大厦
-                </li>
-                <li>
-                    <button class="oBtn" onclick="aboutRdcRelease()">发布</button>
-                </li>
-            </ul>
-            <ul class="clearfix">
-                <li>
-                    <img src="../img/ad1.png" alt="">
-                </li>
-                <li>
-                    合肥众萃RDC
-                </li>
-                <li>
-                    <i class="iconfont orange">&#xe61c;</i>长江中路366号
-                </li>
-                <li>
-                    <button class="oBtn" onclick="aboutRdcRelease()">发布</button>
-                </li>
-            </ul>
+        <div id="rdcList" class="rdcList">
         </div>
     </div>
 </div>
 <div class="section rdcAdd haveCold hide">
-    <form class="submitRdc" onsubmit="return false">
-        <p>
-            上海长宁天山路冷库
-            <span><i class="iconfont orange">&#xe61c;</i>天山路600号捷运大厦</span>
+    <form id="haveCodeForm" class="submitRdc" onsubmit="return false">
+        <p id="rdcName">
+
         </p>
         <ul class="infoImg clearfix" id="infoImg">
-            <li><img src="../img/image0.jpg" alt=""></li>
-            <li><img src="../img/image1.jpg" alt=""></li>
-            <li><img src="../img/image0.jpg" alt=""></li>
+
         </ul>
         <table>
             <tbody>
+            <input type="hidden" id="detlAddress" name="detlAddress"/>
+            <input type="hidden" value="1" name="dataType"/>
+            <input type="hidden" value="1" name="typeCode"/>
+            <input type="hidden" value="元/吨" name="unit"/>
+            <input type="hidden" value="出售" name="typeText"/>
+            <input type="hidden" id="rdcID" name="rdcID"/>
+            <input type="hidden" id="haveProvinceid" name="provinceid"/>
+            <input type="hidden" id="haveCityid" name="cityid"/>
             <tr>
                 <td>货品名称：<b class="blue">*</b></td>
-                <td><input type="text" name="name" id="name" placeholder="货品名称描述（6~24个字符）" ></td>
+                <td><input type="text" name="title" placeholder="货品名称描述（6~24个字符）" ></td>
             </tr>
             <tr>
                 <td>货品总量：<b class="blue">*</b></td>
                 <td class="rdcImg">
-                    <div id="tempStandDiv">
-                        <label><input type="number" step="0.01" placeholder="货品总量（数字）" class="numInput"></label>
-                        <label><input type="radio" name="sex" value="Kg" checked>Kg</label>
-                        <label><input type="radio" name="sex" value="吨">吨</label>
+                    <div>
+                        <label><input name="sqm" type="number" step="0.01" placeholder="货品总量（数字）" class="numInput"></label>
+                        <label><input type="radio" name="publishunit" value="1" checked>Kg</label>
+                        <label><input type="radio" name="publishunit" value="2">吨</label>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>品类：<b class="blue">*</b></td>
                 <td>
-                    <select name="category" id="category">
-                        <option value="水果">水果</option>
-                        <option value="冻品">冻品</option>
+                    <select name="codeLave1" id="haveCategory">
+
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>售价：<b class="blue">*</b></td>
-                <td><input name="rentSqm" type="number" step="0.01" placeholder="元/天（填0为面议）"></td>
+                <td><input name="unitPrice" type="number" step="0.01" placeholder="元/天（填0为面议）"></td>
             </tr>
             <tr>
                 <td>有效开始时间：<b class="blue">*</b></td>
                 <td>
-                    <input type="text" name="date" lay-verify="date" placeholder="yyyy-mm-dd" readonly
+                    <input type="text" name="validStartTime" lay-verify="date" readonly
                            autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})">
                 </td>
             </tr>
             <tr>
                 <td>有效结束时间：<b class="blue">*</b></td>
                 <td>
-                    <input type="text" name="date" lay-verify="date" placeholder="yyyy-mm-dd" readonly
+                    <input type="text" name="validEndTime" lay-verify="date" readonly
                            autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})">
                 </td>
             </tr>
             <tr>
                 <td>联系电话：<b class="blue">*</b></td>
-                <td><input type="tel" placeholder="请输入联系电话" name="phoneNum" id="phoneNum"></td>
+                <td><input type="tel" placeholder="请输入联系电话" name="telephone"></td>
             </tr>
             <tr>
                 <td>备注：</td>
                 <td>
-                    <textarea placeholder="备注" name="remark" id="remark"></textarea>
+                    <textarea placeholder="备注" name="note"></textarea>
                 </td>
             </tr>
             <!--上传图片-->
@@ -162,14 +138,14 @@
                 <td>货品图片：</td>
                 <td class="rdcImg">
                     <a href="javascript:;" class="ofile">
-                        <input type="file" id="storageFile"
+                        <input onchange="rentRdcPicChange(this)" type="file"
                                accept="image/gif, image/bmp, image/jpg, image/jpeg, image/png" multiple>上传图片</a>
                     <span>最多10张(上传货品相关图片，图片每张小于10M)</span>
                 </td>
             </tr>
             <tr class="imgTd">
                 <td colspan="2">
-                    <ul class="clearfix" id="storagePics">
+                    <ul class="clearfix" id="haveStoragePics">
                     </ul>
                 </td>
             </tr>
@@ -177,78 +153,81 @@
             </tbody>
             <!--以上为必填项====================================================================-->
             <tfoot>
-                 <tr id="haveColdSubmit"><td colspan="2"><button class="oBtn">提交</button></td></tr>
+                 <tr id="haveColdSubmit"><td colspan="2"><button class="oBtn" onclick="addHaveCold()">提交</button></td></tr>
             </tfoot>
         </table>
     </form>
 </div>
 <div class="section rdcAdd noCold hide">
-    <form class="submitRdc" onsubmit="return false">
+    <form id="noCodeForm" class="submitRdc" onsubmit="return false">
         <table>
             <tbody>
+            <input type="hidden" value="1" name="dataType"/>
+            <input type="hidden" value="1" name="typeCode"/>
+            <input type="hidden" value="元/吨" name="unit"/>
+            <input type="hidden" value="出售" name="typeText"/>
             <tr>
                 <td>货品名称：<b class="blue">*</b></td>
-                <td><input type="text" name="name" id="name" placeholder="货品名称描述（6~24个字符）" ></td>
+                <td><input type="text" name="title" id="name" placeholder="货品名称描述（6~24个字符）" ></td>
             </tr>
             <tr>
                 <td>省：<b class="blue">*</b></td>
                 <td>
-                    <select name="provinceId" id="provinceId"  name="province" id="province">
+                    <select onchange="getCitys(this)" name="provinceid" id="provinceid">
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>市：<b class="blue">*</b></td>
                 <td>
-                    <select  name="cityId" id="cityId">
+                    <select  name="cityid" id="cityid">
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>品类：<b class="blue">*</b></td>
                 <td>
-                    <select name="category" id="category">
-                        <option value="水果">水果</option>
-                        <option value="冻品">冻品</option>
+                    <select name="codeLave1" id="noCategory">
+
                     </select>
                 </td>
             </tr>
             <tr>
                 <td>货品总量：<b class="blue">*</b></td>
                 <td class="rdcImg">
-                    <div id="tempStandDiv">
-                        <label><input type="number" step="0.01" placeholder="货品总量（数字）" class="numInput"></label>
-                        <label><input type="radio" name="sex" value="Kg" checked>Kg</label>
-                        <label><input type="radio" name="sex" value="吨">吨</label>
+                    <div>
+                        <label><input name="sqm" type="number" step="0.01" placeholder="货品总量（数字）" class="numInput"></label>
+                        <label><input type="radio" name="publishunit" value="1" checked>Kg</label>
+                        <label><input type="radio" name="publishunit" value="2">吨</label>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>售价：<b class="blue">*</b></td>
-                <td><input name="rentSqm" type="number" step="0.01" placeholder="元/天（填0为面议）"></td>
+                <td><input name="unitPrice" type="number" step="0.01" placeholder="元/天（填0为面议）"></td>
             </tr>
             <tr>
                 <td>有效开始时间：<b class="blue">*</b></td>
                 <td>
-                    <input type="text" name="date" lay-verify="date" placeholder="yyyy-mm-dd" readonly
+                    <input type="text" name="validStartTime" lay-verify="date" readonly
                            autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})">
                 </td>
             </tr>
             <tr>
                 <td>有效结束时间：<b class="blue">*</b></td>
                 <td>
-                    <input type="text" name="date" lay-verify="date" placeholder="yyyy-mm-dd" readonly
+                    <input type="text" name="validEndTime" lay-verify="date" readonly
                            autocomplete="off" class="layui-input" onclick="layui.laydate({elem: this})">
                 </td>
             </tr>
             <tr>
                 <td>联系电话：<b class="blue">*</b></td>
-                <td><input type="tel" placeholder="请输入联系电话" name="phoneNum" id="phoneNum"></td>
+                <td><input type="tel" placeholder="请输入联系电话" name="telephone"></td>
             </tr>
             <tr>
                 <td>备注：</td>
                 <td>
-                    <textarea placeholder="备注" name="remark" id="remark"></textarea>
+                    <textarea placeholder="备注" name="note"></textarea>
                 </td>
             </tr>
             <!--上传图片-->
@@ -256,14 +235,14 @@
                 <td>货品图片：</td>
                 <td class="rdcImg">
                     <a href="javascript:;" class="ofile">
-                        <input type="file" id="storageFile"
+                        <input onchange="rentRdcPicChange(this)" type="file"
                                accept="image/gif, image/bmp, image/jpg, image/jpeg, image/png" multiple>上传图片</a>
                     <span>最多10张(上传货品相关图片，图片每张小于10M)</span>
                 </td>
             </tr>
             <tr class="imgTd">
                 <td colspan="2">
-                    <ul class="clearfix" id="storagePics">
+                    <ul class="clearfix" id="noStoragePics">
                     </ul>
                 </td>
             </tr>
@@ -271,7 +250,7 @@
             </tbody>
             <!--以上为必填项====================================================================-->
             <tfoot>
-            <tr id="noColdSubmit"><td colspan="2"><button class="oBtn">提交</button></td></tr>
+            <tr id="noColdSubmit"><td colspan="2"><button class="oBtn" onclick="addNoCold()">提交</button></td></tr>
             </tfoot>
         </table>
     </form>
@@ -308,25 +287,6 @@
 <script src="../plugins/jquery-1.12.0.min.js"></script>
 <script src="../plugins/layui.all.js"></script>
 <script src="../js/common.js"></script>
-<script>
-    layui.use(['form', 'layedit', 'laydate'], function() {
-        var form = layui.form() , layer = layui.layer , laydate = layui.laydate;
-        layer.photos({
-            photos: '#infoImg'
-            //,anim:3//0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
-        });
-    });
-    function aboutRdcRelease(){//关联库发布
-        $('.haveCold').show().siblings('.noCold').hide();//关联库表单展示//不关链库表单隐藏
-        $('.aboutRdc').children('.rentRdc').hide();
-        $('.aboutRdc').children('.orange').children('button').hide();
-    }
-    function noRdcRelease(){//不关联库发布
-        $('.haveCold').hide().siblings('.noCold').show();
-        $('.aboutRdc').children('.rentRdc').hide();
-        $('.aboutRdc').children('.orange').children('button').hide();
-    }
-
-</script>
+<script src="../js/salegoods.js"></script>
 </body>
 </html>

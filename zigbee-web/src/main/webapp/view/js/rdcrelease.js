@@ -71,6 +71,7 @@ function initRdcInfo(rdcId) {
                 filesArr.push('<li><img src="'+file+'" alt=""></li>');
             });
             $("#provinceid").val(rdc.provinceid);
+            $("#cityid").val(rdc.cityid);
             $("#codeLave1").val(rdc.codeLave1);
             $("#detlAddress").val(rdc.address);
             $("#rdcID").val(rdc.rdcID);
