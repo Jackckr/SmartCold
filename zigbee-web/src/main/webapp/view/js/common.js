@@ -1,7 +1,7 @@
 /**
  * Created by wellsea on 6/21/0021.
  */
-
+//layer icon: --1:对号，2:叉号，3：问号，4：锁，5：哭脸，6：笑脸，7：叹号
 if (sessionStorage.lkuser && new Date().getTime() - sessionStorage.longtime < (30 * 60 * 1000)) {
     window.lkuser = JSON.parse(sessionStorage.lkuser);
     $("#loginUser").show().find('img').attr({'src': lkuser.avatar, 'title': lkuser.username});
@@ -36,9 +36,7 @@ if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE 
     window.location.href = "http://m.liankur.com";
     /* 链接到不同的网址  这个是手机的 */
 }
-$('.navSmall').hover(function () {//导航下拉菜单
-    $(this).children('ul').stop().toggle();
-});
+
 $("#loginUser").hover(function () {
     $(this).children('dl').stop().toggle();
 })
@@ -175,3 +173,27 @@ function supportForeach() {
         };
     }
 }
+/*safari时间不支持解决*/
+var formatTime = {
+    standTime:function (date) {
+        return new Date(Date.parse(date.replace(/-/g, "/")))
+    },
+    mseconds:function (date) {
+        return new Date(Date.parse(date.replace(/-/g, "/"))).getTime()
+    }
+};
+/*时间转换成2017-07-19 15:20：20*/
+var formatDateTime = function (date) {
+    date=new Date(Date.parse(date.replace(/-/g, "/")))
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    m = m < 10 ? ('0' + m) : m;
+    var d = date.getDate();
+    d = d < 10 ? ('0' + d) : d;
+    var h = date.getHours();
+    var minute = date.getMinutes();
+    minute = minute < 10 ? ('0' + minute) : minute;
+    var seconds = date.getSeconds();
+    seconds = seconds < 10 ? ('0' + seconds) : seconds;
+    return y + '-' + m + '-' + d+' '+h+':'+minute+':'+seconds;
+};

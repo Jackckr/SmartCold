@@ -17,28 +17,12 @@
     }
 }
 @media only screen and (max-width: 1279px){
-    .navUl{
-        display: none;
-    }
-    .navSmall{
-        display: block;
-        cursor: pointer;
-        text-align: left;
-        position: relative;
-    }
     .navUl li a, .navLogin li a{
         width: 70px;
         text-align: center;
     }
     .filterBox>ul>li.activeA:before{
         border: none;
-    }
-    /*.login,.loginBg{
-        //float: none!important;
-        margin: 0 auto 30px;
-    }*/
-    .section{
-        width: 1210px;
     }
 }
 @media only screen and (max-width: 980px){
@@ -50,9 +34,6 @@
     .login,.loginBg{
         float: none!important;
         margin: 0 auto 30px;
-    }
-    .section{
-        width: 96%;
     }
     .imglist,.txtlist{
         width: 100%;

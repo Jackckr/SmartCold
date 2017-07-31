@@ -118,32 +118,40 @@ $().ready(function () {
         });
     };
     function gethtml(rdc) {
-        var oStart=new Date(rdc.validStartTime).getTime(),oEnd=new Date(rdc.validEndTime).getTime(),today=new Date().getTime();
-        var deadline=oEnd-oStart;
-        var days    = deadline / 1000 / 60 / 60 / 24;
-        var daysRound   = Math.floor(days);//租期
-        var hours    = deadline/ 1000 / 60 / 60 - (24 * daysRound);
-        var hoursRound   = Math.floor(hours);
-        var minutes   = deadline / 1000 /60 - (24 * 60 * daysRound) - (60 * hoursRound);
-        var minutesRound  = Math.floor(minutes);
-        var seconds   = deadline/ 1000 - (24 * 60 * 60 * daysRound) - (60 * 60 * hoursRound) - (60 * minutesRound);
-        var showDate=Math.floor((today-oStart)/ 1000 / 60 / 60 / 24);
-        var showTime=null;
-        if(showDate>=30){
-            showTime=Math.floor(showDate/30)+'个月前发布';
-        }else{
-            if(showDate>1){//1~30天
-                showTime=showDate+'天前发布';
-            }else{//<1天
-                showTime='刚刚发布';
+        var oStart=formatTime.mseconds(rdc.validStartTime);
+        var oEnd=formatTime.mseconds(rdc.validEndTime);
+        var today=new Date().getTime();
+        var validEndTime = formatTime.standTime(rdc.validEndTime).getFullYear()+'-'+
+            (formatTime.standTime(rdc.validEndTime).getMonth()+1<10?'0'+(1+formatTime.standTime(rdc.validEndTime).getMonth()):formatTime.standTime(rdc.validEndTime).getMonth()+1)
+            +'-'+formatTime.standTime(rdc.validEndTime).getDate();
+        var deadline = oEnd - oStart;
+        var days = deadline / 1000 / 60 / 60 / 24;
+        var daysRound = Math.floor(days);//租期
+        var showDate = Math.floor((today - oStart) / 1000 / 60 / 60 / 24);
+        var showTime = null;
+        if (showDate >= 30) {
+            showTime = Math.floor(showDate / 30) + '个月前发布';
+        } else {
+            if (showDate > 1) {
+                showTime = showDate + '天前发布';
+            } else {
+                showTime = '刚刚发布';
             }
         }
-        if(rdc.username==undefined){
-            rdc.username=rdc.id
+        if (rdc.username == undefined) {
+            rdc.username = rdc.id
         }
         var usefulDate = rentDate[rdc.rentdate];
-        if(rdc.rentdate==undefined || rdc.rentdate==null || rdc.rentdate==0){
-            usefulDate = daysRound+1+'天'
+        if (rdc.rentdate == undefined || rdc.rentdate == null || rdc.rentdate == 0) {
+            if(daysRound<30){
+                usefulDate = daysRound +1 + '天'
+            }else{
+                if(daysRound/30>12){
+                    usefulDate = (daysRound/30/12).toFixed(1) + '年'
+                }else{
+                    usefulDate = (daysRound/30).toFixed(1) + '个月'
+                }
+            }
         }
         var collectWords='<a class="fr noCollect" onclick="collect(this,'+rdc.id+')"><i class="iconfont">&#xe605;</i><em>收藏</em></a>';
         if(rdc.collectUserIds && window.user){
@@ -157,7 +165,7 @@ $().ready(function () {
             '<li class="imgCell"><a href="storehousedetail.html?id=' + rdc.id + '" onclick="getSoll()"><span>求租冷库</span><div>'+
             '<p class="ellipsis">'+rdc.title+'</p><p class="position omg orange"><i class="iconfont">&#xe673;</i>'+rdc.sqm+'㎡</p><span class="grab green">['+showTime+']</span>'+
             '</div><div class="flex"><div class="item"><h4>'+usefulDate+'</h4>'+
-            '<p>租期</p></div><div class="item"><h4>'+rdc.validEndTime+'</h4><p>报价截止日</p>'+
+            '<p>租期</p></div><div class="item"><h4>'+validEndTime+'</h4><p>报价截止日</p>'+
             '</div><div class="item"><h4 class="omg">'+rdc.username+'</h4><p>发布者</p></div></div></a>' +
             '<div class="btnFn clearfix"><a href="storehousedetail.html?id='+rdc.id+'" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>'+
             collectWords+'<a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'

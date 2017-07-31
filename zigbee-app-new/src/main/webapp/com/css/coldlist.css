@@ -729,7 +729,7 @@ section{
 }
 .lookRdc .coldlist li a .flex h4{
 	font-weight: 400;
-	width: 5rem;
+	width: 5.5rem;
 	overflow : hidden;
 	text-overflow: ellipsis;
 	display: -webkit-box;

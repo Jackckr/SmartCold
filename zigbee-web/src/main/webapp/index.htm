@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>链库-冷库智能管理与云服务平台</title>
-    <meta charset="utf-8" name="keywords" content="链库,冷链物流,冷库360,冷库监控,冷库智能管理,冷库能效评估"/>
-    <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
+    <meta charset="utf-8" name="keywords" content="找冷库，上链库，出租、求租、出售、求购；冷链物流；冷库360,冷库监控,冷库智能管理,冷库能效评估；"/>
+    <meta charset="utf-8" name="description" content="找冷库，上链库，链库是一个冷库智能管理与云服务平台。它拥有海量冷库数据资源与需求信息，针对冷库仓位，你可以在我们的平台出租、求租、出售和求购，
+        让您在第一时间找到你需要的内容，为您提供最及时全面的信息。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"/>
     <link rel="shortcut icon" href="view/img/favicon.ico" />
@@ -66,10 +67,10 @@
 <!--banner 轮播图-->
 <div class="banner">
     <ul class="imgList">
-        <li><a href="javascript:;"><img src="view/img/blue1.jpg"/></a></li>
-        <li><a href="javascript:;"><img src="view/img/blue2.jpg"/></a></li>
-        <li><a href="javascript:;"><img src="view/img/blue3.jpg"/></a></li>
-        <li><a href="javascript:;"><img src="view/img/blue4.jpg"/></a></li>
+        <li><a href="javascript:;"><img src="view/img/blue44.jpg"/></a></li>
+        <li><a href="javascript:;"><img src="view/img/blue22.jpg"/></a></li>
+        <li><a href="javascript:;"><img src="view/img/blue33.jpg"/></a></li>
+        <li><a href="javascript:;"><img src="view/img/blue11.jpg"/></a></li>
     </ul>
     <ol class="dianList">
         <li class="current"></li>
@@ -178,11 +179,7 @@
         </div>
     </ul>
 </div>
-<div class="section">
-    <div class="bigAd">
-        <img src="view/img/adCol.jpg" alt="">
-    </div>
-</div>
+
 <!--冷库图文列表-->
 <div class="section imgTxtList">
     <h1>
@@ -196,17 +193,22 @@
             <h3 class="clearfix">
                 <i class="iconfont">&#xe615;</i>
                 需求报价动态
-                <a href="javascript:;" class="fr">更多&nbsp;&nbsp;<i class="iconfont">&#xe624;</i></a>
+                <a href="view/html/rdcmatch.html" class="fr">更多&nbsp;&nbsp;<i class="iconfont">&#xe624;</i></a>
             </h3>
             <ul id="leftRdcLeaseUl">
             </ul>
-            <div class="adDouble">
+            <div class="adDouble hide">
                 <ul class="clearfix">
-                    <li><a href=""><img src="view/img/ad3.png" alt=""></a></li>
-                    <li><a href=""><img src="view/img/ad2.png" alt=""></a></li>
+                    <li><a href=""><img src="view/img/rqwl.png" alt=""></a></li>
+                    <li><a href=""><img src="view/img/zwy.png" alt=""></a></li>
                 </ul>
             </div>
         </div>
+    </div>
+</div>
+<div class="section">
+    <div class="bigAd">
+        <img src="view/img/adCol.jpg" alt="">
     </div>
 </div>
 <div class="section clearfix">
@@ -219,11 +221,11 @@
                 <h3 class="clearfix">
                     <i class="iconfont">&#xe615;</i>
                     需求
-                    <a href="javascript:;" class="fr">更多&nbsp;&nbsp;<i class="iconfont">&#xe624;</i></a>
+                    <a onclick="goMatch(1)" class="fr">更多&nbsp;&nbsp;<i class="iconfont">&#xe624;</i></a>
                 </h3>
                 <ul id="rdcRentUl">
                 </ul>
-                <div class="adDouble adOne" >
+                <div class="adDouble adOne hide">
                     <ul class="clearfix">
                         <li><a href=""><img src="view/img/ad4.png" alt=""></a></li>
                         <li><a href=""><img src="view/img/ad4.png" alt=""></a></li>
@@ -238,15 +240,15 @@
         </h1>
         <div class="clearfix">
             <ul class="imglist chartList"  style="width: 100%;">
-                <li style="width: 100%;">
-                    <div id="main1" style="width: 100%;height:100%;"></div>
+                <li style="width: 100%;border: none">
+                    <div id="main1" style="width: 100%;height:413px;background: url('view/img/prices.jpg') no-repeat center;background-size: contain;"></div>
                 </li>
-                <li style="width: 100%;">
-                    <div id="main2" style="width: 100%;height:100%;"></div>
-                </li>
-                <li style="width: 100%;">
+               <!-- <li style="width: 100%;">
+                    <div id="main2" style="width: 100%;height:200px;"></div>
+                </li>-->
+                <!--<li style="width: 100%;">
                     <div id="main3" style="width: 100%;height:100%;"></div>
-                </li>
+                </li>-->
             </ul>
         </div>
     </div>
@@ -269,9 +271,17 @@
                 <li><div class="pic"><a href="http://www.cmac.com.hk/" title="招商美冷" target="_blank"><img src="view/img/zsml.png" /></a></div></li>
                 <li><div class="pic"><a href="http://www.whstwl.com/" title="五环顺通" target="_blank"><img src="view/img/whst.png" /></a></div></li>
                 <li><div class="pic"><a href="http://coldchain.sinotrans.com/" title="中外运冷链" target="_blank"><img src="view/img/zwy.png" /></a></div></li>
+                <!--站位-->
+                <li><div class="pic"><a href="javascript:;" title="逸腾远东制冷（江苏）有限公司"><img src="view/img/yiteng.png" /></a></div></li>
+                <li><div class="pic"><a href="javascript:;" title="逸励柯环境科技（江苏）有限公司"><img src="view/img/yilike.png" /></a></div></li>
+                <!--站位-->
                 <li><div class="pic"><a href="javascript:;" title="铁越集团" target="_blank"><img src="view/img/tyjt.jpg" /></a></div></li>
                 <li><div class="pic"><a href="javascript:;" title="众惠供应链" target="_blank"><img src="view/img/zhgyl.jpg" /></a></div></li>
                 <li><div class="pic"><a href="http://www.zzdcs.com/" title="獐子岛中央冷藏" target="_blank"><img src="view/img/zzd.jpg" /></a></div></li>
+                <!--站位-->
+                <li><div class="pic"><a href="http://www.hflchina.com/" title="恒孚物流" target="_blank"><img src="view/img/hfwl.png" /></a></div></li>
+                <li><div class="pic"><a href="http://www.zjhwwl.com/" title="恒伟供应链" target="_blank"><img src="view/img/hwgyl.png" /></a></div></li>
+                <!--站位-->
                 <!--逸励五家公司-->
                 <li><div class="pic"><a href="javascript:;" title="逸腾远东制冷（江苏）有限公司"><img src="view/img/yiteng.png" /></a></div></li>
                 <li><div class="pic"><a href="javascript:;" title="逸励柯环境科技（江苏）有限公司"><img src="view/img/yilike.png" /></a></div></li>
@@ -288,7 +298,7 @@
     <div class="imgTxtList list1">
         <h1 class="clearfix"><i class="iconfont">&#xe605;</i>
             商品信息
-            <a href="javascript:;" class="fr">更多&nbsp;&nbsp;<i class="iconfont">&#xe624;</i></a>
+            <a onclick="goMatch(2)" class="fr">更多&nbsp;&nbsp;<i class="iconfont">&#xe624;</i></a>
         </h1>
         <div class="clearfix">
             <div class="fl txtlist" style="width: 100%;">

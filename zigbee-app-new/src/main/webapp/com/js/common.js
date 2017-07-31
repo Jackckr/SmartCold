@@ -4,7 +4,7 @@ var oHtml = document.documentElement;
 var _sysconfig={countdown:60,isdebug:true,resize:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
 getFont();$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
- // var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
+ // var ER = {root:"http://www.liankur.com/",coldroot:"http://www.smartcold.org.cn"};
 var ER = {root:"http://192.168.1.114:8080",coldroot:"http://www.smartcold.org.cn"};
 if ($.ajax) {jQuery.ajaxSetup({cache:false,xhrFields:{withCredentials:true}});}//支持ajax跨域
 if(localStorage.length>=14){for(var i in localStorage ){if(i.indexOf("BMap_")>=0){ localStorage.removeItem(i);}}}
@@ -238,9 +238,18 @@ function bgClose(ops) {
 function isWeiXin(){
     var ua = window.navigator.userAgent.toLowerCase();
     if(ua.match(/MicroMessenger/i) == 'micromessenger'||ua.match(/QQ/i) == 'qq'&&ua.match(/QQ/i) == 'mqq'){
-        alert(ua)
+     //   alert(ua)
         return true;
     }else{
         return false;
     }
 }
+/*safari时间不支持解决*/
+var formatTime = {
+    standTime:function (date) {
+        return new Date(Date.parse(date.replace(/-/g, "/")))
+    },
+    mseconds:function (date) {
+        return new Date(Date.parse(date.replace(/-/g, "/"))).getTime()
+    }
+};

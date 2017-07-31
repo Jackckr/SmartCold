@@ -79,3 +79,12 @@ $(".arealist li").click(function () {//点击之后跳转到冷库商情
     $(".filterTxt").hide();
     alert('在这里要做跳转咯');
 })
+function goMatch(i) {
+    if(i==1){
+        window.location.href='view/html/rdcmatch.html#applyLists';
+        localStorage.shareIndex=1;
+    }else if(i==2){
+        window.location.href='view/html/rdcmatch.html#goodsLists';
+        localStorage.shareIndex=2;
+    }
+}
