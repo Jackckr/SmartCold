@@ -120,6 +120,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 			 $scope.initData(data.entity);
 	    	 $scope.rdcsharedto = data.entity;
 	    	 $scope.typeCode = $scope.rdcsharedto.typeCode;
+	    	 $scope.dataType = $scope.rdcsharedto.dataType;
 	    	 $scope.title = $scope.rdcsharedto.title;
 	    	 $scope.telephone = $scope.rdcsharedto.telephone.trim();
 	    	 $scope.note = $scope.rdcsharedto.note;
@@ -277,7 +278,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    function checkStorageSubmit(){
 	        // 检查必须填写项   仓库
 	        if ($scope.title == undefined || $scope.title == '' ) {return false; }
-	        if ($scope.codeLave4 == undefined || $scope.codeLave4 == '' ) {return false; }
+	        if ($scope.typeCode==2&&$scope.dataType==3 && ($scope.codeLave4 == undefined || $scope.codeLave4 == '') ) {return false; }
 	        //if ($scope.detlAddress == undefined || $scope.detlAddress == ''||$scope.detlAddress == '-') {return false;}
 	        if ($scope.temperType == undefined || $scope.temperType == '') { return false;}
 	        if($scope.rdcsharedto.rdcID==null||$scope.rdcsharedto.rdcID==undefined){
@@ -520,7 +521,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				return false
 			}
 			if(checkStorageSubmit()){
-                if($scope.title.length<6||$scope.title.length>24||$scope.codeLave4.length<2||$scope.codeLave4.length>24){
+                if($scope.title.length<6||$scope.title.length>24){
                     layer.open({content: '描述文字长度范围不符合要求，请检查~', btn: '确定'});
                     return;
                 }else if($scope.rdcsharedto.rdcSqm<$scope.sqm){

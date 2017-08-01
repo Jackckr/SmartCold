@@ -106,6 +106,7 @@
 		s.title,
 		s.unitPrice,
 		s.dataType,
+		s.typeCode,
 		s.unit1,
 		s.unit2,
 		s.typeText,
