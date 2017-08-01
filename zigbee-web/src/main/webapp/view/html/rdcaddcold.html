@@ -82,15 +82,15 @@
             </tr>
             <tr>
                 <td>总面积：<b class="blue">*</b></td>
-                <td><input name="area" id="area" type="number" placeholder="请输入冷库面积(只能输数字)/㎡" ></td>
+                <td><input name="area" id="area" type="number" step="0.01" placeholder="请输入冷库面积(只能输数字)/㎡" ></td>
             </tr>
             <tr>
                 <td>可出租面积：<b class="blue">*</b></td>
-                <td><input name="rentSqm" type="number" placeholder="请输入冷库可出租面积(只能输数字)/㎡,没有填写0" ></td>
+                <td><input name="rentSqm" type="number" step="0.01" placeholder="请输入冷库可出租面积(只能输数字)/㎡,没有填写0" ></td>
             </tr>
             <tr>
                 <td>冷库净高：<b class="blue">*</b></td>
-                <td><input name="height" id="rdcHeight" type="number" placeholder="请输入冷库净高(只能输数字)/m" ></td>
+                <td><input name="height" id="rdcHeight" step="0.01" type="number" placeholder="请输入冷库净高(只能输数字)/m" ></td>
             </tr>
             <tr>
                 <td>经营类型：<b class="blue">*</b></td>
@@ -179,10 +179,10 @@
             <tr>
                 <td>冷藏车数量：</td>
                 <td class="oTd">
-                          <div class="oInline"><span class="compare"><1.8T</span><input name="coldTruck1" id="coldTruck1" type="number"><span class="oUnit">辆</span>
-                    </div><div class="oInline"><span class="compare">1.8~6T</span><input name="coldTruck2" id="coldTruck2" type="number"><span class="oUnit">辆</span>
-                    </div><div class="oInline"><span class="compare">6~14T</span><input name="coldTruck3" id="coldTruck3" type="number"><span class="oUnit">辆</span>
-                    </div><div class="oInline"><span class="compare"><14T</span><input name="coldTruck4" id="coldTruck4" type="number"><span class="oUnit">辆</span>
+                          <div class="oInline"><span class="compare"><1.8T</span><input name="coldTruck1" id="coldTruck1" step="1" type="number"><span class="oUnit">辆</span>
+                    </div><div class="oInline"><span class="compare">1.8~6T</span><input name="coldTruck2" id="coldTruck2" step="1" type="number"><span class="oUnit">辆</span>
+                    </div><div class="oInline"><span class="compare">6~14T</span><input name="coldTruck3" id="coldTruck3" step="1" type="number"><span class="oUnit">辆</span>
+                    </div><div class="oInline"><span class="compare"><14T</span><input name="coldTruck4" id="coldTruck4" step="1" type="number"><span class="oUnit">辆</span>
                     </div>
                 </td>
             </tr>
@@ -263,11 +263,11 @@
             <tr>
                 <td>冷库容积：</td>
                 <td class="oTd oC">
-                      <div class="oInline"><span class="compare">8~25℃</span><input type="number" name="capacity1" id="capacity1"><span class="oUnit">面积/㎡</span><input type="number" name="height1" id="height1"><span class="oUnit">高/m</span>
-                </div><div class="oInline"><span class="compare">2~8℃</span><input type="number" name="capacity2" id="capacity2"><span class="oUnit">面积/㎡</span><input type="number" name="height2" id="height2"><span class="oUnit">高/m</span>
-                </div><div class="oInline"><span class="compare">-2~-18℃</span><input type="number" name="capacity3" id="capacity3"><span class="oUnit">面积/㎡</span><input type="number" name="height3" id="height3"><span class="oUnit">高/m</span>
-                </div><div class="oInline"><span class="compare">-18~-30℃</span><input type="number" name="capacity4" id="capacity4"><span class="oUnit">面积/㎡</span><input type="number" name="height4" id="height4"><span class="oUnit">高/m</span>
-                </div><div class="oInline"><span class="compare"><-50℃</span><input type="number" name="capacity5" id="capacity5"><span class="oUnit">面积/㎡</span><input type="number" name="height5" id="height5"><span class="oUnit">高/m</span>
+                      <div class="oInline"><span class="compare">8~25℃</span><input type="number" step="0.01" name="capacity1" id="capacity1"><span class="oUnit">面积/㎡</span><input type="number" step="0.01" name="height1" id="height1"><span class="oUnit">高/m</span>
+                </div><div class="oInline"><span class="compare">2~8℃</span><input type="number" step="0.01" name="capacity2" id="capacity2"><span class="oUnit">面积/㎡</span><input type="number" step="0.01" name="height2" id="height2"><span class="oUnit">高/m</span>
+                </div><div class="oInline"><span class="compare">-2~-18℃</span><input type="number" step="0.01" name="capacity3" id="capacity3"><span class="oUnit">面积/㎡</span><input type="number" step="0.01" name="height3" id="height3"><span class="oUnit">高/m</span>
+                </div><div class="oInline"><span class="compare">-18~-30℃</span><input type="number" step="0.01" name="capacity4" id="capacity4"><span class="oUnit">面积/㎡</span><input type="number" step="0.01" name="height4" id="height4"><span class="oUnit">高/m</span>
+                </div><div class="oInline"><span class="compare"><-50℃</span><input type="number" step="0.01" name="capacity5" id="capacity5"><span class="oUnit">面积/㎡</span><input type="number" step="0.01" name="height5" id="height5"><span class="oUnit">高/m</span>
                 </div>
                 </td>
             </tr>
