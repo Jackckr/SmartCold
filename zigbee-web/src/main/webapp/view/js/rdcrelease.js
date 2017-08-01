@@ -190,7 +190,9 @@ function initUpdateInfo(id) {
     $.ajax({url:"/i/ShareRdcController/getSEByIDForEdit",type:"get",data:{id:id},success:function (data) {
         var share=data.entity;
         initRdcInfo(share.rdcID);
-        getDataToForm($("#submitRdc [name]"),share);
+        setTimeout(function () {
+            getDataToForm($("#submitRdc [name]"),share);
+        },40);
         rentRdcOriginalLent=share.fileList.length;
         $.each(share.fileList,function (index, file) {
             rentRdcPics.push(file);
