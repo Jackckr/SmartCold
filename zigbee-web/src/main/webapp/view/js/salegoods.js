@@ -55,14 +55,21 @@ function addHaveCold() {
         var formData = new FormData();
         formData.append('data',JSON.stringify(vo));
         $.each(goodsPics,function (index, file) {
-            formData.append('file'+index,file);
+            if(index>=goodsOriginalLent){
+                formData.append('file'+index,file);
+            }
         });
         $.ajax({url:"/i/ShareRdcController/shareFreeRelease",type:"post",processData: false, contentType: false,
             data:formData,success:function (data) {
                 layer.close(ii);
                 if(data.success){
                     layer.alert(data.message, {icon: 1},function () {
-                        window.location.href = "rdcmatch.html";
+                        if(sessionStorage.submitRdcStatus==1){
+                            window.localStorage.liIndex=3;
+                            window.location.href ="usercenter.html#goods";
+                        }else{
+                            window.location.href = "rdcmatch.html";
+                        }
                     });
                 }else {
                     layer.alert(data.message, {icon: 2});
@@ -108,17 +115,25 @@ function addNoCold() {
     if(checkSubmitInfo(vo)){
         vo['username']=window.lkuser.username;
         vo['uid']=window.lkuser.id;
+        vo['detlAddress']=$("#provinceid option[value="+vo.provinceid+"]").html()+"-"+$("#cityid option[value="+vo.cityid+"]").html();
         var formData = new FormData();
         formData.append('data',JSON.stringify(vo));
         $.each(goodsPics,function (index, file) {
-            formData.append('file'+index,file);
+            if(index>=goodsOriginalLent){
+                formData.append('file'+index,file);
+            }
         });
         $.ajax({url:"/i/ShareRdcController/shareFreeRelease",type:"post",processData: false, contentType: false,
             data:formData,success:function (data) {
                 layer.close(ii);
                 if(data.success){
                     layer.alert(data.message, {icon: 1},function () {
-                        window.location.href = "rdcmatch.html";
+                        if(sessionStorage.submitRdcStatus==1){
+                            window.localStorage.liIndex=3;
+                            window.location.href ="usercenter.html#goods";
+                        }else{
+                            window.location.href = "rdcmatch.html";
+                        }
                     });
                 }else {
                     layer.alert(data.message, {icon: 2});
@@ -128,8 +143,37 @@ function addNoCold() {
         layer.close(ii);
     }
 }
-
-
+/*================================================================修改===============================================================================*/
+/*初始化修改信息详情*/
+function initUpdateData(id) {
+    $.ajax({url:"/i/ShareRdcController/getSEByIDForEdit",type:"get",data:{id:id},success:function (data) {
+        var shared=data.entity;
+        $("#saleGoodsFlag").html('修改出售货品');
+        $("#applyGoodsFlag").html('修改求购货品');
+        goodsOriginalLent=shared.fileList.length;
+        $.each(shared.fileList,function (index, file) {
+            goodsPics.push(file);
+        });
+        if(shared.rdcID==0||shared.rdcID==""||!shared.rdcID){
+            noRdcRelease();
+            setTimeout(function () {
+                getDataToForm($("#noCodeForm [name]").not("[name=publishunit]"),shared);
+                getCitys($("#provinceid"));
+                $("#noCodeForm [name=publishunit][value="+shared.publishunit+"]").attr("checked","checked");
+                setTimeout(function () {
+                    $("#cityid").val(shared.cityid);
+                },40);
+            },40);
+            $("#noCodeForm").append('<input type="hidden" name="id" value="'+id+'"/>');
+        }else {
+            aboutRdcRelease(shared.rdcID);
+            getDataToForm($("#haveCodeForm [name]").not("[name=publishunit]"),shared);
+            $("#haveCodeForm [name=publishunit][value="+shared.publishunit+"]").attr("checked","checked");
+            $("#haveCodeForm").append('<input type="hidden" name="id" value="'+id+'"/>');
+        }
+        showSelectPics();
+    }});
+}
 
 /*===============================================================公用方法===========================================================================*/
 /*验证提交信息*/
@@ -197,7 +241,7 @@ function rentRdcPicChange(e) {
 function showSelectPics() {
     var storagePicImg=[];
     for(var i=0;i<goodsOriginalLent;i++){
-        storagePicImg.push('<li class="imgBox"><img src="'+goodsPics[i].location+'" alt=""><i onclick="delgoodsPic('+i+','+goodsPics[i].id+')">&times;</i></li>');
+        storagePicImg.push('<li class="imgBox"><img src="'+goodsPics[i].location+'" alt=""><i onclick="delgoodsPic('+i+','+goodsPics[i].id+',\''+goodsPics[i].location+'\')">&times;</i></li>');
     }
     if(goodsPics.length!=goodsOriginalLent){
         for(var i=goodsOriginalLent;i<goodsPics.length;i++){
@@ -213,7 +257,7 @@ function showSelectPics() {
 }
 
 /*删除显示图片*/
-function delgoodsPic(index,id) {
+function delgoodsPic(index,id,location) {
     if(index+1>goodsOriginalLent){
         goodsPics.splice(index,1);
         showSelectPics();
@@ -223,10 +267,9 @@ function delgoodsPic(index,id) {
             shade: false //不显示遮罩
         }, function(e){
             goodsPics.splice(index,1);
-            if(id){
+            if(id&&location){
                 goodsOriginalLent--;
-                $.ajax({url:"/i/rdc/deleteStoragePic",type:"post",data:{belongid:2132,category:'sharePic',id:213213,location:'http',name:'213',type:'123123'},success:function (data) {
-
+                $.ajax({url:"/i/rdc/deleteStoragePic",type:"post",data:{id:id,location:location},success:function (data) {
                 }});
             }
             showSelectPics();
@@ -263,9 +306,15 @@ function noRdcRelease(){//不关联库发布
 
 
 $(function () {
-    if(checkLogin()){
-        getRdcList();
+    if(sessionStorage.submitRdcStatus==0){
+        if(checkLogin()){
+            getRdcList();
+        }
+    }else{
+        var urlParam = getUrlParam('shareId');
+        initUpdateData(urlParam);
     }
+
 });
 
 

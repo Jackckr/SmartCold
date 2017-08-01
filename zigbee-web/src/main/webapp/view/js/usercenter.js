@@ -296,7 +296,7 @@ function getShareList(datatype, pageId, domId) {
                         '<h4 class="omg"><i class="iconfont orange">&#xe61c;</i>' + item.detlAddress + '</h4>' +
                         '<p class="omg">' + formatDateTime(item.updatetime) + '</p><div class="txt-right">' +
                         '<button class="layui-btn layui-btn-normal layui-btn-small" onclick="location.href=\'rdcmatchinfo.html?id='+item.id+'\'">查看</button>' +
-                        '<button class="layui-btn layui-btn-small" onclick="goRentRdc('+item.id+','+item.typeCode+')">修改</button>' +
+                        '<button class="layui-btn layui-btn-small" onclick="goRentRdc('+item.id+','+item.typeCode+','+item.dataType+')">修改</button>' +
                         '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteData(' + item.id + ',' + 1 + ')">删除</button></div></div></li>')
                 });
                 if(oList.length){
@@ -321,12 +321,16 @@ function getShareList(datatype, pageId, domId) {
 
 
 /*进入修改冷库发布页面*/
-function goRentRdc(id,type) {
+function goRentRdc(id,typeCode,dataType) {
     sessionStorage.submitRdcStatus=1;
-    if(type==1){
+    if(typeCode==1&&dataType==3){
         window.location.href='rdcrelease.html?shareId='+id;
-    }else {
+    }else if(typeCode==2&&dataType==3){
         window.location.href='applyrent.html?shareId='+id;
+    }else if(typeCode==1&&dataType==1){
+        window.location.href='salegoods.html?shareId='+id;
+    }else {
+        window.location.href='applygoods.html?shareId='+id;
     }
 }
 /**

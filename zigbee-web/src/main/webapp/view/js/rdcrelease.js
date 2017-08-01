@@ -89,7 +89,7 @@ function initRdcInfo(rdcId) {
     }
 }
 
-/*提交添加出租冷库信息*/
+/*提交添加修改出租冷库信息*/
 function submitAdd() {
     var ii = layer.load();
     var serializeArray = $("#submitRdc").serializeArray();
@@ -112,7 +112,12 @@ function submitAdd() {
             layer.close(ii);
             if(data.success){
                 layer.alert(data.message, {icon: 1},function () {
-                    window.location.href = "rdcmatch.html";
+                    if(sessionStorage.submitRdcStatus==1){
+                        window.localStorage.liIndex=2;
+                        window.location.href ="usercenter.html#rent";
+                    }else{
+                        window.location.href = "rdcmatch.html";
+                    }
                 });
             }else {
                 layer.alert(data.message, {icon: 2});
