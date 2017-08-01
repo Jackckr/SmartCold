@@ -166,9 +166,11 @@ function getFormValue(rdcId) {
         if(rdc.standType==1){
             $("#tempStandDiv,#tempStandUl").hide();
             $("#successStand").show();
+            $("input[name=isJoinStand][value="+3+"]").attr("checked","checked");
         }else if(rdc.standType==2){
             $("#tempStandDiv,#tempStandUl").hide();
             $("#StandAuditing").show();
+            $("input[name=isJoinStand][value="+3+"]").attr("checked","checked");
         }
         if(rdc.lihuoRoom==1){$("#lihuoAreaTr").show();}
         storagePicsArrOriginal=rdc.storagePics.length;
@@ -218,7 +220,8 @@ function updateColdSubmit() {
             success: function (data) {
                 layer.close(ii);
                 layer.alert(data.message, {icon: 1},function () {
-                    window.location.href="/view/html/rdclist.html";
+                    window.localStorage.liIndex=1;
+                    window.location.href="usercenter.html#myRdc";
                 });
             }
         });
