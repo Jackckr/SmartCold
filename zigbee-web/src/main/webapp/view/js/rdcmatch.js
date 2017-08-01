@@ -375,6 +375,7 @@ $(function () {
                     screenParam.dataType=1;
                     screenParam.typeCode=2;
                 }
+                initColdParam();
                 initGoodsParam();
             }
         }else{

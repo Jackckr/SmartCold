@@ -68,7 +68,13 @@ function addHaveCold() {
                             window.localStorage.liIndex=3;
                             window.location.href ="usercenter.html#goods";
                         }else{
-                            window.location.href = "rdcmatch.html";
+                            if(vo.typeCode==1){
+                                window.localStorage.shareIndex=2;
+                                window.location.href = "rdcmatch.html#goodsLists";
+                            }else {
+                                window.localStorage.shareIndex=3;
+                                window.location.href = "rdcmatch.html#applygoodsLists";
+                            }
                         }
                     });
                 }else {
@@ -132,7 +138,13 @@ function addNoCold() {
                             window.localStorage.liIndex=3;
                             window.location.href ="usercenter.html#goods";
                         }else{
-                            window.location.href = "rdcmatch.html";
+                            if(vo.typeCode==1){
+                                window.localStorage.shareIndex=2;
+                                window.location.href = "rdcmatch.html#goodsLists";
+                            }else {
+                                window.localStorage.shareIndex=3;
+                                window.location.href = "rdcmatch.html#applygoodsLists";
+                            }
                         }
                     });
                 }else {
