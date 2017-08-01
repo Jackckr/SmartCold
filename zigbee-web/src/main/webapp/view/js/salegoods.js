@@ -179,7 +179,9 @@ function initUpdateData(id) {
             $("#noCodeForm").append('<input type="hidden" name="id" value="'+id+'"/>');
         }else {
             aboutRdcRelease(shared.rdcID);
-            getDataToForm($("#haveCodeForm [name]").not("[name=publishunit]"),shared);
+            setTimeout(function () {
+                getDataToForm($("#haveCodeForm [name]").not("[name=publishunit]"),shared);
+            },80);
             $("#haveCodeForm [name=publishunit][value="+shared.publishunit+"]").attr("checked","checked");
             $("#haveCodeForm").append('<input type="hidden" name="id" value="'+id+'"/>');
         }
