@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>链库-添加冷库</title>
+    <title id="pageTitle">链库-添加冷库</title>
     <meta charset="utf-8" name="keywords" content="找冷库，上链库，出租、求租、出售、求购；冷链物流；冷库360,冷库监控,冷库智能管理,冷库能效评估；"/>
     <meta charset="utf-8" name="description" content="找冷库，上链库，链库是一个冷库智能管理与云服务平台。它拥有海量冷库数据资源与需求信息，针对冷库仓位，你可以在我们的平台出租、求租、出售和求购，
         让您在第一时间找到你需要的内容，为您提供最及时全面的信息。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
@@ -138,6 +138,12 @@
                         <label><input value="2" type="radio" onclick="delstandard()"  name="isJoinStand">愿意申报</label>
                         <label><input value="3" type="radio" onclick="delstandard()" name="isJoinStand">否</label>
                     </div>
+                <div id="successStand" style="display: none">
+                    <label class="orange ng-scope">已通过</label>
+                </div>
+                <div id="StandAuditing" style="display: none">
+                    <label class="orange ng-scope">审核中</label>
+                </div>
                     <ul id="tempStandUl">
                         <li class="hide" id="li1">
                             <a href="javascript:;" class="ofile"><input id="storageStandPic" type="file" accept="image/gif, image/bmp, image/jpg, image/jpeg, image/png" onchange="standPicChange(this)">上传图片</a>
@@ -265,12 +271,18 @@
                 </div>
                 </td>
             </tr>
-            <tr id="coldAudit">
+            <tr >
                 <td>冷库认证：</td>
-                <td class="rdcImg">
+                <td class="rdcImg" id="coldAudit">
                     <a href="javascript:;" class="ofile"><input type="file" accept="image/gif, image/bmp, image/jpg, image/jpeg, image/png" id="authPic" onchange="auditPicChange(this)">上传图片</a>
                     <span>请上传企业营业执照图片，小于10M</span>
                     <p class="blue">冷库认证通过之后，将显示绿色盾牌标识，提高信任度和搜索排名</p>
+                </td>
+                <td id="successCold" style="display: none">
+                    <label class="orange ng-scope">已通过</label>
+                </td>
+                <td id="ColdAuditing" style="display: none">
+                    <label class="orange ng-scope">审核中</label>
                 </td>
             </tr>
             <tr class="imgTd">
