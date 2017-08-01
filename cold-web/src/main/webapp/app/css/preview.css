@@ -1,0 +1,194 @@
+/*各大模块css*/
+.skin-blue .wrapper, .skin-blue .main-sidebar, .skin-blue .left-side{
+    -webkit-box-shadow: 3px 0 4px #0d1215;
+    -moz-box-shadow: 3px 0 4px #0d1215;
+    -ms-box-shadow: 3px 0 4px #0d1215;
+    box-shadow: 3px 0 4px #0d1215;
+}
+.body-color,
+.main-footer,
+.skin-blue .main-header .navbar,
+.skin-blue .wrapper,
+.skin-blue .main-sidebar,
+.skin-blue .left-side,
+.skin-blue .sidebar-menu > li > .treeview-menu,
+.skin-blue .main-header .logo
+{
+    background: #233038;
+}
+.main-header{
+    border-bottom: 2px solid #0d1215;
+}
+.skin-blue .sidebar-menu > li:hover > a,
+.skin-blue .sidebar-menu > li.active > a{
+    background: #4d779f;
+}
+.skin-blue .sidebar-menu > li > .treeview-menu{
+    color: #4086aa;
+}
+.myDefault{
+    background: #303e47!important;
+    -webkit-box-shadow: 0px 1px 2px #0d1215;
+    -moz-box-shadow: 0px 1px 2px #0d1215;
+    -ms-box-shadow: 0px 1px 2px #0d1215;
+    box-shadow: 0px 1px 2px #0d1215;
+}
+.myColor{
+    color: #8eaab9;
+}
+/*以上是对皮肤默认颜色的设定===========*/
+/*以下是对模块内容颜色的设定========================================*/
+.previewBox{
+    padding: 0 15px 10px;
+    color: #e5e6e9;
+}
+.previewModel,.bodyModel{
+    margin-top: 15px;
+}
+.headerModel{
+    height:40px;
+    line-height:40px;
+    padding:0 20px;
+}
+.previewName{
+    position: relative;
+    padding-left: 10px;
+}
+.previewName:before{
+    content: '';
+    position: absolute;
+    top: 12px;
+    left:0;
+    width: 4px;
+    height: 16px;
+    -webkit-border-radius:2px;
+    -moz-border-radius:2px;
+    border-radius:2px;
+    background: #199a5e;
+}
+.bodyModel>div{
+    width: 24%;
+    float: left;
+    margin-right: 1.333333%;
+    min-height: 80px;
+    text-align: center;
+    position: relative;
+}
+.bodyModel .unitModel{
+    background: #303e47;
+    -webkit-box-shadow: 0px 1px 2px #0d1215;
+    -moz-box-shadow: 0px 1px 2px #0d1215;
+    -ms-box-shadow: 0px 1px 2px #0d1215;
+    box-shadow: 0px 1px 2px #0d1215;
+}
+.bodyModel>div:nth-child(4n+4){
+    margin-right: 0;
+}
+.unitIcon{
+    width: 100%;
+    margin-top: 10px;
+}
+.unitIcon i{
+    font-size: 3em;
+    color: #568ed2;
+    border: 1px solid #568ed2;
+    background: #3a526c;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: inline-block;
+    line-height: 60px;
+}
+.unitModel h2
+{
+    padding: 0;
+    margin-top: 15px;
+    line-height: 1.1;
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space:normal;
+    font-size: 20px;
+}
+.unitModel p{
+    font-size: 12px;
+    line-height: 1.8;
+}
+/*电量模块*/
+.electricModel{
+    padding: 0 20px;
+    height: 40px;
+    line-height: 40px;
+}
+.electricModel>.previewName{
+    text-align: left;
+}
+.txtModel{
+    min-height: 40px;
+    line-height: 40px;
+}
+.txtModel>h2{
+    margin: 0;
+}
+.chartModel {
+    height: 200px;
+    margin-top: 1em;
+}
+.bodyModel>div>img{
+    width: 20%;
+    float: left;
+    margin: 0 5% 15px 5%;
+}
+.bodyModel>div>h6{
+    position: absolute;
+    bottom: -12px;
+    left: 0;
+    width: 100%;
+}
+.previewModel .text-center{
+    height: 40px;
+}
+.previewModel .text-center span{
+    margin: 0 10px;
+    height: 20px;
+    line-height: 20px;
+}
+.previewModel .text-center span b{
+    display: inline-block;
+    width: 30px;
+    height: 16px;
+    background-color: #ff723a;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+.previewModel .text-center span:last-child b{
+    background-color: #8e8e8e;
+}
+.txtModel .unitIcon{
+    margin-top: 0;
+}
+.txtModel .unitIcon>i{
+    font-size: 22px;
+    width: 30px;
+    height: 30px;
+    line-height:34px;
+    border-radius: 6px;
+    background: #10c469;
+    text-align: center;
+    border: none;
+    color: #fff;
+}
+.txtModel p{
+    margin: 0;
+    color: #fff;
+    line-height: 1.4;
+    text-align: right;
+}
+.txtModel .unitIcon>i.danger{
+    background: #d93f3f;
+}
+.txtModel .unitIcon>i.warnings{
+    background: #f39938;
+}
+.txtModel .unitIcon>i.runnings{
+    background: #10c469;
+}
