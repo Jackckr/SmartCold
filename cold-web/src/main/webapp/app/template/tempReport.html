@@ -67,22 +67,21 @@
 <div id="rpt_asis_coment" class="page-content" style="padding: 0 10px" >
 	<div class="page-header row" style="padding: 5px 0px">
 	  <div class="col-lg-4">
-	  	&nbsp;&nbsp;{{titmode[isreportMoth?0:1]}}报表
-<!-- 	  <button class="btn btn-info myPrint" ng-click="Preview()"> 打印预览 </button> -->
-	  <button class="btn btn-info myPrint" ng-click="exppdf()"> 导出PDF </button>
-	  </div>
-	  <div class="col-lg-4"></div>
-	  	<div class="col-lg-4 text-right" style="color:#333;font-size: 14px;line-height: 2;">
-	  	  <button class="btn btn-info myPrint" ng-click="isreportMoth=true" class="">月报</button>
-	      <button class="btn btn-info myPrint" ng-click="isreportMoth=false" >周报</button>
-	  	     <span ng-show="isreportMoth">
-	  	        <input class="datainp wicon" id="date04" type="text" placeholder="YYYY-MM"  readonly>
-	  	    </span>
-	  	   <span ng-show="!isreportMoth">
-	  	                 <input class="datainp wicon" id="date05" type="text"  readonly>
-	  	    </span>
-	           <button class="btn btn-info myPrint" ng-click="getreport()">查询 </button>
-	  	</div>
+		&nbsp;&nbsp;{{titmode[isreportMoth?0:1]}}报表
+		<!-- 	  <button class="btn btn-info myPrint" ng-click="Preview()"> 打印预览 </button> -->
+		<button class="btn btn-info myPrint" ng-click="exppdf()"> 导出PDF </button>
+	</div>
+	<div class="col-lg-8 text-right" style="color:#333;font-size: 14px;line-height: 2;">
+	  <button class="btn btn-info myPrint" ng-click="isreportMoth=true" class="">月报</button>
+	  <button class="btn btn-info myPrint" ng-click="isreportMoth=false" >周报</button>
+		 <span ng-show="isreportMoth">
+			<input class="datainp wicon" id="date04" type="text" placeholder="YYYY-MM"  readonly>
+		</span>
+	   <span ng-show="!isreportMoth">
+					 <input class="datainp wicon" id="date05" type="text"  readonly>
+		</span>
+		   <button class="btn btn-info myPrint" ng-click="getreport()">查询 </button>
+	</div>
 	</div>
 	<div class="version">
 		<div class="clearfix">

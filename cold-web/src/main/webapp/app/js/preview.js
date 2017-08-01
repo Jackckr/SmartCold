@@ -1,18 +1,9 @@
 /**
  * Created by xuyanan on 16/4/25.
  */
-coldWeb.controller('coldStorageDiv', function($stateParams, $scope, $http, $sce) {
-	
-    console.log($stateParams.storageID);
-    
-	$scope.load = function() {
-		if ($stateParams.storageID) {
+coldWeb.controller('preview', function($stateParams, $scope, $http, $sce) {
+	//更多和关闭的功能
 
-			$scope.storageID = $stateParams.storageID;				
-			var url = "coldDiv.html?storageID="+ $scope.storageID;
-			$scope.trustSrc = $sce.trustAsResourceUrl(url);
-			}
-        }
-	
-	$scope.load();
 });
+
+
