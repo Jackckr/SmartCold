@@ -165,7 +165,7 @@ function initRentRdc() {
                 }
             }
             var price=rentRdc.unitPrice==0?'面议':rentRdc.unitPrice;
-            rentRdcArr.push('<ul class="msgBody clearfix"><li><img src="'+rentRdc.logo+'" alt=""></li><li class="msgTitle"><p>'+rentRdc.title+'</p>' +
+            rentRdcArr.push('<ul class="msgBody clearfix"><li><img src="'+rentRdc.logo+'" alt=""></li><li class="msgTitle"><p class="blue" onclick="location.href=\'rdcmatchinfo.html?id='+rentRdc.id+'\'">'+rentRdc.title+'</p>' +
                 '<p><i class="iconfont">&#xe648;</i>'+rentRdc.detlAddress+'</p></li><li>'+rentRdc.sqm+'</li><li>'+price+'</li>' +
                 '<li>'+rentRdc.codeLave2+'</li><li>'+usefulDate+'</li>' +
                 '<li><button class="look" onclick="location.href=\'rdcmatchinfo.html?id='+rentRdc.id+'\'"><i class="iconfont">&#xe610;</i>查看</button>'+collectWords+'</li></ul>');
@@ -275,7 +275,7 @@ function initGoodsList() {
             }
             var price=goods.unitPrice==0?'面议':goods.unitPrice+'元/'+unitPush[goods.publishunit];
 
-            goodsArr.push('<ul class="msgBody clearfix"><li><img src="'+goods.logo+'" alt=""></li><li class="msgTitle"><p>'+goods.title+'</p>' +
+            goodsArr.push('<ul class="msgBody clearfix"><li><img src="'+goods.logo+'" alt=""></li><li class="msgTitle"><p class="blue" onclick="location.href=\'rdcmatchinfo.html?id='+goods.id+'\'">'+goods.title+'</p>' +
                 '<p><i class="iconfont">&#xe648;</i>'+goods.detlAddress+'</p></li><li>'+goods.sqm+unitPush[goods.publishunit]+'</li>' +
                 '<li>'+price+'</li><li>'+goodsAllType[goods.codeLave1]+'</li><li>'+validStartTime+'</li><li>'+validEndTime+'</li>' +
                 '<li><button class="look" onclick="location.href=\'rdcmatchinfo.html?id='+goods.id+'\'"><i class="iconfont">&#xe610;</i>查看</button>'+collectWords+'</li></ul>');
