@@ -141,7 +141,7 @@
         <p ng-if="vo.platform"><span>有无月台</span>{{vo.platform==1?'有':'无'}}</p>
         <p ng-if="vo.lihuoRoom"><span>有无理货区</span>{{vo.lihuoRoom==1?'有':'无'}}</p>
         <p ng-if="vo.lihuoRoom==1"><span>理货区面积</span>{{vo.lihuoArea==0?'未填写':vo.lihuoArea}}</p>
-        <p ng-if="vo.lihuoRoom"><span>有无温控</span>{{vo.lihuoTemperCtr==1?'有':'无'}}</p>
+        <p ng-if="vo.lihuoTemperCtr"><span>理货区温控</span>{{vo.lihuoTemperCtr==1?'有':'无'}}</p>
         <p ng-if="vo.storageRefreg"><span>制冷剂类型</span>{{refreg[vo.storageRefreg]}}</p>
         <p ng-if="vo.temperRecord"><span>温度记录</span>{{isHave[vo.temperRecord]}}</p>
         <p ng-hide="vo.capacity1*vo.height1==0&&
