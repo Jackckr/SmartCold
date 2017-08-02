@@ -1,26 +1,5 @@
 var $form, form, $, oFile;
-/**
-*
-* 个人信息
- *
-* */
-/*获得所有的省市*/
-/*function getProvinceList() {
-    var provinceList = [];
-    $.ajax({
-        url: "/i/city/findProvinceList", type: "get", success: function (data) {
-            provinceList.push('<option value=""></option>');
-            supportForeach();
-            data.forEach(function (val, index) {
-                provinceList.push('<option value="' + val.provinceId + '">' + val.provinceName + '</option>');
-            });
-            $form.find('#hometownid').append(provinceList.join(''));
-            $form.find('#addressid').append(provinceList.join(''));
-            form.render();
-            initForm();
-        }
-    });
-}*/
+
 function changePic(em) {
     oFile = $(em)[0].files[0];
     var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/i;
@@ -283,23 +262,23 @@ function getShareList(datatype, pageId, domId) {
             dataType: datatype,
             pageNum: pageCurrent,
             pageSize: 10
-        }, function (data) {
-            if (data.success) {
-                pagination.pageCount = data.totalPages;
+        }, function (req) {
+            if (req.success) {
+                pagination.pageCount = req.totalPages;
                 if (pagination.pageCount == -1 || pagination.oldPageCount != pagination.pageCount) {
                     changePage(pageId);
                 }
-                var data = data.data;
+                var data = req.data;
                 $.each(data, function (index, item) {
                     var deleteI=null;
                     deleteI=item.dataType==1?2:1;
-                    oList.push('<li><div class="oImg fl"><img src="' + item.logo + '" alt="图片跑丢了~"></div>' +
-                        '<div class="oTxt fl"><h2 class="omg"><a class="blue" onclick="location.href=\'rdcmatchinfo.html?id='+item.id+'\'">[' + item.typeText + ']' + item.title + '</a></h2>' +
-                        '<h4 class="omg"><i class="iconfont orange">&#xe61c;</i>' + item.detlAddress + '</h4>' +
-                        '<p class="omg">' + formatDateTime(item.updatetime) + '</p><div class="txt-right">' +
-                        '<button class="layui-btn layui-btn-normal layui-btn-small" onclick="location.href=\'rdcmatchinfo.html?id='+item.id+'\'">查看</button>' +
-                        '<button class="layui-btn layui-btn-small" onclick="goRentRdc('+item.id+','+item.typeCode+','+item.dataType+')">修改</button>' +
-                        '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteData(' + item.id + ',' + deleteI + ')">删除</button></div></div></li>')
+                    oList.push(['<li><div class="oImg fl"><img src="' , item.logo , '" alt="图片跑丢了~"></div>',
+                        '<div class="oTxt fl"><h2 class="omg"><a class="blue" onclick="location.href=\'rdcmatchinfo.html?id=',item.id,'\'">[' , item.typeText , ']' ,item.title , '</a></h2>' ,
+                        '<h4 class="omg"><i class="iconfont orange">&#xe61c;</i>', item.detlAddress , '</h4>' ,
+                        '<p class="omg">' , item.updatetime.substr(0,19) , '</p><div class="txt-right">' ,
+                        '<button class="layui-btn layui-btn-normal layui-btn-small" onclick="location.href=\'rdcmatchinfo.html?id=',item.id,'\'">查看</button>',
+                        '<button class="layui-btn layui-btn-small" onclick="goRentRdc(',item.id,',',item.typeCode,',',item.dataType,')">修改</button>' ,
+                        '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteData(' , item.id ,',' ,deleteI , ')">删除</button></div></div></li>'].join(""));
                 });
                 if(oList.length){
                     $("#sharelist"+domId).empty().append(oList.join(''));
@@ -308,7 +287,7 @@ function getShareList(datatype, pageId, domId) {
                 }
 
             } else {
-                layer.alert(data.message, {
+                layer.alert(req.message, {
                     icon: 6,
                     skin: 'layui-layer-molv' //样式类名
                     , closeBtn: 0
