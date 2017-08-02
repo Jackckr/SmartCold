@@ -1,16 +1,17 @@
 var pagination={pageCount:-1,oldPageCount:-1}
    ,sqmmode=["","<1000","1000~3000","3000~6000","6000~12000","12000~20000",">20000"]
-  , screenParam={sqm:null,audit:null,hasCar:null,keyword:null,provinceid:null,goodSaveType:null,managetype:null,storagetempertype:null,istemperaturestandard:null,pageNum:1,pageSize:10};
+  , screenParam={sqm:null,audit:null,hasCar:null,keyword:null,provinceid:null,goodSaveType:null,managetype:null,storagetempertype:null,istemperaturestandard:null,pageNum:1,pageSize:10,time:new Date().getTime()};
 
 /*初始化出租冷库列表*/
 function getRdcRentList() {
     var rdcRentInfo=[];
+    screenParam.time=new Date().getTime();
     util.setHashStringArgs(screenParam,"ul_","sqm");
     $.ajax({url:"/i/rdc/newGetRdcList",type:"post",data:screenParam,success:function (data) {
         pagination.pageCount=data.totalPages;
         if(pagination.pageCount==-1||pagination.oldPageCount!=pagination.pageCount){flushPage();}
         var rdcRentList=data.data;
-        supportForeach();
+//        supportForeach();
         rdcRentList.forEach(function (rdcRent, index) {
             var tempTypeStr=rdcRent.tempTypeStr?rdcRent.tempTypeStr:"";
             var manageTypeStr=rdcRent.manageTypeStr?rdcRent.manageTypeStr:"";
@@ -283,5 +284,17 @@ $(function () {
         $(this).children('i').html( flag ?  "&#xe630;" : "&#xe62e;");
         $(".moreType").slideToggle();
     });
+    
+    $(".picList").rollGallery({
+        direction:"left",
+        speed:2000,
+        showNum:5,
+        rollNum:2
+    });
+    util.initialize();  
 });
+
+
+
+   
 

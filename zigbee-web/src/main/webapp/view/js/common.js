@@ -202,6 +202,10 @@ var formatDateTime = function (date) {
  * 工具类
  */
 var util={
+		  initialize: function() {
+	            window.addEventListener('hashchange', function() { this.history.replaceState('hasHash', '', '');}, false);
+	            window.addEventListener('popstate', function(e) {if (e.state) {this.location.reload(); } }, false);
+	      },
 		 getHashStringArgs:function() {
 		    var hashStrings = (window.location.hash.length > 0 ? window.location.hash.substring(1) : ""),hashArgs = {},items = hashStrings.length > 0 ? hashStrings.split("&") : [], item = null, name = null, value = null,i = 0,len = items.length;
 		    for (i = 0; i < len; i++) {
@@ -220,9 +224,7 @@ var util={
 		   for(var key in data){ 
 			   if(blacklist&&blacklist.indexOf(key)>-1){continue;}
 			   val= data[key];
-			   if(val&&val!=""){
-				   hash.push(prefix+key+"="+val);
-			   }
+			   if(val&&val!=""){  hash.push(prefix+key+"="+val); }
 			 } 
 		   if(hash.length>0){
 			   window.location.hash=hash.join("&");
@@ -231,3 +233,5 @@ var util={
 		
 		
 };
+
+
