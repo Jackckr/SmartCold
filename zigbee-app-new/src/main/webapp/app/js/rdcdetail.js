@@ -20,7 +20,7 @@
 	 	//alert("请求内容不存在！");
  }else{
      var app = angular.module('app', []);
-     $(".myphone").hide();     
+     $(".myphone").hide();
      app.controller('colddetail', function($http, $location,$scope) { 
     	$scope.rdcid=id;
     	$scope.user=window.user;
@@ -115,6 +115,7 @@
 		};
 		$scope.initevg=function(){
 			 baguetteBox.run('.baguetteBoxOne', {animation: 'slideIn', buttons: true});
+            slideFn();
 		};
 		$scope.initdata();
 		$scope.initevg();
@@ -123,6 +124,7 @@
 	    }
          /*详情页轮播*/
          function slideFn() {
+             $(".flicking_con a").eq(0).addClass("on").siblings().removeClass("on");
              $dragBln = false;
              $(".main_image").touchSlider({
                  flexible: true,
