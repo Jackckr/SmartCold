@@ -69,12 +69,12 @@ function getRdcInfo() {
         var remark=rdc.remark=="undefined"?"":rdc.remark;
         if(rdc.storagePics.length){
             $.each(rdc.storagePics,function (index, item) {
-                bigImg.push('<li><a href="javascript:;" target="_blank"><img src="'+item.location+'" alt="" width="700" height="320"/></a></li>');
-                smallImg.push('<li class="current"><a href="javascript:;" target="_blank"><img src="'+item.location+'"/><span class="border"></span><span class="mask"></span></a></li>');
+                bigImg.push('<li><a href="javascript:;"><img src="'+item.location+'" alt="" width="700" height="320"/></a></li>');
+                smallImg.push('<li class="current"><a href="javascript:;"><img src="'+item.location+'"/><span class="border"></span><span class="mask"></span></a></li>');
             });
         }else{
-            bigImg.push('<li><a href="javascript:;" target="_blank"><img src="http://139.196.189.93:8089/app/rdcHeader.jpg" alt="" width="700" height="320"/></a></li>');
-            smallImg.push('<li class="current"><a href="javascript:;" target="_blank"><img src="http://139.196.189.93:8089/app/rdcHeader.jpg"/><span class="border"></span><span class="mask"></span></a></li>');
+            bigImg.push('<li><a href="javascript:;"><img src="http://139.196.189.93:8089/app/rdcHeader.jpg" alt="" width="700" height="320"/></a></li>');
+            smallImg.push('<li class="current"><a href="javascript:;"><img src="http://139.196.189.93:8089/app/rdcHeader.jpg"/><span class="border"></span><span class="mask"></span></a></li>');
         }
         baseInfo.push('<h2><b class="blue">'+rdc.name+'</b>');
         var auditButton='<a class="blue" style="margin-left: 20px" href="approve.html?id='+rdc.rdcId+'">认证该冷库</a>';

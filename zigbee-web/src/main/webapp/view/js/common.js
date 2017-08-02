@@ -41,17 +41,7 @@ if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE 
 $("#loginUser").hover(function () {
     $(this).children('dl').stop().toggle();
 })
-$(document).scroll(function () {//吸附导航
-    var sTop = document.body.scrollTop || document.documentElement.scrollTop;
-    var oTop = 116;
-    if (sTop > oTop) {
-        $('.header').addClass('fixed');
-        $('.header').next().css('marginTop', oTop);
-    } else {
-        $('.header').removeClass('fixed');
-        $('.header').next().css('marginTop', 15);
-    }
-});
+
 /*获取URL参数*/
 function getUrlParam(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
