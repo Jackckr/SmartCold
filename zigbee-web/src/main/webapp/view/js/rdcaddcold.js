@@ -109,6 +109,7 @@ function addColdSubmit() {
     });
     var flag = coldValidation(vo);
     if(flag){
+        vo['userid']=window.lkuser.id;
         var formdata = new FormData();
         $.each(storagePicsArr, function (index, item) {
             formdata.append('file' + index, item);
@@ -146,6 +147,7 @@ function addColdSubmit() {
 /*获得修改冷库信息*/
 function getFormValue(rdcId) {
     $("#submitTitle").html("修改冷库 (带*为必填项)");
+    $("#pageTitle").html("链库-修改冷库");
     $("#submitButton").empty().append('<td colspan="2"><button class="oBtn" onclick="updateColdSubmit()">提交</button></td>');
     $("#submitRdc").append('<input type="hidden" name="rdcId" value="'+rdcId+'"/>');
     $.ajax({url:"/i/rdc/findRDCDTOByRDCId",type:"get",data:{"rdcID":rdcId},success:function (data) {
@@ -156,8 +158,21 @@ function getFormValue(rdcId) {
         if(rdc.isJoinStand){$("#submitRdc input[name=isJoinStand][value='"+rdc.isJoinStand+"']").attr("checked","checked");}
         if(rdc.isJoinStand==1){$("#li1").show()}
         if(rdc.isJoinStand==2){$("#li2").show()}
-        if (rdc.audit==2){$("#coldAudit").hide();}
-        if (rdc.istemperaturestandard==1){$("#tempStandDiv,#tempStandUl").hide();}
+        if(rdc.auditType==1){
+            $("#coldAudit").hide();$("#successCold").show();
+        }else if(rdc.auditType==2){
+            $("#coldAudit").hide();$("#coldAuditing").show();
+        }
+
+        if(rdc.standType==1){
+            $("#tempStandDiv,#tempStandUl").hide();
+            $("#successStand").show();
+            $("input[name=isJoinStand][value="+3+"]").attr("checked","checked");
+        }else if(rdc.standType==2){
+            $("#tempStandDiv,#tempStandUl").hide();
+            $("#StandAuditing").show();
+            $("input[name=isJoinStand][value="+3+"]").attr("checked","checked");
+        }
         if(rdc.lihuoRoom==1){$("#lihuoAreaTr").show();}
         storagePicsArrOriginal=rdc.storagePics.length;
         honorPicsArrOriginal=rdc.honorPics.length;
@@ -181,6 +196,7 @@ function updateColdSubmit() {
     });
     var flag = coldValidation(vo);
     if(flag){
+        vo['userid']=window.lkuser.id;
         var formdata = new FormData();
         $.each(storagePicsArr, function (index, item) {
             formdata.append('file' + index, item);
@@ -206,7 +222,8 @@ function updateColdSubmit() {
             success: function (data) {
                 layer.close(ii);
                 layer.alert(data.message, {icon: 1},function () {
-                    window.location.href="/view/html/rdclist.html";
+                    window.localStorage.liIndex=1;
+                    window.location.href="usercenter.html#myRdc";
                 });
             }
         });

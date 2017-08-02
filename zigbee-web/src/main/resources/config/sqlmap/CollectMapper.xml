@@ -25,6 +25,9 @@
     <select id="getSharedCollectByUid" resultMap="getByShared">
         SELECT * FROM `collect` WHERE `collectType`=2 AND `uid`=#{uid}
     </select>
+    <select id="getByColId" resultType="com.smartcold.zigbee.manage.entity.CollectEntity">
+        SELECT * FROM `collect` WHERE `collectId`=#{colId} and `collectType`=2 and `uid`=#{uid}
+    </select>
     <select id="getUsersIdByColId" resultType="java.lang.Integer">
         SELECT `uid` FROM `collect` WHERE `collectId`=#{colId} and `collectType`=2
     </select>

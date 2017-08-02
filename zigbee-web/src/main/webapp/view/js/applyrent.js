@@ -17,14 +17,22 @@ function addApply() {
     if(checkSubmitInfo(vo)){
        var formData = new FormData();
        formData.append('data',JSON.stringify(vo));
-       $.each(appltRdcPics,function (index, val) {
-          formData.append('file'+index,val);
-       });
+        $.each(appltRdcPics,function (index, file) {
+            if(index>=applyRdcOriginalLent){
+                formData.append('file'+index,file);
+            }
+        });
        $.ajax({url:"/i/ShareRdcController/shareFreeRelease",type:"post",data:formData,processData:false,contentType:false,success:function (data) {
            layer.close(ii);
            if(data.success){
                layer.alert(data.message, {icon: 1},function () {
-                   window.location.href = "rdcmatch.html";
+                   if(sessionStorage.submitRdcStatus==1){
+                       window.localStorage.liIndex=2;
+                       window.location.href ="usercenter.html#rent";
+                   }else{
+                       window.localStorage.shareIndex=1;
+                       window.location.href = "rdcmatch.html#applyLists";
+                   }
                });
            }else {
                layer.alert(data.message, {icon: 2});
@@ -92,7 +100,7 @@ function rentRdcPicChange(e) {
 function showSelectPics() {
     var storagePicImg=[];
     for(var i=0;i<applyRdcOriginalLent;i++){
-        storagePicImg.push('<li class="imgBox"><img src="'+appltRdcPics[i].location+'" alt=""><i onclick="delrentRdcPic('+i+','+appltRdcPics[i].id+')">&times;</i></li>');
+        storagePicImg.push('<li class="imgBox"><img src="'+appltRdcPics[i].location+'" alt=""><i onclick="delrentRdcPic('+i+','+appltRdcPics[i].id+',\''+appltRdcPics[i].location+'\')">&times;</i></li>');
     }
     if(appltRdcPics.length!=applyRdcOriginalLent){
         for(var i=applyRdcOriginalLent;i<appltRdcPics.length;i++){
@@ -108,7 +116,7 @@ function showSelectPics() {
 }
 
 /*删除显示图片*/
-function delrentRdcPic(index,id) {
+function delrentRdcPic(index,id,location) {
     if(index+1>applyRdcOriginalLent){
         appltRdcPics.splice(index,1);
         showSelectPics();
@@ -118,10 +126,9 @@ function delrentRdcPic(index,id) {
             shade: false //不显示遮罩
         }, function(e){
             appltRdcPics.splice(index,1);
-            if(id){
+            if(id&&location){
                 applyRdcOriginalLent--;
-                $.ajax({url:"/i/rdc/deleteStoragePic",type:"post",data:{belongid:2132,category:'sharePic',id:213213,location:'http',name:'213',type:'123123'},success:function (data) {
-
+                $.ajax({url:"/i/rdc/deleteStoragePic",type:"post",data:{id:id,location:location},success:function (data) {
                 }});
             }
             showSelectPics();
@@ -159,6 +166,23 @@ function initRdcInfo() {
     }
 }
 
+/*初始化修改信息详情*/
+function initUpdateData(id) {
+    $.ajax({url:"/i/ShareRdcController/getSEByIDForEdit",type:"get",data:{id:id},success:function (data) {
+        var shared=data.entity;
+        getDataToForm($("#submitRdc [name]"),shared);
+        getCitys($("#provinceid"));
+        setTimeout(function () {
+            applyRdcOriginalLent=shared.fileList.length;
+            $.each(shared.fileList,function (index, file) {
+                appltRdcPics.push(file);
+            });
+            $("#cityid").val(shared.cityid);
+            showSelectPics();
+        },40);
+    }});
+}
+
 function getCitys(mark) {
     var cityList=[];
     $.ajax({url:"/i/city/findCitysByProvinceId",async: false,type:"get",data:{"provinceID":$(mark).val()},success:function (data) {
@@ -172,5 +196,11 @@ function getCitys(mark) {
 $(function () {
     if(checkLogin()){
         initRdcInfo();
+        if(sessionStorage.submitRdcStatus==1){
+            $('#applyFlag').html('修改求租冷库');
+           var urlParam = getUrlParam('shareId');
+            $("#submitRdc").append('<input type="hidden" name="id" value="'+urlParam+'"/>');
+            setTimeout(initUpdateData(urlParam),40);
+        }
     }
 });

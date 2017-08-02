@@ -44,7 +44,8 @@ public class RdcShareDTO {
 	private int rentdate; //租期
 	private String username;//发布者
 	private int publishunit;//发布物品单位
-	private List<Integer> collectUserIds;//收藏的用户id
+	private int collectType;//收藏状态0.没收藏1.已收藏
+	private List<Integer> collectUserIds=new ArrayList<Integer>();//收藏的用户id
 	//->拓展字段  ->车
 	
 	private int stprovinceID;
@@ -390,6 +391,14 @@ public class RdcShareDTO {
 
 	public void setPublishunit(int publishunit) {
 		this.publishunit = publishunit;
+	}
+
+	public int getCollectType() {
+		return collectType;
+	}
+
+	public void setCollectType(int collectType) {
+		this.collectType = collectType;
 	}
 
 	public List<Integer> getCollectUserIds() {

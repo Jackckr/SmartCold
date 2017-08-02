@@ -34,10 +34,10 @@ $().ready(function () {
             $(this).hide();
         });
         /*$("#searchDara_div i").click(function (e) {//搜索
-            currentPage = 1;
-            ul_select.empty();
-            getPageData();
-        });*/
+         currentPage = 1;
+         ul_select.empty();
+         getPageData();
+         });*/
         $(window).scroll(function () {
             var scrollTop = $(this).scrollTop();
             var scrollHeight = $(document).height();
@@ -95,6 +95,10 @@ $().ready(function () {
         var sety = $("#ul_mtty_list li.active").attr("value");//经营类型
         var adds = $("#ul_hascar_list li.active").attr("value");////地区
         var keyword = $("#searchDara_div input").val().trim();////关键字搜索
+        var uid = null;
+        if (window.user) {
+            uid = window.user.id;
+        }
         var _options = {
             typeCode: 1,
             dataType: 3,
@@ -103,7 +107,8 @@ $().ready(function () {
             managetype: sety,
             storagetempertype: smty,
             provinceid: adds,
-            keyword: keyword
+            keyword: keyword,
+            uid: uid
         };
         var _filter = {pageNum: pageNum, pageSize: pageSize};
         jQuery.extend(_filter, _options);
@@ -119,66 +124,71 @@ $().ready(function () {
         });
     };
     function gethtml(rdc) {
-        var approve=''
-        if(rdc.audit==2){
-            if(rdc.istemperaturestandard==1){
-                approve='<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
-            }else{
-                approve='<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i>'
+        var approve = ''
+        if (rdc.audit == 2) {
+            if (rdc.istemperaturestandard == 1) {
+                approve = '<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
+            } else {
+                approve = '<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i>'
             }
-        }else if(rdc.audit!=2){
-            if(rdc.istemperaturestandard==1){
-                approve='<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
-            }else{
-                approve='<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i>';
-            }
-        };
-        if(rdc.rdcSqm==undefined){
-            rdc.rdcSqm=rdc.sqm
-        }
-        var collectWords='<a class="fr noCollect" onclick="collect(this,'+rdc.id+')"><i class="iconfont">&#xe605;</i><em>收藏</em></a>';
-        if(rdc.collectUserIds && window.user){
-            for(var i=0;i<rdc.collectUserIds.length;i++){
-                if(rdc.collectUserIds[i]==window.user.id){
-                    collectWords='<a class="fr hasCollect" onclick="collect(this,'+rdc.id+')"><i class="iconfont">&#xe60c;</i><em>已收藏</em></a>';
-                }
+        } else if (rdc.audit != 2) {
+            if (rdc.istemperaturestandard == 1) {
+                approve = '<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
+            } else {
+                approve = '<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i>';
             }
         }
-        var prices=null;
-        if(rdc.unitPrice==undefined||rdc.unitPrice==0){
-            prices='面议'
-        }else{
-            prices=rdc.unitPrice+'<br><span>元/㎡/天</span>'
+        if (rdc.rdcSqm == undefined) {
+            rdc.rdcSqm = rdc.sqm;
         }
-        var loseEffice='';
-        if(rdc.name==null||rdc.name==''||rdc.name=='undefined'){
-            loseEffice='<i class="iconfont loseEffice">&#xe667;</i>'
+        var collectWords = '<a class="fr noCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe605;</i><em>收藏</em></a>';
+        if (rdc.collectType == 1) {
+            collectWords = '<a class="fr hasCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe60c;</i><em>已收藏</em></a>';
+        }
+        var prices = null;
+        if (rdc.unitPrice == undefined || rdc.unitPrice == 0) {
+            prices = '面议';
+        } else {
+            prices = rdc.unitPrice + '<br><span>元/㎡/天</span>';
+        }
+        var loseEffice = '';
+        if (rdc.name == null || rdc.name == '' || rdc.name == 'undefined') {
+            loseEffice = '<i class="iconfont loseEffice">&#xe667;</i>';
         }
         var score = [
-            '<li class="imgCell"><a href="storehousedetail.html?id='+rdc.id+'"  onclick="getSoll()">'+loseEffice+'<span><img src="'+rdc.logo+'" alt=""></span><div>'+
-            '<p class="ellipsis">'+rdc.title+'</p><em>信息完整度<i class="blue">'+rdc.infoIntegrity+'%</i></em><p class="position omg">'+approve+'</p>'+
-            '<p class="grab orange">'+prices+'</p></div><div class="flex"><div class="item"><h4>'+rdc.rdcSqm+'㎡</h4>'+
-            '<p>总面积</p></div><div class="item"><h4>'+rdc.sqm+'㎡</h4><p>可租面积</p></div><div class="item"><h4>'+rdc.detlAddress+'</h4><p></p></div></div></a>'+
-            '<div class="btnFn clearfix"><a href="storehousedetail.html?id='+rdc.id+'" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>'+
-            collectWords+'<a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'
+            '<li class="imgCell"><a href="storehousedetail.html?id=' + rdc.id + '"  onclick="getSoll()">' + loseEffice + '<span><img src="' + rdc.logo + '" alt=""></span><div>' +
+            '<p class="ellipsis">' + rdc.title + '</p><em>信息完整度<i class="blue">' + rdc.infoIntegrity + '%</i></em><p class="position omg">' + approve + '</p>' +
+            '<p class="grab orange">' + prices + '</p></div><div class="flex"><div class="item"><h4>' + rdc.rdcSqm + '㎡</h4>' +
+            '<p>总面积</p></div><div class="item"><h4>' + rdc.sqm + '㎡</h4><p>可租面积</p></div><div class="item"><h4>' + rdc.detlAddress + '</h4><p></p></div></div></a>' +
+            '<div class="btnFn clearfix"><a href="storehousedetail.html?id=' + rdc.id + '" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>' +
+            collectWords + '<a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'
         ];
         return score.join("");
     }
-    collect=function(ops,id) {
-        if(!(window.user && window.user.id!=0)){
+
+    collect = function (ops, id) {
+        if (!(window.user && window.user.id != 0)) {
             checkLogin();
             return;
         }
         var em = $(ops);
-        if(em.hasClass('noCollect')){
-            $.post(ER.root+"/i/collect/addCollectRdc",{uid:window.user.id,collectId:id,collectType:2},function (data) {
+        if (em.hasClass('noCollect')) {
+            $.post(ER.root + "/i/collect/addCollectRdc", {
+                uid: window.user.id,
+                collectId: id,
+                collectType: 2
+            }, function (data) {
 
             });
             em.removeClass('noCollect').addClass('hasCollect');
             em.children('i').html('&#xe60c;');
             em.children('em').html('已收藏');
-        }else{
-            $.post(ER.root+"/i/collect/delByCollect",{uid:window.user.id,collectId:id,collectType:2},function (data) {
+        } else {
+            $.post(ER.root + "/i/collect/delByCollect", {
+                uid: window.user.id,
+                collectId: id,
+                collectType: 2
+            }, function (data) {
 
             });
             em.addClass('noCollect').removeClass('hasCollect');
@@ -187,7 +197,7 @@ $().ready(function () {
         }
     };
     function getPageData(search) {//启用无限加载
-        if(search==1){
+        if (search == 1) {
             currentPage = 1;
             ul_select.empty();
         }

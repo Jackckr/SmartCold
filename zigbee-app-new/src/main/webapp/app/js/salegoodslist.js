@@ -89,7 +89,19 @@ $().ready(function () {
         var adds = $("#ul_hascar_list li.active").attr("value");////地区
         var gdty = $("#ul_goodtype_list li.active").attr("value");//商品类型
         var keyword = $("#searchDara_div input").val().trim();////关键字搜索
-        var _options = {provinceid: adds, goodtype: gdty, typeCode: 1, dataType: 1, rdcID: rdcid, keyword: keyword};
+        var uid = null;
+        if (window.user) {
+            uid = window.user.id;
+        }
+        var _options = {
+            provinceid: adds,
+            goodtype: gdty,
+            typeCode: 1,
+            dataType: 1,
+            rdcID: rdcid,
+            keyword: keyword,
+            uid: uid
+        };
         var _filter = {pageNum: pageNum, pageSize: pageSize};
         jQuery.extend(_filter, _options);
         return _filter;
@@ -104,12 +116,12 @@ $().ready(function () {
         });
     };
     function gethtml(rdc) {
-        var oStart=formatTime.mseconds(rdc.validStartTime);
-        var oEnd=formatTime.mseconds(rdc.validEndTime);
-        var today=new Date().getTime();
-        var validEndTime = formatTime.standTime(rdc.validEndTime).getFullYear()+'-'+
-            (formatTime.standTime(rdc.validEndTime).getMonth()+1<10?'0'+(1+formatTime.standTime(rdc.validEndTime).getMonth()):formatTime.standTime(rdc.validEndTime).getMonth()+1)
-            +'-'+formatTime.standTime(rdc.validEndTime).getDate();
+        var oStart = formatTime.mseconds(rdc.validStartTime);
+        var oEnd = formatTime.mseconds(rdc.validEndTime);
+        var today = new Date().getTime();
+        var validEndTime = formatTime.standTime(rdc.validEndTime).getFullYear() + '-' +
+            (formatTime.standTime(rdc.validEndTime).getMonth() + 1 < 10 ? '0' + (1 + formatTime.standTime(rdc.validEndTime).getMonth()) : formatTime.standTime(rdc.validEndTime).getMonth() + 1)
+            + '-' + formatTime.standTime(rdc.validEndTime).getDate();
         var deadline = oEnd - oStart;
         var days = deadline / 1000 / 60 / 60 / 24;
         var daysRound = Math.floor(days);//租期
@@ -129,28 +141,24 @@ $().ready(function () {
         }
         var usefulDate = rentDate[rdc.rentdate];
         if (rdc.rentdate == undefined || rdc.rentdate == null || rdc.rentdate == 0) {
-            if(daysRound<30){
-                usefulDate = daysRound +1 + '天'
-            }else{
-                if(daysRound/30>12){
-                    usefulDate = (daysRound/30/12).toFixed(1) + '年'
-                }else{
-                    usefulDate = (daysRound/30).toFixed(1) + '个月'
+            if (daysRound < 30) {
+                usefulDate = daysRound + 1 + '天'
+            } else {
+                if (daysRound / 30 > 12) {
+                    usefulDate = (daysRound / 30 / 12).toFixed(1) + '年'
+                } else {
+                    usefulDate = (daysRound / 30).toFixed(1) + '个月'
                 }
             }
         }
         var collectWords = '<a class="fr noCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe605;</i><em>收藏</em></a>';
-        if (rdc.collectUserIds && window.user) {
-            for (var i = 0; i < rdc.collectUserIds.length; i++) {
-                if (rdc.collectUserIds[i] == window.user.id) {
-                    collectWords = '<a class="fr hasCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe60c;</i><em>已收藏</em></a>';
-                }
-            }
+        if (rdc.collectType == 1) {
+            collectWords = '<a class="fr hasCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe60c;</i><em>已收藏</em></a>';
         }
-        var unit=['吨','Kg','吨'];
+        var unit = ['吨', 'Kg', '吨'];
         var score = [
             '<li class="imgCell"><a href="storehousedetail.html?id=' + rdc.id + '" onclick="getSoll()"><span>出售货源</span><div>' +
-            '<p class="ellipsis">' + rdc.title + '</p><p class="position omg orange"><i class="iconfont">&#xe673;</i>' + rdc.sqm + unit[rdc.publishunit]+'</p><span class="grab green">[' + showTime + ']</span>' +
+            '<p class="ellipsis">' + rdc.title + '</p><p class="position omg orange"><i class="iconfont">&#xe673;</i>' + rdc.sqm + unit[rdc.publishunit] + '</p><span class="grab green">[' + showTime + ']</span>' +
             '</div><div class="flex"><div class="item"><h4>' + usefulDate + '</h4>' +
             '<p>有效期</p></div><div class="item"><h4>' + validEndTime + '</h4><p>报价截止日</p>' +
             '</div><div class="item"><h4 class="omg">' + rdc.username + '</h4><p>发布者</p></div></div></a>' +

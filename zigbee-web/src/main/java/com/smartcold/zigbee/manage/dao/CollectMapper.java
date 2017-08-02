@@ -20,6 +20,8 @@ public interface CollectMapper {
 
     Page<CollectEntity> getSharedCollectByUid(Integer uid);
 
+    CollectEntity getByColId(@Param("colId") Integer colId,@Param("uid") Integer uid);
+
     List<Integer> getUsersIdByColId(Integer colId);
 
     List<Integer> getUsersIdByRdcId(Integer rdcId);

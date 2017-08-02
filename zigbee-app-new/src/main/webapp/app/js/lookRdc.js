@@ -33,11 +33,11 @@ $().ready(function () {
             $('.listcontain').hide();
             $(this).hide();
         });
-       /* $("#searchDara_div i").click(function (e) {//搜索
-            currentPage = 1;
-            ul_select.empty();
-            getPageData();
-        });*/
+        /* $("#searchDara_div i").click(function (e) {//搜索
+         currentPage = 1;
+         ul_select.empty();
+         getPageData();
+         });*/
         $(window).scroll(function () {
             var scrollTop = $(this).scrollTop();
             var scrollHeight = $(document).height();
@@ -94,6 +94,10 @@ $().ready(function () {
         var sety = $("#ul_mtty_list li.active").attr("value");//经营类型
         var adds = $("#ul_hascar_list li.active").attr("value");////地区
         var keyword = $("#searchDara_div input").val().trim();////关键字搜索
+        var uid = null;
+        if (window.user) {
+            uid = window.user.id;
+        }
         var _options = {
             typeCode: 2,
             dataType: 3,
@@ -102,7 +106,8 @@ $().ready(function () {
             managetype: sety,
             storagetempertype: smty,
             provinceid: adds,
-            keyword: keyword
+            keyword: keyword,
+            uid: uid
         };
         var _filter = {pageNum: pageNum, pageSize: pageSize};
         jQuery.extend(_filter, _options);
@@ -118,12 +123,12 @@ $().ready(function () {
         });
     };
     function gethtml(rdc) {
-        var oStart=formatTime.mseconds(rdc.validStartTime);
-        var oEnd=formatTime.mseconds(rdc.validEndTime);
-        var today=new Date().getTime();
-        var validEndTime = formatTime.standTime(rdc.validEndTime).getFullYear()+'-'+
-            (formatTime.standTime(rdc.validEndTime).getMonth()+1<10?'0'+(1+formatTime.standTime(rdc.validEndTime).getMonth()):formatTime.standTime(rdc.validEndTime).getMonth()+1)
-            +'-'+formatTime.standTime(rdc.validEndTime).getDate();
+        var oStart = formatTime.mseconds(rdc.validStartTime);
+        var oEnd = formatTime.mseconds(rdc.validEndTime);
+        var today = new Date().getTime();
+        var validEndTime = formatTime.standTime(rdc.validEndTime).getFullYear() + '-' +
+            (formatTime.standTime(rdc.validEndTime).getMonth() + 1 < 10 ? '0' + (1 + formatTime.standTime(rdc.validEndTime).getMonth()) : formatTime.standTime(rdc.validEndTime).getMonth() + 1)
+            + '-' + formatTime.standTime(rdc.validEndTime).getDate();
         var deadline = oEnd - oStart;
         var days = deadline / 1000 / 60 / 60 / 24;
         var daysRound = Math.floor(days);//租期
@@ -143,50 +148,55 @@ $().ready(function () {
         }
         var usefulDate = rentDate[rdc.rentdate];
         if (rdc.rentdate == undefined || rdc.rentdate == null || rdc.rentdate == 0) {
-            if(daysRound<30){
-                usefulDate = daysRound +1 + '天'
-            }else{
-                if(daysRound/30>12){
-                    usefulDate = (daysRound/30/12).toFixed(1) + '年'
-                }else{
-                    usefulDate = (daysRound/30).toFixed(1) + '个月'
+            if (daysRound < 30) {
+                usefulDate = daysRound + 1 + '天'
+            } else {
+                if (daysRound / 30 > 12) {
+                    usefulDate = (daysRound / 30 / 12).toFixed(1) + '年'
+                } else {
+                    usefulDate = (daysRound / 30).toFixed(1) + '个月'
                 }
             }
         }
-        var collectWords='<a class="fr noCollect" onclick="collect(this,'+rdc.id+')"><i class="iconfont">&#xe605;</i><em>收藏</em></a>';
-        if(rdc.collectUserIds && window.user){
-            for(var i=0;i<rdc.collectUserIds.length;i++){
-                if(rdc.collectUserIds[i]==window.user.id){
-                    collectWords='<a class="fr hasCollect" onclick="collect(this,'+rdc.id+')"><i class="iconfont">&#xe60c;</i><em>已收藏</em></a>';
-                }
-            }
+        var collectWords = '<a class="fr noCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe605;</i><em>收藏</em></a>';
+        if (rdc.collectType == 1) {
+            collectWords = '<a class="fr hasCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe60c;</i><em>已收藏</em></a>';
         }
         var score = [
-            '<li class="imgCell"><a href="storehousedetail.html?id=' + rdc.id + '" onclick="getSoll()"><span>求租冷库</span><div>'+
-            '<p class="ellipsis">'+rdc.title+'</p><p class="position omg orange"><i class="iconfont">&#xe673;</i>'+rdc.sqm+'㎡</p><span class="grab green">['+showTime+']</span>'+
-            '</div><div class="flex"><div class="item"><h4>'+usefulDate+'</h4>'+
-            '<p>租期</p></div><div class="item"><h4>'+validEndTime+'</h4><p>报价截止日</p>'+
-            '</div><div class="item"><h4 class="omg">'+rdc.username+'</h4><p>发布者</p></div></div></a>' +
-            '<div class="btnFn clearfix"><a href="storehousedetail.html?id='+rdc.id+'" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>'+
-            collectWords+'<a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'
+            '<li class="imgCell"><a href="storehousedetail.html?id=' + rdc.id + '" onclick="getSoll()"><span>求租冷库</span><div>' +
+            '<p class="ellipsis">' + rdc.title + '</p><p class="position omg orange"><i class="iconfont">&#xe673;</i>' + rdc.sqm + '㎡</p><span class="grab green">[' + showTime + ']</span>' +
+            '</div><div class="flex"><div class="item"><h4>' + usefulDate + '</h4>' +
+            '<p>租期</p></div><div class="item"><h4>' + validEndTime + '</h4><p>报价截止日</p>' +
+            '</div><div class="item"><h4 class="omg">' + rdc.username + '</h4><p>发布者</p></div></div></a>' +
+            '<div class="btnFn clearfix"><a href="storehousedetail.html?id=' + rdc.id + '" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>' +
+            collectWords + '<a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'
         ];
         return score.join("");
     }
-    collect=function(ops,id) {
-        if(!(window.user && window.user.id!=0)){
+
+    collect = function (ops, id) {
+        if (!(window.user && window.user.id != 0)) {
             checkLogin();
             return;
         }
         var em = $(ops);
-        if(em.hasClass('noCollect')){
-            $.post(ER.root+"/i/collect/addCollectRdc",{uid:window.user.id,collectId:id,collectType:2},function (data) {
+        if (em.hasClass('noCollect')) {
+            $.post(ER.root + "/i/collect/addCollectRdc", {
+                uid: window.user.id,
+                collectId: id,
+                collectType: 2
+            }, function (data) {
 
             });
             em.removeClass('noCollect').addClass('hasCollect');
             em.children('i').html('&#xe60c;');
             em.children('em').html('已收藏');
-        }else{
-            $.post(ER.root+"/i/collect/delByCollect",{uid:window.user.id,collectId:id,collectType:2},function (data) {
+        } else {
+            $.post(ER.root + "/i/collect/delByCollect", {
+                uid: window.user.id,
+                collectId: id,
+                collectType: 2
+            }, function (data) {
 
             });
             em.addClass('noCollect').removeClass('hasCollect');

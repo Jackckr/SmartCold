@@ -39,5 +39,6 @@ public interface FileDataMapper {
  public List<FileDataEntity> findByBelongIdAndCategory(@Param("belongid")int belongid, @Param("category")String category);
 
  public Page<FileDataEntity> getAuthByFile(@Param("belongid")Integer belongid, @Param("category")String category ,@Param("description")String description);
- 
+
+ FileDataEntity selectById(int id);
 }

@@ -66,16 +66,20 @@ function initRdcInfo(rdcId) {
             var rdc=data.data[0];
             var filesArr=[];
             $("#rdcName").html(rdc.name+'<span><i class="iconfont orange">&#xe61c;</i>'+rdc.address+'</span>');
-            $.each(rdc.files,function (index, file) {
-                filesArr.push('<li><img src="'+file+'" alt=""></li>');
-            });
+            if(rdc.files){
+                $.each(rdc.files,function (index, file) {
+                    filesArr.push('<li><img src="'+file+'" alt=""></li>');
+                });
+                $("#infoImg").append(filesArr.join(''));
+            }else{
+                $("#infoImg").hide();
+            }
             $("#provinceid").val(rdc.provinceid);
             $("#cityid").val(rdc.cityid);
             $("#codeLave1").val(rdc.codeLave1);
             $("#detlAddress").val(rdc.address);
             $("#rdcID").val(rdc.rdcID);
             $("#rdcSqm").val(rdc.rdcSqm);
-            $("#infoImg").append(filesArr.join(''));
             showImg();
         }});
         var tempType=[];
@@ -89,7 +93,7 @@ function initRdcInfo(rdcId) {
     }
 }
 
-/*提交添加出租冷库信息*/
+/*提交添加修改出租冷库信息*/
 function submitAdd() {
     var ii = layer.load();
     var serializeArray = $("#submitRdc").serializeArray();
@@ -112,7 +116,12 @@ function submitAdd() {
             layer.close(ii);
             if(data.success){
                 layer.alert(data.message, {icon: 1},function () {
-                    window.location.href = "rdcmatch.html";
+                    if(sessionStorage.submitRdcStatus==1){
+                        window.localStorage.liIndex=2;
+                        window.location.href ="usercenter.html#rent";
+                    }else{
+                        window.location.href = "rdcmatch.html";
+                    }
                 });
             }else {
                 layer.alert(data.message, {icon: 2});
@@ -185,7 +194,9 @@ function initUpdateInfo(id) {
     $.ajax({url:"/i/ShareRdcController/getSEByIDForEdit",type:"get",data:{id:id},success:function (data) {
         var share=data.entity;
         initRdcInfo(share.rdcID);
-        getDataToForm($("#submitRdc [name]"),share);
+        setTimeout(function () {
+            getDataToForm($("#submitRdc [name]"),share);
+        },40);
         rentRdcOriginalLent=share.fileList.length;
         $.each(share.fileList,function (index, file) {
             rentRdcPics.push(file);

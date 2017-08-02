@@ -610,6 +610,8 @@ public class RdcController {
 		if(!StringUtils.isEmpty(delIds)){
 			String[] ids=delIds.split(",");
 			for (String delId:ids){
+				FileDataEntity fileDataEntity = fileDataDao.selectById(Integer.parseInt(delId));
+				ftpService.deleteByLocation(fileDataEntity.getLocation());
 				fileDataDao.deleteById(Integer.parseInt(delId));
 			}
 		}
