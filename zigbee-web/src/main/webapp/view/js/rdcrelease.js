@@ -66,16 +66,20 @@ function initRdcInfo(rdcId) {
             var rdc=data.data[0];
             var filesArr=[];
             $("#rdcName").html(rdc.name+'<span><i class="iconfont orange">&#xe61c;</i>'+rdc.address+'</span>');
-            $.each(rdc.files,function (index, file) {
-                filesArr.push('<li><img src="'+file+'" alt=""></li>');
-            });
+            if(rdc.files){
+                $.each(rdc.files,function (index, file) {
+                    filesArr.push('<li><img src="'+file+'" alt=""></li>');
+                });
+                $("#infoImg").append(filesArr.join(''));
+            }else{
+                $("#infoImg").hide();
+            }
             $("#provinceid").val(rdc.provinceid);
             $("#cityid").val(rdc.cityid);
             $("#codeLave1").val(rdc.codeLave1);
             $("#detlAddress").val(rdc.address);
             $("#rdcID").val(rdc.rdcID);
             $("#rdcSqm").val(rdc.rdcSqm);
-            $("#infoImg").append(filesArr.join(''));
             showImg();
         }});
         var tempType=[];
