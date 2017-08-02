@@ -109,6 +109,7 @@ function addColdSubmit() {
     });
     var flag = coldValidation(vo);
     if(flag){
+        vo['userid']=window.lkuser.id;
         var formdata = new FormData();
         $.each(storagePicsArr, function (index, item) {
             formdata.append('file' + index, item);
@@ -195,6 +196,7 @@ function updateColdSubmit() {
     });
     var flag = coldValidation(vo);
     if(flag){
+        vo['userid']=window.lkuser.id;
         var formdata = new FormData();
         $.each(storagePicsArr, function (index, item) {
             formdata.append('file' + index, item);
