@@ -296,7 +296,7 @@ function getShareList(datatype, pageId, domId) {
                     oList.push('<li><div class="oImg fl"><img src="' + item.logo + '" alt="图片跑丢了~"></div>' +
                         '<div class="oTxt fl"><h2 class="omg"><a class="blue" onclick="location.href=\'rdcmatchinfo.html?id='+item.id+'\'">[' + item.typeText + ']' + item.title + '</a></h2>' +
                         '<h4 class="omg"><i class="iconfont orange">&#xe61c;</i>' + item.detlAddress + '</h4>' +
-                        '<p class="omg">' + formatDateTime(item.updatetime) + '</p><div class="txt-right">' +
+                        '<p class="omg">' + item.updatetime + '</p><div class="txt-right">' +
                         '<button class="layui-btn layui-btn-normal layui-btn-small" onclick="location.href=\'rdcmatchinfo.html?id='+item.id+'\'">查看</button>' +
                         '<button class="layui-btn layui-btn-small" onclick="goRentRdc('+item.id+','+item.typeCode+','+item.dataType+')">修改</button>' +
                         '<button class="layui-btn layui-btn-danger layui-btn-small" onclick="deleteData(' + item.id + ',' + deleteI + ')">删除</button></div></div></li>')
