@@ -269,7 +269,6 @@
 	</select>
 	<resultMap id="rdcSharedMap" type="com.smartcold.zigbee.manage.dto.RdcShareDTO">
 		<result property="id" column="id"/>
-		<collection property="collectUserIds" column="id" select="com.smartcold.zigbee.manage.dao.CollectMapper.getUsersIdByColId"/>
 	</resultMap>
 	<select id="getNewSERDCListByPage" parameterType="map" resultMap="rdcSharedMap">
 		SELECT
