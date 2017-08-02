@@ -25,14 +25,18 @@ function initRdcInfo(rdcId) {
             var rdc=data.data[0];
             var filesArr=[];
             $("#rdcName").html(rdc.name+'<span><i class="iconfont orange">&#xe61c;</i>'+rdc.address+'</span>');
-            $.each(rdc.files,function (index, file) {
-                filesArr.push('<li><img src="'+file+'" alt=""></li>');
-            });
+            if(rdc.files){
+                $.each(rdc.files,function (index, file) {
+                    filesArr.push('<li><img src="'+file+'" alt=""></li>');
+                });
+                $("#infoImg").append(filesArr.join(''));
+            }else{
+                $("#infoImg").hide();
+            }
             $("#haveProvinceid").val(rdc.provinceid);
             $("#haveCityid").val(rdc.cityid);
             $("#detlAddress").val(rdc.address);
             $("#rdcID").val(rdc.rdcID);
-            $("#infoImg").append(filesArr.join(''));
             showImg();
             initBaseData();
         }});
@@ -162,7 +166,9 @@ function initUpdateData(id) {
         var shared=data.entity;
         $("#saleGoodsFlag").html('修改出售货品');
         $("#applyGoodsFlag").html('修改求购货品');
-        goodsOriginalLent=shared.fileList.length;
+        if(shared.fileList){
+            goodsOriginalLent=shared.fileList.length;
+        }
         $.each(shared.fileList,function (index, file) {
             goodsPics.push(file);
         });
