@@ -54,11 +54,11 @@
     </div>
 </div>
 <div class="section clearfix oFilter">
-    <select id="provinceList" class="select fl">
+    <select id="ul_provinceid" class="select fl">
     </select>
     <a href="rdcaddcold.html" onclick="getAddStatus()" class="oBtn fr">添加冷库</a>
     <div class="search fr">
-        <input id="keyword" type="text" class="fl" placeholder="请输入关键字……">
+        <input id="ul_keyword" type="text" class="fl" placeholder="请输入关键字……">
         <i class="iconfont">&#xe609;</i>
         <span class="oBtn fl" id="search">搜索</span>
     </div>
@@ -66,72 +66,60 @@
 <div class="section oType">
     <div class="typeList clearfix">
         <span class="fl">经营类型:</span>
-        <ul class="clearfix">
-            <li type="manage" value="0" class="fl activeType">不限</li>
-            <li type="manage" value="1" class="fl">产地型</li>
-            <li type="manage" value="2" class="fl">市场型</li>
-            <li type="manage" value="3" class="fl">仓储型</li>
-            <li type="manage" value="4" class="fl">配送型</li>
-            <li type="manage" value="5" class="fl">生产型</li>
-            <li type="manage" value="6" class="fl">中央厨房</li>
-            <li type="manage" value="7" class="fl">医药型</li>
-            <li type="manage" value="8" class="fl">其他</li>
+        <ul id="ul_managetype" class="clearfix">
+            <li value="0" class="fl activeType">不限</li>
         </ul>
     </div>
     <div class="typeList clearfix">
         <span class="fl">冷库温度类型:</span>
-        <ul class="clearfix">
-            <li type="temp" value="0" class="fl activeType">不限</li>
-            <li type="temp" value="1" class="fl">冷藏库</li>
-            <li type="temp" value="2" class="fl">冷冻库</li>
-            <li type="temp" value="3" class="fl">超低温库</li>
-            <li type="temp" value="4" class="fl">恒温库</li>
-            <li type="temp" value="5" class="fl">多温区库</li>
+        <ul id="ul_storagetempertype" class="clearfix">
+            <li value="0" class="fl activeType">不限</li>
         </ul>
     </div>
     <div class="typeList clearfix">
         <span class="fl">温度达标情况:</span>
-        <ul class="clearfix">
-            <li type="tempStandard" value="-1" class="fl activeType">不限</li>
-            <li type="tempStandard" value="1" class="fl">已达标</li>
-            <li type="tempStandard" value="0" class="fl">未达标</li>
+        <ul id="ul_istemperaturestandard" class="clearfix">
+            <li value="0" class="fl activeType">不限</li>
+            <li value="1" class="fl" type="radio">已达标</li>
+            <li value="0" class="fl" type="radio">未达标</li>
         </ul>
     </div>
     <div class="moreType hide">
         <div class="typeList clearfix">
             <span class="fl">冷库认证情况:</span>
-            <ul class="clearfix">
-                <li type="isAudit" value="-3" class="fl activeType">不限</li>
-                <li type="isAudit" value="2" class="fl">已认证</li>
-                <li type="isAudit" value="-2" class="fl">未认证</li>
+            <ul id="ul_audit" class="clearfix">
+                <li  value="0" class="fl activeType">不限</li>
+                <li  value="2" class="fl" type="radio">已认证</li>
+                <li  value="-2" class="fl" type="radio">未认证</li>
             </ul>
         </div>
         <div class="typeList clearfix">
             <span class="fl">商品存放形式:</span>
-            <ul class="clearfix">
+            <ul id="ul_goodSaveType" class="clearfix">
                 <li type="goodSave" value="0" class="fl activeType">不限</li>
-                <li type="goodSave" value="1" class="fl">货架存放</li>
-                <li type="goodSave" value="2" class="fl">非货架存放</li>
+<!--                 <li type="goodSave" value="1" class="fl">货架存放</li> -->
+<!--                 <li type="goodSave" value="2" class="fl">非货架存放</li> -->
             </ul>
         </div>
         <div class="typeList clearfix">
             <span class="fl">冷库总面积:</span>
-            <ul class="clearfix">
-                <li type="rdcSqm" value="0" class="fl activeType">不限</li>
-                <li type="rdcSqm" value="1" class="fl"><1000㎡</li>
-                <li type="rdcSqm" value="2" class="fl">1000~3000㎡</li>
-                <li type="rdcSqm" value="3" class="fl">3000~6000㎡</li>
-                <li type="rdcSqm" value="4" class="fl">6000~12000㎡</li>
-                <li type="rdcSqm" value="5" class="fl">12000~20000㎡</li>
-                <li type="rdcSqm" value="6" class="fl">>20000㎡</li>
+            <ul id="ul_rdcsqm" class="clearfix">
+                <li value="0" class="fl activeType">不限</li>
+                <li value="1" class="fl"><1000㎡</li>
+                <li value="2" class="fl">1000~3000㎡</li>
+                <li value="3" class="fl">3000~6000㎡</li>
+                <li value="4" class="fl">6000~12000㎡</li>
+                <li value="5" class="fl">12000~20000㎡</li>
+                <li value="6" class="fl">&gt;20000㎡</li>
             </ul>
         </div>
         <div class="typeList clearfix">
             <span class="fl">配备冷藏车情况:</span>
-            <ul class="clearfix">
-                <li type="hasCar" value="-1" class="fl activeType">不限</li>
-                <li type="hasCar" value="1" class="fl">有</li>
-                <li type="hasCar" value="2" class="fl">无</li>
+            <ul id="ul_hasCar" class="clearfix">
+                <li  value="0" class="fl activeType">不限</li>
+                <li  value="1" class="fl" type="radio">有</li>
+                <li  value="2" class="fl" type="radio">无</li>
+                
             </ul>
         </div>
     </div>

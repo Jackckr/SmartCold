@@ -9,6 +9,7 @@ if (sessionStorage.lkuser && new Date().getTime() - sessionStorage.longtime < (3
 } else {
     findUser();
 }
+
 function checkLogin(msg, callback) {//检查是否登录
     if (window.lkuser != null) {
         if (callback) {
@@ -196,4 +197,37 @@ var formatDateTime = function (date) {
     var seconds = date.getSeconds();
     seconds = seconds < 10 ? ('0' + seconds) : seconds;
     return y + '-' + m + '-' + d+' '+h+':'+minute+':'+seconds;
+};
+/**
+ * 工具类
+ */
+var util={
+		 getHashStringArgs:function() {
+		    var hashStrings = (window.location.hash.length > 0 ? window.location.hash.substring(1) : ""),hashArgs = {},items = hashStrings.length > 0 ? hashStrings.split("&") : [], item = null, name = null, value = null,i = 0,len = items.length;
+		    for (i = 0; i < len; i++) {
+		       item = items[i].split("=");
+		       name = decodeURIComponent(item[0]);
+		       value = decodeURIComponent(item[1]);
+		       if (name.length > 0) {
+		           hashArgs[name] = value;
+		       }
+		   }
+		   return hashArgs;
+	   },
+	   setHashStringArgs:function(data,prefix,blacklist) {
+		   if(prefix==undefined){prefix="";}
+		   var val= null,hash=[];
+		   for(var key in data){ 
+			   if(blacklist&&blacklist.indexOf(key)>-1){continue;}
+			   val= data[key];
+			   if(val&&val!=""){
+				   hash.push(prefix+key+"="+val);
+			   }
+			 } 
+		   if(hash.length>0){
+			   window.location.hash=hash.join("&");
+		   }
+	   }
+		
+		
 };
