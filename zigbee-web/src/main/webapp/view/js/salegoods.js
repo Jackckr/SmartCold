@@ -143,11 +143,9 @@ function addNoCold() {
                             window.location.href ="usercenter.html#goods";
                         }else{
                             if(vo.typeCode==1){
-                                window.localStorage.shareIndex=2;
-                                window.location.href = "rdcmatch.html#goodsLists";
+                                window.location.href = "rdcmatch.html#flag=2&dataType=1&typeCode=1&pageNum=1&pageSize=10";
                             }else {
-                                window.localStorage.shareIndex=3;
-                                window.location.href = "rdcmatch.html#applygoodsLists";
+                                window.location.href = "rdcmatch.html#flag=3&dataType=1&typeCode=2&pageNum=1&pageSize=10";
                             }
                         }
                     });

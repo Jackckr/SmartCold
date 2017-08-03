@@ -120,7 +120,7 @@ function submitAdd() {
                         window.localStorage.liIndex=2;
                         window.location.href ="usercenter.html#rent";
                     }else{
-                        window.location.href = "rdcmatch.html";
+                        window.location.href = "rdcmatch.html#flag=0&dataType=3&typeCode=1&pageNum=1&pageSize=10";
                     }
                 });
             }else {
