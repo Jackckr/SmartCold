@@ -1,4 +1,4 @@
-var pagination={pageCount:-1,oldPageCount:-1}
+var ajaxcont=0,pagination={pageCount:-1,oldPageCount:-1}
    ,sqmmode=["","<1000","1000~3000","3000~6000","6000~12000","12000~20000",">20000"]
   , screenParam={sqm:null,audit:null,hasCar:null,keyword:null,provinceid:null,goodSaveType:null,managetype:null,storagetempertype:null,istemperaturestandard:null,pageNum:1,pageSize:10};
 
