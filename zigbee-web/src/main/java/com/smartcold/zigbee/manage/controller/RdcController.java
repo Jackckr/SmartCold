@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSONObject;
+import com.smartcold.zigbee.manage.dao.*;
+import com.smartcold.zigbee.manage.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -26,30 +28,12 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.smartcold.zigbee.manage.dao.CompanyDeviceMapper;
-import com.smartcold.zigbee.manage.dao.FileDataMapper;
-import com.smartcold.zigbee.manage.dao.MessageRecordMapping;
-import com.smartcold.zigbee.manage.dao.RdcExtMapper;
-import com.smartcold.zigbee.manage.dao.RdcMapper;
-import com.smartcold.zigbee.manage.dao.RdcauthMapping;
-import com.smartcold.zigbee.manage.dao.StorageManageTypeMapper;
-import com.smartcold.zigbee.manage.dao.StorageRefregMapper;
-import com.smartcold.zigbee.manage.dao.StorageStructureTypeMapper;
-import com.smartcold.zigbee.manage.dao.StorageTemperTypeMapper;
-import com.smartcold.zigbee.manage.dao.StorageTypeMapper;
-import com.smartcold.zigbee.manage.dao.UserMapper;
 import com.smartcold.zigbee.manage.dto.BaseDto;
 import com.smartcold.zigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.zigbee.manage.dto.RdcAddDTO;
 import com.smartcold.zigbee.manage.dto.RdcEntityDTO;
 import com.smartcold.zigbee.manage.dto.ResultDto;
 import com.smartcold.zigbee.manage.dto.UploadFileEntity;
-import com.smartcold.zigbee.manage.entity.FileDataEntity;
-import com.smartcold.zigbee.manage.entity.MessageRecord;
-import com.smartcold.zigbee.manage.entity.RdcAuthEntity;
-import com.smartcold.zigbee.manage.entity.RdcEntity;
-import com.smartcold.zigbee.manage.entity.RdcExtEntity;
-import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.CommonService;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
@@ -113,6 +97,9 @@ public class RdcController {
 
 	@Autowired
 	private MessageRecordMapping messageRecordMapping;
+
+	@Autowired
+	private CollectMapper collectMapper;
 
 	@RequestMapping(value = "/attestationRdc",method = RequestMethod.POST)
 	@ResponseBody
@@ -1083,7 +1070,7 @@ public class RdcController {
 	 */
 	@RequestMapping(value = "/newGetRdcList")
 	@ResponseBody
-	public ResponseData<RdcEntityDTO> newGetRdcList(String hasCar,String goodSaveType,String istemperaturestandard,String audit, String keyword,String provinceid, String managetype,String storagetempertype,String sqm,int pageNum,int pageSize) {
+	public ResponseData<RdcEntityDTO> newGetRdcList(String uid,String hasCar,String goodSaveType,String istemperaturestandard,String audit, String keyword,String provinceid, String managetype,String storagetempertype,String sqm,int pageNum,int pageSize) {
 		HashMap<String, Object> filter=new HashMap<String, Object>();
 		filter.put("sstauts", 1);//必须：是否有效  --级别1->有效时间：级别2
 		filter.put("sqm", getTotalSqmFilter(sqm));//  "<1000,1000~3000,3000~6000,6000~12000,12000~20000"
@@ -1096,6 +1083,13 @@ public class RdcController {
 		filter.put("audit", audit);
 		filter.put("hasCar",hasCar);
 		PageInfo<RdcEntityDTO> data = this.rdcService.newGetRdcList(pageNum, pageSize, filter);
+		for(RdcEntityDTO rdcEntityDTO:data.getList()){
+			if (StringUtil.isnotNull(uid)){
+				CollectEntity byRdcId = collectMapper.getByRdcId(rdcEntityDTO.getId(), Integer.parseInt(uid));
+				rdcEntityDTO.setCollectType(byRdcId == null ? 0 : 1);
+			}
+			rdcEntityDTO.setCollectUserIds(collectMapper.getUsersIdByRdcId(rdcEntityDTO.getId()));
+		}
 		return ResponseData.newSuccess(data);
 	}
 	private static String getTotalSqmFilter(String sqm) {

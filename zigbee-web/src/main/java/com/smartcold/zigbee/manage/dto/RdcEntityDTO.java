@@ -1,5 +1,6 @@
 package com.smartcold.zigbee.manage.dto;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -69,7 +70,8 @@ public class RdcEntityDTO {
 
     private int infoIntegrity;
 
-    private List<Integer> collectUserIds;//收藏的用户id
+    private List<Integer> collectUserIds=new ArrayList<Integer>();//收藏的用户id
+    private int collectType;//收藏状态0.没收藏1.已收藏
     /*==============================共享信息==================================================*/
     private double rentSqm;
     private int datatype;
@@ -369,5 +371,13 @@ public class RdcEntityDTO {
 
     public void setSharedInfoEntity(SharedInfoEntity sharedInfoEntity) {
         this.sharedInfoEntity = sharedInfoEntity;
+    }
+
+    public int getCollectType() {
+        return collectType;
+    }
+
+    public void setCollectType(int collectType) {
+        this.collectType = collectType;
     }
 }

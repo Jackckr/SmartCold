@@ -120,7 +120,9 @@ $().ready(function () {
         var sety = $("#ul_mtty_list li.active").attr("value");//经营类型
         var adds = $("#ul_address_list li.active").attr("value");////地区
         var keyword = $("#searchDara_div input").val().trim();////关键字搜索
-        var _options = {sqm: sqm, storagetempertype: smty, managetype: sety,audit:audit, provinceid: adds, keyword: keyword};
+        var uid=null;
+        if(window.user){uid=window.user.id;}
+        var _options = {uid:uid,sqm: sqm, storagetempertype: smty, managetype: sety,audit:audit, provinceid: adds, keyword: keyword};
         var _filter = {pageNum: pageNum, pageSize: pageSize};
         jQuery.extend(_filter, _options);
         return _filter;
@@ -185,13 +187,9 @@ $().ready(function () {
         }
         ;
         var collectWords = '<a class="fr noCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe605;</i><em>收藏</em></a>';
-        if (rdc.collectUserIds && window.user) {
-            for (var i = 0; i < rdc.collectUserIds.length; i++) {
-                if (rdc.collectUserIds[i] == window.user.id) {
+                if (rdc.collectType == 1) {
                     collectWords = '<a class="fr hasCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe60c;</i><em>已收藏</em></a>';
                 }
-            }
-        }
         var score = ['<li class="imgCell" ><a href="rdcdetail.html?id=' + rdc.id + '" onclick="getSoll()"><img class="fl" src="' + rdc.logo + '">' +
         '<div><p class="ellipsis">' + rdc.name + '</p><p class="position omg"><i class="iconfont">&#xe66e;</i>' + rdc.address + '</p>' +
         '<div class="star">' + approve + '</div></div></a>' +
