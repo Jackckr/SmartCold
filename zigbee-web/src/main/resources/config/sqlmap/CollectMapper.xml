@@ -34,4 +34,7 @@
     <select id="getUsersIdByRdcId" resultType="java.lang.Integer">
         SELECT `uid` FROM `collect` WHERE `collectId`=#{rdcId} and `collectType`=1
     </select>
+    <select id="getByRdcId" resultType="com.smartcold.zigbee.manage.entity.CollectEntity">
+        SELECT * FROM `collect` WHERE `collectId`=#{rdcId} and `collectType`=1 and `uid`=#{uid}
+    </select>
 </mapper>

@@ -179,7 +179,6 @@
     <resultMap id="rdcLidMap" type="com.smartcold.zigbee.manage.dto.RdcEntityDTO">
         <result property="id" column="id"/>
         <association property="sharedInfoEntity" column="id" select="com.smartcold.zigbee.manage.dao.RdcShareMapper.getSharedInfoEntity"/>
-        <collection property="collectUserIds" column="id" select="com.smartcold.zigbee.manage.dao.CollectMapper.getUsersIdByRdcId"/>
     </resultMap>
     <select id="getNewRdcList" parameterType="map" resultMap="rdcLidMap">
         SELECT
