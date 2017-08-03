@@ -288,12 +288,16 @@ $(function () {
         $(this).children('i').html( flag ?  "&#xe630;" : "&#xe62e;");
         $(".moreType").slideToggle();
     });
-    
-    $(".picList").rollGallery({
-        direction:"left",
-        speed:2000,
-        showNum:5,
-        rollNum:2
+
+    jQuery(".picScroll-left").slide({
+        mainCell: ".bd ul",
+        autoPage: true,
+        effect: "leftLoop",
+        autoPlay: true,
+        vis: 5,
+        scroll:3,
+        delayTime:500,
+        trigger: "click"
     });
     util.initialize();  
 });
