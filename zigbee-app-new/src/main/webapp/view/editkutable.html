@@ -715,6 +715,10 @@ $(function () {
                 layer.open({content:'可出租面积不能超过总面积~',btn: '确定'});
                 return false;
             }
+            if($scope.height<=0){
+                layer.open({content:'冷库高度不合法，请重新输入~',btn: '确定'});
+                return false
+            }
             if (!areaRex.test($scope.height)) {
                 layer.open({content:'冷库净高度输入有误！(小数点后最多保留两位，如：15.28)',btn: '确定'});
                 return false;

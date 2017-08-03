@@ -30,23 +30,14 @@ function getRdcShare() {
         }
         $("#rdcRentUl").empty().append(rdcRent.join(''));
     }});
-    $.ajax({url:"/i/ShareRdcController/getSERdc",type:"post",data:{"dataType":1,"typeCode":1},success:function (data) {
+    $.ajax({url:"/i/ShareRdcController/getSERdc",type:"post",data:{"dataType":1,"typeCode":null},success:function (data) {
         var shopInfo=[];
         for(var i=0;i<data.length;i++){
             if(i<=5){
-                shopInfo.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'"><span>'+(i+1)+'</span>['+data[i].detlAddress+'] '+data[i].title+'，联系电话['+data[i].telephone+']</a></li>');
+                shopInfo.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'"><span>'+(i+1)+'</span>['+data[i].typeText+'] '+data[i].title+'，联系电话['+data[i].telephone+']</a></li>');
             }
         }
         $("#shopInfoUl").empty().append(shopInfo.join(''));
-    }});
-    $.ajax({url:"/i/ShareRdcController/getSERdc",type:"post",data:{"dataType":1,"typeCode":2},success:function (data) {
-        var buyShop=[];
-        for(var i=0;i<data.length;i++){
-            if(i<=5){
-                buyShop.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'"><span>'+(i+1)+'</span>['+data[i].detlAddress+'] '+data[i].title+'，联系电话['+data[i].telephone+']</a></li>');
-            }
-        }
-        $("#buyShopUl").empty().append(buyShop.join(''));
     }});
 }
 function dwrechar(index,em,title,data,type){
@@ -66,14 +57,14 @@ function dwrechar(index,em,title,data,type){
 	        yAxis: { axisLabel:{textStyle: {color: '#66d1f7'  } }, axisLine:{ lineStyle:{ color:'#f4f4f4', }}, splitLine:{ lineStyle:{  color:'#f4f4f4', } } },
 	        series: [{  type: type,  data: ydata,  barWidth:30 }]
 	    };
-	   // if(type=='bar'){ option1.series[0].itemStyle= {  normal: {  color: function(params) { return colorList[params.dataIndex];} }  };  }else{ option1.series[0].itemStyle={ normal: { color:'#ff916c' }  }; option1.series[0].smooth= true;}
+	   if(type=='bar'){ option1.series[0].itemStyle= {  normal: {  color: function(params) { return colorList[params.dataIndex];} }  };  }else{ option1.series[0].itemStyle={ normal: { color:'#ff916c' }  }; option1.series[0].smooth= true;}
 	    chartArry[index].setOption(option1);
 }
 
 
 function initechardata(){
 	var startTime=new Date(),endTime=new Date();startTime.setFullYear(endTime.getFullYear()-1);
-	// $.ajax({url:"/i/DataAnalysis/getDataAnalysisBykey",type:"post",data:{type:1,key:'price',startTime:startTime,endTime:endTime},success:function (data) {  dwrechar(0,'main1','全国冷库价格趋势图',data,'bar'); }});
+	$.ajax({url:"/i/DataAnalysis/getDataAnalysisBykey",type:"post",data:{type:1,key:'price',startTime:startTime,endTime:endTime},success:function (data) {  dwrechar(0,'main1','2017年上半年全国冷库价格趋势图',data,'bar'); }});
 	// $.ajax({url:"/i/DataAnalysis/getDataAnalysisBykey",type:"post",data:{type:1,key:'boom',startTime:startTime,endTime:endTime},success:function (data) {  dwrechar(1,'main2','中国冷链物流景气指数',data,'line'); }});
 	// $.ajax({url:"/i/DataAnalysis/getDataAnalysisBykey",type:"post",data:{type:1,key:'energy',startTime:startTime,endTime:endTime},success:function (data) {  dwrechar(1,'main3','全国冷库能耗势图',data,'line'); }});
 }
