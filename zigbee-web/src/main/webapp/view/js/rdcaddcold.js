@@ -345,12 +345,20 @@ function coldValidation(vo) {
         layer.alert('面积输入有误！(小数点后最多保留两位，如：15.28)', {icon: 2});
         return false;
     }
+    if(vo.area<10){
+        layer.alert('面积不能小于10㎡', {icon: 2});
+        return false;
+    }
     if (!areaRex.test(vo.rentSqm)) {
         layer.alert('可出租面积输入有误！(小数点后最多保留两位，如：15.28)', {icon: 2});
         return false;
     }
     if (!areaRex.test(vo.height)) {
         layer.alert('冷库净高度输入有误！(小数点后最多保留两位，如：15.28)', {icon: 2});
+        return false;
+    }
+    if(vo.height<3||vo.height>40){
+        layer.alert('冷库净高度输入已超出（3m~40m）范围', {icon: 2});
         return false;
     }
     if (vo.capacity1 != "" && !areaRex.test(vo.capacity1) || vo.capacity2 != "" && !areaRex.test(vo.capacity2) ||
