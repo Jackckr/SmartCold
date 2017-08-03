@@ -1,17 +1,16 @@
-supportForeach();
-var ajaxcont=0,pagination={pageCount:-1,oldPageCount:-1}
+var pagination={pageCount:-1,oldPageCount:-1}
    ,sqmmode=["","<1000","1000~3000","3000~6000","6000~12000","12000~20000",">20000"]
-  , screenParam={sqm:null,audit:null,hasCar:null,keyword:null,provinceid:null,goodSaveType:null,managetype:null,storagetempertype:null,istemperaturestandard:null,pageNum:1,pageSize:10,time:new Date().getTime()};
+  , screenParam={sqm:null,audit:null,hasCar:null,keyword:null,provinceid:null,goodSaveType:null,managetype:null,storagetempertype:null,istemperaturestandard:null,pageNum:1,pageSize:10};
+
 /*初始化出租冷库列表*/
 function getRdcRentList() {
     var rdcRentInfo=[];
-    screenParam.time=new Date().getTime();
     util.setHashStringArgs(screenParam,"ul_","sqm");
     $.ajax({url:"/i/rdc/newGetRdcList",type:"post",data:screenParam,success:function (data) {
         pagination.pageCount=data.totalPages;
         if(pagination.pageCount==-1||pagination.oldPageCount!=pagination.pageCount){flushPage();}
         var rdcRentList=data.data;
-//      
+//        supportForeach();
         rdcRentList.forEach(function (rdcRent, index) {
             var tempTypeStr=rdcRent.tempTypeStr?rdcRent.tempTypeStr:"";
             var manageTypeStr=rdcRent.manageTypeStr?rdcRent.manageTypeStr:"";
@@ -209,7 +208,7 @@ function init_filter(){
 		        window.localStorage.rdc_list_ManageType=cache;
 		        $("#ul_managetype li").bind('click',getManageType);
 		        inithostfilter();
-		 }}); 
+		 }});
 	 }
 	 //w温度类型
 	 if( window.localStorage.rdc_list_TemperType){
@@ -223,7 +222,7 @@ function init_filter(){
 			 window.localStorage.rdc_list_TemperType=cache;
 			 $("#ul_storagetempertype li").bind('click',getTempType);
 			inithostfilter();
-		 }}); 
+		 }});
 	 }
 	 //商品存放类型
 	 if( window.localStorage.rdc_list_StorageType){
@@ -237,7 +236,7 @@ function init_filter(){
 			 window.localStorage.rdc_list_StorageType=cache;
 			 $("#ul_goodSaveType li").bind('click',getGoodSave);
 			 inithostfilter();
-		 }}); 
+		 }});
 	 }
 	 //初始化省
 	 if( window.localStorage.rdc_list_province){
@@ -250,7 +249,7 @@ function init_filter(){
 		        });
 		        window.localStorage.rdc_list_province=provinceArr.join('');
 		        $("#ul_provinceid").empty().append(window.localStorage.rdc_list_province);
-		        
+
 		  }});
 	 }
 	setTimeout(inithostfilter, 0);
@@ -272,7 +271,6 @@ function inithostfilter(){
 		}
 		screenParam[key.substring(3)]=val;
 	}
-//	for(key in screenParam){if(screenParam[key]==null){$("#ul_"+key+" li:first").addClass("activeType");}}
 };
 $(function () {
 	init_filter();
