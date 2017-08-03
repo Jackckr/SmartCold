@@ -403,6 +403,7 @@ function flushPage(em) {
             cont: em
             , pages: pagination.pageCount
             , skin: '#1E9FFF',
+            curr: screenParam.pageNum,
             jump: function (obj, first) {
                 screenParam.pageNum = obj.curr;
                 pagination.oldPageCount = pagination.pageCount;
