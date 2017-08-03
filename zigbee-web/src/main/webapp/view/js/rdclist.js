@@ -274,7 +274,7 @@ function inithostfilter(){
 	
 	
 };
-<<<<<<< HEAD
+
 
 function initdata(isread){
 	if(isread){
@@ -310,37 +310,8 @@ function initdata(isread){
 
 }
 initdata();
-=======
-$(function () {
-	init_filter();
-    getRdcRentList();
-    $("#ul_istemperaturestandard li").bind('click',getTempStandard);
-    $("#ul_audit li").bind('click',getAudit);
-    $("#ul_hasCar li").bind('click',getHasCar);
-    $("#ul_rdcsqm li").bind('click',getRdcSqm);
-    $("#ul_provinceid").bind('change',changeProvince);
-    $("#search").bind('click',getKeyword);
-    $("#ul_keyword").keydown(function () {if(event.keyCode == "13") {getKeyword();}});
-    $(".moreBtn").click(function() {
-        var flag=$(".moreType").is(":hidden");
-        $(this).children('span').html( flag ?  "收起" : "更多筛选");
-        $(this).children('i').html( flag ?  "&#xe630;" : "&#xe62e;");
-        $(".moreType").slideToggle();
-    });
 
-    jQuery(".picScroll-left").slide({
-        mainCell: ".bd ul",
-        autoPage: true,
-        effect: "leftLoop",
-        autoPlay: true,
-        vis: 5,
-        scroll:3,
-        delayTime:500,
-        trigger: "click"
-    });
-    util.initialize();  
-});
->>>>>>> fe00a3b47c072bba150f0e925ddb56cc60f368c7
+
 
 
 
