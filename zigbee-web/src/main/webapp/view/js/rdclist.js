@@ -59,7 +59,7 @@ function getRdcRentList() {
                 } else {
                     rdcRentInfo.push('<h3>暂无信息</h3>');
                 }
-                rdcRentInfo.push('</div><div class="rdcBtn">', collectWords, '<button class="look"><a   target="_blank" href="rdcinfo.html?rdcId=', rdcRent.id, '"><i class="iconfont">&#xe610;</i>查看</a></button></div></li>');
+                rdcRentInfo.push('</div><div class="rdcBtn">', collectWords, '<button class="look" onclick="openurl('+rdcRent.id+')"><i class="iconfont">&#xe610;</i>查看</button></div></li>');
             });
             if (rdcRentInfo.length) {
                 $("#rdcRentList").append(rdcRentInfo.join(''));
@@ -69,6 +69,9 @@ function getRdcRentList() {
 
         }
     });
+}
+function openurl(id) {
+    window.open("rdcinfo.html?rdcId="+id)
 }
 /*点击查看实时库温*/
 function realTimeTem(rdcId, rdcName) {
@@ -361,12 +364,16 @@ function initdata(isread) {
             $(".moreType").slideToggle();
         });
 
-//	    $(".picList").rollGallery({
-//	        direction:"left",
-//	        speed:2000,
-//	        showNum:5,
-//	        rollNum:2
-//	    });
+        jQuery(".picScroll-left").slide({
+            mainCell: ".bd ul",
+            autoPage: true,
+            effect: "leftLoop",
+            autoPlay: true,
+            vis: 5,
+            scroll:3,
+            delayTime:500,
+            trigger: "click"
+        });
         util.initialize();
     }
 

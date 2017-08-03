@@ -221,5 +221,8 @@ var util={
 		   }
 	   }
 };
-
+setInterval(function () {
+    localStorage.removeItem('OURL');
+    console.log('定时清除本地缓存')
+},60000)
 
