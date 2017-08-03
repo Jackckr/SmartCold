@@ -90,48 +90,48 @@ function changeProvince() {
 /*获得冷库经营类型*/
 function getManageType() {
 	var slvalue=  setStyle("#ul_managetype",this);
-	screenParam.managetype=slvalue==0?null:slvalue;
+	screenParam.managetype=slvalue==-100?null:slvalue;
     screenParam.pageNum=1;
     getRdcRentList();
 }
 /*获得冷库温度类型*/
 function getTempType() {
 	var slvalue= setStyle("#ul_storagetempertype",this);
-	screenParam.storagetempertype=slvalue==0?null:slvalue;
+	screenParam.storagetempertype=slvalue==-100?null:slvalue;
     screenParam.pageNum=1;
     getRdcRentList();
 }
 /*获得达标冷库*/
 function getTempStandard() {
 	var slvalue= setStyle("#ul_istemperaturestandard",this);
-	screenParam.istemperaturestandard=slvalue==0?null:slvalue;
+	screenParam.istemperaturestandard=slvalue==-100?null:slvalue;
     screenParam.pageNum=1;
     getRdcRentList();
 }
 /*获得冷库认证*/
 function getAudit() {
 	var slvalue=setStyle("#ul_audit",this);
-	screenParam.audit=slvalue==0?null:slvalue;
+	screenParam.audit=slvalue==-100?null:slvalue;
     screenParam.pageNum=1;
     getRdcRentList();
 }
 /*获得商品存放类型*/
 function getGoodSave() {
 	var slvalue=setStyle("#ul_goodSaveType",this);
-	screenParam.goodSaveType=slvalue==0?null:slvalue;
+	screenParam.goodSaveType=slvalue==-100?null:slvalue;
     screenParam.pageNum=1;
     getRdcRentList();
 }
 /*获得冷藏车情况*/
 function getHasCar() {
 	var slvalue=setStyle("#ul_hasCar",this);
-    screenParam.hasCar=slvalue==0?null:slvalue;
+    screenParam.hasCar=slvalue==-100?null:slvalue;
     getRdcRentList();
 }
 /*获取冷库总面积*/
 function getRdcSqm() {
 	var slvalue=setStyle("#ul_rdcsqm",this);
-	if(slvalue==0){
+	if(slvalue==-100){
 		screenParam.sqm=null;screenParam.rdcsqm=null;
 	}else{
 		var sqm=[];
