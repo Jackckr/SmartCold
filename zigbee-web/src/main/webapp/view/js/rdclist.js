@@ -299,12 +299,12 @@ function initdata(isread){
 	        $(".moreType").slideToggle();
 	    });
 	    
-	    $(".picList").rollGallery({
-	        direction:"left",
-	        speed:2000,
-	        showNum:5,
-	        rollNum:2
-	    });
+//	    $(".picList").rollGallery({
+//	        direction:"left",
+//	        speed:2000,
+//	        showNum:5,
+//	        rollNum:2
+//	    });
 	    util.initialize();
 	}
 
