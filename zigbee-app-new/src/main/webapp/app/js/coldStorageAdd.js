@@ -243,6 +243,10 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
             layer.open({content:'该冷库名已被占用，请重新输入~',btn: '确定'});
             return false
         }
+        if($scope.height<=0){
+            layer.open({content:'冷库高度不合法，请重新输入~',btn: '确定'});
+            return false
+        }
     	if(checkMobile($scope.phoneNum.toString().trim()) == false){
 			layer.open({content:'请输入正确的手机号码或者座机号码~',btn: '确定'});
 			return false
@@ -271,6 +275,14 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
             }
             if (!areaRex.test($scope.rentSqm)) {
                 layer.open({content:'可出租面积输入有误！(小数点后最多保留两位，如：15.28)',btn: '确定'});
+                return false;
+            }
+            if ($scope.area<10) {
+                layer.open({content:'面积不能小于10㎡',btn: '确定'});
+                return false;
+            }
+            if ($scope.height<3||$scope.height>40) {
+                layer.open({content:'冷库净高度输入已超出（3m~40m）范围',btn: '确定'});
                 return false;
             }
             if (!areaRex.test($scope.height)) {

@@ -269,6 +269,14 @@ function coldValidation(vo) {
     	alert_errmsg("面积输入有误！(小数点后最多保留两位，如：15.28)");
         return false;
     }
+    if(vo.area<10){
+        alert_errmsg("面积不能小于10㎡");
+        return false;
+    }
+    if(vo.height<3||vo.height>40){
+        alert_errmsg("冷库净高度输入已超出（3m~40m）范围");
+        return false;
+    }
     if(!areaRex.test(vo.rentSqm)){alert_errmsg("可出租面积输入有误！(小数点后最多保留两位，如：15.28)");}
     if(!areaRex.test(vo.height)){alert_errmsg("冷库净高度！(小数点后最多保留两位，如：15.28)");}
     if (vo.capacity1 != "" && !areaRex.test(vo.capacity1) || vo.capacity2 != "" && !areaRex.test(vo.capacity2) ||

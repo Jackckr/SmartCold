@@ -29,7 +29,7 @@ function initColdParam() {
                 manageType.push('<li type="manage" value="' + val.id + '">' + val.type + '</li>');
             });
             $("#managetype").empty().append(manageType.join(''));
-            if (screenParam.managetype != null) {
+            if (screenParam.managetype != null&&screenParam.managetype!="") {
                 $("#managetype li").removeClass("activeType");
                 screenParam.managetype.split(",").forEach(function (sval, index) {
                     $("#managetype li[value='" + sval + "']").addClass('activeType');
@@ -44,7 +44,7 @@ function initColdParam() {
                 tempType.push('<li type="temp" value="' + val.id + '">' + val.type + '</li>');
             });
             $("#storagetempertype").empty().append(tempType.join(''));
-            if (screenParam.storagetempertype != null) {
+            if (screenParam.storagetempertype != null&&screenParam.storagetempertype!="") {
                 $("#storagetempertype li").removeClass("activeType");
                 screenParam.storagetempertype.split(",").forEach(function (sval, index) {
                     $("#storagetempertype li[value='" + sval + "']").addClass('activeType');
@@ -59,7 +59,7 @@ function initColdParam() {
                 provinceList.push('<option value="' + val.provinceId + '">' + val.provinceName + '</option>');
             });
             $("select[name=provinceid]").empty().append(provinceList.join(''));
-            if (screenParam.provinceid != null) {
+            if (screenParam.provinceid != null&&screenParam.provinceid!="") {
                 $("[name=provinceid]").val(screenParam.provinceid);
             }
         }
@@ -75,7 +75,7 @@ function initColdParam() {
                 goodsAllType.push(val.type_name);
             });
             $("#goodsType").empty().append(goodsType.join(''));
-            if (screenParam.goodtype != null) {
+            if (screenParam.goodtype != null&&screenParam.goodtype!="") {
                 $("#goodsType li").removeClass("activeType");
                 screenParam.goodtype.split(",").forEach(function (sval, index) {
                     $("#goodsType li[value='" + sval + "']").addClass('activeType');
@@ -83,11 +83,14 @@ function initColdParam() {
             }
         }
     });
-    if (screenParam.sqm != null) {
+    if (screenParam.sqm != null &&screenParam.sqm!="") {
         $("#sqm li").removeClass("activeType");
         screenParam.sqm.split(",").forEach(function (sval, index) {
             $("#sqm li[value='" + sval + "']").addClass('activeType');
         });
+    }
+    if(screenParam.keyword!=""&&screenParam.keyword!=null){
+        $("[name=keyword]").val(screenParam.keyword);
     }
 }
 
@@ -403,6 +406,7 @@ function flushPage(em) {
             cont: em
             , pages: pagination.pageCount
             , skin: '#1E9FFF',
+            curr: screenParam.pageNum,
             jump: function (obj, first) {
                 screenParam.pageNum = obj.curr;
                 pagination.oldPageCount = pagination.pageCount;

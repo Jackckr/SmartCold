@@ -69,11 +69,11 @@ $(".arealist li").click(function () {//点击之后跳转到冷库商情
     alert('在这里要做跳转咯');
 })
 function goMatch(i) {
-    if(i==1){
-        window.location.href='view/html/rdcmatch.html#applyLists';
+    if(i==1){//求租
+        window.location.href='view/html/rdcmatch.html#flag=1&dataType=3&typeCode=2&pageNum=1&pageSize=10';
         localStorage.shareIndex=1;
-    }else if(i==2){
-        window.location.href='view/html/rdcmatch.html#goodsLists';
+    }else if(i==2){//出售
+        window.location.href='view/html/rdcmatch.html#flag=2&dataType=1&typeCode=1&pageNum=1&pageSize=10';
         localStorage.shareIndex=2;
     }
 }

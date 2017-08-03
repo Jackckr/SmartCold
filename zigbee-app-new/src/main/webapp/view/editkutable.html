@@ -699,6 +699,14 @@ $(function () {
                 layer.open({content:'面积输入有误！(小数点后最多保留两位，如：15.28)',btn: '确定'});
                 return false;
             }
+            if ($scope.area<10) {
+                layer.open({content:'面积不能小于10㎡',btn: '确定'});
+                return false;
+            }
+            if ($scope.height<3||$scope.height>40) {
+                layer.open({content:'冷库净高度输入已超出（3m~40m）范围',btn: '确定'});
+                return false;
+            }
             if (!areaRex.test($scope.rentSqm)) {
                 layer.open({content:'可出租面积输入有误！(小数点后最多保留两位，如：15.28)',btn: '确定'});
                 return false;
@@ -706,6 +714,10 @@ $(function () {
             if($scope.rentSqm>$scope.area){
                 layer.open({content:'可出租面积不能超过总面积~',btn: '确定'});
                 return false;
+            }
+            if($scope.height<=0){
+                layer.open({content:'冷库高度不合法，请重新输入~',btn: '确定'});
+                return false
             }
             if (!areaRex.test($scope.height)) {
                 layer.open({content:'冷库净高度输入有误！(小数点后最多保留两位，如：15.28)',btn: '确定'});

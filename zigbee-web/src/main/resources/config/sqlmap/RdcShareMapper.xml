@@ -265,7 +265,7 @@
 		GROUP BY
 		s.id
 		ORDER BY
-		s.updatetime DESC limit 0,12
+		s.updatetime DESC limit 0,14
 	</select>
 	<resultMap id="rdcSharedMap" type="com.smartcold.zigbee.manage.dto.RdcShareDTO">
 		<result property="id" column="id"/>
