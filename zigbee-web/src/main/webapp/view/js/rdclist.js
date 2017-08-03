@@ -1,16 +1,16 @@
-var ajaxcont=0,pagination={pageCount:-1,oldPageCount:-1}
+
+var ajaxcont=0, ui_laypage,pagination={pageCount:-1,oldPageCount:-1}
    ,sqmmode=["","<1000","1000~3000","3000~6000","6000~12000","12000~20000",">20000"]
   , screenParam={sqm:null,audit:null,hasCar:null,keyword:null,provinceid:null,goodSaveType:null,managetype:null,storagetempertype:null,istemperaturestandard:null,pageNum:1,pageSize:10};
-
 /*初始化出租冷库列表*/
 function getRdcRentList() {
     var rdcRentInfo=[];
+    $("#rdcRentList").empty();
     util.setHashStringArgs(screenParam,"ul_","sqm");
-    $.ajax({url:"/i/rdc/newGetRdcList",type:"post",data:screenParam,success:function (data) {
+    $.ajax({url:"/i/rdc/newGetRdcList",type:"post",cache:false,data:screenParam,success:function (data) {
         pagination.pageCount=data.totalPages;
         if(pagination.pageCount==-1||pagination.oldPageCount!=pagination.pageCount){flushPage();}
         var rdcRentList=data.data;
-//        supportForeach();
         rdcRentList.forEach(function (rdcRent, index) {
             var tempTypeStr=rdcRent.tempTypeStr?rdcRent.tempTypeStr:"";
             var manageTypeStr=rdcRent.manageTypeStr?rdcRent.manageTypeStr:"";
@@ -39,9 +39,9 @@ function getRdcRentList() {
             rdcRentInfo.push('</div><div class="rdcBtn">',collectWords,'<button class="look"><a   target="_blank" href="rdcinfo.html?rdcId=',rdcRent.id,'"><i class="iconfont">&#xe610;</i>查看</a></button></div></li>');
         });
         if(rdcRentInfo.length){
-            $("#rdcRentList").empty().append(rdcRentInfo.join(''));
+            $("#rdcRentList").append(rdcRentInfo.join(''));
         }else{
-            $("#rdcRentList").empty().append('<li class="nodata"><img src="../img/nodata.png" alt=""><p>暂无数据~</p></li>');
+            $("#rdcRentList").append('<li class="nodata"><img src="../img/nodata.png" alt=""><p>暂无数据~</p></li>');
         }
 
     }});
@@ -60,8 +60,8 @@ function realTimeTem(rdcId,rdcName) {
 }
 /*刷新分页*/
 function flushPage() {
-    layui.use(['laypage', 'layer'], function(){
-        var laypage = layui.laypage ;
+	ui_laypage= layui.use(['laypage', 'layer'], function(){
+         laypage = layui.laypage ;
         laypage({
             cont: 'demo2'
             ,pages: pagination.pageCount
@@ -271,32 +271,44 @@ function inithostfilter(){
 		}
 		screenParam[key.substring(3)]=val;
 	}
+	
+	
 };
-$(function () {
-	init_filter();
-    getRdcRentList();
-    $("#ul_istemperaturestandard li").bind('click',getTempStandard);
-    $("#ul_audit li").bind('click',getAudit);
-    $("#ul_hasCar li").bind('click',getHasCar);
-    $("#ul_rdcsqm li").bind('click',getRdcSqm);
-    $("#ul_provinceid").bind('change',changeProvince);
-    $("#search").bind('click',getKeyword);
-    $("#ul_keyword").keydown(function () {if(event.keyCode == "13") {getKeyword();}});
-    $(".moreBtn").click(function() {
-        var flag=$(".moreType").is(":hidden");
-        $(this).children('span').html( flag ?  "收起" : "更多筛选");
-        $(this).children('i').html( flag ?  "&#xe630;" : "&#xe62e;");
-        $(".moreType").slideToggle();
-    });
-    
-    $(".picList").rollGallery({
-        direction:"left",
-        speed:2000,
-        showNum:5,
-        rollNum:2
-    });
-    util.initialize();  
-});
+
+function initdata(isread){
+	if(isread){
+		 $("#rdcRentList").empty();
+		inithostfilter();
+		getRdcRentList();
+		flushPage();
+	}else{
+		init_filter();
+	    getRdcRentList();
+	    $("#ul_istemperaturestandard li").bind('click',getTempStandard);
+	    $("#ul_audit li").bind('click',getAudit);
+	    $("#ul_hasCar li").bind('click',getHasCar);
+	    $("#ul_rdcsqm li").bind('click',getRdcSqm);
+	    $("#ul_provinceid").bind('change',changeProvince);
+	    $("#search").bind('click',getKeyword);
+	    $("#ul_keyword").keydown(function () {if(event.keyCode == "13") {getKeyword();}});
+	    $(".moreBtn").click(function() {
+	        var flag=$(".moreType").is(":hidden");
+	        $(this).children('span').html( flag ?  "收起" : "更多筛选");
+	        $(this).children('i').html( flag ?  "&#xe630;" : "&#xe62e;");
+	        $(".moreType").slideToggle();
+	    });
+	    
+	    $(".picList").rollGallery({
+	        direction:"left",
+	        speed:2000,
+	        showNum:5,
+	        rollNum:2
+	    });
+	    util.initialize();
+	}
+
+}
+initdata();
 
 
 
