@@ -379,45 +379,6 @@
     margin: 20px 0;
     position: relative;
 }
-.lists{
-    width: 100%;
-    height: 100px;
-    overflow: hidden;
-    position: relative;
-}
-.lists ul {
-    width: 9999px;
-    height: 151px;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-.lists ul li{
-    float: left;
-    width: 200px;
-    padding: 0 5px;
-}
-.lists ul li a{
-    border:1px solid #eee;
-    display: inline-block;
-    transition: all 1s;
-}
-.lists ul li a:hover{
-    border-color: #ff4400;
-}
-.adbanner i{
-    height: 150px;
-    position: absolute;
-    top: 0;
-    color: #cccccc;
-    text-align: center;;
-    font-size: 3em;
-    line-height: 190px;
-    cursor: pointer;
-}
-i.left{left: 20px;}
-i.right{right: 20px;}
-.adbanner i:hover{color: #4790ff;}
 .list3,.list2,.list1{
     width: 32.333%;
     float: left;
@@ -445,3 +406,69 @@ i.right{right: 20px;}
     height:117px;
     display: inline-block;
 }
+/* 本例子css */
+.picScroll-left {
+    overflow: hidden;
+    position: relative;
+    padding: 0 30px;
+    height: 100px;
+}
+
+.picScroll-left > a {
+    position: absolute;
+    top: 30px;
+    z-index: 10;
+}
+.picScroll-left > a i{
+    font-size: 3em;
+    color: #999;
+}
+.picScroll-left > a:hover i{
+    color: #4286ff;
+}
+.picScroll-left > a.next{
+    right: 5px;
+}
+.picScroll-left > a.prev {
+    left: 5px;
+}
+
+.picScroll-left .bd {
+    padding: 10px;
+    overflow: hidden;
+}
+
+.picScroll-left .bd ul {
+    overflow: hidden;
+    zoom: 1;
+}
+
+.picScroll-left .bd ul li {
+    margin: 0 8px;
+    float: left;
+    _display: inline;
+    overflow: hidden;
+    text-align: center;
+    width: 210px !important;
+}
+
+.picScroll-left .bd ul li .pic {
+    text-align: center;
+}
+
+.picScroll-left .bd ul li .pic img {
+    width: 210px;
+    height: 90px;
+    display: block;
+    padding: 2px;
+    border: 1px solid #eee;
+    transition: all 1s;
+}
+.picScroll-left .bd ul li .pic a:hover img {
+    border-color: #ff4400;
+}
+
+.picScroll-left .bd ul li .title {
+    line-height: 24px;
+}
+

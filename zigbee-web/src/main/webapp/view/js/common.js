@@ -220,8 +220,6 @@ var util={
 			   window.location.hash=hash.join("&");
 		   }
 	   }
-		
-		
 };
 
 
