@@ -317,6 +317,20 @@ function inithostfilter() {
     if (!histdata.ul_pageNum) {
         return;
     }
+	 screenParam = {
+		uid : null,
+		sqm : null,
+		audit : null,
+		hasCar : null,
+		keyword : null,
+		provinceid : null,
+		goodSaveType : null,
+		managetype : null,
+		storagetempertype : null,
+		istemperaturestandard : null,
+		pageNum : 1,
+		pageSize : 10
+	};
     for (key in histdata) {
         val = histdata[key], em = $("#" + key);
         if (em.length > 0) {
