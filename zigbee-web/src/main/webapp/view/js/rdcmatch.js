@@ -1,5 +1,6 @@
 var pagination = {pageCount: -1, oldPageCount: -1};
 var screenParam = {
+    flag: null,
     uid: null,
     goodtype: null,
     sqm: null,
@@ -15,10 +16,6 @@ var screenParam = {
 var rentDates = ['', '1个月以下', '1~3个月', '3~6个月', '6~9个月', '1年以上', '两年以上', '三年以上', '五年以上'];
 var goodsAllType = [''];
 var unitPush = ['吨', 'kg', '吨'];
-var storageManage = [];
-var storageTemp = [];
-var rentSqm = [];
-var goodsTypeParam = [];
 /*===============================================================出租求租=================================================================================*/
 /*初始化冷库出租求租筛选条件*/
 function initColdParam() {
@@ -31,15 +28,28 @@ function initColdParam() {
             data.forEach(function (val, index) {
                 manageType.push('<li type="manage" value="' + val.id + '">' + val.type + '</li>');
             });
-            $("#manageType").empty().append(manageType.join(''));
+            $("#managetype").empty().append(manageType.join(''));
+            if (screenParam.managetype != null) {
+                $("#managetype li").removeClass("activeType");
+                screenParam.managetype.split(",").forEach(function (sval, index) {
+                    $("#managetype li[value='" + sval + "']").addClass('activeType');
+                });
+            }
         }
     });
+
     $.ajax({
         url: "/i/rdc/findAllTemperType", type: "get", success: function (data) {
             data.forEach(function (val, index) {
                 tempType.push('<li type="temp" value="' + val.id + '">' + val.type + '</li>');
             });
-            $("#temperType").empty().append(tempType.join(''));
+            $("#storagetempertype").empty().append(tempType.join(''));
+            if (screenParam.storagetempertype != null) {
+                $("#storagetempertype li").removeClass("activeType");
+                screenParam.storagetempertype.split(",").forEach(function (sval, index) {
+                    $("#storagetempertype li[value='" + sval + "']").addClass('activeType');
+                });
+            }
         }
     });
 
@@ -48,10 +58,37 @@ function initColdParam() {
             data.forEach(function (val, index) {
                 provinceList.push('<option value="' + val.provinceId + '">' + val.provinceName + '</option>');
             });
-            $("select[name=province]").empty().append(provinceList.join(''));
+            $("select[name=provinceid]").empty().append(provinceList.join(''));
+            if (screenParam.provinceid != null) {
+                $("[name=provinceid]").val(screenParam.provinceid);
+            }
         }
     });
 
+    var goodsType = ['<li type="goodsType" value="0" class="activeType">不限</li>'];
+    $.ajax({
+        url: "/i/ShareRdcController/getGDFilterData", type: "get", success: function (data) {
+            supportForeach();
+            goodsAllType = [''];
+            data.entity.gt.forEach(function (val, index) {
+                goodsType.push('<li type="goodsType" value="' + val.type_code + '">' + val.type_name + '/' + val.type_desc + '</li>');
+                goodsAllType.push(val.type_name);
+            });
+            $("#goodsType").empty().append(goodsType.join(''));
+            if (screenParam.goodtype != null) {
+                $("#goodsType li").removeClass("activeType");
+                screenParam.goodtype.split(",").forEach(function (sval, index) {
+                    $("#goodsType li[value='" + sval + "']").addClass('activeType');
+                });
+            }
+        }
+    });
+    if (screenParam.sqm != null) {
+        $("#sqm li").removeClass("activeType");
+        screenParam.sqm.split(",").forEach(function (sval, index) {
+            $("#sqm li[value='" + sval + "']").addClass('activeType');
+        });
+    }
 }
 
 
@@ -65,10 +102,13 @@ function changeProvince() {
 /*获得冷库经营类型*/
 function getManageType() {
     if ($(this).val() == 0) {
-        storageManage.splice(0, storageManage.length);
         screenParam.managetype = null;
     } else {
-        var index = storageManage.contains($(this).val());
+        var storageManage = [];
+        if(screenParam.managetype!=null&&screenParam.managetype!=""){
+            storageManage=screenParam.managetype.split(',');
+        }
+        var index = storageManage.contains($(this).val()+"");
         index == -1 ? storageManage.push($(this).val()) : storageManage.splice(index, 1);
         screenParam.managetype = storageManage.join();
     }
@@ -79,10 +119,13 @@ function getManageType() {
 /*获得冷库温度类型*/
 function getTempType() {
     if ($(this).val() == 0) {
-        storageTemp.splice(0, storageTemp.length);
         screenParam.storagetempertype = null;
     } else {
-        var index = storageTemp.contains($(this).val());
+        var storageTemp = [];
+        if(screenParam.storagetempertype!=null&&screenParam.storagetempertype!=""){
+            storageTemp=screenParam.storagetempertype.split(',');
+        }
+        var index = storageTemp.contains($(this).val()+"");
         index == -1 ? storageTemp.push($(this).val()) : storageTemp.splice(index, 1);
         screenParam.storagetempertype = storageTemp.join();
     }
@@ -104,33 +147,15 @@ function getKeyword() {
 
 /*获得可出租面积*/
 function getRdcSqm() {
-    var area;
-    switch ($(this).val()) {
-        case 1:
-            area = "<1000";
-            break;
-        case 2:
-            area = "1000~3000";
-            break;
-        case 3:
-            area = "3000~6000";
-            break;
-        case 4:
-            area = "6000~12000";
-            break;
-        case 5:
-            area = "12000~20000";
-            break;
-        case 6:
-            area = ">20000";
-            break;
-    }
     if ($(this).val() == 0) {
-        rentSqm.splice(0, rentSqm.length);
         screenParam.sqm = null;
     } else {
-        var index = rentSqm.contains(area);
-        index == -1 ? rentSqm.push(area) : rentSqm.splice(index, 1);
+        var rentSqm=[];
+        if(screenParam.sqm!=null && screenParam.sqm!=""){
+            rentSqm=screenParam.sqm.split(',');
+        }
+        var index = rentSqm.contains($(this).val()+"");
+        index == -1 ? rentSqm.push($(this).val()) : rentSqm.splice(index, 1);
         screenParam.sqm = rentSqm.join();
     }
     screenParam.pageNum = 1;
@@ -139,8 +164,18 @@ function getRdcSqm() {
 
 /*初始化出租求租冷库列表*/
 function initRentRdc() {
+    util.setHashStringArgs(screenParam);
     if (window.lkuser) {
         screenParam.uid = window.lkuser.id;
+    }
+    var sqmmode = ["", "<1000", "1000~3000", "3000~6000", "6000~12000", "12000~20000", ">20000"];
+    var saveSqm=screenParam.sqm;
+    if (screenParam.sqm != null) {
+        var sqmDetail = [];
+        $.each(screenParam.sqm.split(), function (index, val) {
+            sqmDetail.push(sqmmode[val]);
+        });
+        screenParam.sqm = sqmDetail.join();
     }
     var rentRdcArr = ['<ul class="msgHeader clearfix"><li></li><li class="msgTitle">冷库信息</li><li>面积·㎡</li><li>单价·元/天/㎡</li><li>温度类型</li><li>租期</li><li>操作</li></ul>'];
     $.ajax({
@@ -150,6 +185,7 @@ function initRentRdc() {
         data: screenParam,
         success: function (data) {
             pagination.pageCount = data.totalPages;
+            screenParam.sqm=saveSqm;
             $.each(data.data, function (index, rentRdc) {
                 var collectWords = '<button class="collect" onclick="collection(this,' + rentRdc.id + ')"><i class="iconfont orange">&#xe634;</i><em>收藏</em></button>';
                 if (rentRdc.collectType == 1) {
@@ -224,22 +260,6 @@ function initRentRdc() {
 }
 /*===============================================================出售求购=================================================================================*/
 
-/*初始化出售求购筛选条件*/
-function initGoodsParam() {
-    var goodsType = ['<li type="goodsType" value="0" class="activeType">不限</li>'];
-    $.ajax({
-        url: "/i/ShareRdcController/getGDFilterData", type: "get", success: function (data) {
-            supportForeach();
-            goodsAllType = [''];
-            data.entity.gt.forEach(function (val, index) {
-                goodsType.push('<li type="goodsType" value="' + val.type_code + '">' + val.type_name + '/' + val.type_desc + '</li>');
-                goodsAllType.push(val.type_name);
-            });
-            $("#goodsType").empty().append(goodsType.join(''));
-            initGoodsList();
-        }
-    });
-}
 
 /*获得商品种类型*/
 function getGoodsType() {
@@ -247,7 +267,11 @@ function getGoodsType() {
         goodsTypeParam.splice(0, storageTemp.length);
         screenParam.goodtype = null;
     } else {
-        var index = goodsTypeParam.contains($(this).val());
+        var goodsTypeParam = [];
+        if(screenParam.goodtype!=null&&screenParam.goodtype!=""){
+            goodsTypeParam=screenParam.goodtype.split(',');
+        }
+        var index = goodsTypeParam.contains($(this).val()+"");
         index == -1 ? goodsTypeParam.push($(this).val()) : goodsTypeParam.splice(index, 1);
         screenParam.goodtype = goodsTypeParam.join();
     }
@@ -257,6 +281,10 @@ function getGoodsType() {
 var rentDate = ['', '1个月以下', '1~3个月', '3~6个月', '6~9个月', '1年以上', '两年以上', '三年以上', '五年以上'];
 /*初始化出售求购列表*/
 function initGoodsList() {
+    util.setHashStringArgs(screenParam);
+    if (window.lkuser) {
+        screenParam.uid = window.lkuser.id;
+    }
     var goodsArr = ['<ul class="msgHeader clearfix"><li></li><li class="msgTitle">货品信息</li><li>数量</li><li>单价</li><li>品类</li><li>发布时间</li><li>报价截止日</li><li>操作</li></ul>'];
     $.ajax({
         url: "/i/ShareRdcController/newGetSERDCList",
@@ -384,51 +412,45 @@ function flushPage(em) {
         });
     });
 }
+
+/*将url中的参数赋给页面*/
+function inithostfilter() {
+    var histdata = util.getHashStringArgs(), key = null, val = null, em = null, type = null, nem = null;
+    if (!histdata.pageNum) {
+        return;
+    }
+    for (key in histdata) {
+        val = histdata[key];
+        screenParam[key] = val;
+    }
+}
 $(function () {
-    var hash = location.hash;
-    if (localStorage.shareIndex && hash) {//刷新页面记录刷新之前位置
-        var oIndex = localStorage.shareIndex;
+    if (screenParam.flag != null) {
         clearParam();
+    }
+    inithostfilter();
+    initColdParam();
+    if (screenParam.flag != null) {//刷新页面记录刷新之前位置
+        var oIndex = screenParam.flag;
         if (oIndex < 4) {
             $('.btnGroup button').eq(oIndex).addClass('active').siblings().removeClass('active');
             if (oIndex < 2) {
                 $(".rentToggle").show().siblings('.goodsToggle').hide();//加载出租求租列表
-                if (oIndex == 0 && hash == '#coldLists') {
-                    //console.log('初始化出租列表');
-                    screenParam.dataType = 3;
-                    screenParam.typeCode = 1;
-                } else if (oIndex == 1 && hash == '#applyLists') {
-                    //console.log('初始化求租列表');
-                    screenParam.dataType = 3;
-                    screenParam.typeCode = 2;
-                }
-                initColdParam();
                 initRentRdc();
             } else if (oIndex < 4) {
                 $(".goodsToggle").show().siblings('.rentToggle').hide();//加载出售求购列表
-                if (oIndex == 2 && hash == '#goodsLists') {
-                    //console.log('初始化出售列表');
-                    screenParam.dataType = 1;
-                    screenParam.typeCode = 1;
-                } else if (oIndex == 3 && hash == '#applygoodsLists') {
-                    //console.log('初始化求购列表');
-                    screenParam.dataType = 1;
-                    screenParam.typeCode = 2;
-                }
-                initColdParam();
-                initGoodsParam();
+                setTimeout(initGoodsList, 40);
             }
         } else {
-            initColdParam();
             initRentRdc();
         }
     } else {
-        initColdParam();
+        screenParam.flag = 0;
         initRentRdc();
     }
     $(".btnGroup button").click(function () {
+        screenParam.flag = $(this).val();
         var oIndex = $(this).index();
-        localStorage.shareIndex = oIndex;
         if (oIndex < 4) {
             $(this).addClass('active').siblings().removeClass('active');
             if (oIndex < 2) {
@@ -457,7 +479,7 @@ $(function () {
                 }
                 initColdParam();
                 clearParam();
-                initGoodsParam();
+                setTimeout(initGoodsList, 40);
             }
         } else {
             console.log('发布共享信息');
@@ -488,7 +510,8 @@ $(function () {
             getKeyword();
         }
     });
-    $("#coldProvince,#goodsProvince").bind('change', changeProvince);
+    $("#provinceid,#goodsProvince").bind('change', changeProvince);
+    util.initialize();
 });
 function collection(mark, id) {
     checkLogin();

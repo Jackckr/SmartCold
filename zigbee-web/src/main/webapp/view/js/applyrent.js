@@ -30,8 +30,7 @@ function addApply() {
                        window.localStorage.liIndex=2;
                        window.location.href ="usercenter.html#rent";
                    }else{
-                       window.localStorage.shareIndex=1;
-                       window.location.href = "rdcmatch.html#applyLists";
+                       window.location.href = "rdcmatch.html#flag=1&dataType=3&typeCode=2&pageNum=1&pageSize=10";
                    }
                });
            }else {

@@ -55,11 +55,11 @@
 </div>
 <div class="section clearfix">
     <div class="btnGroup">
-        <button class="active"><a href="#coldLists">出租</a></button>
-        <button><a href="#applyLists">求租</a></button>
-        <button><a href="#goodsLists">出售</a></button>
-        <button><a href="#applygoodsLists">求购</a></button>
-        <button onclick="toAddInfo()"><a href="javascript:;">免费发布信息</a></button>
+        <button value="0" class="active"><a>出租</a></button>
+        <button value="1"><a>求租</a></button>
+        <button value="2"><a>出售</a></button>
+        <button value="3"><a>求购</a></button>
+        <button><a onclick="toAddInfo()">免费发布信息</a></button>
     </div>
     <!--出租求租html*********************************************************************-->
     <div class="rdcMatch rentToggle">
@@ -69,30 +69,30 @@
                 <div class="fl">
                     <label>
                         区域　
-                        <select name="province" id="coldProvince">
+                        <select name="provinceid" id="provinceid">
 
                         </select>
                     </label>
                 </div>
                 <div class="fr">
-                    <input class="keyword" id="keyword" type="text" placeholder="请输入关键词">
+                    <input class="keyword" name="keyword" id="keyword" type="text" placeholder="请输入关键词">
                     <i name="search" id="search" class="iconfont zoom">&#xe609;</i>
                 </div>
             </div>
             <div class="filterBody">
                 <div class="typeList clearfix">
                     <span class="fl">经营类型:</span>
-                    <ul class="clearfix" id="manageType">
+                    <ul class="clearfix" id="managetype">
                     </ul>
                 </div>
                 <div class="typeList clearfix">
                     <span class="fl">冷库温度类型:</span>
-                    <ul class="clearfix" id="temperType">
+                    <ul class="clearfix" id="storagetempertype">
                     </ul>
                 </div>
                 <div class="typeList clearfix">
                     <span class="fl">吨位/面积·㎡:</span>
-                    <ul class="clearfix">
+                    <ul class="clearfix" id="sqm">
                         <li type="sqm" value="0" class="activeType">不限</li>
                         <li type="sqm" value="1">1000以下</li>
                         <li type="sqm" value="2">1000~3000</li>
@@ -118,13 +118,13 @@
                 <div class="fl">
                     <label>
                         区域　
-                        <select name="province" id="goodsProvince">
+                        <select name="provinceid" id="goodsProvince">
 
                         </select>
                     </label>
                 </div>
                 <div class="fr">
-                    <input id="goodsKeyword" class="keyword" type="text" placeholder="请输入关键词">
+                    <input id="goodsKeyword" name="keyword" class="keyword" type="text" placeholder="请输入关键词">
                     <i name="search" class="iconfont zoom">&#xe609;</i>
                 </div>
             </div>
