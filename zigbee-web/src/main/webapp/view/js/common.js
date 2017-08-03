@@ -194,7 +194,13 @@ var formatDateTime = function (date) {
 var util={
 		  initialize: function() {
 	            window.addEventListener('hashchange', function() { this.history.replaceState('hasHash','', window.location.hash); }, false);
-	            window.addEventListener('popstate', function(e) {if (e.state) { if(initdata){ initdata(true);}else{ this.location.reload();}  } }, false);
+		            window.addEventListener('popstate', function(e) {
+			if (e.state) {
+				if (undefined!=initdata&&typeof(initdata)=="function") {
+					initdata(true);
+				} else {
+					this.location.reload();
+				}  } }, false);
 	      },
 		 getHashStringArgs:function() {
 		    var hashStrings = (window.location.hash.length > 0 ? window.location.hash.substring(1) : ""),hashArgs = {},items = hashStrings.length > 0 ? hashStrings.split("&") : [], item = null, name = null, value = null,i = 0,len = items.length;
