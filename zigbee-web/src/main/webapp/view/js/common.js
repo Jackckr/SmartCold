@@ -101,7 +101,7 @@ function logout() {
     });
     localStorage.clear();
     sessionStorage.clear();//清除系统user;
-    window.location.href = "../../index.htm";
+    window.location.href = "../../index.html";
 };
 /*判断数组中是否有重复元素*/
 Array.prototype.contains = function (obj) {

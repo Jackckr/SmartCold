@@ -65,7 +65,7 @@ function flushPage() {
         laypage({
             cont: 'demo2'
             ,pages: pagination.pageCount
-            ,skip:true
+//            ,skip:true
             ,skin: '#1E9FFF'
             ,curr: screenParam.pageNum, //获取hash值为fenye的当前页
             jump:function (obj,first) {
