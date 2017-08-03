@@ -12,6 +12,7 @@
 .banner{
     position: relative;
     min-width: 1210px;
+    margin-top: 116px!important;
 }
 .imgList li{
     position: absolute;

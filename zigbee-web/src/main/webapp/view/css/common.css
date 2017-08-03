@@ -113,6 +113,13 @@ html,body,header{
     min-width:1210px;
     height: 116px;
     background: #2763cc;
+    position: fixed;
+    top:0;
+    left: 0;
+    z-index:9999;
+}
+.header+div{
+    margin-top: 130px;
 }
 .footer{
     width: 100%;
@@ -213,12 +220,6 @@ html,body,header{
 }
 .navUlList li a:hover{
     background: #186eff;
-}
-.fixed{
-    position: fixed;
-    top:0;
-    left: 0;
-    z-index: 10000;
 }
 #loginUser{
     width: 100px;

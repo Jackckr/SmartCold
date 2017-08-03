@@ -196,7 +196,7 @@ function initUpdateInfo(id) {
         initRdcInfo(share.rdcID);
         setTimeout(function () {
             getDataToForm($("#submitRdc [name]"),share);
-        },40);
+        },500);
         rentRdcOriginalLent=share.fileList.length;
         $.each(share.fileList,function (index, file) {
             rentRdcPics.push(file);

@@ -199,7 +199,7 @@ function init_filter(){
 	 //经营类型
 	 if( window.localStorage.rdc_list_ManageType){
 		 $("#ul_managetype").append(window.localStorage.rdc_list_ManageType);
-		 $("#ul_managetype li").bind('click',getManageType);
+		 $("#ul_managetype li").bind('click',getManageType); inithostfilter();
 	 }else{
 		 $.ajax({url:"/i/rdc/findAllManageType",type:"get",success:function (data) {
 		    	var manageList=[]; data.forEach(function (val, index) { manageList.push('<li  value="'+val.id+'" class="fl">'+val.type+'</li>');});
@@ -207,12 +207,13 @@ function init_filter(){
 		        $("#ul_managetype").append(cache);
 		        window.localStorage.rdc_list_ManageType=cache;
 		        $("#ul_managetype li").bind('click',getManageType);
-		 }}); 
+		        inithostfilter();
+		 }});
 	 }
 	 //w温度类型
 	 if( window.localStorage.rdc_list_TemperType){
 		 $("#ul_storagetempertype").append(window.localStorage.rdc_list_TemperType);
-		 $("#ul_storagetempertype li").bind('click',getTempType);
+		 $("#ul_storagetempertype li").bind('click',getTempType); inithostfilter();
 	 }else{
 		 $.ajax({url:"/i/rdc/findAllTemperType",type:"get",success:function (data) {
 			 var manageList=[]; data.forEach(function (val, index) { manageList.push('<li  value="'+val.id+'" class="fl">'+val.type+'</li>');});
@@ -220,12 +221,13 @@ function init_filter(){
 			 $("#ul_storagetempertype").append(cache);
 			 window.localStorage.rdc_list_TemperType=cache;
 			 $("#ul_storagetempertype li").bind('click',getTempType);
-		 }}); 
+			inithostfilter();
+		 }});
 	 }
 	 //商品存放类型
 	 if( window.localStorage.rdc_list_StorageType){
 		 $("#ul_goodSaveType").append(window.localStorage.rdc_list_StorageType);
-		 $("#ul_goodSaveType li").bind('click',getGoodSave);
+		 $("#ul_goodSaveType li").bind('click',getGoodSave); inithostfilter();
 	 }else{
 		 $.ajax({url:"/i/rdc/findAllStorageType",type:"get",success:function (data) {
 			 var manageList=[]; data.forEach(function (val, index) { manageList.push('<li  value="'+val.id+'" class="fl">'+val.type+'</li>');});
@@ -233,7 +235,8 @@ function init_filter(){
 			 $("#ul_goodSaveType").append(cache);
 			 window.localStorage.rdc_list_StorageType=cache;
 			 $("#ul_goodSaveType li").bind('click',getGoodSave);
-		 }}); 
+			 inithostfilter();
+		 }});
 	 }
 	 //初始化省
 	 if( window.localStorage.rdc_list_province){
@@ -246,10 +249,13 @@ function init_filter(){
 		        });
 		        window.localStorage.rdc_list_province=provinceArr.join('');
 		        $("#ul_provinceid").empty().append(window.localStorage.rdc_list_province);
+
 		  }});
 	 }
+	setTimeout(inithostfilter, 0);
 }
 function inithostfilter(){
+	ajaxcont++;if(ajaxcont<3){return;}
 	var histdata=util.getHashStringArgs(),key=null,val=null,em=null,type=null;
 	if(!histdata.ul_pageNum){return;}
 	for(key in histdata){
@@ -268,7 +274,6 @@ function inithostfilter(){
 };
 $(function () {
 	init_filter();
-    inithostfilter();
     getRdcRentList();
     $("#ul_istemperaturestandard li").bind('click',getTempStandard);
     $("#ul_audit li").bind('click',getAudit);

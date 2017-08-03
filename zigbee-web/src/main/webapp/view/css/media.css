@@ -24,6 +24,14 @@
     .filterBox>ul>li.activeA:before{
         border: none;
     }
+    loginBg {
+        width: 477.6px!important;
+        height: 200px!important;
+    }
+    .login,.loginBg{
+        float: none!important;
+        margin: 0 auto 30px;
+    }
 }
 @media only screen and (max-width: 980px){
 
