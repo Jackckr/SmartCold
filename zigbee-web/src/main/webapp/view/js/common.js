@@ -223,6 +223,19 @@ var util={
 		   }
 	   }
 };
+//手机号加密
+function telMd5(tel) {
+    if(tel){
+        if(tel.length==11){//手机号
+            tel=tel.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2');
+        }else{//座机
+            tel=tel.slice(0,tel.length-4).concat('****');
+        }
+    }else{
+        tel='187****2361';//手机号没有时默认值
+    }
+    return tel;
+}
 setInterval(function () {
     localStorage.removeItem('OURL');
     console.log('定时清除本地缓存')

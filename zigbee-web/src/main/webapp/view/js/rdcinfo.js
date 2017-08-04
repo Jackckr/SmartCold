@@ -86,7 +86,7 @@ function getRdcInfo() {
         if(!window.lkuser){//没有登录
             baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%</td></tr>' +
                 '<tr><td>地址</td><td>'+rdc.address+'</td> </tr>' +
-                '<tr><td>您还未登录</td><td><a style="color:#2763cc;" href="login.html">去登录</a></td> </tr></table>');
+                '<tr><td>仓储信息</td><td><a style="color:#2763cc;" href="login.html">登录</a>方可查看更多</tr></table>');
         }else if(window.lkuser.id==rdc.userid){//是自己的冷库
             if(rdc.audit==2){
                 auditButton=''
@@ -106,7 +106,7 @@ function getRdcInfo() {
             }
             if(window.lkuser.vipType==0) {//没有实名认证
                 baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%</td></tr>' +
-                    '<tr><td>地址</td><td>'+rdc.address+'</td> </tr></table>');
+                    '<tr><td>地址</td><td>'+rdc.address+'</td> </tr><tr><td>仓库信息</td><td><a href="../html/authentication.html" style="color:#2763cc;">实名认证</a><b>后可方可查看</b></td> </tr></table>');
             }else if(window.lkuser.vipType>0){//实名认证
                 baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%'+auditButton+'</td></tr>' +
                     '<tr><td>地址</td><td>'+rdc.address+'</td> </tr> ' +
@@ -152,9 +152,11 @@ function getRdcInfo() {
                 '<tr>'+coldTruck4+capacity4+'</tr> ' +
                 capacity5+'<tr>'+facility+'</tr><tr>'+remark+'</tr>' +'</tbody></table>');
         }else if(window.lkuser && window.lkuser.vipType==0&&window.lkuser&&window.lkuser.id!=rdc.userid){
-            otherInfo.push('<table><caption>仓库信息</caption><tbody><tr><td><b>认证用户方可看到更多信息</b>　<a href="../html/authentication.html" style="color:#2763cc;">实名认证</a></td></tr></tbody></table>');
+            otherInfo.push('');
+            $("#otherInfo").hide();
         }else{
-            otherInfo.push('<table><caption>仓库信息</caption><tbody><tr><td><b>您还未登录</b>　<a href="../html/login.html" style="color:#2763cc;">去登录</a></td></tr></tbody></table>');
+            otherInfo.push('');
+            $("#otherInfo").hide();
         }
         $("#baseInfo").empty().append(baseInfo.join(''));
         $("#divimginfog_imgPlayer").empty().append(bigImg.join(''));

@@ -1,6 +1,6 @@
 .mod_focus_show { width: 480px; height: 400px; position: relative; overflow: hidden; margin: 0 auto; }
     .mod_focus_show .mod_focus_pic { display: block; width: 480px; height: 320px; }
-        .mod_focus_show .mod_focus_pic li, .mod_focus_show .mod_focus_pic a, .mod_focus_show .mod_focus_pic img { display: block; width: 480px; height: 320px; }
+        .mod_focus_show .mod_focus_pic li, .mod_focus_show .mod_focus_pic a { display: block; width: 480px; height: 320px;overflow: hidden;}
         .mod_focus_show .mod_focus_pic li { position: absolute; left: 0; top: 0; }
     .mod_focus_show .mod_focus_title { position: absolute; z-index: 1; left: 0; bottom: 80px; overflow: hidden; zoom: 1; width: 480px; height: 53px; background-color: rgba(0,0,0,.8); filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr='#CC000000',endColorstr='#CC000000'); background-image: url(about:blank); }
 :root .mod_focus_title { filter: none; }

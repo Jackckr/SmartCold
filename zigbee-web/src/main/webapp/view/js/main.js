@@ -4,7 +4,8 @@ function getRdcShare() {
     $.ajax({url:"/i/ShareRdcController/getSERdc",type:"post",data:{"dataType":3,"typeCode":1},success:function (data) {
         var rightRdcLease=[];
         var leftRdclease=[];
-        for(var i=0;i<data.length;i++){
+        for(var i=0,tel='';i<data.length;i++){
+            if(window.lkuser){tel=data[i].telephone;}else{tel=telMd5(data[i].telephone);}
             if(i<=5){
                 var price='';
                 rightRdcLease.push('<li class="fl">');
@@ -15,7 +16,7 @@ function getRdcShare() {
                 rightRdcLease.push('</div><div class="city"><p class="omg"><i class="iconfont fl">&#xe61c;</i>'+data[i].detlAddress+'</p><p>可租面积：'+data[i].sqm+'㎡</p></div></a></li>');
             }else {
                 leftRdclease.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'"><span>'+(i-5)+'</span>' +
-                    '['+data[i].name+'] 有'+data[i].sqm+'㎡冷库可用来出租，联系电话['+data[i].telephone+']</a></li>');
+                    '['+data[i].name+'] 有'+data[i].sqm+'㎡冷库可用来出租，联系电话['+tel+']</a></li>');
             }
         }
         $("#rightRdcLeaseUl").empty().append(rightRdcLease.join(''));
@@ -23,18 +24,20 @@ function getRdcShare() {
     }});
     $.ajax({url:"/i/ShareRdcController/getSERdc",type:"post",data:{"dataType":3,"typeCode":2},success:function (data) {
         var rdcRent=[];
-        for(var i=0;i<data.length;i++){
+        for(var i=0,tel='';i<data.length;i++){
+            if(window.lkuser){tel=data[i].telephone;}else{tel=telMd5(data[i].telephone);}
             if(i<=6){
-                rdcRent.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'"><span>'+(i+1)+'</span>['+data[i].detlAddress+'] '+data[i].title+'，联系电话['+data[i].telephone+']</a></li>');
+                rdcRent.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'"><span>'+(i+1)+'</span>['+data[i].detlAddress+'] '+data[i].title+'，联系电话['+tel+']</a></li>');
             }
         }
         $("#rdcRentUl").empty().append(rdcRent.join(''));
     }});
     $.ajax({url:"/i/ShareRdcController/getSERdc",type:"post",data:{"dataType":1,"typeCode":null},success:function (data) {
         var shopInfo=[];
-        for(var i=0;i<data.length;i++){
+        for(var i=0,tel='';i<data.length;i++){
+            if(window.lkuser){tel=data[i].telephone;}else{tel=telMd5(data[i].telephone);}
             if(i<=5){
-                shopInfo.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'"><span>'+(i+1)+'</span>['+data[i].typeText+'] '+data[i].title+'，联系电话['+data[i].telephone+']</a></li>');
+                shopInfo.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'"><span>'+(i+1)+'</span>['+data[i].typeText+'] '+data[i].title+'，联系电话['+tel+']</a></li>');
             }
         }
         $("#shopInfoUl").empty().append(shopInfo.join(''));
@@ -50,11 +53,10 @@ function dwrechar(index,em,title,data,type){
 	        xAxis: {
 	            data: xdata,
 	            axisLabel:{   textStyle: { color: '#66d1f7'  }, interval:0, rotate: 30 },
-	            axisLine:{ lineStyle:{ color:'#f4f4f4', }},
-	            splitLine:{ lineStyle:{  color:'#f4f4f4', }
-	            }
+	            axisLine:{ lineStyle:{ color:'#f4f4f4' }},
+	            splitLine:{ lineStyle:{  color:'#f4f4f4' }}
 	        },
-	        yAxis: { axisLabel:{textStyle: {color: '#66d1f7'  } }, axisLine:{ lineStyle:{ color:'#f4f4f4', }}, splitLine:{ lineStyle:{  color:'#f4f4f4', } } },
+	        yAxis: { axisLabel:{textStyle: {color: '#66d1f7'  } }, axisLine:{ lineStyle:{ color:'#f4f4f4', }}, splitLine:{ lineStyle:{  color:'#f4f4f4'} } },
 	        series: [{  type: type,  data: ydata,  barWidth:30 }]
 	    };
 	   if(type=='bar'){ option1.series[0].itemStyle= {  normal: {  color: function(params) { return colorList[params.dataIndex];} }  };  }else{ option1.series[0].itemStyle={ normal: { color:'#ff916c' }  }; option1.series[0].smooth= true;}
@@ -63,10 +65,10 @@ function dwrechar(index,em,title,data,type){
 
 
 function initechardata(){
-	var startTime=new Date(),endTime=new Date();startTime.setFullYear(endTime.getFullYear()-1);
-	$.ajax({url:"/i/DataAnalysis/getDataAnalysisBykey",type:"post",data:{type:1,key:'price',startTime:startTime,endTime:endTime},success:function (data) {  dwrechar(0,'main1','2017年上半年全国冷库价格趋势图',data,'bar'); }});
-	// $.ajax({url:"/i/DataAnalysis/getDataAnalysisBykey",type:"post",data:{type:1,key:'boom',startTime:startTime,endTime:endTime},success:function (data) {  dwrechar(1,'main2','中国冷链物流景气指数',data,'line'); }});
-	// $.ajax({url:"/i/DataAnalysis/getDataAnalysisBykey",type:"post",data:{type:1,key:'energy',startTime:startTime,endTime:endTime},success:function (data) {  dwrechar(1,'main3','全国冷库能耗势图',data,'line'); }});
+	//var startTime=new Date(),endTime=new Date();startTime.setFullYear(endTime.getFullYear()-1);
+	//$.ajax({url:"/i/DataAnalysis/getDataAnalysisBykey",type:"post",data:{type:1,key:'price',startTime:startTime,endTime:endTime},success:function (data) {  dwrechar(0,'main1','全国冷库价格趋势图',data,'bar'); }});
+	//$.ajax({url:"/i/DataAnalysis/getDataAnalysisBykey",type:"post",data:{type:1,key:'boom',startTime:startTime,endTime:endTime},success:function (data) {  dwrechar(1,'main2','中国冷链物流景气指数',data,'line'); }});
+	//$.ajax({url:"/i/DataAnalysis/getDataAnalysisBykey",type:"post",data:{type:1,key:'energy',startTime:startTime,endTime:endTime},success:function (data) {  dwrechar(1,'main3','全国冷库能耗势图',data,'line'); }});
 }
 
 function resizeChart() {
@@ -80,4 +82,11 @@ $(function () {
     window.onresize = function () {
         resizeChart();
     };
+    var telTxt=["汇源集团冷链运输招标  联系人：田先生13718154618","华润万家深中冷链运输项目招标公告 马丽丽 0755-28450635","U家超市冷链设备招标公告 韦先生18377335381",
+        "辽宁华润万家门店冷链维修招标 杨建群：024-25103229","疫苗冷库温湿度监测系统采购招标 王英芳 0398-2846506","冶春食品冷藏车采购 曹慧颖  0514-87806576"]
+    if(window.lkuser){
+        for(var i=0;i<6;i++){
+            $(".list3 ul li").eq(i).children('a').html(telTxt[i])
+        }
+    }
 });
