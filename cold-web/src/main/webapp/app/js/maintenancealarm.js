@@ -1,5 +1,6 @@
 coldWeb.controller('maintenancealarm', function ($rootScope, $scope,$stateParams, $state, $cookies, $http, $location,baseTools,Upload) {
 	$scope.st=$stateParams.st;
+    $("#oview").height($(".content-wrapper")[0].clientHeight);
 	if($scope.st==1||$scope.st==2){var statusmode=["0","0,1,2,3,4,5","6"];$scope.status=statusmode[$scope.st];}else{return;}
 	$scope.setp=1;
 	$scope.remode=["未处理 ","已忽略 ","解除故障","放弃维修"];//终止流程

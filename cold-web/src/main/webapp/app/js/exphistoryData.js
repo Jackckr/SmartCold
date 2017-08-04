@@ -3,6 +3,7 @@
  * 历史数据查询
  */
 coldWeb.controller('exphistoryData', function ($scope, $http,$rootScope,$timeout,baseTools) {
+
 	$scope.intervaltime=1,$scope.intervaltimeTxt="默认（30秒）";
 	var stdate = new Date(); stdate.setHours(stdate.getHours () - 6);
 	$scope.rdcid=window.sessionStorage.smrdcId,$scope.showobjgroup=false,$scope.coldstoragedoor=null;
@@ -199,5 +200,5 @@ coldWeb.controller('exphistoryData', function ($scope, $http,$rootScope,$timeout
 			};
 	 });
 	//********************************************************************事件END**********************************************************************
-	 
+    $("#oview").height($(".content-wrapper")[0].clientHeight);
 });

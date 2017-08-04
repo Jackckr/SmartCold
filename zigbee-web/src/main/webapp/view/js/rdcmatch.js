@@ -23,73 +23,75 @@ function initColdParam() {
     var tempType = ['<li type="temp" value="0" class="activeType">不限</li>'];
     var provinceList = ['<option value="">全部</option>'];
     supportForeach();
-    $.ajax({
-        url: "/i/rdc/findAllManageType", type: "get", success: function (data) {
-            data.forEach(function (val, index) {
-                manageType.push('<li type="manage" value="' + val.id + '">' + val.type + '</li>');
-            });
-            $("#managetype").empty().append(manageType.join(''));
-            if (screenParam.managetype != null&&screenParam.managetype!="") {
-                $("#managetype li").removeClass("activeType");
-                screenParam.managetype.split(",").forEach(function (sval, index) {
-                    $("#managetype li[value='" + sval + "']").addClass('activeType');
+    if (screenParam.flag < 2) {
+        $.ajax({
+            url: "/i/rdc/findAllManageType", type: "get", success: function (data) {
+                data.forEach(function (val, index) {
+                    manageType.push('<li type="manage" value="' + val.id + '">' + val.type + '</li>');
                 });
+                $("#managetype").empty().append(manageType.join(''));
+                if (screenParam.managetype != null && screenParam.managetype != "") {
+                    $("#managetype li").removeClass("activeType");
+                    screenParam.managetype.split(",").forEach(function (sval, index) {
+                        $("#managetype li[value='" + sval + "']").addClass('activeType');
+                    });
+                }
             }
-        }
-    });
-
-    $.ajax({
-        url: "/i/rdc/findAllTemperType", type: "get", success: function (data) {
-            data.forEach(function (val, index) {
-                tempType.push('<li type="temp" value="' + val.id + '">' + val.type + '</li>');
-            });
-            $("#storagetempertype").empty().append(tempType.join(''));
-            if (screenParam.storagetempertype != null&&screenParam.storagetempertype!="") {
-                $("#storagetempertype li").removeClass("activeType");
-                screenParam.storagetempertype.split(",").forEach(function (sval, index) {
-                    $("#storagetempertype li[value='" + sval + "']").addClass('activeType');
+        });
+        $.ajax({
+            url: "/i/rdc/findAllTemperType", type: "get", success: function (data) {
+                data.forEach(function (val, index) {
+                    tempType.push('<li type="temp" value="' + val.id + '">' + val.type + '</li>');
                 });
+                $("#storagetempertype").empty().append(tempType.join(''));
+                if (screenParam.storagetempertype != null && screenParam.storagetempertype != "") {
+                    $("#storagetempertype li").removeClass("activeType");
+                    screenParam.storagetempertype.split(",").forEach(function (sval, index) {
+                        $("#storagetempertype li[value='" + sval + "']").addClass('activeType');
+                    });
+                }
             }
-        }
-    });
+        });
 
+    } else if (screenParam.flag < 4) {
+        var goodsType = ['<li type="goodsType" value="0" class="activeType">不限</li>'];
+        $.ajax({
+            url: "/i/ShareRdcController/getGDFilterData", type: "get", success: function (data) {
+                supportForeach();
+                goodsAllType = [''];
+                data.entity.gt.forEach(function (val, index) {
+                    goodsType.push('<li type="goodsType" value="' + val.type_code + '">' + val.type_name + '/' + val.type_desc + '</li>');
+                    goodsAllType.push(val.type_name);
+                });
+                $("#goodsType").empty().append(goodsType.join(''));
+                if (screenParam.goodtype != null && screenParam.goodtype != "") {
+                    $("#goodsType li").removeClass("activeType");
+                    screenParam.goodtype.split(",").forEach(function (sval, index) {
+                        $("#goodsType li[value='" + sval + "']").addClass('activeType');
+                    });
+                }
+                initGoodsList();
+            }
+        });
+    }
     $.ajax({
         url: "/i/city/findProvinceList", type: "get", success: function (data) {
             data.forEach(function (val, index) {
                 provinceList.push('<option value="' + val.provinceId + '">' + val.provinceName + '</option>');
             });
             $("select[name=provinceid]").empty().append(provinceList.join(''));
-            if (screenParam.provinceid != null&&screenParam.provinceid!="") {
+            if (screenParam.provinceid != null && screenParam.provinceid != "") {
                 $("[name=provinceid]").val(screenParam.provinceid);
             }
         }
     });
-
-    var goodsType = ['<li type="goodsType" value="0" class="activeType">不限</li>'];
-    $.ajax({
-        url: "/i/ShareRdcController/getGDFilterData", type: "get", success: function (data) {
-            supportForeach();
-            goodsAllType = [''];
-            data.entity.gt.forEach(function (val, index) {
-                goodsType.push('<li type="goodsType" value="' + val.type_code + '">' + val.type_name + '/' + val.type_desc + '</li>');
-                goodsAllType.push(val.type_name);
-            });
-            $("#goodsType").empty().append(goodsType.join(''));
-            if (screenParam.goodtype != null&&screenParam.goodtype!="") {
-                $("#goodsType li").removeClass("activeType");
-                screenParam.goodtype.split(",").forEach(function (sval, index) {
-                    $("#goodsType li[value='" + sval + "']").addClass('activeType');
-                });
-            }
-        }
-    });
-    if (screenParam.sqm != null &&screenParam.sqm!="") {
+    if (screenParam.sqm != null && screenParam.sqm != "") {
         $("#sqm li").removeClass("activeType");
         screenParam.sqm.split(",").forEach(function (sval, index) {
             $("#sqm li[value='" + sval + "']").addClass('activeType');
         });
     }
-    if(screenParam.keyword!=""&&screenParam.keyword!=null){
+    if (screenParam.keyword != "" && screenParam.keyword != null) {
         $("[name=keyword]").val(screenParam.keyword);
     }
 }
@@ -108,10 +110,10 @@ function getManageType() {
         screenParam.managetype = null;
     } else {
         var storageManage = [];
-        if(screenParam.managetype!=null&&screenParam.managetype!=""){
-            storageManage=screenParam.managetype.split(',');
+        if (screenParam.managetype != null && screenParam.managetype != "") {
+            storageManage = screenParam.managetype.split(',');
         }
-        var index = storageManage.contains($(this).val()+"");
+        var index = storageManage.contains($(this).val() + "");
         index == -1 ? storageManage.push($(this).val()) : storageManage.splice(index, 1);
         screenParam.managetype = storageManage.join();
     }
@@ -125,10 +127,10 @@ function getTempType() {
         screenParam.storagetempertype = null;
     } else {
         var storageTemp = [];
-        if(screenParam.storagetempertype!=null&&screenParam.storagetempertype!=""){
-            storageTemp=screenParam.storagetempertype.split(',');
+        if (screenParam.storagetempertype != null && screenParam.storagetempertype != "") {
+            storageTemp = screenParam.storagetempertype.split(',');
         }
-        var index = storageTemp.contains($(this).val()+"");
+        var index = storageTemp.contains($(this).val() + "");
         index == -1 ? storageTemp.push($(this).val()) : storageTemp.splice(index, 1);
         screenParam.storagetempertype = storageTemp.join();
     }
@@ -153,11 +155,11 @@ function getRdcSqm() {
     if ($(this).val() == 0) {
         screenParam.sqm = null;
     } else {
-        var rentSqm=[];
-        if(screenParam.sqm!=null && screenParam.sqm!=""){
-            rentSqm=screenParam.sqm.split(',');
+        var rentSqm = [];
+        if (screenParam.sqm != null && screenParam.sqm != "") {
+            rentSqm = screenParam.sqm.split(',');
         }
-        var index = rentSqm.contains($(this).val()+"");
+        var index = rentSqm.contains($(this).val() + "");
         index == -1 ? rentSqm.push($(this).val()) : rentSqm.splice(index, 1);
         screenParam.sqm = rentSqm.join();
     }
@@ -172,7 +174,7 @@ function initRentRdc() {
         screenParam.uid = window.lkuser.id;
     }
     var sqmmode = ["", "<1000", "1000~3000", "3000~6000", "6000~12000", "12000~20000", ">20000"];
-    var saveSqm=screenParam.sqm;
+    var saveSqm = screenParam.sqm;
     if (screenParam.sqm != null) {
         var sqmDetail = [];
         $.each(screenParam.sqm.split(), function (index, val) {
@@ -188,7 +190,7 @@ function initRentRdc() {
         data: screenParam,
         success: function (data) {
             pagination.pageCount = data.totalPages;
-            screenParam.sqm=saveSqm;
+            screenParam.sqm = saveSqm;
             $.each(data.data, function (index, rentRdc) {
                 var collectWords = '<button class="collect" onclick="collection(this,' + rentRdc.id + ')"><i class="iconfont orange">&#xe634;</i><em>收藏</em></button>';
                 if (rentRdc.collectType == 1) {
@@ -264,19 +266,18 @@ function initRentRdc() {
 /*===============================================================出售求购=================================================================================*/
 
 function openurl(id) {
-    window.open("rdcmatchinfo.html?id="+id)
+    window.open("rdcmatchinfo.html?id=" + id)
 }
 /*获得商品种类型*/
 function getGoodsType() {
     if ($(this).val() == 0) {
-        goodsTypeParam.splice(0, storageTemp.length);
         screenParam.goodtype = null;
     } else {
         var goodsTypeParam = [];
-        if(screenParam.goodtype!=null&&screenParam.goodtype!=""){
-            goodsTypeParam=screenParam.goodtype.split(',');
+        if (screenParam.goodtype != null && screenParam.goodtype != "") {
+            goodsTypeParam = screenParam.goodtype.split(',');
         }
-        var index = goodsTypeParam.contains($(this).val()+"");
+        var index = goodsTypeParam.contains($(this).val() + "");
         index == -1 ? goodsTypeParam.push($(this).val()) : goodsTypeParam.splice(index, 1);
         screenParam.goodtype = goodsTypeParam.join();
     }
@@ -445,7 +446,6 @@ $(function () {
                 initRentRdc();
             } else if (oIndex < 4) {
                 $(".goodsToggle").show().siblings('.rentToggle').hide();//加载出售求购列表
-                setTimeout(initGoodsList, 40);
             }
         } else {
             initRentRdc();
@@ -456,6 +456,7 @@ $(function () {
     }
     $(".btnGroup button").click(function () {
         screenParam.flag = $(this).val();
+        initColdParam();
         var oIndex = $(this).index();
         if (oIndex < 4) {
             $(this).addClass('active').siblings().removeClass('active');
@@ -483,9 +484,7 @@ $(function () {
                     screenParam.dataType = 1;
                     screenParam.typeCode = 2;
                 }
-                initColdParam();
                 clearParam();
-                setTimeout(initGoodsList, 40);
             }
         } else {
             console.log('发布共享信息');

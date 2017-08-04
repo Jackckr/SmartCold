@@ -2,7 +2,7 @@ var rentRdcPics=[];
 var rentRdcOriginalLent=0;
 var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/;
 var msg = "*.gif,*.jpg,*.jpeg,*.png,*.bmp";
-
+var ajaxCount=0;
 /*冷库出租图change*/
 function rentRdcPicChange(e) {
     var files = e.files;
@@ -60,8 +60,9 @@ function delrentRdcPic(index,id,location) {
 }
 
 /*初始化rdc详情*/
-function initRdcInfo(rdcId) {
+function initRdcInfo(rdcId,share) {
     if(checkLogin()){
+        $("#telephone").val(window.lkuser.telephone);
         $.ajax({url:"/i/ShareRdcController/getRdcByUid",type:"get",data:{rdcId:rdcId,uid:window.lkuser.id},success:function (data) {
             var rdc=data.data[0];
             var filesArr=[];
@@ -81,6 +82,12 @@ function initRdcInfo(rdcId) {
             $("#rdcID").val(rdc.rdcID);
             $("#rdcSqm").val(rdc.rdcSqm);
             showImg();
+            if(share&&ajaxCount==1){
+                getDataToForm($("#submitRdc [name]"),share);
+                ajaxCount=0;
+            }else {
+                ajaxCount++;
+            }
         }});
         var tempType=[];
         $.ajax({url:"/i/rdc/findAllTemperType",type:"get",success:function (data) {
@@ -88,8 +95,13 @@ function initRdcInfo(rdcId) {
                 tempType.push('<option value="'+val.id+'">'+val.type+'</option>');
             });
             $("#codeLave2").empty().append(tempType.join(''));
+            if(share&&ajaxCount==1){
+                getDataToForm($("#submitRdc [name]"),share);
+                ajaxCount=0;
+            }else {
+                ajaxCount++;
+            }
         }});
-        $("#telephone").val(window.lkuser.telephone);
     }
 }
 
@@ -149,6 +161,10 @@ function checkSubmitInfo(vo) {
         layer.alert('面积输入有误！(小数点后最多保留两位，如：15.28)', {icon: 2});
         return false;
     }
+    if(vo.sqm<10){
+        layer.alert('出租面积不能小于10㎡', {icon: 2});
+        return false;
+    }
     if(!areaRex.test(vo.unitPrice.trim())){
         layer.alert('单价输入有误！(小数点后最多保留两位，如：15.28)', {icon: 2});
         return false;
@@ -193,10 +209,7 @@ function getRdcList() {
 function initUpdateInfo(id) {
     $.ajax({url:"/i/ShareRdcController/getSEByIDForEdit",type:"get",data:{id:id},success:function (data) {
         var share=data.entity;
-        initRdcInfo(share.rdcID);
-        setTimeout(function () {
-            getDataToForm($("#submitRdc [name]"),share);
-        },500);
+        initRdcInfo(share.rdcID,share);
         rentRdcOriginalLent=share.fileList.length;
         $.each(share.fileList,function (index, file) {
             rentRdcPics.push(file);

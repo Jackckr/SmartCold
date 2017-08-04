@@ -2,6 +2,7 @@ var appltRdcPics=[];
 var applyRdcOriginalLent=0;
 var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/;
 var msg = "*.gif,*.jpg,*.jpeg,*.png,*.bmp";
+var ajaxCount=0;
 
 /*提交添加求租冷库信息*/
 function addApply() {
@@ -59,6 +60,10 @@ function checkSubmitInfo(vo) {
     var areaRex = /^[0-9]{1}[\d]{0,10}\.*[\d]{0,2}$/;
     if(!areaRex.test(vo.sqm.trim())){
         layer.alert('面积输入有误！(小数点后最多保留两位，如：15.28)', {icon: 2});
+        return false;
+    }
+    if(vo.sqm<10){
+        layer.alert('求租面积不能小于10㎡', {icon: 2});
         return false;
     }
     if(!areaRex.test(vo.unitPrice.trim())){
@@ -142,26 +147,29 @@ function initRdcInfo() {
         var tempType=[];
         var manageType=[];
         var provinceList=[];
+        $("#telephone").val(window.lkuser.telephone);
         $.ajax({url:"/i/rdc/findAllTemperType",type:"get",success:function (data) {
             $.each(data,function (index, val) {
                 tempType.push('<option value="'+val.id+'">'+val.type+'</option>');
             });
             $("#codeLave2").empty().append(tempType.join(''));
+            goUpdateCold();
         }});
         $.ajax({url:"/i/rdc/findAllManageType",type:"get",success:function (data) {
             $.each(data,function (index, val) {
                 manageType.push('<option value="'+val.id+'">'+val.type+'</option>');
             });
             $("#codeLave1").empty().append(manageType.join(''));
+            goUpdateCold();
         }});
         $.ajax({url:"/i/city/findProvinceList",type:"get",success:function (data) {
             $.each(data,function (index, val) {
                 provinceList.push('<option value="'+val.provinceId+'">'+val.provinceName+'</option>');
             });
             $("#provinceid").empty().append(provinceList.join(''));
+            goUpdateCold();
             getCitys($("#provinceid"));
         }});
-        $("#telephone").val(window.lkuser.telephone);
     }
 }
 
@@ -170,36 +178,42 @@ function initUpdateData(id) {
     $.ajax({url:"/i/ShareRdcController/getSEByIDForEdit",type:"get",data:{id:id},success:function (data) {
         var shared=data.entity;
         getDataToForm($("#submitRdc [name]"),shared);
-        getCitys($("#provinceid"));
-        setTimeout(function () {
-            applyRdcOriginalLent=shared.fileList.length;
-            $.each(shared.fileList,function (index, file) {
-                appltRdcPics.push(file);
-            });
-            $("#cityid").val(shared.cityid);
-            showSelectPics();
-        },40);
+        getCitys($("#provinceid"),shared.cityid);
+        applyRdcOriginalLent=shared.fileList.length;
+        $.each(shared.fileList,function (index, file) {
+            appltRdcPics.push(file);
+        });
+        showSelectPics();
     }});
 }
 
-function getCitys(mark) {
+function getCitys(mark,cityid) {
     var cityList=[];
     $.ajax({url:"/i/city/findCitysByProvinceId",async: false,type:"get",data:{"provinceID":$(mark).val()},success:function (data) {
         $.each(data,function (index, val) {
             cityList.push('<option value="'+val.cityID+'">'+val.cityName+'</option>');
         });
         $("#cityid").empty().append(cityList.join(''));
+        if(sessionStorage.submitRdcStatus==1&&cityid){
+            $("#cityid").val(cityid);
+        }
     }});
 }
 
+function goUpdateCold() {
+    if(sessionStorage.submitRdcStatus!=1){return false;}
+    if(ajaxCount==2){
+        ajaxCount=0;
+        $('#applyFlag').html('修改求租冷库');
+        var urlParam = getUrlParam('shareId');
+        $("#submitRdc").append('<input type="hidden" name="id" value="'+urlParam+'"/>');
+        initUpdateData(urlParam);
+    }else {
+        ajaxCount++;
+    }
+}
 $(function () {
     if(checkLogin()){
         initRdcInfo();
-        if(sessionStorage.submitRdcStatus==1){
-            $('#applyFlag').html('修改求租冷库');
-           var urlParam = getUrlParam('shareId');
-            $("#submitRdc").append('<input type="hidden" name="id" value="'+urlParam+'"/>');
-            setTimeout(initUpdateData(urlParam),40);
-        }
     }
 });

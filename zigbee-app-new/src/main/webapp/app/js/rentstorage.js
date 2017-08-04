@@ -188,6 +188,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
                 layer.open({content: '出租面积不能大于冷库总面积~', btn: '确定'});
                 return;
             }
+            if($scope.sqm<10){
+                layer.open({content: '出租面积不能小于10㎡~', btn: '确定'});
+                return;
+            }
             layer.open({
                 type: 2
                 , content: '努力加载中~~~'

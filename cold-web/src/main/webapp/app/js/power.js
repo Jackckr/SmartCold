@@ -1,6 +1,6 @@
 coldWeb.controller('power', function ($scope,$http, $location,$stateParams,baseTools,$rootScope) {
-	
-	
+
+    $("#oview").height($(".content-wrapper")[0].clientHeight);
 	$scope.preLoad = function(){
 		url = '/i/power/findById?id=' + $stateParams.powerid;
 		$http.get(url).success(function(data,status,config,header){

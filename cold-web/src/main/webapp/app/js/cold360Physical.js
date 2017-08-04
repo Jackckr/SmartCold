@@ -6,8 +6,8 @@
 coldWeb.controller('cold360Physical', function( $scope, $rootScope, $stateParams,$http,$timeout,baseTools ) {
 	//初始化页面
 	$scope.rdcId = $stateParams.rdcId;
-	$scope.cwheight=$(".content-wrapper").height();
-	$(".mainHeight").height($scope.cwheight); 
+	$scope.cwheight=$(".content-wrapper")[0].clientHeight;
+	$(".mainHeight").height($scope.cwheight);
 	$scope.physicalday= window.localStorage['physicalday'+$scope.rdcId];
 	if($scope.physicalday){
 		var date1=new Date($scope.physicalday), date2=new Date(), date3=date2.getTime()-date1.getTime(),days=Math.floor(date3/(86400000)) ; 

@@ -23,6 +23,6 @@ coldWeb.controller('maintenancenotice', function ($rootScope, $scope, $state, $c
     $scope.tol_batch=function(){
 	   
     };
-    
+    $("#oview").height($(".content-wrapper")[0].clientHeight);
     
 });

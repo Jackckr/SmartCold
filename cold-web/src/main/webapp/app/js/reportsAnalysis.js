@@ -3,6 +3,7 @@
  * 分析报表
  */
 coldWeb.controller('reportsAnalysis', function ($scope, $http,$stateParams,$rootScope) {
+    $("#oview").height($(".content-wrapper")[0].clientHeight);
 	$scope.rdcid=window.sessionStorage.smrdcId;//// $stateParams.rdcId; 
 	$scope.getDateTimeStringBefore = function(before){ return new Date(new Date().getTime() - before *24*60*60*1000).toISOString().replace("T"," ").replace(/\..*/g,''); };
 	$scope.begin = $scope.getDateTimeStringBefore(3).substr(0,10),$scope.end =$scope.getDateTimeStringBefore(0).substr(0,10),$scope.picktime = $scope.begin + ' - ' + $scope.end  ; 
