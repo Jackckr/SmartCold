@@ -2,6 +2,7 @@ coldWeb.controller('maintainRequest', function($rootScope, $scope, $state, $stat
 	$scope.stmode = [ "未处理 ", "待维修", "等确认", "维修中", "维修确认", "已完成 ", "已忽略" ];
 	$scope.warids = $stateParams.ids;
 	$scope.st = $stateParams.st;
+    $("#oview").height($(".content-wrapper")[0].clientHeight);
 	if (!$scope.warids) {
 		return;
 	}

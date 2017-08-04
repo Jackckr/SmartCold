@@ -28,7 +28,7 @@ coldWeb.controller('cpswaterCost', function ($scope,$http, $location,$stateParam
 		});
 		
 	};
-	
+    $("#oview").height($(".content-wrapper")[0].clientHeight);
 	$scope.load();
 	clearInterval($rootScope.timeTicket);
     $rootScope.timeTicket = setInterval(function () { $scope.load(); }, 30000);

@@ -24,7 +24,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     		    });	
     	}
     };
-    
+    $("#oview").height($(".content-wrapper")[0].clientHeight);
     
     
     $scope.load = function () {

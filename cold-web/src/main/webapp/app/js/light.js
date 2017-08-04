@@ -13,6 +13,6 @@ coldWeb.controller('light', function($stateParams, $scope, $http, $sce) {
 			$scope.trustSrc = $sce.trustAsResourceUrl(url);
 			}
         }
-	
 	$scope.load();
+    $("#oview").height($(".content-wrapper")[0].clientHeight);
 });
