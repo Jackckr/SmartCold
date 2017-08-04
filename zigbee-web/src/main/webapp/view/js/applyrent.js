@@ -62,6 +62,10 @@ function checkSubmitInfo(vo) {
         layer.alert('面积输入有误！(小数点后最多保留两位，如：15.28)', {icon: 2});
         return false;
     }
+    if(vo.sqm<10){
+        layer.alert('求租面积不能小于10㎡', {icon: 2});
+        return false;
+    }
     if(!areaRex.test(vo.unitPrice.trim())){
         layer.alert('单价输入有误！(小数点后最多保留两位，如：15.28)', {icon: 2});
         return false;

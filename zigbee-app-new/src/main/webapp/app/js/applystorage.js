@@ -136,6 +136,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 		        }else if(parseFloat($scope.unitprice).length>11){
 					layer.open({content:'单价不合法哦~',btn: '确定'});return;
 		        }
+                if($scope.sqm<10){
+                    layer.open({content: '出租面积不能小于10㎡~', btn: '确定'});
+                    return;
+                }
 	        	layer.open({
 	        		type: 2
 	        		,content: '努力加载中~~~'
