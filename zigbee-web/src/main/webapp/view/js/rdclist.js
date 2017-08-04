@@ -55,7 +55,8 @@ function getRdcRentList() {
                 }
 
                 if (rdcRent.sharedInfoEntity && rdcRent.sharedInfoEntity.datatype == 3 && rdcRent.sharedInfoEntity.typecode == 1) {
-                    rdcRentInfo.push('<p>可用面积<i class="orange">', rdcRent.sharedInfoEntity.sqm, '</i>㎡</p><p class="rdcPriceNum blue">', rdcRent.sharedInfoEntity.unitPrice, '</p><p>元/㎡/天</p>');
+                    var price=rdcRent.sharedInfoEntity.unitPrice==0?'面议</p><p></p>':rdcRent.sharedInfoEntity.unitPrice+'</p><p>元/㎡/天</p>';
+                    rdcRentInfo.push('<p>可用面积<i class="orange">', rdcRent.sharedInfoEntity.sqm, '</i>㎡</p><p class="rdcPriceNum blue">', price);
                 } else {
                     rdcRentInfo.push('<h3>暂无信息</h3>');
                 }

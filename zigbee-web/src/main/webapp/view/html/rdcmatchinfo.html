@@ -169,6 +169,7 @@
                     var isAudit='<b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>';
                     var isStand='';
                     if(share.audit==2){isAudit='<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>';}
+                    if(share.rdcID==1878){isAudit='';}
                     if(share.istemperaturestandard==1){isStand='<b class="reachStand"><i class="iconfont">&#xe6e9;</i>冷链委温度达标库</b>';}
                     modalHtml.push('<li><div>关联冷库:</div><div>'+share.name+'</div>'+isAudit+isStand+'</li>');
                     modalHtml.push('<li><div>信息完整度:</div><div>'+share.infoIntegrity+'%</div></li></ol>');
@@ -177,20 +178,22 @@
                 modalHtml.push('<h3 class="orange">其他信息</h3><ol>');
                 var note=clearUndefined(share.note);
                 if(share.dataType==3){
+                    var price=share.unitPrice==0?"面议":share.unitPrice+"元/天·平方米";
                     if(share.typeCode==1){
                         modalHtml.push('<li><div>出租面积:</div><div>'+share.sqm+'㎡</div></li>');
                     }else {
                         modalHtml.push('<li><div>存放产品:</div><div>'+share.codeLave4+'</div></li><li><div>求租面积:</div><div>'+share.sqm+'㎡</div></li>');
                     }
-                    modalHtml.push('<li><div>单价:</div><div>'+share.unitPrice+'元/天·平方米</div></li>');
+                    modalHtml.push('<li><div>单价:</div><div>'+price+'</div></li>');
                     modalHtml.push('<li><div>租期:</div><div>'+rentDates[share.rentdate]+'</div></li>');
                     modalHtml.push('<li><div>经营类型:</div><div>'+share.codeLave1+'</div></li>');
                     modalHtml.push('<li><div>温度类型:</div><div>'+share.codeLave2+'</div></li>');
                 }
                 if(share.dataType==1){
+                    var price=share.unitPrice==0?"面议":share.unitPrice+"元/"+unitPush[share.publishunit];
                     modalHtml.push('<li><div>品类:</div><div>'+share.codeLave1+'</div></li>');
                     modalHtml.push('<li><div>数量:</div><div>'+share.sqm+unitPush[share.publishunit]+'</div></li>');
-                    modalHtml.push('<li><div>单价:</div><div>'+share.unitPrice+'元/'+unitPush[share.publishunit]+'</div></li>');
+                    modalHtml.push('<li><div>单价:</div><div>'+price+'</div></li>');
                 }
                 modalHtml.push('<li><div>开始时间:</div><div>'+share.validStartTime+'</div></li>');
                 modalHtml.push('<li><div>结束时间:</div><div>'+share.validEndTime+'</div></li>');

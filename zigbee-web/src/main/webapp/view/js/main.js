@@ -16,7 +16,7 @@ function getRdcShare() {
                 rightRdcLease.push('</div><div class="city"><p class="omg"><i class="iconfont fl">&#xe61c;</i>'+data[i].detlAddress+'</p><p>可租面积：'+data[i].sqm+'㎡</p></div></a></li>');
             }else {
                 leftRdclease.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'"><span>'+(i-5)+'</span>' +
-                    '['+data[i].name+'] 有'+data[i].sqm+'㎡冷库可用来出租，联系电话['+tel+']</a></li>');
+                    '['+data[i].title+'] 有'+data[i].sqm+'㎡冷库可用来出租，联系电话['+tel+']</a></li>');
             }
         }
         $("#rightRdcLeaseUl").empty().append(rightRdcLease.join(''));
