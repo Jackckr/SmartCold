@@ -30,4 +30,5 @@ coldWeb.controller('waterCost', function($rootScope, $scope, $http,baseTools,$ti
     $rootScope.timeTicket = setInterval(function () {
         $scope.load();
     }, 30000);
+
 });

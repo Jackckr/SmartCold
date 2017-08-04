@@ -160,6 +160,7 @@ coldWeb.controller('historyData', function ($scope, $http,$rootScope,$timeout,ba
 				while (elem) { if (elem.id && elem.id=='filter_sl_div') {  return;  }  elem = elem.parentNode; } $scope.$apply(function () { $scope.hidefilter(); });//循环判断至跟节点，防止点击的是div子元素
 			};
 	 });
+    $("#oview").height($(".content-wrapper")[0].clientHeight);
 	//********************************************************************事件END**********************************************************************
 	 
 });

@@ -2,7 +2,7 @@
  * Created by sunqiunian on 16/3/3.
  */
 coldWeb.controller('compressorBlower', function ($scope, $location, $stateParams,$http,$rootScope) {
-    console.log($stateParams.userId);
+    $("#oview").height($(".content-wrapper")[0].clientHeight);
     $scope.coldCnt = 0;
     $scope.defrostCnt = 0;
     $scope.freeCnt = 0;

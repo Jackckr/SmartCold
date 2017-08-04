@@ -24,7 +24,7 @@ coldWeb.controller('coldStorageHumidity', function ($scope, $location, $statePar
     		    });	
     	}
     };
-    
+    $("#oview").height($(".content-wrapper")[0].clientHeight);
     
     
     $scope.load = function () {

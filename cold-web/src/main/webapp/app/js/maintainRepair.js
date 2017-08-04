@@ -1,4 +1,5 @@
 coldWeb.controller('maintainRepair', function ($rootScope, $scope, $state,$stateParams, $cookies, $http, $location,baseTools) {
+    $("#oview").height($(".content-wrapper")[0].clientHeight);
 	$scope.stmode=["未处理 ","待维修","等确认","维修中","维修清单确认","维修签字","已完成 "];
 	$scope.unit=[{id:1,name:'个'},{id:2,name:'套'},{id:3,name:'台'}];
 	$scope.swartype=new Array();  $scope.faultmapper=new Array();//实际故障
