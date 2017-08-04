@@ -445,7 +445,8 @@ $(function () {
                 initRentRdc();
             } else if (oIndex < 4) {
                 $(".goodsToggle").show().siblings('.rentToggle').hide();//加载出售求购列表
-                setTimeout(initGoodsList, 40);
+                //setTimeout(initGoodsList, 40);
+                initGoodsList();
             }
         } else {
             initRentRdc();
@@ -485,7 +486,8 @@ $(function () {
                 }
                 initColdParam();
                 clearParam();
-                setTimeout(initGoodsList, 40);
+                //setTimeout(initGoodsList, 40);
+                initGoodsList();
             }
         } else {
             console.log('发布共享信息');
