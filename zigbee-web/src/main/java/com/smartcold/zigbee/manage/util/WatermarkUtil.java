@@ -9,16 +9,15 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageOutputStream;
 import javax.swing.ImageIcon;
 
-import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 
 /*
@@ -45,10 +44,15 @@ public class WatermarkUtil {
 	
    private static Image getImge() {
 	   if(iconimgImage!=null){  return iconimgImage; }
-	   URL url = WatermarkUtil.class.getResource("comm/img/logo.png"); 
-	   ImageIcon imgIcon = new ImageIcon(url); // 得到Image对象。
-	   iconimgImage =imgIcon.getImage();
-	   return iconimgImage;
+	   try {
+		   URL url =new URL("http://139.196.189.93:8089/app/logo.png");
+		   ImageIcon imgIcon = new ImageIcon(url); // 得到Image对象。
+		   iconimgImage =imgIcon.getImage();
+		   return iconimgImage;
+	   } catch (MalformedURLException e) {
+
+	   }
+	   return null;
    }
 	
 	public static InputStream watermarkImg(MultipartFile file) {
