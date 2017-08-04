@@ -379,7 +379,7 @@ public class RdcController {
 			}
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
-			ftpService.uploadFile(uploadFileEntity);
+			ftpService.uploadWatermarkFile(uploadFileEntity);
 			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName,
 					FileDataMapper.CATEGORY_STORAGE_PIC, rdcEntity.getId(), fileName);
 			storageFiles.add(fileDataEntity);
@@ -395,7 +395,7 @@ public class RdcController {
 			}
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
-			ftpService.uploadFile(uploadFileEntity);
+			ftpService.uploadWatermarkFile(uploadFileEntity);
 			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName,
 					FileDataMapper.CATEGORY_HONOR_PIC, rdcEntity.getId(), fileName);
 			honorFiles.add(fileDataEntity);
@@ -408,7 +408,7 @@ public class RdcController {
 		if (arrangePic != null) {
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, arrangePic, dir);
-			ftpService.uploadFile(uploadFileEntity);
+			ftpService.uploadWatermarkFile(uploadFileEntity);
 			FileDataEntity arrangeFile = new FileDataEntity(arrangePic.getContentType(), dir + "/" + fileName,
 					FileDataMapper.CATEGORY_ARRANGE_PIC, rdcEntity.getId(), fileName);
 			fileDataDao.saveFileData(arrangeFile);
@@ -527,7 +527,7 @@ public class RdcController {
 			}
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
-			ftpService.uploadFile(uploadFileEntity);
+			ftpService.uploadWatermarkFile(uploadFileEntity);
 			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName,
 					FileDataMapper.CATEGORY_STORAGE_PIC, rdcEntity.getId(), fileName);
 			storageFiles.add(fileDataEntity);
@@ -543,7 +543,7 @@ public class RdcController {
 			}
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
-			ftpService.uploadFile(uploadFileEntity);
+			ftpService.uploadWatermarkFile(uploadFileEntity);
 			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName,
 					FileDataMapper.CATEGORY_HONOR_PIC, rdcEntity.getId(), fileName);
 			honorFiles.add(fileDataEntity);
@@ -559,7 +559,7 @@ public class RdcController {
 		if(rdcAddDTO.getIsJoinStand()==1&&standPic!=null){
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, standPic, dir);
-			ftpService.uploadFile(uploadFileEntity);
+			ftpService.uploadWatermarkFile(uploadFileEntity);
 			FileDataEntity fileDataEntity = new FileDataEntity(standPic.getContentType(), dir + "/" + fileName,
 					FileDataMapper.CATEGORY_STAND_PIC, rdcEntity.getId(), fileName);
 			fileDataDao.saveFileData(fileDataEntity);
@@ -672,7 +672,7 @@ public class RdcController {
 			}
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
-			ftpService.uploadFile(uploadFileEntity);
+			ftpService.uploadWatermarkFile(uploadFileEntity);
 			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName,
 					FileDataMapper.CATEGORY_STORAGE_PIC, rdcEntity.getId(), fileName);
 			storageFiles.add(fileDataEntity);
@@ -688,7 +688,7 @@ public class RdcController {
 			}
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
-			ftpService.uploadFile(uploadFileEntity);
+			ftpService.uploadWatermarkFile(uploadFileEntity);
 			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName,
 					FileDataMapper.CATEGORY_HONOR_PIC, rdcEntity.getId(), fileName);
 			honorFiles.add(fileDataEntity);
@@ -699,7 +699,7 @@ public class RdcController {
 		if(rdcAddDTO.getIsJoinStand()==1&&standPic!=null){
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, standPic, dir);
-			ftpService.uploadFile(uploadFileEntity);
+			ftpService.uploadWatermarkFile(uploadFileEntity);
 			FileDataEntity fileDataEntity = new FileDataEntity(standPic.getContentType(), dir + "/" + fileName,
 					FileDataMapper.CATEGORY_STAND_PIC, rdcEntity.getId(), fileName);
 			fileDataDao.saveFileData(fileDataEntity);
@@ -797,7 +797,7 @@ public class RdcController {
 			}
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
-			ftpService.uploadFile(uploadFileEntity);
+			ftpService.uploadWatermarkFile(uploadFileEntity);
 			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName,
 					FileDataMapper.CATEGORY_STORAGE_PIC, rdcEntity.getId(), fileName);
 			storageFiles.add(fileDataEntity);
@@ -813,7 +813,7 @@ public class RdcController {
 			}
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
-			ftpService.uploadFile(uploadFileEntity);
+			ftpService.uploadWatermarkFile(uploadFileEntity);
 			FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(), dir + "/" + fileName,
 					FileDataMapper.CATEGORY_HONOR_PIC, rdcEntity.getId(), fileName);
 			honorFiles.add(fileDataEntity);
@@ -825,7 +825,7 @@ public class RdcController {
 		if (arrangePic != null) {
 			String fileName = String.format("rdc%s_%s.%s", rdcExtEntity.getRDCID(), new Date().getTime(), "jpg");
 			UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, arrangePic, dir);
-			ftpService.uploadFile(uploadFileEntity);
+			ftpService.uploadWatermarkFile(uploadFileEntity);
 			FileDataEntity arrangeFile = new FileDataEntity(arrangePic.getContentType(), dir + "/" + fileName,
 					FileDataMapper.CATEGORY_ARRANGE_PIC, rdcEntity.getId(), fileName);
 			fileDataDao.saveFileData(arrangeFile);

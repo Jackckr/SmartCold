@@ -1,6 +1,8 @@
 package com.smartcold.zigbee.manage.service.impl;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import org.apache.commons.net.ftp.FTPClient;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.smartcold.zigbee.manage.dto.UploadFileEntity;
 import com.smartcold.zigbee.manage.service.FtpService;
+import com.smartcold.zigbee.manage.util.WatermarkUtil;
 
 /**
  * @author jiangkaiqiang
@@ -24,6 +27,7 @@ public class FtpServiceImpl implements FtpService {
 	
 	/**
 	 * ftp 已经连接登录
+	 * 上传普通文件
 	 * @param uploadFileEntity
 	 * @return
 	 * @throws IOException
@@ -48,6 +52,40 @@ public class FtpServiceImpl implements FtpService {
 		}
 		
 		result = ftp.storeFile(uploadFileEntity.getName(), uploadFileEntity.getMultipartFile().getInputStream());
+		if (!result) {
+			log.error("File upload failed, upload dir:"+uploadFileEntity.getRemoteNewDir()+
+					", file name:"+uploadFileEntity.getName()+
+					", reply code "+ftp.getReplyCode()+" "+ftp.getReplyString());
+		}
+		return result;
+	}
+	
+	/**
+	 * 水印图片
+	 * @param uploadFileEntity
+	 * @return
+	 * @throws IOException
+	 */
+	private boolean uploadMKFile(UploadFileEntity uploadFileEntity) throws IOException{
+		boolean result = false;
+		if (!ftp.changeWorkingDirectory(BASEDIR)) {
+			throw new IOException("change base working dir error!");
+		}
+		
+		//创建目录
+		String[] dirs = uploadFileEntity.getRemoteNewDir().split("/");
+		for (String dir : dirs) {
+			boolean isExist =  ftp.changeWorkingDirectory(dir);
+			if (!isExist) {
+				if (!ftp.makeDirectory(dir)) {
+					log.error("ftp current working directory:"+ftp.printWorkingDirectory()+
+							" ftp create "+dir+" directory failed, reply code:"+ftp.getReplyCode());
+				}
+				ftp.changeWorkingDirectory(dir);
+			}
+		}
+		InputStream watermarkImg = WatermarkUtil.watermarkImg(uploadFileEntity.getMultipartFile());
+		result = ftp.storeFile(uploadFileEntity.getName(), watermarkImg);
 		if (!result) {
 			log.error("File upload failed, upload dir:"+uploadFileEntity.getRemoteNewDir()+
 					", file name:"+uploadFileEntity.getName()+
@@ -119,6 +157,7 @@ public class FtpServiceImpl implements FtpService {
 		return result;
 	}
 	
+	
 	public boolean deleteFile(String url){
 		String hostUrl = PUB_HOST+":"+READPORT;
 		int index = url.indexOf(hostUrl);
@@ -143,5 +182,51 @@ public class FtpServiceImpl implements FtpService {
 			e.printStackTrace();
 		}
 		return deleted;
+	}
+
+
+	@Override
+	public boolean uploadWatermarkFile(UploadFileEntity uploadFile) {
+		boolean result = false;
+				
+				try {
+					connectFtp();
+					result = uploadMKFile(uploadFile);
+					closeFtp();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					if (ftp.isConnected()) {
+						try {
+							ftp.disconnect();
+						} catch (IOException ioe) {
+							ioe.printStackTrace();
+						}
+					}
+				}
+				return result;
+	}
+
+
+	@Override
+	public boolean uploadWatermarkFileList(List<UploadFileEntity> uploadFileList) {
+       boolean result = false;
+		try {
+			connectFtp();
+			for (UploadFileEntity uploadFile : uploadFileList) {
+				uploadMKFile(uploadFile);
+			}
+			closeFtp();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (ftp.isConnected()) {
+				try {
+					ftp.disconnect();
+				} catch (IOException ioe) {
+				}
+			}
+		}
+		return result;
 	}
 }

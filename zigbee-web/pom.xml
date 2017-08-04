@@ -190,7 +190,8 @@
             <version>1.0</version> 
             <scope>system</scope> 
             <systemPath>${project.basedir}/lib/comet4j-tomcat7.jar</systemPath>
-        </dependency>  
+        </dependency> 
+         
 	</dependencies>
 
 	<build>
