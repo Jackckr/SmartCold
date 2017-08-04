@@ -161,9 +161,9 @@
                     phone=share.telephone;
                 }else {
                     localStorage.OURL=window.location.href;
-                    phone='<a href="login.html" class="blue">登录后显示</a>';
+                    phone=telMd5(share.telephone)+' <a href="login.html" class="blue">[去登录]</a>';
                 }
-                modalHtml.push('</ul><h3 class="orange">基本信息</h3><ol><li><div>'+share.typeText+'描述:</div><div>'+share.title+'</div></li>' +
+                modalHtml.push('</ul><h3 class="orange">基本信息------><strong>'+share.typeText+'</strong></h3><ol><li><div>描述:</div><div>'+share.title+'</div></li>' +
                     '<li><div>地址:</div><div>'+share.detlAddress+'</div></li><li><div>联系电话:</div><div class="orange">'+phone+'</div></li>');
                 if(share.rdcID&&share.rdcID!=0){
                     var isAudit='<b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>';

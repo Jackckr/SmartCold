@@ -228,13 +228,13 @@
         </h1>
         <div class="clearfix">
             <ul class="imglist chartList"  style="width: 100%;">
-                <li style="width: 100%;border: none">
-                    <div id="main1"></div>
+                <li style="width: 100%;">
+                    <div id="main1" style="width: 100%;height: 400px;"></div>
                 </li>
-               <!-- <li style="width: 100%;">
-                    <div id="main2" style="width: 100%;height:200px;"></div>
-                </li>-->
                 <!--<li style="width: 100%;">
+                    <div id="main2" style="width: 100%;height:200px;"></div>
+                </li>
+                <li style="width: 100%;">
                     <div id="main3" style="width: 100%;height:100%;"></div>
                 </li>-->
             </ul>
@@ -371,12 +371,12 @@
         <div class="clearfix">
             <div class="fl txtlist" style="width: 100%;">
                 <ul>
-                    <li><a href="javascript:;" title="汇源集团冷链运输招标  联系人：田先生13718154618"><span>1</span>汇源集团冷链运输招标  联系人：田先生13718154618</a></li>
-                    <li><a href="javascript:;" title="华润万家深中冷链运输项目招标公告 马丽丽 0755-28450635"><span>2</span>华润万家深中冷链运输项目招标公告 马丽丽 0755-28450635</a></li>
-                    <li><a href="javascript:;" title="U家超市冷链设备招标公告 韦先生18377335381"><span>3</span>U家超市冷链设备招标公告 韦先生18377335381</a></li>
-                    <li><a href="javascript:;" title="辽宁华润万家门店冷链维修招标 杨建群：024-25103229"><span>4</span>辽宁华润万家门店冷链维修招标 杨建群：024-25103229</a></li>
-                    <li><a href="javascript:;" title="疫苗冷库温湿度监测系统采购招标 王英芳 0398-2846506"><span>5</span>疫苗冷库温湿度监测系统采购招标 王英芳 0398-2846506</a></li>
-                    <li><a href="javascript:;" title="冶春食品冷藏车采购 曹慧颖  0514-87806576"><span>6</span>冶春食品冷藏车采购 曹慧颖  0514-87806576</a></li>
+                    <li><a href="javascript:;" title=><span>1</span>汇源集团冷链运输招标  联系人：田先生137****4618</a></li>
+                    <li><a href="javascript:;" title=><span>2</span>华润万家深中冷链运输项目招标公告 马丽丽 0755-2845****</a></li>
+                    <li><a href="javascript:;" title=><span>3</span>U家超市冷链设备招标公告 韦先生1837733****</a></li>
+                    <li><a href="javascript:;" title=><span>4</span>辽宁华润万家门店冷链维修招标 杨建群：024-2510****</a></li>
+                    <li><a href="javascript:;" title=><span>5</span>疫苗冷库温湿度监测系统采购招标 王英芳 0398-284****</a></li>
+                    <li><a href="javascript:;" title=><span>6</span>冶春食品冷藏车采购 曹慧颖  0514-8780****</a></li>
                 </ul>
             </div>
         </div>
@@ -431,6 +431,79 @@
         delayTime:500,
         trigger: "click"
     });
+    var myChart = echarts.init(document.getElementById('main1'));
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: '2017年上半年全国冷库价格趋势图',
+            x:'center',
+            y:'top',
+            textAlign:'center '
+        },
+        tooltip: {
+            trigger: 'item',
+            position: function(pt) {
+                return [pt[0], '10%'];
+            },
+            formatter: "{a} <br/>{b}: {c}元/吨/天"
+        },
+        xAxis: {
+            axisLabel :{
+                interval:0
+            },
+            axisLine:{
+                lineStyle:{
+                    color:'#666'
+                },
+            },
+            axisTick:{
+                lineStyle:{
+                    color:'#666'
+                },
+            },
+            data: ["北京","上海","广东","河南","安徽","福建","新疆",
+                "海南","贵州","宁夏","青海","陕西","四川","河北",
+                "重庆","吉林","浙江","云南","山东","江苏","广西",
+                "湖南","甘肃"]
+        },
+        yAxis: {
+            type :'value',
+            name: '元/吨/天',
+            axisLine:{
+                lineStyle:{
+                    color:'#666'
+                },
+            },
+            axisTick:{
+                lineStyle:{
+                    color:'#666'
+                },
+            }
+        },
+        grid:{
+            left:40,
+            top:60,
+            bottom:30,
+            right:30
+        },
+        series: [{
+            name: '平均价格',
+            type: 'bar',
+            data: [3.5, 4.2, 3.3, 2.8, 2.2, 3, 5,
+                4.5, 3.5, 4, 2.5, 3, 2.9, 2.2,
+                3.3, 2.2,2.6, 2.7, 2.1, 3.1, 4.7,
+                2.8, 3.2],
+            itemStyle:{
+                normal:{
+                    color:'#ff7f50'
+                }
+            }
+        }]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+    myChart.resize();
 </script>
 </body>
 </html>
