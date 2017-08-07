@@ -257,8 +257,8 @@ function getShareList(datatype, pageId, domId) {
     var oList = [];
     $.get('/i/ShareRdcController/newGetSEListByUID',
         {
-            userID: window.lkuser.id,
-            username: window.lkuser.name,
+            uid:window.lkuser.id,
+            username: window.lkuser.username,
             dataType: datatype,
             pageNum: pageCurrent,
             pageSize: 10
