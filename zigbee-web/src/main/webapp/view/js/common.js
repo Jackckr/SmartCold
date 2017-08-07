@@ -5,10 +5,17 @@
 /**
  * page工具类
  */
+if (window.localStorage.lkuser&& new Date().getTime() - window.localStorage.longtime < 1800000) {
+	window.lkuser = JSON.parse(window.localStorage.lkuser);
+	$("#noLoginUser").hide();
+	$("#loginUser").show().find('img').attr({'src' : lkuser.avatar,'title' : lkuser.username});
+}
+
 var PageUtil = {
 	get_Cookie:function(name){var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");if(arr=document.cookie.match(reg))return unescape(arr[2]);else	return null;},
 	set_Cookie:function (name,value){var Days = 30, exp = new Date();exp.setTime(exp.getTime() + Days*24*60*60*1000);document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();} ,
 	del_Cookie:function(name){var exp = new Date();	exp.setTime(exp.getTime() - 1);var cval=PageUtil.get_Cookie(name);if(cval!=null)document.cookie= name + "="+cval+";expires="+exp.toGMTString();},
+	del_lS:function(keys){var type=typeof(keys);if("object"==type){ $.each(keys, function(i, vo){ localStorage.removeItem(localStorage.removeItem(vo));});}else if("string"==type){localStorage.removeItem(keys);}else{localStorage.clear();}},	
 	initialize:function(){window.addEventListener("hashchange",function(){this.history.replaceState("hasHash","",window.location.hash);},false);window.addEventListener("popstate",function(e){if(e.state){this.location.reload();}},false);},
 	refpage:function(){var hiddenProperty="hidden" in document?"hidden":"webkitHidden" in document?"webkitHidden":"mozHidden" in document?"mozHidden":null;var visibilityChangeEvent=hiddenProperty.replace(/hidden/i,"visibilitychange");document.addEventListener(visibilityChangeEvent,findUser);},
 	setHashStringArgs:function(data,prefix,blacklist){if(prefix==undefined){prefix="";}var val=null,hash=[];for(var key in data){if(blacklist&&blacklist.indexOf(key)>-1){continue;}val=data[key];if(val&&val!=""){hash.push(prefix+key+"="+val);}}if(hash.length>0){window.location.hash=hash.join("&");}},
@@ -16,36 +23,15 @@ var PageUtil = {
 	goh5:function(){var sUserAgent=navigator.userAgent.toLowerCase(),bIsIpad=sUserAgent.match(/ipad/i)=="ipad",bIsIphoneOs=sUserAgent.match(/iphone os/i)=="iphone os",bIsMidp=sUserAgent.match(/midp/i)=="midp",bIsUc7=sUserAgent.match(/rv:1.2.3.4/i)=="rv:1.2.3.4",bIsUc=sUserAgent.match(/ucweb/i)=="ucweb",bIsAndroid=sUserAgent.match(/android/i)=="android",bIsCE=sUserAgent.match(/windows ce/i)=="windows ce",bIsWM=sUserAgent.match(/windows mobile/i)=="windows mobile";if(bIsIpad||bIsIphoneOs||bIsMidp||bIsUc7||bIsUc||bIsAndroid||bIsCE||bIsWM){window.location.href="http://m.liankur.com";}},
 };
 var DataUtil = {
-    getUser:function(){},
+    getUser:function(){$.ajax({url : "/i/user/findUser",type : "get",dataType : "json",success : function(data) {DataUtil.chUser(data);}}); },
     refUser:function(){},
-    delUser:function(){},
+    delUser:function(){DataUtil.chUser(null);},
+    chUser:function(data){if (data&&data.username && data.id != 0) {window.lkuser = data;window.localStorage.lkuser = JSON.stringify(data);window.localStorage.longtime = new Date().getTime();}else{PageUtil.del_Cookie("token");window.lkuser = null;PageUtil.del_lS(['longtime','lkuser']);}DataUtil.chHtml();},
+    chHtml:function(){if (window.lkuser) {$("#loginUser").show().find('img').attr({'src' : window.lkuser.avatar,'title' : window.lkuser.username});$("#noLoginUser").hide();} else {$("#noLoginUser").show();$("#loginUser").hide();}},
     getMsg:function(){},
     getToken:function(){},
 };
-
-
-
-if (window.localStorage.lkuser
-		&& new Date().getTime() - window.localStorage.longtime < (30 * 60 * 1000)) {
-	window.lkuser = JSON.parse(window.localStorage.lkuser);
-	$("#loginUser").show().find('img').attr({
-		'src' : lkuser.avatar,
-		'title' : lkuser.username
-	});
-	$("#noLoginUser").hide();
-	$.ajax({
-		url : "/i/user/findUserById",
-		type : "post",
-		data : {
-			"userId" : lkuser.id
-		},
-		success : function(data) {
-			window.lkuser = data;
-		}
-	});
-} else {
-	findUser();
-}
+DataUtil.getUser();
 
 function checkLogin(msg, callback) {// 检查是否登录
 	if (window.lkuser != null) {
