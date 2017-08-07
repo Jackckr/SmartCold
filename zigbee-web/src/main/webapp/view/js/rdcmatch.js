@@ -169,7 +169,7 @@ function getRdcSqm() {
 
 /*初始化出租求租冷库列表*/
 function initRentRdc() {
-    util.setHashStringArgs(screenParam);
+    PageUtil.setHashStringArgs(screenParam);
     if (window.lkuser) {
         screenParam.uid = window.lkuser.id;
     }
@@ -287,7 +287,7 @@ function getGoodsType() {
 var rentDate = ['', '1个月以下', '1~3个月', '3~6个月', '6~9个月', '1年以上', '两年以上', '三年以上', '五年以上'];
 /*初始化出售求购列表*/
 function initGoodsList() {
-    util.setHashStringArgs(screenParam);
+    PageUtil.setHashStringArgs(screenParam);
     if (window.lkuser) {
         screenParam.uid = window.lkuser.id;
     }
@@ -422,7 +422,7 @@ function flushPage(em) {
 
 /*将url中的参数赋给页面*/
 function inithostfilter() {
-    var histdata = util.getHashStringArgs(), key = null, val = null, em = null, type = null, nem = null;
+    var histdata = PageUtil.getHashStringArgs(), key = null, val = null, em = null, type = null, nem = null;
     if (!histdata.pageNum) {
         return;
     }
@@ -516,7 +516,7 @@ $(function () {
         }
     });
     $("#provinceid,#goodsProvince").bind('change', changeProvince);
-    util.initialize();
+    PageUtil.initialize();
 });
 function collection(mark, id) {
     checkLogin();

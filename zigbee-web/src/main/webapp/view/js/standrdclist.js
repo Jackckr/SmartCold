@@ -11,7 +11,7 @@ var ui_laypage, pagination = {pageCount: -1, oldPageCount: -1}
 function getRdcRentList() {
     var rdcRentInfo = [];
     $("#rdcRentList").empty();
-    util.setHashStringArgs(screenParam, "ul_", "sqm");
+    PageUtil.setHashStringArgs(screenParam, "ul_", "sqm");
     if (window.lkuser) {
         screenParam.uid = window.lkuser.id;
     }
@@ -185,7 +185,7 @@ function init_filter() {
     setTimeout(inithostfilter, 0);
 }
 function inithostfilter() {
-    var histdata = util.getHashStringArgs(), key = null, val = null, em = null, type = null;
+    var histdata = PageUtil.getHashStringArgs(), key = null, val = null, em = null, type = null;
     if (!histdata.ul_pageNum) {
         return;
     }
@@ -256,7 +256,7 @@ function initdata(isread) {
             delayTime:500,
             trigger: "click"
         });
-        util.initialize();
+        PageUtil.initialize();
     }
 
 }

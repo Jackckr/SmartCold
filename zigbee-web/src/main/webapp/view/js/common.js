@@ -83,7 +83,7 @@ function getUrlParam(name) {
 
 /* 获取用户对象 */
 function findUser() {
-	console.log(PageUtil.getCookie("token"));
+	console.log(PageUtil.get_Cookie("token"));
 	$.ajax({
 		url : "/i/user/findUser",
 		type : "get",
@@ -117,7 +117,7 @@ function logout() {
 	});
 	
 	PageUtil.del_Cookie("token");
-	console.log(PageUtil.getCookie("token"));
+	console.log(PageUtil.get_Cookie("token"));
 	window.localStorage.clear();// 清除系统user;
 	window.location.href = "../../index.html";
 };
