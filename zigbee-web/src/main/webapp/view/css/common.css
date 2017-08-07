@@ -159,6 +159,7 @@ html,body,header{
     width: 300px;
     height: 100%;
     background: url("../img/logo.png") left center no-repeat;
+    background-size: contain;
     color: #fff;
     text-indent: 150px;
     font-size: 20px;
