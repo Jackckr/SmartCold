@@ -121,7 +121,7 @@
 <script src="view/plugins/layui.all.js"></script>
 <script src="view/js/common.js"></script>
 <script>
-  if( window.lkuser){  window.location.href='index.html'; }
+  if( window.lkuser||window.localStorage.lkuser){  window.location.href='index.html'; }
   layui.use(['form'], function(){
         var form = layui.form(),layer = layui.layer;
         //自定义验证规则
@@ -175,8 +175,8 @@
                                 if (data && data.id != 0) {
                                     window.lkuser=data;
                                     window.lkuser.token=token;
-                                    window.sessionStorage.lkuser=JSON.stringify(data);
-                                    window.sessionStorage.longtime=new Date().getTime();
+                                    window.localStorage.lkuser=JSON.stringify(data);
+                                    window.localStorage.longtime=new Date().getTime();
                                     if(localStorage.OURL){
                                         window.location.href=localStorage.OURL;
                                     }else{
@@ -184,7 +184,7 @@
                                     }
                                     localStorage.removeItem('OURL');
                                 } else {
-                                    window.sessionStorage.removeItem("lkuser");//清除系统user;
+                                    window.localStorage.removeItem("lkuser");//清除系统user;
                                 }
                             }
                         });
