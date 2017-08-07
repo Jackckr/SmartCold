@@ -56,7 +56,7 @@ function checkLogin(msg, callback) {// 检查是否登录
 	} else {
 		localStorage.OURL = document.URL;
 		window.lkuser = null;
-		window.location.href = "login.html";
+		window.location.href = "/login.html";
 		return false;
 	}
 }
