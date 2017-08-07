@@ -86,7 +86,7 @@ function getRdcInfo() {
         if(!window.lkuser){//没有登录
             baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%</td></tr>' +
                 '<tr><td>地址</td><td>'+rdc.address+'</td> </tr>' +
-                '<tr><td>仓储信息</td><td><a style="color:#2763cc;" href="login.html">登录</a>方可查看更多</tr></table>');
+                '<tr><td>仓储信息</td><td><a style="color:#2763cc;" href="../../login.html">登录</a>方可查看更多</tr></table>');
         }else if(window.lkuser.id==rdc.userid){//是自己的冷库
             if(rdc.audit==2){
                 auditButton=''

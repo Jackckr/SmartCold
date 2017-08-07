@@ -38,7 +38,7 @@ public class WatermarkUtil {
 	private static final int iconX = 160;
 	private static final int iconY = 86;
 	private static final float alpha = 0.8f; // 透明度 
-	private static final  double caling = 0.4; //缩放比例 
+	private static final  double caling = 0.2; //缩放比例 
 	private static Image iconimgImage=null;
 
 	
