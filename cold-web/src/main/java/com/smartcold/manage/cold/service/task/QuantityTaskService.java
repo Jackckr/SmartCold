@@ -32,7 +32,6 @@ import com.smartcold.manage.cold.entity.olddb.Rdc;
 import com.smartcold.manage.cold.entity.olddb.SystemInformEntity;
 import com.smartcold.manage.cold.entity.olddb.TempSetEntity;
 import com.smartcold.manage.cold.service.StorageService;
-import com.smartcold.manage.cold.service.TaskService;
 import com.smartcold.manage.cold.util.ExportExcelUtil;
 import com.smartcold.manage.cold.util.RemoteUtil;
 import com.smartcold.manage.cold.util.SetUtil;
@@ -45,7 +44,7 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 2016年9月27日11:55:45
  **/
 @Service
-public class QuantityTaskService implements TaskService {
+public class QuantityTaskService  {
 
 	@Autowired
 	private RdcMapper rdcMapper;
@@ -666,13 +665,7 @@ public class QuantityTaskService implements TaskService {
 		this.warningLogMapper.addWarningLog(errInfoList);
 	}
 
-	@Override
-	public void runTask(int day) {
-		String time = TimeUtil.getFormatDate(TimeUtil.getBeforeDay(day));
-		Date dateTime = TimeUtil.parseYMD(time);
-		String startTime= time+ " 00:00:00";String endtime =time+ " 23:59:59";
-		SummaryoverTempCpunt(time, dateTime, startTime, endtime);
-	}
+
 	
 	//超温统计
 	public void SummaryoverTempCpunt(String time, Date dateTime,String startTime,String endTime){

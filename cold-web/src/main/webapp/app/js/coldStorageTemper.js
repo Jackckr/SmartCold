@@ -130,6 +130,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     	});
     };
     $scope.getTempset(); 
+//    $scope.load();
     clearInterval($rootScope.timeTicket);
     $rootScope.timeTicket = setInterval(function () { $scope.refdata(); }, 30000);
     $scope.$on('$destroy',function(){ clearInterval($rootScope.timeTicket);  });

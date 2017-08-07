@@ -102,6 +102,17 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 		        		 $rootScope.Tempset=[];
 		        		 $rootScope.mystorages = data;
 		        		 $rootScope.storageModal = data[0];
+		        	     angular.forEach($rootScope.mystorages,function(item){	
+		        	    	 if($rootScope.Tempset[item.id]==undefined){
+		        	    		 $http.get('/i/temp/getTempsetByStorageID?oid=' + item.id).success(function(req,status,headers,config){
+		        	    			 var oids=new Array(),names=new Array();
+				        	    	 angular.forEach(req,function(obj,i){
+				    		    	 		oids.push(obj.id);names.push(obj.name);
+				    		    	 });
+				        	    	 $rootScope.Tempset[item.id]={oids:oids,names:names };
+		        	             });
+		        	    	 }
+		        	     });
 		        	 });
 		        	 $http.get('/i/coldStorageSet/findHasDoorStorageSetByRdcId?rdcID=' + rdcId).success(function(data){
 		        			$rootScope.hasDoorStorages = data;
@@ -290,7 +301,7 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/basicReport/{rdcId}',
         controller: 'basicReport',
         templateUrl: 'app/template/basicReport.html'
-    }).state('wiseReport',{//基本版析报告  -分析报告--jhy--2017-06-19 新版
+    }).state('wiseReport',{//聪慧版析报告  -分析报告--jhy--2017-06-19 新版
         url: '/wiseReport/{rdcId}',
         controller: 'wiseReport',
         templateUrl: 'app/template/wiseReport.html'

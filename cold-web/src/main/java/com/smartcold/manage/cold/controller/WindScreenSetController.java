@@ -9,6 +9,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smartcold.manage.cold.dao.olddb.WindScreenSetMapping;
 
+
+/**
+ * 风幕机windScreen
+ * @author Administrator
+ *
+ */
 @Controller
 @RequestMapping(value = "/windScreen")
 public class WindScreenSetController {
