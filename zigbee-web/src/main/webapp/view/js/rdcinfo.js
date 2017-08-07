@@ -67,7 +67,7 @@ function getRdcInfo() {
         var rentSqm=rdc.rentSqm?rdc.rentSqm+"㎡":"暂无";
         var facility=rdc.facility=="undefined"?"":rdc.facility;
         var remark=rdc.remark=="undefined"?"":rdc.remark;
-        if(rdc.storagePics.length){
+        if(rdc.storagePics){
             $.each(rdc.storagePics,function (index, item) {
                 bigImg.push('<li><a href="javascript:;"><img src="'+item.location+'" alt="" width="700" height="320"/></a></li>');
                 smallImg.push('<li class="current"><a href="javascript:;"><img src="'+item.location+'"/><span class="border"></span><span class="mask"></span></a></li>');
