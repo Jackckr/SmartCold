@@ -183,7 +183,7 @@
 }
 .bodyModel>div>h6{
     position: absolute;
-    bottom: -12px;
+    top: -36px;
     left: 0;
     width: 100%;
 }
