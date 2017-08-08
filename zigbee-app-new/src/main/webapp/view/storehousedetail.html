@@ -96,8 +96,8 @@
 				<div class="flex" ng-if="vo.audit==2||vo.istemperaturestandard==1">
 					<div class="item flex">
 						<span class="item"></span>
-						<p class="item" ng-if="vo.audit==2"><i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i></p>
-						<p class="item" ng-if="vo.istemperaturestandard==1"><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i></p>
+						<p class="item" ng-if="vo.audit==2 && vo.rdcID!=1878"><i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i></p>
+						<p class="item" ng-if="vo.istemperaturestandard==1 && vo.rdcID!=1878"><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i></p>
 					</div>
 				</div>
 				<div class="flex" ng-if="vo.detlAddress!=''&&vo.detlAddress!=undefined">
