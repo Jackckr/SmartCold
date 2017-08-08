@@ -162,12 +162,17 @@
 .rdcCol>li{
     overflow: hidden;
     zoom: 1;
-    border: 1px solid #ccc;
+    border: 3px solid #ccc;
     padding: 8px;
     margin-bottom: 10px;
+    transition: all 0.2s;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    transition: all 0.2s;
 }
 .rdcCol>li:hover{
-    border-color: #186eff;
+    border: 3px solid #186eff;
 }
 .rdcCol>li>div{
     float:left;
