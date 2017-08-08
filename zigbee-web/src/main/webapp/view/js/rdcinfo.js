@@ -67,10 +67,10 @@ function getRdcInfo() {
         var rentSqm=rdc.rentSqm?rdc.rentSqm+"㎡":"暂无";
         var facility=rdc.facility=="undefined"?"":rdc.facility;
         var remark=rdc.remark=="undefined"?"":rdc.remark;
-        if(rdc.storagePics){
+        if(rdc.storagePics&&rdc.storagePics.length>0){
             $.each(rdc.storagePics,function (index, item) {
                 bigImg.push('<li><a href="javascript:;"><img src="'+item.location+'" alt="" width="700" height="320"/></a></li>');
-                smallImg.push('<li class="current"><a href="javascript:;"><img src="'+item.location+'"/><span class="border"></span><span class="mask"></span></a></li>');
+                smallImg.push('<li><a href="javascript:;"><img src="'+item.location+'"/><span class="border"></span><span class="mask"></span></a></li>');
             });
         }else{
             bigImg.push('<li><a href="javascript:;"><img src="http://139.196.189.93:8089/app/rdcHeader.jpg" alt="" width="700" height="320"/></a></li>');
@@ -162,7 +162,7 @@ function getRdcInfo() {
         $("#divimginfog_imgPlayer").empty().append(bigImg.join(''));
         layer.photos({
             photos: '#divimginfog_imgPlayer'
-            //,anim:3//0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+            ,anim:5//0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
         });
 
         $("#divpageinfog_imgPlayer").empty().append(smallImg.join(''));
@@ -178,6 +178,7 @@ function realTimeTem(rdcId,rdcName) {
         ,area: ['500px', '300px']
         ,title: rdcName+'实时库温'
         ,shade: 0.6 //遮罩透明度
+        ,shadeClose: true
         ,maxmin: true //允许全屏最小化
         ,anim: 2 //0-6的动画形式，-1不开启
         ,content: '<div style="padding:50px;"><span style="color: #54c849;">'+rdcName+'</span>　还没有加入冷库360，请致电400-853-5606联系~</div>'

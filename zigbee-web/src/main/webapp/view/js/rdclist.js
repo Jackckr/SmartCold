@@ -32,11 +32,11 @@ function getRdcRentList() {
             rdcRentList.forEach(function (rdcRent, index) {
                 var tempTypeStr = rdcRent.tempTypeStr ? rdcRent.tempTypeStr : "";
                 var manageTypeStr = rdcRent.manageTypeStr ? rdcRent.manageTypeStr : "";
-                rdcRentInfo.push('<li><div class="rdcImg"><a  target="_blank" href="rdcinfo.html?rdcId=', rdcRent.id, '"><img src="', rdcRent.logo, '" alt=""></a>');
+                rdcRentInfo.push('<li><div class="rdcImg"><a href="rdcinfo.html?rdcId=', rdcRent.id, '"><img src="', rdcRent.logo, '" alt=""></a>');
                 if (rdcRent.istemperaturestandard == 1) {
                     rdcRentInfo.push('<i>温度达标冷库</i>');
                 }
-                rdcRentInfo.push('</div><div class="rdcInfo"><div class="rdcTxt clearfix"><span class="rdcName omg fl"><a   target="_blank" href="rdcinfo.html?rdcId=', rdcRent.id, '">', rdcRent.name, '</a></span><span class="infoPercenty fl">信息完整度:<b>', rdcRent.infoIntegrity, '%</b></span><ul class="stars clearfix fl">');
+                rdcRentInfo.push('</div><div class="rdcInfo"><div class="rdcTxt clearfix"><span class="rdcName omg fl"><a  href="rdcinfo.html?rdcId=', rdcRent.id, '">', rdcRent.name, '</a></span><span class="infoPercenty fl">信息完整度:<b>', rdcRent.infoIntegrity, '%</b></span><ul class="stars clearfix fl">');
                 rdcRentInfo.push('</ul></div><div class="rdcApprove">');
                 rdcRent.audit == 2 ? rdcRentInfo.push('<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>') : rdcRentInfo.push('<b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>');
                 if (rdcRent.istemperaturestandard == 1) {
@@ -72,7 +72,7 @@ function getRdcRentList() {
     });
 }
 function openurl(id) {
-    window.open("rdcinfo.html?rdcId="+id)
+    location.href="rdcinfo.html?rdcId="+id;
 }
 /*点击查看实时库温*/
 function realTimeTem(rdcId, rdcName) {
@@ -81,6 +81,7 @@ function realTimeTem(rdcId, rdcName) {
         , area: ['500px', '300px']
         , title: rdcName + '实时库温'
         , shade: 0.6 //遮罩透明度
+        ,shadeClose: true
         , maxmin: true //允许全屏最小化
         , anim: 2 //0-6的动画形式，-1不开启
         , content: '<div style="padding:50px;">' + rdcName + '还没有加入冷库360，请致电400-853-5606联系~</div>'
