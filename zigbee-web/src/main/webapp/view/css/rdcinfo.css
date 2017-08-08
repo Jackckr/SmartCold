@@ -74,8 +74,12 @@
 .rdcInfoTxt table td{
     padding: 5px 0 5px 20px;
     border: none;
+    vertical-align: top;
 }
-.rdcInfoTxt table td>span{
+.rdcInfoTxt table td p{
+    line-height: 1.8;
+}
+.rdcInfoTxt table td span{
     color: #868686;
     display: inline-block;
     width: 120px;
