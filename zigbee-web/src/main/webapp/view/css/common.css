@@ -14,7 +14,8 @@ input[type='text'],input[type='number'],input[type='tel'],input[type='email'],te
     background-image: none; border: 1px solid #ccc; border-radius: 4px;resize: vertical; }
 a{cursor: pointer;text-decoration: none; color: #4F4F4F; font-family: Microsoft YaHei,HELVETICA, sans-serif,Tahoma, Arial;}
 a:hover{color: #186efe; text-decoration: none;}
-a:active{color: #656565;}
+a:active{color: darkgoldenrod;}
+a:visited{color: steelblue;}
 table{border: solid 1px #e8eef4; border-collapse: collapse;}
 table td{padding: 5px; border: solid 1px #e8eef4;}
 table th{padding: 6px 5px; text-align: left; background-color: #e8eef4; border: solid 1px #e8eef4;}
