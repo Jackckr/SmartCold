@@ -55,7 +55,7 @@
 			</h1>
 			<div class="flex">
 				<div class="item"><span>联系电话</span><b class="blue">
-					<a href="login.html" class="blue" ng-if="checkUserLogin()==false">登录后显示</a>
+					<a href="login.html" class="blue" ng-if="checkUserLogin()==false">{{telMd5(vo.telephone)}} [去登录]</a>
 					<em ng-if="checkUserLogin()">{{vo.telephone}}</em>
 				</b></div>
 				<div class="item">
@@ -76,7 +76,6 @@
 				<div class="flex">
 					<div class="item">
 						<span></span>
-
 					</div>
 				</div>
 			</div>-->

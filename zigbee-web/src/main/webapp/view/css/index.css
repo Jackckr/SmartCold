@@ -236,7 +236,7 @@
 }
 .imglist li{
     width: 32%;
-    height: 214px;
+    height: 219px;
     /*height: 168px;*/
     margin-right: 1%;
     margin-bottom: 15px;
@@ -340,7 +340,7 @@
     left: 0;
     width: 0;
     height: 100%;
-    background: #2098d1;
+    background: #d2ac36;
     z-index:0;
     transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;	/* Firefox 4 */
