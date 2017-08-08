@@ -140,6 +140,7 @@ function getTempStandard() {
 function getAudit() {
     var slvalue = setStyle("#ul_audit", this);
     screenParam.audit = slvalue == -100 ? null : slvalue;
+    screenParam.audit= slvalue==0? '0,1':slvalue;
     screenParam.pageNum = 1;
     getRdcRentList();
 }
