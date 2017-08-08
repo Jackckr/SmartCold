@@ -173,8 +173,8 @@
 .msgBody{
     border-bottom: 8px solid #f7f7f7;
 }
-.msgBody li{
-   /* line-height: 58px;*/
+.msgBody:hover{
+    background-color: #daefff;
 }
 .msgInfo ul > li.msgTitle {
     width: 20%;

@@ -15,8 +15,8 @@ function getRdcShare() {
                 if(data[i].audit==2){rightRdcLease.push('<b class="approve fr"><i class="iconfont">&#xe6ac;</i>已认证</b>');}else{rightRdcLease.push('<b class="reachStand fr"><i class="iconfont">&#xe63b;</i>未认证</b>');}
                 rightRdcLease.push('</div><div class="city"><p class="omg"><i class="iconfont fl">&#xe61c;</i>'+data[i].detlAddress+'</p><p>可租面积：'+data[i].sqm+'㎡</p></div></a></li>');
             }else {
-                leftRdclease.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'"><span>'+(i-5)+'</span>' +
-                    '['+data[i].title+'] 有'+data[i].sqm+'㎡冷库可用来出租，联系电话['+tel+']</a></li>');
+                var datainfo='<p class="omg"><span>'+(i-5)+'</span>['+data[i].title+'] 有'+data[i].sqm+'㎡冷库可用来出租，联系电话['+tel+']</p>';
+                leftRdclease.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'">'+datainfo+'</a></li>');
             }
         }
         $("#rightRdcLeaseUl").empty().append(rightRdcLease.join(''));
@@ -27,7 +27,8 @@ function getRdcShare() {
         for(var i=0,tel='';i<data.length;i++){
             if(window.lkuser){tel=data[i].telephone;}else{tel=telMd5(data[i].telephone);}
             if(i<=6){
-                rdcRent.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'"><span>'+(i+1)+'</span>['+data[i].detlAddress+'] '+data[i].title+'，联系电话['+tel+']</a></li>');
+                var datainfo='<p class="omg"><span>'+(i+1)+'</span>['+data[i].detlAddress+'] '+data[i].title+'，联系电话['+tel+']</p>';
+                rdcRent.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'">'+datainfo+'</a></li>');
             }
         }
         $("#rdcRentUl").empty().append(rdcRent.join(''));
@@ -37,7 +38,8 @@ function getRdcShare() {
         for(var i=0,tel='';i<data.length;i++){
             if(window.lkuser){tel=data[i].telephone;}else{tel=telMd5(data[i].telephone);}
             if(i<=5){
-                shopInfo.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'"><span>'+(i+1)+'</span>['+data[i].typeText+'] '+data[i].title+'，联系电话['+tel+']</a></li>');
+                var datainfo='<p class="omg"><span>'+(i+1)+'</span>['+data[i].typeText+'] '+data[i].title+'，联系电话['+tel+']</p>';
+                shopInfo.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'">'+datainfo+'</a></li>');
             }
         }
         $("#shopInfoUl").empty().append(shopInfo.join(''));
