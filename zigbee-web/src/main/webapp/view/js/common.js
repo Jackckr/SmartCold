@@ -24,8 +24,8 @@ var PageUtil = {
 };
 var DataUtil = {
     getUser:function(){$.ajax({url : "/i/user/findUser",type : "get",dataType : "json",success : function(data) {DataUtil.chUser(data);}}); },
-    refUser:function(){},
     delUser:function(){DataUtil.chUser(null);},
+    logout:function(){$.ajax({type : "GET",cache : false,dataType : 'json',url : '/i/user/logout'}).success(function(data) {});PageUtil.del_Cookie("token");window.localStorage.clear();window.location.href = "../../index.html";},
     chUser:function(data){if (data&&data.username && data.id != 0) {window.lkuser = data;window.localStorage.lkuser = JSON.stringify(data);window.localStorage.longtime = new Date().getTime();}else{PageUtil.del_Cookie("token");window.lkuser = null;PageUtil.del_lS(['longtime','lkuser']);}DataUtil.chHtml();},
     chHtml:function(){if (window.lkuser) {$("#loginUser").show().find('img').attr({'src' : window.lkuser.avatar,'title' : window.lkuser.username});$("#noLoginUser").hide();} else {$("#noLoginUser").show();$("#loginUser").hide();}},
     getMsg:function(){},
@@ -64,48 +64,8 @@ function getUrlParam(name) {
 		return unescape(r[2]);
 	return null;
 }/* 获取URL参数 */
-
-
-
-///* 获取用户对象 */
-//function findUser() {
-//	console.log(PageUtil.get_Cookie("token"));
-//	$.ajax({
-//		url : "/i/user/findUser",
-//		type : "get",
-//		dataType : "json",
-//		success : function(data) {
-//			if (data.username && data.id != 0) {
-//				window.lkuser = data;
-//				window.localStorage.lkuser = JSON.stringify(data);
-//				window.localStorage.longtime = new Date().getTime();
-//				$("#loginUser").show().find('img').attr({
-//					'src' : data.avatar,
-//					'title' : data.username
-//				});
-//				$("#noLoginUser").hide();
-//			} else {
-//				window.localStorage.removeItem("lkuser");// 清除系统user;
-//				$("#noLoginUser").show();
-//				$("#loginUser").hide();
-//			}
-//		}
-//	});
-//}
 /* 登出系统 */
-function logout() {
-	$.ajax({
-		type : "GET",
-		cache : false,
-		dataType : 'json',
-		url : '/i/user/logout'
-	}).success(function(data) {
-	});
-	
-	PageUtil.del_Cookie("token");
-	window.localStorage.clear();// 清除系统user;
-	window.location.href = "../../index.html";
-};
+function logout() {DataUtil.logout();};
 /* 判断数组中是否有重复元素 */
 Array.prototype.contains = function(obj) {
 	var i = this.length;
