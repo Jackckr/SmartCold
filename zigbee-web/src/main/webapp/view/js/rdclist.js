@@ -22,9 +22,11 @@ function getRdcRentList() {
     if (window.lkuser) {
         screenParam.uid = window.lkuser.id;
     }
+    if(screenParam.audit==0){screenParam.audit='0,1';}
     $.ajax({
         url: "/i/rdc/newGetRdcList", type: "post", cache: false, data: screenParam, success: function (data) {
             pagination.pageCount = data.totalPages;
+            if(screenParam.audit=='0,1'){screenParam.audit=0;}
             if (pagination.pageCount == -1 || pagination.oldPageCount != pagination.pageCount) {
                 flushPage();
             }
@@ -140,7 +142,6 @@ function getTempStandard() {
 function getAudit() {
     var slvalue = setStyle("#ul_audit", this);
     screenParam.audit = slvalue == -100 ? null : slvalue;
-    screenParam.audit= slvalue==0? '0,1':slvalue;
     screenParam.pageNum = 1;
     getRdcRentList();
 }
