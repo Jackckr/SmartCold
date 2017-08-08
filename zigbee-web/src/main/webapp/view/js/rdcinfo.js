@@ -133,28 +133,37 @@ function getRdcInfo() {
             rdc.temperRecord==0?temperRecord='':temperRecord='<td> <span>有无温度记录：</span>'+isHave[rdc.temperRecord]+' </td>';
             rdc.facility==""||rdc.facility=="undefined"?facility='':facility='<td colspan="2"> <span>周边设施：</span>'+rdc.facility+' </td>';
             rdc.remark==""||rdc.remark=="undefined"?remark='':remark='<td colspan="2"> <span>备注：</span>'+rdc.remark+' </td>';
-            rdc.coldTruck1==0?coldTruck1='':coldTruck1='<td> <span>小于1.8T：</span>'+rdc.coldTruck1+' 辆</td>';
-            rdc.height1*rdc.capacity1==0?capacity1='':capacity1='<td> <span>8 ~ 25℃：</span> '+(rdc.height1*rdc.capacity1).toFixed(2)+'m³</td> ';
-            rdc.coldTruck2==0?coldTruck2='':coldTruck2='<td> <span>1.8 ～ 6T：</span>'+rdc.coldTruck2+' 辆</td>';
-            rdc.height2*rdc.capacity2==0?capacity2='':capacity2='<td> <span>2 ~ 8℃：</span> '+(rdc.height2*rdc.capacity2).toFixed(2)+'m³</td> ';
-            rdc.coldTruck3==0?coldTruck3='':coldTruck3='<td> <span>6 ～ 14T：</span>'+rdc.coldTruck3+' 辆</td>';
-            rdc.height3*rdc.capacity3==0?capacity3='':capacity3='<td> <span>-2 ~ -18℃：</span> '+(rdc.height3*rdc.capacity3).toFixed(2)+'m³</td> ';
-            rdc.coldTruck4==0?coldTruck4='':coldTruck4='<td> <span>大于14T：</span>'+rdc.coldTruck4+' 辆</td>';
-            rdc.height4*rdc.capacity4==0?capacity4='':capacity4='<td> <span>-18 ~ -30℃：</span> '+(rdc.height4*rdc.capacity4).toFixed(2)+'m³</td> ';
-            rdc.height5*rdc.capacity5==0?capacity5='':capacity5='<tr> <td></td> <td> <span>小于-50℃：</span> '+(rdc.height5*rdc.capacity5).toFixed(2)+'m³ </td></tr>';
-
+            rdc.coldTruck1==0?coldTruck1='':coldTruck1='<p> <span>小于1.8T：</span>'+rdc.coldTruck1+' 辆</p>';
+            rdc.height1*rdc.capacity1==0?capacity1='':capacity1='<p> <span>8 ~ 25℃：</span> '+(rdc.height1*rdc.capacity1).toFixed(2)+'m³</p> ';
+            rdc.coldTruck2==0?coldTruck2='':coldTruck2='<p> <span>1.8 ～ 6T：</span>'+rdc.coldTruck2+' 辆</p>';
+            rdc.height2*rdc.capacity2==0?capacity2='':capacity2='<p> <span>2 ~ 8℃：</span> '+(rdc.height2*rdc.capacity2).toFixed(2)+'m³</p> ';
+            rdc.coldTruck3==0?coldTruck3='':coldTruck3='<p> <span>6 ～ 14T：</span>'+rdc.coldTruck3+' 辆</p>';
+            rdc.height3*rdc.capacity3==0?capacity3='':capacity3='<p> <span>-2 ~ -18℃：</span> '+(rdc.height3*rdc.capacity3).toFixed(2)+'m³</p> ';
+            rdc.coldTruck4==0?coldTruck4='':coldTruck4='<p> <span>大于14T：</span>'+rdc.coldTruck4+' 辆</p>';
+            rdc.height4*rdc.capacity4==0?capacity4='':capacity4='<p> <span>-18 ~ -30℃：</span> '+(rdc.height4*rdc.capacity4).toFixed(2)+'m³</p> ';
+            rdc.height5*rdc.capacity5==0?capacity5='':capacity5='<p> <span>小于-50℃：</span> '+(rdc.height5*rdc.capacity5).toFixed(2)+'m³ </p>';
+            coldTruck = coldTruck1+coldTruck2+coldTruck3+coldTruck4;
+            capacity=capacity1+capacity2+capacity3+capacity4+capacity5;
+            if(rdc.coldTruck1==0&&rdc.coldTruck2==0&&rdc.coldTruck3==0&&rdc.coldTruck4==0){
+                carNum='<td> <span>冷藏车数量：</span>库主未填写</td>'
+            }else{
+                carNum='<td> <span>冷藏车数量：</span></td>'
+            }
+            if(capacity1==''&&capacity2==''&&capacity3==''&&capacity4==''&&capacity5==''){
+                rdcCapacity='<td> <span>冷库容积：</span>库主未填写</td> '
+            }else{
+                rdcCapacity='<td> <span>冷库容积：</span> </td> '
+            }
             otherInfo.push('<table><caption>仓库信息</caption><tbody>' +
                 '<tr><td><span>冷库经营类型：</span>'+manageType[rdc.manageType]+' </td> <td> <span>冷库温度类型：</span>'+tempType[rdc.temperType]+' </td> </tr> ' +
                 '<tr><td> <span>商品存放类型：</span>'+saveType[rdc.storageType]+'</td> '+structure+' </tr> ' +
                 '<tr>'+platform + lihuoRoom +'</tr>'+
                 '<tr>'+lihuoArea+lihuoTemperCtr +'</tr>'+
                 '<tr>'+storageRefreg+temperRecord+'</tr>'+
-                '<tr> <td> <span>冷藏车数量：</span> </td> <td> <span>冷库容积：</span> </td> </tr> ' +
-                '<tr>'+coldTruck1+capacity1+'</tr> ' +
-                '<tr>'+coldTruck2+capacity2+'</tr> ' +
-                '<tr>'+coldTruck3+capacity3+'</tr> ' +
-                '<tr>'+coldTruck4+capacity4+'</tr> ' +
-                capacity5+'<tr>'+facility+'</tr><tr>'+remark+'</tr>' +'</tbody></table>');
+                '<tr> '+carNum+rdcCapacity+'</tr> ' +
+                '<tr> <td>'+coldTruck+'</td>' +
+                '<td>'+capacity+'</td> </tr> ' +
+                '<tr>'+remark+'</tr>' +'</tbody></table>');
         }else if(window.lkuser && window.lkuser.vipType==0&&window.lkuser&&window.lkuser.id!=rdc.userid){
             otherInfo.push('');
             $("#otherInfo").hide();
