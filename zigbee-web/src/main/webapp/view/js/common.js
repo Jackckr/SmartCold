@@ -17,7 +17,7 @@ var PageUtil = {
 	del_Cookie:function(name){var exp = new Date();	exp.setTime(exp.getTime() - 1);var cval=PageUtil.get_Cookie(name);if(cval!=null)document.cookie= name + "="+cval+";expires="+exp.toGMTString();},
 	del_lS:function(keys){var type=typeof(keys);if("object"==type){ $.each(keys, function(i, vo){ localStorage.removeItem(localStorage.removeItem(vo));});}else if("string"==type){localStorage.removeItem(keys);}else{localStorage.clear();}},	
 	initialize:function(){window.addEventListener("hashchange",function(){this.history.replaceState("hasHash","",window.location.hash);},false);window.addEventListener("popstate",function(e){if(e.state){this.location.reload();}},false);},
-	refpage:function(){var hiddenProperty="hidden" in document?"hidden":"webkitHidden" in document?"webkitHidden":"mozHidden" in document?"mozHidden":null;var visibilityChangeEvent=hiddenProperty.replace(/hidden/i,"visibilitychange");document.addEventListener(visibilityChangeEvent,findUser);},
+	refpage:function(){var hiddenProperty="hidden" in document?"hidden":"webkitHidden" in document?"webkitHidden":"mozHidden" in document?"mozHidden":null;var visibilityChangeEvent=hiddenProperty.replace(/hidden/i,"visibilitychange");document.addEventListener(visibilityChangeEvent,DataUtil.getUser);},
 	setHashStringArgs:function(data,prefix,blacklist){if(prefix==undefined){prefix="";}var val=null,hash=[];for(var key in data){if(blacklist&&blacklist.indexOf(key)>-1){continue;}val=data[key];if(val&&val!=""){hash.push(prefix+key+"="+val);}}if(hash.length>0){window.location.hash=hash.join("&");}},
 	getHashStringArgs:function(){var hashStrings=(window.location.hash.length>0?window.location.hash.substring(1):""),hashArgs={},items=hashStrings.length>0?hashStrings.split("&"):[],item=null,name=null,value=null,i=0,len=items.length;for(i=0;i<len;i++){item=items[i].split("=");name=decodeURIComponent(item[0]);value=decodeURIComponent(item[1]);if(name.length>0){hashArgs[name]=value;}}return hashArgs;},
 	goh5:function(){var sUserAgent=navigator.userAgent.toLowerCase(),bIsIpad=sUserAgent.match(/ipad/i)=="ipad",bIsIphoneOs=sUserAgent.match(/iphone os/i)=="iphone os",bIsMidp=sUserAgent.match(/midp/i)=="midp",bIsUc7=sUserAgent.match(/rv:1.2.3.4/i)=="rv:1.2.3.4",bIsUc=sUserAgent.match(/ucweb/i)=="ucweb",bIsAndroid=sUserAgent.match(/android/i)=="android",bIsCE=sUserAgent.match(/windows ce/i)=="windows ce",bIsWM=sUserAgent.match(/windows mobile/i)=="windows mobile";if(bIsIpad||bIsIphoneOs||bIsMidp||bIsUc7||bIsUc||bIsAndroid||bIsCE||bIsWM){window.location.href="http://m.liankur.com";}},
@@ -31,7 +31,7 @@ var DataUtil = {
     getMsg:function(){},
     getToken:function(){},
 };
-DataUtil.getUser();
+
 
 function checkLogin(msg, callback) {// 检查是否登录
 	if (window.lkuser != null) {
@@ -67,31 +67,31 @@ function getUrlParam(name) {
 
 
 
-/* 获取用户对象 */
-function findUser() {
-	console.log(PageUtil.get_Cookie("token"));
-	$.ajax({
-		url : "/i/user/findUser",
-		type : "get",
-		dataType : "json",
-		success : function(data) {
-			if (data.username && data.id != 0) {
-				window.lkuser = data;
-				window.localStorage.lkuser = JSON.stringify(data);
-				window.localStorage.longtime = new Date().getTime();
-				$("#loginUser").show().find('img').attr({
-					'src' : data.avatar,
-					'title' : data.username
-				});
-				$("#noLoginUser").hide();
-			} else {
-				window.localStorage.removeItem("lkuser");// 清除系统user;
-				$("#noLoginUser").show();
-				$("#loginUser").hide();
-			}
-		}
-	});
-}
+///* 获取用户对象 */
+//function findUser() {
+//	console.log(PageUtil.get_Cookie("token"));
+//	$.ajax({
+//		url : "/i/user/findUser",
+//		type : "get",
+//		dataType : "json",
+//		success : function(data) {
+//			if (data.username && data.id != 0) {
+//				window.lkuser = data;
+//				window.localStorage.lkuser = JSON.stringify(data);
+//				window.localStorage.longtime = new Date().getTime();
+//				$("#loginUser").show().find('img').attr({
+//					'src' : data.avatar,
+//					'title' : data.username
+//				});
+//				$("#noLoginUser").hide();
+//			} else {
+//				window.localStorage.removeItem("lkuser");// 清除系统user;
+//				$("#noLoginUser").show();
+//				$("#loginUser").hide();
+//			}
+//		}
+//	});
+//}
 /* 登出系统 */
 function logout() {
 	$.ajax({
@@ -103,7 +103,6 @@ function logout() {
 	});
 	
 	PageUtil.del_Cookie("token");
-	console.log(PageUtil.get_Cookie("token"));
 	window.localStorage.clear();// 清除系统user;
 	window.location.href = "../../index.html";
 };
@@ -210,3 +209,4 @@ function telMd5(tel) {
 setInterval(function() {localStorage.removeItem('OURL');}, 60000);
 PageUtil.goh5();
 PageUtil.refpage();
+DataUtil.getUser();
