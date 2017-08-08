@@ -15,403 +15,408 @@
     <link rel="stylesheet" href="view/css/media.css" />
 </head>
 <body>
-<!--header 导航栏-->
-<div class="header">
-    <div class="hotLine">
-        <h2 class="fl">冷库物联网大数据平台</h2>
-        <div class="fr">
-            <span>客服热线：<span class="orange">400-853-5606</span></span>
-            <a href="#QRcode">
-                APP下载<i class="iconfont orange">&#xe642;</i>
-            </a>
-        </div>
-    </div>
-    <div class="nav">
-        <h1 class="fl"><a href="index.html"></a></h1>
-        <ul id="noLoginUser" class="fr navLogin">
-            <li><a href="login.html"><i class="iconfont">&#xe715;</i>&nbsp;登录</a></li>
-            <li><a href="view/html/register.html"><i class="iconfont">&#xe60f;</i>&nbsp;注册</a></li>
-        </ul>
-        <div id="loginUser" class="fr">
-            <div class="nameDiv">
-                <img src="" onclick="window.location.href='view/html/usercenter.html'">
+<div id="containBox">
+    <div id="containBody">
+        <!--header 导航栏-->
+        <div class="header">
+            <div class="hotLine">
+                <h2 class="fl">冷库物联网大数据平台</h2>
+                <div class="fr">
+                    <span>客服热线：<span class="orange">400-853-5606</span></span>
+                    <a href="#QRcode">
+                        APP下载<i class="iconfont orange">&#xe642;</i>
+                    </a>
+                </div>
             </div>
-            <dl class="hide">
-                <li><a href="view/html/usercenter.html">个人中心</a></li>
-                <li><a onclick="logout()">退出</a></li>
-            </dl>
+            <div class="nav">
+                <h1 class="fl"><a href="index.html"></a></h1>
+                <ul id="noLoginUser" class="fr navLogin">
+                    <li><a href="login.html"><i class="iconfont">&#xe715;</i>&nbsp;登录</a></li>
+                    <li><a href="view/html/register.html"><i class="iconfont">&#xe60f;</i>&nbsp;注册</a></li>
+                </ul>
+                <div id="loginUser" class="fr">
+                    <div class="nameDiv">
+                        <img src="" onclick="window.location.href='view/html/usercenter.html'">
+                    </div>
+                    <dl class="hide">
+                        <li><a href="view/html/usercenter.html">个人中心</a></li>
+                        <li><a onclick="logout()">退出</a></li>
+                    </dl>
+                </div>
+                <ul class="fr navUl">
+                    <li><a href="index.html">首　　页</a></li>
+                    <li><a href="view/html/rdclist.html">冷库商情</a></li>
+                    <li><a href="view/html/standrdclist.html">达标冷库</a></li>
+                    <li><a href="view/html/rdcprice.html">冷库价格</a></li>
+                    <li><a href="view/html/rdcmatch.html">需求匹配</a></li>
+                    <li><a href="view/html/rdctrace.html">温度追溯</a></li>
+                    <li><a href="http://www.smartcold.org.cn/">冷库360</a></li>
+                </ul>
+            </div>
         </div>
-        <ul class="fr navUl">
-            <li><a href="index.html">首　　页</a></li>
-            <li><a href="view/html/rdclist.html">冷库商情</a></li>
-            <li><a href="view/html/standrdclist.html">达标冷库</a></li>
-            <li><a href="view/html/rdcprice.html">冷库价格</a></li>
-            <li><a href="view/html/rdcmatch.html">需求匹配</a></li>
-            <li><a href="view/html/rdctrace.html">温度追溯</a></li>
-            <li><a href="http://www.smartcold.org.cn/">冷库360</a></li>
-        </ul>
-    </div>
-</div>
-<!--banner 轮播图-->
-<div class="banner">
-    <ul class="imgList">
-        <li><a href="javascript:;"><img src="view/img/blue44.jpg"/></a></li>
-        <li><a href="javascript:;"><img src="view/img/blue22.jpg"/></a></li>
-        <li><a href="javascript:;"><img src="view/img/blue33.jpg"/></a></li>
-        <li><a href="javascript:;"><img src="view/img/blue11.jpg"/></a></li>
-    </ul>
-    <ol class="dianList">
-        <li class="current"></li>
-        <li></li>
-        <li></li>
-        <li></li>
-    </ol>
-    <div class="leftBtn"><i class="iconfont">&#xe611;</i></div>
-    <div class="rightBtn"><i class="iconfont">&#xe624;</i></div>
-    <!--过滤条件-->
-    <ul class="filter hide clearfix">
-        <ul class="fl">
-            <li class="filterDiv">
-                <i class="iconfont">&#xe621;</i>
-                <p>找冷库</p>
-            </li>
-        </ul>
-        <div class="filterBox">
-            <ul>
-                <li onclick="activeA(this)">
-                    <a href="javascript:;">
-                        <i class="iconfont fl">&#xe61c;</i>
-                        区域面积
-                        <i class="iconfont fr">&#xe64a;</i>
-                    </a>
-                </li>
-                <li onclick="activeA(this)">
-                    <a href="javascript:;">
-                        <i class="iconfont fl">&#xe673;</i>
-                        冷库面积
-                        <i class="iconfont fr">&#xe64a;</i>
-                    </a>
-                </li>
-                <li onclick="activeA(this)">
-                    <a href="javascript:;">
-                        <i class="iconfont fl">&#xe60b;</i>
-                        价格区间
-                        <i class="iconfont fr">&#xe64a;</i>
-                    </a>
-                </li>
-                <li onclick="activeA(this)">
-                    <a href="javascript:;">
-                        <i class="iconfont fl">&#xe635;</i>
-                       冷库类型
-                        <i class="iconfont fr">&#xe64a;</i>
-                    </a>
-                </li>
+        <!--banner 轮播图-->
+        <div class="banner">
+            <ul class="imgList">
+                <li><a href="javascript:;"><img src="view/img/blue44.jpg"/></a></li>
+                <li><a href="javascript:;"><img src="view/img/blue22.jpg"/></a></li>
+                <li><a href="javascript:;"><img src="view/img/blue33.jpg"/></a></li>
+                <li><a href="javascript:;"><img src="view/img/blue11.jpg"/></a></li>
             </ul>
-            <ol class="filterTxt">
-                <li>
-                    <div class="area">
-                        <h3>区域面积</h3>
-                        <ul class="arealist clearfix">
-                            <li class="fl">不限</li>
-                            <li class="fl"><1000㎡</li>
-                            <li class="fl">1000~5000㎡</li>
-                            <li class="fl">5000~1万㎡</li>
-                            <li class="fl">1万~5万㎡</li>
-                            <li class="fl">>5万㎡</li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <div class="area">
-                        <h3>冷库面积</h3>
-                        <ul class="arealist clearfix">
-                            <li class="fl">不限</li>
-                            <li class="fl"><1000㎡</li>
-                            <li class="fl">1000~5000㎡</li>
-                            <li class="fl">5000~1万㎡</li>
-                            <li class="fl">1万~5万㎡</li>
-                            <li class="fl">>5万㎡</li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <div class="area">
-                        <h3>价格区间</h3>
-                        <ul class="arealist clearfix">
-                            <li class="fl">不限</li>
-                            <li class="fl"><50元</li>
-                            <li class="fl">50~100元</li>
-                            <li class="fl">100~500元</li>
-                            <li class="fl">500~1000元</li>
-                            <li class="fl">>1000元</li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <div class="area">
-                        <h3>冷库类型</h3>
-                        <ul class="arealist clearfix">
-                            <li class="fl">不限</li>
-                            <li class="fl">产地型</li>
-                            <li class="fl">市场型</li>
-                            <li class="fl">仓储型</li>
-                            <li class="fl">配送型</li>
-                            <li class="fl">生产型</li>
-                            <li class="fl">中央厨房</li>
-                            <li class="fl">医药型</li>
-                            <li class="fl">其他</li>
-                        </ul>
-                    </div>
-                </li>
+            <ol class="dianList">
+                <li class="current"></li>
+                <li></li>
+                <li></li>
+                <li></li>
             </ol>
-        </div>
-    </ul>
-</div>
-
-<!--冷库图文列表-->
-<div class="section imgTxtList">
-    <h1>
-        <i class="iconfont">&#xe631;</i>
-        出租冷库
-    </h1>
-    <div class="clearfix">
-        <ul class="fl imglist" id="rightRdcLeaseUl">
-        </ul>
-        <div class="fr txtlist">
-            <h3 class="clearfix">
-                <i class="iconfont">&#xe615;</i>
-                冷库出租动态
-                <a href="view/html/rdcmatch.html" class="fr">更多&nbsp;&nbsp;<i class="iconfont">&#xe624;</i></a>
-            </h3>
-            <ul id="leftRdcLeaseUl">
-            </ul>
-            <div class="adDouble hide">
-                <ul class="clearfix">
-                    <li><a href=""><img src="view/img/rqwl.png" alt=""></a></li>
-                    <li><a href=""><img src="view/img/zwy.png" alt=""></a></li>
+            <div class="leftBtn"><i class="iconfont">&#xe611;</i></div>
+            <div class="rightBtn"><i class="iconfont">&#xe624;</i></div>
+            <!--过滤条件-->
+            <ul class="filter hide clearfix">
+                <ul class="fl">
+                    <li class="filterDiv">
+                        <i class="iconfont">&#xe621;</i>
+                        <p>找冷库</p>
+                    </li>
                 </ul>
+                <div class="filterBox">
+                    <ul>
+                        <li onclick="activeA(this)">
+                            <a href="javascript:;">
+                                <i class="iconfont fl">&#xe61c;</i>
+                                区域面积
+                                <i class="iconfont fr">&#xe64a;</i>
+                            </a>
+                        </li>
+                        <li onclick="activeA(this)">
+                            <a href="javascript:;">
+                                <i class="iconfont fl">&#xe673;</i>
+                                冷库面积
+                                <i class="iconfont fr">&#xe64a;</i>
+                            </a>
+                        </li>
+                        <li onclick="activeA(this)">
+                            <a href="javascript:;">
+                                <i class="iconfont fl">&#xe60b;</i>
+                                价格区间
+                                <i class="iconfont fr">&#xe64a;</i>
+                            </a>
+                        </li>
+                        <li onclick="activeA(this)">
+                            <a href="javascript:;">
+                                <i class="iconfont fl">&#xe635;</i>
+                                冷库类型
+                                <i class="iconfont fr">&#xe64a;</i>
+                            </a>
+                        </li>
+                    </ul>
+                    <ol class="filterTxt">
+                        <li>
+                            <div class="area">
+                                <h3>区域面积</h3>
+                                <ul class="arealist clearfix">
+                                    <li class="fl">不限</li>
+                                    <li class="fl"><1000㎡</li>
+                                    <li class="fl">1000~5000㎡</li>
+                                    <li class="fl">5000~1万㎡</li>
+                                    <li class="fl">1万~5万㎡</li>
+                                    <li class="fl">>5万㎡</li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="area">
+                                <h3>冷库面积</h3>
+                                <ul class="arealist clearfix">
+                                    <li class="fl">不限</li>
+                                    <li class="fl"><1000㎡</li>
+                                    <li class="fl">1000~5000㎡</li>
+                                    <li class="fl">5000~1万㎡</li>
+                                    <li class="fl">1万~5万㎡</li>
+                                    <li class="fl">>5万㎡</li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="area">
+                                <h3>价格区间</h3>
+                                <ul class="arealist clearfix">
+                                    <li class="fl">不限</li>
+                                    <li class="fl"><50元</li>
+                                    <li class="fl">50~100元</li>
+                                    <li class="fl">100~500元</li>
+                                    <li class="fl">500~1000元</li>
+                                    <li class="fl">>1000元</li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="area">
+                                <h3>冷库类型</h3>
+                                <ul class="arealist clearfix">
+                                    <li class="fl">不限</li>
+                                    <li class="fl">产地型</li>
+                                    <li class="fl">市场型</li>
+                                    <li class="fl">仓储型</li>
+                                    <li class="fl">配送型</li>
+                                    <li class="fl">生产型</li>
+                                    <li class="fl">中央厨房</li>
+                                    <li class="fl">医药型</li>
+                                    <li class="fl">其他</li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </ul>
+        </div>
+
+        <!--冷库图文列表-->
+        <div class="section imgTxtList">
+            <h1>
+                <i class="iconfont">&#xe631;</i>
+                出租冷库
+            </h1>
+            <div class="clearfix">
+                <ul class="fl imglist" id="rightRdcLeaseUl">
+                </ul>
+                <div class="fr txtlist">
+                    <h3 class="clearfix">
+                        <i class="iconfont">&#xe615;</i>
+                        冷库出租动态
+                        <a href="view/html/rdcmatch.html" class="fr">更多&nbsp;&nbsp;<i class="iconfont">&#xe624;</i></a>
+                    </h3>
+                    <ul id="leftRdcLeaseUl">
+                    </ul>
+                    <div class="adDouble hide">
+                        <ul class="clearfix">
+                            <li><a href=""><img src="view/img/rqwl.png" alt=""></a></li>
+                            <li><a href=""><img src="view/img/zwy.png" alt=""></a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="section">
-    <div class="bigAd">
-        <a href="http://www.smartcold.org.cn/"><img src="view/img/adCol.jpg" alt=""></a>
-    </div>
-</div>
-<div class="section clearfix">
-    <div class="imgTxtList leftList">
-        <h1 class="clearfix"><i class="iconfont">&#xe659;</i>
-            求租冷库
-        </h1>
-        <div class="clearfix">
-            <div class="fl txtlist" style="width: 100%;">
-                <h3 class="clearfix">
-                    <i class="iconfont">&#xe615;</i>
-                    需求
-                    <a onclick="goMatch(1)" class="fr">更多&nbsp;&nbsp;<i class="iconfont">&#xe624;</i></a>
-                </h3>
-                <ul id="rdcRentUl">
-                </ul>
-                <div class="adDouble adOne hide">
-                    <ul class="clearfix">
-                        <li><a href=""><img src="view/img/ad4.png" alt=""></a></li>
-                        <li><a href=""><img src="view/img/ad4.png" alt=""></a></li>
+        <div class="section">
+            <div class="bigAd">
+                <a href="http://www.smartcold.org.cn/"><img src="view/img/adCol.jpg" alt=""></a>
+            </div>
+        </div>
+        <div class="section clearfix">
+            <div class="imgTxtList leftList">
+                <h1 class="clearfix"><i class="iconfont">&#xe659;</i>
+                    求租冷库
+                </h1>
+                <div class="clearfix">
+                    <div class="fl txtlist" style="width: 100%;">
+                        <h3 class="clearfix">
+                            <i class="iconfont">&#xe615;</i>
+                            需求
+                            <a onclick="goMatch(1)" class="fr">更多&nbsp;&nbsp;<i class="iconfont">&#xe624;</i></a>
+                        </h3>
+                        <ul id="rdcRentUl">
+                        </ul>
+                        <div class="adDouble adOne hide">
+                            <ul class="clearfix">
+                                <li><a href=""><img src="view/img/ad4.png" alt=""></a></li>
+                                <li><a href=""><img src="view/img/ad4.png" alt=""></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="imgTxtList rightList">
+                <h1 class="clearfix"><i class="iconfont">&#xe659;</i>
+                    冷库数据
+                </h1>
+                <div class="clearfix">
+                    <ul class="imglist chartList"  style="width: 100%;">
+                        <li style="width: 100%;">
+                            <div id="main1" style="width: 100%;height: 388px;"></div>
+                        </li>
+                        <!--<li style="width: 100%;">
+                            <div id="main2" style="width: 100%;height:200px;"></div>
+                        </li>
+                        <li style="width: 100%;">
+                            <div id="main3" style="width: 100%;height:100%;"></div>
+                        </li>-->
                     </ul>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="imgTxtList rightList">
-        <h1 class="clearfix"><i class="iconfont">&#xe659;</i>
-            冷库数据
-        </h1>
-        <div class="clearfix">
-            <ul class="imglist chartList"  style="width: 100%;">
-                <li style="width: 100%;">
-                    <div id="main1" style="width: 100%;height: 388px;"></div>
-                </li>
-                <!--<li style="width: 100%;">
-                    <div id="main2" style="width: 100%;height:200px;"></div>
-                </li>
-                <li style="width: 100%;">
-                    <div id="main3" style="width: 100%;height:100%;"></div>
-                </li>-->
-            </ul>
+        <div class="section imgTxtList">
+            <h1>
+                <i class="iconfont">&#xe613;</i>
+                广告合作
+            </h1>
+            <div class="clearfix adbanner">
+                <div class="picScroll-left">
+                    <a class="next"><i class="iconfont">&#xe64a;</i></a>
+                    <a class="prev"><i class="iconfont">&#xe64b;</i></a>
+                    <div class="bd">
+                        <ul class="picList">
+                            <!--冷链委下公司-->
+                            <li>
+                                <div class="pic"><a href="http://www.hflchina.com/" title="恒孚物流" target="_blank"><img
+                                        src="view/img/hfwl.png"/></a></div>
+                            </li>
+                            <li>
+                                <div class="pic"><a href="http://www.zjhwwl.com/" title="恒伟供应链" target="_blank"><img
+                                        src="view/img/hwgyl.png"/></a></div>
+                            </li>
+                            <li>
+                                <div class="pic"><a href="http://www.etoo.net.cn/" title="华夏易通物流" target="_blank"><img
+                                        src="view/img/hxyt.png"/></a></div>
+                            </li>
+                            <li>
+                                <div class="pic"><a href="http://www.nbportll.com/" title="宁波兴港货柜" target="_blank"><img
+                                        src="view/img/glwl.png"/></a></div>
+                            </li>
+                            <li>
+                                <div class="pic"><a href="http://www.rokin.cn/" title="荣庆物流" target="_blank"><img
+                                        src="view/img/rqwl.png"/></a></div>
+                            </li>
+                            <li>
+                                <div class="pic"><a href="http://www.hnxianyi.com/index.html" title="鲜易供应链" target="_blank"><img
+                                        src="view/img/xygyl.png"/></a></div>
+                            </li>
+                            <li>
+                                <div class="pic"><a href="http://www.cmac.com.hk/" title="招商美冷" target="_blank"><img
+                                        src="view/img/zsml.png"/></a></div>
+                            </li>
+                            <li>
+                                <div class="pic"><a href="http://www.whstwl.com/" title="五环顺通" target="_blank"><img
+                                        src="view/img/whst.png"/></a></div>
+                            </li>
+                            <li>
+                                <div class="pic"><a href="http://coldchain.sinotrans.com/" title="中外运冷链" target="_blank"><img
+                                        src="view/img/zwy.png"/></a></div>
+                            </li>
+                            <li>
+                                <div class="pic"><a href="javascript:;" title="铁越集团" target="_blank"><img
+                                        src="view/img/tyjt.jpg"/></a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="pic"><a href="javascript:;" title="众惠供应链" target="_blank"><img
+                                        src="view/img/zhgyl.jpg"/></a></div>
+                            </li>
+                            <li>
+                                <div class="pic"><a href="http://www.zzdcs.com/" title="獐子岛中央冷藏" target="_blank"><img
+                                        src="view/img/zzd.jpg"/></a></div>
+                            </li>
+                            <!--逸励五家公司-->
+                            <li>
+                                <div class="pic"><a href="javascript:;" title="逸腾远东制冷（江苏）有限公司"><img src="view/img/yiteng.png"/></a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="pic"><a href="javascript:;" title="逸励柯环境科技（江苏）有限公司"><img src="view/img/yilike.png"/></a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="pic"><a href="javascript:;" title="逸励实业（上海）有限公司"><img src="view/img/yili.png"/></a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="pic"><a href="javascript:;" title="常州市贝源冷冻设备有限公司"><img src="view/img/beiyuan.png"/></a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="pic"><a href="javascript:;" title="苏州和风煜立冷冻设备有限公司"><img
+                                        src="view/img/yuli.png"/></a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-<div class="section imgTxtList">
-    <h1>
-        <i class="iconfont">&#xe613;</i>
-        广告合作
-    </h1>
-    <div class="clearfix adbanner">
-        <div class="picScroll-left">
-            <a class="next"><i class="iconfont">&#xe64a;</i></a>
-            <a class="prev"><i class="iconfont">&#xe64b;</i></a>
-            <div class="bd">
-                <ul class="picList">
-                    <!--冷链委下公司-->
-                    <li>
-                        <div class="pic"><a href="http://www.hflchina.com/" title="恒孚物流" target="_blank"><img
-                                src="view/img/hfwl.png"/></a></div>
-                    </li>
-                    <li>
-                        <div class="pic"><a href="http://www.zjhwwl.com/" title="恒伟供应链" target="_blank"><img
-                                src="view/img/hwgyl.png"/></a></div>
-                    </li>
-                    <li>
-                        <div class="pic"><a href="http://www.etoo.net.cn/" title="华夏易通物流" target="_blank"><img
-                                src="view/img/hxyt.png"/></a></div>
-                    </li>
-                    <li>
-                        <div class="pic"><a href="http://www.nbportll.com/" title="宁波兴港货柜" target="_blank"><img
-                                src="view/img/glwl.png"/></a></div>
-                    </li>
-                    <li>
-                        <div class="pic"><a href="http://www.rokin.cn/" title="荣庆物流" target="_blank"><img
-                                src="view/img/rqwl.png"/></a></div>
-                    </li>
-                    <li>
-                        <div class="pic"><a href="http://www.hnxianyi.com/index.html" title="鲜易供应链" target="_blank"><img
-                                src="view/img/xygyl.png"/></a></div>
-                    </li>
-                    <li>
-                        <div class="pic"><a href="http://www.cmac.com.hk/" title="招商美冷" target="_blank"><img
-                                src="view/img/zsml.png"/></a></div>
-                    </li>
-                    <li>
-                        <div class="pic"><a href="http://www.whstwl.com/" title="五环顺通" target="_blank"><img
-                                src="view/img/whst.png"/></a></div>
-                    </li>
-                    <li>
-                        <div class="pic"><a href="http://coldchain.sinotrans.com/" title="中外运冷链" target="_blank"><img
-                                src="view/img/zwy.png"/></a></div>
-                    </li>
-                    <li>
-                        <div class="pic"><a href="javascript:;" title="铁越集团" target="_blank"><img
-                                src="view/img/tyjt.jpg"/></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="pic"><a href="javascript:;" title="众惠供应链" target="_blank"><img
-                                src="view/img/zhgyl.jpg"/></a></div>
-                    </li>
-                    <li>
-                        <div class="pic"><a href="http://www.zzdcs.com/" title="獐子岛中央冷藏" target="_blank"><img
-                                src="view/img/zzd.jpg"/></a></div>
-                    </li>
-                    <!--逸励五家公司-->
-                    <li>
-                        <div class="pic"><a href="javascript:;" title="逸腾远东制冷（江苏）有限公司"><img src="view/img/yiteng.png"/></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="pic"><a href="javascript:;" title="逸励柯环境科技（江苏）有限公司"><img src="view/img/yilike.png"/></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="pic"><a href="javascript:;" title="逸励实业（上海）有限公司"><img src="view/img/yili.png"/></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="pic"><a href="javascript:;" title="常州市贝源冷冻设备有限公司"><img src="view/img/beiyuan.png"/></a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="pic"><a href="javascript:;" title="苏州和风煜立冷冻设备有限公司"><img
-                                src="view/img/yuli.png"/></a>
-                        </div>
-                    </li>
-                </ul>
+        <div class="section clearfix">
+            <div class="imgTxtList list1">
+                <h1 class="clearfix"><i class="iconfont">&#xe605;</i>
+                    商品信息
+                    <a onclick="goMatch(2)" class="fr">更多&nbsp;&nbsp;<i class="iconfont">&#xe624;</i></a>
+                </h1>
+                <div class="clearfix">
+                    <div class="fl txtlist" style="width: 100%;">
+                        <ul id="shopInfoUl">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="imgTxtList list2">
+                <h1 class="clearfix"><i class="iconfont">&#xe62a;</i>
+                    解决方案
+                </h1>
+                <div class="clearfix">
+                    <ul class="imglist chartList">
+                        <li>
+                            <a href="http://www.smartcold.org.cn/" target="_blank"><img src="view/img/fa1.png" alt=""></a>
+                        </li>
+                        <li>
+                            <a href="javascript:;"><img src="view/img/fa2.png" alt=""></a>
+                        </li>
+                        <li>
+                            <a href="javascript:;"><img src="view/img/fa3.png" alt=""></a>
+                        </li>
+                        <li>
+                            <a href="javascript:;"><img src="view/img/fa4.png" alt=""></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="imgTxtList list3">
+                <h1 class="clearfix"><i class="iconfont">&#xe659;</i>
+                    招标采购
+                    <a href="javascript:;" class="fr">更多&nbsp;&nbsp;<i class="iconfont">&#xe624;</i></a>
+                </h1>
+                <div class="clearfix">
+                    <div class="fl txtlist" style="width: 100%;">
+                        <ul>
+                            <li><a href="javascript:;" title=><p class="omg"><span>1</span>汇源集团冷链运输招标  联系人：田先生137****4618</p></a></li>
+                            <li><a href="javascript:;" title=><p class="omg"><span>2</span>华润万家深中冷链运输项目招标公告 马丽丽 0755-2845****</p></a></li>
+                            <li><a href="javascript:;" title=><p class="omg"><span>3</span>U家超市冷链设备招标公告 韦先生1837733****</p></a></li>
+                            <li><a href="javascript:;" title=><p class="omg"><span>4</span>辽宁华润万家门店冷链维修招标 杨建群：024-2510****</p></a></li>
+                            <li><a href="javascript:;" title=><p class="omg"><span>5</span>疫苗冷库温湿度监测系统采购招标 王英芳 0398-284****</p></a></li>
+                            <li><a href="javascript:;" title=><p class="omg"><span>6</span>冶春食品冷藏车采购 曹慧颖  0514-8780****</p></a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="section clearfix">
-    <div class="imgTxtList list1">
-        <h1 class="clearfix"><i class="iconfont">&#xe605;</i>
-            商品信息
-            <a onclick="goMatch(2)" class="fr">更多&nbsp;&nbsp;<i class="iconfont">&#xe624;</i></a>
-        </h1>
-        <div class="clearfix">
-            <div class="fl txtlist" style="width: 100%;">
-                <ul id="shopInfoUl">
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="imgTxtList list2">
-        <h1 class="clearfix"><i class="iconfont">&#xe62a;</i>
-            解决方案
-        </h1>
-        <div class="clearfix">
-            <ul class="imglist chartList">
-                <li>
-                    <a href="http://www.smartcold.org.cn/" target="_blank"><img src="view/img/fa1.png" alt=""></a>
-                </li>
-                <li>
-                    <a href="javascript:;"><img src="view/img/fa2.png" alt=""></a>
-                </li>
-                <li>
-                    <a href="javascript:;"><img src="view/img/fa3.png" alt=""></a>
-                </li>
-                <li>
-                    <a href="javascript:;"><img src="view/img/fa4.png" alt=""></a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="imgTxtList list3">
-        <h1 class="clearfix"><i class="iconfont">&#xe659;</i>
-            招标采购
-            <a href="javascript:;" class="fr">更多&nbsp;&nbsp;<i class="iconfont">&#xe624;</i></a>
-        </h1>
-        <div class="clearfix">
-            <div class="fl txtlist" style="width: 100%;">
-                <ul>
-                    <li><a href="javascript:;" title=><p class="omg"><span>1</span>汇源集团冷链运输招标  联系人：田先生137****4618</p></a></li>
-                    <li><a href="javascript:;" title=><p class="omg"><span>2</span>华润万家深中冷链运输项目招标公告 马丽丽 0755-2845****</p></a></li>
-                    <li><a href="javascript:;" title=><p class="omg"><span>3</span>U家超市冷链设备招标公告 韦先生1837733****</p></a></li>
-                    <li><a href="javascript:;" title=><p class="omg"><span>4</span>辽宁华润万家门店冷链维修招标 杨建群：024-2510****</p></a></li>
-                    <li><a href="javascript:;" title=><p class="omg"><span>5</span>疫苗冷库温湿度监测系统采购招标 王英芳 0398-284****</p></a></li>
-                    <li><a href="javascript:;" title=><p class="omg"><span>6</span>冶春食品冷藏车采购 曹慧颖  0514-8780****</p></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-<!--版权区域-->
-<div class="footer" id="QRcode">
-    <dl class="clearfix">
-        <li class="fl">
-            <p><a href="view/html/aboutlianku.html">关于链库</a></p>
-            <p>©2016 Smartcold    沪ICP备 16004753</p>
-            <p>为了您可以获取更佳的浏览效果</p>
-            <p>本站推荐使用
-                <a href="http://sw.bos.baidu.com/sw-search-sp/software/ba34c905dbdd4/ChromeStandalone_57.0.2987.98_Setup.exe">谷歌浏览器
-                </a>、<a href="http://sw.bos.baidu.com/sw-search-sp/software/4cee66da4242e/Firefox_52.0.1.6284_setup.exe">火狐浏览器
-                </a>或者<a href="http://down.360safe.com/se/360se8.1.1.250.exe">360浏览器极速模式</a>
-            </p>
-        </li>
-        <li class="fr">
-            <div class="codeImg">
-                <img src="view/img/ios.png" alt="开小差了~~~">
-                <p>iPhone下载</p>
-            </div>
-            <div class="codeImg">
+    <!--版权区域-->
+    <div class="footer" id="QRcode">
+        <dl class="clearfix">
+            <li class="fl">
+                <p><a href="view/html/aboutlianku.html">关于链库</a></p>
+                <p>©2016 Smartcold    沪ICP备 16004753</p>
+                <p>为了您可以获取更佳的浏览效果</p>
+                <p>本站推荐使用
+                    <a href="http://sw.bos.baidu.com/sw-search-sp/software/ba34c905dbdd4/ChromeStandalone_57.0.2987.98_Setup.exe">谷歌浏览器
+                    </a>、<a href="http://sw.bos.baidu.com/sw-search-sp/software/4cee66da4242e/Firefox_52.0.1.6284_setup.exe">火狐浏览器
+                    </a>或者<a href="http://down.360safe.com/se/360se8.1.1.250.exe">360浏览器极速模式</a>
+                </p>
+            </li>
+            <li class="fr">
+                <div class="codeImg">
+                    <img src="view/img/ios.png" alt="开小差了~~~">
+                    <p>iPhone下载</p>
+                </div>
+                <div class="codeImg">
 
-                <img src="view/img/android.png" alt="开小差了~~~">
-                <p>Android下载</p>
-            </div>
-            <div class="codeImg">
-                <img src="view/img/weixin_lianku.jpg" alt="开小差了~~~">
-                <p>链库公众号</p>
-            </div>
-        </li>
-    </dl>
+                    <img src="view/img/android.png" alt="开小差了~~~">
+                    <p>Android下载</p>
+                </div>
+                <div class="codeImg">
+                    <img src="view/img/weixin_lianku.jpg" alt="开小差了~~~">
+                    <p>链库公众号</p>
+                </div>
+            </li>
+        </dl>
+    </div>
 </div>
+
 <!--引入js-->
 <script src="view/plugins/jquery-1.12.0.min.js"></script>
 <script src="view/plugins/jquery.SuperSlide.2.1.1.js"></script>
