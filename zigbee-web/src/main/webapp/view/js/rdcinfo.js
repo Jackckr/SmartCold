@@ -69,8 +69,12 @@ function getRdcInfo() {
         var remark=rdc.remark=="undefined"?"":rdc.remark;
         if(rdc.storagePics&&rdc.storagePics.length>0){
             $.each(rdc.storagePics,function (index, item) {
+                if(index==0){
+                    smallImg.push('<li class="current"><a href="javascript:;"><img src="'+item.location+'"/><span class="border"></span><span class="mask"></span></a></li>');
+                }else{
+                    smallImg.push('<li><a href="javascript:;"><img src="'+item.location+'"/><span class="border"></span><span class="mask"></span></a></li>');
+                }
                 bigImg.push('<li><a href="javascript:;"><img src="'+item.location+'" alt="" width="700" height="320"/></a></li>');
-                smallImg.push('<li><a href="javascript:;"><img src="'+item.location+'"/><span class="border"></span><span class="mask"></span></a></li>');
             });
         }else{
             bigImg.push('<li><a href="javascript:;"><img src="http://139.196.189.93:8089/app/rdcHeader.jpg" alt="" width="700" height="320"/></a></li>');
