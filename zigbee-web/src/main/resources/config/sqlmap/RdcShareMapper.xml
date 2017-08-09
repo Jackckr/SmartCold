@@ -282,6 +282,8 @@
 		s.unitPrice,
 		s.telephone,
 		s.unit,
+		s.unit1,
+		s.unit2,
 		s.sqm,
 		s.detlAddress,
 		s.rentdate,

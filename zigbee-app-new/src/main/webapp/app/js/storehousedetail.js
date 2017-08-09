@@ -21,7 +21,11 @@
 						data.entity.unit=data.entity.picunit.substr(4);
 					}
 				}
-				$scope.vo=data.entity; 
+				$scope.vo=data.entity;
+				$scope.price="元/㎡/天";
+				if($scope.vo.unit1&&$scope.vo.unit2&&$scope.vo.unit1!=""&&$scope.vo.unit2!=""){
+					$scope.price="元/"+$scope.vo.unit2+"/"+$scope.vo.unit1;
+				}
 				$scope.datatype=data.entity.dataType;
               }
         });
