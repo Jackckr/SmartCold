@@ -122,11 +122,9 @@ $(function() {
 					</div> <i class="iconfont fr moreinfo">&#xe697;</i></li>
 				<li ng-if="typeCode==1"><label>可租面积</label> <em>*</em>
 					<input type="number" id="sqm" ng-model="$parent.sqm" style="min-width:4rem;width:4rem;" placeholder="㎡"/></li>
-				<li ng-if="typeCode==2"><label for="price">单价</label> <input type="number" id="price" name="unitPrice"
-					placeholder="元/天（填0为面议）" ng-model="unitprice"/></li>
-				<li ng-if="typeCode==1"><label for="price">单价</label> <input type="number" id="price" name="unitPrice"
+				<li><label for="price">单价</label> <input type="number" id="price" name="unitPrice"
 														 placeholder="填0为面议" ng-model="unitprice"/></li>
-				<li ng-if="typeCode==1" class="unitgroup"><label>单位</label><em>*</em>
+				<li class="unitgroup"><label>单位</label><em>*</em>
 					<span>元</span>/
 					<select>
 						<option value="天">天</option>

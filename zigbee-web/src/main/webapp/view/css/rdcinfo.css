@@ -273,3 +273,9 @@
     width: 30%;
     margin-right:3%;
 }
+.unitgroup>span,
+.unitgroup>select{
+    text-align: center;
+    width: 90px;
+    display: inline-block;
+}
