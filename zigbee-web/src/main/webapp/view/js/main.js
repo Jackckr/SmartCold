@@ -15,8 +15,8 @@ function getRdcShare() {
                 if(data[i].audit==2){rightRdcLease.push('<b class="approve fr"><i class="iconfont">&#xe6ac;</i>已认证</b>');}else{rightRdcLease.push('<b class="reachStand fr"><i class="iconfont">&#xe63b;</i>未认证</b>');}
                 rightRdcLease.push('</div><div class="city"><p class="omg"><i class="iconfont fl">&#xe61c;</i>'+data[i].detlAddress+'</p><p>可租面积：'+data[i].sqm+'㎡</p></div></a></li>');
             }else {
-                leftRdclease.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'"><span>'+(i-5)+'</span>' +
-                    '['+data[i].title+'] 有'+data[i].sqm+'㎡冷库可用来出租，联系电话['+tel+']</a></li>');
+                var datainfo='<p class="omg"><span>'+(i-5)+'</span>['+data[i].title+'] 有'+data[i].sqm+'㎡冷库可用来出租，联系电话['+tel+']</p>';
+                leftRdclease.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'">'+datainfo+'</a></li>');
             }
         }
         $("#rightRdcLeaseUl").empty().append(rightRdcLease.join(''));
@@ -27,7 +27,8 @@ function getRdcShare() {
         for(var i=0,tel='';i<data.length;i++){
             if(window.lkuser){tel=data[i].telephone;}else{tel=telMd5(data[i].telephone);}
             if(i<=6){
-                rdcRent.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'"><span>'+(i+1)+'</span>['+data[i].detlAddress+'] '+data[i].title+'，联系电话['+tel+']</a></li>');
+                var datainfo='<p class="omg"><span>'+(i+1)+'</span>['+data[i].detlAddress+'] '+data[i].title+'，联系电话['+tel+']</p>';
+                rdcRent.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'">'+datainfo+'</a></li>');
             }
         }
         $("#rdcRentUl").empty().append(rdcRent.join(''));
@@ -37,7 +38,8 @@ function getRdcShare() {
         for(var i=0,tel='';i<data.length;i++){
             if(window.lkuser){tel=data[i].telephone;}else{tel=telMd5(data[i].telephone);}
             if(i<=5){
-                shopInfo.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'"><span>'+(i+1)+'</span>['+data[i].typeText+'] '+data[i].title+'，联系电话['+tel+']</a></li>');
+                var datainfo='<p class="omg"><span>'+(i+1)+'</span>['+data[i].typeText+'] '+data[i].title+'，联系电话['+tel+']</p>';
+                shopInfo.push('<li><a href="view/html/rdcmatchinfo.html?id='+data[i].id+'">'+datainfo+'</a></li>');
             }
         }
         $("#shopInfoUl").empty().append(shopInfo.join(''));
@@ -82,11 +84,11 @@ $(function () {
     window.onresize = function () {
         resizeChart();
     };
-    var telTxt=["汇源集团冷链运输招标  联系人：田先生13718154618","华润万家深中冷链运输项目招标公告 马丽丽 0755-28450635","U家超市冷链设备招标公告 韦先生18377335381",
-        "辽宁华润万家门店冷链维修招标 杨建群：024-25103229","疫苗冷库温湿度监测系统采购招标 王英芳 0398-2846506","冶春食品冷藏车采购 曹慧颖  0514-87806576"]
+    var telTxt=["<span>1</span>汇源集团冷链运输招标  联系人：田先生13718154618","<span>2</span>华润万家深中冷链运输项目招标公告 马丽丽 0755-28450635","<span>3</span>U家超市冷链设备招标公告 韦先生18377335381",
+        "<span>4</span>辽宁华润万家门店冷链维修招标 杨建群：024-25103229","<span>5</span>疫苗冷库温湿度监测系统采购招标 王英芳 0398-2846506","<span>6</span>冶春食品冷藏车采购 曹慧颖  0514-87806576"]
     if(window.lkuser){
         for(var i=0;i<6;i++){
-            $(".list3 ul li").eq(i).children('a').html(telTxt[i])
+            $(".list3 ul li").eq(i).children('a').children('p').html(telTxt[i])
         }
     }
 });

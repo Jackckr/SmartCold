@@ -23,11 +23,48 @@
 }
 .imgList li img{
     position: absolute;
-   /* width: 1920px;*/
     height: 200px;
     left: 50%;
     top: 0;
     margin-left: -50%;
+}
+.imgList li a{
+    position: relative;
+    overflow: hidden;
+    display: block;
+    height:100%;
+}
+.bigAd>a{
+    position: relative;
+    display: block;
+    height:100%;
+}
+.imgList li a:after,.bigAd>a:after{
+    content:'';
+    width: 40px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: -150px;
+    z-index: 9;
+    background:-webkit-linear-gradient(left,rgba(255,255,255,0),rgba(255,255,255,0.5),rgba(255,255,255,0));
+    background:-moz-linear-gradient(left,rgba(255,255,255,0),rgba(255,255,255,0.5),rgba(255,255,255,0));
+    background:-ms-linear-gradient(left,rgba(255,255,255,0),rgba(255,255,255,0.5),rgba(255,255,255,0));
+    background:-o-linear-gradient(left,rgba(255,255,255,0),rgba(255,255,255,0.5),rgba(255,255,255,0));
+    transform: skew(-20deg);
+    -webkit-transform: skew(-20deg);
+    -moz-transform: skew(-20deg);
+    -ms-transform: skew(-20deg);
+    -o-transform: skew(-20deg);
+}
+
+.imgList li a:hover:after,.bigAd>a:hover:after{
+    left:1950px;
+    -webkit-transition: all 3s;
+    -moz-transition: all 3s;
+    -ms-transition: all 3s;
+    -o-transition: all 3s;
+    transition: all 3s;
 }
 .dianList{
     height: 16px;
@@ -204,7 +241,7 @@
 }
 .imglist li{
     width: 32%;
-    height: 214px;
+    height: 219px;
     /*height: 168px;*/
     margin-right: 1%;
     margin-bottom: 15px;
@@ -298,10 +335,36 @@
     text-overflow: ellipsis;
     white-space:nowrap;
     border-bottom: 1px solid #f2f2f2;
+    position: relative;
 }
-/*.txtlist li>a:hover{
-    color: #f57e1e;
-}*/
+/*不要动画就删除以下代码 begin*/
+.txtlist li>a:before{
+    content: '';
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: #2098d1;
+    z-index:0;
+    transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;	/* Firefox 4 */
+    -webkit-transition: all 0.3s ease;	/* Safari 和 Chrome */
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+}
+.txtlist li>a:hover:before{
+    width: 100%;
+}
+.txtlist li>a:hover{
+    color: #fff;
+}
+.txtlist li>a>p{
+    background: transparent;
+    position: relative;
+    z-index:1;
+}
+/*不要动画就删除以下代码 END*/
 .txtlist a span{
     display: inline-block;
     margin-right:1em;

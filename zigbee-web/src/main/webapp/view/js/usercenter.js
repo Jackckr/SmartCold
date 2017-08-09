@@ -148,7 +148,7 @@ function updatePwd() {
                         } else {
                             layer.open({content: '修改成功!请重新登录', btn: '确定',yes:function () {
                                 logout();
-                                window.location.href="login.html";
+                                window.location.href="../../login.html";
                             }});
                         }
                     }
@@ -293,7 +293,7 @@ function getShareList(datatype, pageId, domId) {
                     , closeBtn: 0
                 }, function (index) {
                     sessionStorage.clear();
-                    window.location.href = 'login.html';
+                    window.location.href = '../../login.html';
                     layer.close(index);
                 });
             }

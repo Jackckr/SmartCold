@@ -16,276 +16,280 @@
     <link rel="stylesheet" href="../css/media.css"/>
 </head>
 <body>
-<!--header 导航栏-->
-<div class="header">
-    <div class="hotLine">
-        <h2 class="fl">冷库物联网大数据平台</h2>
-        <div class="fr">
-            <span>客服热线：<span class="orange">400-853-5606</span></span>
-            <a href="#QRcode">
-                APP下载<i class="iconfont orange">&#xe642;</i>
-            </a>
+<div id="containBox">
+    <div id="containBody">
+        <!--header 导航栏-->
+        <div class="header">
+            <div class="hotLine">
+                <h2 class="fl">冷库物联网大数据平台</h2>
+                <div class="fr">
+                    <span>客服热线：<span class="orange">400-853-5606</span></span>
+                    <a href="#QRcode">
+                        APP下载<i class="iconfont orange">&#xe642;</i>
+                    </a>
+                </div>
+            </div>
+            <div class="nav">
+                <h1 class="fl"><a href="../../index.html" target="_blank"></a></h1>
+                <ul id="noLoginUser" class="fr navLogin">
+                    <li><a href="../../login.html"><i class="iconfont">&#xe715;</i>&nbsp;登录</a></li>
+                    <li><a href="register.html"><i class="iconfont">&#xe60f;</i>&nbsp;注册</a></li>
+                </ul>
+                <div id="loginUser" class="fr">
+                    <div class="nameDiv">
+                        <img src="">
+                    </div>
+                    <dl class="hide">
+                        <li><a href="usercenter.html">个人中心</a></li>
+                        <li><a onclick="logout()">退出</a></li>
+                    </dl>
+                </div>
+                <ul class="fr navUl">
+                    <li><a href="../../index.html">首　　页</a></li>
+                    <li><a href="rdclist.html">冷库商情</a></li>
+                    <li><a href="standrdclist.html">达标冷库</a></li>
+                    <li><a href="rdcprice.html">冷库价格</a></li>
+                    <li><a href="rdcmatch.html">需求匹配</a></li>
+                    <li><a href="rdctrace.html">温度追溯</a></li>
+                    <li><a href="http://www.smartcold.org.cn/">冷库360</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="section clearfix">
+            <div class="tabLeft fl">
+                <div class="tabHeader">
+                    <div class="headImg">
+                        <img id="headPic">
+                    </div>
+                    <p id="rightUserName" class="txt-center omg"></p>
+                    <p id="auditStatus" class="txt-center">
+                        <a href="authentication.html"><i class="iconfont">&#xe647;</i><span>已认证</span></a>
+                    </p>
+                </div>
+                <ul class="tabNav">
+                    <li class="current"><a href="#user"><i class="iconfont">&#xe63c;</i>个人信息</a></li>
+                    <li><a href="#myRdc"><i class="iconfont">&#xe656;</i>我的冷库</a></li>
+                    <li><a href="#rent"><i class="iconfont">&#xe61d;</i>出租求租</a></li>
+                    <li><a href="#goods"><i class="iconfont">&#xe605;</i>我的货源</a></li>
+                    <li><a href="#collect"><i class="iconfont">&#xe60c;</i>我的收藏</a></li>
+                    <li><a href="#about"><i class="iconfont">&#xe629;</i>联系我们</a></li>
+                </ul>
+            </div>
+            <div class="userBox">
+                <ol class="userInfo">
+                    <li id="user">
+                        <h3><i class="iconfont">&#xe63c;</i>个人信息</h3>
+                        <div class="layui-tab">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">基本信息</li>
+                                <li onclick="initUpdatePhone()">修改手机</li>
+                                <li>修改密码</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <form id="userInfo" class="layui-form" onsubmit="return false">
+                                        <input type="hidden" id="id" name="id"/>
+                                        <div>
+                                            <label class="layui-form-label">头像<em>*</em></label>
+                                            <div class="layui-input-inline headerDiv">
+                                                <img id="headerPic" src="../img/register.png" alt="">
+                                                <label for="headerEdit">
+                                                    更改头像
+                                                    <input type="file" onchange="changePic(this)"
+                                                           accept="image/gif, image/bmp, image/jpg,image/jpeg, image/png"
+                                                           id="headerEdit">
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="layui-form-label">昵称<em>*</em></label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="nickname" required lay-verify="required"
+                                                       placeholder="请输入昵称" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="layui-input-block">
+                                                <button class="layui-btn" onclick="saveUser()">立即提交</button>
+                                                <button id="reset" class="layui-btn layui-btn-primary">重置</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <form class="layui-form" onsubmit="return false">
+                                        <div style="height: 38px;">
+                                            <label class="layui-form-label">原手机号</label>
+                                            <div class="layui-input-inline clearfix">
+                                                <input id="oldPhone" type="text" name="title" lay-verify="required"
+                                                       placeholder="请输入原手机号" autocomplete="off" class="layui-input"
+                                                       style="width: 70%;display: inline-block">
+                                                <button id="oldPhoneBtn" onclick="getCode(1)"
+                                                        class="layui-btn layui-btn-primary fr getCode omg">获取验证码
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="layui-form-label">验证码</label>
+                                            <div class="layui-input-inline">
+                                                <input id="oldCode" maxlength="4" type="text" name="title" lay-verify="required"
+                                                       placeholder="请输入验证码" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="layui-form-label">新手机号</label>
+                                            <div class="layui-input-inline clearfix">
+                                                <input id="newPhone" type="text" name="title" lay-verify="required"
+                                                       placeholder="请输入新手机号" autocomplete="off" class="layui-input"
+                                                       style="width: 70%;display: inline-block">
+                                                <button id="newPhoneBtn" onclick="getCode(2)"
+                                                        class="layui-btn layui-btn-primary fr getCode omg">获取验证码
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="layui-form-label">验证码</label>
+                                            <div class="layui-input-inline">
+                                                <input id="newCode" type="text" name="title" maxlength="4" lay-verify="required"
+                                                       placeholder="请输入验证码" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="layui-input-block">
+                                                <button onclick="updateTelephone()" class="layui-btn" lay-submit
+                                                        lay-filter="formDemo">立即提交
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <form class="layui-form" onsubmit="return false">
+                                        <div>
+                                            <label class="layui-form-label">原始密码</label>
+                                            <div class="layui-input-inline">
+                                                <input id="old_password" type="password" lay-verify="required"
+                                                       placeholder="请输入原密码" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="layui-form-label">新密码</label>
+                                            <div class="layui-input-inline">
+                                                <input id="new_password" type="password" lay-verify="required"
+                                                       placeholder="请输入新密码" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label class="layui-form-label">确认新密码</label>
+                                            <div class="layui-input-inline">
+                                                <input id="new_repassword" type="password" lay-verify="required"
+                                                       placeholder="请确认新密码" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="layui-input-block">
+                                                <button onclick="updatePwd()" class="layui-btn" lay-submit
+                                                        lay-filter="formDemo">立即提交
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li id="myRdc">
+                        <h3><i class="iconfont">&#xe656;</i>我的冷库</h3>
+                        <div class="search rdcSearch">
+                            <div class="layui-input-inline">
+                                <input type="text" name="keyword" placeholder="请输入关键词" onblur="search()" class="layui-input">
+                            </div>
+                            <button class="layui-btn" onclick="search()">搜索</button>
+                        </div>
+                        <!--列表区域-->
+                        <ul class="oList clearfix" id="rdcList"></ul>
+                        <div id="page0" class="page"></div>
+                    </li>
+                    <li id="rent">
+                        <h3><i class="iconfont">&#xe61d;</i>出租求租</h3>
+                        <!--列表区域-->
+                        <ul class="oList clearfix" id="sharelist1"></ul>
+                        <div id="page1" class="page"></div>
+                    </li>
+                    <li id="goods">
+                        <h3><i class="iconfont">&#xe605;</i>我的货源</h3>
+                        <!--列表区域-->
+                        <ul class="oList clearfix" id="sharelist2"></ul>
+                        <div id="page2" class="page"></div>
+                    </li>
+                    <li id="collect">
+                        <h3><i class="iconfont">&#xe60c;</i>我的收藏</h3>
+                        <div class="layui-tab">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this" onclick="getCollectList(0,3,3)">冷库冷库</li>
+                                <li onclick="getCollectList(1,4,4)">需求收藏</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <!--列表区域-->
+                                    <ul class="oList clearfix" id="sharelist3"></ul>
+                                    <div id="page3" class="page"></div>
+                                </div>
+                                <div class="layui-tab-item">
+                                    <!--列表区域-->
+                                    <ul class="oList clearfix" id="sharelist4"></ul>
+                                    <div id="page4" class="page"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li id="about" class="customer">
+                        <h3><i class="iconfont">&#xe629;</i>联系我们</h3>
+                        <p>手机网址：<a href="http://m.liankur.com" target="_blank" class="blue">http://m.liankur.com</a></p>
+                        <p>官方网址：<a href="http://lianku.org.cn/" target="_blank" class="blue">http://lianku.org.cn/</a></p>
+                        <p>360网址：<a href="http://www.smartcold.org.cn" target="_blank"
+                                    class="blue">http://www.smartcold.org.cn</a></p>
+                        <p>联系电话：<i class="orange">400-853-5606</i></p>
+                        <p>办公时间：周一至周五，09:30~17:30</p>
+                        <p>办公时间：周一至周五，09:30~17:30</p>
+                        <p>上海地址：长宁区天山路600弄新虹桥捷运大厦11D</p>
+                        <p>北京地址：海淀区阜成路58号新洲商务大厦612室</p>
+                        <p>电子邮箱：kefu@smartcold.cn</p>
+                    </li>
+                </ol>
+            </div>
         </div>
     </div>
-    <div class="nav">
-        <h1 class="fl"><a href="../../index.html" target="_blank"></a></h1>
-        <ul id="noLoginUser" class="fr navLogin">
-            <li><a href="../../login.html"><i class="iconfont">&#xe715;</i>&nbsp;登录</a></li>
-            <li><a href="register.html"><i class="iconfont">&#xe60f;</i>&nbsp;注册</a></li>
-        </ul>
-        <div id="loginUser" class="fr">
-            <div class="nameDiv">
-                <img src="">
-            </div>
-            <dl class="hide">
-                <li><a href="usercenter.html">个人中心</a></li>
-                <li><a onclick="logout()">退出</a></li>
-            </dl>
-        </div>
-        <ul class="fr navUl">
-            <li><a href="../../index.html">首　　页</a></li>
-            <li><a href="rdclist.html">冷库商情</a></li>
-            <li><a href="standrdclist.html">达标冷库</a></li>
-            <li><a href="rdcprice.html">冷库价格</a></li>
-            <li><a href="rdcmatch.html">需求匹配</a></li>
-            <li><a href="rdctrace.html">温度追溯</a></li>
-            <li><a href="http://www.smartcold.org.cn/">冷库360</a></li>
-        </ul>
-    </div>
-</div>
-<div class="section clearfix">
-    <div class="tabLeft fl">
-        <div class="tabHeader">
-            <div class="headImg">
-                <img id="headPic">
-            </div>
-            <p id="rightUserName" class="txt-center omg"></p>
-            <p id="auditStatus" class="txt-center">
-                <a href="authentication.html"><i class="iconfont">&#xe647;</i><span>已认证</span></a>
-            </p>
-        </div>
-        <ul class="tabNav">
-            <li class="current"><a href="#user"><i class="iconfont">&#xe63c;</i>个人信息</a></li>
-            <li><a href="#myRdc"><i class="iconfont">&#xe656;</i>我的冷库</a></li>
-            <li><a href="#rent"><i class="iconfont">&#xe61d;</i>出租求租</a></li>
-            <li><a href="#goods"><i class="iconfont">&#xe605;</i>我的货源</a></li>
-            <li><a href="#collect"><i class="iconfont">&#xe60c;</i>我的收藏</a></li>
-            <li><a href="#about"><i class="iconfont">&#xe629;</i>联系我们</a></li>
-        </ul>
-    </div>
-    <div class="userBox">
-        <ol class="userInfo">
-            <li id="user">
-                <h3><i class="iconfont">&#xe63c;</i>个人信息</h3>
-                <div class="layui-tab">
-                    <ul class="layui-tab-title">
-                        <li class="layui-this">基本信息</li>
-                        <li onclick="initUpdatePhone()">修改手机</li>
-                        <li>修改密码</li>
-                    </ul>
-                    <div class="layui-tab-content">
-                        <div class="layui-tab-item layui-show">
-                            <form id="userInfo" class="layui-form" onsubmit="return false">
-                                <input type="hidden" id="id" name="id"/>
-                                <div>
-                                    <label class="layui-form-label">头像<em>*</em></label>
-                                    <div class="layui-input-inline headerDiv">
-                                        <img id="headerPic" src="../img/register.png" alt="">
-                                        <label for="headerEdit">
-                                            更改头像
-                                            <input type="file" onchange="changePic(this)"
-                                                   accept="image/gif, image/bmp, image/jpg,image/jpeg, image/png"
-                                                   id="headerEdit">
-                                        </label>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="layui-form-label">昵称<em>*</em></label>
-                                    <div class="layui-input-inline">
-                                        <input type="text" name="nickname" required lay-verify="required"
-                                               placeholder="请输入昵称" autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="layui-input-block">
-                                        <button class="layui-btn" onclick="saveUser()">立即提交</button>
-                                        <button id="reset" class="layui-btn layui-btn-primary">重置</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="layui-tab-item">
-                            <form class="layui-form" onsubmit="return false">
-                                <div style="height: 38px;">
-                                    <label class="layui-form-label">原手机号</label>
-                                    <div class="layui-input-inline clearfix">
-                                        <input id="oldPhone" type="text" name="title" lay-verify="required"
-                                               placeholder="请输入原手机号" autocomplete="off" class="layui-input"
-                                               style="width: 70%;display: inline-block">
-                                        <button id="oldPhoneBtn" onclick="getCode(1)"
-                                                class="layui-btn layui-btn-primary fr getCode omg">获取验证码
-                                        </button>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="layui-form-label">验证码</label>
-                                    <div class="layui-input-inline">
-                                        <input id="oldCode" maxlength="4" type="text" name="title" lay-verify="required"
-                                               placeholder="请输入验证码" autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="layui-form-label">新手机号</label>
-                                    <div class="layui-input-inline clearfix">
-                                        <input id="newPhone" type="text" name="title" lay-verify="required"
-                                               placeholder="请输入新手机号" autocomplete="off" class="layui-input"
-                                               style="width: 70%;display: inline-block">
-                                        <button id="newPhoneBtn" onclick="getCode(2)"
-                                                class="layui-btn layui-btn-primary fr getCode omg">获取验证码
-                                        </button>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="layui-form-label">验证码</label>
-                                    <div class="layui-input-inline">
-                                        <input id="newCode" type="text" name="title" maxlength="4" lay-verify="required"
-                                               placeholder="请输入验证码" autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="layui-input-block">
-                                        <button onclick="updateTelephone()" class="layui-btn" lay-submit
-                                                lay-filter="formDemo">立即提交
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="layui-tab-item">
-                            <form class="layui-form" onsubmit="return false">
-                                <div>
-                                    <label class="layui-form-label">原始密码</label>
-                                    <div class="layui-input-inline">
-                                        <input id="old_password" type="password" lay-verify="required"
-                                               placeholder="请输入原密码" autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="layui-form-label">新密码</label>
-                                    <div class="layui-input-inline">
-                                        <input id="new_password" type="password" lay-verify="required"
-                                               placeholder="请输入新密码" autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="layui-form-label">确认新密码</label>
-                                    <div class="layui-input-inline">
-                                        <input id="new_repassword" type="password" lay-verify="required"
-                                               placeholder="请确认新密码" autocomplete="off" class="layui-input">
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="layui-input-block">
-                                        <button onclick="updatePwd()" class="layui-btn" lay-submit
-                                                lay-filter="formDemo">立即提交
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+    <!--版权区域-->
+    <div class="footer" id="QRcode">
+        <dl class="clearfix">
+            <li class="fl">
+                <p><a href="aboutlianku.html">关于链库</a></p>
+                <p>©2016 Smartcold 沪ICP备 16004753</p>
+                <p>为了您可以获取更佳的浏览效果</p>
+                <p>本站推荐使用
+                    <a href="http://sw.bos.baidu.com/sw-search-sp/software/ba34c905dbdd4/ChromeStandalone_57.0.2987.98_Setup.exe">谷歌浏览器
+                    </a>、<a href="http://sw.bos.baidu.com/sw-search-sp/software/4cee66da4242e/Firefox_52.0.1.6284_setup.exe">火狐浏览器
+                    </a>或者<a href="http://down.360safe.com/se/360se8.1.1.250.exe">360浏览器极速模式</a>
+                </p>
+            </li>
+            <li class="fr">
+                <div class="codeImg">
+                    <img src="../img/ios.png" alt="开小差了~~~">
+                    <p>iPhone下载</p>
                 </div>
-            </li>
-            <li id="myRdc">
-                <h3><i class="iconfont">&#xe656;</i>我的冷库</h3>
-                <div class="search rdcSearch">
-                    <div class="layui-input-inline">
-                        <input type="text" name="keyword" placeholder="请输入关键词" onblur="search()" class="layui-input">
-                    </div>
-                    <button class="layui-btn" onclick="search()">搜索</button>
-                </div>
-                <!--列表区域-->
-                <ul class="oList clearfix" id="rdcList"></ul>
-                <div id="page0" class="page"></div>
-            </li>
-            <li id="rent">
-                <h3><i class="iconfont">&#xe61d;</i>出租求租</h3>
-                <!--列表区域-->
-                <ul class="oList clearfix" id="sharelist1"></ul>
-                <div id="page1" class="page"></div>
-            </li>
-            <li id="goods">
-                <h3><i class="iconfont">&#xe605;</i>我的货源</h3>
-                <!--列表区域-->
-                <ul class="oList clearfix" id="sharelist2"></ul>
-                <div id="page2" class="page"></div>
-            </li>
-            <li id="collect">
-                <h3><i class="iconfont">&#xe60c;</i>我的收藏</h3>
-                <div class="layui-tab">
-                    <ul class="layui-tab-title">
-                        <li class="layui-this" onclick="getCollectList(0,3,3)">冷库冷库</li>
-                        <li onclick="getCollectList(1,4,4)">需求收藏</li>
-                    </ul>
-                    <div class="layui-tab-content">
-                        <div class="layui-tab-item layui-show">
-                            <!--列表区域-->
-                            <ul class="oList clearfix" id="sharelist3"></ul>
-                            <div id="page3" class="page"></div>
-                        </div>
-                        <div class="layui-tab-item">
-                            <!--列表区域-->
-                            <ul class="oList clearfix" id="sharelist4"></ul>
-                            <div id="page4" class="page"></div>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li id="about" class="customer">
-                <h3><i class="iconfont">&#xe629;</i>联系我们</h3>
-                <p>手机网址：<a href="http://m.liankur.com" target="_blank" class="blue">http://m.liankur.com</a></p>
-                <p>官方网址：<a href="http://www.liankur.com" target="_blank" class="blue">http://www.liankur.com</a></p>
-                <p>360网址：<a href="http://www.smartcold.org.cn" target="_blank"
-                            class="blue">http://www.smartcold.org.cn</a></p>
-                <p>联系电话：<i class="orange">400-853-5606</i></p>
-                <p>办公时间：周一至周五，09:30~17:30</p>
-                <p>办公时间：周一至周五，09:30~17:30</p>
-                <p>上海地址：长宁区天山路600弄新虹桥捷运大厦11D</p>
-                <p>北京地址：海淀区阜成路58号新洲商务大厦612室</p>
-                <p>电子邮箱：kefu@smartcold.cn</p>
-            </li>
-        </ol>
-    </div>
-</div>
-<!--版权区域-->
-<div class="footer" id="QRcode">
-    <dl class="clearfix">
-        <li class="fl">
-            <p><a href="aboutlianku.html">关于链库</a></p>
-            <p>©2016 Smartcold 沪ICP备 16004753</p>
-            <p>为了您可以获取更佳的浏览效果</p>
-            <p>本站推荐使用
-                <a href="http://sw.bos.baidu.com/sw-search-sp/software/ba34c905dbdd4/ChromeStandalone_57.0.2987.98_Setup.exe">谷歌浏览器
-                </a>、<a href="http://sw.bos.baidu.com/sw-search-sp/software/4cee66da4242e/Firefox_52.0.1.6284_setup.exe">火狐浏览器
-                </a>或者<a href="http://down.360safe.com/se/360se8.1.1.250.exe">360浏览器极速模式</a>
-            </p>
-        </li>
-        <li class="fr">
-            <div class="codeImg">
-                <img src="../img/ios.png" alt="开小差了~~~">
-                <p>iPhone下载</p>
-            </div>
-            <div class="codeImg">
+                <div class="codeImg">
 
-                <img src="../img/android.png" alt="开小差了~~~">
-                <p>Android下载</p>
-            </div>
-            <div class="codeImg">
-                <img src="../img/weixin_lianku.jpg" alt="开小差了~~~">
-                <p>链库公众号</p>
-            </div>
-        </li>
-    </dl>
+                    <img src="../img/android.png" alt="开小差了~~~">
+                    <p>Android下载</p>
+                </div>
+                <div class="codeImg">
+                    <img src="../img/weixin_lianku.jpg" alt="开小差了~~~">
+                    <p>链库公众号</p>
+                </div>
+            </li>
+        </dl>
+    </div>
 </div>
 <script src="../plugins/jquery-1.12.0.min.js"></script>
 <script src="../plugins/layui.all.js"></script>

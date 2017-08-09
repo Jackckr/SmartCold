@@ -16,229 +16,165 @@
     <link rel="stylesheet" href="../css/rdcMatch.css"/>
 </head>
 <body>
-<!--header 导航栏-->
-<div class="header">
-    <div class="hotLine">
-        <h2 class="fl">冷库物联网大数据平台</h2>
-        <div class="fr">
-            <span>客服热线：<span class="orange">400-853-5606</span></span>
-            <a href="#QRcode">
-                APP下载<i class="iconfont orange">&#xe642;</i>
-            </a>
-        </div>
-    </div>
-    <div class="nav">
-        <h1 class="fl"><a href="../../index.html" target="_blank"></a></h1>
-        <ul id="noLoginUser" class="fr navLogin">
-            <li><a href="../../login.html"><i class="iconfont">&#xe715;</i>&nbsp;登录</a></li>
-            <li><a href="register.html"><i class="iconfont">&#xe60f;</i>&nbsp;注册</a></li>
-        </ul>
-        <div id="loginUser" class="fr">
-            <div class="nameDiv">
-                <img src="" onclick="window.location.href='usercenter.html'">
-            </div>
-            <dl class="hide">
-                <li><a href="usercenter.html">个人中心</a></li>
-                <li><a onclick="logout()">退出</a></li>
-            </dl>
-        </div>
-        <ul class="fr navUl">
-            <li><a href="../../index.html">首　　页</a></li>
-            <li><a href="rdclist.html">冷库商情</a></li>
-            <li><a href="standrdclist.html">达标冷库</a></li>
-            <li><a href="rdcprice.html">冷库价格</a></li>
-            <li class="activeNav"><a href="rdcmatch.html">需求匹配</a></li>
-            <li><a href="rdctrace.html">温度追溯</a></li>
-            <li><a href="http://www.smartcold.org.cn/">冷库360</a></li>
-        </ul>
-    </div>
-</div>
-<div class="section clearfix">
-    <div class="btnGroup">
-        <button value="0" class="active"><a>冷库出租</a></button>
-        <button value="1"><a>冷库求租</a></button>
-        <button value="2"><a>商品出售</a></button>
-        <button value="3"><a>商品求购</a></button>
-        <button onclick="toAddInfo()"><a>免费发布信息</a></button>
-    </div>
-    <!--出租求租html*********************************************************************-->
-    <div class="rdcMatch rentToggle">
-        <!--筛选条件-->
-        <div class="filter">
-            <div class="filterHeader clearfix">
-                <div class="fl">
-                    <label>
-                        区域　
-                        <select name="provinceid" id="provinceid">
-
-                        </select>
-                    </label>
-                </div>
+<div id="containBox">
+    <div id="containBody">
+        <!--header 导航栏-->
+        <div class="header">
+            <div class="hotLine">
+                <h2 class="fl">冷库物联网大数据平台</h2>
                 <div class="fr">
-                    <input class="keyword" name="keyword" id="keyword" type="text" placeholder="请输入关键词">
-                    <i name="search" id="search" class="iconfont zoom">&#xe609;</i>
+                    <span>客服热线：<span class="orange">400-853-5606</span></span>
+                    <a href="#QRcode">
+                        APP下载<i class="iconfont orange">&#xe642;</i>
+                    </a>
                 </div>
             </div>
-            <div class="filterBody">
-                <div class="typeList clearfix">
-                    <span class="fl">经营类型:</span>
-                    <ul class="clearfix" id="managetype">
-                    </ul>
+            <div class="nav">
+                <h1 class="fl"><a href="../../index.html" target="_blank"></a></h1>
+                <ul id="noLoginUser" class="fr navLogin">
+                    <li><a href="../../login.html"><i class="iconfont">&#xe715;</i>&nbsp;登录</a></li>
+                    <li><a href="register.html"><i class="iconfont">&#xe60f;</i>&nbsp;注册</a></li>
+                </ul>
+                <div id="loginUser" class="fr">
+                    <div class="nameDiv">
+                        <img src="" onclick="window.location.href='usercenter.html'">
+                    </div>
+                    <dl class="hide">
+                        <li><a href="usercenter.html">个人中心</a></li>
+                        <li><a onclick="logout()">退出</a></li>
+                    </dl>
                 </div>
-                <div class="typeList clearfix">
-                    <span class="fl">冷库温度类型:</span>
-                    <ul class="clearfix" id="storagetempertype">
-                    </ul>
-                </div>
-                <div class="typeList clearfix">
-                    <span class="fl">吨位/面积·㎡:</span>
-                    <ul class="clearfix" id="sqm">
-                        <li type="sqm" value="0" class="activeType">不限</li>
-                        <li type="sqm" value="1">1000以下</li>
-                        <li type="sqm" value="2">1000~3000</li>
-                        <li type="sqm" value="3">3000~6000</li>
-                        <li type="sqm" value="4">6000~12000</li>
-                        <li type="sqm" value="5">12000~20000</li>
-                        <li type="sqm" value="6">20000以上</li>
-                    </ul>
-                </div>
+                <ul class="fr navUl">
+                    <li><a href="../../index.html">首　　页</a></li>
+                    <li><a href="rdclist.html">冷库商情</a></li>
+                    <li><a href="standrdclist.html">达标冷库</a></li>
+                    <li><a href="rdcprice.html">冷库价格</a></li>
+                    <li class="activeNav"><a href="rdcmatch.html">需求匹配</a></li>
+                    <li><a href="rdctrace.html">温度追溯</a></li>
+                    <li><a href="http://www.smartcold.org.cn/">冷库360</a></li>
+                </ul>
             </div>
         </div>
-        <!--信息主体-->
-        <div class="msgInfo" id="coldList"></div>
-        <div class="msgInfo hide" id="applyList"></div>
-        <div id="coldPage" class="listPage"></div>
-    </div>
-    <!--出租求租html end*********************************************************************-->
-    <!--出售求购html*********************************************************************-->
-    <div class="rdcMatch goodsToggle hide">
-        <!--筛选条件-->
-        <div class="filter">
-            <div class="filterHeader clearfix">
-                <div class="fl">
-                    <label>
-                        区域　
-                        <select name="provinceid" id="goodsProvince">
-
-                        </select>
-                    </label>
-                </div>
-                <div class="fr">
-                    <input id="goodsKeyword" name="keyword" class="keyword" type="text" placeholder="请输入关键词">
-                    <i name="search" class="iconfont zoom">&#xe609;</i>
-                </div>
+        <div class="section clearfix">
+            <div class="btnGroup">
+                <button value="0" class="active"><a>冷库出租</a></button>
+                <button value="1"><a>冷库求租</a></button>
+                <button value="2"><a>商品出售</a></button>
+                <button value="3"><a>商品求购</a></button>
+                <button onclick="toAddInfo()"><a>免费发布信息</a></button>
             </div>
-            <div class="filterBody">
-                <div class="typeList clearfix">
-                    <span class="fl">品类:</span>
-                    <ul class="clearfix" id="goodsType">
-                    </ul>
+            <!--出租求租html*********************************************************************-->
+            <div class="rdcMatch rentToggle">
+                <!--筛选条件-->
+                <div class="filter">
+                    <div class="filterHeader clearfix">
+                        <div class="fl">
+                            <label>
+                                区域　
+                                <select name="provinceid" id="provinceid">
+
+                                </select>
+                            </label>
+                        </div>
+                        <div class="fr">
+                            <input class="keyword" name="keyword" id="keyword" type="text" placeholder="请输入关键词">
+                            <i name="search" id="search" class="iconfont zoom">&#xe609;</i>
+                        </div>
+                    </div>
+                    <div class="filterBody">
+                        <div class="typeList clearfix">
+                            <span class="fl">经营类型:</span>
+                            <ul class="clearfix" id="managetype">
+                            </ul>
+                        </div>
+                        <div class="typeList clearfix">
+                            <span class="fl">冷库温度类型:</span>
+                            <ul class="clearfix" id="storagetempertype">
+                            </ul>
+                        </div>
+                        <div class="typeList clearfix">
+                            <span class="fl">吨位/面积·㎡:</span>
+                            <ul class="clearfix" id="sqm">
+                                <li type="sqm" value="0" class="activeType">不限</li>
+                                <li type="sqm" value="1">1000以下</li>
+                                <li type="sqm" value="2">1000~3000</li>
+                                <li type="sqm" value="3">3000~6000</li>
+                                <li type="sqm" value="4">6000~12000</li>
+                                <li type="sqm" value="5">12000~20000</li>
+                                <li type="sqm" value="6">20000以上</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
+                <!--信息主体-->
+                <div class="msgInfo" id="coldList"></div>
+                <div class="msgInfo hide" id="applyList"></div>
+                <div id="coldPage" class="listPage"></div>
+            </div>
+            <!--出租求租html end*********************************************************************-->
+            <!--出售求购html*********************************************************************-->
+            <div class="rdcMatch goodsToggle hide">
+                <!--筛选条件-->
+                <div class="filter">
+                    <div class="filterHeader clearfix">
+                        <div class="fl">
+                            <label>
+                                区域　
+                                <select name="provinceid" id="goodsProvince">
+
+                                </select>
+                            </label>
+                        </div>
+                        <div class="fr">
+                            <input id="goodsKeyword" name="keyword" class="keyword" type="text" placeholder="请输入关键词">
+                            <i name="search" class="iconfont zoom">&#xe609;</i>
+                        </div>
+                    </div>
+                    <div class="filterBody">
+                        <div class="typeList clearfix">
+                            <span class="fl">品类:</span>
+                            <ul class="clearfix" id="goodsType">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--信息主体-->
+                <div id="goodsList" class="msgInfo"></div>
+                <div id="applygoodsList" class="msgInfo hide"></div>
+                <div id="goodsPage" class="listPage"></div>
             </div>
         </div>
-        <!--信息主体-->
-        <div id="goodsList" class="msgInfo"></div>
-        <div id="applygoodsList" class="msgInfo hide"></div>
-        <div id="goodsPage" class="listPage"></div>
     </div>
-</div>
-<!--<div class="infoModal">
-    <ul class="infoImg clearfix">
-        <li><img src="../img/image0.jpg" alt=""></li>
-        <li><img src="../img/image1.jpg" alt=""></li>
-        <li><img src="../img/image0.jpg" alt=""></li>
-    </ul>
-    <h3 class="orange">基本信息</h3>
-    <ol>
-        <li>
-            <div>数量：</div>
-            <div>23.00吨</div>
-        </li>
-        <li>
-            <div>有效期：</div>
-            <div>3~6个月</div>
-        </li>
-        <li>
-            <div>备注：</div>
-            <div>快捷方式的客服给会计是大法官客家话</div>
-        </li>
-    </ol>
-</div>-->
-<!--版权区域-->
-<div class="footer" id="QRcode">
-    <!--<ul class="clearfix">
-        <li class="fl txt-center">
-            <div>
-                <i class="iconfont">&#xe625;</i>
-                <p>找库</p>
-            </div>
-            <ol>
-                <li><a href="javascript:;">冷库详情</a></li>
-                <li><a href="javascript:;">冷库点评</a></li>
-                <li><a href="javascript:;">冷库地图</a></li>
-            </ol>
-        </li>
-        <li class="fl txt-center">
-            <div>
-                <i class="iconfont">&#xe61f;</i>
-                <p>共享</p>
-            </div>
-            <ol>
-                <li><a href="javascript:;">配货信息</a></li>
-                <li><a href="javascript:;">订仓信息</a></li>
-                <li><a href="javascript:;">商品信息</a></li>
-            </ol>
-        </li>
-        <li class="fl txt-center">
-            <div>
-                <i class="iconfont">&#xe63a;</i>
-                <p>追溯</p>
-            </div>
-            <ol>
-                <li><a href="javascript:;">批次查询</a></li>
-                <li><a href="javascript:;">物流追踪</a></li>
-                <li><a href="javascript:;">温度分析</a></li>
-            </ol>
-        </li>
-        <li class="fl txt-center">
-            <div>
-                <i class="iconfont">&#xe61b;</i>
-                <p>冷库360</p>
-            </div>
-            <ol>
-                <li><a href="javascript:;">在线评估</a></li>
-                <li><a href="javascript:;">能耗分析</a></li>
-                <li><a href="javascript:;">动态管理</a></li>
-            </ol>
-        </li>
-    </ul>-->
-    <dl class="clearfix">
-        <li class="fl">
-            <p><a href="aboutlianku.html">关于链库</a></p>
-            <p>©2016 Smartcold 沪ICP备 16004753</p>
-            <p>为了您可以获取更佳的浏览效果</p>
-            <p>本站推荐使用
-                <a href="http://sw.bos.baidu.com/sw-search-sp/software/ba34c905dbdd4/ChromeStandalone_57.0.2987.98_Setup.exe">谷歌浏览器
-                </a>、<a href="http://sw.bos.baidu.com/sw-search-sp/software/4cee66da4242e/Firefox_52.0.1.6284_setup.exe">火狐浏览器
-                </a>或者<a href="http://down.360safe.com/se/360se8.1.1.250.exe">360浏览器极速模式</a>
-            </p>
-        </li>
-        <li class="fr">
-            <div class="codeImg">
-                <img src="../img/ios.png" alt="开小差了~~~">
-                <p>iPhone下载</p>
-            </div>
-            <div class="codeImg">
+    <div class="footer" id="QRcode">
 
-                <img src="../img/android.png" alt="开小差了~~~">
-                <p>Android下载</p>
-            </div>
-            <div class="codeImg">
-                <img src="../img/weixin_lianku.jpg" alt="开小差了~~~">
-                <p>链库公众号</p>
-            </div>
-        </li>
-    </dl>
+        <dl class="clearfix">
+            <li class="fl">
+                <p><a href="aboutlianku.html">关于链库</a></p>
+                <p>©2016 Smartcold 沪ICP备 16004753</p>
+                <p>为了您可以获取更佳的浏览效果</p>
+                <p>本站推荐使用
+                    <a href="http://sw.bos.baidu.com/sw-search-sp/software/ba34c905dbdd4/ChromeStandalone_57.0.2987.98_Setup.exe">谷歌浏览器
+                    </a>、<a href="http://sw.bos.baidu.com/sw-search-sp/software/4cee66da4242e/Firefox_52.0.1.6284_setup.exe">火狐浏览器
+                    </a>或者<a href="http://down.360safe.com/se/360se8.1.1.250.exe">360浏览器极速模式</a>
+                </p>
+            </li>
+            <li class="fr">
+                <div class="codeImg">
+                    <img src="../img/ios.png" alt="开小差了~~~">
+                    <p>iPhone下载</p>
+                </div>
+                <div class="codeImg">
+
+                    <img src="../img/android.png" alt="开小差了~~~">
+                    <p>Android下载</p>
+                </div>
+                <div class="codeImg">
+                    <img src="../img/weixin_lianku.jpg" alt="开小差了~~~">
+                    <p>链库公众号</p>
+                </div>
+            </li>
+        </dl>
+    </div>
 </div>
 <script src="../plugins/jquery-1.12.0.min.js"></script>
 <script src="../plugins/layui.all.js"></script>

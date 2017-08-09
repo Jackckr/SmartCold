@@ -16,409 +16,414 @@
     <link rel="stylesheet" href="../css/homenewlayout.css" />
 </head>
 <body>
-<!--header 导航栏-->
-<div class="header">
-    <div class="hotLine">
-        <h2 class="fl" style="line-height: 28px;">冷库物联网大数据平台</h2>
-        <div class="fr">
-            <span>客服热线：<span class="orange">400-853-5606</span></span>
-            <a href="#QRcode">
-                APP下载<i class="iconfont orange">&#xe642;</i>
-            </a>
-        </div>
-    </div>
-    <div class="nav">
-        <h1 class="fl"><a href="../../index.html" target="_blank"></a></h1>
-        <ul id="noLoginUser" class="fr navLogin">
-            <li><a href="../../login.html"><i class="iconfont">&#xe715;</i>&nbsp;登录</a></li>
-            <li><a href="register.html"><i class="iconfont">&#xe60f;</i>&nbsp;注册</a></li>
-        </ul>
-        <div id="loginUser" class="fr">
-            <div class="nameDiv">
-                <img src="" onclick="window.location.href='usercenter.html'">
+<div id="containBox">
+    <div id="containBody">
+        <!--header 导航栏-->
+        <div class="header">
+            <div class="hotLine">
+                <h2 class="fl" style="line-height: 28px;">冷库物联网大数据平台</h2>
+                <div class="fr">
+                    <span>客服热线：<span class="orange">400-853-5606</span></span>
+                    <a href="#QRcode">
+                        APP下载<i class="iconfont orange">&#xe642;</i>
+                    </a>
+                </div>
             </div>
-            <dl class="hide">
-                <li><a href="usercenter.html">个人中心</a></li>
-                <li><a onclick="logout()">退出</a></li>
-            </dl>
-        </div>
-        <ul class="fr navUl">
-            <li><a href="../../index.html">首　　页</a></li>
-            <li><a href="rdclist.html">冷库商情</a></li>
-            <li><a href="standrdclist.html">达标冷库</a></li>
-            <li><a href="rdcprice.html">冷库价格</a></li>
-            <li><a href="rdcmatch.html">需求匹配</a></li>
-            <li><a href="rdctrace.html">温度追溯</a></li>
-            <li><a href="http://www.smartcold.org.cn/">冷库360</a></li>
-        </ul>
-    </div>
-</div>
-<div>
-    <div class="bs-example">
-        <div id="carousel" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ol class="carousel-indicators">
-                <li data-target="#carousel" data-slide-to="0" class="active"></li>
-                <li data-target="#carousel" data-slide-to="1"></li>
-                <li data-target="#carousel" data-slide-to="2"></li>
-            </ol>
-
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner" role="listbox">
-                <div class="item active">
-                    <img src="../img/image0.jpg" style="width:100%;" alt="First slide">
-                </div>
-                <div class="item">
-                    <img src="../img/image1.jpg" style="width:100%;" alt="Second slide">
-                </div>
-                <div class="item">
-                    <img src="../img/image3.jpg" style="width:100%;" alt="Third slide">
-                </div>
-                <!-- 轮播（Carousel）导航 -->
-                <a class="left carousel-control" href="javascript:;" role="button">
-                    <i class="fa fa-angle-left"></i>
-                </a>
-                <a class="right carousel-control" href="javascript:;" role="button">
-                    <i class="fa fa-angle-right"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="content">
-        <div style="height:400px;">
-            <div class="col-lg-12 col-xs-12 col-xs-12 col-sm-12 col-md-12">
-                <div class="col-lg-10 col-xs-10 col-sm-10 col-lg-offset-1 col-sm-offset-1 col-xs-offset-1 col-sm-offset-1 col-xs-offset-1 col-md-10 col-md-offset-1">
-                    <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6" >
-                        <div class="h1 visible-lg">WHO WE ARE<br>我们是谁</div>
-                        <div class="h2 visible-md">WHO WE ARE<br>我们是谁</div>
-                        <div class="h3 visible-sm">WHO WE ARE<br>我们是谁</div>
-                        <div class="h4 visible-xs">WHO WE ARE<br>我们是谁</div>
-                        <div class="h5">
-                            <p style="border-top-style: groove; margin-top: 10px;"></p>
-
-                            <p>我们的团队由物流专家、信息化专家、制冷专家、食品专家、物联网专家组成<br></p>
-
-                            <p>依托中国物流与采购联合会冷链物流专业委员会行业资源<br></p>
-
-                            <p>打造集评价、认证、共享、追溯、能耗管理为一体、国内最权威的冷库智能管理与云服务平台</p>
-
-                            <p style="border-top-style: groove; margin-top: 10px;"></p>
-                        </div>
-                        <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 ">
-                            <img src="../img/people.png" style="height:100px">
-                        </div>
+            <div class="nav">
+                <h1 class="fl"><a href="../../index.html" target="_blank"></a></h1>
+                <ul id="noLoginUser" class="fr navLogin">
+                    <li><a href="../../login.html"><i class="iconfont">&#xe715;</i>&nbsp;登录</a></li>
+                    <li><a href="register.html"><i class="iconfont">&#xe60f;</i>&nbsp;注册</a></li>
+                </ul>
+                <div id="loginUser" class="fr">
+                    <div class="nameDiv">
+                        <img src="" onclick="window.location.href='usercenter.html'">
                     </div>
-                    <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6" id="what">
-                        <div class="h1 visible-lg">WHAT WE DO<br>解决什么问题</div>
-                        <div class="h2 visible-md">WHAT WE DO<br>解决什么问题</div>
-                        <div class="h3 visible-sm">WHAT WE DO<br>解决什么问题</div>
-                        <div class="h4 visible-xs">WHAT WE DO<br>解决什么问题</div>
-                        <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12" style="height:100px">
-                            <img src="../img/cloud.png" style="height:100px">
-                            <div class="h5 col-lg-12" style="width:105%">
-                                <p style="border-top-style: groove; margin-top: 10px;"></p>
+                    <dl class="hide">
+                        <li><a href="usercenter.html">个人中心</a></li>
+                        <li><a onclick="logout()">退出</a></li>
+                    </dl>
+                </div>
+                <ul class="fr navUl">
+                    <li><a href="../../index.html">首　　页</a></li>
+                    <li><a href="rdclist.html">冷库商情</a></li>
+                    <li><a href="standrdclist.html">达标冷库</a></li>
+                    <li><a href="rdcprice.html">冷库价格</a></li>
+                    <li><a href="rdcmatch.html">需求匹配</a></li>
+                    <li><a href="rdctrace.html">温度追溯</a></li>
+                    <li><a href="http://www.smartcold.org.cn/">冷库360</a></li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <div class="bs-example">
+                <div id="carousel" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel" data-slide-to="1"></li>
+                        <li data-target="#carousel" data-slide-to="2"></li>
+                    </ol>
 
-                                <p>让您快速找到国内优秀的标准化冷库<br></p>
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox">
+                        <div class="item active">
+                            <img src="../img/image0.jpg" style="width:100%;" alt="First slide">
+                        </div>
+                        <div class="item">
+                            <img src="../img/image1.jpg" style="width:100%;" alt="Second slide">
+                        </div>
+                        <div class="item">
+                            <img src="../img/image3.jpg" style="width:100%;" alt="Third slide">
+                        </div>
+                        <!-- 轮播（Carousel）导航 -->
+                        <a class="left carousel-control" href="javascript:;" role="button">
+                            <i class="fa fa-angle-left"></i>
+                        </a>
+                        <a class="right carousel-control" href="javascript:;" role="button">
+                            <i class="fa fa-angle-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div style="height:400px;">
+                    <div class="col-lg-12 col-xs-12 col-xs-12 col-sm-12 col-md-12">
+                        <div class="col-lg-10 col-xs-10 col-sm-10 col-lg-offset-1 col-sm-offset-1 col-xs-offset-1 col-sm-offset-1 col-xs-offset-1 col-md-10 col-md-offset-1">
+                            <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6" >
+                                <div class="h1 visible-lg">WHO WE ARE<br>我们是谁</div>
+                                <div class="h2 visible-md">WHO WE ARE<br>我们是谁</div>
+                                <div class="h3 visible-sm">WHO WE ARE<br>我们是谁</div>
+                                <div class="h4 visible-xs">WHO WE ARE<br>我们是谁</div>
+                                <div class="h5">
+                                    <p style="border-top-style: groove; margin-top: 10px;"></p>
 
-                                <p>为生鲜农产品提供产、配、销一站式信息对接平台，解决农产品产销信息不对称难题<br></p>
+                                    <p>我们的团队由物流专家、信息化专家、制冷专家、食品专家、物联网专家组成<br></p>
 
-                                <p>让生鲜农产品提供从田间到餐桌全程温度追溯可视化，保证食品安全<br></p>
+                                    <p>依托中国物流与采购联合会冷链物流专业委员会行业资源<br></p>
 
-                                <p>帮助企业改善冷库操作及节能管理，有效降低冷库的运营成本，提高企业的市场竞争能力</p>
+                                    <p>打造集评价、认证、共享、追溯、能耗管理为一体、国内最权威的冷库智能管理与云服务平台</p>
 
-                                <p style="border-top-style: groove; margin-top: 10px;"></p>
+                                    <p style="border-top-style: groove; margin-top: 10px;"></p>
+                                </div>
+                                <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 ">
+                                    <img src="../img/people.png" style="height:100px">
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6" id="what">
+                                <div class="h1 visible-lg">WHAT WE DO<br>解决什么问题</div>
+                                <div class="h2 visible-md">WHAT WE DO<br>解决什么问题</div>
+                                <div class="h3 visible-sm">WHAT WE DO<br>解决什么问题</div>
+                                <div class="h4 visible-xs">WHAT WE DO<br>解决什么问题</div>
+                                <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12" style="height:100px">
+                                    <img src="../img/cloud.png" style="height:100px">
+                                    <div class="h5 col-lg-12" style="width:105%">
+                                        <p style="border-top-style: groove; margin-top: 10px;"></p>
+
+                                        <p>让您快速找到国内优秀的标准化冷库<br></p>
+
+                                        <p>为生鲜农产品提供产、配、销一站式信息对接平台，解决农产品产销信息不对称难题<br></p>
+
+                                        <p>让生鲜农产品提供从田间到餐桌全程温度追溯可视化，保证食品安全<br></p>
+
+                                        <p>帮助企业改善冷库操作及节能管理，有效降低冷库的运营成本，提高企业的市场竞争能力</p>
+
+                                        <p style="border-top-style: groove; margin-top: 10px;"></p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="content main">
-        <div style="height:600px;">
-            <div class="col-lg-12 col-xs-12 col-sm-12 col-sm-12 col-md-12 block-center">
-                <div class="titleCom fix">
-                    <div class="fl line"></div>
-                    <div class="fl titleMid">
-                        <div class="h3 visible-lg"><h3>我们的服务内容<br>WHAT WE SERVICE</h3></div>
-                        <div class="h4 visible-md">我们的服务内容<br>WHAT WE SERVICE</div>
-                        <div class="h5 visible-sm">我们的服务内容<br>WHAT WE SERVICE</div>
-                        <div class="h6 visible-xs">我们的服务内容<br>WHAT WE SERVICE</div>
+            <div class="content main">
+                <div style="height:600px;">
+                    <div class="col-lg-12 col-xs-12 col-sm-12 col-sm-12 col-md-12 block-center">
+                        <div class="titleCom fix">
+                            <div class="fl line"></div>
+                            <div class="fl titleMid">
+                                <div class="h3 visible-lg"><h3>我们的服务内容<br>WHAT WE SERVICE</h3></div>
+                                <div class="h4 visible-md">我们的服务内容<br>WHAT WE SERVICE</div>
+                                <div class="h5 visible-sm">我们的服务内容<br>WHAT WE SERVICE</div>
+                                <div class="h6 visible-xs">我们的服务内容<br>WHAT WE SERVICE</div>
+                            </div>
+                            <div class="fr line"></div>
+                        </div>
                     </div>
-                    <div class="fr line"></div>
-                </div>
-            </div>
-            <div class="col-lg-10 col-xs-10 col-sm-10 col-lg-offset-1 col-sm-offset-1 col-xs-offset-1 col-md-10 col-md-offset-1" style="margin-top:3%;">
-                <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3 text-center ahover"
-                     style="border-right:1px dotted gray;padding-bottom:20px;">
-                    <a class="h1 visible-lg strong" href="rdclist.html" >冷库商情</a>
-                    <a class="h2 visible-md strong" href="rdclist.html" >冷库商情</a>
-                    <a class="h3 visible-sm strong" href="rdclist.html" >冷库商情</a>
-                    <a class="h4 visible-xs strong" href="rdclist.html" >冷库商情</a>
-                    <br>
-                    <h3 class="text-gray visible-lg">寻找标准化冷库的最佳途径</h3>
-                    <h4 class="text-gray visible-md">寻找标准化冷库的最佳途径</h4>
-                    <h5 class="text-gray visible-sm">寻找标准化冷库的最佳途径</h5>
-                    <h6 class="text-gray visible-xs">寻找标准化冷库的最佳途径</h6>
-                    <br>
-                    <a href="rdclist.html"><img class="img-thumbnail" style="border:0px;" src="../img/tab1.png"></a>
-                    <br>
-                    <h4 class="text-gray">冷库点评，展示，地图</h4>
-                </div>
-                <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3 text-center ahover"
-                     style="border-right:1px dotted gray;padding-bottom:20px;">
-                    <a class="h1 visible-lg strong" href="rdcmatch.html" >需求匹配</a>
-                    <a class="h2 visible-md strong" href="rdcmatch.html" >需求匹配</a>
-                    <a class="h3 visible-sm strong" href="rdcmatch.html" >需求匹配</a>
-                    <a class="h4 visible-xs strong" href="rdcmatch.html" >需求匹配</a>
-                    <br>
-                    <h3 class="text-gray visible-lg">&nbsp;&nbsp;&nbsp;车、仓、货资源共享&nbsp;&nbsp;&nbsp;</h3>
-                    <h4 class="text-gray visible-md">&nbsp;&nbsp;&nbsp;车、仓、货资源共享&nbsp;&nbsp;&nbsp;</h4>
-                    <h5 class="text-gray visible-sm">&nbsp;&nbsp;&nbsp;车、仓、货资源共享&nbsp;&nbsp;&nbsp;</h5>
-                    <h6 class="text-gray visible-xs">&nbsp;&nbsp;&nbsp;车、仓、货资源共享&nbsp;&nbsp;&nbsp;</h6>
-                    <br>
-                    <a href="rdcmatch.html"><img class="img-thumbnail" style="border:0px;" src="../img/tab2.png"></a>
-                    <br>
-                    <h4 class="text-gray">配送，订仓，货源&nbsp;信息发布</h4>
-                </div>
-                <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3 text-center ahover"
-                     style="border-right:1px dotted gray;padding-bottom:20px;">
-                    <a class="h1 visible-lg strong" href="rdctrace.html" >温度追溯</a>
-                    <a class="h2 visible-md strong" href="rdctrace.html" >温度追溯</a>
-                    <a class="h3 visible-sm strong" href="rdctrace.html" >温度追溯</a>
-                    <a class="h4 visible-xs strong" href="rdctrace.html" >温度追溯</a>
-                    <br>
-                    <h3 class="text-gray visible-lg">端到端全程温度可视化系统</h3>
-                    <h4 class="text-gray visible-md">端到端全程温度可视化系统</h4>
-                    <h5 class="text-gray visible-sm">端到端全程温度可视化系统</h5>
-                    <h6 class="text-gray visible-xs">端到端全程温度可视化系统</h6>
-                    <br>
-                    <a href="rdctrace.html" ><img class="img-thumbnail" style="border:0px;" src="../img/tab3.png"></a>
-                    <br>
-                    <h4 class="text-gray">温度数据托管与监控</h4>
-                </div>
-                <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3 text-center ahover" style="padding-bottom:20px;">
-                    <a class="h1 visible-lg strong" href="http://smartcold.org.cn" target="view_frame">冷库360</a>
-                    <a class="h2 visible-md strong" href="http://smartcold.org.cn" target="view_frame">冷库360</a>
-                    <a class="h3 visible-sm strong" href="http://smartcold.org.cn" target="view_frame">冷库360</a>
-                    <a class="h4 visible-xs strong" href="http://smartcold.org.cn" target="view_frame">冷库360</a>
-                    <br>
-                    <h3 class="text-gray visible-lg">冷库能效在线管理系统</h3>
-                    <h4 class="text-gray visible-md">冷库能效在线管理系统</h4>
-                    <h5 class="text-gray visible-sm">冷库能效在线管理系统</h5>
-                    <h6 class="text-gray visible-xs">冷库能效在线管理系统</h6>
-                    <br>
-                    <a href="http://smartcold.org.cn" target="view_frame"><img class="img-thumbnail" style="border:0px;" src="../img/oursevice.png"></a>
-                    <br>
-                    <h4 class="text-gray">冷库认证与能耗管理</h4>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="content">
-        <div style="height:480px" class="case">
-            <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
-                <div class="titleCom fix">
-                    <div class="fl line"></div>
-                    <div class="fl titleMid">
-                        <div class="h3 visible-lg">智慧冷库<br>SMART COLD</div>
-                        <div class="h4 visible-md">智慧冷库<br>SMART COLD</div>
-                        <div class="h5 visible-sm">智慧冷库<br>SMART COLD</div>
-                        <div class="h6 visible-xs">智慧冷库<br>SMART COLD</div>
+                    <div class="col-lg-10 col-xs-10 col-sm-10 col-lg-offset-1 col-sm-offset-1 col-xs-offset-1 col-md-10 col-md-offset-1" style="margin-top:3%;">
+                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3 text-center ahover"
+                             style="border-right:1px dotted gray;padding-bottom:20px;">
+                            <a class="h1 visible-lg strong" href="rdclist.html" >冷库商情</a>
+                            <a class="h2 visible-md strong" href="rdclist.html" >冷库商情</a>
+                            <a class="h3 visible-sm strong" href="rdclist.html" >冷库商情</a>
+                            <a class="h4 visible-xs strong" href="rdclist.html" >冷库商情</a>
+                            <br>
+                            <h3 class="text-gray visible-lg">寻找标准化冷库的最佳途径</h3>
+                            <h4 class="text-gray visible-md">寻找标准化冷库的最佳途径</h4>
+                            <h5 class="text-gray visible-sm">寻找标准化冷库的最佳途径</h5>
+                            <h6 class="text-gray visible-xs">寻找标准化冷库的最佳途径</h6>
+                            <br>
+                            <a href="rdclist.html"><img class="img-thumbnail" style="border:0px;" src="../img/tab1.png"></a>
+                            <br>
+                            <h4 class="text-gray">冷库点评，展示，地图</h4>
+                        </div>
+                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3 text-center ahover"
+                             style="border-right:1px dotted gray;padding-bottom:20px;">
+                            <a class="h1 visible-lg strong" href="rdcmatch.html" >需求匹配</a>
+                            <a class="h2 visible-md strong" href="rdcmatch.html" >需求匹配</a>
+                            <a class="h3 visible-sm strong" href="rdcmatch.html" >需求匹配</a>
+                            <a class="h4 visible-xs strong" href="rdcmatch.html" >需求匹配</a>
+                            <br>
+                            <h3 class="text-gray visible-lg">&nbsp;&nbsp;&nbsp;车、仓、货资源共享&nbsp;&nbsp;&nbsp;</h3>
+                            <h4 class="text-gray visible-md">&nbsp;&nbsp;&nbsp;车、仓、货资源共享&nbsp;&nbsp;&nbsp;</h4>
+                            <h5 class="text-gray visible-sm">&nbsp;&nbsp;&nbsp;车、仓、货资源共享&nbsp;&nbsp;&nbsp;</h5>
+                            <h6 class="text-gray visible-xs">&nbsp;&nbsp;&nbsp;车、仓、货资源共享&nbsp;&nbsp;&nbsp;</h6>
+                            <br>
+                            <a href="rdcmatch.html"><img class="img-thumbnail" style="border:0px;" src="../img/tab2.png"></a>
+                            <br>
+                            <h4 class="text-gray">配送，订仓，货源&nbsp;信息发布</h4>
+                        </div>
+                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3 text-center ahover"
+                             style="border-right:1px dotted gray;padding-bottom:20px;">
+                            <a class="h1 visible-lg strong" href="rdctrace.html" >温度追溯</a>
+                            <a class="h2 visible-md strong" href="rdctrace.html" >温度追溯</a>
+                            <a class="h3 visible-sm strong" href="rdctrace.html" >温度追溯</a>
+                            <a class="h4 visible-xs strong" href="rdctrace.html" >温度追溯</a>
+                            <br>
+                            <h3 class="text-gray visible-lg">端到端全程温度可视化系统</h3>
+                            <h4 class="text-gray visible-md">端到端全程温度可视化系统</h4>
+                            <h5 class="text-gray visible-sm">端到端全程温度可视化系统</h5>
+                            <h6 class="text-gray visible-xs">端到端全程温度可视化系统</h6>
+                            <br>
+                            <a href="rdctrace.html" ><img class="img-thumbnail" style="border:0px;" src="../img/tab3.png"></a>
+                            <br>
+                            <h4 class="text-gray">温度数据托管与监控</h4>
+                        </div>
+                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3 text-center ahover" style="padding-bottom:20px;">
+                            <a class="h1 visible-lg strong" href="http://smartcold.org.cn" target="view_frame">冷库360</a>
+                            <a class="h2 visible-md strong" href="http://smartcold.org.cn" target="view_frame">冷库360</a>
+                            <a class="h3 visible-sm strong" href="http://smartcold.org.cn" target="view_frame">冷库360</a>
+                            <a class="h4 visible-xs strong" href="http://smartcold.org.cn" target="view_frame">冷库360</a>
+                            <br>
+                            <h3 class="text-gray visible-lg">冷库能效在线管理系统</h3>
+                            <h4 class="text-gray visible-md">冷库能效在线管理系统</h4>
+                            <h5 class="text-gray visible-sm">冷库能效在线管理系统</h5>
+                            <h6 class="text-gray visible-xs">冷库能效在线管理系统</h6>
+                            <br>
+                            <a href="http://smartcold.org.cn" target="view_frame"><img class="img-thumbnail" style="border:0px;" src="../img/oursevice.png"></a>
+                            <br>
+                            <h4 class="text-gray">冷库认证与能耗管理</h4>
+                        </div>
                     </div>
-                    <div class="fr line"></div>
                 </div>
             </div>
-            <div class="col-lg-10 col-xs-10 col-sm-10 col-lg-offset-1 col-sm-offset-1
+            <div class="content">
+                <div style="height:480px" class="case">
+                    <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
+                        <div class="titleCom fix">
+                            <div class="fl line"></div>
+                            <div class="fl titleMid">
+                                <div class="h3 visible-lg">智慧冷库<br>SMART COLD</div>
+                                <div class="h4 visible-md">智慧冷库<br>SMART COLD</div>
+                                <div class="h5 visible-sm">智慧冷库<br>SMART COLD</div>
+                                <div class="h6 visible-xs">智慧冷库<br>SMART COLD</div>
+                            </div>
+                            <div class="fr line"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-10 col-xs-10 col-sm-10 col-lg-offset-1 col-sm-offset-1
          col-xs-offset-1 col-sm-offset-1 col-xs-offset-1 col-md-10 col-md-offset-1">
-                <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7"  style="margin-top:5%">
-                    <ul class="home-ul">
-                        <li><h3><i class="icon-play main-color"></i>冷库能效在线评估系统</h3></li>
-                        <li><h3><i class="icon-play main-color"></i>运行数据全面透明化管理</h3></li>
-                        <li><h3><i class="icon-play main-color"></i>云端温度监控，数据托管服务</h3></li>
-                        <li><h3><i class="icon-play main-color"></i>基于大数据的多维能效管理</h3></li>
-                        <li><h3><i class="icon-play main-color"></i>远程智能故障诊断及故障预警</h3></li>
-                    </ul>
-                </div>
-                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="margin-top:5%">
-                    <img src="../img/jiankong.png" style="width:100%;height:100%">
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="content">
-        <div class="row">
-            <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
-                <div class="titleCom fix">
-                    <div class="fl line"></div>
-                    <div class="fl titleMid">
-                        <div class="h3 visible-lg">服务哪些企业<br>WHO WE SERVICE</div>
-                        <div class="h4 visible-md">服务哪些企业<br>WHO WE SERVICE</div>
-                        <div class="h5 visible-sm">服务哪些企业<br>WHO WE SERVICE</div>
-                        <div class="h6 visible-xs">服务哪些企业<br>WHO WE SERVICE</div>
-                    </div>
-                    <div class="fr line"></div>
-                </div>
-            </div>
-            <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 col-lg-offset-1" style="margin-left:10%;margin-top:1%">
-                <div class="" id="cnt1">
-                    <div class="row feature">
-                        <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2" >
-                            <div>
-                                <img src="../img/product.jpg" alt="Texto Alternativo"
-                                     class="img-thumbnail">
-                                <div>
-                                    <p class="text-left h5" style="margin-left:10%">产地型企业
-                                        <span class="icon-angle-right" style="float:right;margin-right:10%"></span></p>
-                                </div>
-                            </div>
+                        <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7"  style="margin-top:5%">
+                            <ul class="home-ul">
+                                <li><h3><i class="icon-play main-color"></i>冷库能效在线评估系统</h3></li>
+                                <li><h3><i class="icon-play main-color"></i>运行数据全面透明化管理</h3></li>
+                                <li><h3><i class="icon-play main-color"></i>云端温度监控，数据托管服务</h3></li>
+                                <li><h3><i class="icon-play main-color"></i>基于大数据的多维能效管理</h3></li>
+                                <li><h3><i class="icon-play main-color"></i>远程智能故障诊断及故障预警</h3></li>
+                            </ul>
                         </div>
-                        <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2" style="margin-left:2%;">
-                            <div>
-                                <img src="../img/E-commerce.jpg" alt="Texto Alternativo"
-                                     class="img-thumbnail">
-                                <div>
-                                    <p class="text-left h5" style="margin-left:10%">生鲜电商
-                                        <span class="icon-angle-right" style="float:right;margin-right:10%"></span></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2" style="margin-left:1%;" >
-                            <div>
-                                <img src="../img/food.jpg" alt="Texto Alternativo"
-                                     class="img-thumbnail">
-                                <div>
-                                    <p class="text-left h5" style="margin-left:10%">商超及餐饮企业
-                                        <span class="icon-angle-right" style="float:right;margin-right:10%"></span></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2" >
-                            <div>
-                                <img src="../img/coldChain.jpg" alt="Texto Alternativo"
-                                     class="img-thumbnail">
-                                <div>
-                                    <p class="text-left h5" style="margin-left:10%">第三方冷链物流企业
-                                        <span class="icon-angle-right" style="float:right;margin-right:1%"></span></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2" style="margin-left:2%;" >
-                            <div>
-                                <img src="../img/supply-chain.jpg" alt="Texto Alternativo"
-                                     class="img-thumbnail">
-                                <div>
-                                    <p class="text-left h5" style="margin-left:10%">供应链管理企业
-                                        <span class="icon-angle-right" style="float:right;margin-right:10%"></span></p>
-                                </div>
-                            </div>
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" style="margin-top:5%">
+                            <img src="../img/jiankong.png" style="width:100%;height:100%">
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="content" >
-        <div style="height:500px;" class="case">
-            <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
-                <div class="titleCom fix">
-                    <div class="fl line" style="width:35%"></div>
-                    <div class="fl titleMid" style="width:28%">
-                        <div class="h3 visible-lg">全国冷链仓配资源分布图</div>
-                        <div class="h5 visible-lg">The National Map of Cold Warehousing & Distribution</div>
-                        <div class="h4 visible-md">全国冷链仓配资源分布图</div>
-                        <div class="h6 visible-md">The National Map of Cold Warehousing & Distribution</div>
-                        <div class="h5 visible-sm">全国冷链仓配资源分布图</div>
-                        <div class="h7 visible-sm">The National Map of Cold Warehousing & Distribution</div>
-                        <div class="h6 visible-xs">全国冷链仓配资源分布图</div>
-                        <div class="h8 visible-xs">The National Map of Cold Warehousing & Distribution</div>
+            <div class="content">
+                <div class="row">
+                    <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
+                        <div class="titleCom fix">
+                            <div class="fl line"></div>
+                            <div class="fl titleMid">
+                                <div class="h3 visible-lg">服务哪些企业<br>WHO WE SERVICE</div>
+                                <div class="h4 visible-md">服务哪些企业<br>WHO WE SERVICE</div>
+                                <div class="h5 visible-sm">服务哪些企业<br>WHO WE SERVICE</div>
+                                <div class="h6 visible-xs">服务哪些企业<br>WHO WE SERVICE</div>
+                            </div>
+                            <div class="fr line"></div>
+                        </div>
                     </div>
-                    <div class="fr line" style="width:35%"></div>
+                    <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 col-lg-offset-1" style="margin-left:10%;margin-top:1%">
+                        <div class="" id="cnt1">
+                            <div class="row feature">
+                                <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2" >
+                                    <div>
+                                        <img src="../img/product.jpg" alt="Texto Alternativo"
+                                             class="img-thumbnail">
+                                        <div>
+                                            <p class="text-left h5" style="margin-left:10%">产地型企业
+                                                <span class="icon-angle-right" style="float:right;margin-right:10%"></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2" style="margin-left:2%;">
+                                    <div>
+                                        <img src="../img/E-commerce.jpg" alt="Texto Alternativo"
+                                             class="img-thumbnail">
+                                        <div>
+                                            <p class="text-left h5" style="margin-left:10%">生鲜电商
+                                                <span class="icon-angle-right" style="float:right;margin-right:10%"></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2" style="margin-left:1%;" >
+                                    <div>
+                                        <img src="../img/food.jpg" alt="Texto Alternativo"
+                                             class="img-thumbnail">
+                                        <div>
+                                            <p class="text-left h5" style="margin-left:10%">商超及餐饮企业
+                                                <span class="icon-angle-right" style="float:right;margin-right:10%"></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2" >
+                                    <div>
+                                        <img src="../img/coldChain.jpg" alt="Texto Alternativo"
+                                             class="img-thumbnail">
+                                        <div>
+                                            <p class="text-left h5" style="margin-left:10%">第三方冷链物流企业
+                                                <span class="icon-angle-right" style="float:right;margin-right:1%"></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2" style="margin-left:2%;" >
+                                    <div>
+                                        <img src="../img/supply-chain.jpg" alt="Texto Alternativo"
+                                             class="img-thumbnail">
+                                        <div>
+                                            <p class="text-left h5" style="margin-left:10%">供应链管理企业
+                                                <span class="icon-angle-right" style="float:right;margin-right:10%"></span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12" style="margin-top:0px;margin-bottom: 0px;text-align:center">
-                <a href="rdclist.html"><img src="../img/map.jpg" style="height:390px;width: 80%;margin:0 auto;"></a>
-                <!-- <div class="chart" id="mapChart" style="height:390px;width: 80%;margin-left: 10%;margin-top: 1%;margin-bottom: 1%;"></div> -->
+            <div class="content" >
+                <div style="height:500px;" class="case">
+                    <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
+                        <div class="titleCom fix">
+                            <div class="fl line" style="width:35%"></div>
+                            <div class="fl titleMid" style="width:28%">
+                                <div class="h3 visible-lg">全国冷链仓配资源分布图</div>
+                                <div class="h5 visible-lg">The National Map of Cold Warehousing & Distribution</div>
+                                <div class="h4 visible-md">全国冷链仓配资源分布图</div>
+                                <div class="h6 visible-md">The National Map of Cold Warehousing & Distribution</div>
+                                <div class="h5 visible-sm">全国冷链仓配资源分布图</div>
+                                <div class="h7 visible-sm">The National Map of Cold Warehousing & Distribution</div>
+                                <div class="h6 visible-xs">全国冷链仓配资源分布图</div>
+                                <div class="h8 visible-xs">The National Map of Cold Warehousing & Distribution</div>
+                            </div>
+                            <div class="fr line" style="width:35%"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12" style="margin-top:0px;margin-bottom: 0px;text-align:center">
+                        <a href="rdclist.html"><img src="../img/map.jpg" style="height:390px;width: 80%;margin:0 auto;"></a>
+                        <!-- <div class="chart" id="mapChart" style="height:390px;width: 80%;margin-left: 10%;margin-top: 1%;margin-bottom: 1%;"></div> -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!--版权区域-->
-<div class="footer" id="QRcode">
-    <!--<ul class="clearfix">
-        <li class="fl txt-center">
-            <div>
-                <i class="iconfont">&#xe625;</i>
-                <p>找库</p>
-            </div>
-            <ol>
-                <li><a href="javascript:;">冷库详情</a></li>
-                <li><a href="javascript:;">冷库点评</a></li>
-                <li><a href="javascript:;">冷库地图</a></li>
-            </ol>
-        </li>
-        <li class="fl txt-center">
-            <div>
-                <i class="iconfont">&#xe61f;</i>
-                <p>共享</p>
-            </div>
-            <ol>
-                <li><a href="javascript:;">配货信息</a></li>
-                <li><a href="javascript:;">订仓信息</a></li>
-                <li><a href="javascript:;">商品信息</a></li>
-            </ol>
-        </li>
-        <li class="fl txt-center">
-            <div>
-                <i class="iconfont">&#xe63a;</i>
-                <p>追溯</p>
-            </div>
-            <ol>
-                <li><a href="javascript:;">批次查询</a></li>
-                <li><a href="javascript:;">物流追踪</a></li>
-                <li><a href="javascript:;">温度分析</a></li>
-            </ol>
-        </li>
-        <li class="fl txt-center">
-            <div>
-                <i class="iconfont">&#xe61b;</i>
-                <p>冷库360</p>
-            </div>
-            <ol>
-                <li><a href="javascript:;">在线评估</a></li>
-                <li><a href="javascript:;">能耗分析</a></li>
-                <li><a href="javascript:;">动态管理</a></li>
-            </ol>
-        </li>
-    </ul>-->
-    <dl class="clearfix">
-        <li class="fl">
-            <p><a href="aboutlianku.html">关于链库</a></p>
-            <p>©2016 Smartcold    沪ICP备 16004753</p>
-            <p>为了您可以获取更佳的浏览效果</p>
-            <p>本站推荐使用
-                <a href="http://sw.bos.baidu.com/sw-search-sp/software/ba34c905dbdd4/ChromeStandalone_57.0.2987.98_Setup.exe">谷歌浏览器
-                </a>、<a href="http://sw.bos.baidu.com/sw-search-sp/software/4cee66da4242e/Firefox_52.0.1.6284_setup.exe">火狐浏览器
-                </a>或者<a href="http://down.360safe.com/se/360se8.1.1.250.exe">360浏览器极速模式</a>
-            </p>
-        </li>
-        <li class="fr">
-            <div class="codeImg">
-                <img src="../img/ios.png" alt="开小差了~~~">
-                <p>iPhone下载</p>
-            </div>
-            <div class="codeImg">
+    <!--版权区域-->
+    <div class="footer" id="QRcode">
+        <!--<ul class="clearfix">
+            <li class="fl txt-center">
+                <div>
+                    <i class="iconfont">&#xe625;</i>
+                    <p>找库</p>
+                </div>
+                <ol>
+                    <li><a href="javascript:;">冷库详情</a></li>
+                    <li><a href="javascript:;">冷库点评</a></li>
+                    <li><a href="javascript:;">冷库地图</a></li>
+                </ol>
+            </li>
+            <li class="fl txt-center">
+                <div>
+                    <i class="iconfont">&#xe61f;</i>
+                    <p>共享</p>
+                </div>
+                <ol>
+                    <li><a href="javascript:;">配货信息</a></li>
+                    <li><a href="javascript:;">订仓信息</a></li>
+                    <li><a href="javascript:;">商品信息</a></li>
+                </ol>
+            </li>
+            <li class="fl txt-center">
+                <div>
+                    <i class="iconfont">&#xe63a;</i>
+                    <p>追溯</p>
+                </div>
+                <ol>
+                    <li><a href="javascript:;">批次查询</a></li>
+                    <li><a href="javascript:;">物流追踪</a></li>
+                    <li><a href="javascript:;">温度分析</a></li>
+                </ol>
+            </li>
+            <li class="fl txt-center">
+                <div>
+                    <i class="iconfont">&#xe61b;</i>
+                    <p>冷库360</p>
+                </div>
+                <ol>
+                    <li><a href="javascript:;">在线评估</a></li>
+                    <li><a href="javascript:;">能耗分析</a></li>
+                    <li><a href="javascript:;">动态管理</a></li>
+                </ol>
+            </li>
+        </ul>-->
+        <dl class="clearfix">
+            <li class="fl">
+                <p><a href="aboutlianku.html">关于链库</a></p>
+                <p>©2016 Smartcold    沪ICP备 16004753</p>
+                <p>为了您可以获取更佳的浏览效果</p>
+                <p>本站推荐使用
+                    <a href="http://sw.bos.baidu.com/sw-search-sp/software/ba34c905dbdd4/ChromeStandalone_57.0.2987.98_Setup.exe">谷歌浏览器
+                    </a>、<a href="http://sw.bos.baidu.com/sw-search-sp/software/4cee66da4242e/Firefox_52.0.1.6284_setup.exe">火狐浏览器
+                    </a>或者<a href="http://down.360safe.com/se/360se8.1.1.250.exe">360浏览器极速模式</a>
+                </p>
+            </li>
+            <li class="fr">
+                <div class="codeImg">
+                    <img src="../img/ios.png" alt="开小差了~~~">
+                    <p>iPhone下载</p>
+                </div>
+                <div class="codeImg">
 
-                <img src="../img/android.png" alt="开小差了~~~">
-                <p>Android下载</p>
-            </div>
-            <div class="codeImg">
-                <img src="../img/weixin_lianku.jpg" alt="开小差了~~~">
-                <p>链库公众号</p>
-            </div>
-        </li>
-    </dl>
+                    <img src="../img/android.png" alt="开小差了~~~">
+                    <p>Android下载</p>
+                </div>
+                <div class="codeImg">
+                    <img src="../img/weixin_lianku.jpg" alt="开小差了~~~">
+                    <p>链库公众号</p>
+                </div>
+            </li>
+        </dl>
+    </div>
 </div>
+
 <script src="../plugins/jquery-1.12.0.min.js"></script>
 <script src="../plugins/bootstrap.min.js"></script>
 <script src="../js/common.js"></script>
