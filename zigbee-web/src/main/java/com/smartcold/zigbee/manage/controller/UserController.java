@@ -6,13 +6,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -162,14 +163,6 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public Object findUser(HttpServletRequest request,String token,Boolean isupdate) {
 		UserEntity user =new UserEntity();
-		/*if(isupdate==null||!isupdate){
-			 user = (UserEntity)request.getSession().getAttribute("user");
-			if(user!=null){
-			   return user;
-			}else{
-				user =new UserEntity();
-			}
-		}*/
 		if(StringUtil.isNull(token)){
 			Cookie[] cookies = request.getCookies();
 			if(cookies!=null&&cookies.length>0){

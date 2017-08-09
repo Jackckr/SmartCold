@@ -36,7 +36,7 @@
 	
 	<select id="findLastNPoint" parameterType="map" resultMap="dataResultMap">
 	    SELECT * FROM storagedatacollection
-	    WHERE  `time` >#{startTime}
+	    WHERE  `time` >#{startTime} AND `time` &lt; #{endTime}  
 	    <if test="apid != null">
 		    AND `apid` = #{apid} 
 	    </if>
@@ -85,20 +85,6 @@
 	       order by `time` ${orderBy}   
 	    </if>
 	</select>
-<!-- 	<select id="findByTimeFormat1" parameterType="map" resultMap="dataResultMap"> -->
-<!-- 	    SELECT avg(`value`) value,DATE_FORMAT(`time`, #{dateFormat})  as grouptime ,time FROM storagedatacollection   -->
-<!-- 	    WHERE 1 =1 -->
-<!-- 	    <if test="apid != null"> -->
-<!-- 		    AND `apid` = #{apid}  -->
-<!-- 	    </if> -->
-<!-- 	    <if test="deviceid != null"> -->
-<!-- 		    AND `deviceid` = #{deviceid}  -->
-<!-- 	    </if> -->
-<!-- 	    <if test="key != null"> -->
-<!-- 		    AND `key` = #{key}  -->
-<!-- 	    </if> -->
-<!-- 	    AND time > #{startTime} AND time &lt; #{endTime}  GROUP BY grouptime  ORDER BY  grouptime ${orderBy}  -->
-<!-- 	</select> -->
 	
 	<resultMap id="ResultOfInteger" type="java.lang.Integer">  
      <result column="cou" property="cou" jdbcType="INTEGER" />  

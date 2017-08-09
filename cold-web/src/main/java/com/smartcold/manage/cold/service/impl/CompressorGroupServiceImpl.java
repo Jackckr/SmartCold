@@ -57,10 +57,10 @@ public class CompressorGroupServiceImpl implements CompressorGroupService {
 		List<CompressorSetEntity> compressors = compressorSetDao.findCompressorByGroupid(groupid);
 		double waterCost = 0;
 		Date startTime=TimeUtil.getBeforeMinute(30);
+		Date nowDate = new Date();
 		CompressorGroupWaterCostEntity entity = new CompressorGroupWaterCostEntity();
 		for (CompressorSetEntity compressor : compressors) {
 			// 在这里可以防止compressorGroup不为null
-			Date nowDate = new Date();
 			long nowTime;
 			try {
 				nowTime = sf.parse(sf.format(nowDate)).getTime();
@@ -80,12 +80,11 @@ public class CompressorGroupServiceImpl implements CompressorGroupService {
 			List<StorageKeyValue> lRunS = storageKeyValueDao.findByTime(StorageType.COMPRESSOR.getTable(),
 					compressor.getId(), "runS", new Date(nowTime - 5 * 60 * 1000), new Date(nowTime),"desc");
 			double lS = lRunS.size() > 0 ? lRunS.get(0).getValue() : 0;
-			List<StorageKeyValue> runH = storageKeyValueDao.findByNums(StorageType.COMPRESSOR.getTable(),
-					compressor.getId(), "runH", 1,startTime);
+			List<StorageKeyValue> runH = storageKeyValueDao.findByNums(StorageType.COMPRESSOR.getTable(),compressor.getId(), "runH", startTime,nowDate,1);
 			List<StorageKeyValue> runM = storageKeyValueDao.findByNums(StorageType.COMPRESSOR.getTable(),
-					compressor.getId(), "runM", 1,startTime);
+					compressor.getId(), "runM", startTime,nowDate,1);
 			List<StorageKeyValue> runS = storageKeyValueDao.findByNums(StorageType.COMPRESSOR.getTable(),
-					compressor.getId(), "runS", 1,startTime);
+					compressor.getId(), "runS", startTime,nowDate,1);
 			totalRunTime += runH.size() > 0 ? runH.get(0).getValue() - lH : 0;
 			totalRunTime += runM.size() > 0 ? (runM.get(0).getValue() - lM) / 60 : 0;
 			totalRunTime += runS.size() > 0 ? (runS.get(0).getValue() - lS) / 3600 : 0;
@@ -109,9 +108,9 @@ public class CompressorGroupServiceImpl implements CompressorGroupService {
 		for (CompressorSetEntity compressor : compressors) {
 			HashMap<String, Double> keyValues = new HashMap<String, Double>();
 			List<StorageKeyValue> infos = storageKeyValueDao.findByNums(StorageType.COMPRESSOR.getTable(),
-					compressor.getId(), "run", 1,startTime);
+					compressor.getId(), "run", startTime,new Date(),1);
 			keyValues.put("isRunning", infos.size() > 0 ? infos.get(0).getValue() : 0);
-			infos = storageKeyValueDao.findByNums(StorageType.COMPRESSOR.getTable(), compressor.getId(), "exTemp", 1,startTime);
+			infos = storageKeyValueDao.findByNums(StorageType.COMPRESSOR.getTable(), compressor.getId(), "exTemp", startTime,new Date(),1);
 			keyValues.put("exTemp", infos.size() > 0 ? infos.get(0).getValue() : 0);
 			result.add(new CompressorDto(compressor, keyValues));
 		}

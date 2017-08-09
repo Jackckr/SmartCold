@@ -1,8 +1,10 @@
 package com.smartcold.zigbee.manage.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class CookieEntity {
+public class CookieEntity implements Serializable {
+
 
 	private int id;
 
@@ -13,6 +15,8 @@ public class CookieEntity {
 	private int expireTime;
 
 	private Date addTime;
+
+	private static final long serialVersionUID = 8607220598564329559L;
 
 	public int getId() {
 		return id;

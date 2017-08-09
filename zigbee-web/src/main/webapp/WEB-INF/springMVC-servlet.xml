@@ -2,6 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task" 
+	 xmlns:cache="http://www.springframework.org/schema/cache"
+	   xmlns:redisson="http://redisson.org/scheam/redisson"
 	xsi:schemaLocation="
            http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
@@ -12,7 +14,9 @@
            http://www.springframework.org/schema/task
            http://www.springframework.org/schema/task/spring-task-4.1.xsd
            http://www.springframework.org/schema/mvc
-           http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd">
+           http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+          http://redisson.org/scheam/redisson http://redisson.org/scheam/redisson/redisson.xsd
+	       http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
         <property name="maxUploadSize" value="10485760" />  
@@ -32,6 +36,8 @@
 	<context:annotation-config />
 	<!-- 默认的注解映射的支持 -->  
 	<mvc:annotation-driven />
+	<!-- 支持缓存 -->  
+	<cache:annotation-driven/>
 	
 	 <!-- 处理定时任务并发性操作。。 -->
 	<task:annotation-driven scheduler="myScheduler"/>   

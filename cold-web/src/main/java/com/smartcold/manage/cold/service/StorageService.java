@@ -17,6 +17,8 @@ public interface StorageService {
 
 	List<StorageKeyValue> findByNums(StorageType stype, int oid, String key, int nums);
 
+	List<StorageKeyValue> findByTime(int type, int oid, String key, Date startTime, Date endTime, int nums);
+	
 	List<StorageKeyValue> findByTime(int type, int oid, String key, Date startTime, Date endTime,String orderBy);
 	
 	Integer findCounSizeByTime(int type, int oid, String deviceid,String key, Date startTime, Date endTime);

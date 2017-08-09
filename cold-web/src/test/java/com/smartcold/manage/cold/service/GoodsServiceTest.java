@@ -1,4 +1,4 @@
-/*
+
 package com.smartcold.manage.cold.service;
 
 import java.util.List;
@@ -17,10 +17,10 @@ import com.smartcold.manage.cold.dto.BlowerDTO;
 import com.smartcold.manage.cold.entity.olddb.CompressorGroupSetEntity;
 import com.smartcold.manage.cold.entity.olddb.SingleTypeEntity;
 
-*/
+
 /**
  * Created by sunqiunian on 16/2/25.
- *//*
+ */
 
 @Transactional(rollbackFor = Exception.class)
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -62,4 +62,4 @@ public class GoodsServiceTest {
 		System.out.println(list.size());
 	}
 }
-*/
+

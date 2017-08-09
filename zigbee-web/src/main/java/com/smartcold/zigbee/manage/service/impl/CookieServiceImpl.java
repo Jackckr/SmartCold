@@ -3,6 +3,8 @@ package com.smartcold.zigbee.manage.service.impl;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.smartcold.zigbee.manage.dao.CookieMapper;
@@ -10,7 +12,8 @@ import com.smartcold.zigbee.manage.entity.CookieEntity;
 import com.smartcold.zigbee.manage.service.CookieService;
 import com.smartcold.zigbee.manage.util.EncodeUtil;
 
-@Service
+@Service(value="CookieService")
+@CacheConfig(cacheNames = "CookieServiceImpl")
 public class CookieServiceImpl implements CookieService {
 
 	@Autowired
@@ -31,7 +34,9 @@ public class CookieServiceImpl implements CookieService {
 	}
 
 	@Override
+	@Cacheable(key="#cookie")
 	public CookieEntity findEffectiveCookie(String cookie) {
+		System.err.println("=======================================db===========================");
 		return cookieDao.findEffectiveCookie(cookie);
 	}
 

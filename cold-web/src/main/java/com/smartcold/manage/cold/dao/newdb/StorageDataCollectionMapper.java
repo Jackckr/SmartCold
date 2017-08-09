@@ -12,14 +12,13 @@ public interface StorageDataCollectionMapper {
 
 	void batchInsert(List<StorageDataCollectionEntity> batchEntity);
 
-	List<StorageKeyValue> findLastNPoint(@Param("apid") String apid, @Param("deviceid") String deviceid,@Param("key") String key, @Param("limit") int limit,@Param("startTime")Date startTime);
-
 	Integer findCounSizeByTime(@Param("apid") String apid, @Param("deviceid") String deviceid,@Param("key") String key, @Param("startTime") Date startTime, @Param("endTime") Date endTime);
+	
+	List<StorageKeyValue> findLastNPoint(@Param("apid") String apid, @Param("deviceid") String deviceid,@Param("key") String key,@Param("startTime")Date startTime, @Param("endTime") Date endTime, @Param("limit") int limit);
 	
 	List<StorageKeyValue> findByTime(@Param("apid") String apid, @Param("deviceid") String deviceid,@Param("key") String key, @Param("startTime") Date startTime, @Param("endTime") Date endTime,@Param("orderBy"  )String orderBy);//
 	
 	List<StorageKeyValue> findByTimeFormat(@Param("apid") String apid, @Param("deviceid") String deviceid,@Param("key") String key, @Param("startTime") Date startTime, @Param("endTime") Date endTime,@Param("dateFormat")String dateFormat,@Param("orderBy")String orderBy);
 	
-//	List<StorageKeyValue> findByTimeFormat1(@Param("apid") String apid, @Param("deviceid") String deviceid,@Param("key") String key, @Param("startTime") Date startTime, @Param("endTime") Date endTime,@Param("dateFormat")String dateFormat,@Param("orderBy")String orderBy);
 	
 }

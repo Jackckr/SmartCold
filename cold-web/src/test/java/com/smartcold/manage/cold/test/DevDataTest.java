@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.junit.Test;
+
 import com.alibaba.fastjson.JSONArray;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -16,10 +18,9 @@ import com.smartcold.manage.cold.entity.newdb.ZSDevDataEntity;
 import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 
-public class Test {
-
-	public static void test1(){
-
+public class DevDataTest {
+	@Test
+	public  void test1(){
 		  boolean	isSaveDU=false;
 		String devData="[{'devid':'00210005','datas':{'time':1494729138,'Temp':27.82,'AU':0,'BU':0,'CU':0,'AI':0,'BI':0,'CI':0,'PWC':0,'Switch':1,'DU':4.26,'BSI':-47.5,'apid':'00200001','MSI':22}},{'devid':'00210001','datas':{'time':1494729139,'Temp':27.82,'AU':0,'BU':0,'CU':0,'AI':0,'BI':0,'CI':0,'PWC':0,'Switch':1,'DU':4.17,'BSI':-56.5,'apid':'00200001','MSI':22}},{'devid':'00210003','datas':{'time':1494729142,'Temp':27.82,'AU':0,'BU':0,'CU':0,'AI':0,'BI':0,'CI':0,'PWC':0,'Switch':1,'DU':4.23,'BSI':-48,'apid':'00200001','MSI':22}},{'devid':'00210006','datas':{'time':1494729130,'Temp':27.82,'AU':0,'BU':0,'CU':0,'AI':0,'BI':0,'CI':0,'PWC':0,'Switch':1,'DU':4.26,'BSI':-45,'apid':'00200001','MSI':22}},{'devid':'00210002','datas':{'time':1494729141,'Temp':27.82,'AU':0,'BU':0,'CU':0,'AI':0,'BI':0,'CI':0,'PWC':0,'Switch':1,'DU':4.21,'BSI':-41.5,'apid':'00200001','MSI':22}},{'devid':'00210004','datas':{'time':1494729144,'Temp':27.82,'AU':0,'BU':0,'CU':0,'AI':0,'BI':0,'CI':0,'PWC':0,'Switch':1,'DU':4.17,'BSI':-50.5,'apid':'00200001','MSI':22}}]";
 		Calendar calendar = Calendar.getInstance();
@@ -66,8 +67,8 @@ public class Test {
 		}
 		
 	}
-	
-	private static void test2(){
+	@Test
+	private  void test2(){
 		  Gson gson = new Gson();
 		String data="{'apID': 'AP10', 'infos': [{'devID': '69', 'Temp': '00.00', 'AU': '00.00', 'AI': '00.00', 'BU': '00.00', 'BI': '00.00', 'CU': '00.00', 'CI': '00.00', 'PWC': '00.00', 'Switch': '1', 'time': '1498012780'}]}";
 		Map<String, Object> dataCollectionBatchEntity = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
@@ -87,9 +88,7 @@ public class Test {
 		}
 	}
 	
-	public static void main(String[] args) {
-		test1();
-	}
+	
 	
 
 	

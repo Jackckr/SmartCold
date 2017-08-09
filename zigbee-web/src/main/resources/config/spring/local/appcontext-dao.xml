@@ -25,4 +25,22 @@
         </property>
     </bean>  
    
+   <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+	   <property name="connectionFactory" ref="jedisConnectionFactory"></property>
+	   <property name="keySerializer">
+	      <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"></bean>
+	   </property>
+	   <property name="valueSerializer">
+	      <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"></bean>
+	   </property>
+	   <property name="enableTransactionSupport" value="false"></property>
+	
+	</bean>
+ 
+	<bean id="cacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+	   <constructor-arg index="0" ref="redisTemplate"></constructor-arg>
+	</bean>
+   	
+  
+	
 </beans>

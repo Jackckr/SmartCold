@@ -102,17 +102,6 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 		        		 $rootScope.Tempset=[];
 		        		 $rootScope.mystorages = data;
 		        		 $rootScope.storageModal = data[0];
-		        	     angular.forEach($rootScope.mystorages,function(item){	
-		        	    	 if($rootScope.Tempset[item.id]==undefined){
-		        	    		 $http.get('/i/temp/getTempsetByStorageID?oid=' + item.id).success(function(req,status,headers,config){
-		        	    			 var oids=new Array(),names=new Array();
-				        	    	 angular.forEach(req,function(obj,i){
-				    		    	 		oids.push(obj.id);names.push(obj.name);
-				    		    	 });
-				        	    	 $rootScope.Tempset[item.id]={oids:oids,names:names };
-		        	             });
-		        	    	 }
-		        	     });
 		        	 });
 		        	 $http.get('/i/coldStorageSet/findHasDoorStorageSetByRdcId?rdcID=' + rdcId).success(function(data){
 		        			$rootScope.hasDoorStorages = data;
@@ -178,7 +167,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
     };
 }]);
 coldWeb.config(function ($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise("/cold360Physical");
+    $urlRouterProvider.otherwise("/preview");
     coldWeb.stateProvider=$stateProvider;
     //index
     $stateProvider

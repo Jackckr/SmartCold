@@ -1,6 +1,8 @@
 package com.smartcold.manage.cold.controller;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,13 +17,15 @@ import com.smartcold.manage.cold.dao.newdb.TaskMapper;
 import com.smartcold.manage.cold.dao.newdb.UsageMapper;
 import com.smartcold.manage.cold.dao.newdb.WallMaterialMapper;
 import com.smartcold.manage.cold.dao.olddb.TempSetMapper;
+import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
+import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
 import com.smartcold.manage.cold.service.GoodsService;
 import com.smartcold.manage.cold.service.StorageService;
 
 /**
  * 
  * @author Administrator
- *
+ * 
  */
 @Controller
 @RequestMapping(value = "/baseInfo")
@@ -67,17 +71,38 @@ public class BaseInfoController extends BaseController {
 
 	@RequestMapping("/getKeyValueData")
 	@ResponseBody
-	public Object getKeyValueData(@RequestParam("type") Integer type, @RequestParam("oid") int oid,
-			@RequestParam("key") String key, @RequestParam(value = "nums", defaultValue = "480") Integer nums) {
+	public Object getKeyValueData(@RequestParam("type") Integer type,
+			@RequestParam("oid") int oid, @RequestParam("key") String key,
+			@RequestParam(value = "nums", defaultValue = "480") Integer nums) {
 		return storageService.findByNums(type, oid, key, nums);
 	}
 
+
+	
 	@RequestMapping("/getKeyValueDataByTime")
 	@ResponseBody
-	public Object getKeyValueDataByTime(@RequestParam("type") Integer type, @RequestParam("oid") int oid,
-			@RequestParam("key") String key, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
+	public Object getKeyValueDataByTime(@RequestParam("type") Integer type,
+			@RequestParam("oid") int oid, @RequestParam("key") String key,
+			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
 			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime) {
-		return storageService.findByTime(type, oid, key, startTime, endTime,"DESC");
+		return storageService.findByTime(type, oid, key, startTime, endTime,
+				"DESC");
+	}
+
+	@RequestMapping("/getKeyValuesByTime")
+	@ResponseBody
+	public Object getKeyValuesByTime(@RequestParam("type") Integer type,
+			@RequestParam("oids") 	int [] oids,@RequestParam("key") String key,
+			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
+			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime,
+			@RequestParam(value = "nums", defaultValue = "1") Integer nums) {
+		
+		HashMap<Integer, List<StorageKeyValue>> result = new HashMap<Integer,List<StorageKeyValue>>();
+		for (int oid : oids) {
+			result.put(oid,  storageService.findByTime(type, oid, key, startTime, endTime,nums));
+		}
+		return result;
+		
 	}
 
 }
