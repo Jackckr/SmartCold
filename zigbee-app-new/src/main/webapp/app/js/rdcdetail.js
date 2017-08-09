@@ -31,12 +31,42 @@
 	    	debugger;
 //	    	window.location.href ="storehousedetail.html?id="+sharid;
         };
-         $scope.manageType=["","产地型","市场型","仓储型","配送型","生产型","中央厨房","医药型","其它"];
-         $scope.tempType=["","冷藏库","冷冻库","超低温库","恒温库","多温区库"];
-         $scope.refreg=["","氨制冷","氟利昂制冷","氨氟都有","其他"];
-         $scope.struct=["","土建型","钢结构型"];
-         $scope.saveType=["","货架存放","非货架存放","堆垛存放","货架和堆垛都有"];
+         $scope.manageType={};
+         $scope.tempType={};
+         $scope.refreg={};
+         $scope.struct={};
+         $scope.saveType={};
          $scope.isHave=["","有","无"];
+         //获取温度类型
+         $http.get(ER.root+'/i/rdc/findAllTemperType').success(function (data) {
+             angular.forEach(data,function (item, key) {
+                 $scope.tempType[item.id]=item.type;
+             });
+         });
+         //获取产品存放类型
+         $http.get(ER.root+'/i/rdc/findAllStorageType').success(function (data) {
+             angular.forEach(data,function (item, key) {
+                 $scope.saveType[item.id]=item.type;
+             });
+         });
+         // 获取冷库经营类型
+         $http.get(ER.root+'/i/rdc/findAllManageType').success(function (data) {
+             angular.forEach(data,function (item, key) {
+                 $scope.manageType[item.id]=item.type;
+             });
+         });
+         // 制冷剂类型
+         $http.get(ER.root+'/i/rdc/findAllStorageRefreg').success(function (data) {
+             angular.forEach(data,function (item, key) {
+                 $scope.refreg[item.id]=item.type;
+             });
+         });
+         // 获取冷库结构类型
+         $http.get(ER.root+"/i/rdc/findAllStorageStructureType").success(function (data) {
+             angular.forEach(data,function (item, key) {
+                 $scope.struct[item.id]=item.type;
+             });
+         });
          $scope.oSwitch=false;
          $scope.user=window.user;
          $scope.on_off=function($event){
