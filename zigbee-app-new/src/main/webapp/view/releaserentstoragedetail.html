@@ -68,27 +68,7 @@
         <ul class="houseinfo">
             <li><label for="name">描述</label><em>*</em> <input type="text" id="name"
                                                               placeholder="仓位出租描述（6~24字）" ng-model="title"/></li>
-            <!-- <li class="offershow"><label for="province">省</label><em>*</em>
-                 <div class="mySelect">
-                     <select id="province" ng-model="provinceId" ng-disabled="editable" name="provinceId"
-                             ng-change="provinceSelected(provinceId)"
-                             ng-options="x.provinceId as x.provinceName for x in provinces"></select>
-                 </div>
-                 <i class="iconfont fr moreinfo">&#xe697;</i></li>
-             <li class="offershow"><label for="city">市</label><em>*</em>
-                 <div class="mySelect">
-                     <select id="city" ng-model="cityId" name="cityid"
-                             ng-disabled="editable" ng-change="citySelected(cityId)"
-                             ng-options="x.cityID as x.cityName for x in citys"></select>
-                 </div>
-                 <i class="iconfont fr moreinfo">&#xe697;</i></li>-->
-           <!-- <li id="li_storageType" class="black"><label for="storageType">经营类型</label><em>*</em>
-                <div class="mySelect">
-                    <select id="ls_storageType" ng-model="storageType" name="storageType"
-                            ng-change="StorageTypeSelected(storageType)"
-                            ng-options="x.id as x.type for x in storageTypes"></select>
-                </div>
-                <i class="iconfont fr moreinfo">&#xe697;</i></li>-->
+
             <li><label for="temperatureType">冷库温度类型</label><em>*</em>
                 <div class="mySelect">
                     <select id="temperatureType" ng-model="temperType" name="temperType"
@@ -105,7 +85,19 @@
                 <label><input type="radio" name="quality" value="元/天·其他" ng-model="unit" name="unit"/>其他</label>-->
 
             <li><label for="price">单价</label><em>*</em>
-                <input type="number" id="price" name="unitPrice" placeholder="元/天（填0为面议）" ng-model="unitprice"/></li>
+                <input type="number" id="price" name="unitPrice" placeholder="元/天（填0为面议）" ng-model="unitprice" style="min-width: 3rem!important;"/>
+                <span>元·</span>
+                <select style="width: 2rem;display: inline-block;">
+                    <option value="天">天</option>
+                    <option value="月">月</option>
+                </select>·
+                <select style="width: 2rem;display: inline-block;">
+                    <option value="㎡">㎡</option>
+                    <option value="m³">m³</option>
+                    <option value="吨">吨</option>
+                    <option value="整体">整体</option>
+                </select>
+            </li>
             <li><label for="rentdate">租期</label><em>*</em>
                 <div class="mySelect">
                     <select id="rentdate" ng-model="rentdate" name="rentdate"

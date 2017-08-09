@@ -129,6 +129,7 @@ function supportForeach() {
 		};
 	}
 }
+supportForeach()
 /* safari时间不支持解决 */
 var formatTime = {
 	standTime : function(date) {

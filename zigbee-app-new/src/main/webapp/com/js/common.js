@@ -1,4 +1,28 @@
 "use strict";
+if ((navigator.userAgent.indexOf('MSIE') >= 0) && (navigator.userAgent.indexOf('Opera') < 0)||//ie6,7,8,9,10
+    (navigator.userAgent.indexOf('Trident') >= 0)||//ie11
+    (navigator.userAgent.indexOf('Edge') >= 0)){//ie Edge
+    console.log('你使用的是IE');
+    if(location.href.indexOf("index")>=0){
+        var divalert='<div class="divalert"><div class="alertBox"><div class="alertTxt"><p>hi,您访问的是手机版链库网站，由于您当前的浏览器版本过低，可能存在安全风险，</p>' +
+            '<p>建议升级浏览器：</p>'+
+            '<a href="http://sw.bos.baidu.com/sw-search-sp/software/b168073fdd275/ChromeStandalone_60.0.3112.90_Setup.exe">谷歌 Chrome</a>'+
+            '<a href="http://sw.bos.baidu.com/sw-search-sp/software/95ea25cc4f539/Firefox_55.0.0.6424_setup.exe">火狐 Firefox</a>'+
+            '<p>或者访问<span>电脑端链库</span>网站:<a href="http://lianku.org.cn">http://lianku.org.cn/</a></p>'+
+            '<p>您也可以直接使用<span>链库APP</span>进行浏览</p>'+
+            '<div><img src="com/img/ios.png" alt=""><img src="com/img/android.png" alt=""></div></div></div></div>'
+    }else{
+        var divalert='<div class="divalert"><div class="alertBox"><div class="alertTxt"><p>hi,您当前的浏览器版本过低，可能存在安全风险，</p><p>建议升级浏览器：</p>'+
+            '<a href="http://sw.bos.baidu.com/sw-search-sp/software/b168073fdd275/ChromeStandalone_60.0.3112.90_Setup.exe">谷歌 Chrome</a>'+
+            '<a href="http://sw.bos.baidu.com/sw-search-sp/software/95ea25cc4f539/Firefox_55.0.0.6424_setup.exe">火狐 Firefox</a>'+
+            '<p>或者访问<span>电脑端链库</span>网站:<a href="http://lianku.org.cn">http://lianku.org.cn/</a></p>'+
+            '<p>或者直接使用<span>链库APP</span>进行浏览</p>'+
+            '<div><img src="../com/img/ios.png" alt=""><img src="../com/img/android.png" alt=""></div></div></div></div>'
+    }
+    document.write(divalert);
+}else{
+    console.log('浏览器审核通过！')
+}
 var oHtml = document.documentElement;
 
 var _sysconfig={countdown:60,isdebug:true,resize:true};

@@ -116,6 +116,7 @@ $().ready(function () {
         });
     };
     function gethtml(rdc) {
+        var oprice='';
         var oStart = new Date(rdc.validStartTime).getTime(), oEnd = new Date(rdc.validEndTime).getTime(),
             today = new Date().getTime();
         var deadline = oEnd - oStart;
@@ -137,9 +138,6 @@ $().ready(function () {
                 showTime = '刚刚发布';
             }
         }
-        if (rdc.username == undefined) {
-            rdc.username = rdc.id
-        }
         var usefulDate = rentDate[rdc.rentdate];
         if (rdc.rentdate == undefined || rdc.rentdate == null || rdc.rentdate == 0) {
             usefulDate = daysRound + 1 + '天';
@@ -149,12 +147,17 @@ $().ready(function () {
             collectWords = '<a class="fr hasCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe60c;</i><em>已收藏</em></a>';
         }
         var unit = ['吨', 'Kg', '吨'];
+        if(!rdc.unitPrice||rdc.unitPrice==0){
+            oprice=rdc.unitPrice='面议';
+        }else{
+            oprice=rdc.unitPrice+'元/'+unit[rdc.publishunit];
+        }
         var score = [
             '<li class="imgCell"><a href="storehousedetail.html?id=' + rdc.id + '" onclick="getSoll()"><span>求购货源</span><div>' +
             '<p class="ellipsis">' + rdc.title + '</p><p class="position omg orange"><i class="iconfont">&#xe673;</i>' + rdc.sqm + unit[rdc.publishunit] + '</p><span class="grab green">[' + showTime + ']</span>' +
             '</div><div class="flex"><div class="item"><h4>' + usefulDate + '</h4>' +
             '<p>有效期</p></div><div class="item"><h4>' + rdc.validEndTime + '</h4><p>报价截止日</p>' +
-            '</div><div class="item"><h4 class="omg">' + rdc.username + '</h4><p>发布者</p></div></div></a>' +
+            '</div><div class="item"><h4 class="omg">' + oprice + '</h4><p>价格</p></div></div></a>' +
             '<div class="btnFn clearfix"><a href="storehousedetail.html?id=' + rdc.id + '" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>' +
             collectWords + '<a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'
         ];

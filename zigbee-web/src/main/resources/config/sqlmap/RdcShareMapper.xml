@@ -289,6 +289,7 @@
 		s.publishunit,
 		s.codeLave1,
 		s.codeLave2,
+		s.codeLave4,
 		validStartTime,
 		validEndTime,
 		r.audit,

@@ -386,9 +386,23 @@
     color: #fff;
     text-align: center;
     font-size: 12px;
+    -webkit-transition: all 1s cubic-bezier(0.6, 4, 0.3, 0.8);;
+    -moz-transition: all 1s cubic-bezier(0.6, 4, 0.3, 0.8);;
+    -ms-transition: all 1s cubic-bezier(0.6, 4, 0.3, 0.8);;
+    -o-transition: all 1s cubic-bezier(0.6, 4, 0.3, 0.8);;
+    transition: all 1s cubic-bezier(0.6, 4, 0.3, 0.8);;
 }
 .imgTxtList a.fr i{
     font-size: 12px;
+}
+.imgTxtList a.fr:hover{
+    width:120px;
+    background-color: #00bdcc;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 0 0 2px rgba(255,255,255,0.5), 0 0 0 4px #345ef5;
+    -moz-box-shadow: 0 0 0 2px rgba(255,255,255,0.5), 0 0 0 4px #345ef5;
+    -ms-box-shadow: 0 0 0 2px rgba(255,255,255,0.5), 0 0 0 4px #345ef5;
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.5), 0 0 0 4px #345ef5;
 }
 .adDouble{
     margin: 32px 0;
@@ -436,7 +450,8 @@
     width:40%;
 }
 .rightList{
-    width:60%;
+    width:58%;
+    float: right;
 }
 /*ad*/
 .adbanner{

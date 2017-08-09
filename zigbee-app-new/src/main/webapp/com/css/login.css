@@ -268,7 +268,7 @@ input[type='radio']:checked{
 }
 .loginBg h1{
 	display: inline-block;
-	background: url("../img/newlogin.png") no-repeat center;
+	background: url("../img/logo.png") no-repeat center;
 	background-size: cover;
 	width: 5.551rem;
 	height:2rem;
