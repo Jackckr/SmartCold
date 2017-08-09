@@ -200,6 +200,20 @@
 .msgInfo ul > li>img{
     width:80px;
     height: 60px;
+    position: relative;
+    transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;	/* Firefox 4 */
+    -webkit-transition: all 0.5s ease;	/* Safari 和 Chrome */
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    cursor: pointer;
+}
+.msgInfo ul > li>img:hover{
+    transform: translate(20px,0);
+    -ms-transform: translate(20px,0);	/* IE 9 */
+    -webkit-transform: translate(20px,0);	/* Safari 和 Chrome */
+    -o-transform: translate(20px,0);	/* Opera */
+    -moz-transform: translate(20px,0);	/* Firefox */
 }
 .msgInfo ul > li >button{
     display: inline-block;
