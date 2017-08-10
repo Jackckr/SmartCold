@@ -41,7 +41,13 @@ public class CityController {
     public Object findCityById(@RequestParam int CityID) {
         return cityListDao.findCityById(CityID);
     }
-    
+
+    @RequestMapping(value = "/findProvinceById", method = RequestMethod.GET)
+    @ResponseBody
+    public Object findProvinceById(@RequestParam int provinceId) {
+        return cityListDao.findProvinceById(provinceId);
+    }
+
     @RequestMapping(value = "/findCityByName", method = RequestMethod.GET)
     @ResponseBody
     public Object findCityByName(@RequestParam String CityName) {

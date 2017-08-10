@@ -109,6 +109,14 @@
 	    	$http.get(ER.root+'/i/rdc/findRDCDTOByRDCId', { params: {"rdcID": id}}).success(function(data) {//withCredentials: true , headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 	    		if(data){
 	    			$scope.vo=data[0];
+                    $http.get(ER.root+"/i/city/findProvinceById",{params:{provinceId:$scope.vo.provinceId}}).success(function (data) {
+                        $scope.provinceName=data.provinceName;
+                    });
+                    $http.get(ER.root+"/i/city/findCityById",{params:{CityID:$scope.vo.cityId}}).success(function (data) {
+                        if(data.cityName){
+                            $scope.cityName="-"+data.cityName;
+                        }
+                    });
 	    			$scope.auth_show = ($scope.isLogin(user) && $scope.vo.audit !== 2);
     			}else{
 	    			//alert(data.message);
