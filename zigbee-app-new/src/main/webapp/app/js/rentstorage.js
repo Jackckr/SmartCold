@@ -201,7 +201,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
                 title: $scope.title,
                 uid: window.user.id,
                 provinceid: $scope.rdcdto.provinceid,
-                cityid: $scope.cityId,
+                cityid: $scope.rdcdto.cityid,
                 codeLave2: $scope.temperType,
                 codeLave1: $scope.rdcdto.codeLave1,
                 rentdate:$scope.rentdate,

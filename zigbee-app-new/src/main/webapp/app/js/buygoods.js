@@ -4,6 +4,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
     var id=getUrlParam("id");
     window.flag2=1;
     $scope.unit = "Kg";
+    $scope.publishunit = 1;
     $scope.telephone =  window.user.telephone.trim();
     if(id){
 //

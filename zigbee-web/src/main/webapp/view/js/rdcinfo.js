@@ -87,16 +87,26 @@ function getRdcInfo() {
         }*/
         if(rdc.audit==2){baseInfo.push('<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>')}else{baseInfo.push('<b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>')};
         if(rdc.istemperaturestandard==1){baseInfo.push('&nbsp;<b class="reachStand"><i class="iconfont">&#xe6e9;</i>冷链委温度达标库</b>');}
+        var address=["["];
+        $.ajax({url:"/i/city/findProvinceById",type:"get",data:{provinceId:rdc.provinceId},async:false,success:function (data) {
+            address.push(data.provinceName);
+        }});
+        $.ajax({url:"/i/city/findCityById",type:"get",data:{CityID:rdc.cityId},async:false,success:function (data) {
+            if(data&&data.cityName){
+                address.push("-"+data.cityName);
+            }
+        }});
+        address.push(']');
         if(!window.lkuser){//没有登录
             baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%</td></tr>' +
-                '<tr><td>地址</td><td>'+rdc.address+'</td> </tr>' +
+                '<tr><td>地址</td><td>'+address.join('')+rdc.address+'</td> </tr>' +
                 '<tr><td>仓储信息</td><td><a style="color:#2763cc;" href="../../login.html">登录</a>方可查看更多</tr></table>');
         }else if(window.lkuser.id==rdc.userid){//是自己的冷库
             if(rdc.audit==2){
                 auditButton=''
             }
             baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%'+auditButton+'</td></tr>' +
-                '<tr><td>地址</td><td>'+rdc.address+'</td> </tr> ' +
+                '<tr><td>地址</td><td>'+address.join('')+rdc.address+'</td> </tr> ' +
                 '<tr> <td>价格</td> <td>'+price+'</td> </tr> ' +
                 '<tr> <td>总面积/空置面积</td> <td>'+rdc.area+'㎡/'+rentSqm+'</td> </tr>' +
                 '<tr> <td>冷库净高</td> <td>'+rdc.height+' m</td> </tr>' +
@@ -110,10 +120,10 @@ function getRdcInfo() {
             }
             if(window.lkuser.vipType==0) {//没有实名认证
                 baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%</td></tr>' +
-                    '<tr><td>地址</td><td>'+rdc.address+'</td> </tr><tr><td>仓库信息</td><td><a href="../html/authentication.html" style="color:#2763cc;">实名认证</a><b>后可方可查看</b></td> </tr></table>');
+                    '<tr><td>地址</td><td>'+address.join('')+rdc.address+'</td> </tr><tr><td>仓库信息</td><td><a href="../html/authentication.html" style="color:#2763cc;">实名认证</a><b>后可方可查看</b></td> </tr></table>');
             }else if(window.lkuser.vipType>0){//实名认证
                 baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%'+auditButton+'</td></tr>' +
-                    '<tr><td>地址</td><td>'+rdc.address+'</td> </tr> ' +
+                    '<tr><td>地址</td><td>'+address.join('')+rdc.address+'</td> </tr> ' +
                     '<tr> <td>价格</td> <td>'+price+'</td> </tr> ' +
                     '<tr> <td>总面积/空置面积</td> <td>'+rdc.area+'㎡/'+rentSqm+'</td> </tr>' +
                     '<tr> <td>冷库净高</td> <td>'+rdc.height+' m</td> </tr>' +
