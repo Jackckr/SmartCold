@@ -181,7 +181,12 @@
                 modalHtml.push('<h3 class="orange">其他信息</h3><ol>');
                 var note=clearUndefined(share.note);
                 if(share.dataType==3){
-                    var price=share.unitPrice==0?"面议":share.unitPrice+"元/天·平方米";
+                    var price="";
+                    if(share.unit1&&share.unit2&&share.unit1!=""&&share.unit2!=""){
+                        var price=share.unitPrice==0?"面议":share.unitPrice+"元/"+share.unit1+"·"+share.unit2;
+                    }else {
+                        var price=share.unitPrice==0?"面议":share.unitPrice+"元/天·平方米";
+                    }
                     if(share.typeCode==1){
                         modalHtml.push('<li><div>出租面积:</div><div>'+share.sqm+'㎡</div></li>');
                     }else {
