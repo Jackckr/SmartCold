@@ -5,6 +5,7 @@ $().ready(function () {
     var ul_select = $("#ul_rdcsL_list");
     var isLoadRB=false;
     var flag=2;
+    localStorage.isStand=3;
     getSoll = function () {
         var scrollHeight = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;//隐藏的高度
         localStorage.list_cache_storehouse = JSON.stringify({

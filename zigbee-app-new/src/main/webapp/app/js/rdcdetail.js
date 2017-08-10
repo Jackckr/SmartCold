@@ -87,19 +87,21 @@
          };
          $scope.goWhere = function () {
              if($scope.checkUserLogin()){//登录
-                 if(localStorage.gowhere){//从我的html跳转而来
+                 /*if(localStorage.gowhere){//从我的html跳转而来
                      goback();
-                 }else{//
+                 }else{//*/
                      if(localStorage.isStand==0){
                          location.href='rdclist.html'
                      }else if(localStorage.isStand==1){
                          location.href='rdcstand.html'
                      }else if(localStorage.isStand==2){
                          location.href='user-mycold.html'
+                     }else if(localStorage.isStand==3){
+                         location.href='mycollect.html'
                      }else{
                          goback();
                      }
-				 }
+				// }
              }else{//未登录
                  location.href='rdclist.html';
              }
