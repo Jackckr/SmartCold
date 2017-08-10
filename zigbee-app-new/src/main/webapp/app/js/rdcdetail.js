@@ -101,7 +101,7 @@
                      }
 				 }
              }else{//未登录
-                 goback();
+                 location.href='rdclist.html';
              }
          };
 		$scope.initdata=function(){

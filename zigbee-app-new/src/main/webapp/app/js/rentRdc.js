@@ -236,6 +236,14 @@ $().ready(function () {
         initevg();
 
     };
+
+    function setRdcID() {
+        var urlParam = getUrlParam("rdcid");
+        if(urlParam&&urlParam!=null&&urlParam!=""){
+            localStorage.saveRdcID=urlParam;
+        }
+    }
+
     $("#searchDara_div>input").keypress(function (e) {
         var eCode = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
         if (eCode == 13) {
@@ -259,4 +267,14 @@ $().ready(function () {
         }
     };
     initData();
-});	
+    setRdcID();
+});
+function goWhere() {
+    if(localStorage.saveRdcID){
+        var rdcId=localStorage.saveRdcID;
+        checkLocal();
+        location.href="rdcdetail.html?id="+rdcId;
+    }else {
+        location.href="../index.html";
+    }
+}

@@ -194,6 +194,12 @@ $().ready(function () {
             em.children('em').html('收藏');
         }
     };
+    function setRdcID() {
+        var urlParam = getUrlParam("rdcid");
+        if(urlParam&&urlParam!=null&&urlParam!=""){
+            localStorage.saveRdcID=urlParam;
+        }
+    }
     function getPageData() {//启用无限加载
         isLoadRB = true;
         var _filter = getFilter(currentPage, maxSize);
@@ -261,5 +267,15 @@ $().ready(function () {
         }
         ;
     });
+    setRdcID();
     initData();
-});	
+});
+function goWhere() {
+    if(localStorage.saveRdcID){
+        var rdcId=localStorage.saveRdcID;
+        checkLocal();
+        location.href="rdcdetail.html?id="+rdcId;
+    }else {
+        location.href="../index.html";
+    }
+}

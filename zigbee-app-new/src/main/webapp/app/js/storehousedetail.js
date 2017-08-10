@@ -106,18 +106,20 @@
 		 	if(localStorage.gowhere){
                 goback();
 			}else{
+		 		var rdcId="";
+		 		if(localStorage.saveRdcID){rdcId="?rdcid="+localStorage.saveRdcID;}
                 checkLocal();
                 if($scope.datatype==3){//1:出租/2:求租
                     if($scope.vo.typeCode==1){
-                        location.href='rentstorage.html'
+                        location.href='rentstorage.html'+rdcId
                     }else{
-                        location.href='lookstorage.html'
+                        location.href='lookstorage.html'+rdcId
                     }
                 }else if($scope.datatype==1){//1:出售/2:求购
                     if($scope.vo.typeCode==1){
-                        location.href='salegoodslist.html'
+                        location.href='salegoodslist.html'+rdcId
                     }else{
-                        location.href='buygoodslist.html'
+                        location.href='buygoodslist.html'+rdcId
                     }
                 }
 			}
