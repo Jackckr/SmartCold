@@ -412,7 +412,11 @@ function flushPage(em) {
                 screenParam.pageNum = obj.curr;
                 pagination.oldPageCount = pagination.pageCount;
                 if (first != true) {
-                    initRentRdc();
+                    if(em='goodsPage'){
+                        initGoodsList();
+                    }else{
+                        initGoodsList();
+                    }
                     window.scroll(0, 0);//跳到顶部
                 }
             }
