@@ -107,8 +107,7 @@ $().ready(function () {
             managetype: sety,
             storagetempertype: smty,
             provinceid: adds,
-            keyword: keyword,
-            uid: uid
+            keyword: keyword
         };
         var _filter = {pageNum: pageNum, pageSize: pageSize};
         jQuery.extend(_filter, _options);
@@ -149,9 +148,9 @@ $().ready(function () {
         if (rdc.unitPrice == undefined || rdc.unitPrice == 0) {
             prices = '面议';
         }else if(rdc.unit1&&rdc.unit2&&rdc.unit1.trim()!=""&&rdc.unit2.trim()!=""){
-            prices=rdc.unitPrice+'<br><span>元/'+rdc.unit2+'/'+rdc.unit1+'</span>';
+            prices=rdc.unitPrice+'<br><span>元/'+rdc.unit1+'/'+rdc.unit2+'</span>';
         }else {
-            prices = rdc.unitPrice + '<br><span>元/㎡/天</span>';
+            prices = rdc.unitPrice + '<br><span>元/天/㎡</span>';
         }
         var loseEffice = '';
         if (rdc.name == null || rdc.name == '' || rdc.name == 'undefined') {

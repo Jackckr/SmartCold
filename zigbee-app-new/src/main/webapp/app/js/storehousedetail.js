@@ -22,9 +22,9 @@
 					}
 				}
 				$scope.vo=data.entity;
-				$scope.price="元/㎡/天";
+				$scope.price="元/天/㎡";
 				if($scope.vo.unit1&&$scope.vo.unit2&&$scope.vo.unit1!=""&&$scope.vo.unit2!=""){
-					$scope.price="元/"+$scope.vo.unit2+"/"+$scope.vo.unit1;
+					$scope.price="元/"+$scope.vo.unit1+"/"+$scope.vo.unit2;
 				}
 				$scope.datatype=data.entity.dataType;
               }
