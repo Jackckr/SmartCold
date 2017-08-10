@@ -164,8 +164,8 @@ function getRdcInfo() {
             }else{
                 rdcCapacity='<td> <span>冷库容积：</span> </td> '
             }
-            otherInfo.push('<table><caption>仓库信息</caption><tbody>' +
-                '<tr><td><span>冷库经营类型：</span>'+manageType[rdc.manageType]+' </td> <td> <span>冷库温度类型：</span>'+tempType[rdc.temperType]+' </td> </tr> ' +
+            otherInfo.push('<table><tbody><tr><td><span>冷库经营类型：</span>'+manageType[rdc.manageType]+' </td> ' +
+                '<td> <span>冷库温度类型：</span>'+tempType[rdc.temperType]+' </td> </tr> ' +
                 '<tr><td> <span>商品存放类型：</span>'+saveType[rdc.storageType]+'</td> '+structure+' </tr> ' +
                 '<tr>'+platform + lihuoRoom +'</tr>'+
                 '<tr>'+lihuoArea+lihuoTemperCtr +'</tr>'+
@@ -176,10 +176,8 @@ function getRdcInfo() {
                 '<tr>'+remark+'</tr>' +'</tbody></table>');
         }else if(window.lkuser && window.lkuser.vipType==0&&window.lkuser&&window.lkuser.id!=rdc.userid){
             otherInfo.push('');
-            $("#otherInfo").hide();
         }else{
-            otherInfo.push('');
-            $("#otherInfo").hide();
+            otherInfo.push('<a style="color:#2763cc;" href="../../login.html">登录</a>方可查看更多');
         }
         $("#baseInfo").empty().append(baseInfo.join(''));
         $("#divimginfog_imgPlayer").empty().append(bigImg.join(''));
@@ -207,7 +205,59 @@ function realTimeTem(rdcId,rdcName) {
         ,content: '<div style="padding:50px;">该功能尚未开放，请耐心等待~</div>'
     });
 }
-
+/*关联库发布列表*/
+function getList(typeCode,datatype,index) {
+    var oTabBox = $('#matchList').children('div').eq(index),ourl='',npoint=null;
+    if(index>0){
+        oTabBox.empty();
+        datatype==1?ourl='/i/ShareRdcController/getSEGDList':ourl='/i/ShareRdcController/getSERDCList';
+        if(index==4){ourl='/i/comment/findCommentsByRDCId',npoint=200;};
+        $.get(ourl,{pageNum:1,pageSize:10,rdcID:rdcId,datatype:datatype,type:typeCode,npoint:npoint},function (data) {
+            var list=null;
+            index==4?list=data:list = data.data;
+            var pStr=str='',ounit=['吨','Kg','吨'];
+            $.each(list,function (i,val) {
+                if(datatype==3){//出租
+                    if(!val.unit1){val.unit1='天'};
+                    if(!val.unit2){val.unit2='㎡'};
+                    str='<p class="txtList omg"><a href="rdcmatchinfo.html?id='+val.id+'"><span>'+(i+1)+'</span>' +
+                        '['+val.title+']--'+val.sqm+'㎡'+val.codeLave2+','+val.unitPrice+'元/'+val.unit1+'/'+val.unit2+'</a></p>';
+                }else if(datatype==1){//出售求购
+                    str='<p class="txtList omg"><a href="rdcmatchinfo.html?id='+val.id+'"><span>'+(i+1)+'</span>' +
+                        '['+val.detlAddress+']' +val.title+'--'+val.sqm+ounit[val.publishunit]+','+val.unitPrice+'元/'+ounit[val.publishunit]+'</a></p>';
+                }else{//评论
+                    var img=grade=imglist='';
+                    for(var j=0,imgLen=val.reviewPics.length;j<imgLen;j++){
+                        img='<li><img src="'+val.reviewPics[j].location+'"></li>';
+                        imglist=imglist+img;
+                    }
+                    if(val.grade==1){grade='<i class="iconfont filled">&#xe60c;</i><i class="iconfont">&#xe60c;</i><i class="iconfont">&#xe60c;</i><i class="iconfont">&#xe60c;</i><i class="iconfont">&#xe60c;</i>';
+                    }else if(val.grade==2){grade='<i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont">&#xe60c;</i><i class="iconfont">&#xe60c;</i><i class="iconfont">&#xe60c;</i>';
+                    }else if(val.grade==3){grade='<i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont">&#xe60c;</i><i class="iconfont">&#xe60c;</i>';
+                    }else if(val.grade==4){grade='<i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont">&#xe60c;</i>';
+                    }else{grade='<i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i>';}
+                    str='<div class="clearfix commentlist"><div class="imgleft">'+
+                        '<img src="'+val.avatar+'"><p>'+val.commerName+'</p><p>'+val.addTime+'</p><p>'+grade+'</p></div>'+
+                        '<div class="imgright"><p>'+val.content+'</p>'+
+                        '<ul class="commentImg">'+imglist+'</ul></div></div>'
+                }
+                pStr=pStr+str;
+            });
+            if(!pStr){
+                index==4?pStr='暂无评论信息~':pStr="该冷库尚无发布信息~"
+            }
+            oTabBox.append(pStr);
+            layer.photos({
+                photos: '.commentImg'
+                ,anim:5//0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+            });
+        });
+    }
+}
+/*发布评论*/
+function goComment() {
+    window.location.href='rdccomment.html?id='+rdcId;
+}
 $(function () {
    /* if(window.lkuser){
         flushUser(window.lkuser.id);

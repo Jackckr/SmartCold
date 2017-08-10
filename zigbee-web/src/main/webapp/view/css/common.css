@@ -14,8 +14,6 @@ input[type='text'],input[type='number'],input[type='tel'],input[type='email'],te
     background-image: none; border: 1px solid #ccc; border-radius: 4px;resize: vertical; }
 a{cursor: pointer;text-decoration: none; color: #4F4F4F; font-family: Microsoft YaHei,HELVETICA, sans-serif,Tahoma, Arial;}
 a:hover{color: #186efe; text-decoration: none;}
-a:active{color: #186efe;}
-a:visited{color: #656565;}
 table{border: solid 1px #e8eef4; border-collapse: collapse;}
 table td{padding: 5px; border: solid 1px #e8eef4;}
 table th{padding: 6px 5px; text-align: left; background-color: #e8eef4; border: solid 1px #e8eef4;}
@@ -154,12 +152,6 @@ html,body{
 #containBody{
     padding-bottom: 140px;
 }
-/*
-#containBox>#containBody
-
-
-
-*/
 .footer{
     width: 100%;
     padding: 30px 5% 0;

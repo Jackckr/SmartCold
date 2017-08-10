@@ -85,7 +85,27 @@
                 <p class="orange">分享给好友</p>
             </div>
         </div>
-        <div class="section rdcInfoTxt" id="otherInfo"></div>
+        <div class="section rdcInfoTxt" id="aboutRdcRelease">
+            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                <button class="layui-btn comBtn" onclick="goComment()">立即评价</button>
+                <ul class="layui-tab-title">
+                    <li class="layui-this">仓储信息</li>
+                    <li onclick="getList(1,3,1)">冷库出租</li>
+                    <li onclick="getList(1,1,2)">商品出售</li>
+                    <li onclick="getList(2,1,3)">商品求购</li>
+                    <li onclick="getList(null,null,4)">冷库评价</li>
+                </ul>
+                <div class="layui-tab-content" id="matchList">
+                    <div class="layui-tab-item layui-show">
+                        <div class="rdcInfoTxt" style="border: none;" id="otherInfo"></div>
+                    </div>
+                    <div class="layui-tab-item"></div>
+                    <div class="layui-tab-item"></div>
+                    <div class="layui-tab-item"></div>
+                    <div class="layui-tab-item"></div>
+                </div>
+            </div>
+        </div>
     </div>
     <!--版权区域-->
     <div class="footer" id="QRcode">
