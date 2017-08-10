@@ -187,15 +187,44 @@
         </ul>
     </div>
 </section>
-<!--货品列表展示-->
-<section class="more" ng-if="gdtotal" style="margin-top: 0;padding-bottom: .3rem">
+<!--出售列表展示-->
+<section class="more" ng-if="satotal" style="margin-top: 0;padding-bottom: .3rem">
     <ul class="listDad clearfix">
-        <li class="fl">货品&nbsp;(<span id="num">{{gdtotal}}</span>)</li>
+        <li class="fl">货品出售&nbsp;(<span id="num">{{satotal}}</span>)</li>
         <li class="fr"><a href="salegoodslist.html?rdcid={{rdcid}}"><i class="iconfont">&#xe697;</i></a></li>
     </ul>
     <div class="coldlist">
         <ul class="imgTable">
-            <li class="imgCell" ng-repeat="good in goodList" style="background-color: transparent;">
+            <li class="imgCell" ng-repeat="good in saleList" style="background-color: transparent;">
+                <a href="storehousedetail.html?id={{good.id}}">
+                    <img class="fl" ng-src="{{good.logo}}">
+                    <div class="">
+                        <p class='ellipsis'>【{{good.typeText}}】{{good.title}}</p>
+                        <p class='position'><i class="iconfont">&#xe66e;</i>{{good.detlAddress}}</p>
+                        <ul class='star'>
+                            <li class="filled">★</li>
+                            <li class="filled">★</li>
+                            <li class="filled">★</li>
+                            <li class="filled">★</li>
+                            <li class="filled">★</li>
+                        </ul>
+                        <!--<button class="grab">立即抢单</button>-->
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<!--求购列表展示-->
+<section class="more" ng-if="aptotal" style="margin-top: 0;padding-bottom: .3rem">
+    <ul class="listDad clearfix">
+        <li class="fl">货品求购&nbsp;(<span id="num">{{aptotal}}</span>)</li>
+        <li class="fr"><a href="buygoodslist.html?rdcid={{rdcid}}"><i class="iconfont">&#xe697;</i></a></li>
+    </ul>
+    <div class="coldlist">
+        <ul class="imgTable">
+            <li class="imgCell" ng-repeat="good in applyList" style="background-color: transparent;">
                 <a href="storehousedetail.html?id={{good.id}}">
                     <img class="fl" ng-src="{{good.logo}}">
                     <div class="">

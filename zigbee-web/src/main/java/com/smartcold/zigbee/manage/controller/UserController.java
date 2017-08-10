@@ -304,9 +304,10 @@ public class UserController extends BaseController {
 		if(StringUtil.isNull(sessyzm)||"null".endsWith(sessyzm)){
 			sessyzm=request.getSession().getAttribute("signUpCodeshear_yzm")+"";
 			}//跨app获得验证码
-		if(signUpCode==null||!(sessyzm).equalsIgnoreCase(signUpCode))
-			return new ResultDtoStr("-1", "验证码输入错误");
-		UserEntity userByTelephone = userDao.findUserByTelephone(telephone.trim());
+		/*if(signUpCode==null||!(sessyzm).equalsIgnoreCase(signUpCode))
+			return new ResultDtoStr("-1", "验证码输入错误");*/
+		telephone=telephone.trim();
+		UserEntity userByTelephone = userDao.findUserByTelephone(telephone);
 		if(userByTelephone!=null)
 			return new ResultDtoStr("-1", "该手机号已被注册！");
 		if(type==null){type=0;}

@@ -134,10 +134,14 @@
 	    		$("div.userType").hide();
 	    		$("p.userType").show();
 	    	}*/
-	        $http.get(ER.root + "/i/ShareRdcController/getSEGDList", {params: {pageNum:1,pageSize:2,rdcID:id,datatype:1}}).success(function( data) {//货品共享
-				$scope.goodList = data.data;//
-				$scope.gdtotal = data.total;//
+	        $http.get(ER.root + "/i/ShareRdcController/newGetSERDCList", {params: {pageNum:1,pageSize:2,rdcID:id,dataType:1,typeCode:1}}).success(function( data) {//出售共享
+				$scope.saleList = data.data;//
+				$scope.satotal = data.total;//
 			});
+            $http.get(ER.root + "/i/ShareRdcController/newGetSERDCList", {params: {pageNum:1,pageSize:2,rdcID:id,dataType:1,typeCode:2}}).success(function( data) {//求购共享
+                $scope.applyList = data.data;//
+                $scope.aptotal = data.total;//
+            });
 			$http.get(ER.root + "/i/ShareRdcController/getSEPSList", {params: {pageNum:1,pageSize:2,rdcID:id,datatype:2}}).success(function(data) {//配送共享
 				$scope.pslist = data.data;//
 				$scope.pstotal = data.total;//
