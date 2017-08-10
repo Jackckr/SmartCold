@@ -22,7 +22,7 @@
 					}
 				}
 				$scope.vo=data.entity;
-				if($scope.vo.typeCode ==1){
+				if($scope.vo.rdcID&&$scope.vo.rdcID!=0){
                     $http.get(ER.root+"/i/city/findProvinceById",{params:{provinceId:$scope.vo.provinceid}}).success(function (data) {
                         $scope.provinceName="["+data.provinceName;
                     });
