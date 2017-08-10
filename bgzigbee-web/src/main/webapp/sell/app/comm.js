@@ -1,4 +1,4 @@
-﻿if(!window.sessionStorage.asikey||parent.sysuser==undefined||parent.sysuser.token==undefined){ 
+﻿if(!window.sessionStorage.asikey||parent.sysuser==undefined||parent.sysuser.token==undefined||!(window.top.location.hostname=="sys.liankur.com"||window.top.location.hostname=="localhost")){ 
 	   parent.sysuser=undefined;window.sessionStorage.clear();  window.top.location="../../login.htm";
 	}else{
 		sysuser=parent.sysuser;

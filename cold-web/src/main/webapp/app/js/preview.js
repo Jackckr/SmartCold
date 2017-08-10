@@ -3,18 +3,6 @@
  * Created by maqiang34 on 17/8/7.
  * 
  * 
- * 
- *  angular.forEach($rootScope.mystorages,function(item){	
-		        	    	 if($rootScope.Tempset[item.id]==undefined){
-		        	    		 $http.get('/i/temp/getTempsetByStorageID?oid=' + item.id).success(function(req,status,headers,config){
-		        	    			 var oids=new Array(),names=new Array();
-				        	    	 angular.forEach(req,function(obj,i){
-				    		    	 		oids.push(obj.id);names.push(obj.name);
-				    		    	 });
-				        	    	 $rootScope.Tempset[item.id]={oids:oids,names:names };
-		        	             });
-		        	    	 }
-		        	     });
  */
 coldWeb.controller('preview', function($scope, $location, $stateParams, $http,$rootScope, baseTools) {
 	
@@ -22,6 +10,8 @@ coldWeb.controller('preview', function($scope, $location, $stateParams, $http,$r
        $scope.cuttTemp={};
        $scope.cuttrestime={};
        $scope.isNumber=function(obj) {  return typeof obj === 'number' && isFinite(obj) ;}  ;
+       
+       
        $scope.initTempset=function(startTime,endTime){
     	   angular.forEach($rootScope.mystorages,function(item){	
   	    	   if($rootScope.Tempset[item.id]==undefined){
@@ -40,7 +30,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams, $http,$r
     	   $http.get('/i/baseInfo/getKeyValuesByTime', { params: {type:18,"oid": oid, oids:oids,names:names, 'key':'Temp', "startTime": baseTools.formatTime(startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (data) {
     		   var temp=0;
     		   angular.forEach(oids,function(obj,i){
-    			  if(data[obj]){ 
+    			  if(data[obj].length>0){ 
     				  temp+=data[obj][0]['value'];
     			  }
     		   });
