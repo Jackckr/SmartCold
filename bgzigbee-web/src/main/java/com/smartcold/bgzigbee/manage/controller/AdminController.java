@@ -120,6 +120,7 @@ public class AdminController extends BaseController {
 	public Object logout(HttpServletRequest request) {
 		request.getSession().removeAttribute("admin");
 		Cookie[] cookies = request.getCookies();
+		if(cookies==null||cookies.length==0){return true;}
 		for (Cookie cookie : cookies) {
 			if (cookie.getName().equals("token")) {
 				cookieService.deleteCookie(cookie.getValue());
@@ -207,12 +208,12 @@ public class AdminController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/getUserMenu")
-	public List<ACLAdminNode> getUserMenu(HttpServletRequest request) {
+	public Object getUserMenu(HttpServletRequest request) {
 		AdminEntity admin = (AdminEntity)request.getSession().getAttribute("admin");
 		if(admin!=null&&admin.getId()!=0&&StringUtil.isnotNull(admin.getAcl())){
 			return getml(admin.getAcl());
 		}
-		return null;
+		return "false";
 	}
 	
 	public List<ACLAdminNode> getml(String alc) {

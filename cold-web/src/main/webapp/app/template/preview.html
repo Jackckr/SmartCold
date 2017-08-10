@@ -14,7 +14,7 @@
                     <div class="unitIcon"><i class="iconfont">&#xe67c;</i></div>
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                    <h2 class="omg">{{cuttTemp[storage.id]}}</h2>
+                    <h2 class="omg">{{cuttTemp[storage.id]}}°C</h2>
                     <p class="omg">{{storage.name}}</p>
                 </div>
             </div>
@@ -32,30 +32,17 @@
             </div>
         </div>
         <div class="bodyModel clearfix">
-            <div>
+            <div ng-repeat="power in powers">
                 <div class="unitModel">
                     <div class="electricModel">
-                        <div class="previewName myColor">电表1</div>
+                        <div class="previewName myColor">{{power.name}}</div>
                     </div>
                     <div class="txtModel">
                         <h2 class="omg">310056.36Kw·h</h2>
                     </div>
                 </div>
-                <div class="chartModel myDefault"  id="main">
+                <div class="chartModel myDefault"  id="powerchar_{{power.id}}">
 
-                </div>
-            </div>
-            <div>
-                <div class="unitModel">
-                    <div class="electricModel">
-                        <div class="previewName myColor">电表2</div>
-                    </div>
-                    <div class="txtModel">
-                        <h2 class="omg">310056.36Kw·h</h2>
-                    </div>
-                </div>
-                <div class="chartModel myDefault">
-                    666
                 </div>
             </div>
         </div>
