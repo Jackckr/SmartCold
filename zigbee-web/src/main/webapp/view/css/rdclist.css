@@ -208,11 +208,11 @@
     overflow: hidden;
 }
 .rdcImg img:hover{
-    transform: scale(1.2);
-    -ms-transform: scale(1.2);	/* IE 9 */
-    -webkit-transform: scale(1.2);	/* Safari 和 Chrome */
-    -o-transform: scale(1.2);	/* Opera */
-    -moz-transform: scale(1.2);	/* Firefox */
+    transform: scale(1.06) translate(0,-50px);
+    -ms-transform: scale(1.06) translate(0,-50px);	/* IE 9 */
+    -webkit-transform: scale(1.06) translate(0,-50px);	/* Safari 和 Chrome */
+    -o-transform: scale(1.06) translate(0,-50px);	/* Opera */
+    -moz-transform: scale(1.06) translate(0,-50px);	/* Firefox */
 }
 .rdcImg>i{
     position: absolute;

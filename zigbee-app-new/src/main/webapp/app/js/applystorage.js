@@ -157,6 +157,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					codeLave2 : $scope.temperType,
 					codeLave1:$("#storageType").attr('val'),
 					unit : $scope.unit,
+					unit1 : $scope.unit1,
+					unit2 : $scope.unit2,
 					sqm:$scope.sqm,
 					unitPrice : $scope.unitprice,
 					validStartTime : $scope.validStartTime,

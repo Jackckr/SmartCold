@@ -21,7 +21,19 @@
 						data.entity.unit=data.entity.picunit.substr(4);
 					}
 				}
-				$scope.vo=data.entity; 
+				$scope.vo=data.entity;
+				$http.get(ER.root+"/i/city/findProvinceById",{params:{provinceId:$scope.vo.provinceid}}).success(function (data) {
+					$scope.provinceName=data.provinceName;
+                });
+                $http.get(ER.root+"/i/city/findCityById",{params:{CityID:$scope.vo.cityid}}).success(function (data) {
+                	if(data.cityName){
+                        $scope.cityName="-"+data.cityName;
+					}
+                });
+				$scope.price="元/㎡/天";
+				if($scope.vo.unit1&&$scope.vo.unit2&&$scope.vo.unit1!=""&&$scope.vo.unit2!=""){
+					$scope.price="元/"+$scope.vo.unit2+"/"+$scope.vo.unit1;
+				}
 				$scope.datatype=data.entity.dataType;
               }
         });

@@ -306,6 +306,9 @@ public class UserController extends BaseController {
 			}//跨app获得验证码
 		if(signUpCode==null||!(sessyzm).equalsIgnoreCase(signUpCode))
 			return new ResultDtoStr("-1", "验证码输入错误");
+		UserEntity userByTelephone = userDao.findUserByTelephone(telephone.trim());
+		if(userByTelephone!=null)
+			return new ResultDtoStr("-1", "该手机号已被注册！");
 		if(type==null){type=0;}
 		UserEntity userEntity = new UserEntity();   
 		userEntity.setType(type);

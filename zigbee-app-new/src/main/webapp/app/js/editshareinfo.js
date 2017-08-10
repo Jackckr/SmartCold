@@ -136,6 +136,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    	 $scope.provinceId = $scope.rdcsharedto.provinceid;
 	    	 $scope.cityId = $scope.rdcsharedto.cityid;
 	    	 $scope.unit1 = $scope.rdcsharedto.unit1;
+	    	 $scope.unit2 = $scope.rdcsharedto.unit2;
 	    	 $scope.sqm = parseFloat($scope.rdcsharedto.sqm);
 	    	 $scope.temperType = $scope.rdcsharedto.codeLave2;
 	    	 $scope.manageType = $scope.rdcsharedto.codeLave1;
@@ -552,6 +553,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
                 	codeLave4 : $scope.codeLave4,
 					codeLave1:parseInt($("#manageType").attr("val")),
 					unit : $scope.unit,
+					unit1 : $scope.unit1,
+					unit2: $scope.unit2,
 					sqm:$scope.sqm,
 					unitPrice : $scope.unitprice,
 					validStartTime : $scope.validStartTime,

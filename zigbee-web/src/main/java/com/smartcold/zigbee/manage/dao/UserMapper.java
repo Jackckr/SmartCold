@@ -30,4 +30,6 @@ public interface UserMapper {
 	public void addmsg(@Param("userName")String userName,@Param("telephone")String telephone,@Param("corporateName")String corporateName,@Param("note")String note);
 
 	void updateTypeById(UserEntity userEntity);
+
+	UserEntity findUserByTelephone(@Param("telephone") String telephone);
 }

@@ -15,7 +15,7 @@
            http://www.springframework.org/schema/task/spring-task-4.1.xsd
            http://www.springframework.org/schema/mvc
            http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
-          http://redisson.org/scheam/redisson http://redisson.org/scheam/redisson/redisson.xsd
+          http://redisson.org/scheam/redisson
 	       http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
@@ -36,8 +36,8 @@
 	<context:annotation-config />
 	<!-- 默认的注解映射的支持 -->  
 	<mvc:annotation-driven />
-	<!-- 支持缓存 -->  
-	<cache:annotation-driven/>
+	<!-- 支持缓存 -->
+	<!--<cache:annotation-driven/>-->
 	
 	 <!-- 处理定时任务并发性操作。。 -->
 	<task:annotation-driven scheduler="myScheduler"/>   

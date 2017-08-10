@@ -68,7 +68,6 @@
     border-bottom-color: #c1b9f9;
 }
 .houseinfo>li.rdcImg{
-    /*font-size: .6rem;*/
     line-height:1.7;
 }
 #tempStandDiv{
@@ -76,4 +75,13 @@
 }
 .position>i{
     font-size: .6rem;
+}
+.houseinfo>.unitgroup>span,
+.houseinfo>.unitgroup>select{
+    text-align: center;
+    width: 3rem;
+    display: inline-block;
+}
+.houseinfo>.unitgroup>select{
+    color: #4287ff;
 }

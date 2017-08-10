@@ -94,7 +94,20 @@
                 <i class="iconfont fr moreinfo">&#xe697;</i></li>
 
             <li><label for="price">求租单价<em>*</em></label> <input type="number" id="price" name="unitPrice"
-                                                     placeholder="元/天（填0为面议）" ng-model="unitprice"/></li>
+                                                     placeholder="填0为面议" ng-model="unitprice"/></li>
+            <li class="unitgroup"><label>单位</label><em>*</em>
+                <span>元</span>/
+                <select id="unit1" ng-model="unit1" ng-init="unit1='天'">
+                    <option value="天">天</option>
+                    <option value="月">月</option>
+                </select>/
+                <select id="unit2" ng-model="unit2" ng-init="unit2='㎡'">
+                    <option value="㎡">㎡</option>
+                    <option value="m³">m³</option>
+                    <option value="吨">吨</option>
+                    <option value="整体">整体</option>
+                </select>
+            </li>
             <li><label for="rentdate">租期</label><em>*</em>
                 <div class="mySelect">
                     <select id="rentdate" ng-model="rentdate" name="rentdate"

@@ -28,11 +28,7 @@
         <section class="more" style="margin-top:2.5rem;" ng-if="evatotal">
 <!--         	<div class="commentFix">立即评价</div> -->
              <ul class="borderlist clearfix" >
-                <li><span>全部</span>&nbsp;(<span id="num">642</span>)</li>
-                <li><span>值得推荐</span>&nbsp;(<span id="num">343</span>)</li>
-                <li><span>有待改善</span>&nbsp;(<span id="num">56</span>)</li>
-                <li><span>信誉好</span>&nbsp;(<span id="num">123</span>)</li>
-                <li><span>性价比高</span>&nbsp;(<span id="num">120</span>)</li>
+                <li><span>全部</span>&nbsp;(<span id="num">{{evaList.length}}</span>)</li>
              </ul>
              <!--具体评论区域-->
              <ul class="commentArea" ng-repeat="eva in evaList">

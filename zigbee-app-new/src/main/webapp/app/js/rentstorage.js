@@ -208,6 +208,8 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
                 publishunit:3,
                 username:window.user.username,
                 unit: $scope.unit,
+                unit1:$scope.unit1,
+                unit2:$scope.unit2,
                 sqm: $scope.sqm,
                 validStartTime: $scope.validStartTime,
                 validEndTime: $scope.validEndTime,

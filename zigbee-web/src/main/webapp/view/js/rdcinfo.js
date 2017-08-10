@@ -194,7 +194,7 @@ function realTimeTem(rdcId,rdcName) {
         ,shadeClose: true
         ,maxmin: true //允许全屏最小化
         ,anim: 2 //0-6的动画形式，-1不开启
-        ,content: '<div style="padding:50px;"><span style="color: #54c849;">'+rdcName+'</span>　还没有加入冷库360，请致电400-853-5606联系~</div>'
+        ,content: '<div style="padding:50px;">该功能尚未开放，请耐心等待~</div>'
     });
 }
 

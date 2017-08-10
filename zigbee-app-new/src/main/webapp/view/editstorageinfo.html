@@ -123,7 +123,20 @@ $(function() {
 				<li ng-if="typeCode==1"><label>可租面积</label> <em>*</em>
 					<input type="number" id="sqm" ng-model="$parent.sqm" style="min-width:4rem;width:4rem;" placeholder="㎡"/></li>
 				<li><label for="price">单价</label> <input type="number" id="price" name="unitPrice"
-					placeholder="元/天（填0为面议）" ng-model="unitprice"/></li>
+														 placeholder="填0为面议" ng-model="unitprice"/></li>
+				<li class="unitgroup"><label>单位</label><em>*</em>
+					<span>元</span>/
+					<select id="unit1" ng-model="unit1">
+						<option value="天">天</option>
+						<option value="月">月</option>
+					</select>/
+					<select id="unit2" ng-model="unit2">
+						<option value="㎡">㎡</option>
+						<option value="m³">m³</option>
+						<option value="吨">吨</option>
+						<option value="整体">整体</option>
+					</select>
+				</li>
 				<li><label for="rentdate">租期</label><em>*</em>
 					<div class="mySelect">
 						<select id="rentdate" ng-model="rentdate" name="rentdate"

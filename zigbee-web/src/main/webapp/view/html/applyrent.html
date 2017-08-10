@@ -111,7 +111,23 @@
                     </tr>
                     <tr>
                         <td>单价：<b class="blue">*</b></td>
-                        <td><input name="unitPrice" type="number" step="0.01" placeholder="元/天（填0为面议）"></td>
+                        <td><input name="unitPrice" type="number" step="0.01" placeholder="填0为面议"></td>
+                    </tr>
+                    <tr>
+                        <td>单位：<b class="blue">*</b></td>
+                        <td class="unitgroup">
+                            <span>元</span>/
+                            <select>
+                                <option value="天">天</option>
+                                <option value="月">月</option>
+                            </select>/
+                            <select>
+                                <option value="㎡">㎡</option>
+                                <option value="m³">m³</option>
+                                <option value="吨">吨</option>
+                                <option value="整体">整体</option>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td>租期：<b class="blue">*</b></td>
