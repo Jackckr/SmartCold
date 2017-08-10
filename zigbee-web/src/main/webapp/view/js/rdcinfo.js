@@ -210,9 +210,8 @@ function getList(typeCode,datatype,index) {
     var oTabBox = $('#matchList').children('div').eq(index),ourl='',npoint=null;
     if(index>0){
         oTabBox.empty();
-        datatype==1?ourl='/i/ShareRdcController/getSEGDList':ourl='/i/ShareRdcController/getSERDCList';
-        if(index==4){ourl='/i/comment/findCommentsByRDCId',npoint=200;};
-        $.get(ourl,{pageNum:1,pageSize:10,rdcID:rdcId,datatype:datatype,type:typeCode,npoint:npoint},function (data) {
+        if(index==4){ourl='/i/comment/findCommentsByRDCId',npoint=200;}else{ourl='/i/ShareRdcController/newGetSERDCList'};
+        $.get(ourl,{pageNum:1,pageSize:10,rdcID:rdcId,dataType:datatype,typeCode:typeCode,npoint:npoint},function (data) {
             var list=null;
             index==4?list=data:list = data.data;
             var pStr=str='',ounit=['吨','Kg','吨'];
@@ -221,10 +220,10 @@ function getList(typeCode,datatype,index) {
                     if(!val.unit1){val.unit1='天'};
                     if(!val.unit2){val.unit2='㎡'};
                     str='<p class="txtList omg"><a href="rdcmatchinfo.html?id='+val.id+'"><span>'+(i+1)+'</span>' +
-                        '['+val.title+']--'+val.sqm+'㎡'+val.codeLave2+','+val.unitPrice+'元/'+val.unit1+'/'+val.unit2+'</a></p>';
+                        '['+val.title+']--共'+val.sqm+'㎡'+val.codeLave2+'，单价：'+val.unitPrice+'元/'+val.unit1+'/'+val.unit2+'</a></p>';
                 }else if(datatype==1){//出售求购
                     str='<p class="txtList omg"><a href="rdcmatchinfo.html?id='+val.id+'"><span>'+(i+1)+'</span>' +
-                        '['+val.detlAddress+']' +val.title+'--'+val.sqm+ounit[val.publishunit]+','+val.unitPrice+'元/'+ounit[val.publishunit]+'</a></p>';
+                        '['+val.detlAddress+']' +val.title+'--共'+val.sqm+ounit[val.publishunit]+'，单价：'+val.unitPrice+val.unit+'</a></p>';
                 }else{//评论
                     var img=grade=imglist='';
                     for(var j=0,imgLen=val.reviewPics.length;j<imgLen;j++){
