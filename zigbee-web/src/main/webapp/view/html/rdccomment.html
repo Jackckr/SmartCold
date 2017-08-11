@@ -267,7 +267,7 @@
 
         });
         $("#commonSubmit").click(function(){
-            if($(".nameInput").val().trim().length<201&&$(".nameInput").val().trim().length>4){
+            if($.trim($(".nameInput").val()).length<201&&$.trim($(".nameInput").val()).length>4){
                 $('input[name="commerID"]').val(window.lkuser.id);
                 $('input[name="rdcID"]').val(rdcId);
                 $('input[name="grade"]').val(oul.eq(0).children('li.active').length);
