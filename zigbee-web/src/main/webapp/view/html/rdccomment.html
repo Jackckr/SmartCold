@@ -244,7 +244,7 @@
             if (explorer.indexOf('MSIE') >= 0) {
                 if (!/\.(jpg|jpeg|png|JPG|PNG|JPEG|gif|GIF|bmp|BMP)$/.test(imgSrc)) {
                     imgSrc = "";
-                    fileImg.attr("src","http://139.196.189.93:8089/app/rdcHeader.jpg");
+                    //fileImg.attr("src","http://139.196.189.93:8089/app/rdcHeader.jpg");
                     return false
                 }else{
                     fileImg.attr("src",imgSrc);
@@ -252,7 +252,7 @@
             }else{
                 if (!/\.(jpg|jpeg|png|JPG|PNG|JPEG|gif|GIF|bmp|BMP)$/.test(imgSrc)) {
                     imgSrc = "";
-                    fileImg.attr("src","http://139.196.189.93:8089/app/rdcHeader.jpg");
+                   // fileImg.attr("src","http://139.196.189.93:8089/app/rdcHeader.jpg");
                     return false
                 }else{
                     var file = $(this)[0].files[0];
