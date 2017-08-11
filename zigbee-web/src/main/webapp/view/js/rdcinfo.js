@@ -262,30 +262,30 @@ function getList(typeCode,datatype,index) {
 }
 /*刷新分页*/
 function flushPage(index) {
-    if(index>0&&index<4){
-        ui_laypage = layui.use(['laypage', 'layer'], function () {
-            laypage = layui.laypage;
-            laypage({
-                cont: 'demo2'
-                , pages: pageCount
-                , skin: '#1E9FFF'
-                , curr: pageNum,
-                jump: function (obj, first) {
-                    pageNum = obj.curr;
-                    oldPageCount = pageCount;
-                    if (first != true) {
-                        if(index==1){
-                            getList(1,3,1)
-                        }else if(index==2){
-                            getList(1,1,2)
-                        }else if(index==3){
-                            getList(2,1,3)
-                        }
+    ui_laypage = layui.use(['laypage', 'layer'], function () {
+        laypage = layui.laypage;
+        laypage({
+            cont: 'demo2'
+            , pages: pageCount
+            , skin: '#1E9FFF'
+            , curr: pageNum,
+            jump: function (obj, first) {
+                pageNum = obj.curr;
+                oldPageCount = pageCount;
+                if (first != true) {
+                    if(index==1){
+                        getList(1,3,1)
+                    }else if(index==2){
+                        getList(1,1,2)
+                    }else if(index==3){
+                        getList(2,1,3)
+                    }else{
+                        console.warn('无需分页，无视他')
                     }
                 }
-            });
+            }
         });
-    }
+    });
 }
 /*发布评论*/
 function goComment() {
@@ -294,6 +294,7 @@ function goComment() {
 $("#aboutRdcRelease ul li").click(function () {
     var index=$(this).index();
     pageNum=1;
+    flushPage();
     if(index==1){
         getList(1,3,1)
     }else if(index==2){
