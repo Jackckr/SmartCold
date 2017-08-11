@@ -311,12 +311,12 @@
 .commentlist p{
     line-height: 1.8;
 }
-.imgleft p:nth-child(2){
+.imgleft img+p+p{
     font-size: 12px;
 }
 .imgleft img{
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border: 1px solid #eee;
     -webkit-border-radius:50%;
     -moz-border-radius:50%;
@@ -329,15 +329,14 @@
 .imgright ul{
     margin-top: 15px;
     height:100px;
-    margin-bottom: 10px;
 }
 .imgright ul li{
     float: left;
     margin-right: 10px;
-    height: 100px;
-    width: 120px;
+    height: 80px;
+    width: 100px;
     overflow: hidden;
-    line-height: 100px;
+    line-height: 80px;
     border: 1px solid #ddd;
     cursor: pointer;
 }
