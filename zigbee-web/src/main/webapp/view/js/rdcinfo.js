@@ -243,17 +243,19 @@ function getList(typeCode,datatype,index) {
                     str='<div class="clearfix commentlist"><div class="imgleft">'+
                         '<img src="'+val.avatar+'"><p>'+val.commerName+'</p><p>'+val.addTime+'</p><p>'+grade+'</p></div>'+
                         '<div class="imgright"><p>'+val.content+'</p>'+
-                        '<ul class="commentImg">'+imglist+'</ul></div></div>'
-                }
+                        '<ul class="commentImg" id="commentImg'+i+'">'+imglist+'</ul></div></div>'
+                };
                 pStr=pStr+str;
             });
             if(!pStr){
                 index==4?pStr='暂无评论信息~':pStr="该冷库尚无发布信息~"
             }
             oTabBox.append(pStr);
-            layer.photos({
-                photos: '.commentImg'
-                ,anim:5//0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+            $.each(list,function (i,val) {
+                layer.photos({
+                    photos: '#commentImg'+i
+                    ,anim:5
+                });
             });
         });
     }
