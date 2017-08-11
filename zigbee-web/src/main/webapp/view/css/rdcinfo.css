@@ -270,7 +270,7 @@
 }
 .infoImg li{
     float: left;
-    width: 30%;
+    width: 15%;
     margin-right:3%;
 }
 .unitgroup>span,
@@ -328,17 +328,25 @@
 }
 .imgright ul{
     margin-top: 15px;
-    height:100px;
+    height:70px;
 }
 .imgright ul li{
     float: left;
     margin-right: 10px;
-    height: 80px;
-    width: 100px;
+    height: 60px;
+    width: 60px;
     overflow: hidden;
-    line-height: 80px;
     border: 1px solid #ddd;
     cursor: pointer;
+    background-color: #efefef;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+.imgright ul li img{
+    height: 100%;
 }
 .comBtn{
     position: absolute;

@@ -206,13 +206,18 @@ function realTimeTem(rdcId,rdcName) {
     });
 }
 /*关联库发布列表*/
+var pageCount=-1, oldPageCount=-1,pageNum=1;
 function getList(typeCode,datatype,index) {
     var oTabBox = $('#matchList').children('div').eq(index),ourl='',npoint=null;
     if(index>0){
         oTabBox.empty();
         if(index==4){ourl='/i/comment/findCommentsByRDCId',npoint=200;}else{ourl='/i/ShareRdcController/newGetSERDCList'};
-        $.get(ourl,{pageNum:1,pageSize:10,rdcID:rdcId,dataType:datatype,typeCode:typeCode,npoint:npoint},function (data) {
+        $.get(ourl,{pageNum:pageNum,pageSize:10,rdcID:rdcId,dataType:datatype,typeCode:typeCode,npoint:npoint},function (data) {
             var list=null;
+            pageCount= data.totalPages;
+            if (pageCount == -1 || oldPageCount != pageCount) {
+                flushPage(index);
+            }
             index==4?list=data:list = data.data;
             var pStr=str='',ounit=['吨','Kg','吨'];
             $.each(list,function (i,val) {
@@ -253,14 +258,53 @@ function getList(typeCode,datatype,index) {
         });
     }
 }
+/*刷新分页*/
+function flushPage(index) {
+    if(index>0&&index<4){
+        ui_laypage = layui.use(['laypage', 'layer'], function () {
+            laypage = layui.laypage;
+            laypage({
+                cont: 'demo2'
+                , pages: pageCount
+                , skin: '#1E9FFF'
+                , curr: pageNum,
+                jump: function (obj, first) {
+                    pageNum = obj.curr;
+                    oldPageCount = pageCount;
+                    if (first != true) {
+                        if(index==1){
+                            getList(1,3,1)
+                        }else if(index==2){
+                            getList(1,1,2)
+                        }else if(index==3){
+                            getList(2,1,3)
+                        }
+                    }
+                }
+            });
+        });
+    }
+}
 /*发布评论*/
 function goComment() {
     window.location.href='rdccomment.html?id='+rdcId;
 }
+$("#aboutRdcRelease ul li").click(function () {
+    var index=$(this).index();
+    pageNum=1;
+    if(index==1){
+        getList(1,3,1)
+    }else if(index==2){
+        getList(1,1,2)
+    }else if(index==3){
+        getList(2,1,3)
+    }else if(index==4){
+        getList(null,null,4)
+    }else{
+        getRdcInfo();
+    }
+});
 $(function () {
-   /* if(window.lkuser){
-        flushUser(window.lkuser.id);
-    }*/
     rdcId = getUrlParam("rdcId");
     getRdcInfo();
 });
