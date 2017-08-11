@@ -97,14 +97,17 @@ function getRdcInfo() {
             }
         }});
         address.push(']');
+        if(rdc.openLIne&&rdc.openLIne==1){//公开温度曲线
+            openLIne='<tr> <td>实时温度</td> <td class="blue"><span style="cursor: pointer;" onclick="realTimeTem('+rdc.id+',\''+rdc.name+'\')">点击查看实时温度</span></td> </tr>';
+        }else{
+            openLIne='<tr> <td>实时温度</td> <td>该冷库主尚未公开温度曲线</td> </tr>';
+        }
         if(!window.lkuser){//没有登录
             baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%</td></tr>' +
                 '<tr><td>地址</td><td>'+address.join('')+rdc.address+'</td> </tr>' +
-                '<tr><td>仓储信息</td><td><a style="color:#2763cc;" href="../../login.html">登录</a>方可查看更多</tr></table>');
+                '<tr><td>仓储信息</td><td><a class="blue" href="../../login.html">登录</a>方可查看更多</tr>'+openLIne+'</table>');
         }else if(window.lkuser.id==rdc.userid){//是自己的冷库
-            if(rdc.audit==2){
-                auditButton=''
-            }
+            if(rdc.audit==2){auditButton=''}
             baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%'+auditButton+'</td></tr>' +
                 '<tr><td>地址</td><td>'+address.join('')+rdc.address+'</td> </tr> ' +
                 '<tr> <td>价格</td> <td>'+price+'</td> </tr> ' +
@@ -113,14 +116,9 @@ function getRdcInfo() {
                 ' <tr> <td>联系电话</td> <td class="orange"> <b>'+rdc.phoneNum+'</b></td> </tr>' +
                 ' <tr> <td>实时温度</td> <td class="blue"><span style="cursor: pointer;" onclick="realTimeTem('+rdc.id+',\''+rdc.name+'\')">点击查看实时温度</span></td> </tr> </table>');
         }else{//不是自己的冷库
-            if(rdc.openLIne&&rdc.openLIne==1){//公开温度曲线
-                openLIne='<tr> <td>实时温度</td> <td class="blue"><span style="cursor: pointer;" onclick="realTimeTem('+rdc.id+',\''+rdc.name+'\')">点击查看实时温度</span></td> </tr>';
-            }else{
-                openLIne='<tr> <td>实时温度</td> <td>该冷库主尚未公开温度曲线</td> </tr>';
-            }
             if(window.lkuser.vipType==0) {//没有实名认证
                 baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%</td></tr>' +
-                    '<tr><td>地址</td><td>'+address.join('')+rdc.address+'</td> </tr><tr><td>仓库信息</td><td><a href="../html/authentication.html" style="color:#2763cc;">实名认证</a><b>后可方可查看</b></td> </tr></table>');
+                    '<tr><td>地址</td><td>'+address.join('')+rdc.address+'</td> </tr><tr><td>仓库信息</td><td><a href="../html/authentication.html" class="blue">实名认证</a><b>后可方可查看</b></td> </tr>'+openLIne+'</table>');
             }else if(window.lkuser.vipType>0){//实名认证
                 baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%'+auditButton+'</td></tr>' +
                     '<tr><td>地址</td><td>'+address.join('')+rdc.address+'</td> </tr> ' +
@@ -175,9 +173,9 @@ function getRdcInfo() {
                 '<td>'+capacity+'</td> </tr> ' +
                 '<tr>'+remark+'</tr>' +'</tbody></table>');
         }else if(window.lkuser && window.lkuser.vipType==0&&window.lkuser&&window.lkuser.id!=rdc.userid){
-            otherInfo.push('');
+            otherInfo.push('<b>您尚未实名认证，现在去<a href="../html/authentication.html" class="blue">实名认证</a></b>');
         }else{
-            otherInfo.push('<a style="color:#2763cc;" href="../../login.html">登录</a>方可查看更多');
+            otherInfo.push('<a class="blue" href="../../login.html">登录</a>方可查看更多');
         }
         $("#baseInfo").empty().append(baseInfo.join(''));
         $("#divimginfog_imgPlayer").empty().append(bigImg.join(''));
