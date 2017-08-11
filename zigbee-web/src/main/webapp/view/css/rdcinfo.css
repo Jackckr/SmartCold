@@ -329,6 +329,7 @@
 .imgright ul{
     margin-top: 15px;
     height:100px;
+    margin-bottom: 10px;
 }
 .imgright ul li{
     float: left;
@@ -336,6 +337,9 @@
     height: 100px;
     width: 120px;
     overflow: hidden;
+    line-height: 100px;
+    border: 1px solid #ddd;
+    cursor: pointer;
 }
 .comBtn{
     position: absolute;
