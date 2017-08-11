@@ -4,19 +4,57 @@
  */
 coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http ,$timeout,$state,baseTools) {
 	$scope.colors= ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'];  Highcharts.setOptions({  global: {useUTC: false } ,colors:$scope.colors });
-	$scope.isreportMoth=false;  $scope.isnotprint=false; $scope.charArray=[];
-	$scope.titmode=["月度","七天"], $scope.fontcol=['red' ,'#ED561B' ,'#058DC7' ];
+	$scope.reportType=0;  $scope.isnotprint=false; $scope.charArray=[];
+	$scope.titmode=["日","七天","月度"],$scope.timemode=[0,7,30] , $scope.fontcol=['red' ,'#ED561B' ,'#058DC7' ];
+	$scope.sumDatavalue=[[0,0],[0,0]];
 	$scope.rdcId = $stateParams.rdcId;$scope.isnotprint=true;$scope.index=0;
-	$("#date04").jeDate({isinitVal:true,festival:false, ishmsVal:false,isToday:false, initAddVal:[-30],minDate: '2016-05-01 23:59:59', maxDate: $.nowDate(-30),  format:"YYYY-MM",zIndex:100});
-	$("#date05").jeDate({  isinitVal:true, initAddVal:[-7], festival: true, format: 'YYYY-MM-DD',maxDate: $.nowDate(-7),});
+	$("#date00").jeDate({  isinitVal:true, initAddVal:[0], festival: true, format: 'YYYY-MM-DD'});
+	$("#date01").jeDate({  isinitVal:true, initAddVal:[-7], festival: true, format: 'YYYY-MM-DD',maxDate: $.nowDate(-7),});
+	$("#date02").jeDate({  isinitVal:true,festival:false, ishmsVal:false,isToday:false, initAddVal:[-30],minDate: '2016-05-01 23:59:59', maxDate: $.nowDate(-30),  format:"YYYY-MM",zIndex:100});
 	$scope.note=false;
 	
-	var firstDate = new Date(); firstDate.setDate(firstDate.getDate()-7);firstDate.setHours(0);firstDate.setMinutes(0);firstDate.setSeconds(0);//设置上月的第一天
-	var endDate = new Date(); endDate.setHours(23);endDate.setMinutes(59);endDate.setSeconds(59);//设置上月的最后一天
-	$scope.endTime=baseTools.formatTime(endDate);
-	$scope.startTime= baseTools.formatTime(firstDate);
-	$scope.timeuRange=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
-	$scope.sumDatavalue=[[0,0],[0,0]];
+	//设置的开始时间
+	 $scope.settime=function(){
+			if($scope.reportType==0){//日报
+				var newDate=$("#date00").val();firstDate = new Date(newDate+' 00:00:00'); endDate =  new Date(newDate+' 23:59:59');  
+		    	$scope.endTime= baseTools.formatTime(endDate),$scope.startTime= baseTools.formatTime(firstDate), newtime=$scope.startTime.substring(0,10);
+		    	if(newtime==$scope.timeuRange){$("#loding").hide();return;}
+		    	$scope.timeuRange=newtime;
+		    	$scope.datemod = [[ $scope.startTime, newDate + ' 02:59:59' ],[ newDate + ' 03:00:00',newDate + ' 05:59:59' ],[ newDate + ' 06:00:00',newDate + ' 09:59:59' ],[ newDate + ' 10:00:00',newDate + ' 12:59:59' ],[ newDate + ' 13:00:00',newDate + ' 15:59:59' ],[ newDate + ' 16:00:00',newDate + ' 18:59:59' ],[ newDate + ' 19:00:00',newDate + ' 20:59:59' ],[ newDate + ' 21:00:00',$scope.endTime ] ];
+			}else if($scope.reportType==1){
+				var newDate=$("#date01").val(),date=newDate.substr(0,8);
+		    	 firstDate = new Date(newDate+' 00:00:00'); endDate =  new Date(newDate+' 23:59:59'),selday=firstDate.getDay();  
+		    	endDate.setDate(firstDate.getDate()+7);
+		    	$scope.endTime= baseTools.formatTime(endDate); 
+		    	$scope.startTime= baseTools.formatTime(firstDate); 
+		    	var newtime=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
+		    	if(newtime==$scope.timeuRange){$("#loding").hide();return;}
+		    	$scope.timeuRange=newtime;
+			    $scope.datemod = [
+					[ $scope.startTime,date + selday + ' 23:59:59' ],
+					[ date + (selday + 1) + ' 00:00:00',date + (selday + 1) + ' 23:59:59' ],
+					[ date + (selday + 2) + ' 00:00:00',date + (selday + 2) + ' 23:59:59' ],
+					[ date + (selday + 3) + ' 00:00:00',date + (selday + 3) + ' 23:59:59' ],
+					[ date + (selday + 4) + ' 00:00:00',date + (selday + 4) + ' 23:59:59' ],
+					[ date + (selday + 5) + ' 00:00:00',date + (selday + 5) + ' 23:59:59' ],[ date + (selday + 6) + ' 00:00:00',date + (selday + 6) + ' 06:00:00' ],[ date + (selday + 6) + ' 06:00:00',$scope.endTime ] ];
+			}else if($scope.reportType==2){
+		    	var data=$("#date02").val(),newDate=data.split("-");
+		    	if(newDate.length!=2){ return; }
+		    	 firstDate = new Date();firstDate.setFullYear(newDate[0], newDate[1]-1, 1);firstDate.setHours(0); firstDate.setMinutes(0); firstDate.setSeconds(0);//设置上月的第一天
+		    	 endDate = new Date(firstDate);  endDate.setMonth(firstDate.getMonth()+1); endDate.setDate(0);endDate.setHours(23); endDate.setMinutes(59); endDate.setSeconds(59);//设置上月的最后一天
+		    	$scope.endTime=baseTools.formatTime(endDate); $scope.startTime= baseTools.formatTime(firstDate); 
+		    	var newtime=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
+		    	if(newtime==$scope.timeuRange){$("#loding").hide();return;} 
+		    	$scope.timeuRange=newtime;
+							    $scope.datemod = [
+									[ $scope.startTime, data + '-03 23:59:59' ],[ data + '-04 00:00:00',data + '-06 23:59:59' ],
+									[ data + '-07 00:00:00',data + '-10 23:59:59' ],[ data + '-11 00:00:00',data + '-14 23:59:59' ],
+									[ data + '-15 00:00:00',data + '-18 23:59:59' ],[ data + '-19 00:00:00', data + '-22 23:59:59' ] 
+									[ data + '-23 00:00:00',data + '-26 23:59:59' ],[ data + '-28 00:00:00',  $scope.endTime  ] 
+								];
+			}
+	};
+	$scope.settime();
 	$scope.oids=[],$scope.names=[];//当前登陆tempid;
 	$http.get('/i/physicalController/getCompNameByRdcId',{params: {"rdcId":$scope.rdcId } }).success(function(data){
 		$scope.compName=(data.message&&data.message!=""&&data.message!="null")?data.message:$rootScope.vm.choserdc.name;
@@ -45,29 +83,30 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	 */
 	 $scope.loadTemp = function () {
 	    	if($scope.oids.length==0){ $("#loding").hide();return;};
-	    	if($scope.isreportMoth){
+//	    	if($scope.reportType!=0){
 	    		var longmotdata=[];
 	    		  angular.forEach($scope.datemod,function(item,i){
 	    			  $http.get('/i/temp/getTempByTime', { params: {index:i,oid:$scope.cuttstorage.id, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime":item[0], "endTime":item[1]}}).success(function (result) {
 	    					 longmotdata[result.index]=result;
-	    					 if( longmotdata.length==6){
-	    					 var fristdata= longmotdata[0]; longmotdata.shift(); //  	
-	    					  angular.forEach(longmotdata,function(obj,i){
-	    						  angular.forEach(obj.tempMap,function(obj1,i){
-	    							  if(obj1.length>0){
-	    								  fristdata.tempMap[i]=fristdata.tempMap[i].concat(obj1);
-	    							  }
-	    						  });
-	    					  });
-	    					 $scope.initTempAxis(fristdata);
+	    					 if( longmotdata.length==8){
+		    					  var fristdata=longmotdata[0]; 
+		    					  longmotdata.shift(); //  	
+		    					  angular.forEach(longmotdata,function(obj,i){
+		    						  angular.forEach(obj.tempMap,function(obj1,i){
+		    							  if(obj1.length>0){
+		    								  fristdata.tempMap[i]=fristdata.tempMap[i].concat(obj1);
+		    							  }
+		    						  });
+		    					  });
+		    					  $scope.initTempAxis(fristdata);
 	    					 }
 			          });
 	    		  });
-	    	}else{
-		        $http.get('/i/temp/getTempByTime', { params: {"oid":$scope.cuttstorage.id, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime":$scope.startTime, "endTime":$scope.endTime}}).success(function (result) {
-		        	$scope.initTempAxis(result);
-		          });
-	    	}
+//	    	}else{
+//		        $http.get('/i/temp/getTempByTime', { params: {"oid":$scope.cuttstorage.id, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime":$scope.startTime, "endTime":$scope.endTime}}).success(function (result) {
+//		        	$scope.initTempAxis(result);
+//		          });
+//	    	}
 	 };
 	/**
 	 *1.3 数据封装
@@ -235,46 +274,33 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	$scope.Preview=function(){ //打印预览
 		  $scope.isnotprint=false;
 		  angular.forEach($scope.charArray,function(item){ 
-			  
-			    var imgURL = item.getDataURL('png');//获取base64编码
-//			                var obj={};
-//			                obj["imgsURl"]=imgURL;
-//			                obj["name"]="ysj";
-//			                RunJavaMethodTrans("com.amarsoft.app.als.formatdoc.ahzxreport.ChangeToPhoto", "PersonTaxInfo", JSON.stringify({"data":obj}));
-//			                $(item.selector+"_img")
+			  item.exportChart("png") ;
+			   var imgURL = item.getDataURL('png');//获取base64编码
 			  $(item.selector+"_img").html("<img src="+imgURL+" title='超温时长(min/day)'>");
 			 });
-		  $timeout(printpage,0); $timeout(chanpangstatus,0);//加入js队列
+		  $timeout(printpage,0); 
+		  $timeout(chanpangstatus,0);//加入js队列
 	 };
 	
 	 $scope.exppdf=function(){
-		  html2canvas($('#print'), {onrendered: function(canvas) {var doc = new jsPDF('p','mm',[1600,canvas.height]); doc.addImage(canvas.toDataURL('img/notice/png'), 'JPEG', 0, 0,1600,canvas.height); doc.save($scope.cuttstorage.name+$scope.titmode[$scope.isreportMoth?0:1]+'分析报告.pdf');  } });   
+		 html2canvas($('#print'), {
+             onrendered:function(canvas) {
+                 var pageData = canvas.toDataURL('image/jpeg', 1.0);
+                 var pdf = new jsPDF('', 'pt', 'a4');
+                 pdf.addImage(pageData, 'JPEG', 0, 0, 595.28, 592.28/canvas.width * canvas.height );
+                 pdf.save($rootScope.vm.choserdc.name+"-"+$scope.cuttstorage.name+$scope.titmode[$scope.reportType]+'分析报告.pdf');
+             }
+         });
 	 };
    
+	 
+	
 	 /**
 	  * 查询事件
 	  */
 	$scope.getreport=function(){
 		$("#loding").show();
-		if($scope.isreportMoth){
-			var data=$("#date04").val(),newDate=data.split("-");
-	    	if(newDate.length!=2){ return; }
-	    	 firstDate = new Date();firstDate.setFullYear(newDate[0], newDate[1]-1, 1);firstDate.setHours(0); firstDate.setMinutes(0); firstDate.setSeconds(0);//设置上月的第一天
-	    	 endDate = new Date(firstDate);  endDate.setMonth(firstDate.getMonth()+1); endDate.setDate(0);endDate.setHours(23); endDate.setMinutes(59); endDate.setSeconds(59);//设置上月的最后一天
-	    	$scope.endTime=baseTools.formatTime(endDate); $scope.startTime= baseTools.formatTime(firstDate); 
-	    	var newtime=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
-	    	if(newtime==$scope.timeuRange){$("#loding").hide();return;} $scope.timeuRange=newtime;
-	    	$scope.datemod=[[$scope.startTime,data+'-05 23:59:59'],[data+'-06 00:00:00',data+'-10 23:59:59'],[data+'-11 00:00:00',data+'-15 23:59:59'],[data+'-16 00:00:00',data+'-20 23:59:59'],[data+'-21 00:00:00',data+'-25 23:59:59'],[data+'-25 00:00:00',$scope.endTime]];
-		}else{
-			var newDate=$("#date05").val();
-	    	 firstDate = new Date(newDate+' 00:00:00'), endDate =  new Date(newDate+' 23:59:59');  
-	    	endDate.setDate(firstDate.getDate()+7);
-	    	$scope.endTime= baseTools.formatTime(endDate); 
-	    	$scope.startTime= baseTools.formatTime(firstDate); 
-	    	var newtime=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
-	    	if(newtime==$scope.timeuRange){$("#loding").hide();return;}
-	    	$scope.timeuRange=newtime;
-		}
+		$scope.settime();
 		 $scope.initdata();
 	};
 	/**

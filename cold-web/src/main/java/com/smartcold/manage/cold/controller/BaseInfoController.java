@@ -104,5 +104,23 @@ public class BaseInfoController extends BaseController {
 		return result;
 		
 	}
+	
+	@RequestMapping("/getKeysValueByTime")
+	@ResponseBody
+	public Object getKeysValueByTime(@RequestParam("type") Integer type,
+			@RequestParam("oid") 	int oid,@RequestParam("keys") String[] keys,
+			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startTime,
+			@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date endTime,
+			@RequestParam(value = "nums", defaultValue = "1") Integer nums) {
+		
+		HashMap<String, List<StorageKeyValue>> result = new HashMap<String,List<StorageKeyValue>>();
+		for (String key : keys) {
+			result.put(key,  storageService.findByTime(type, oid, key, startTime, endTime,nums));
+		}
+		return result;
+		
+	}
+	
+
 
 }

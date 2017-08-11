@@ -67,19 +67,24 @@
 <div id="rpt_asis_coment" class="page-content" style="padding: 0 10px" >
 	<div class="page-header row" style="padding: 5px 0px">
 	  <div class="col-lg-4">
-		&nbsp;&nbsp;{{titmode[isreportMoth?0:1]}}报表
-		<!-- 	  <button class="btn btn-info myPrint" ng-click="Preview()"> 打印预览 </button> -->
+		&nbsp;&nbsp;{{titmode[reportType]}}报表
+<!-- 		  <button class="btn btn-info myPrint" ng-click="Preview()"> 打印预览 </button> 	 -->
 		<button class="btn btn-info myPrint" ng-click="exppdf()"> 导出PDF </button>
 	</div>
 	<div class="col-lg-8 text-right" style="color:#333;font-size: 14px;line-height: 2;">
-	  <button class="btn btn-info myPrint" ng-click="isreportMoth=true" class="">月报</button>
-	  <button class="btn btn-info myPrint" ng-click="isreportMoth=false" >周报</button>
-		 <span ng-show="isreportMoth">
-			<input class="datainp wicon" id="date04" type="text" placeholder="YYYY-MM"  readonly>
+	  <button class="btn btn-info myPrint" ng-click="reportType=0" >日报</button>
+	  <button class="btn btn-info myPrint" ng-click="reportType=1" >周报</button>
+	  <button class="btn btn-info myPrint" ng-click="reportType=2" class="">月报</button>
+	    <span ng-show="reportType==0">
+					 <input class="datainp wicon" id="date00" type="text"  readonly>
 		</span>
-	   <span ng-show="!isreportMoth">
-					 <input class="datainp wicon" id="date05" type="text"  readonly>
+	    <span ng-show="reportType==1">
+					 <input class="datainp wicon" id="date01" type="text"  readonly>
 		</span>
+		 <span ng-show="reportType==2">
+			<input class="datainp wicon" id="date02" type="text" placeholder="YYYY-MM"  readonly>
+		</span>
+	   
 		   <button class="btn btn-info myPrint" ng-click="getreport()">查询 </button>
 	</div>
 	</div>
@@ -112,7 +117,7 @@
 	    </div>
 	    <!-- 报表标题  -->
 	    <div class="print_title">
-	    	<h2 class="tac"><strong>冷库综合运行系统{{isreportMoth?titmode[0]:titmode[1]}}分析报告</strong></h2>
+	    	<h2 class="tac"><strong>冷库综合运行系统{{titmode[reportType]}}分析报告</strong></h2>
 	    	<div class="print_name clearfix">
 	    		<div class="pull-left">
 	    			<span>客户名称：</span>{{compName}}
@@ -127,16 +132,16 @@
 					<span>{{cuttstorage.name}}（基准温度℃）：{{cuttstorage.datumTemp}}
 				</div>
 				<div class="pull-left">
-					<span>{{isreportMoth?titmode[0]:titmode[1]}}危险告警次数：</span>{{cuttstorage.l1tailcount}}次
+					<span>{{titmode[reportType]}}危险告警次数：</span>{{cuttstorage.l1tailcount}}次
 				</div>
 				<div class="pull-right">
-					<span>{{isreportMoth?titmode[0]:titmode[1]}}危险告警时长：</span>{{cuttstorage.l1tailtime}}min
+					<span>{{titmode[reportType]}}危险告警时长：</span>{{cuttstorage.l1tailtime}}min
 				</div>
 	    	</div>
 	    </div>
 	    <!-- 月度曲线图 -->
 	    <div class="print_part chart_gap">
-	    	<p class="tac"><span class="bgBlue">{{isreportMoth?titmode[0]:titmode[1]}}温度曲线图</span></p>
+	    	<p class="tac"><span class="bgBlue">{{titmode[reportType]}}温度曲线图</span></p>
 	    	<div>
 	    		<div class="chartPart">
 	    			<div id="temperatureChart" class="chartHight" ng-show="isnotprint"></div>
@@ -151,7 +156,7 @@
 	    		<div class="chartPart">
 	    			<div id="tempovertime" class="chartHight" ng-show="isnotprint"></div>
 	    			<div id="tempovertime_img"  ng-show="!isnotprint"></div>
-	    	     	<span class="warnmsgs">{{isreportMoth?titmode[0]:titmode[1]}} 超温总时长：<er>{{sumDatavalue[0][1]}}</er>分钟      超温总次数：<er>{{sumDatavalue[0][0]}} </er>次  </span>
+	    	     	<span class="warnmsgs">{{titmode[reportType]}} 超温总时长：<er>{{sumDatavalue[0][1]}}</er>分钟      超温总次数：<er>{{sumDatavalue[0][0]}} </er>次  </span>
 	    		</div>
 	    	</div>
 	    </div>
@@ -169,7 +174,7 @@
 	    </div>
 		<div class="box ">
 			<div class="box-header with-border">
-				<h3 class="box-title">{{isreportMoth?titmode[0]:titmode[1]}}温度超标报警明细</h3>
+				<h3 class="box-title">{{titmode[reportType]}}温度超标报警明细</h3>
 				<div class="box-tools pull-right">
 					<button class="btn btn-box-tool" data-widget="collapse">
 						<i class="fa fa-minus"></i>
@@ -206,16 +211,16 @@
 		<!--DC（冷库）系统给出本月评分分值-->
 		<div class="print_part chart_gap">
 			<p class="tac"><span class="bgGreen">综合评分</span></p>
-			<div class="h4">360系统给出本{{isreportMoth?titmode[0]:titmode[1]}}评分分值<span style="text-decoration: underline">{{cuttstorage.score}}</span>分</div>
+			<div class="h4">360系统给出本{{titmode[reportType]}}评分分值<span style="text-decoration: underline">{{cuttstorage.score}}</span>分</div>
 		</div>
 
 		<!--结论-->
 		<div class="print_part chart_gap">
 			<p class="tac" ><span class="bgGold">结论</span></p>
-			<div class="h4" ng-show="cuttstorage.score>90&&!note" ng-click="note=true"> {{isreportMoth?titmode[0]:titmode[1]}}库温度完全达标，能够保证库内货品质量安全。</div>		
-			<div class="h4" ng-show="cuttstorage.score>70&&cuttstorage.score<90&&!note" ng-click="note=true">本{{isreportMoth?titmode[0]:titmode[1]}}冷库温度指标良好，但有一定改善空间。				</div>	
-			<div class="h4" ng-show="cuttstorage.score>50&&cuttstorage.score<70&&!note"ng-click="note=true">本{{isreportMoth?titmode[0]:titmode[1]}}冷库温度指标较低，存在影响库内货品质量安全的隐患。	</div>				
-			<div class="h4" ng-show="cuttstorage.score<50&&!note" ng-click="note=true">本{{isreportMoth?titmode[0]:titmode[1]}}冷库温度指标很糟糕，严重影响了食品质量安全。		</div>	
+			<div class="h4" ng-show="cuttstorage.score>90&&!note" ng-click="note=true"> {{titmode[reportType]}}库温度完全达标，能够保证库内货品质量安全。</div>		
+			<div class="h4" ng-show="cuttstorage.score>70&&cuttstorage.score<90&&!note" ng-click="note=true">本{{titmode[reportType]}}冷库温度指标良好，但有一定改善空间。				</div>	
+			<div class="h4" ng-show="cuttstorage.score>50&&cuttstorage.score<70&&!note"ng-click="note=true">本{{titmode[reportType]}}冷库温度指标较低，存在影响库内货品质量安全的隐患。	</div>				
+			<div class="h4" ng-show="cuttstorage.score<50&&!note" ng-click="note=true">本{{titmode[reportType]}}冷库温度指标很糟糕，严重影响了食品质量安全。		</div>	
 			<div ng-if="note">
 			     <textarea style="width: 100%; height: 150px;"></textarea>	
 			</div>
@@ -223,7 +228,7 @@
 	</div>
 	</div>
 	<div class="col-lg-12 text-center" ng-show="isloaderr">
-	  <div class="alert alert-info text-center">没有查到当前{{isreportMoth?titmode[0]:titmode[1]}}份的分析数据哦</div>
+	  <div class="alert alert-info text-center">没有查到当前{{titmode[reportType]}}份的分析数据哦</div>
    </div>
 	
 	

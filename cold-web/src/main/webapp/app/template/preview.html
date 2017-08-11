@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="bodyModel clearfix">
-            <div class="unitModel"ng-repeat="storage in mystorages">
+            <div class="unitModel"ng-repeat="storage in mystorages" ng-show="$index<4">
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="unitIcon"><i class="iconfont">&#xe67c;</i></div>
                 </div>
@@ -23,7 +23,7 @@
     <!--一个模块 end-->
 
     <!--一个模块 start--><!--温度模块================================-->
-    <div class="previewModel">
+    <div class="previewModel" ng-show="powers">
         <div class="headerModel myDefault">
             <div class="previewName myColor pull-left">实时电量</div>
             <div class="previewBtn pull-right">
@@ -32,13 +32,13 @@
             </div>
         </div>
         <div class="bodyModel clearfix">
-            <div ng-repeat="power in powers">
+            <div ng-repeat="power in powers" ng-show="$index<4">
                 <div class="unitModel">
                     <div class="electricModel">
                         <div class="previewName myColor">{{power.name}}</div>
                     </div>
                     <div class="txtModel">
-                        <h2 class="omg">310056.36Kw·h</h2>
+                        <h2 class="omg">{{cuttrepwc[power.id]}}Kw·h</h2>
                     </div>
                 </div>
                 <div class="chartModel myDefault"  id="powerchar_{{power.id}}">
@@ -58,34 +58,10 @@
                 <button class="btn btn-danger btn-xs" onclick="closeFn(this)">关闭</button>
             </div>
         </div>
-        <div class="bodyModel clearfix">
-            <div class="clearfix">
-                <img src="../assets/img/pressure1_stop.png">
-                <img src="../assets/img/pressure1_run.png">
-                <img src="../assets/img/pressure2_run.png">
-                <img src="../assets/img/pressure2_run.png">
-                <img src="../assets/img/pressure1_stop.png">
-                <h6>压缩机组1</h6>
-            </div>
-            <div class="clearfix">
-                <img src="../assets/img/pressure1_stop.png">
-                <img src="../assets/img/pressure1_run.png">
-                <img src="../assets/img/pressure1_stop.png">
-                <h6>压缩机组2</h6>
-            </div>
-            <div class="clearfix">
-                <img src="../assets/img/pressure1_stop.png">
-                <img src="../assets/img/pressure1_stop.png">
-                <h6>压缩机组3</h6>
-            </div>
-            <div class="clearfix">
-                <img src="../assets/img/pressure1_stop.png">
-                <img src="../assets/img/pressure1_run.png">
-                <img src="../assets/img/pressure2_run.png">
-                <img src="../assets/img/pressure2_run.png">
-                <img src="../assets/img/pressure1_run.png">
-                <img src="../assets/img/pressure1_stop.png">
-                <h6>压缩机组4</h6>
+        <div class="bodyModel clearfix" >
+            <div class="clearfix" ng-repeat="compressorGroup in compressorGroups" ng-show="$index<4">
+                <img ng-repeat="compressor in compressorGroup.compressors" ng-src="../assets/img/pressure{{compressor.type}}_{{compressor.status}}.png">
+                <h6>{{compressorGroup.name}}</h6>
             </div>
         </div>
         <div class="text-center">
@@ -105,66 +81,18 @@
             </div>
         </div>
         <div class="bodyModel clearfix">
-            <div>
-                <div class="unitModel">
+            <div ng-repeat="blower in blowers" id="blowerPage" ng-show="$index<4">
+                <div class="unitModel"  >
                     <div class="electricModel myColor omg">
-                        <div class="text-left">低温库1号风机</div>
+                        <div class="text-left">{{blower.coldStorageName}}的{{blower.name}}</div>
                     </div>
                     <div class="txtModel clearfix">
                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <div class="unitIcon"><i class="iconfont danger">&#xe732;</i></div>
+                            <div class="unitIcon"><i  class="iconfont {{blower.cls}}">&#xe732;</i></div>
                         </div>
                         <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                            <p class="omg">制冷累计：312.0H</p>
-                            <p class="omg">化霜累计：615.3H</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="unitModel">
-                    <div class="electricModel myColor omg">
-                        <div class="text-left">低温库1号风机</div>
-                    </div>
-                    <div class="txtModel clearfix">
-                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <div class="unitIcon"><i class="iconfont warnings">&#xe732;</i></div>
-                        </div>
-                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                            <p class="omg">制冷累计：312.0H</p>
-                            <p class="omg">化霜累计：615.3H</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="unitModel">
-                    <div class="electricModel myColor omg">
-                        <div class="text-left">低温库1号风机</div>
-                    </div>
-                    <div class="txtModel clearfix">
-                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <div class="unitIcon"><i class="iconfont runnings">&#xe732;</i></div>
-                        </div>
-                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                            <p class="omg">制冷累计：312.0H</p>
-                            <p class="omg">化霜累计：615.3H</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="unitModel">
-                    <div class="electricModel myColor omg">
-                        <div class="text-left">低温库1号风机</div>
-                    </div>
-                    <div class="txtModel clearfix">
-                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <div class="unitIcon"><i class="iconfont runnings">&#xe732;</i></div>
-                        </div>
-                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                            <p class="omg">制冷累计：312.0H</p>
-                            <p class="omg">化霜累计：615.3H</p>
+                            <p class="omg">制冷累计：{{blower.runTime}}H</p>
+                            <p class="omg">化霜累计：{{blower.defrostTime}}H</p>
                         </div>
                     </div>
                 </div>
@@ -172,9 +100,9 @@
         </div>
         <div class="headerModel myDefault" style="margin-top: 1em;">
             <div class="text-center">
-                <span><b style="background-color:#10c469;"></b>开机</span>
+                <span><b style="background-color:#10c469;"></b>制冷</span>
                 <span><b style="background-color:#f39938;"></b>化霜</span>
-                <span><b style="background-color:#d93f3f;"></b>停机</span>
+                <span><b style="background-color:#d93f3f;"></b>待机</span>
             </div>
         </div>
     </div>
@@ -191,40 +119,13 @@
             </div>
         </div>
         <div class="bodyModel clearfix">
-            <div class="unitModel">
+            <div class="unitModel"ng-repeat="storage in mystorages" >
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="unitIcon"><i class="iconfont">&#xe67c;</i></div>
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                    <h2 class="omg">-18.5℃</h2>
-                    <p class="omg">低温库</p>
-                </div>
-            </div>
-            <div class="unitModel">
-                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <div class="unitIcon"><i class="iconfont">&#xe67c;</i></div>
-                </div>
-                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                    <h2 class="omg">-18.5℃</h2>
-                    <p class="omg">机组1_速冻隧道1</p>
-                </div>
-            </div>
-            <div class="unitModel">
-                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <div class="unitIcon"><i class="iconfont">&#xe67c;</i></div>
-                </div>
-                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                    <h2 class="omg">-133.56℃</h2>
-                    <p class="omg">机组1_速冻压缩机组340</p>
-                </div>
-            </div>
-            <div class="unitModel">
-                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <div class="unitIcon"><i class="iconfont">&#xe67c;</i></div>
-                </div>
-                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                    <h2 class="omg">-18.5℃</h2>
-                    <p class="omg">机组1_速冻压缩机组340</p>
+                    <h2 class="omg">{{cuttTemp[storage.id]}}°C</h2>
+                    <p class="omg">{{storage.name}}</p>
                 </div>
             </div>
         </div>
@@ -240,30 +141,17 @@
             </div>
         </div>
         <div class="bodyModel clearfix">
-            <div>
+                <div ng-repeat="power in powers" >
                 <div class="unitModel">
                     <div class="electricModel">
-                        <div class="previewName myColor">电表1</div>
+                        <div class="previewName myColor">{{power.name}}</div>
                     </div>
                     <div class="txtModel">
-                        <h2 class="omg">310056.36Kw·h</h2>
+                        <h2 class="omg">{{cuttrepwc[power.id]}}Kw·h</h2>
                     </div>
                 </div>
-                <div class="chartModel myDefault"  id="main">
+                <div class="chartModel myDefault" style="height: 200px;width:400px; "  id="all_powerchar_{{power.id}}">
 
-                </div>
-            </div>
-            <div>
-                <div class="unitModel">
-                    <div class="electricModel">
-                        <div class="previewName myColor">电表2</div>
-                    </div>
-                    <div class="txtModel">
-                        <h2 class="omg">310056.36Kw·h</h2>
-                    </div>
-                </div>
-                <div class="chartModel myDefault">
-                    666
                 </div>
             </div>
         </div>
@@ -279,33 +167,9 @@
             </div>
         </div>
         <div class="bodyModel clearfix">
-            <div class="clearfix">
-                <img src="../assets/img/pressure1_stop.png">
-                <img src="../assets/img/pressure1_run.png">
-                <img src="../assets/img/pressure2_run.png">
-                <img src="../assets/img/pressure2_run.png">
-                <img src="../assets/img/pressure1_stop.png">
-                <h6>压缩机组1</h6>
-            </div>
-            <div class="clearfix">
-                <img src="../assets/img/pressure1_stop.png">
-                <img src="../assets/img/pressure1_run.png">
-                <img src="../assets/img/pressure1_stop.png">
-                <h6>压缩机组2</h6>
-            </div>
-            <div class="clearfix">
-                <img src="../assets/img/pressure1_stop.png">
-                <img src="../assets/img/pressure1_stop.png">
-                <h6>压缩机组3</h6>
-            </div>
-            <div class="clearfix">
-                <img src="../assets/img/pressure1_stop.png">
-                <img src="../assets/img/pressure1_run.png">
-                <img src="../assets/img/pressure2_run.png">
-                <img src="../assets/img/pressure2_run.png">
-                <img src="../assets/img/pressure1_run.png">
-                <img src="../assets/img/pressure1_stop.png">
-                <h6>压缩机组4</h6>
+           <div class="clearfix" ng-repeat="compressorGroup in compressorGroups">
+                <img ng-repeat="compressor in compressorGroup.compressors" ng-src="../assets/img/pressure{{compressor.type}}_{{compressor.status}}.png">
+                <h6>{{compressorGroup.name}}</h6>
             </div>
         </div>
         <div class="text-center">
@@ -324,66 +188,18 @@
             </div>
         </div>
         <div class="bodyModel clearfix">
-            <div>
-                <div class="unitModel">
+            <div ng-repeat="blower in blowers" id="blowerPage" >
+                <div class="unitModel"  >
                     <div class="electricModel myColor omg">
-                        <div class="text-left">低温库1号风机</div>
+                        <div class="text-left">{{blower.coldStorageName}}的{{blower.name}}</div>
                     </div>
                     <div class="txtModel clearfix">
                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <div class="unitIcon"><i class="iconfont danger">&#xe732;</i></div>
+                            <div class="unitIcon"><i  class="iconfont {{blower.cls}}">&#xe732;</i></div>
                         </div>
                         <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                            <p class="omg">制冷累计：312.0H</p>
-                            <p class="omg">化霜累计：615.3H</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="unitModel">
-                    <div class="electricModel myColor omg">
-                        <div class="text-left">低温库1号风机</div>
-                    </div>
-                    <div class="txtModel clearfix">
-                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <div class="unitIcon"><i class="iconfont warnings">&#xe732;</i></div>
-                        </div>
-                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                            <p class="omg">制冷累计：312.0H</p>
-                            <p class="omg">化霜累计：615.3H</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="unitModel">
-                    <div class="electricModel myColor omg">
-                        <div class="text-left">低温库1号风机</div>
-                    </div>
-                    <div class="txtModel clearfix">
-                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <div class="unitIcon"><i class="iconfont runnings">&#xe732;</i></div>
-                        </div>
-                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                            <p class="omg">制冷累计：312.0H</p>
-                            <p class="omg">化霜累计：615.3H</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <div class="unitModel">
-                    <div class="electricModel myColor omg">
-                        <div class="text-left">低温库1号风机</div>
-                    </div>
-                    <div class="txtModel clearfix">
-                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <div class="unitIcon"><i class="iconfont runnings">&#xe732;</i></div>
-                        </div>
-                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                            <p class="omg">制冷累计：312.0H</p>
-                            <p class="omg">化霜累计：615.3H</p>
+                            <p class="omg">制冷累计：{{blower.runTime}}H</p>
+                            <p class="omg">化霜累计：{{blower.defrostTime}}H</p>
                         </div>
                     </div>
                 </div>
@@ -391,9 +207,9 @@
         </div>
         <div class="headerModel myDefault" style="margin-top: 1em;">
             <div class="text-center">
-                <span><b style="background-color:#10c469;"></b>开机</span>
+                <span><b style="background-color:#10c469;"></b>制冷</span>
                 <span><b style="background-color:#f39938;"></b>化霜</span>
-                <span><b style="background-color:#d93f3f;"></b>停机</span>
+                <span><b style="background-color:#d93f3f;"></b>待机</span>
             </div>
         </div>
     </div>
@@ -412,76 +228,5 @@
         $(em).parents('.singleModel').hide();
         $(".groupModel").show ();
     }
-    var myChart = echarts.init(document.getElementById('main'));
-    // 指定图表的配置项和数据
-    var option = {
-        tooltip:{
-            backgroundColor:'rgba(0,0,0,0.3)'
-        },
-        grid:{
-            left:40,
-            top:20,
-            bottom:30,
-            right:30
-        },
-        xAxis: {
-           splitLine:{show: false},
-           data: ["10:00","10:20","10:40","11:00"],
-           axisLabel:{
-               textStyle:{
-                   color:'#eee',
-                   fontSize:12
-               }
-           },
-            axisLine:{
-                lineStyle:{
-                    color:'#eee'
-                },
-            },
-            axisTick:{
-                lineStyle:{
-                    color:'#eee'
-                },
-            }
-        },
-        yAxis: {
-            splitLine:{show: false},
-            axisLabel:{
-                textStyle:{
-                    color:'#eee',
-                    fontSize:12
-                }
-            },
-            axisLine:{
-                lineStyle:{
-                    color:'#eee'
-                },
-            },
-            axisTick:{
-                lineStyle:{
-                    color:'#eee'
-                },
-            }
-        },
-        series: [{
-            name: '电量',
-            type: 'line',
-            smooth:true,
-
-            lineStyle:{
-                normal:{
-                    color:'#188ae2'
-                }
-            },
-            itemStyle:{
-                normal:{
-                    color:'#188ae2'
-                }
-            },
-            data: [30, 82, 50, 93]
-        }]
-    };
-
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
+   
 </script>

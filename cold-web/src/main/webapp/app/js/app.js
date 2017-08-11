@@ -110,9 +110,10 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
     					$rootScope.compressorGroups = data;
     					angular.forEach($rootScope.compressorGroups,function(item){	$http.get('/i/compressor/findBygroupId?groupId=' + item.id).success(function(data,status,headers,config){item.compressors = data;});});
 		        	 });
-		        	 $http.get('/i/power/findByRdcId?rdcId=' + rdcId).success( function(data,status,headers,config){ // 初始化电量
-		        				  $rootScope.powers = data;
-		        	 });
+	        		 $http.get('/i/power/findByRdcId?rdcId=' + rdcId).success( function(data,status,headers,config){ // 初始化电量
+        				  $rootScope.powers = data;
+        	         });
+		        	
 		             $http.get('/i/platformDoor/findByRdcId?rdcId=' + rdcId).success( function(data,status,headers,config){ //  初始化月台门
 		            			 $rootScope.platformDoors = data;
 		             });
