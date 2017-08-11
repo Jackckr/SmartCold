@@ -224,11 +224,13 @@ function getList(typeCode,datatype,index) {
                 if(datatype==3){//出租
                     if(!val.unit1){val.unit1='天'};
                     if(!val.unit2){val.unit2='㎡'};
+                    if(val.unitPrice==0){unitPrice='面议'}else{unitPrice=val.unitPrice+'元/'+val.unit1+'/'+val.unit2}
                     str='<p class="txtList omg"><a href="rdcmatchinfo.html?id='+val.id+'"><span>'+(i+1)+'</span>' +
-                        '['+val.title+']--共'+val.sqm+'㎡'+val.codeLave2+'，单价：'+val.unitPrice+'元/'+val.unit1+'/'+val.unit2+'</a></p>';
+                        '['+val.title+']--共'+val.sqm+'㎡'+val.codeLave2+'，单价：'+unitPrice+'</a></p>';
                 }else if(datatype==1){//出售求购
+                    if(val.unitPrice==0){unitPrice='面议'}else{unitPrice=val.unitPrice+val.unit}
                     str='<p class="txtList omg"><a href="rdcmatchinfo.html?id='+val.id+'"><span>'+(i+1)+'</span>' +
-                        '['+val.detlAddress+']' +val.title+'--共'+val.sqm+ounit[val.publishunit]+'，单价：'+val.unitPrice+val.unit+'</a></p>';
+                        '['+val.detlAddress+']' +val.title+'--共'+val.sqm+ounit[val.publishunit]+'，单价：'+unitPrice+'</a></p>';
                 }else{//评论
                     var img=grade=imglist='';
                     for(var j=0,imgLen=val.reviewPics.length;j<imgLen;j++){
