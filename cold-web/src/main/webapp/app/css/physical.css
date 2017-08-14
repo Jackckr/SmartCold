@@ -538,7 +538,7 @@ html, body {
 	margin-top: 8px;
 }
 .print_title,.print_name{
-	margin-top: 30px;
+	margin-top: 50px;
 }
 .print_title h2{
 	font-size: 24px;
@@ -630,7 +630,7 @@ html, body {
 .chart_gap>div{
 	margin-bottom: 5px;
 }
-.chart_gap>div .h4{
+.chart_gap>div .h4,.chart_gap>div{
 	font-size: 14px;
 }
 .bgPurple{
