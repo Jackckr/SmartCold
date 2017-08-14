@@ -15,6 +15,7 @@ function addApply() {
     vo['uid']=window.lkuser.id;
     vo['username']=window.lkuser.username;
     vo['detlAddress']=$("#provinceid option[value="+vo.provinceid+"]").html()+"-"+$("#cityid option[value="+vo.cityid+"]").html();
+    vo['unit']='元/'+vo.unit2+'/'+vo.unit1;
     if(checkSubmitInfo(vo)){
        var formData = new FormData();
        formData.append('data',JSON.stringify(vo));

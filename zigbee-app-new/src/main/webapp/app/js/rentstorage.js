@@ -214,7 +214,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
                 rentdate:$scope.rentdate,
                 publishunit:3,
                 username:window.user.username,
-                unit: $scope.unit,
+                unit: "元/"+$scope.unit2+"/"+$scope.unit1,
                 unit1:$scope.unit1,
                 unit2:$scope.unit2,
                 sqm: $scope.sqm,

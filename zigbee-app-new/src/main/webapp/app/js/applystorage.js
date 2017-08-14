@@ -156,7 +156,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					codeLave4 : $scope.codeLave4,
 					codeLave2 : $scope.temperType,
 					codeLave1:$("#storageType").attr('val'),
-					unit : $scope.unit,
+					unit : "元/"+$scope.unit2+"/"+$scope.unit1,
 					unit1 : $scope.unit1,
 					unit2 : $scope.unit2,
 					sqm:$scope.sqm,

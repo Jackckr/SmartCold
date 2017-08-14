@@ -113,6 +113,7 @@ function submitAdd() {
     $.each(serializeArray,function (index, val) {
         vo[val.name]=val.value;
     });
+    vo['unit']='元/'+vo.unit2+'/'+vo.unit1;
     if(checkSubmitInfo(vo)){
         vo['username']=window.lkuser.username;
         var formData = new FormData();
