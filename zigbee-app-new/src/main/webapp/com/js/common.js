@@ -246,7 +246,21 @@ function checkMobile(str) {
    }
 }
 /*分享功能*/
+var flagPC = true;
+function IsPC() {
+    var userAgentInfo = navigator.userAgent;
+    var Agents = ["Android", "iPhone","SymbianOS", "Windows Phone","iPad", "iPod"];
+    for (var v = 0; v < Agents.length; v++) {
+        if (userAgentInfo.indexOf(Agents[v]) > 0) {
+            flagPC = false;
+            break;
+        }
+    }
+    return flagPC;
+}
 function weixinShare() {
+    IsPC();
+    if(flagPC){alert('你当前使用的不是手机浏览器，无法使用该功能~');return false}
     var wx='<div class="wxShare"><span class="bgClose" onclick="bgClose(this)"></span></div>';
     var web='<div class="webShare"><span class="bgClose" onclick="bgClose(this)"></span></div>';
     if(isWeiXin()){//微信浏览器
