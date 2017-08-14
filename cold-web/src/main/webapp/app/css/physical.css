@@ -546,16 +546,59 @@ html, body {
 .print_name>div{
 	width:40%;
 	margin-right:1%;
-	height: 34px;
-	line-height:32px;
 	font-size: 12px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
-.print_name>div>input{
-	border:0;
-	/* border-bottom:1px solid #333; */
-	width: 65%;
-	height: 30px;
+/*分析报告css2017-8-14*/
+.newlayout{
+	padding-top: 40px;
+	position: relative;
+	margin-top: 0;
+	margin-bottom: 60px;
 }
+.rightLogo{
+	position: absolute;
+	top:30px;
+	right: 20px;
+}
+.rightLogo img{
+	width: 100px;
+}
+.rightLogo p>span{
+	font-size: 16px;
+	display: inline-block;
+	width: 80px;
+	vertical-align: top;
+	line-height: 1.2;
+	letter-spacing: 3px;
+	text-align: center;
+}
+.rightLogo p>span>span{
+	font-size: 12px;
+	letter-spacing: 0;
+}
+.newlayout  h1,
+.newlayout h2{
+	text-align: left;
+	color: #494748;
+	margin: 0;
+}
+.newlayout h2{
+	font-size: 18px;
+	margin-bottom: 5px;
+}
+.newlayout  h1{
+	margin-top: 6px;
+}
+.print_part .text-left{
+	font-weight: 700;
+	border-bottom: 1px solid #ccc;
+	line-height: 2.4;
+	font-size: 14px;
+}
+/*分析报告css2017-8-14*/
 .partP>p{
 	text-indent: 2em;
 	font-size: 12px;
@@ -579,13 +622,16 @@ html, body {
 }
 .chartHight{
 	height: 400px;
-	border:1px solid #eee
+	/*border:1px solid #eee*/
 }
 .chartPart{	
-	border:1px solid #ccc;
+	/*border:1px solid #ccc;*/
 }
 .chart_gap>div{
 	margin-bottom: 5px;
+}
+.chart_gap>div .h4{
+	font-size: 14px;
 }
 .bgPurple{
 	background: #5AB1EF!important;
@@ -677,6 +723,10 @@ html, body {
 }
 .print_part>h4,#print .box-title{
 	font-size: 14px;
+}
+#print .box-title{
+	font-weight: 700;
+	color: #000;
 }
 .print_part+hr,.clearfix+hr{
 	margin: 5px 0;

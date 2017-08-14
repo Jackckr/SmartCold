@@ -248,7 +248,7 @@ function getList(typeCode,datatype,index) {
                 pStr=pStr+str;
             });
             if(!pStr){
-                index==4?pStr='暂无评论信息~':pStr="该冷库尚无发布信息~"
+                index==4?pStr='暂无评论信息~':pStr="该冷库尚无发布相关信息~"
             }
             oTabBox.append(pStr);
             $.each(list,function (i,val) {
