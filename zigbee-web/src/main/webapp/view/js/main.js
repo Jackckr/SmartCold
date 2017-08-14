@@ -10,7 +10,15 @@ function getRdcShare() {
                 var price='';
                 rightRdcLease.push('<li class="fl">');
                 if(data[i].istemperaturestandard==1){rightRdcLease.push('<div class="lt">温度达标冷库</div>');}
-                if(data[i].unitPrice!=0&&data[i].unitPrice!=undefined){price=data[i].unitPrice+'元/㎡/天'}else{price='面议'};
+                if(data[i].unitPrice!=0&&data[i].unitPrice!=undefined){
+                    if(data[i].unit1&&data[i].unit2&&data[i].unit1!=""&&data[i].unit2!=""){
+                        price=data[i].unitPrice+'元/'+data[i].unit2+'/'+data[i].unit1;
+                    }else {
+                        price=data[i].unitPrice+'元/㎡/天';
+                    }
+                }else{
+                    price='面议'
+                };
                 rightRdcLease.push('<a href="view/html/rdcmatchinfo.html?id='+data[i].id+'"><div class="img"><img src="'+data[i].logo+'" alt=""><div class="bg omg">'+data[i].title+'</div></div><div class="price clearfix"><span class="fl">'+price+'</span>');
                 if(data[i].audit==2){rightRdcLease.push('<b class="approve fr"><i class="iconfont">&#xe6ac;</i>已认证</b>');}else{rightRdcLease.push('<b class="reachStand fr"><i class="iconfont">&#xe63b;</i>未认证</b>');}
                 rightRdcLease.push('</div><div class="city"><p class="omg"><i class="iconfont fl">&#xe61c;</i>'+data[i].detlAddress+'</p><p>可租面积：'+data[i].sqm+'㎡</p></div></a></li>');

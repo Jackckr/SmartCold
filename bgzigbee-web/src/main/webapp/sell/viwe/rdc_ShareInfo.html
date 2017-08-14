@@ -100,10 +100,26 @@
 	    			<td>可租面积(㎡):</td>
 	    			<td><input class="easyui-textbox" name="sqm" ></input></td>
 	    		</tr>
+				<tr>
+					<td>出租冷库高度(m):</td>
+					<td><input class="easyui-textbox" name="codeLave4" ></input></td>
+				</tr>
 	    		<tr>
-	    			<td>单价(元/天):</td>
+	    			<td>单价:</td>
 	    			<td><input class="easyui-textbox" name="unitPrice" ></input></td>
 	    		</tr>
+				<tr>
+					<td>单位:</td>
+					<td>元/<select class="easyui-combobox" name="unit1" data-options="width :'70'">
+						<option value="天" selected="selected">天</option>
+						<option value="月">月</option>
+					</select><select class="easyui-combobox" name="unit2" data-options="width :'70'">
+						<option value="㎡">㎡</option>
+						<option value="m³">m³</option>
+						<option value="吨">吨</option>
+						<option value="整体">整体</option>
+					</select></td>
+				</tr>
 	    		<tr>
 	    			<td>租期:</td>
 	    			<td>

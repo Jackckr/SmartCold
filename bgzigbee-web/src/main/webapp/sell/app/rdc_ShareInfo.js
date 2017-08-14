@@ -68,7 +68,7 @@ function add_storageSharinfo(){
                     vo.provinceid=slrdc.provinceid;
                     vo.cityId= slrdc.cityId;
                 }
-                vo.unit='元/天·平方米';
+                vo.unit='元/'+vo.unit2+'/'+vo.unit1;
                 vo.publishunit=3;
                 vo.uid= slrdc.userId;
                 if(!vo.uid){vo.uid=1;}
