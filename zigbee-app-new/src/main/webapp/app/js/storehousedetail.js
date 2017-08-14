@@ -103,7 +103,7 @@
      };
      $scope.goWhere = function () {
 		 if($scope.checkUserLogin()){
-		 	if(localStorage.gowhere){
+		 	if(localStorage.gowhere||localStorage.oURL){
                 goback();
 			}else{
 		 		var rdcId="";
