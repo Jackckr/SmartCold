@@ -279,7 +279,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 	    function checkStorageSubmit(){
 	        // 检查必须填写项   仓库
 	        if ($scope.title == undefined || $scope.title == '' ) {return false; }
-	        if ($scope.typeCode==2&&$scope.dataType==3 && ($scope.codeLave4 == undefined || $scope.codeLave4 == '') ) {return false; }
+	        if ($scope.dataType==3 && ($scope.codeLave4 == undefined || $scope.codeLave4 == '') ) {return false; }
 	        //if ($scope.detlAddress == undefined || $scope.detlAddress == ''||$scope.detlAddress == '-') {return false;}
 	        if ($scope.temperType == undefined || $scope.temperType == '') { return false;}
 	        if($scope.rdcsharedto.rdcID==null||$scope.rdcsharedto.rdcID==undefined){
@@ -517,6 +517,10 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 				layer.open({content:'开始时间和结束时间冲突，请更改~',btn: '确定'});
 				return false
 			}
+            if($scope.codeLave4<3||$scope.codeLave4>40){
+                layer.open({content:'库高范围3~40m,请修改',btn: '确定'});
+                return false
+            }
 			if(checkMobile($scope.telephone.trim()) == false){
 				layer.open({content:'请输入正确的手机号码或者座机号码~',btn: '确定'});
 				return false
@@ -552,7 +556,7 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
 					codeLave2 : $scope.temperType,
                 	codeLave4 : $scope.codeLave4,
 					codeLave1:parseInt($("#manageType").attr("val")),
-					unit : $scope.unit,
+					unit : "元/"+$scope.unit2+"/"+$scope.unit1,
 					unit1 : $scope.unit1,
 					unit2: $scope.unit2,
 					sqm:$scope.sqm,

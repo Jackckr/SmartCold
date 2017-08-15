@@ -102,7 +102,7 @@
 				<div class="flex" ng-if="vo.detlAddress!=''&&vo.detlAddress!=undefined">
 					<div class="item flex">
 						<span class="item">地址</span>
-						<p class="item">[{{provinceName}}{{cityName}}]{{vo.detlAddress}}</p>
+						<p class="item">{{provinceName}}{{cityName}}{{vo.detlAddress}}</p>
 					</div>
 				</div>
 				<div class="flex" ng-if="vo.infoIntegrity">
@@ -117,8 +117,9 @@
 					<i class="iconfont blue">&#xe60b;</i>
 					&nbsp;其他
 				</h2>
-				<div class="flex" ng-if="vo.codeLave4!=''&&vo.codeLave4!=undefined"><span class="item">存放产品</span><p class="item">{{vo.codeLave4}}</p></div>
-				<p><span>{{vo.typeText}}面积</span>{{vo.sqm}}平方米</p>
+				<div class="flex" ng-if="vo.typeCode==2"><span class="item">存放产品</span><p class="item">{{vo.codeLave4==undefined?'暂无信息':vo.codeLave4}}</p></div>
+				<p><span>{{vo.typeText}}面积</span>{{vo.sqm}} ㎡</p>
+				<p ng-if="vo.typeCode==1"><span>出租库高</span>{{vo.codeLave4==undefined?'暂无信息':vo.codeLave4+' m'}}</p>
 				<p><span>{{appmode[datatype].lab[1][0]}}</span>{{vo.unitPrice == undefined||vo.unitPrice==0 ?"面议":vo.unitPrice}}<em ng-if="vo.unitPrice != undefined&&vo.unitPrice!=0">{{price}}</em></p>
 				<p ng-hide="vo.rentdate==''"><span>租期</span>{{rentDate[vo.rentdate]}}</p>
 				<p><span>开始时间</span>{{vo.validStartTime |date:"yyyy-MM-dd" }}</p>
@@ -163,7 +164,7 @@
 				<div class="flex" ng-if="vo.detlAddress!=''&&vo.detlAddress!=undefined">
 					<div class="item flex">
 						<span class="item">地址</span>
-						<p class="item">{{vo.detlAddress}}</p>
+						<p class="item">{{provinceName}}{{cityName}}{{vo.detlAddress}}</p>
 					</div>
 				</div>
 				<div class="flex" ng-if="vo.infoIntegrity">

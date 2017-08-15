@@ -31,5 +31,5 @@ public interface UserMapper {
 
 	void updateTypeById(UserEntity userEntity);
 
-	UserEntity findUserByTelephone(@Param("telephone") String telephone);
+	UserEntity findUserByTelephone(String phone);
 }

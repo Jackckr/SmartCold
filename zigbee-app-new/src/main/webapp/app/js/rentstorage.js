@@ -135,6 +135,9 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
         if ($scope.sqm == undefined || $scope.sqm == '') {
             return false;
         }
+        if ($scope.codeLave4 == undefined || $scope.codeLave4 == '') {
+            return false;
+        }
         if ($scope.telephone.trim() == undefined || $scope.telephone.trim() == '') {
             return false;
         }
@@ -180,6 +183,9 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
             } else if ($scope.sqm.toString().length > 11) {
                 layer.open({content: '数量不合法哦~', btn: '确定'});
                 return;
+            } else if ($scope.codeLave4<3||$scope.codeLave4>40) {
+                layer.open({content: '库高范围3~40m,请修改', btn: '确定'});
+                return;
             } else if (parseFloat($scope.unitprice).length > 11) {
                 layer.open({content: '单价不合法哦~', btn: '确定'});
                 return;
@@ -201,13 +207,14 @@ angular.module('app', ['ngFileUpload']).controller('ctrl', function ($scope, Upl
                 title: $scope.title,
                 uid: window.user.id,
                 provinceid: $scope.rdcdto.provinceid,
-                cityid: $scope.cityId,
+                cityid: $scope.rdcdto.cityid,
                 codeLave2: $scope.temperType,
                 codeLave1: $scope.rdcdto.codeLave1,
+                codeLave4: $scope.codeLave4,
                 rentdate:$scope.rentdate,
                 publishunit:3,
                 username:window.user.username,
-                unit: $scope.unit,
+                unit: "元/"+$scope.unit2+"/"+$scope.unit1,
                 unit1:$scope.unit1,
                 unit2:$scope.unit2,
                 sqm: $scope.sqm,

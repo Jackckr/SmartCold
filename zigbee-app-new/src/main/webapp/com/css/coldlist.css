@@ -954,3 +954,6 @@ div.flicking_con a.on {
 }
 
 /* 详情轮播main_image end*/
+.equal .star li{
+	display: block!important;
+}

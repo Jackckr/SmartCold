@@ -87,21 +87,23 @@
          };
          $scope.goWhere = function () {
              if($scope.checkUserLogin()){//登录
-                 if(localStorage.gowhere){//从我的html跳转而来
+                 /*if(localStorage.gowhere){//从我的html跳转而来
                      goback();
-                 }else{//
+                 }else{//*/
                      if(localStorage.isStand==0){
                          location.href='rdclist.html'
                      }else if(localStorage.isStand==1){
                          location.href='rdcstand.html'
                      }else if(localStorage.isStand==2){
                          location.href='user-mycold.html'
+                     }else if(localStorage.isStand==3){
+                         location.href='mycollect.html'
                      }else{
                          goback();
                      }
-				 }
+				// }
              }else{//未登录
-                 goback();
+                 location.href='rdclist.html';
              }
          };
 		$scope.initdata=function(){
@@ -134,10 +136,14 @@
 	    		$("div.userType").hide();
 	    		$("p.userType").show();
 	    	}*/
-	        $http.get(ER.root + "/i/ShareRdcController/getSEGDList", {params: {pageNum:1,pageSize:2,rdcID:id,datatype:1}}).success(function( data) {//货品共享
-				$scope.goodList = data.data;//
-				$scope.gdtotal = data.total;//
+	        $http.get(ER.root + "/i/ShareRdcController/newGetSERDCList", {params: {pageNum:1,pageSize:2,rdcID:id,dataType:1,typeCode:1}}).success(function( data) {//出售共享
+				$scope.saleList = data.data;//
+				$scope.satotal = data.total;//
 			});
+            $http.get(ER.root + "/i/ShareRdcController/newGetSERDCList", {params: {pageNum:1,pageSize:2,rdcID:id,dataType:1,typeCode:2}}).success(function( data) {//求购共享
+                $scope.applyList = data.data;//
+                $scope.aptotal = data.total;//
+            });
 			$http.get(ER.root + "/i/ShareRdcController/getSEPSList", {params: {pageNum:1,pageSize:2,rdcID:id,datatype:2}}).success(function(data) {//配送共享
 				$scope.pslist = data.data;//
 				$scope.pstotal = data.total;//

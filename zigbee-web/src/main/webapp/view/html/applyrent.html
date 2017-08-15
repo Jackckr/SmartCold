@@ -66,7 +66,6 @@
                     <input type="hidden" name="typeCode" value="2">
                     <input type="hidden" name="typeText" value="求租">
                     <input type="hidden" name="publishunit" value="3">
-                    <input type="hidden" name="unit" value="元/天·平方米">
                     <tr>
                         <td>标题：<b class="blue">*</b></td>
                         <td><input type="text" name="title" id="title" placeholder="标题（6~24个字符）" ></td>
@@ -117,11 +116,11 @@
                         <td>单位：<b class="blue">*</b></td>
                         <td class="unitgroup">
                             <span>元</span>/
-                            <select>
+                            <select name="unit1">
                                 <option value="天">天</option>
                                 <option value="月">月</option>
                             </select>/
-                            <select>
+                            <select name="unit2">
                                 <option value="㎡">㎡</option>
                                 <option value="m³">m³</option>
                                 <option value="吨">吨</option>

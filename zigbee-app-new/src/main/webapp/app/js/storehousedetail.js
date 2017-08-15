@@ -22,17 +22,21 @@
 					}
 				}
 				$scope.vo=data.entity;
-				$http.get(ER.root+"/i/city/findProvinceById",{params:{provinceId:$scope.vo.provinceid}}).success(function (data) {
-					$scope.provinceName=data.provinceName;
-                });
-                $http.get(ER.root+"/i/city/findCityById",{params:{CityID:$scope.vo.cityid}}).success(function (data) {
-                	if(data.cityName){
-                        $scope.cityName="-"+data.cityName;
-					}
-                });
+				if($scope.vo.rdcID&&$scope.vo.rdcID!=0){
+                    $http.get(ER.root+"/i/city/findProvinceById",{params:{provinceId:$scope.vo.provinceid}}).success(function (data) {
+                        $scope.provinceName="["+data.provinceName;
+                    });
+                    $http.get(ER.root+"/i/city/findCityById",{params:{CityID:$scope.vo.cityid}}).success(function (data) {
+                    	if(data&&data.cityName!=""){
+                            $scope.cityName="-"+data.cityName+"]";
+						}else {
+                            $scope.cityName="]";
+						}
+                    });
+				}
 				$scope.price="元/㎡/天";
 				if($scope.vo.unit1&&$scope.vo.unit2&&$scope.vo.unit1!=""&&$scope.vo.unit2!=""){
-					$scope.price="元/"+$scope.vo.unit2+"/"+$scope.vo.unit1;
+					$scope.price="元/"+$scope.vo.unit1+"/"+$scope.vo.unit2;
 				}
 				$scope.datatype=data.entity.dataType;
               }
@@ -99,21 +103,23 @@
      };
      $scope.goWhere = function () {
 		 if($scope.checkUserLogin()){
-		 	if(localStorage.gowhere){
+		 	if(localStorage.gowhere||localStorage.oURL){
                 goback();
 			}else{
+		 		var rdcId="";
+		 		if(localStorage.saveRdcID){rdcId="?rdcid="+localStorage.saveRdcID;}
                 checkLocal();
                 if($scope.datatype==3){//1:出租/2:求租
                     if($scope.vo.typeCode==1){
-                        location.href='rentstorage.html'
+                        location.href='rentstorage.html'+rdcId
                     }else{
-                        location.href='lookstorage.html'
+                        location.href='lookstorage.html'+rdcId
                     }
                 }else if($scope.datatype==1){//1:出售/2:求购
                     if($scope.vo.typeCode==1){
-                        location.href='salegoodslist.html'
+                        location.href='salegoodslist.html'+rdcId
                     }else{
-                        location.href='buygoodslist.html'
+                        location.href='buygoodslist.html'+rdcId
                     }
                 }
 			}

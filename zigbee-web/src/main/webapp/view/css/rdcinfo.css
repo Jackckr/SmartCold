@@ -270,7 +270,7 @@
 }
 .infoImg li{
     float: left;
-    width: 30%;
+    width: 15%;
     margin-right:3%;
 }
 .unitgroup>span,
@@ -278,4 +278,91 @@
     text-align: center;
     width: 95px;
     display: inline-block;
+}
+/*冷库详情关联库发布列表*/
+#aboutRdcRelease{
+    position: relative;
+}
+.txtList{
+    line-height:2.3;
+    border-bottom: 1px dashed #ccc;
+    margin-bottom: 5px;
+}
+.txtList span{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: #5fb878;
+    text-align: center;
+    line-height:16px;
+    color: #fff;
+    border-radius: 2px;
+    font-size: 12px;
+    margin-right: 8px;
+}
+.commentlist>div{
+    float: left;
+}
+.commentlist>.imgleft{
+    margin-right: 20px;
+    width: 120px;
+    text-align: center;
+}
+.commentlist p{
+    line-height: 1.8;
+}
+.imgleft img+p+p{
+    font-size: 12px;
+}
+.imgleft img{
+    width: 50px;
+    height: 50px;
+    border: 1px solid #eee;
+    -webkit-border-radius:50%;
+    -moz-border-radius:50%;
+    -ms-border-radius:50%;
+    border-radius:50%;
+}
+.imgright{
+    width:680px;
+}
+.imgright ul{
+    margin-top: 15px;
+    height:70px;
+}
+.imgright ul li{
+    float: left;
+    margin-right: 10px;
+    height: 60px;
+    width: 60px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    background-color: #efefef;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+.imgright ul li img{
+    height: 100%;
+}
+.comBtn{
+    position: absolute;
+    top:5px;
+    right: 10px;
+    z-index:20;
+}
+.commentlist{
+    border-bottom: 1px dashed #ccc;
+    margin-bottom: 10px;
+}
+.commentlist i{
+    color: #cccccc;
+    font-size: 14px;
+    margin-right: 3px;
+}
+.commentlist .filled{
+    color: #ff7800;
 }

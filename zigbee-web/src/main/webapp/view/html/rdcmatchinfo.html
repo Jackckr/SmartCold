@@ -166,9 +166,22 @@
                     localStorage.OURL=window.location.href;
                     phone=telMd5(share.telephone)+' <a href="../../login.html" class="blue">[去登录]</a>';
                 }
-                modalHtml.push('</ul><h3 class="orange">基本信息------><strong>'+share.typeText+'</strong></h3><ol><li><div>描述:</div><div>'+share.title+'</div></li>' +
-                    '<li><div>地址:</div><div>'+share.detlAddress+'</div></li><li><div>联系电话:</div><div class="orange">'+phone+'</div></li>');
+                var baseInfo='</ul><h3 class="orange">基本信息------><strong>'+share.typeText+'</strong></h3><ol><li><div>描述:</div><div>'+share.title+'</div></li>' +
+                    '<li><div>地址:</div><div>'+share.detlAddress+'</div></li><li><div>联系电话:</div><div class="orange">'+phone+'</div></li>';
                 if(share.rdcID&&share.rdcID!=0){
+                    var address=["["];
+                    $.ajax({url:"/i/city/findProvinceById",type:"get",data:{provinceId:share.provinceid},async:false,success:function (data) {
+                        address.push(data.provinceName);
+                    }});
+                    $.ajax({url:"/i/city/findCityById",type:"get",data:{CityID:share.cityid},async:false,success:function (data) {
+                        if(data&&data.cityName){
+                            address.push("-"+data.cityName);
+                        }
+                    }});
+                    address.push(']');
+                    baseInfo='</ul><h3 class="orange">基本信息------><strong>'+share.typeText+'</strong></h3><ol><li><div>描述:</div><div>'+share.title+'</div></li>' +
+                        '<li><div>地址:</div><div>'+address.join('')+share.detlAddress+'</div></li><li><div>联系电话:</div><div class="orange">'+phone+'</div></li>';
+                    modalHtml.push(baseInfo);
                     var isAudit='<b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>';
                     var isStand='';
                     if(share.audit==2){isAudit='<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>';}
@@ -177,14 +190,23 @@
                     modalHtml.push('<li><div>关联冷库:</div><div>'+share.name+'</div>'+isAudit+isStand+'</li>');
                     modalHtml.push('<li><div>信息完整度:</div><div>'+share.infoIntegrity+'%</div></li></ol>');
 
+                }else {
+                    modalHtml.push(baseInfo);
                 }
                 modalHtml.push('<h3 class="orange">其他信息</h3><ol>');
                 var note=clearUndefined(share.note);
                 if(share.dataType==3){
-                    var price=share.unitPrice==0?"面议":share.unitPrice+"元/天·平方米";
-                    if(share.typeCode==1){
-                        modalHtml.push('<li><div>出租面积:</div><div>'+share.sqm+'㎡</div></li>');
+                    var price="";
+                    if(share.unit1&&share.unit2&&share.unit1!=""&&share.unit2!=""){
+                        var price=share.unitPrice==0?"面议":share.unitPrice+"元/"+share.unit1+"·"+share.unit2;
                     }else {
+                        var price=share.unitPrice==0?"面议":share.unitPrice+"元/天·平方米";
+                    }
+                    if(share.typeCode==1){
+                        share.codeLave4==undefined?share.codeLave4='暂无信息':share.codeLave4=share.codeLave4+'m';
+                        modalHtml.push('<li><div>出租面积:</div><div>'+share.sqm+'㎡</div></li><li><div>出租库高:</div><div>'+share.codeLave4+'</div></li>');
+                    }else {
+                        share.codeLave4==undefined?share.codeLave4='暂无信息':share.codeLave4=share.codeLave4;
                         modalHtml.push('<li><div>存放产品:</div><div>'+share.codeLave4+'</div></li><li><div>求租面积:</div><div>'+share.sqm+'㎡</div></li>');
                     }
                     modalHtml.push('<li><div>单价:</div><div>'+price+'</div></li>');

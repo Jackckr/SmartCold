@@ -3,66 +3,64 @@
 <script type="text/javascript" src="assets/js/html2canvas.js"></script>
 <script type="text/javascript" src="assets/js/jspdf.debug.js"></script>
 
-
 <style>
-	.jedateblue .jedatebot .jedatebtn span{  width:46%!important;  }
-	.coldName li { background: none; }
-	.coldName li {
-    list-style-type: none;
-    border: 2px solid #ccc;
-    margin-top: 5px;
-    cursor: pointer;
-    padding: 3px 20px;
-   }
-	
-
-.coldName li.select:after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 20px;
-    height: 20px;
-    background: url(../assets/img/icon-right.png);
-}
-	.coldName li.select {
-    border-color: #0095ff!important;
-    padding: 3px 20px;
-    position: relative;
-}
-.box {
-    border: 1px solid #ccc;
-}
-.print_name>div{
-	border-bottom:1px solid #666;
-}
-	.print_name>div>span{
-	height:22px;
-	display:inline-block;
-	position: relative;
+	.jedateblue .jedatebot .jedatebtn span {
+		width: 46% !important;
 	}
-	.print_name>div>span:before{
+
+	.coldName li {
+		list-style-type: none;
+		margin-top: 5px;
+		cursor: pointer;
+		padding: 3px 20px;
+		background: #233038;
+		-webkit-border-radius:50px;
+		-moz-border-radius:50px;
+		-ms-border-radius:50px;
+		border-radius:50px;
+	}
+	.coldName li.select {
+		background: #1c4d5c;
+	}
+	.box {
+		border:none;
+		box-shadow: none;
+	}
+	.box .box-header.with-border{
+		border-bottom-color: #ccc;
+		font-weight: 700;
+	}
+	/*.print_name > div {
+		border-bottom: 1px solid #666;
+	}*/
+	.print_name > div > span {
+		height: 22px;
+		display: inline-block;
+		position: relative;
+	}
+	/*.print_name > div > span:before {
 		content: "";
 		width: 100%;
 		height: 6px;
 		position: absolute;
 		bottom: -12px;
 		left: 0;
-	background: #fff;
-		
-	}
-	.warnmsgs{
+		background: #fff;
+	}*/
+	.warnmsgs {
 		position: relative;
 		margin-top: -42px;
 		left: 20px;
 		float: left;
-		    font-weight: 900;
-    color: #333333;
+		font-weight: 900;
+		color: #333333;
 	}
-	.warnmsgs er{
-	color: red;
+	.warnmsgs er {
+		color: red;
 	}
-	.chart_gap>p>span{width: auto;}
+	.chart_gap > p > span {
+		/*width: auto;*/
+	}
 </style>
 <div id="rpt_asis_coment" class="page-content" style="padding: 0 10px" >
 	<div class="page-header row" style="padding: 5px 0px">
@@ -90,7 +88,7 @@
 	</div>
 	<div class="version">
 		<div class="clearfix">
-			<span class="pull-left" style="margin-top: 11px;">选择版本</span>
+			<span class="pull-left" style="margin-top: 9px;">选择版本</span>
 			<ul class="coldName version_choice clearfix pull-left">
 				<li class="select" ng-click="changeversions(0,'tempReport',$event)">温度版</li>
 				<li class="{{aclmap[20]?'':'grey'}}"       ng-click="changeversions(1,'basicReport',$event)">基本版</li>
@@ -100,7 +98,7 @@
 			</ul>
 		</div>
 		<div class="clearfix">
-			<span class="pull-left" style="margin-top: 11px;">选择冷库</span>
+			<span class="pull-left" style="margin-top: 9px;">选择冷库</span>
 			<ul class="coldName clearfix pull-left">
 				<li ng-repeat="storage in mystorages" ng-click="changestorage($index,storage.id,$event)" class="{{$index==0?'select':'' }} " >{{storage.name}}</li>
 			</ul>
@@ -108,40 +106,47 @@
  	</div>
 	<div id="print" ng-show="!isloaderr">
 	  <div id="page1" >
-	  
-		<div class="print_header">
-	        <h3>
-	            <img src="../../assets/img/logo_home.png" class="lianku_logo fl"><span class="fr">冷库360在线管理系统</span>
-	        </h3>
-	        <hr>
-	    </div>
 	    <!-- 报表标题  -->
-	    <div class="print_title">
-	    	<h2 class="tac"><strong>冷库综合运行系统{{titmode[reportType]}}分析报告</strong></h2>
-	    	<div class="print_name clearfix">
-	    		<div class="pull-left">
-	    			<span>客户名称：</span>{{compName}}
-	    		</div>
-	    		<div class="pull-right">
-	    			<span>RDC(冷库)名称：</span>{{vm.choserdc.name}}
-	    		</div>
-	    		<div class="pull-left input-group date">
-	    			<span>分析周期：</span>{{timeuRange}}
-	    		</div>
-				<div class="pull-right">
-					<span>{{cuttstorage.name}}（基准温度℃）：{{cuttstorage.datumTemp}}
+	    <div class="print_title newlayout">
+			<div class="rightLogo">
+				<p>
+					<img src="../../assets/img/lianku_black.png" alt="">
+					<span>冷库360
+						<span>在线管理系统</span>
+					</span><br></p>
+			</div>
+			<div class="clearfix">
+				<div class="col-lg-3" style="margin-top:20px;">
+					<h2 class="tac"><strong>冷库</strong></h2>
+					<h2 class="tac"><strong>综合运行系统{{titmode[reportType]}}</strong></h2>
+					<h1 class="tac"><strong>分析报告</strong></h1>
 				</div>
-				<div class="pull-left">
-					<span>{{titmode[reportType]}}危险告警次数：</span>{{cuttstorage.l1tailcount}}次
+				<div class="print_name col-lg-9">
+					<div class="pull-left">
+						<span>客户名称：</span>{{compName}}
+					</div>
+					<div class="pull-left">
+						<span>RDC(冷库)名称：</span>{{vm.choserdc.name}}
+					</div>
+					<div class="pull-left input-group date">
+						<span>分析周期：</span>{{timeuRange}}
+					</div>
+					<div class="pull-left">
+						<span>{{cuttstorage.name}}（基准温度℃）：</span>{{cuttstorage.datumTemp}}
+					</div>
+					<div class="pull-left">
+						<span>{{titmode[reportType]}}危险告警次数：</span>{{cuttstorage.l1tailcount}}次
+					</div>
+					<div class="pull-left">
+						<span>{{titmode[reportType]}}危险告警时长：</span>{{cuttstorage.l1tailtime}}min
+					</div>
+
 				</div>
-				<div class="pull-right">
-					<span>{{titmode[reportType]}}危险告警时长：</span>{{cuttstorage.l1tailtime}}min
-				</div>
-	    	</div>
+			</div>
 	    </div>
 	    <!-- 月度曲线图 -->
 	    <div class="print_part chart_gap">
-	    	<p class="tac"><span class="bgBlue">{{titmode[reportType]}}温度曲线图</span></p>
+	    	<p class="text-left">{{titmode[reportType]}}温度曲线图</p>
 	    	<div>
 	    		<div class="chartPart">
 	    			<div id="temperatureChart" class="chartHight" ng-show="isnotprint"></div>
@@ -151,7 +156,7 @@
 	    </div>
 	    <!-- 超温时间及次数统计表 -->
 	    <div class="print_part chart_gap">
-	    	<p class="tac"><span class="bgGold">超温时长及次数统计表</span></p>
+	    	<p class="text-left">超温时长及次数统计表</p>
 	    	<div>
 	    		<div class="chartPart">
 	    			<div id="tempovertime" class="chartHight" ng-show="isnotprint"></div>
@@ -164,7 +169,7 @@
 	   <div id="page2">
 	    <!-- 超温时间及次数统计表 -->
 	    <div class="print_part chart_gap">
-	    	<p class="tac"><span class="bgGold">超温报警时长及次数统计表</span></p>
+	    	<p class="text-left">超温报警时长及次数统计表</p>
 	    	<div>
 	    		<div class="chartPart">
 	    			<div id="tempwarning" class="chartHight" ng-show="isnotprint"></div>

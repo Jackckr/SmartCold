@@ -238,6 +238,8 @@
 		s.unitPrice,
 		s.telephone,
 		s.unit,
+		s.unit1,
+		s.unit2,
 		s.sqm,
 		s.detlAddress,
 		st.type codeLave2,
@@ -312,6 +314,7 @@
 			<if test="managetype !=null and  managetype != ''"> and s.codeLave1 IN  (${managetype})</if>
 			<if test="storagetempertype !=null and  storagetempertype != ''"> and s.codeLave2 in (${storagetempertype})</if>
 			<if test="goodtype !=null and goodtype!=''">and s.codeLave1 in (${goodtype})</if>
+			<if test="rdcID !=null and rdcID!=''">and rdcID=#{rdcID}</if>
 		</where>
 		GROUP BY
 		s.id

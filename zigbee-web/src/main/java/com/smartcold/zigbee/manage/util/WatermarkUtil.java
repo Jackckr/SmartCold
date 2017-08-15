@@ -123,6 +123,7 @@ public class WatermarkUtil {
 	
 	private static int[] getImgewh(int height){
     	int bl=	(int)(height*caling/iconY);
+    	if(bl==0){bl=1;}
 	    return new int[]{bl*iconX,iconY*bl};
 	}
 	

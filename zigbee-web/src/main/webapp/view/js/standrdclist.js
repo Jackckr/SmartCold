@@ -35,13 +35,13 @@ function getRdcRentList() {
                 if (rdcRent.istemperaturestandard == 1) {
                     rdcRentInfo.push('<b class="reachStand"><i class="iconfont">&#xe6e9;</i>冷链委温度达标库</b>');
                 }
-                if (window.lkuser && window.lkuser.vipType > 0) {
+              /*  if (window.lkuser && window.lkuser.vipType > 0) {*/
                     rdcRentInfo.push('<a onclick="realTimeTem(', rdcRent.id, ',\'', rdcRent.name, '\')">点击可查看实时库温</a></div><div class="rdcArea"><span>总面积', rdcRent.sqm, '㎡</span>|<span>', tempTypeStr, '</span><span>', manageTypeStr, '</span></div>',
                         '<div class="rdcPosition"><b><i class="iconfont">&#xe648;</i>', rdcRent.address, '</b></div></div><div class="rdcPrice">');
-                } else {
+               /* } else {
                     rdcRentInfo.push('</div><div class="rdcArea"><span>总面积', rdcRent.sqm, '㎡</span>|<span>', tempTypeStr, '</span><span>', manageTypeStr, '</span></div>',
                         '<div class="rdcPosition"><b><i class="iconfont">&#xe648;</i>', rdcRent.address, '</b></div></div><div class="rdcPrice">');
-                }
+                }*/
                 var collectWords = '<button class="collect" onclick="collection(this,' + rdcRent.id + ')"><i class="iconfont orange">&#xe634;</i><em>收藏</em></button>';
                 if (rdcRent.collectType == 1) {
                     collectWords = '<button class="collect" onclick="collection(this,' + rdcRent.id + ')"><i class="iconfont orange isLike">&#xe637;</i><em>已收藏</em></button>';
@@ -77,7 +77,7 @@ function realTimeTem(rdcId, rdcName) {
         ,shadeClose:true
         , maxmin: true //允许全屏最小化
         , anim: 2 //0-6的动画形式，-1不开启
-        , content: '<div style="padding:50px;">' + rdcName + '还没有加入冷库360，请致电400-853-5606联系~</div>'
+        , content: '<div style="padding:50px;">该功能尚未开放，请耐心等待~</div>'
     });
 }
 /*刷新分页*/

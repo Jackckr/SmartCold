@@ -84,7 +84,6 @@
                     <input type="hidden" name="cityid" id="cityid">
                     <input type="hidden" name="codeLave1" id="codeLave1">
                     <input type="hidden" name="publishunit" value="3">
-                    <input type="hidden" name="unit" value="元/天·平方米">
                     <input type="hidden" name="dataType" value="3">
                     <input type="hidden" name="typeCode" value="1">
                     <input type="hidden" name="detlAddress" id="detlAddress">
@@ -107,6 +106,10 @@
                         <td><input name="sqm" type="number" step="0.01" placeholder="只能输数字/㎡,没有填写0" ></td>
                     </tr>
                     <tr>
+                        <td>出租库库高：<b class="blue">*</b></td>
+                        <td><input name="codeLave4" type="number" step="0.01" placeholder="单位/m，范围3~40m" ></td>
+                    </tr>
+                    <tr>
                         <td>单价：<b class="blue">*</b></td>
                         <td><input name="unitPrice" type="number" step="0.01" placeholder="元/天（填0为面议）"></td>
                     </tr>
@@ -114,11 +117,11 @@
                         <td>单位：<b class="blue">*</b></td>
                         <td class="unitgroup">
                             <span>元</span>/
-                            <select>
+                            <select name="unit1">
                                 <option value="天">天</option>
                                 <option value="月">月</option>
                             </select>/
-                            <select>
+                            <select name="unit2">
                                 <option value="㎡">㎡</option>
                                 <option value="m³">m³</option>
                                 <option value="吨">吨</option>

@@ -182,7 +182,7 @@ function initRentRdc() {
         });
         screenParam.sqm = sqmDetail.join();
     }
-    var rentRdcArr = ['<ul class="msgHeader clearfix"><li></li><li class="msgTitle">冷库信息</li><li>面积·㎡</li><li>单价·元/天/㎡</li><li>温度类型</li><li>租期</li><li>操作</li></ul>'];
+    var rentRdcArr = ['<ul class="msgHeader clearfix"><li></li><li class="msgTitle">冷库信息</li><li>面积·㎡</li><li>单价</li><li>温度类型</li><li>租期</li><li>操作</li></ul>'];
     $.ajax({
         url: "/i/ShareRdcController/newGetSERDCList",
         async: false,
@@ -233,7 +233,12 @@ function initRentRdc() {
                         }
                     }
                 }
-                var price = rentRdc.unitPrice == 0 ? '面议' : rentRdc.unitPrice;
+                var price="";
+                if(rentRdc.unit1&&rentRdc.unit2&&rentRdc.unit1!=""&&rentRdc.unit2!=""){
+                    price = rentRdc.unitPrice == 0 ? '面议' : rentRdc.unitPrice+"元/"+rentRdc.unit1+"·"+rentRdc.unit2;
+                }else {
+                    price = rentRdc.unitPrice == 0 ? '面议' : rentRdc.unitPrice+"元/天·平方米";
+                }
                 rentRdcArr.push('<ul class="msgBody clearfix"><li><img src="' + rentRdc.logo + '" onclick="openurl(' + rentRdc.id + ')"></li><li class="msgTitle"><p class="blue" onclick="openurl(' + rentRdc.id + ')">' + rentRdc.title + '</p>' +
                     '<p><i class="iconfont">&#xe648;</i>' + rentRdc.detlAddress + '</p></li><li>' + rentRdc.sqm + '</li><li>' + price + '</li>' +
                     '<li>' + rentRdc.codeLave2 + '</li><li>' + usefulDate + '</li>' +
@@ -412,10 +417,10 @@ function flushPage(em) {
                 screenParam.pageNum = obj.curr;
                 pagination.oldPageCount = pagination.pageCount;
                 if (first != true) {
-                    if(em='goodsPage'){
+                    if(em=='goodsPage'){
                         initGoodsList();
                     }else{
-                        initGoodsList();
+                        initRentRdc();
                     }
                     window.scroll(0, 0);//跳到顶部
                 }

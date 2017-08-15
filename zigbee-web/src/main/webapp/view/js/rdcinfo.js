@@ -87,33 +87,41 @@ function getRdcInfo() {
         }*/
         if(rdc.audit==2){baseInfo.push('<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>')}else{baseInfo.push('<b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>')};
         if(rdc.istemperaturestandard==1){baseInfo.push('&nbsp;<b class="reachStand"><i class="iconfont">&#xe6e9;</i>冷链委温度达标库</b>');}
+        var address=["["];
+        $.ajax({url:"/i/city/findProvinceById",type:"get",data:{provinceId:rdc.provinceId},async:false,success:function (data) {
+            address.push(data.provinceName);
+        }});
+        $.ajax({url:"/i/city/findCityById",type:"get",data:{CityID:rdc.cityId},async:false,success:function (data) {
+            if(data&&data.cityName){
+                address.push("-"+data.cityName);
+            }
+        }});
+        address.push(']');
+        if(rdc.openLIne&&rdc.openLIne==1){//公开温度曲线
+            openLIne='<tr> <td>实时温度</td> <td class="blue"><span style="cursor: pointer;" onclick="realTimeTem('+rdc.id+',\''+rdc.name+'\')">点击查看实时温度</span></td> </tr>';
+        }else{
+            openLIne='<tr> <td>实时温度</td> <td>该冷库主尚未公开温度曲线</td> </tr>';
+        }
         if(!window.lkuser){//没有登录
             baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%</td></tr>' +
-                '<tr><td>地址</td><td>'+rdc.address+'</td> </tr>' +
-                '<tr><td>仓储信息</td><td><a style="color:#2763cc;" href="../../login.html">登录</a>方可查看更多</tr></table>');
+                '<tr><td>地址</td><td>'+address.join('')+rdc.address+'</td> </tr>' +
+                '<tr><td>仓储信息</td><td><a class="blue" href="../../login.html">登录</a>方可查看更多</tr>'+openLIne+'</table>');
         }else if(window.lkuser.id==rdc.userid){//是自己的冷库
-            if(rdc.audit==2){
-                auditButton=''
-            }
+            if(rdc.audit==2){auditButton=''}
             baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%'+auditButton+'</td></tr>' +
-                '<tr><td>地址</td><td>'+rdc.address+'</td> </tr> ' +
+                '<tr><td>地址</td><td>'+address.join('')+rdc.address+'</td> </tr> ' +
                 '<tr> <td>价格</td> <td>'+price+'</td> </tr> ' +
                 '<tr> <td>总面积/空置面积</td> <td>'+rdc.area+'㎡/'+rentSqm+'</td> </tr>' +
                 '<tr> <td>冷库净高</td> <td>'+rdc.height+' m</td> </tr>' +
                 ' <tr> <td>联系电话</td> <td class="orange"> <b>'+rdc.phoneNum+'</b></td> </tr>' +
                 ' <tr> <td>实时温度</td> <td class="blue"><span style="cursor: pointer;" onclick="realTimeTem('+rdc.id+',\''+rdc.name+'\')">点击查看实时温度</span></td> </tr> </table>');
         }else{//不是自己的冷库
-            if(rdc.openLIne&&rdc.openLIne==1){//公开温度曲线
-                openLIne='<tr> <td>实时温度</td> <td class="blue"><span style="cursor: pointer;" onclick="realTimeTem('+rdc.id+',\''+rdc.name+'\')">点击查看实时温度</span></td> </tr>';
-            }else{
-                openLIne='<tr> <td>实时温度</td> <td>该冷库主尚未公开温度曲线</td> </tr>';
-            }
             if(window.lkuser.vipType==0) {//没有实名认证
                 baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%</td></tr>' +
-                    '<tr><td>地址</td><td>'+rdc.address+'</td> </tr><tr><td>仓库信息</td><td><a href="../html/authentication.html" style="color:#2763cc;">实名认证</a><b>后可方可查看</b></td> </tr></table>');
+                    '<tr><td>地址</td><td>'+address.join('')+rdc.address+'</td> </tr><tr><td>仓库信息</td><td><a href="../html/authentication.html" class="blue">实名认证</a><b>后可方可查看</b></td> </tr>'+openLIne+'</table>');
             }else if(window.lkuser.vipType>0){//实名认证
                 baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%'+auditButton+'</td></tr>' +
-                    '<tr><td>地址</td><td>'+rdc.address+'</td> </tr> ' +
+                    '<tr><td>地址</td><td>'+address.join('')+rdc.address+'</td> </tr> ' +
                     '<tr> <td>价格</td> <td>'+price+'</td> </tr> ' +
                     '<tr> <td>总面积/空置面积</td> <td>'+rdc.area+'㎡/'+rentSqm+'</td> </tr>' +
                     '<tr> <td>冷库净高</td> <td>'+rdc.height+' m</td> </tr>' +
@@ -154,8 +162,8 @@ function getRdcInfo() {
             }else{
                 rdcCapacity='<td> <span>冷库容积：</span> </td> '
             }
-            otherInfo.push('<table><caption>仓库信息</caption><tbody>' +
-                '<tr><td><span>冷库经营类型：</span>'+manageType[rdc.manageType]+' </td> <td> <span>冷库温度类型：</span>'+tempType[rdc.temperType]+' </td> </tr> ' +
+            otherInfo.push('<table><tbody><tr><td><span>冷库经营类型：</span>'+manageType[rdc.manageType]+' </td> ' +
+                '<td> <span>冷库温度类型：</span>'+tempType[rdc.temperType]+' </td> </tr> ' +
                 '<tr><td> <span>商品存放类型：</span>'+saveType[rdc.storageType]+'</td> '+structure+' </tr> ' +
                 '<tr>'+platform + lihuoRoom +'</tr>'+
                 '<tr>'+lihuoArea+lihuoTemperCtr +'</tr>'+
@@ -165,11 +173,9 @@ function getRdcInfo() {
                 '<td>'+capacity+'</td> </tr> ' +
                 '<tr>'+remark+'</tr>' +'</tbody></table>');
         }else if(window.lkuser && window.lkuser.vipType==0&&window.lkuser&&window.lkuser.id!=rdc.userid){
-            otherInfo.push('');
-            $("#otherInfo").hide();
+            otherInfo.push('<b>您尚未实名认证，现在去<a href="../html/authentication.html" class="blue">实名认证</a></b>');
         }else{
-            otherInfo.push('');
-            $("#otherInfo").hide();
+            otherInfo.push('<a class="blue" href="../../login.html">登录</a>方可查看更多');
         }
         $("#baseInfo").empty().append(baseInfo.join(''));
         $("#divimginfog_imgPlayer").empty().append(bigImg.join(''));
@@ -197,11 +203,111 @@ function realTimeTem(rdcId,rdcName) {
         ,content: '<div style="padding:50px;">该功能尚未开放，请耐心等待~</div>'
     });
 }
-
+/*关联库发布列表*/
+var pageCount=-1, oldPageCount=-1,pageNum=1;
+function getList(typeCode,datatype,index) {
+    var oTabBox = $('#matchList').children('div').eq(index),ourl='',npoint=null;
+    if(index>0){
+        oTabBox.empty();
+        if(index==4){ourl='/i/comment/findCommentsByRDCId',npoint=200;}else{ourl='/i/ShareRdcController/newGetSERDCList'};
+        $.get(ourl,{pageNum:pageNum,pageSize:10,rdcID:rdcId,dataType:datatype,typeCode:typeCode,npoint:npoint},function (data) {
+            var list=null;
+            pageCount= data.totalPages;
+            if (pageCount == -1 || oldPageCount != pageCount) {
+                flushPage(index);
+            }
+            index==4?list=data:list = data.data;
+            var pStr=str='',ounit=['吨','Kg','吨'];
+            $.each(list,function (i,val) {
+                if(datatype==3){//出租
+                    if(!val.unit1){val.unit1='天'};
+                    if(!val.unit2){val.unit2='㎡'};
+                    if(val.unitPrice==0){unitPrice='面议'}else{unitPrice=val.unitPrice+'元/'+val.unit1+'/'+val.unit2}
+                    str='<p class="txtList omg"><a href="rdcmatchinfo.html?id='+val.id+'"><span>'+(i+1)+'</span>' +
+                        '['+val.title+']--共'+val.sqm+'㎡'+val.codeLave2+'，单价：'+unitPrice+'</a></p>';
+                }else if(datatype==1){//出售求购
+                    if(val.unitPrice==0){unitPrice='面议'}else{unitPrice=val.unitPrice+val.unit}
+                    str='<p class="txtList omg"><a href="rdcmatchinfo.html?id='+val.id+'"><span>'+(i+1)+'</span>' +
+                        '['+val.detlAddress+']' +val.title+'--共'+val.sqm+ounit[val.publishunit]+'，单价：'+unitPrice+'</a></p>';
+                }else{//评论
+                    var img=grade=imglist='';
+                    for(var j=0,imgLen=val.reviewPics.length;j<imgLen;j++){
+                        img='<li><img src="'+val.reviewPics[j].location+'"></li>';
+                        imglist=imglist+img;
+                    }
+                    if(val.grade==1){grade='<i class="iconfont filled">&#xe60c;</i><i class="iconfont">&#xe60c;</i><i class="iconfont">&#xe60c;</i><i class="iconfont">&#xe60c;</i><i class="iconfont">&#xe60c;</i>';
+                    }else if(val.grade==2){grade='<i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont">&#xe60c;</i><i class="iconfont">&#xe60c;</i><i class="iconfont">&#xe60c;</i>';
+                    }else if(val.grade==3){grade='<i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont">&#xe60c;</i><i class="iconfont">&#xe60c;</i>';
+                    }else if(val.grade==4){grade='<i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont">&#xe60c;</i>';
+                    }else{grade='<i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i>';}
+                    str='<div class="clearfix commentlist"><div class="imgleft">'+
+                        '<img src="'+val.avatar+'"><p>'+val.commerName+'</p><p>'+val.addTime+'</p><p>'+grade+'</p></div>'+
+                        '<div class="imgright"><p>'+val.content+'</p>'+
+                        '<ul class="commentImg" id="commentImg'+i+'">'+imglist+'</ul></div></div>'
+                };
+                pStr=pStr+str;
+            });
+            if(!pStr){
+                index==4?pStr='暂无评论信息~':pStr="该冷库尚无发布相关信息~"
+            }
+            oTabBox.append(pStr);
+            $.each(list,function (i,val) {
+                layer.photos({
+                    photos: '#commentImg'+i
+                    ,anim:5
+                });
+            });
+        });
+    }
+}
+/*刷新分页*/
+function flushPage(index) {
+    ui_laypage = layui.use(['laypage', 'layer'], function () {
+        laypage = layui.laypage;
+        laypage({
+            cont: 'demo2'
+            , pages: pageCount
+            , skin: '#1E9FFF'
+            , curr: pageNum,
+            jump: function (obj, first) {
+                pageNum = obj.curr;
+                oldPageCount = pageCount;
+                if (first != true) {
+                    if(index==1){
+                        getList(1,3,1)
+                    }else if(index==2){
+                        getList(1,1,2)
+                    }else if(index==3){
+                        getList(2,1,3)
+                    }else{
+                        console.warn('无需分页，无视他')
+                    }
+                }
+            }
+        });
+    });
+}
+/*发布评论*/
+function goComment() {
+    window.location.href='rdccomment.html?id='+rdcId;
+}
+$("#aboutRdcRelease ul li").click(function () {
+    var index=$(this).index();
+    pageNum=1;
+    flushPage();
+    if(index==1){
+        getList(1,3,1)
+    }else if(index==2){
+        getList(1,1,2)
+    }else if(index==3){
+        getList(2,1,3)
+    }else if(index==4){
+        getList(null,null,4)
+    }else{
+        getRdcInfo();
+    }
+});
 $(function () {
-   /* if(window.lkuser){
-        flushUser(window.lkuser.id);
-    }*/
     rdcId = getUrlParam("rdcId");
     getRdcInfo();
 });

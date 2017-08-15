@@ -113,6 +113,7 @@ function submitAdd() {
     $.each(serializeArray,function (index, val) {
         vo[val.name]=val.value;
     });
+    vo['unit']='元/'+vo.unit2+'/'+vo.unit1;
     if(checkSubmitInfo(vo)){
         vo['username']=window.lkuser.username;
         var formData = new FormData();
@@ -164,6 +165,10 @@ function checkSubmitInfo(vo) {
     if(vo.sqm<10){
         layer.alert('出租面积不能小于10㎡', {icon: 2});
         return false;
+    }
+    if(vo.codeLave4<3||vo.codeLave4>40||vo.codeLave4==''||vo.codeLave4==undefined){
+        layer.alert('库高范围3~40m,请修改', {icon: 2});
+        return false
     }
     if(!areaRex.test(vo.unitPrice.trim())){
         layer.alert('单价输入有误！(小数点后最多保留两位，如：15.28)', {icon: 2});
