@@ -103,7 +103,11 @@
                      }
 				// }
              }else{//未登录
-                 location.href='rdclist.html';
+                 if(localStorage.isStand==1){
+                     location.href='rdcstand.html';
+                 }else{
+                     location.href='rdclist.html';
+                 }
              }
          };
 		$scope.initdata=function(){
