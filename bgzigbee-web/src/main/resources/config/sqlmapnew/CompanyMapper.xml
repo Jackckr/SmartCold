@@ -8,7 +8,7 @@
     <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, address, addtime
+    id,email,telephone,principal, name, address, addtime
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -41,6 +41,15 @@
       <if test="addtime != null" >
         addtime,
       </if>
+      <if test="principal != null" >
+        principal,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -55,6 +64,15 @@
       <if test="addtime != null" >
         #{addtime,jdbcType=TIMESTAMP},
       </if>
+      <if test="principal != null" >
+        #{principal,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.smartcold.bgzigbee.manage.sc360.entity.Company" >
@@ -68,6 +86,15 @@
       </if>
       <if test="addtime != null" >
         addtime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="principal != null" >
+        principal = #{principal,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
