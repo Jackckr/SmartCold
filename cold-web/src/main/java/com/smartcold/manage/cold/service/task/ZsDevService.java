@@ -37,7 +37,7 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 数据存在重复（准备处理）
  * 
  **/
-//@Service
+@Service
 public class ZsDevService  {
 	    private static boolean isRuning=true;
 	    
@@ -77,7 +77,6 @@ public class ZsDevService  {
 	    		this.readData();
 	    	}
 		}
-	    
 	    /*
 	     * 6小时保存一次状态（延迟15秒）
 	     */
@@ -98,7 +97,6 @@ public class ZsDevService  {
 	    	}
 	    	
 	    }
-		
 		
 		private synchronized void addTempData(String data){
 			dataList.push(data);if(dataList.size()>30){dataList.clear();}

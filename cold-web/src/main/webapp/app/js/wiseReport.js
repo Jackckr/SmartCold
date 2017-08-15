@@ -254,6 +254,40 @@ coldWeb.controller('wiseReport', function( $scope, $rootScope,$stateParams,$http
 		  angular.forEach($scope.charArray,function(item){ $("#"+item.dom.id+"_img").html(item.getImage('jpeg').outerHTML); });
 		  $timeout(printpage,0); $timeout(chanpangstatus,0);//加入js队列
 	};
+	
+	$scope.exppdf=function(){
+		 html2canvas($('#print'), {
+            onrendered:function(canvas) {
+//                var pageData = canvas.toDataURL('image/jpeg', 1.0);
+//                var pdf = new jsPDF('', 'pt', 'a4');
+//                pdf.addImage(pageData, 'JPEG', 0, 0, 595.28,592.28/canvas.width * canvas.height );
+//                pdf.save($rootScope.vm.choserdc.name+"-"+$scope.titmode[$scope.reportType]+'分析报告.pdf');
+            	var contentWidth = canvas.width;
+                var contentHeight = canvas.height;
+                var pageHeight = contentWidth / 592.28 * 841.89;
+                var leftHeight = contentHeight;
+                var position = 0;
+                var imgWidth = 595.28;
+                var imgHeight = 592.28/contentWidth * contentHeight;
+                var pageData = canvas.toDataURL('image/jpeg', 1.0);
+                var pdf = new jsPDF('', 'pt', 'a4');
+                if (leftHeight < pageHeight) {
+                   pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
+                } else {
+                    while(leftHeight > 0) {
+                        pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight);
+                        leftHeight -= pageHeight;
+                        position -= 841.89;
+                        //避免添加空白页
+                        if(leftHeight > 0) {
+                          pdf.addPage();
+                        }
+                    }
+                }
+                pdf.save($rootScope.vm.choserdc.name+"-"+$scope.titmode[$scope.reportType]+'分析报告.pdf');
+            }
+        });
+	 };
 	$('.goTop').click(function(event){$('html,body').stop().animate({'scrollTop':0}, 200);});
 	$(window).scroll(function(event) {if ($(window).scrollTop() >= $(window).height()) {$('.goTop').show();} else {$('.goTop').hide();}});//一键回到顶部
    

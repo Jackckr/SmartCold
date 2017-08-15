@@ -1,21 +1,33 @@
+<style>
+     @-webkit-keyframes magentaPulse {
+            from {color: 	#FFFAFA; !imporeat}
+            50% {bcolor: #a9014b; }
+            to {color: #FF0000; }
+        }
+        .wiltrue{-webkit-animation-iteration-count: infinite;}
+        .magentaPulse.wiltrue{-webkit-animation-name:magentaPulse;-webkit-animation-duration:2s;}
+</style>
+
 <div class="previewBox groupModel">
     <!--一个模块 start--><!--温度模块================================-->
     <div class="previewModel">
         <div class="headerModel myDefault">
             <div class="previewName myColor pull-left">实时温度</div>
             <div class="previewBtn pull-right">
-                <button class="btn btn-success btn-xs" onclick="moreFn(this,1)">更多</button>
+                <button  ng-show="mystorages.length>4" class="btn btn-success btn-xs" onclick="moreFn(this,1)">更多</button>
                 <button class="btn btn-danger btn-xs" onclick="closeFn(this)">关闭</button>
             </div>
         </div>
         <div class="bodyModel clearfix">
             <div class="unitModel"ng-repeat="storage in mystorages" ng-show="$index<4">
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <div class="unitIcon"><i class="iconfont">&#xe67c;</i></div>
+                    <div class="unitIcon"><i class="iconfont  {{isovTemp[storage.id]?'magentaPulse wiltrue':'' }} "   >&#xe67c;</i></div>
+                        <canvas id="wave-can_{{storage.id}}" width="60" height="30" style="color:red;margin-top: -44px;position: absolute;margin-left: -30px;"></canvas>
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                     <h2 class="omg">{{cuttTemp[storage.id]}}°C</h2>
                     <p class="omg">{{storage.name}}</p>
+                
                 </div>
             </div>
         </div>
@@ -23,11 +35,11 @@
     <!--一个模块 end-->
 
     <!--一个模块 start--><!--温度模块================================-->
-    <div class="previewModel" ng-show="powers">
+    <div class="previewModel" ng-show="powers.length>0">
         <div class="headerModel myDefault">
             <div class="previewName myColor pull-left">实时电量</div>
             <div class="previewBtn pull-right">
-                <button class="btn btn-success btn-xs" onclick="moreFn(this,2)">更多</button>
+                <button ng-show="powers.length>4" class="btn btn-success btn-xs" onclick="moreFn(this,2)">更多</button>
                 <button class="btn btn-danger btn-xs" onclick="closeFn(this)">关闭</button>
             </div>
         </div>
@@ -50,11 +62,11 @@
     <!--一个模块 end-->
 
     <!--一个模块 start--><!--压缩机模块===============================-->
-    <div class="previewModel myDefault">
+    <div class="previewModel myDefault" ng-show="compressorGroups.length>0">
         <div class="headerModel">
             <div class="previewName myColor pull-left">压缩机</div>
             <div class="previewBtn pull-right">
-                <button class="btn btn-success btn-xs" onclick="moreFn(this,3)">更多</button>
+                <button  ng-show="compressorGroups.length>4" class="btn btn-success btn-xs" onclick="moreFn(this,3)">更多</button>
                 <button class="btn btn-danger btn-xs" onclick="closeFn(this)">关闭</button>
             </div>
         </div>
@@ -72,11 +84,11 @@
     <!--一个模块 end-->
 
     <!--一个模块 start--><!--冷风机模块================================-->
-    <div class="previewModel">
+    <div class="previewModel" ng-show="blowers.length>0">
         <div class="headerModel myDefault">
             <div class="previewName myColor pull-left">冷风机</div>
             <div class="previewBtn pull-right">
-                <button class="btn btn-success btn-xs" onclick="moreFn(this,4)">更多</button>
+                <button ng-show="blowers.length>4" class="btn btn-success btn-xs" onclick="moreFn(this,4)">更多</button>
                 <button class="btn btn-danger btn-xs" onclick="closeFn(this)">关闭</button>
             </div>
         </div>

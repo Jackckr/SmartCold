@@ -4,13 +4,14 @@
  * 
  * 
  */
-coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout, $http,$rootScope, baseTools) {
+coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout, $interval,$http,$rootScope, baseTools) {
 	   $scope.blowers = null;
        $scope.endTime= new Date(),  
+       $scope.priveseting={isOverTemp:true};
        $scope.statusmode=[["stop","run"],['danger','runnings','warnings']];
        $scope.startTime = new Date($scope.endTime.getTime() - 1800000),
-       $scope.ansisTime = new Date($scope.endTime.getTime() - 86400000),
-       $scope.cuttTemp={}, $scope.cuttrepwc={}, $scope.cuttrestime={};
+       $scope.ansisTime = new Date($scope.endTime.getTime() - 432000000),
+       $scope.cuttTemp={},$scope.isovTemp={}, $scope.cuttrepwc={},$scope.cuttrestime={};
        $scope.isNumber=function(obj) {  return typeof obj === 'number' && isFinite(obj) ;}  ;
        $scope.pwcoption = {
       	        tooltip:{ backgroundColor:'rgba(0,0,0,0.3)'},
@@ -44,10 +45,16 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
     		   });
     		   if(temp!=0){temp=temp/oids.length;}
     		   if($scope.isNumber($scope.cuttTemp[oid])&&temp==0){ temp=$scope.cuttTemp[oid]; }
-    		   $scope.cuttTemp[oid]=temp==0?"--":temp/oids.length;
+    		   $scope.cuttTemp[oid]=temp==0?"--": parseFloat((temp/oids.length).toFixed(2));
     		   $scope.cuttrestime[0]=new Date();
     	   });
+    	   if($scope.priveseting.isOverTemp){//加载告警
+    		   $http.get('http://139.224.16.238/i/util/getColdAlarmStatus', { params: {oid: oid}}).success(function (result) {
+        		   $scope.isovTemp[oid]=result.isAlarm||result.isBlack;
+        	   });
+    	   }
        };  
+       
        //=================================================================2.电量===================================================================================
        //2.1获得各个电表总配置
        $scope.initPWCset=function(startTime,endTime,isinit){
@@ -58,9 +65,9 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
        //2.2获得各个电表总电量
        $scope.getPWC=function(oid,startTime,endTime){
     	   $http.get('/i/baseInfo/getKeyValuesByTime', { params: {type:10, oids:oid, 'key':'PWC', "startTime": baseTools.formatTime(startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (data) {
-    		   var pwc=data[oid].length>0?data[obj][0]['value']:0;
-    		   if($scope.isNumber($scope.cuttrepwc[oid])&&temp==0){ pwc=$scope.cuttrepwc[oid]; }
-    			$scope.cuttrepwc[oid]=pwc==0?"--":pwc/oids.length;
+    		   var pwc=data[oid].length>0?data[oid][0]['value']:0;
+    		   if($scope.isNumber($scope.cuttrepwc[oid])&&pwc==0){ pwc=$scope.cuttrepwc[oid]; }
+    			$scope.cuttrepwc[oid]=pwc==0?"--":pwc;
     		    $scope.cuttrestime[1]=new Date();
     	   });
     	   
@@ -96,7 +103,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
        $scope.initCompressorStatus= function(startTime,endTime){//
     	   angular.forEach($rootScope.compressorGroups,function(item){	
     		   angular.forEach(item.compressors,function(obj){	
-    			   $http.get('/i/baseInfo/getKeyValuesByTime', { params: {type:5, oids:obj.id, 'key':'isRunning', "startTime": baseTools.formatTime(startTime ), "endTime": baseTools.formatTime(endTime)}}).success(function (data) {
+    			   $http.get('/i/baseInfo/getKeyValuesByTime', { params: {type:5, oids:obj.id, 'key':'run', "startTime": baseTools.formatTime(startTime ), "endTime": baseTools.formatTime(endTime)}}).success(function (data) {
     				   obj.status=data[obj.id].length>0?$scope.statusmode[0][data[obj.id][0]['value']]:"stop";
     				   $scope.cuttrestime[2]=new Date();
     	    	   });
@@ -151,54 +158,71 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
 	    };
 	    
 	    //============================================================================监听冷库变化====================
-		//冷库监听 
-	    if($rootScope.mystorages==undefined){
-			  $scope.changeStorages=function(){
-				   if($rootScope.mystorages!=undefined){
-					   initdatawatch();//销毁监听
-					   $scope.initBlowers(); 
-					   $scope.initTempset($scope.startTime , $scope.endTime);
-				   }
-			    };
-			  initdatawatch= $scope.$watch('mystorages', $scope.changeStorages,true);//监听冷库变化
-		}else{
-			 $scope.initBlowers();
-			$scope.initTempset( $scope.startTime , $scope.endTime);
-		}
-		 //电量监听
-		 if($rootScope.powers==undefined){
-			  $scope.changepowers=function(){
-				   if($rootScope.powers!=undefined){
-					   initPWCwatch();
-					   $scope.initPWCchar();
-					   $scope.initPWCset( $scope.startTime , $scope.endTime);
-				   }
-			    };
-			  initPWCwatch= $scope.$watch('powers', $scope.changepowers,true);//监听冷库变化
-		}else{
-			 $scope.initPWCchar();
-			$scope.initPWCset( $scope.startTime , $scope.endTime);
-		}
+	    $scope.init_Temp=function(){
+	    	//冷库监听 
+		    if($rootScope.mystorages==undefined){
+				  $scope.changeStorages=function(){
+					   if($rootScope.mystorages!=undefined){
+						   initdatawatch();//销毁监听
+						   $scope.initBlowers(); 
+						   $scope.initTempset($scope.startTime , $scope.endTime);
+					   }
+				    };
+				  initdatawatch= $scope.$watch('mystorages', $scope.changeStorages,true);//监听冷库变化
+			}else{
+				 $scope.initBlowers();
+				$scope.initTempset( $scope.startTime , $scope.endTime);
+			}
+	    };
+	    $scope.init_pwc=function(){
+			 //电量监听
+			 if($rootScope.powers==undefined){
+				  $scope.changepowers=function(){
+					   if($rootScope.powers!=undefined){
+						   initPWCwatch();
+						   $scope.initPWCset( $scope.startTime , $scope.endTime);
+					   }
+				    };
+				  initPWCwatch= $scope.$watch('powers', $scope.changepowers,true);//监听冷库变化
+			}else{
+				$scope.initPWCset( $scope.startTime , $scope.endTime);
+			}
+	    };
 		 //机组监听
 		 
 		$scope.initcompressorGroups=function(){
 			$scope.initCompressorStatus( $scope.startTime , $scope.endTime);
 		};
-		 if($rootScope.compressorGroups==undefined){
-			 $scope.changecompressorGroups=function(){
-				 if($rootScope.compressorGroups!=undefined&&$rootScope.compressorGroups[0].compressors){
-					 initCGwatch();
-					 $timeout(	$scope.initcompressorGroups ,500);
+		 $scope.init_compressorGroups=function(){
+				 if($rootScope.compressorGroups==undefined){
+					 $scope.changecompressorGroups=function(){
+						 if($rootScope.compressorGroups!=undefined&&$rootScope.compressorGroups[0].compressors){
+							 initCGwatch();
+							 $timeout(	$scope.initcompressorGroups ,500);
+						 }
+					 };
+					 initCGwatch= $scope.$watch('compressorGroups', $scope.changecompressorGroups,true);//监听冷库变化
+				 }else{
+					 $scope.initCompressorStatus( $scope.startTime , $scope.endTime);
 				 }
-			 };
-			 initCGwatch= $scope.$watch('compressorGroups', $scope.changecompressorGroups,true);//监听冷库变化
-		 }else{
-			 $scope.initCompressorStatus( $scope.startTime , $scope.endTime);
-		 }
+		 };
+		 $scope.changeRdc=function(){
+			 $timeout(	 $scope.refData ,1500);
+		 };
+		 
+	    $scope.refData=function(){
+	    	 $scope.init_Temp();
+	    	 $scope.init_pwc();
+	    	 $scope.initPWCchar();
+	    	 $scope.init_compressorGroups();
+	    };
+	    
+	   
+	    $scope.$watch('rdcId', $scope.changeRdc,true);//监听冷库变化
 		 
 		//定时刷新任务30s 
 	    clearInterval($rootScope.timeTicket);
-	    $rootScope.timeTicket = setInterval(function () { $scope.refdata(); }, 30000);
+	    $rootScope.timeTicket = setInterval(function () { $scope.refData; }, 30000);
 	    $scope.$on('$destroy',function(){ clearInterval($rootScope.timeTicket);  });
 
 });

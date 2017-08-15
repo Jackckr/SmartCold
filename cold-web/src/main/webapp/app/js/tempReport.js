@@ -5,7 +5,7 @@
 coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http ,$timeout,$state,baseTools) {
 	$scope.colors= ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'];  Highcharts.setOptions({  global: {useUTC: false } ,colors:$scope.colors });
 	$scope.reportType=0;  $scope.isnotprint=false; $scope.charArray=[];
-	$scope.titmode=["日","七天","月度"],$scope.timemode=[0,7,30] , $scope.fontcol=['red' ,'#ED561B' ,'#058DC7' ];
+	$scope.titmode=["日","七天","月度"],$scope.timemode=[0,7,30],$scope.minRange_mode=[[3600000,86400000,86400000],['%H:%M:%S','%Y-%m-%d','%Y-%m-%d']] , $scope.fontcol=['red' ,'#ED561B' ,'#058DC7' ];
 	$scope.sumDatavalue=[[0,0],[0,0]];
 	$scope.rdcId = $stateParams.rdcId;$scope.isnotprint=true;$scope.index=0;
 	$("#date00").jeDate({  isinitVal:true, initAddVal:[0], festival: true, format: 'YYYY-MM-DD'});
@@ -22,9 +22,10 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 		    	$scope.timeuRange=newtime;
 		    	$scope.datemod = [[ $scope.startTime, newDate + ' 02:59:59' ],[ newDate + ' 03:00:00',newDate + ' 05:59:59' ],[ newDate + ' 06:00:00',newDate + ' 09:59:59' ],[ newDate + ' 10:00:00',newDate + ' 12:59:59' ],[ newDate + ' 13:00:00',newDate + ' 15:59:59' ],[ newDate + ' 16:00:00',newDate + ' 18:59:59' ],[ newDate + ' 19:00:00',newDate + ' 20:59:59' ],[ newDate + ' 21:00:00',$scope.endTime ] ];
 			}else if($scope.reportType==1){
-				var newDate=$("#date01").val(),date=newDate.substr(0,8);
-		    	 firstDate = new Date(newDate+' 00:00:00'); endDate =  new Date(newDate+' 23:59:59'),selday=firstDate.getDay();  
+				var newDate=$("#date01").val();
+		    	 firstDate = new Date(newDate+' 00:00:00'); endDate =  new Date(newDate+' 23:59:59');  
 		    	endDate.setDate(firstDate.getDate()+7);
+		    	selday=firstDate.getDate(),date=newDate.substr(0,8);
 		    	$scope.endTime= baseTools.formatTime(endDate); 
 		    	$scope.startTime= baseTools.formatTime(firstDate); 
 		    	var newtime=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
@@ -47,10 +48,10 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 		    	if(newtime==$scope.timeuRange){$("#loding").hide();return;} 
 		    	$scope.timeuRange=newtime;
 							    $scope.datemod = [
-									[ $scope.startTime, data + '-03 23:59:59' ],[ data + '-04 00:00:00',data + '-06 23:59:59' ],
-									[ data + '-07 00:00:00',data + '-10 23:59:59' ],[ data + '-11 00:00:00',data + '-14 23:59:59' ],
-									[ data + '-15 00:00:00',data + '-18 23:59:59' ],[ data + '-19 00:00:00', data + '-22 23:59:59' ] 
-									[ data + '-23 00:00:00',data + '-26 23:59:59' ],[ data + '-28 00:00:00',  $scope.endTime  ] 
+									[ $scope.startTime, data + '-03 23:59:59' ],[ data + '-04 00:00:00',data + '-07 23:59:59' ],
+									[ data + '-08 00:00:00',data + '-11 23:59:59' ],[ data + '-12 00:00:00',data + '-15 23:59:59' ],
+									[ data + '-16 00:00:00',data + '-19 23:59:59' ],[ data + '-20 00:00:00', data + '-24 23:59:59' ] ,
+									[ data + '-25 00:00:00',data + '-27 23:59:59' ],[ data + '-28 00:00:00',  $scope.endTime  ] 
 								];
 			}
 	};
@@ -83,12 +84,12 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	 */
 	 $scope.loadTemp = function () {
 	    	if($scope.oids.length==0){ $("#loding").hide();return;};
-//	    	if($scope.reportType!=0){
-	    		var longmotdata=[];
+	    		var longmotdata=[],count=[];
 	    		  angular.forEach($scope.datemod,function(item,i){
 	    			  $http.get('/i/temp/getTempByTime', { params: {index:i,oid:$scope.cuttstorage.id, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime":item[0], "endTime":item[1]}}).success(function (result) {
 	    					 longmotdata[result.index]=result;
-	    					 if( longmotdata.length==8){
+	    					 count.push(result.index);
+	    					 if( count.length==8){
 		    					  var fristdata=longmotdata[0]; 
 		    					  longmotdata.shift(); //  	
 		    					  angular.forEach(longmotdata,function(obj,i){
@@ -102,11 +103,6 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	    					 }
 			          });
 	    		  });
-//	    	}else{
-//		        $http.get('/i/temp/getTempByTime', { params: {"oid":$scope.cuttstorage.id, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime":$scope.startTime, "endTime":$scope.endTime}}).success(function (result) {
-//		        	$scope.initTempAxis(result);
-//		          });
-//	    	}
 	 };
 	/**
 	 *1.3 数据封装
@@ -114,44 +110,80 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	$scope.initTempAxis=function(data){
 	        var datumTemp =  parseFloat(data.startTemperature) + 0.5 * parseFloat(data.tempdiff), datumTemp1 =  datumTemp+2, datumTemp2 = datumTemp-2;//基准温度
 	        $scope.cuttstorage.datumTemp=datumTemp;
-	        var yData = [], tempMap = data.tempMap;
+	        var yData = [], tempMap = data.tempMap,temp=null,minval=null,maxval=null,sumvl=null, anysis=[];
 	    	var i= 0,tempList=[],newdata = [],vo=cuttime=lasttime=null;
 	        for(var key in tempMap) { 
-	         	 vo=cuttime=null, tempList=tempMap[key], newdata = [];
+	         	 vo=cuttime=null, tempList=tempMap[key],newdata = [];
 	             if( tempList.length>0){
-	            	 lasttime=new Date(tempList[0].addtime).getTime();;
+	            	 sumvl=0;
+	            	 minval= tempList[0].value, maxval= tempList[0].value;
+	            	 lasttime=new Date(tempList[0].addtime).getTime();
 	                 for ( i = 0; i < tempList.length; i++) {
-						 vo=tempList[i];
+						 vo=tempList[i], temp= vo.value;
+						 sumvl+=temp;
+						 if(temp<minval){minval=temp; }
+						 if(temp>maxval){maxval=temp; }
 						 cuttime= new Date(vo.addtime).getTime();
 						 if( cuttime-lasttime>1800000){
 							 newdata.push({x:cuttime+3000,y:null});
 			              }  
-						 newdata.push({x:cuttime,y:vo.value});
+						 newdata.push({x:cuttime,y:temp});
 						 lasttime=cuttime;
 					}
+	                 anysis.push({'key':key,'minval':minval,'maxTemp':maxval,'avgTemp':sumvl/ tempList.length}) ;
 	             }
 	             yData.push({"name": key, "data": newdata,turboThreshold:0});
 	        } 
-	        yData.push({ name: '基准温度', color: 'red',dashStyle: 'solid', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:datumTemp},{ x:endDate.getTime(),y:datumTemp}]});//处理基准温度
-	        yData.push({ name: '报警基线', color: '#f39c12',dashStyle: 'solid', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:datumTemp1},{ x:endDate.getTime(),y:datumTemp1}],dashStyle:'dash'});//处理基准温度
-	        yData.push({ name: ' ', color: '#f39c12',dashStyle: 'solid', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:datumTemp2},{ x:endDate.getTime(),y:datumTemp2}],dashStyle:'dash'});//处理基准温度
+	        if(anysis.length>0){
+	        	minval=anysis[0].minval,maxval=anysis[0].maxTemp,sumavg=0;
+	        	for(var i in anysis){
+	        		if(anysis[i].minval<minval){minval=anysis[i].minval;};
+	        		if(anysis[i].maxTemp>maxval){maxval=anysis[i].maxTemp;};
+	        		sumavg+=anysis[i].avgTemp;
+		        }
+	        	sumavg=sumavg/anysis.length;
+	        	console.log("最低温度${minval}"+minval);
+	        	console.log("最高温度${maxval}"+maxval);
+	        	console.log("平均温度${sumavg}"+sumavg);
+		        
+	        	yData.push({ name: '平均温度', color: '#32CD32', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:sumavg},{ x:endDate.getTime(),y:sumavg}],dashStyle:'dash'});//处理基准温度
+	        }
+	        
+	        yData.push({ name: '基准温度', color: 'red', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:datumTemp},{ x:endDate.getTime(),y:datumTemp}]});//处理基准温度
+	        yData.push({ name: '报警基线', color: '#f39c12',marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:datumTemp1},{ x:endDate.getTime(),y:datumTemp1}],dashStyle:'dash'});//处理基准温度
+	        yData.push({ name: ' ', color: '#f39c12', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:datumTemp2},{ x:endDate.getTime(),y:datumTemp2}],dashStyle:'dash'});//处理基准温度
+//	        yData.push({    marker: {
+//                enabled: false
+//            }});
 	        $scope.initHighchart(yData);
 	};
 	/**
 	 * 1.4绘制图表
 	 */
 	$scope.initHighchart=function(yData ){
-		$scope.charArray[0]=  $('#temperatureChart').highcharts({
-			 chart: {  zoomType: 'x'},
+		var minRange= $scope.minRange_mode[0][$scope.reportType],fm=$scope.minRange_mode[1][$scope.reportType];
+		  var chart = new Highcharts.Chart({ 
+			 chart: { renderTo: 'temperatureChart', zoomType: 'x'},
             title: { text: ''  },
             series:yData,
-            yAxis: {  title: {  text: '温度'  }},
-            xAxis: { type: 'datetime',  	minRange:  86400000,labels: {  formatter: function() {   return  Highcharts.dateFormat('%Y-%m-%d', this.value);  }  }  },//minRange:  86400000--间隔为每天显示, tickPixelInterval: 400 , 
+            yAxis: {  title: {  text: '温度'  }, },
+            xAxis: { type: 'datetime', 	minRange:minRange ,labels: {  formatter: function() {   return  Highcharts.dateFormat(fm, this.value);  }  }  },//minRange:  86400000--间隔为每天显示, tickPixelInterval: 400 , 
             xDateFormat: '%Y-%m-%d',
             tooltip: { formatter: function () {  return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' + Highcharts.numberFormat(this.y, 2)+" ℃"; } },
     	    legend: {enabled: false },
     	    credits: { enabled: false},
         });
+		
+		
+//		myChart = Highcharts.Chart(.....);
+
+		miny = chart.yAxis[0].min;
+		maxy = chart.yAxis[0].max;
+//		miny = xxxx.yAxis[0].min;
+//		maxy = xxxx.yAxis[0].max;
+		$scope.charArray[0]=chart;
+//		console.log(miny);
+//		console.log(maxy);
 		$("#loding").hide(); 
 	};
 	//2.超温时间和次数图表====================================================================================================================================================================================
@@ -284,15 +316,30 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	
 	 $scope.exppdf=function(){
 		 html2canvas($('#print'), {
-             onrendered:function(canvas) {
-                 var pageData = canvas.toDataURL('image/jpeg', 1.0);
-                 var pdf = new jsPDF('', 'pt', 'a4');
-                 pdf.addImage(pageData, 'JPEG', 0, 0, 595.28, 592.28/canvas.width * canvas.height );
-                 pdf.save($rootScope.vm.choserdc.name+"-"+$scope.cuttstorage.name+$scope.titmode[$scope.reportType]+'分析报告.pdf');
-             }
-         });
+            onrendered:function(canvas) {
+            	var contentWidth = canvas.width,contentHeight = canvas.height;
+                var pageHeight = contentWidth / 592.28 * 841.89, leftHeight = contentHeight;
+                var position = 0, imgWidth = 595.28;
+                var imgHeight = 592.28/contentWidth * contentHeight;
+                var pageData = canvas.toDataURL('image/jpeg', 1.0);
+                var pdf = new jsPDF('', 'pt', 'a4');
+                if (leftHeight < pageHeight) {
+                   pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
+                } else {
+                    while(leftHeight > 0) {
+                        pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight);
+                        leftHeight -= pageHeight;
+                        position -= 841.89;
+                        //避免添加空白页
+                        if(leftHeight > 0) {
+                          pdf.addPage();
+                        }
+                    }
+                }
+                pdf.save($rootScope.vm.choserdc.name+"-"+$scope.cuttstorage.name+$scope.titmode[$scope.reportType]+'分析报告.pdf');
+            }
+        });
 	 };
-   
 	 
 	
 	 /**

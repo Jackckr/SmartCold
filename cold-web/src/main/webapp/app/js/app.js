@@ -120,10 +120,8 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 		             $http.get('/i/AlarmController/getAlarmMsg',{params:{  userId: $rootScope.user.id, type: $rootScope.user.type, rdcId:$rootScope.rdcId,isgetMsg:false} }).success( function(data,status,headers,config){ //  初始化月台门
 		            	 $rootScope.alarmMsgCount = data;
 		             });
+		             $state.go('preview');
         	};
-        	
-        	
-        	
         	$rootScope.changeRdc = function(value){
         		if(value){
         			if(value.originalObject == $rootScope.vm.choserdc){return;}
@@ -150,7 +148,6 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
             	}
             	
             }
-
             $rootScope.toMyCompressor = function (compressorID) {  $state.go('compressorPressure', {'compressorID': compressorID}); };
             $rootScope.toMyBlowers = function () { $state.go('compressorBlower', {'rdcId': $rootScope.rdcId}); };
             $rootScope.openColdDiv = function (){ $state.go('coldStorageDiv',{'storageID': $rootScope.rdcId}); };
@@ -162,8 +159,6 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
             $rootScope.tomaintenancealarm = function () {$state.go('maintenancealarm', {'st': 1});};
             $rootScope.tomaintenancehist = function () {$state.go('maintenancealarm', {'st':2});};
             $rootScope.toalarmTemp = function () {$state.go('alarmTemp');};
-//            $rootScope.toMap = function () { $state.go('coldStorageMap', {}); };
-//            $rootScope.toReport = function () { var time = 'daily';var item = 'data';$state.go('report', {'time':time,'item':item});};
         }
     };
 }]);
