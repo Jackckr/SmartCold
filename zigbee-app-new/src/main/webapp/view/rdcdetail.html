@@ -2,7 +2,7 @@
 <html ng-app="app" ng-controller="colddetail" on-finish-render-filters>
 <head>
     <meta charset="UTF-8">
-    <title ng-bind="vo.name+'·冷库详情'"></title>
+    <title>冷库详情</title>
     <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta name="viewport"
@@ -162,7 +162,7 @@
 <!--仓位列表展示-->
 <section class="more" ng-if="rdctotal" style="margin-top: 0;padding-bottom: .3rem">
     <ul class="listDad clearfix">
-        <li class="fl">仓位&nbsp;(<span id="num">{{rdctotal}}</span>)</li>
+        <li class="fl">冷库出租&nbsp;(<span id="num">{{rdctotal}}</span>)</li>
         <li class="fr"><a href="rentstorage.html?rdcid={{rdcid}}"><i class="iconfont">&#xe697;</i></a></li>
     </ul>
     <div class="coldlist">
@@ -190,7 +190,7 @@
 <!--出售列表展示-->
 <section class="more" ng-if="satotal" style="margin-top: 0;padding-bottom: .3rem">
     <ul class="listDad clearfix">
-        <li class="fl">货品出售&nbsp;(<span id="num">{{satotal}}</span>)</li>
+        <li class="fl">商品出售&nbsp;(<span id="num">{{satotal}}</span>)</li>
         <li class="fr"><a href="salegoodslist.html?rdcid={{rdcid}}"><i class="iconfont">&#xe697;</i></a></li>
     </ul>
     <div class="coldlist">
@@ -219,7 +219,7 @@
 <!--求购列表展示-->
 <section class="more" ng-if="aptotal" style="margin-top: 0;padding-bottom: .3rem">
     <ul class="listDad clearfix">
-        <li class="fl">货品求购&nbsp;(<span id="num">{{aptotal}}</span>)</li>
+        <li class="fl">商品求购&nbsp;(<span id="num">{{aptotal}}</span>)</li>
         <li class="fr"><a href="buygoodslist.html?rdcid={{rdcid}}"><i class="iconfont">&#xe697;</i></a></li>
     </ul>
     <div class="coldlist">
@@ -296,7 +296,6 @@
             <p class='ellipsis'>{{(eva.commerName.trim()==undefined ||
                 eva.commerName.trim()=="")?eva.nickname:eva.commerName}}</p>
             <div class="equal clearfix">
-                <span class="fl">打分</span>
                 <ul class='star fl'>
                     <li class="{{eva.grade>=1?'filled':''}}">★</li>
                     <li class="{{eva.grade>=2?'filled':''}}">★</li>
