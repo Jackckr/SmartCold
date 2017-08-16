@@ -12,8 +12,11 @@ function init_table() {
         {field: 'ck', checkbox: true},
         {field: 'id', title: 'ID', sortable: true},
         {field: 'name', title: '企业名称', width: 80, align: 'center', sortable: true},
+        {field: 'principal', title: '企业负责人', width: 30, align: 'center', sortable: true},
+        {field: 'telephone', title: '企业电话', width: 50, align: 'center', sortable: true},
+        {field: 'email', title: '企业邮箱', width:50, align: 'center', sortable: true},
         {field: 'address', title: '企业地址', width: 80, align: 'center', sortable: true},
-        {field: 'addtime', title: '添加时间', width: 40, align: 'center', sortable: true, formatter: tool.col_format},
+        {field: 'addtime', title: '添加时间', width: 80, align: 'center', sortable: true, formatter: tool.col_format},
         {field: 'hand', title: '操作', width: 100, align: 'center', formatter: cellStyler}
     ]];
     initTable("集团管理","icon-cold", "POST", "../../i/company/newFindCompanyList", queryParams,"#div_filteri",null, col,true, onDblClickRow);
@@ -104,16 +107,18 @@ function updateCompanySubmit() {
     $.each(serializeArray,function (index,item) {
        vo[item.name]=item.value;
     });
-    $.ajax({
-        url:"/i/company/updateCompanyById",
-        data:vo,
-        type:"post",
-        success:function (data) {
-            alert_infomsg(data.message);
-            $('#addCompany').dialog('close');
-            reloaddata();
-        }
-    });
+    if(validate(vo)){
+        $.ajax({
+            url:"/i/company/updateCompanyById",
+            data:vo,
+            type:"post",
+            success:function (data) {
+                alert_infomsg(data.message);
+                $('#addCompany').dialog('close');
+                reloaddata();
+            }
+        });
+    }
 }
 
 /*验证*/
@@ -124,6 +129,29 @@ function validate(vo) {
     }
     if(vo.address.trim()==""){
         alert_errmsg("企业地址不能为空！");
+        return false;
+    }
+    if(vo.email.trim()==""){
+        alert_errmsg("企业邮箱不能为空！");
+        return false;
+    }
+    if(vo.principal.trim()==""){
+        alert_errmsg("企业负责人不能为空！");
+        return false;
+    }
+    if(vo.telephone.trim()==""){
+        alert_errmsg("企业电话不能为空！");
+        return false;
+    }
+    var phoneNumRex =  /^1[34578]\d{9}$/;
+    var cellPhoneRex=/^0{1}\d{2,3}-{1}\d{7,8}$/;
+    var emailRex=/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/;
+    if (!phoneNumRex.test(vo.telephone)&&!cellPhoneRex.test(vo.telephone)) {
+        alert_errmsg("联系电话输入有误！(座机如：021-67189203)");
+        return false;
+    }
+    if (!emailRex.test(vo.email)) {
+        alert_errmsg("邮箱格式不正确！");
         return false;
     }
     return true;
