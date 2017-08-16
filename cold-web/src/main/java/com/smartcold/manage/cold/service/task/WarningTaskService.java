@@ -135,7 +135,7 @@ public class WarningTaskService  {
 			key=colditem.getId();//冷库id
 			if(Blacklist.contains(key)){continue;}//||(extBlacklist.containsKey(key)&&extBlacklist.get(key)>5)
 			if(StringUtil.isNull(colditem.getTids())){ Blacklist.add(key);  continue;}//过滤无效数据
-		    baseTemp=	colditem.getTempdiff()/2+colditem.getStartTemperature()+2;
+		    baseTemp=colditem.getTempdiff()+colditem.getStartTemperature();
 		    colditem.setBaseTemp(baseTemp);//计算基线温度
 		    String deviceid = colditem.getDeviceids();
 		    if(StringUtil.isnotNull(deviceid)&&deviceid.indexOf("'")==-1){

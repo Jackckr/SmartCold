@@ -34,6 +34,8 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
         $http.get('/i/temp/getTempByTime', { params: {"oid": $stateParams.storageID, oids:$scope.oids,names:$scope.names, 'key':'Temp', "startTime": baseTools.formatTime(startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (result) {
             $scope.isErr=false;$scope.name = result.name;
             $scope.startTime=endTime;
+            $scope.tempdiff=result.tempdiff;
+            $scope.startTemperature=result.startTemperature;
         	var yData = [],jxData=[], tempMap = result.tempMap,systime=result.systime,lasttime=0;
         	 $scope.datumTemp =  parseFloat(result.startTemperature) + 0.5 * parseFloat(result.tempdiff);//基准温度
         	var i= 0,tempList=newdata = [],vo=cuttime=null; 
@@ -62,6 +64,8 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
                 yData.push({"name": key, "data": newdata,turboThreshold:0 });
             } 
             yData.push({ name: '基准温度', color: 'red',dashStyle: 'solid', marker: { symbol: 'circle' },data: jxData});//处理基准温度
+            yData.push({ name: '启动温度', color: '#00BFFF',dashStyle: 'dash', marker: { symbol: 'circle' },data: [ {x:startTime.getTime(),y:(  $scope.tempdiff+ $scope.startTemperature)},{x:endTime.getTime(),y:$scope.tempdiff+ $scope.startTemperature} ]});//处理基准温度
+            yData.push({ name: '停机温度', color: '#00BFFF',dashStyle: 'dash', marker: { symbol: 'circle' },data: [{x:startTime.getTime(),y:$scope.startTemperature},{x:endTime.getTime(),y:$scope.startTemperature} ]});//处理基准温度
             $scope.initHighchart( $scope.datumTemp,yData);
             if( $scope.isErr){ $("#mgs_div1").removeClass("hidden");}else{ $("#mgs_div1").addClass("hidden");}
           });
@@ -91,9 +95,11 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
              }
              index++;
          }
-       	var bastempLine=series[series.length-1];
-       	bastempLine.addPoint([endTime.getTime(),  $scope.datumTemp], true, false);
-       	
+       	var bastempLine=series[series.length-3];bastempLine.addPoint([endTime.getTime(),  $scope.datumTemp], false, false);
+       	 bastempLine=series[series.length-2];bastempLine.addPoint([endTime.getTime(),   $scope.tempdiff+ $scope.startTemperature], false, false);
+       	 bastempLine=series[series.length-1];bastempLine.addPoint([endTime.getTime(),  $scope.startTemperature], true, false);
+//        yData.push({ name: '启动温度', color: '#00BFFF',dashStyle: 'dash', marker: { symbol: 'circle' },data: [ {x:startTime.getTime(),y:(  $scope.tempdiff+ $scope.startTemperature)},{x:endTime.getTime(),y:$scope.tempdiff+ $scope.startTemperature} ]});//处理基准温度
+//        yData.push({ name: '停机温度', color: '#00BFFF',dashStyle: 'dash', marker: { symbol: 'circle' },data: [{x:startTime.getTime(),y:$scope.startTemperature},{x:endTime.getTime(),y:$scope.startTemperature} ]});//处理基准温度
     	});
     };
     $scope.initHighchart=function(datumTemp,yData ){
@@ -118,10 +124,7 @@ coldWeb.controller('coldStorageTemper', function ($scope, $location, $stateParam
     	        }
     	    },
     	    xAxis: { type: 'datetime',  tickPixelInterval: 150  },
-    	    yAxis: {
-    	        title: { text: '温度(℃)' },
-    	        plotLines: [{ value: 0,  width: 1, color: '#808080' }]
-    	    },
+    	    yAxis: { title: { text: '温度(℃)' },plotLines: [{ value: 0,  width: 1, color: '#808080' }]},
     	    yAxis: {title: {text: '温度(℃)' }  },
     	    tooltip: { formatter: function () {  return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' + Highcharts.numberFormat(this.y, 2)+" ℃"; } },
     	    legend: {enabled: false },
