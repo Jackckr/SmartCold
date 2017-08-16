@@ -294,7 +294,7 @@ function goComment() {
 $("#aboutRdcRelease ul li").click(function () {
     var index=$(this).index();
     pageNum=1;
-    flushPage();
+    flushPage(index);
     if(index==1){
         getList(1,3,1)
     }else if(index==2){

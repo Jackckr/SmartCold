@@ -243,7 +243,7 @@ public class AdminController extends BaseController {
 	    List<ACLAdminNode> mlList2=new ArrayList<ACLAdminNode>();
 		mlList2.add(new ACLAdminNode("2_0","main_company",    "集团管理", "company_manage.html" ));
 		mlList2.add(new ACLAdminNode("2_1","icon-role",    "权限配置", "" ));
-		mlList2.add(new ACLAdminNode("2_2","icon-role",    "360配置",  "" ));
+		mlList2.add(new ACLAdminNode("2_2","icon-role",    "360配置",  "spiderConfig.html" ));
 		mlList2.add(new ACLAdminNode("2_3","icon-role",     "报表管理", "" ));
 		mlList2.add(new ACLAdminNode("2_4","main_relating" , "关联管理", "relating_manage.html" ));
 		pml.setChild(mlList2);  ml.add(pml);
