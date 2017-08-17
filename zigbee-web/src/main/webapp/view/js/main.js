@@ -20,7 +20,10 @@ function getRdcShare() {
                     price='面议'
                 };
                 rightRdcLease.push('<a href="view/html/rdcmatchinfo.html?id='+data[i].id+'"><div class="img"><img src="'+data[i].logo+'" alt=""><div class="bg omg">'+data[i].title+'</div></div><div class="price clearfix"><span class="fl">'+price+'</span>');
-                if(data[i].audit==2){rightRdcLease.push('<b class="approve fr"><i class="iconfont">&#xe6ac;</i>已认证</b>');}else{rightRdcLease.push('<b class="reachStand fr"><i class="iconfont">&#xe63b;</i>未认证</b>');}
+                if(data[i].audit==2){
+                    if(data[i].rdcID==1878){rightRdcLease.push('<b class="approve fr"><i class="iconfont">&#xe65d;</i>已通过</b>')}
+                    else{rightRdcLease.push('<b class="approve fr"><i class="iconfont">&#xe6ac;</i>已认证</b>');}
+                }else{rightRdcLease.push('<b class="reachStand fr"><i class="iconfont">&#xe63b;</i>未认证</b>');}
                 rightRdcLease.push('</div><div class="city"><p class="omg"><i class="iconfont fl">&#xe61c;</i>'+data[i].detlAddress+'</p><p>可租面积：'+data[i].sqm+'㎡</p></div></a></li>');
             }else {
                 var datainfo='<p class="omg"><span>'+(i-5)+'</span>['+data[i].title+'] 有'+data[i].sqm+'㎡冷库可用来出租，联系电话['+tel+']</p>';

@@ -125,10 +125,14 @@ $().ready(function () {
     function gethtml(rdc) {
         var approve = ''
         if (rdc.audit == 2) {
-            if (rdc.istemperaturestandard == 1) {
-                approve = '<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
-            } else {
-                approve = '<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i>'
+            if(rdc.rdcID==1878){
+                approve = '<i class="iconfont green">&#xe61f;</i><i class="green">已通过</i>'
+            }else{
+                if (rdc.istemperaturestandard == 1) {
+                    approve = '<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
+                } else {
+                    approve = '<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i>'
+                }
             }
         } else if (rdc.audit != 2) {
             if (rdc.istemperaturestandard == 1) {
