@@ -76,19 +76,15 @@ function dwrechar(index,em,title,data,type){
 	    chartArry[index].setOption(option1);
 }
 
-
 function initechardata(){
 	//var startTime=new Date(),endTime=new Date();startTime.setFullYear(endTime.getFullYear()-1);
 	//$.ajax({url:"/i/DataAnalysis/getDataAnalysisBykey",type:"post",data:{type:1,key:'price',startTime:startTime,endTime:endTime},success:function (data) {  dwrechar(0,'main1','全国冷库价格趋势图',data,'bar'); }});
 	//$.ajax({url:"/i/DataAnalysis/getDataAnalysisBykey",type:"post",data:{type:1,key:'boom',startTime:startTime,endTime:endTime},success:function (data) {  dwrechar(1,'main2','中国冷链物流景气指数',data,'line'); }});
 	//$.ajax({url:"/i/DataAnalysis/getDataAnalysisBykey",type:"post",data:{type:1,key:'energy',startTime:startTime,endTime:endTime},success:function (data) {  dwrechar(1,'main3','全国冷库能耗势图',data,'line'); }});
 }
-
 function resizeChart() {
   for (var i = 1; i < chartArry.length; i++) {chartArry[i].resize(); }
 }
-
-
 $(function () {
     getRdcShare();
     initechardata();
