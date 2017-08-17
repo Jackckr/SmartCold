@@ -12,6 +12,9 @@ import com.smartcold.bgzigbee.manage.dto.RdcAuthDTO;
 import com.smartcold.bgzigbee.manage.dto.RdcDTO;
 import com.smartcold.bgzigbee.manage.dto.RdcEntityDTO;
 import com.smartcold.bgzigbee.manage.entity.*;
+import com.smartcold.bgzigbee.manage.sc360.dao.DeviceObjectMappingMapper;
+import com.smartcold.bgzigbee.manage.sc360.entity.*;
+import com.smartcold.bgzigbee.manage.sc360.entity.DeviceObjectMappingEntity;
 import com.smartcold.bgzigbee.manage.service.FtpService;
 import com.smartcold.bgzigbee.manage.service.RdcService;
 import com.smartcold.bgzigbee.manage.util.BaiduMapUtil;
@@ -76,6 +79,11 @@ public class RdcServiceImpl implements RdcService {
 	@Autowired
 	private CollectMapper collectMapper;
 
+	@Autowired
+	private DeviceObjectMappingMapper deviceObjectMappingMapper;
+
+	@Autowired
+	private SpiderCollectionConfigMapper spiderCollectionConfigMapper;
 	@Override
 	public List<RdcEntity> findRdcList() {
 		return rdcDao.findRdcList(null, null);
@@ -325,6 +333,12 @@ public class RdcServiceImpl implements RdcService {
 				float score = 0.0f;
 				int userCommentCnt = 0;
 				int userRecommendPercent = 0;
+				//判断是否是360冷库
+				SpiderCollectionConfigEntity configByRdcid = spiderCollectionConfigMapper.findConfigByRdcid(rdcEntity.getId());
+				List<DeviceObjectMappingEntity> byRdcId = deviceObjectMappingMapper.findByRdcId(rdcEntity.getId());
+				if(configByRdcid!=null||byRdcId.size()>0){
+					dto.setIs360Rdc(1);
+				}
 				// 计算RDC的评分/用户推荐数/评论数
 				List<CommentEntity> commentsByRdcId = commentDao.findCommentsByRdcId(rdcEntity.getId());
 				if (!CollectionUtils.isEmpty(commentsByRdcId)) {
