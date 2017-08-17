@@ -55,7 +55,7 @@
                 </ul>
             </div>
         </div>
-        <div>
+        <div style="margin-top: 116px">
             <div class="bs-example">
                 <div id="carousel" class="carousel slide" data-ride="carousel">
                     <!-- Indicators -->
@@ -439,17 +439,7 @@ $(function () {
     $(".right.carousel-control").click(function(){
         $("#carousel").carousel('next');
     });
-    $(document).scroll(function () {//吸附导航
-        var sTop = document.body.scrollTop || document.documentElement.scrollTop;
-        var oTop = 116;
-        if (sTop > oTop) {
-            $('.header').addClass('fixed');
-            $('.header').next().css('marginTop', oTop);
-        } else {
-            $('.header').removeClass('fixed');
-            $('.header').next().css('marginTop', 0);
-        }
-    });
+
 })
 </script>
 </body>
