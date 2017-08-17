@@ -246,6 +246,7 @@ public class AdminController extends BaseController {
 		mlList2.add(new ACLAdminNode("2_2","icon-role",    "360配置",  "spiderConfig.html" ));
 		mlList2.add(new ACLAdminNode("2_3","icon-role",     "报表管理", "" ));
 		mlList2.add(new ACLAdminNode("2_4","main_relating" , "关联管理", "relating_manage.html" ));
+		mlList2.add(new ACLAdminNode("2_5","main_kv" , "键值管理", "kv_manage.html" ));
 		pml.setChild(mlList2);  ml.add(pml);
 		
 		pml  = new ACLAdminNode("3"  ,"main_coun",  "网站统计");
@@ -268,7 +269,13 @@ public class AdminController extends BaseController {
 		mlList5.add(new ACLAdminNode("5_2","icon-role",    "缓存管理", "sys_state.html" ));
 		mlList5.add(new ACLAdminNode("5_3","icon-role",    "任务调度", "bug/bug_task.html" ));
 		pml.setChild(mlList5);      ml.add(pml);
-		
+
+		pml  = new ACLAdminNode("6"  ,"main_companyInner",    "企业内部");
+		List<ACLAdminNode> mlList6=new ArrayList<ACLAdminNode>();
+		mlList6.add(new ACLAdminNode("6_0","main_companyAcl",    "权限管理", "company_acl.html" ));
+		pml.setChild(mlList6);      ml.add(pml);
+
+
 		List<ACLAdminNode> nml=new ArrayList<ACLAdminNode>();
 		String[] split = alc.split("-");
 		String pacl=split[0];
