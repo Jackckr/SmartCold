@@ -37,23 +37,30 @@ function initRdcInfo(rdcId, share) {
             data: {rdcId: rdcId, uid: window.lkuser.id},
             success: function (data) {
                 var rdc = data.data[0];
-                var filesArr = [];
-                $("#rdcName").html(rdc.name + '<span><i class="iconfont orange">&#xe61c;</i>' + rdc.address + '</span>');
-                if (rdc.files) {
-                    $.each(rdc.files, function (index, file) {
-                        filesArr.push('<li><img src="' + file + '" alt=""></li>');
-                    });
-                    $("#infoImg").append(filesArr.join(''));
-                } else {
-                    $("#infoImg").hide();
+                if(rdc){
+                    var filesArr = [];
+                    $("#rdcName").html(rdc.name + '<span><i class="iconfont orange">&#xe61c;</i>' + rdc.address + '</span>');
+                    if (rdc.files) {
+                        $.each(rdc.files, function (index, file) {
+                            filesArr.push('<li><img src="' + file + '" alt=""></li>');
+                        });
+                        $("#infoImg").append(filesArr.join(''));
+                    } else {
+                        $("#infoImg").hide();
+                    }
+                    $("#haveProvinceid").val(rdc.provinceid);
+                    $("#haveCityid").val(rdc.cityid);
+                    $("#detlAddress").val(rdc.address);
+                    $("#rdcID").val(rdc.rdcID);
+                    showImg();
+                    ajaxCount++;
+                    initBaseData(share);
+                }else{
+                    layer.alert('关联冷库已被删除，此条数据已经失效~',function () {
+                        window.history.back()
+                    })
                 }
-                $("#haveProvinceid").val(rdc.provinceid);
-                $("#haveCityid").val(rdc.cityid);
-                $("#detlAddress").val(rdc.address);
-                $("#rdcID").val(rdc.rdcID);
-                showImg();
-                ajaxCount++;
-                initBaseData(share);
+
             }
         });
     }

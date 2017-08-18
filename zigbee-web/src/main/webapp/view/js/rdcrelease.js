@@ -65,28 +65,34 @@ function initRdcInfo(rdcId,share) {
         $("#telephone").val(window.lkuser.telephone);
         $.ajax({url:"/i/ShareRdcController/getRdcByUid",type:"get",data:{rdcId:rdcId,uid:window.lkuser.id},success:function (data) {
             var rdc=data.data[0];
-            var filesArr=[];
-            $("#rdcName").html(rdc.name+'<span><i class="iconfont orange">&#xe61c;</i>'+rdc.address+'</span>');
-            if(rdc.files){
-                $.each(rdc.files,function (index, file) {
-                    filesArr.push('<li><img src="'+file+'" alt=""></li>');
-                });
-                $("#infoImg").append(filesArr.join(''));
+            if(rdc){
+                var filesArr=[];
+                $("#rdcName").html(rdc.name+'<span><i class="iconfont orange">&#xe61c;</i>'+rdc.address+'</span>');
+                if(rdc.files){
+                    $.each(rdc.files,function (index, file) {
+                        filesArr.push('<li><img src="'+file+'" alt=""></li>');
+                    });
+                    $("#infoImg").append(filesArr.join(''));
+                }else{
+                    $("#infoImg").hide();
+                }
+                $("#provinceid").val(rdc.provinceid);
+                $("#cityid").val(rdc.cityid);
+                $("#codeLave1").val(rdc.codeLave1);
+                $("#detlAddress").val(rdc.address);
+                $("#rdcID").val(rdc.rdcID);
+                $("#rdcSqm").val(rdc.rdcSqm);
+                showImg();
+                if(share&&ajaxCount==1){
+                    getDataToForm($("#submitRdc [name]"),share);
+                    ajaxCount=0;
+                }else {
+                    ajaxCount++;
+                }
             }else{
-                $("#infoImg").hide();
-            }
-            $("#provinceid").val(rdc.provinceid);
-            $("#cityid").val(rdc.cityid);
-            $("#codeLave1").val(rdc.codeLave1);
-            $("#detlAddress").val(rdc.address);
-            $("#rdcID").val(rdc.rdcID);
-            $("#rdcSqm").val(rdc.rdcSqm);
-            showImg();
-            if(share&&ajaxCount==1){
-                getDataToForm($("#submitRdc [name]"),share);
-                ajaxCount=0;
-            }else {
-                ajaxCount++;
+                layer.alert('关联冷库已被删除，此条数据已经失效~',function () {
+                    window.history.back()
+                })
             }
         }});
         var tempType=[];
@@ -215,7 +221,7 @@ function initUpdateInfo(id) {
     $.ajax({url:"/i/ShareRdcController/getSEByIDForEdit",type:"get",data:{id:id},success:function (data) {
         var share=data.entity;
         initRdcInfo(share.rdcID,share);
-        rentRdcOriginalLent=share.fileList.length;
+        if(share.fileList){rentRdcOriginalLent=share.fileList.length;}
         $.each(share.fileList,function (index, file) {
             rentRdcPics.push(file);
         });
