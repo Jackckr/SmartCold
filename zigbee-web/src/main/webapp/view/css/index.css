@@ -274,11 +274,11 @@
     position: relative;
 }
 .img>img{
-    transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;	/* Firefox 4 */
-    -webkit-transition: all 0.5s ease;	/* Safari 和 Chrome */
-    -ms-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
+    transition: all 1.5s ease;
+    -moz-transition: all 1.5s ease;	/* Firefox 4 */
+    -webkit-transition: all 1.5s ease;	/* Safari 和 Chrome */
+    -ms-transition: all 1.5s ease;
+    -o-transition: all 1.5s ease;
     height:auto;
 }
 .lt{

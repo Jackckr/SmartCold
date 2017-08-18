@@ -40,7 +40,11 @@ function getRdcRentList() {
                 }
                 rdcRentInfo.push('</div><div class="rdcInfo"><div class="rdcTxt clearfix"><span class="rdcName omg fl"><a  href="rdcinfo.html?rdcId=', rdcRent.id, '">', rdcRent.name, '</a></span><span class="infoPercenty fl">信息完整度:<b>', rdcRent.infoIntegrity, '%</b></span><ul class="stars clearfix fl">');
                 rdcRentInfo.push('</ul></div><div class="rdcApprove">');
-                rdcRent.audit == 2 ? rdcRentInfo.push('<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>') : rdcRentInfo.push('<b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>');
+                if(rdcRent.id==1878){
+                    rdcRentInfo.push('<b class="approve"><i class="iconfont">&#xe65d;</i>已通过</b>')
+                }else{
+                    rdcRent.audit == 2 ? rdcRentInfo.push('<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>') : rdcRentInfo.push('<b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>');
+                }
                 if (rdcRent.istemperaturestandard == 1) {
                     rdcRentInfo.push('<b class="reachStand"><i class="iconfont">&#xe6e9;</i>冷链委温度达标库</b>');
                 }

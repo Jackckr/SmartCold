@@ -66,7 +66,7 @@ function add_storageSharinfo(){
                     vo.codeLave1=rdcext.managetype;
                     vo.detlAddress=slrdc.address;
                     vo.provinceid=slrdc.provinceid;
-                    vo.cityId= slrdc.cityId;
+                    vo.cityId= slrdc.cityid;
                 }
                 vo.unit='元/'+vo.unit2+'/'+vo.unit1;
                 vo.publishunit=3;

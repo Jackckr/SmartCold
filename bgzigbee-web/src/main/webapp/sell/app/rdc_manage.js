@@ -25,6 +25,13 @@ function setPic() {
         eval("var image"+j+"=image;var oReader"+j+" = new FileReader();oReader"+j+".onload = function(e) {image"+j+".src = e.target.result;};oReader"+j+".readAsDataURL(file);");
     }
 }
+function getStand(value) {
+    return value==1?"已达标":"未达标";
+}
+
+function get360Stauts(value) {
+    return value==1?"是":"否";
+}
 
 function getRdcAudit(value) {
     if (value == 0)
@@ -47,10 +54,12 @@ function init_table() {
         {field: 'ck', checkbox: true},
         {field: 'id', title: 'ID', sortable: true},
         {field: 'name', title: '冷库名称', width: 80, align: 'center', sortable: true},
-        {field: 'username', title: '添加人', width: 80, align: 'center', sortable: true},
-        {field: 'cellphone', title: '联系方式', width: 80, align: 'center', sortable: true},
-        {field: 'addtime', title: '添加时间', width: 40, align: 'center', sortable: true, formatter: tool.col_format},
         {field: 'audit', title: '状态', width: 40, align: 'center', sortable: true, formatter: getRdcAudit},
+        {field: 'username', title: '添加人', width: 80, align: 'center', sortable: true},
+        {field: 'cellphone', title: '联系方式', width: 60, align: 'center', sortable: true},
+        {field: 'istemperaturestandard', title: '冷库是否达标', width: 50, align: 'center', sortable: true, formatter: getStand},
+        {field: 'is360Rdc', title: '是否加入360', width: 30, align: 'center', sortable: true, formatter: get360Stauts},
+        {field: 'addtime', title: '添加时间', width: 80, align: 'center', sortable: true, formatter: tool.col_format},
         {field: 'hand', title: '操作', width: 100, align: 'center', formatter: cellStyler}
     ]];
     initTable("冷库管理","icon-cold", "POST", "../../i/rdc/getRdcDTOByPage", queryParams,"#div_filteri",null, col,true, onDblClickRow);
@@ -408,7 +417,14 @@ function doUpdateCold() {
 }
 //批量删除冷库
 function dl() {
-    var rdcIDs = getTableCheckedID();
+    var rdcIDs = [], checkedItems = objTable.datagrid('getChecked');
+    for(var i=0;i<checkedItems.length;i++){
+        if(checkedItems[i].is360Rdc==1){
+            $.messager.alert('删除冷库', '您选择的冷库中有加入360的冷库，请确认~', 'info');
+            return;
+        }
+        rdcIDs.push(checkedItems[i].id);
+    }
     if (rdcIDs.length > 0) {
         $.messager.confirm('删除确认', '你确认要<er>删除</er>这<er>' + rdcIDs.length + '</er>条冷库信息吗?', function (r) {
             if (r) {

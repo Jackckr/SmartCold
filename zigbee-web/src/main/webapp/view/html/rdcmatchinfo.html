@@ -184,8 +184,10 @@
                     modalHtml.push(baseInfo);
                     var isAudit='<b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>';
                     var isStand='';
-                    if(share.audit==2){isAudit='<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>';}
-                    if(share.rdcID==1878){isAudit='';}
+                    if(share.audit==2){
+                        if(share.rdcID==1878){isAudit='<b class="approve"><i class="iconfont">&#xe65d;</i>已通过</b>';}
+                        else{isAudit='<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>';}
+                    }
                     if(share.istemperaturestandard==1){isStand='<b class="reachStand"><i class="iconfont">&#xe6e9;</i>冷链委温度达标库</b>';}
                     modalHtml.push('<li><div>关联冷库:</div><div>'+share.name+'</div>'+isAudit+isStand+'</li>');
                     modalHtml.push('<li><div>信息完整度:</div><div>'+share.infoIntegrity+'%</div></li></ol>');

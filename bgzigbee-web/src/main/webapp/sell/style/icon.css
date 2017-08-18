@@ -46,12 +46,14 @@
 .main_fwq {background: url(img/icons.png) no-repeat scroll -960px -60px rgba(0, 0, 0, 0);}/*服务管理*/
 .main_debug {background: url(img/icons.png) no-repeat scroll -1172px -62px rgba(0, 0, 0, 0);}/*服务管理*/
 .main_ad {background: url(img/icons.png) no-repeat scroll -781px -569px rgba(0, 0, 0, 0);}/*服务管理*/
+.main_companyInner {background: url(img/icons.png) no-repeat scroll -871px -390px rgba(0, 0, 0, 0);}/*企业内部*/
 
 .main_share {background: url(img/icons.png) no-repeat scroll -1440px -452px rgba(0, 0, 0, 0);}/*共享*/
 .main_infmation {background: url(img/icons.png) no-repeat scroll -631px -571px rgba(0, 0, 0, 0);}/*资讯*/
 
 .main_company {background: url(img/icons.png) no-repeat scroll -1350px -211px rgba(0, 0, 0, 0);}/*集团管理*/
 .main_relating {background: url(img/icons.png) no-repeat scroll -151px -450px rgba(0, 0, 0, 0);}/*关联管理*/
+.main_kv{background: url(img/icons.png) no-repeat scroll -61px -270px rgba(0, 0, 0, 0);}/*键值管理*/
 
 .dev_warning {background: url(img/icons.png) no-repeat scroll -1082px -30px rgba(0, 0, 0, 0);}/*设备告警*/
 .dev_mang {background: url(img/icons.png) no-repeat scroll -1112px -30px rgba(0, 0, 0, 0);}/*设备告警*/
@@ -62,6 +64,9 @@
 .dev_del {background: url(img/icons.png) no-repeat scroll -1023px -30px rgba(0, 0, 0, 0);}/*设备删除*/
 .dev_charge {background: url(img/icons.png) no-repeat scroll -1200px -30px rgba(0, 0, 0, 0);}/*设备充电*/
 .dev_token {background: url(img/icons.png) no-repeat scroll -1050px -511px rgba(0, 0, 0, 0);}/*设备充电*/
+
+
+.main_companyAcl {background: url(img/icons.png) no-repeat scroll -1052px -270px rgba(0, 0, 0, 0);}/*企业内部权限管理*/
 
 /*=====================================用户图标=====================================================*/
 .user_audit{background: url(img/icons.png) no-repeat scroll -961px -659px rgba(0, 0, 0, 0);}
@@ -77,6 +82,9 @@
 /*====================================企业管理图标=====================================================*/
 .company_del {background: url(img/icons.png) no-repeat scroll -899px -270px rgba(0, 0, 0, 0);}
 .company_add {background: url(img/icons.png) no-repeat scroll -871px -270px rgba(0, 0, 0, 0);}
+/*====================================建值管理图标=====================================================*/
+.kv_add {background: url(img/icons.png) no-repeat scroll -991px -603px rgba(0, 0, 0, 0);}
+.kv_del {background: url(img/icons.png) no-repeat scroll -1021px -602px rgba(0, 0, 0, 0);}
 /*消息中心*/
 .objicon{display: inline-block;width: 20px;height: 20px;}
 .icon-msgType{    background: url(img/icos.png) no-repeat scroll -1350px -391px rgba(0, 0, 0, 0);}

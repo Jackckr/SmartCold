@@ -50,7 +50,7 @@ public class FtpServiceImpl implements FtpService {
 				ftp.changeWorkingDirectory(dir);
 			}
 		}
-		
+
 		result = ftp.storeFile(uploadFileEntity.getName(), uploadFileEntity.getMultipartFile().getInputStream());
 		if (!result) {
 			log.error("File upload failed, upload dir:"+uploadFileEntity.getRemoteNewDir()+

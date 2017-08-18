@@ -912,6 +912,7 @@ border-bottom: 0;
 .main_image li {
 	float: left;
 	height: 100%;
+	width: 100%;
 }
 
 .main_image li img {

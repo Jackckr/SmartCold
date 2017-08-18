@@ -28,7 +28,9 @@ public interface DeviceObjectMappingMapper {
 	public List<DeviceObjectMappingEntity> findByTypeOid(@Param("type") int type, @Param("oid")int oid);
 	
 	public List<DeviceObjectMappingEntity> findByTypeDeviceId(@Param("type") int type, @Param("deviceid")String deviceid);
-	
+
+	public List<DeviceObjectMappingEntity> findByRdcId(int rdcId);
+
 	public List<DeviceObjectMappingEntity>  findInfoByfilter(@Param("type") Integer type, @Param("status")Integer status,@Param("oid")String oid,@Param("rdcid")Integer rdcid);
 	
 

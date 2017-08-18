@@ -4,6 +4,7 @@ public class StorageKeysEntity {
 	private Integer id;
 	private int type;
 	private String key;
+	private int issis;
 	private String desc;
 	private String unit;
 	public Integer getId() {
@@ -36,5 +37,12 @@ public class StorageKeysEntity {
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
-	
+
+	public int getIssis() {
+		return issis;
+	}
+
+	public void setIssis(int issis) {
+		this.issis = issis;
+	}
 }

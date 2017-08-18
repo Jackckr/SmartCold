@@ -419,4 +419,10 @@ public class UserController extends BaseController {
 	public UserEntity findUserById(int userId){
 		return this.userDao.findUserById(userId);
 	}
+
+	@RequestMapping(value = "/checkTelephone")
+	@ResponseBody
+	public Boolean checkTelephone(String telephone){
+		return this.userDao.findUserByTelephone(telephone)==null?true:false;
+	}
 }

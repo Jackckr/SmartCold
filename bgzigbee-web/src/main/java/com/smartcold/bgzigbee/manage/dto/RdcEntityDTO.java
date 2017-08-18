@@ -55,6 +55,8 @@ public class RdcEntityDTO {
     private String username;
 
     private int istemperaturestandard;
+
+    private int is360Rdc;
 	
 	public String getUsername() {
 		return username;
@@ -263,5 +265,13 @@ public class RdcEntityDTO {
 
     public void setIstemperaturestandard(int istemperaturestandard) {
         this.istemperaturestandard = istemperaturestandard;
+    }
+
+    public int getIs360Rdc() {
+        return is360Rdc;
+    }
+
+    public void setIs360Rdc(int is360Rdc) {
+        this.is360Rdc = is360Rdc;
     }
 }

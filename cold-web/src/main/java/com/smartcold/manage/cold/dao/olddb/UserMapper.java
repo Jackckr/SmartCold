@@ -35,4 +35,6 @@ public interface UserMapper {
 	public int existenceUserName(@Param("username")String username);
 
 	void updateTypeById(UserEntity userEntity);
+
+    UserEntity findUserByTelephone(String phone);
 }

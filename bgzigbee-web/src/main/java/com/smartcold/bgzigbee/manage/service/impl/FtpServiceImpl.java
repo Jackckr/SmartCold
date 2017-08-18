@@ -1,8 +1,10 @@
 package com.smartcold.bgzigbee.manage.service.impl;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
+import com.smartcold.bgzigbee.manage.util.WatermarkUtil;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 import org.slf4j.Logger;
@@ -46,8 +48,8 @@ public class FtpServiceImpl implements FtpService {
 				ftp.changeWorkingDirectory(dir);
 			}
 		}
-		
-		result = ftp.storeFile(uploadFileEntity.getName(), uploadFileEntity.getMultipartFile().getInputStream());
+		InputStream watermarkImg = WatermarkUtil.watermarkImg(uploadFileEntity.getMultipartFile());
+		result = ftp.storeFile(uploadFileEntity.getName(),watermarkImg);
 		if (!result) {
 			log.error("File upload failed, upload dir:"+uploadFileEntity.getRemoteNewDir()+
 					", file name:"+uploadFileEntity.getName()+

@@ -176,4 +176,10 @@ public class UserController extends BaseController {
 		if(StringUtil.isNull(userName)){return false;}
 	    return this.userDao.existenceUserName(userName)>0;
 	}
+
+	@RequestMapping(value = "/checkTelephone")
+	@ResponseBody
+	public Boolean checkTelephone(String telephone){
+		return this.userDao.findUserByTelephone(telephone)==null?true:false;
+	}
 }
