@@ -15,7 +15,6 @@ import java.util.concurrent.ThreadFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
@@ -37,7 +36,7 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 数据存在重复（准备处理）
  * 
  **/
-@Service
+//@Service
 public class ZsDevService  {
 	    private static boolean isRuning=true;
 	    
