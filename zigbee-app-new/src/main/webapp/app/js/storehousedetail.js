@@ -125,7 +125,23 @@
 			}
 
 		 }else{
-		 	goback();
+		 	if(window.history&&window.history.length>1){
+                goback();
+			}else{
+                if($scope.datatype==3){//1:出租/2:求租
+                    if($scope.vo.typeCode==1){
+                        location.href='rentstorage.html'
+                    }else{
+                        location.href='lookstorage.html'
+                    }
+                }else if($scope.datatype==1){//1:出售/2:求购
+                    if($scope.vo.typeCode==1){
+                        location.href='salegoodslist.html'
+                    }else{
+                        location.href='buygoodslist.html'
+                    }
+                }
+			}
 		 }
      };
      $scope.rentDate=['','1个月以下','1~3个月','3~6个月','6~9个月','1年以上','两年以上','三年以上','五年以上'];
