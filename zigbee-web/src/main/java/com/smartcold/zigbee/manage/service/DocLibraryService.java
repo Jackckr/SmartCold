@@ -20,6 +20,8 @@ public interface DocLibraryService {
 	public List<FileDataEntity> handleFile(HttpServletRequest r,UserEntity user) throws IOException ;
 	
 	public  List<FileDataEntity> handleFile(int dataID,String type,UserEntity user,HttpServletRequest request)throws IOException;
-	
+
+	public  List<FileDataEntity> handleWMFile(int dataID,String type,UserEntity user,HttpServletRequest request)throws IOException;
+
 	
 }

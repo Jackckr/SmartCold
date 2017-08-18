@@ -50,8 +50,8 @@ public class FtpServiceImpl implements FtpService {
 				ftp.changeWorkingDirectory(dir);
 			}
 		}
-		InputStream watermarkImg = WatermarkUtil.watermarkImg(uploadFileEntity.getMultipartFile());
-		result = ftp.storeFile(uploadFileEntity.getName(), watermarkImg);
+
+		result = ftp.storeFile(uploadFileEntity.getName(), uploadFileEntity.getMultipartFile().getInputStream());
 		if (!result) {
 			log.error("File upload failed, upload dir:"+uploadFileEntity.getRemoteNewDir()+
 					", file name:"+uploadFileEntity.getName()+
