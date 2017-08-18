@@ -1,3 +1,4 @@
+
 <style>
      @-webkit-keyframes magentaPulse {
             from {color: 	#FFFAFA; !imporeat}
@@ -6,9 +7,21 @@
         }
         .wiltrue{-webkit-animation-iteration-count: infinite;}
         .magentaPulse.wiltrue{-webkit-animation-name:magentaPulse;-webkit-animation-duration:2s;}
+        
+	
 </style>
-
+ <div class="text-right"> 
+   <div > 
+     <span><input type="checkbox" checked="checked">告警</span>      
+     <span><input type="checkbox"  checked="checked">轮巡</span> 
+     <span class="glyphicon glyphicon-repeat" title="重置"></span> 
+     <span ng-click="fullScreen()" class="glyphicon glyphicon-refresh"    title="刷新"></span>
+     <span ng-click="fullScreen()" class="glyphicon glyphicon-fullscreen" title="全屏"></span>
+   </div>
+ </div>
+ <div >
 <div class="previewBox groupModel">
+ 
     <!--一个模块 start--><!--温度模块================================-->
     <div class="previewModel">
         <div class="headerModel myDefault">
@@ -227,18 +240,12 @@
     </div>
     <!--一个模块 end-->
 </div>
+</div>
+ 
+
 <script src="assets/js/echarts.min.js"></script>
 <script>
-    function closeFn(em) {
-        $(em).parents('.previewModel').remove();
-    }
-    function moreFn(em,index) {
-        $(em).parents('.groupModel').hide();
-        $(".singleModel").show ().children(".previewModel").eq(index-1).show().siblings().hide();
-    }
-    function backFn(em,index) {
-        $(em).parents('.singleModel').hide();
-        $(".groupModel").show ();
-    }
-   
+    function closeFn(em) { $(em).parents('.previewModel').remove(); }
+    function moreFn(em,index) { $(em).parents('.groupModel').hide();$(".singleModel").show ().children(".previewModel").eq(index-1).show().siblings().hide(); }
+    function backFn(em,index) { $(em).parents('.singleModel').hide(); $(".groupModel").show (); }
 </script>

@@ -94,4 +94,33 @@ public class DocLibraryServiceImpl implements DocLibraryService {
     	 }
      return storageFiles;
     }
+
+    @Override
+    public List<FileDataEntity> handleWMFile(int dataID, String type, UserEntity user, HttpServletRequest request) throws IOException {
+        List<MultipartFile> files = new ArrayList<MultipartFile>();
+        List<FileDataEntity> storageFiles = new ArrayList<FileDataEntity>();
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession() .getServletContext());
+        if (multipartResolver.isMultipart(request)) {
+            MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+            Iterator<String> iter = multiRequest.getFileNames();
+            while (iter.hasNext()) {
+                String para = iter.next();
+                MultipartFile file = multiRequest.getFile(para);
+                files.add(file);
+            }
+            String dir = String.format("%s/share/%s", DocLibraryServiceImpl.baseDir,  dataID);
+            for (MultipartFile file : files) {
+                if (file == null) {  continue; }
+                String fileName = String.format("share%s_%s.%s", dataID, new Date().getTime(), "jpg");
+                UploadFileEntity uploadFileEntity = new UploadFileEntity(fileName, file, dir);
+                this.ftpService.uploadWatermarkFile(uploadFileEntity);
+                FileDataEntity fileDataEntity = new FileDataEntity(file.getContentType(),  dir + "/" + fileName, type, dataID, fileName);
+                storageFiles.add(fileDataEntity);
+            }
+            if (!storageFiles.isEmpty()) {
+                this.fileDataDao.saveFileDatas(storageFiles); //??????
+            }
+        }
+        return storageFiles;
+    }
 }

@@ -551,7 +551,7 @@ public class ShareRdcController {
                 rdcShareDTO.setUpdatetime(TimeUtil.getDateTime());
                 this.rdcShareService.updateshareInfo(rdcShareDTO);//修改发布消息
             }
-            this.docLibraryService.handleFile(rdcShareDTO.getId(), FileDataMapper.CATEGORY_SHARE_PIC, null, request);
+            this.docLibraryService.handleWMFile(rdcShareDTO.getId(), FileDataMapper.CATEGORY_SHARE_PIC, null, request);
             return ResponseData.newSuccess("发布成功~");
 
         } catch (Exception e) {

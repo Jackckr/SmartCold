@@ -70,7 +70,7 @@ public class UtilController extends BaseController {
 	 @RequestMapping("/getColdStatus") //判断指定冷库是否超温
 	 public boolean getColdStatus(int oid )	{ return WarningTaskService.tempListen.containsKey(oid);}
 	 @RequestMapping("/getColdAlarmStatus") //判断指定冷库是否超温
-	 public HashMap<String, Boolean> getColdAlarmStatus(int oid )	{ HashMap<String, Boolean> tempHashMap=new HashMap<String, Boolean>();tempHashMap.put("isAlarm",  WarningTaskService.tempListen.containsKey(oid));tempHashMap.put("isBlack",  WarningTaskService.extBlacklist.containsKey(oid));	 return   tempHashMap;}
+	 public HashMap<String, Boolean> getColdAlarmStatus(int oid )	{ HashMap<String, Boolean> tempHashMap=new HashMap<String, Boolean>();tempHashMap.put("isAlarm",  WarningTaskService.tempListen.containsKey(oid)&& WarningTaskService.tempListen.get(oid).getWarcount()>3);tempHashMap.put("isBlack",  WarningTaskService.extBlacklist.containsKey(oid));	 return   tempHashMap;}
 
 	
 }
