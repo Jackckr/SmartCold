@@ -70,7 +70,9 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
         setStorage: function () {
         	$rootScope.initAllByRdcId = function(rdcId){
         		     console.log("rdc:"+rdcId);
-        		     $rootScope.rdcId = rdcId;window.sessionStorage.smrdcId=rdcId;//缓存rdcid
+        		     $rootScope.rdcId = rdcId;
+        		     window.sessionStorage.smrdcId=rdcId;//缓存rdcid
+        		     window.sessionStorage.cactrdc=JSON.stringify($rootScope.vm.choserdc);
 		        	 $http({method:'POST',url:'i/acl/getRUACL',params:{rdcid : $rootScope.rdcId,uid : $rootScope.user.id}}).success(function (data) {
 		        			    $rootScope.aclml=data.aclml;
 		        			    $rootScope.aclmap={};
@@ -127,7 +129,6 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
         			if(value.originalObject == $rootScope.vm.choserdc){return;}
             		$rootScope.vm.choserdc = value.originalObject;
         		}
-        		window.sessionStorage.cactrdc=JSON.stringify($rootScope.vm.choserdc);
         		$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
         		
         	};

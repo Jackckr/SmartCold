@@ -7,19 +7,18 @@
         }
         .wiltrue{-webkit-animation-iteration-count: infinite;}
         .magentaPulse.wiltrue{-webkit-animation-name:magentaPulse;-webkit-animation-duration:2s;}
-        
-	
+        #main_count_div{width: 100%;height: 100%;}
 </style>
  <div class="text-right"> 
-   <div > 
-     <span><input type="checkbox" checked="checked">告警</span>      
-     <span><input type="checkbox"  checked="checked">轮巡</span> 
+   <div id="tool"> 
+     <span><input type="checkbox" checked="checked" ng-click="alarm()">告警</span>      
+     <span><input type="checkbox"  checked="checked" >轮巡</span> 
      <span class="glyphicon glyphicon-repeat" title="重置"></span> 
-     <span ng-click="fullScreen()" class="glyphicon glyphicon-refresh"    title="刷新"></span>
+     <span ng-click="refData()" class="glyphicon glyphicon-refresh"    title="刷新"></span>
      <span ng-click="fullScreen()" class="glyphicon glyphicon-fullscreen" title="全屏"></span>
    </div>
  </div>
- <div >
+ <div id="main_count_div" class="myDefault">
 <div class="previewBox groupModel">
  
     <!--一个模块 start--><!--温度模块================================-->

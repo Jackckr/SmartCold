@@ -22,10 +22,13 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
        };
        //全屏
        $scope.fullScreen=function(){
-    	   var docElm=document.getElementById("oview");if(docElm.requestFullscreen){docElm.requestFullscreen();}else{if(docElm.mozRequestFullScreen){docElm.mozRequestFullScreen();}else{if(docElm.webkitRequestFullScreen){docElm.webkitRequestFullScreen();}else{if(elem.msRequestFullscreen){elem.msRequestFullscreen();}}}};
+    	   var docElm=document.getElementById("main_count_div");if(docElm.requestFullscreen){docElm.requestFullscreen();}else{if(docElm.mozRequestFullScreen){docElm.mozRequestFullScreen();}else{if(docElm.webkitRequestFullScreen){docElm.webkitRequestFullScreen();}else{if(elem.msRequestFullscreen){elem.msRequestFullscreen();}}}};
        };
        //告警
-       $scope.alarm=function(){  $scope.priveseting.isOverTemp=!$scope.priveseting.isOverTemp;};
+       $scope.alarm=function(){ 
+    	   $scope.priveseting.isOverTemp=!$scope.priveseting.isOverTemp;
+    	   if( !$scope.priveseting.isOverTemp){ angular.forEach($scope.isovTemp,function(item,index){  $scope.isovTemp[index]=false;}); }
+       };
        $scope.rdclist=$rootScope.vm.allUserRdcs;//拿到所有冷库
        console.log("当前冷库长度"+$scope.rdclist.length);
        //视图切换
