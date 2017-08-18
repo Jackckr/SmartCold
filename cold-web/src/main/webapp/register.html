@@ -315,6 +315,16 @@ function checkUserName(){
 function checktelephone(){
 	var telephone = $("#txt_telephone").val().trim();
 	var ct = vsphone(telephone);
+    if(telephone.length==11){
+        $.ajax({url:"/i/user/checkTelephone",data:{telephone:telephone},type:"post",success:function (data) {
+            if(!data){
+                victdata.victel=false;
+                $(".telMsg").html("该手机号已被注册~");
+                $('#sp_yzmbut').attr('disabled',true);
+                return;
+            }
+        }});
+    }
     if(ct){
 		 victdata.victel=true;
 		 $(".telMsg").html("");

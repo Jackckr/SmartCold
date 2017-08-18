@@ -161,4 +161,7 @@
 	    <include refid="Base_Column_List" />
 	    from User
 	</select>
+    <select id="findUserByTelephone" resultType="com.smartcold.manage.cold.entity.olddb.UserEntity">
+        SELECT * FROM `user` WHERE `telephone` =#{phone} limit 1
+    </select>
 </mapper>
