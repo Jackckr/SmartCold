@@ -59,7 +59,17 @@ angular.module('myapp', []).controller('oregister',function($http, $location, $s
 	$scope.vertelephone = function() {// 验证手机号码
 		$("#code2").val('');$("#but_vercode").data('vc', false);
 		var ct = $scope.vsphone($scope.telephone);
-		if(ct){
+		if($scope.telephone.length==11){
+		    $http.get(ER.root+"/i/user/checkTelephone",{params:{telephone:$scope.telephone}}).success(function (data) {
+                if(!data){
+                    victdata.victtl=false;
+                    $("#mention1").html("该手机号已被注册~");
+                    $("#but_vercode").attr("disabled", true).css("background-color",  "#cccccc");
+                    return;
+                }
+            });
+        }
+         if(ct){
 			victdata.victtl=true;
             $("#mention1").html('');
             $("#but_vercode").attr("disabled", false).css("background-color",  "#4287ff");

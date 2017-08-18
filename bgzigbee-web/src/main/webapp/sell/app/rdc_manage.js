@@ -56,10 +56,10 @@ function init_table() {
         {field: 'name', title: '冷库名称', width: 80, align: 'center', sortable: true},
         {field: 'audit', title: '状态', width: 40, align: 'center', sortable: true, formatter: getRdcAudit},
         {field: 'username', title: '添加人', width: 80, align: 'center', sortable: true},
-        {field: 'cellphone', title: '联系方式', width: 80, align: 'center', sortable: true},
-        {field: 'istemperaturestandard', title: '冷库是否达标', width: 80, align: 'center', sortable: true, formatter: getStand},
-        {field: 'is360Rdc', title: '是否加入360', width: 80, align: 'center', sortable: true, formatter: get360Stauts},
-        {field: 'addtime', title: '添加时间', width: 40, align: 'center', sortable: true, formatter: tool.col_format},
+        {field: 'cellphone', title: '联系方式', width: 60, align: 'center', sortable: true},
+        {field: 'istemperaturestandard', title: '冷库是否达标', width: 50, align: 'center', sortable: true, formatter: getStand},
+        {field: 'is360Rdc', title: '是否加入360', width: 30, align: 'center', sortable: true, formatter: get360Stauts},
+        {field: 'addtime', title: '添加时间', width: 80, align: 'center', sortable: true, formatter: tool.col_format},
         {field: 'hand', title: '操作', width: 100, align: 'center', formatter: cellStyler}
     ]];
     initTable("冷库管理","icon-cold", "POST", "../../i/rdc/getRdcDTOByPage", queryParams,"#div_filteri",null, col,true, onDblClickRow);
