@@ -36,12 +36,10 @@
             <div class="unitModel"ng-repeat="storage in mystorages" ng-show="$index<4">
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="unitIcon"><i class="iconfont  {{isovTemp[storage.id]?'magentaPulse wiltrue':'' }} "   >&#xe67c;</i></div>
-                        <canvas id="wave-can_{{storage.id}}" width="60" height="30" style="color:red;margin-top: -44px;position: absolute;margin-left: -30px;"></canvas>
+                    <p class="omg">{{storage.name}}</p>
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                     <h2 class="omg">{{cuttTemp[storage.id]}}°C</h2>
-                    <p class="omg">{{storage.name}}</p>
-                
                 </div>
             </div>
         </div>
@@ -85,7 +83,7 @@
             </div>
         </div>
         <div class="bodyModel clearfix" >
-            <div class="clearfix" ng-repeat="compressorGroup in compressorGroups" ng-show="$index<4">
+            <div class="clearfix ysj" ng-repeat="compressorGroup in compressorGroups" ng-show="$index<4">
                 <img ng-repeat="compressor in compressorGroup.compressors" ng-src="../assets/img/pressure{{compressor.type}}_{{compressor.status}}.png">
                 <h6>{{compressorGroup.name}}</h6>
             </div>
@@ -148,10 +146,10 @@
             <div class="unitModel"ng-repeat="storage in mystorages" >
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="unitIcon"><i class="iconfont">&#xe67c;</i></div>
+                    <p class="omg">{{storage.name}}</p>
                 </div>
                 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                     <h2 class="omg">{{cuttTemp[storage.id]}}°C</h2>
-                    <p class="omg">{{storage.name}}</p>
                 </div>
             </div>
         </div>
@@ -193,7 +191,7 @@
             </div>
         </div>
         <div class="bodyModel clearfix">
-           <div class="clearfix" ng-repeat="compressorGroup in compressorGroups">
+           <div class="clearfix ysj" ng-repeat="compressorGroup in compressorGroups">
                 <img ng-repeat="compressor in compressorGroup.compressors" ng-src="../assets/img/pressure{{compressor.type}}_{{compressor.status}}.png">
                 <h6>{{compressorGroup.name}}</h6>
             </div>

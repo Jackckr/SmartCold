@@ -148,15 +148,15 @@
 {
     padding: 0;
     margin-top: 15px;
-    line-height: 1.1;
+    line-height: 2;
     word-wrap: break-word;
     word-break: break-all;
-    white-space:normal;
-    font-size: 20px;
+    font-size: 30px;
 }
 .unitModel p{
     font-size: 12px;
     line-height: 1.8;
+    margin-top: 6px;
 }
 /*电量模块*/
 .electricModel{
@@ -185,7 +185,7 @@
 }
 .bodyModel>div>h6{
     position: absolute;
-    top: -36px;
+    bottom:0;
     left: 0;
     width: 100%;
 }
@@ -237,12 +237,18 @@
 .txtModel .unitIcon>i.runnings{
     background: #10c469;
 }
+.ysj{
+    height: 140px;
+    border: 1px solid rgba(0, 0, 0, 0.24);
+    padding: 10px 0;
+    overflow: hidden;
+}
 /*工具按钮*/
 .toolbar{
     position: fixed;
     top:67px;
     right: 0;
-    width: 240px;
+    width: 32px;
     height: 32px;
     z-index: 999999999999;
     overflow: hidden;
@@ -280,7 +286,9 @@
     -moz-border-radius: 3px 0 0 3px;
     border-radius: 3px 0 0 3px;
 }
-
+.toolbar:hover{
+    width: 222px;
+}
 .toolbar:hover .toolI{
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
