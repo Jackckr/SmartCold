@@ -9,15 +9,15 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
        $scope.priveseting={isOverTemp:true};
        $scope.statusmode=[["stop","run"],['danger','runnings','warnings']];
        $scope.startTime = new Date($scope.endTime.getTime() - 1800000),
-       $scope.ansisTime = new Date($scope.endTime.getTime() - 432000000),
+       $scope.ansisTime = new Date($scope.endTime.getTime() - 2592000000),
        $scope.cuttTemp={},$scope.isovTemp={}, $scope.cuttrepwc={},$scope.cuttrestime={};
        $scope.isNumber=function(obj) {  return typeof obj === 'number' && isFinite(obj) ;}  ;
        $scope.pwcoption = {
-      	        tooltip:{ backgroundColor:'rgba(0,0,0,0.3)'},
-      	        grid:{left:40,top:20, bottom:30,right:30},
-      	        xAxis: {splitLine:{show: false}, axisLabel:{ textStyle:{ color:'#eee',fontSize:12} }, axisLine:{ lineStyle:{ color:'#eee'}},axisTick:{ lineStyle:{ color:'#eee'}} },
+      	        tooltip:{ backgroundColor:'rgba(0,0,0,0.3)',formatter: "{a} <br/>{b}: {c} kwh"},
+      	        grid:{left:40,top:20, bottom:66,right:30},
+      	        xAxis: {splitLine:{show: false}, axisLabel:{ textStyle:{ color:'#eee',fontSize:12},interval:1,rotate:45 }, axisLine:{ lineStyle:{ color:'#eee'}},axisTick:{ lineStyle:{ color:'#eee'}} },
       	        yAxis: {splitLine:{show: false}, axisLine:{ lineStyle:{color:'#eee'}},axisTick:{ lineStyle:{color:'#eee'}},axisLabel:{textStyle:{color:'#eee', fontSize:12} }},
-      	        series: [{name: '电量',type: 'line', smooth:true,lineStyle:{ normal:{color:'#188ae2' }},itemStyle:{ normal:{ color:'#188ae2'}} }]
+      	        series: [{name: '电量',type: 'bar', smooth:true,lineStyle:{ normal:{color:'#188ae2' }},itemStyle:{ normal:{ color:'#188ae2'}} }]
        };
        //全屏
        $scope.fullScreen=function(){

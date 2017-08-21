@@ -15,12 +15,15 @@ public class SysWarningsInfo {
 	private String addtime;
 	private String endtime;
 	private String starttime;
+	private Double basTemp;
+	private Float tempdiff;
+	private String name;
 	
 	public SysWarningsInfo() {
 		super();
 	}
 
-	public SysWarningsInfo(int rdcid, int objid, int type, int level,String starttime,String endtime,double longtime, String title,String warnigmsg, String addtime) {
+	public SysWarningsInfo(int rdcid, int objid, int type, int level,String starttime,String endtime,double longtime, String title,String warnigmsg, String addtime,String name,Double basTemp,Float tempdiff) {
 		super();
 		this.rdcid = rdcid;
 		this.objid = objid;
@@ -32,6 +35,9 @@ public class SysWarningsInfo {
 		this.addtime = addtime;
 		this.starttime = starttime;
 		this.endtime = endtime;
+		this.name=name;
+		this.basTemp=basTemp;
+		this.tempdiff=tempdiff;
 	}
 
 	public int getId() {
@@ -122,4 +128,27 @@ public class SysWarningsInfo {
 		this.addtime = addtime;
 	}
 
+	public Double getBasTemp() {
+		return basTemp;
+	}
+
+	public void setBasTemp(Double basTemp) {
+		this.basTemp = basTemp;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Float getTempdiff() {
+		return tempdiff;
+	}
+
+	public void setTempdiff(Float tempdiff) {
+		this.tempdiff = tempdiff;
+	}
 }

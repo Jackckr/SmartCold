@@ -206,6 +206,7 @@
     -o-transition: all 1.5s ease;
     position: relative;
     overflow: hidden;
+    min-height: 150px;
 }
 .rdcImg img:hover{
     transform: scale(1.06) translate(0,-50px);

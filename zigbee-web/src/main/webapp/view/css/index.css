@@ -280,6 +280,7 @@
     -ms-transition: all 1.5s ease;
     -o-transition: all 1.5s ease;
     height:auto;
+    min-height: 128px;
 }
 .lt{
     position: absolute;
