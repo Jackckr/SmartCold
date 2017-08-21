@@ -104,7 +104,21 @@
      $scope.goWhere = function () {
 		 if($scope.checkUserLogin()){
 		 	if(localStorage.gowhere||localStorage.oURL){
-                goback();
+                if($scope.datatype==3){//1:出租/2:求租
+                    if($scope.vo.typeCode==1){
+                        location.href='rentstorage.html'
+                    }else{
+                        location.href='lookstorage.html'
+                    }
+                }else if($scope.datatype==1){//1:出售/2:求购
+                    if($scope.vo.typeCode==1){
+                        location.href='salegoodslist.html'
+                    }else{
+                        location.href='buygoodslist.html'
+                    }
+                }else{
+                    goback();
+				}
 			}else{
 		 		var rdcId="";
 		 		if(localStorage.saveRdcID){rdcId="?rdcid="+localStorage.saveRdcID;}

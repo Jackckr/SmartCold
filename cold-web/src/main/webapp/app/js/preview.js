@@ -20,6 +20,23 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
       	        yAxis: {splitLine:{show: false}, axisLine:{ lineStyle:{color:'#eee'}},axisTick:{ lineStyle:{color:'#eee'}},axisLabel:{textStyle:{color:'#eee', fontSize:12} }},
       	        series: [{name: '电量',type: 'line', smooth:true,lineStyle:{ normal:{color:'#188ae2' }},itemStyle:{ normal:{ color:'#188ae2'}} }]
        };
+       //全屏
+       $scope.fullScreen=function(){
+    	   var docElm=document.getElementById("main_count_div");if(docElm.requestFullscreen){docElm.requestFullscreen();}else{if(docElm.mozRequestFullScreen){docElm.mozRequestFullScreen();}else{if(docElm.webkitRequestFullScreen){docElm.webkitRequestFullScreen();}else{if(elem.msRequestFullscreen){elem.msRequestFullscreen();}}}};
+       };
+       //告警
+       $scope.alarm=function(){ 
+    	   $scope.priveseting.isOverTemp=!$scope.priveseting.isOverTemp;
+    	   if( !$scope.priveseting.isOverTemp){ angular.forEach($scope.isovTemp,function(item,index){  $scope.isovTemp[index]=false;}); }
+       };
+       $scope.rdclist=$rootScope.vm.allUserRdcs;//拿到所有冷库
+       console.log("当前冷库长度"+$scope.rdclist.length);
+       //视图切换
+   
+       
+   
+       
+    
        //=================================================================1.温度===================================================================================
        $scope.initTempset=function(startTime,endTime){
     	   angular.forEach($rootScope.mystorages,function(item){	
@@ -146,10 +163,9 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
                  });
             }); 
        };
+	 
 	    
-	     /**
-	     *刷新数据
-	     */
+	     //刷新数据
 	    $scope.refdata=function(){
 	    	var endtime=new Date();
 	    	$scope.refBlowers( $scope.cuttrestime[3] , endtime);
@@ -225,6 +241,21 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
 	    $rootScope.timeTicket = setInterval(function () { $scope.refData; }, 30000);
 	    $scope.$on('$destroy',function(){ clearInterval($rootScope.timeTicket);  });
 
+       
+       
+//       $scope.viewController=function(){
+//    	   $scope.view = this, nameArray=[], indexCurrent = 0;
+//    	   angular.forEach($scope.rdclist,function(obj){	
+//    		   nameArray.push(obj.id);
+//    	   });
+//    	   $scope.view.next = next;
+//    	   $scope.view.current = nameArray[indexCurrent];
+//	        function next(){
+//	            indexCurrent = (indexCurrent + 1) % nameArray.length;
+//	            $scope.view.current = nameArray[indexCurrent];
+//	        }
+//	    };
+//	    $scope.viewController();
 });
 
 

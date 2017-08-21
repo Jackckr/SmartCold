@@ -142,11 +142,8 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	        		sumavg+=anysis[i].avgTemp;
 		        }
 	        	sumavg=sumavg/anysis.length;
-	        	console.log("最低温度"+minval);
-	        	console.log("最高温度"+maxval);
-	        	console.log("平均温度"+sumavg);
 	        	$scope.anysisdata.asisarry=anysis;
-	        	$scope.anysisdata.asisdata={'minval':minval.toFixed(2),'maxTemp':maxval.toFixed(2),'avgTemp':sumavg.toFixed(2)};
+	        	$scope.anysisdata.asisdata={'minval':minval.toFixed(2),'maxval':maxval.toFixed(2),'avgTemp':sumavg.toFixed(2)};
 	        	yData.push({ name: '平均温度', color: '#32CD32', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:sumavg},{ x:endDate.getTime(),y:sumavg}],dashStyle:'dash'});//处理基准温度
 	        }
 	        yData.push({ name: '基准温度', color: 'red', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:datumTemp},{ x:endDate.getTime(),y:datumTemp}]});//处理基准温度
@@ -229,9 +226,10 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 			$http.get('/i/AnalysisController/getAnalysisDataByKey', { params: {type:1, oid:$scope.cuttstorage.id, keys:'OverTempL1Time,OverTempL2Time,OverTempL3Time,OverTempL1Count,OverTempL2Count,OverTempL3Count', startTime:$scope.startTime, endTime:$scope.endTime}}).success(function (data) {
 				if(data&&data.OverTempL1Time){
 					$scope.dwrc(data);//第一套逻辑
-				}else{
-					$scope.getColdstarageYinZi();//第二逻辑
 				}
+//				else{
+//					$scope.getColdstarageYinZi();//第二逻辑
+//				}
 			});
 	};
 	
@@ -243,7 +241,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 		angular.forEach(data.OverTempL3Count,function(obj,i){l3count.unshift(obj.value);l3tailcount+=obj.value;});
 		angular.forEach(data.OverTempL1Count,function(obj,i){l1count.unshift(obj.value); l1tailcount+=obj.value;});
 		angular.forEach(data.OverTempL1Time,function(obj,i){xdata.unshift(baseTools.formatTime(obj.date).split(" ")[0]);l1time.unshift(obj.value);l1tailtime+=obj.value;});
-    	var score=100-l1tailcount*10- parseInt(l2tailcount/4)*5- parseInt(l3tailcount/8)*2;
+		var score=100-l1tailcount*10- parseInt(l2tailcount/4)*5- parseInt(l3tailcount/8)*2;
 		$scope.cuttstorage.l1tailtime=l1tailtime;
 		$scope.cuttstorage.l1tailcount=l1tailcount;
 		$scope.cuttstorage.score=score<0?0:score;
@@ -270,12 +268,13 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 			angular.forEach(data.OverTempCount, function(obj,i){ 
                    	console.log(obj);			
 			});
-			angular.forEach(data.BaoWenYinZi, function(obj,i){ 
-
-			});
-			angular.forEach(data.JiangWenYinZi,function(obj,i){
-				
-			});
+			angular.forEach(data.BaoWenYinZi, function(obj,i){ });
+			angular.forEach(data.JiangWenYinZi,function(obj,i){});
+			
+//			var score=100-l1tailcount*10- parseInt(l2tailcount/4)*5- parseInt(l3tailcount/8)*2;
+//			$scope.cuttstorage.l1tailtime=l1tailtime;
+//			$scope.cuttstorage.l1tailcount=l1tailcount;
+//			$scope.cuttstorage.score=score<0?0:score;
 		});
 	};
 	

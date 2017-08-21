@@ -24,6 +24,7 @@ public class StringUtil
 	  return 	EncodeUtil.encodeByMD5("token"+TimeUtil.getDateHour());
 	}
 	
+	
 	/**
 	 * 加密校验
 	 * @param stoken

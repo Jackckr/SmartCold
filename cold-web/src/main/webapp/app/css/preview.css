@@ -5,6 +5,7 @@
     -ms-box-shadow: 3px 0 4px #0d1215;
     box-shadow: 3px 0 4px #0d1215;
 }
+.myBg{background-color: #233038!important;}
 .body-color,
 .main-footer,
 .skin-blue .main-header .navbar,
@@ -147,15 +148,15 @@
 {
     padding: 0;
     margin-top: 15px;
-    line-height: 1.1;
+    line-height: 2;
     word-wrap: break-word;
     word-break: break-all;
-    white-space:normal;
-    font-size: 20px;
+    font-size: 30px;
 }
 .unitModel p{
     font-size: 12px;
     line-height: 1.8;
+    margin-top: 6px;
 }
 /*电量模块*/
 .electricModel{
@@ -184,7 +185,7 @@
 }
 .bodyModel>div>h6{
     position: absolute;
-    top: -36px;
+    bottom:0;
     left: 0;
     width: 100%;
 }
@@ -236,3 +237,69 @@
 .txtModel .unitIcon>i.runnings{
     background: #10c469;
 }
+.ysj{
+    height: 140px;
+    border: 1px solid rgba(0, 0, 0, 0.24);
+    padding: 10px 0;
+    overflow: hidden;
+}
+/*工具按钮*/
+.toolbar{
+    position: fixed;
+    top:67px;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    z-index: 999999999999;
+    overflow: hidden;
+}
+.toolI{
+    position: absolute;
+    top:0;
+    right: 0;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    -webkit-border-radius: 3px 0 0 3px;
+    -moz-border-radius: 3px 0 0 3px;
+    border-radius: 3px 0 0 3px;
+    font-size: 24px;
+    background-color: #7a6e6e;
+    cursor: pointer;
+    z-index: 2;
+}
+#tool{
+    position: absolute;
+    top:0;
+    right: -200px;
+    z-index:1;
+    -webkit-transition: all 1s;
+    -moz-transition: all 1s;
+    -ms-transition: all 1s;
+    -o-transition: all 1s;
+    transition: all 1s;
+    background: #7a6e6e;
+    height: 32px;
+    line-height: 32px;
+    -webkit-border-radius: 3px 0 0 3px;
+    -moz-border-radius: 3px 0 0 3px;
+    border-radius: 3px 0 0 3px;
+}
+.toolbar:hover{
+    width: 222px;
+}
+.toolbar:hover .toolI{
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+.toolbar:hover #tool{
+    right: 32px;
+}
+#tool span{
+    display: inline-block;
+    margin: 0 5px;
+    cursor: pointer;
+}
+/*工具按钮 end*/
