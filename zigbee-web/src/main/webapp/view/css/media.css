@@ -15,10 +15,6 @@
     }
 }
 @media only screen and (max-width: 1279px){
-    .navUl li a, .navLogin li a{
-        width: 70px;
-        text-align: center;
-    }
     .filterBox>ul>li.activeA:before{
         border: none;
     }

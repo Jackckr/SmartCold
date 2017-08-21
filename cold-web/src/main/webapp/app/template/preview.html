@@ -107,12 +107,18 @@
         <div class="bodyModel clearfix">
             <div ng-repeat="blower in blowers" id="blowerPage" ng-show="$index<4">
                 <div class="unitModel"  >
-                    <div class="electricModel myColor omg">
-                        <div class="text-left">{{blower.coldStorageName}}的{{blower.name}}</div>
+                    <div class="electricModel myColor">
+                        <div class="text-left omg">{{blower.coldStorageName}}的{{blower.name}}</div>
                     </div>
                     <div class="txtModel clearfix">
                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <div class="unitIcon"><i  class="iconfont {{blower.cls}}">&#xe732;</i></div>
+                            <div class="unitIcon">
+                                 <span class="unitBg {{blower.cls}}">
+                                   <i  class="fa fa-support"></i>
+                                </span>
+
+                            </div>
+
                         </div>
                         <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                             <p class="omg">制冷累计：{{blower.runTime}}H</p>
@@ -214,12 +220,16 @@
         <div class="bodyModel clearfix">
             <div ng-repeat="blower in blowers" id="blowerPage" >
                 <div class="unitModel"  >
-                    <div class="electricModel myColor omg">
-                        <div class="text-left">{{blower.coldStorageName}}的{{blower.name}}</div>
+                    <div class="electricModel myColor">
+                        <div class="text-left omg">{{blower.coldStorageName}}的{{blower.name}}</div>
                     </div>
                     <div class="txtModel clearfix">
                         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                            <div class="unitIcon"><i  class="iconfont {{blower.cls}}">&#xe732;</i></div>
+                            <div class="unitIcon">
+                                <span class="unitBg {{blower.cls}}">
+                                    <i  class="fa fa-support"></i>
+                                </span>
+                            </div>
                         </div>
                         <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                             <p class="omg">制冷累计：{{blower.runTime}}H</p>
