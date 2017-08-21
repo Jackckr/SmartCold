@@ -64,6 +64,19 @@ public class StorageServiceImpl implements StorageService {
 	
 	
 	@Override
+	public List<StorageKeyValue> findByToolNums(int type, int oid, String key, int nums) {
+		Date startTime=null;if(nums==1){startTime=TimeUtil.getBeforeMinute(70);}else{startTime=TimeUtil.getBeforeHOUR(2);}
+		List<DeviceObjectMappingEntity> deviceList = deviceObjectMappingDao.findByTypeOid(type, oid);
+		if (SetUtil.isnotNullList(deviceList)) {
+			return storageDataCollectionDao.findLastNPoint(null, deviceList.get(0).getDeviceid(), key, startTime,new Date(),nums);
+		} else {
+			String table = StorageType.getStorageType(type).getTable();
+			List<StorageKeyValue> result = storageKeyValueDao.findByNums(table, oid, key,startTime,new Date(), nums);
+			return result;
+		}
+	}
+	
+	@Override
 	public List<StorageKeyValue> findByNums(int type, int oid, String key, int nums) {
 		Date startTime=null;if(nums==1){startTime=TimeUtil.getBeforeMinute(30);}else{startTime=TimeUtil.getBeforeHOUR(2);}
 		List<DeviceObjectMappingEntity> deviceList = deviceObjectMappingDao.findByTypeOid(type, oid);
@@ -97,6 +110,16 @@ public class StorageServiceImpl implements StorageService {
 		}
 	}
 	
+	
+	@Override
+	public List<StorageKeyValue> findByTime(int type, int oid, String key,Date startTime, Date endTime, int nums) {
+		List<DeviceObjectMappingEntity> deviceList =deviceObjectMappingDao.findByTypeOid(type, oid);
+		if (SetUtil.isnotNullList(deviceList)) {
+			return storageDataCollectionDao.findLastNPoint(null,  deviceList.get(0).getDeviceid(), key, startTime,new Date(),nums);
+		} else {
+			return storageKeyValueDao.findByNums(StorageType.getStorageType(type).getTable(), oid, key, startTime,new Date(),nums);
+		}
+	}
 	
 	
 	@Override
@@ -145,15 +168,7 @@ public class StorageServiceImpl implements StorageService {
 
 
 
-	@Override
-	public List<StorageKeyValue> findByTime(int type, int oid, String key,Date startTime, Date endTime, int nums) {
-		List<DeviceObjectMappingEntity> deviceList =deviceObjectMappingDao.findByTypeOid(type, oid);
-		if (SetUtil.isnotNullList(deviceList)) {
-			return storageDataCollectionDao.findLastNPoint(null,  deviceList.get(0).getDeviceid(), key, startTime,new Date(),nums);
-		} else {
-			return storageKeyValueDao.findByNums(StorageType.getStorageType(type).getTable(), oid, key, startTime,new Date(),nums);
-		}
-	}
+	
 
 	
 }

@@ -32,6 +32,24 @@ public class CompressorBlowerServiceImpl implements CompressorBlowerService {
 	private StorageService storageService;
 
 	@Override
+	public BlowerDTO findByBlowerId(int blowerId) {
+		BlowerDTO blowerDTO = new BlowerDTO();
+		List<StorageKeyValue> infos;
+		infos = storageService.findByToolNums(StorageType.BLOWER.getType(), blowerId,"isDefrosting", 1);
+		blowerDTO.setIsDefrosting(infos.size() > 0 ? infos.get(0).getValue().intValue() : 0);
+		infos = storageService.findByToolNums(StorageType.BLOWER.getType(), blowerId,"isRunning", 1);
+		blowerDTO.setIsRunning(infos.size() > 0 ? infos.get(0).getValue().intValue() : 0);
+		// 计算化霜累计时间/制冷累计时间
+		infos = storageService.findByToolNums(StorageType.BLOWER.getType(),blowerId,"totalRunning", 1);
+		blowerDTO.setRunTime(infos.size() > 0 ? infos.get(0).getValue().intValue() : 0);
+		infos = storageService.findByToolNums(StorageType.BLOWER.getType(),blowerId,"totalDefrosting", 1);
+		blowerDTO.setDefrostTime(infos.size() > 0 ? infos.get(0).getValue().intValue() : 0);
+		return blowerDTO;
+	}
+	
+	
+	
+	@Override
 	public List<BlowerDTO> findByRdcId(int rdcId) {
 		List<ColdStorageSetEntity> storageIdList = coldStorageSetDao.findByRdcId(rdcId);
 		List<BlowerDTO> blowerList = Lists.newArrayList();
@@ -47,15 +65,15 @@ public class CompressorBlowerServiceImpl implements CompressorBlowerService {
 						blowerDTO.setColdStorageId(obj.getColdStorageId());
 						blowerDTO.setCompressorGroupId(obj.getCompressorGroupId());
 						blowerDTO.setDefrostingTemperature(obj.getDefrostingTemperature());
-						infos = storageService.findByNums(StorageType.BLOWER.getType(), obj.getId(),"isDefrosting", 1);
+						infos = storageService.findByToolNums(StorageType.BLOWER.getType(), obj.getId(),"isDefrosting", 1);
 						blowerDTO.setIsDefrosting(infos.size() > 0 ? infos.get(0).getValue().intValue() : 0);
-						infos = storageService.findByNums(StorageType.BLOWER.getType(), obj.getId(),"isRunning", 1);
+						infos = storageService.findByToolNums(StorageType.BLOWER.getType(), obj.getId(),"isRunning", 1);
 						blowerDTO.setIsRunning(infos.size() > 0 ? infos.get(0).getValue().intValue() : 0);
 						blowerDTO.setColdStorageName(coldStorageSetEntity.getName());
 						// 计算化霜累计时间/制冷累计时间
-						infos = storageService.findByNums(StorageType.BLOWER.getType(), obj.getId(),"totalRunning", 1);
+						infos = storageService.findByToolNums(StorageType.BLOWER.getType(), obj.getId(),"totalRunning", 1);
 						blowerDTO.setRunTime(infos.size() > 0 ? infos.get(0).getValue().intValue() : 0);
-						infos = storageService.findByNums(StorageType.BLOWER.getType(), obj.getId(),"totalDefrosting", 1);
+						infos = storageService.findByToolNums(StorageType.BLOWER.getType(), obj.getId(),"totalDefrosting", 1);
 						blowerDTO.setDefrostTime(infos.size() > 0 ? infos.get(0).getValue().intValue() : 0);
 						blowerList.add(blowerDTO);
 					}
@@ -64,5 +82,6 @@ public class CompressorBlowerServiceImpl implements CompressorBlowerService {
 		}
 		return blowerList;
 	}
-	
+
+
 }

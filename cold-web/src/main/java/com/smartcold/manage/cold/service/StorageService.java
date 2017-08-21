@@ -15,6 +15,8 @@ public interface StorageService {
 
 	List<StorageKeyValue> findByNums(int type, int oid, String key, int nums);
 
+	List<StorageKeyValue> findByToolNums(int type, int oid, String key, int nums);
+	
 	List<StorageKeyValue> findByNums(StorageType stype, int oid, String key, int nums);
 
 	List<StorageKeyValue> findByTime(int type, int oid, String key, Date startTime, Date endTime, int nums);
@@ -28,6 +30,7 @@ public interface StorageService {
 	Map<String, Map<String, List<ColdStorageAnalysisEntity>>> findAnalysisByRdcidKeyDate(int rdcid, List<String> keys, Date startTime, Date endTime);
 	
 	List<StorageKeyValue> findByTimeFormat(int type, int oid, String key, Date startTime, Date endTime,int daysBetween,String dateFormat,String orderBy);
+
 	
 	
 }

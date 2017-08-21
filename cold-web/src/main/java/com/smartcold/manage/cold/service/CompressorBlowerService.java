@@ -10,4 +10,6 @@ import com.smartcold.manage.cold.dto.BlowerDTO;
 public interface CompressorBlowerService {
 
 	List<BlowerDTO> findByRdcId(int userid);
+
+	BlowerDTO findByBlowerId(int blowerId);
 }

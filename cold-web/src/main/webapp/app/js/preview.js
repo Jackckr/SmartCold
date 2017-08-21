@@ -5,7 +5,6 @@
  * 
  */
 coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout, $interval,$http,$rootScope, baseTools) {
-	   $scope.blowers = null;
        $scope.endTime= new Date(),  
        $scope.priveseting={isOverTemp:true};
        $scope.statusmode=[["stop","run"],['danger','runnings','warnings']];
@@ -30,13 +29,8 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
     	   if( !$scope.priveseting.isOverTemp){ angular.forEach($scope.isovTemp,function(item,index){  $scope.isovTemp[index]=false;}); }
        };
        $scope.rdclist=$rootScope.vm.allUserRdcs;//拿到所有冷库
-       console.log("当前冷库长度"+$scope.rdclist.length);
-       //视图切换
-   
-       
-   
-       
-    
+//       console.log("当前冷库长度"+$scope.rdclist.length);
+
        //=================================================================1.温度===================================================================================
        $scope.initTempset=function(startTime,endTime){
     	   angular.forEach($rootScope.mystorages,function(item){	
@@ -54,15 +48,15 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
        };
        $scope.getTemp=function(oid,oids,names,startTime,endTime){
     	   $http.get('/i/baseInfo/getKeyValuesByTime', { params: {type:18,"oid": oid, oids:oids,names:names, 'key':'Temp', "startTime": baseTools.formatTime(startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (data) {
-    		   var temp=0;
+    		   var temp=0,sccount=0;
     		   angular.forEach(oids,function(obj,i){
     			  if(data[obj].length>0){ 
-    				  temp+=data[obj][0]['value'];
+    				  temp+=data[obj][0]['value']; sccount++;
     			  }
     		   });
-    		   if(temp!=0){temp=temp/oids.length;}
+    		   if(temp!=0){temp=temp/sccount;}
     		   if($scope.isNumber($scope.cuttTemp[oid])&&temp==0){ temp=$scope.cuttTemp[oid]; }
-    		   $scope.cuttTemp[oid]=temp==0?"--": parseFloat((temp/oids.length).toFixed(2));
+    		   $scope.cuttTemp[oid]=temp==0?"--": parseFloat(temp.toFixed(2));
     		   $scope.cuttrestime[0]=new Date();
     	   });
     	   if($scope.priveseting.isOverTemp){//加载告警
@@ -84,7 +78,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
     	   $http.get('/i/baseInfo/getKeyValuesByTime', { params: {type:10, oids:oid, 'key':'PWC', "startTime": baseTools.formatTime(startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (data) {
     		   var pwc=data[oid].length>0?data[oid][0]['value']:0;
     		   if($scope.isNumber($scope.cuttrepwc[oid])&&pwc==0){ pwc=$scope.cuttrepwc[oid]; }
-    			$scope.cuttrepwc[oid]=pwc==0?"--":pwc;
+    			$scope.cuttrepwc[oid]=pwc==0?"--":pwc.toFixed(2);
     		    $scope.cuttrestime[1]=new Date();
     	   });
     	   
@@ -121,7 +115,8 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
     	   angular.forEach($rootScope.compressorGroups,function(item){	
     		   angular.forEach(item.compressors,function(obj){	
     			   $http.get('/i/baseInfo/getKeyValuesByTime', { params: {type:5, oids:obj.id, 'key':'run', "startTime": baseTools.formatTime(startTime ), "endTime": baseTools.formatTime(endTime)}}).success(function (data) {
-    				   obj.status=data[obj.id].length>0?$scope.statusmode[0][data[obj.id][0]['value']]:"stop";
+    				   obj.status=data[obj.id].length>0?$scope.statusmode[0][data[obj.id][0]['value']]:(obj.old_status?obj.old_status:'stop');//
+    				   obj.old_status=obj.status;
     				   $scope.cuttrestime[2]=new Date();
     	    	   });
     		   });
@@ -131,47 +126,35 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
        //=================================================================4.风机===================================================================================
        //4.1获得风机配置
        $scope.initBlowers  = function () {
-           $http.get('/i/compressorBlower/findByRdcId', {  params: {  "rdcId": $rootScope.rdcId } }).success(function (result) {
-               $scope.blowers = result;
-               angular.forEach($rootScope.mystorages,function(obj){ 
-	               	var  stblower=[];
-	               	angular.forEach( $scope.blowers,function(item){ 
-	                            if(obj.id==item.coldStorageId){
-	                            	stblower.push(item);
-	                            }
-	                            item.runTime = parseFloat(item.runTime / 3600).toFixed(2);
-	                            item.defrostTime = parseFloat(item.defrostTime / 3600).toFixed(2);
-	                            if( item.isRunning==1){item.st=1;}else if( item.isDefrosting==1){item.st=2;}else{item.st=0;}
-	                            item.cls= $scope.statusmode[1][item.st] ;
-	                  }); 
-               	  obj.blowers=stblower;
-               }); 
-               $scope.cuttrestime[3]=new Date();
+           $http.get('i/compressorBlower/findByRdcId', {  params: {  "rdcId": $rootScope.rdcId } }).success(function (result) {
+        	   $scope.blowers = result;
+               	angular.forEach( $scope.blowers,function(item){ 
+                            item.runTime = parseFloat(item.runTime / 3600).toFixed(2);
+                            item.defrostTime = parseFloat(item.defrostTime / 3600).toFixed(2);
+                            if( item.isRunning==1){item.st=1;}else if( item.isDefrosting==1){item.st=2;}else{item.st=0;}
+                            item.cls= $scope.statusmode[1][item.st] ;
+                  }); 
+                $scope.cuttrestime[3]=new Date();
+              
            });
        };
        //4.2刷新
        $scope.refBlowers  = function (startTime,endTime) {
-    	   angular.forEach($rootScope.mystorages,function(obj){ 
-              	angular.forEach( obj.blowers,function(item){ 
-              		 $http.get('/i/baseInfo/getKeysValueByTime', { params: {type:4, oid:item.blowerId, keys:['isDefrosting','isRunning'], "startTime": baseTools.formatTime(startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (data) {
-              			 item.isRunning= data['isRunning'].length>0?data['isRunning'][0]['value']:item.isRunning;
-              			 item.isDefrosting= data['isDefrosting'].length>0?data['isDefrosting'][0]['value']:item.isDefrosting;
+              	angular.forEach($scope.blowers,function(item){ 
+              		 $http.get('/i/compressorBlower/findByBlowerId', { params: {blowerId:item.blowerId}}).success(function (data) {
+              			 item.runTime = parseFloat(data.runTime / 3600).toFixed(2);
+              			 item.defrostTime = parseFloat(data.defrostTime / 3600).toFixed(2);
+              			 item.isRunning= data['isRunning'];
+              			 item.isDefrosting= data['isDefrosting'];
               			  if( item.isRunning==1){item.st=1;}else if( item.isDefrosting==1){item.st=2;}else{item.st=0;}
                           item.cls= $scope.statusmode[1][item.st] ;
               			  $scope.cuttrestime[3]=new Date();
               	   });
                  });
-            }); 
        };
 	 
 	    
-	     //刷新数据
-	    $scope.refdata=function(){
-	    	var endtime=new Date();
-	    	$scope.refBlowers( $scope.cuttrestime[3] , endtime);
-	    	$scope.initTempset($scope.cuttrestime[0] ,endtime );
-	    	$scope.initCompressorStatus($scope.cuttrestime[2] , endtime);
-	    };
+	  
 	    
 	    //============================================================================监听冷库变化====================
 	    $scope.init_Temp=function(){
@@ -223,26 +206,29 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
 				 }
 		 };
 		 $scope.changeRdc=function(){
-			 $timeout(	 $scope.refData ,1500);
+			 $timeout(	 $scope.intData ,1500);
 		 };
 		 
-	    $scope.refData=function(){
+	    $scope.intData=function(){
 	    	 $scope.init_Temp();
 	    	 $scope.init_pwc();
 	    	 $scope.initPWCchar();
 	    	 $scope.init_compressorGroups();
 	    };
-	    
+	    //刷新数据
+	    $scope.refdata=function(){
+	    	var endtime=new Date();
+	    	$scope.refBlowers( $scope.cuttrestime[3] , endtime);
+	    	$scope.initTempset($scope.cuttrestime[0] ,endtime );
+	    	$scope.initCompressorStatus($scope.cuttrestime[2] , endtime);
+	    };
 	   
 	    $scope.$watch('rdcId', $scope.changeRdc,true);//监听冷库变化
 		 
 		//定时刷新任务30s 
 	    clearInterval($rootScope.timeTicket);
-	    $rootScope.timeTicket = setInterval(function () { $scope.refData; }, 30000);
+	    $rootScope.timeTicket = setInterval( $scope.refdata, 30000);
 	    $scope.$on('$destroy',function(){ clearInterval($rootScope.timeTicket);  });
-
-       
-       
 //       $scope.viewController=function(){
 //    	   $scope.view = this, nameArray=[], indexCurrent = 0;
 //    	   angular.forEach($scope.rdclist,function(obj){	

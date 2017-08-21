@@ -35,7 +35,7 @@ public class UtilController extends BaseController {
 	@RequestMapping("/getDFSData")
 	public String getDFSData()  {return DFSCollectionController.dfsdata;}
 	 @RequestMapping(value = "/gettoke")
-	 public String gettoke(String toke){if(("admin"+TimeUtil.getDateHour()).equals(toke)){ return EncodeUtil.encodeByMD5("toke"+TimeUtil.getDay());}return null;}
+	 public String gettoke(String toke){if(("admin"+TimeUtil.getDateHour()).equals(toke)){ return EncodeUtil.encodeByMD5("toke"+TimeUtil.getDateHour());}return null;}
 	 @RequestMapping(value = "/get_dfsconfig")
 	 public Object getconfig(String toke,String rdcid){if(StringUtil.verifyToken(toke)&&StringUtil.isnotNull(rdcid)){ return  DFSCollectionController.configchcateHashMap.get(rdcid);} return -1; }
 	 @RequestMapping(value = "/del_dfsconfig")
@@ -51,7 +51,7 @@ public class UtilController extends BaseController {
 	 @RequestMapping("/getZSData") //获得主机内存//内存总数//最大可用内存//当前JVM空闲内存-- double free1 = max - total + free;//JVM实际可用内存
 	 public LinkedList<String> getZSData()  {return ZsDevService.dataList;}
 	 @RequestMapping(value = "/del_devcache")//删除缓存
-	 public Object deldevcache(String toke){if(StringUtil.verifyToken(toke)){ZsDevService.clerCache();	return true;}return -1;}
+	 public Object deldevcache(String toke){if(StringUtil.verifyToken(toke)){ZsDevService.clerCache();	return true;}return false;}
 	 
 	 
 	 

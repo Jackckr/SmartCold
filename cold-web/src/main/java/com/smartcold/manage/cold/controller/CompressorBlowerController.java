@@ -23,4 +23,9 @@ public class CompressorBlowerController {
 	public Object findByRdcId(@RequestParam int rdcId) {
 		return compressorBlowerService.findByRdcId(rdcId);
 	}
+	@RequestMapping(value = "/findByBlowerId", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findByBlowerId(@RequestParam int blowerId) {
+		return compressorBlowerService.findByBlowerId(blowerId);
+	}
 }
