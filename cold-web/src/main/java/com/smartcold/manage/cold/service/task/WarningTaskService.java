@@ -7,6 +7,10 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
+import com.smartcold.manage.cold.dao.olddb.RdcMapper;
+import com.smartcold.manage.cold.entity.olddb.Rdc;
+import com.smartcold.manage.cold.util.RemoteUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -37,6 +41,8 @@ public class WarningTaskService  {
 	private TempWarningService tempWarningServer;
 	@Autowired
 	private SysWarningsInfoMapper sysWarningsInfoMapper;
+	@Autowired
+	private ColdStorageSetMapper coldStorageSetMapper;
  
 	private static int excute=0;
     private static 	List<ColdStorageSetEntity> allMonitorTempSet=Lists.newArrayList();
@@ -224,7 +230,7 @@ public class WarningTaskService  {
 											double overtime = Tv[i];//不同级别超温数据不定
 											long minuteBetween = TimeUtil.minuteBetween(Lt[i],temp.getAddtime());
 							                 if(minuteBetween >=overtime){
-							                	 allWarningList.put(colditem.getId(), new SysWarningsInfo(colditem.getRdcId(), colditem.getId(), 1,1, TimeUtil.getDateTime(Lt[i]),TimeUtil.getDateTime(temp.getAddtime()),minuteBetween,colditem.getName()+"超温" , colditem.getName()+"发生超温1级超温告警,超基准温度（"+basTemp+"）:+"+((i+1)*2)+" ℃, 超温时长："+minuteBetween+"分钟，超温次数：1次", TimeUtil.getDateTime()));
+							                	 allWarningList.put(colditem.getId(), new SysWarningsInfo(colditem.getRdcId(), colditem.getId(), 1,1, TimeUtil.getDateTime(Lt[i]),TimeUtil.getDateTime(temp.getAddtime()),minuteBetween,colditem.getName()+"超温" , colditem.getName()+"发生超温1级超温告警,超基准温度（"+basTemp+"）:+"+((i+1)*2)+" ℃, 超温时长："+minuteBetween+"分钟，超温次数：1次", TimeUtil.getDateTime(),colditem.getName(),colditem.getBaseTemp(),colditem.getTempdiff()));
 							            		 isreturn=true;
 							            		 break;
 							            	 }
@@ -241,7 +247,7 @@ public class WarningTaskService  {
 										double overtime = Tv[i];//不同级别超温数据不定
 										long minuteBetween = TimeUtil.minuteBetween(Lt[i],endtime)+1;
 						                 if(minuteBetween >=overtime){
-						                	 allWarningList.put(colditem.getId(),new SysWarningsInfo(colditem.getRdcId(), colditem.getId(), 1,i>2?1:3, TimeUtil.getDateTime(Lt[i]),TimeUtil.getDateTime(endtime),minuteBetween, colditem.getName()+"超温" , colditem.getName()+"在"+TimeUtil.getDateTime(Lt[i])+"发生"+(i>2?1:3)+"级超温告警,超基准温度（"+basTemp+"）:+"+((i+1)*2)+" ℃, 超温时长："+minuteBetween+"分钟，超温次数：1次", TimeUtil.getDateTime()));
+						                	 allWarningList.put(colditem.getId(),new SysWarningsInfo(colditem.getRdcId(), colditem.getId(), 1,i>2?1:3, TimeUtil.getDateTime(Lt[i]),TimeUtil.getDateTime(endtime),minuteBetween, colditem.getName()+"超温" , colditem.getName()+"在"+TimeUtil.getDateTime(Lt[i])+"发生"+(i>2?1:3)+"级超温告警,超基准温度（"+basTemp+"）:+"+((i+1)*2)+" ℃, 超温时长："+minuteBetween+"分钟，超温次数：1次", TimeUtil.getDateTime(),colditem.getName(),colditem.getBaseTemp(),colditem.getTempdiff()));
 						                	 break;
 						            	 }
 									}
@@ -255,7 +261,16 @@ public class WarningTaskService  {
 				    for (Integer key : allWarningList.keySet()) {
 					    addAlercoun(key);
 					    newextsid.remove(key);
-					    warningList.add(allWarningList.get(key));
+						SysWarningsInfo sysWarningsInfo = allWarningList.get(key);
+						warningList.add(sysWarningsInfo);
+						HashMap<String, Object> stringObjectHashMap = new HashMap<>();
+						stringObjectHashMap.put("rdc",sysWarningsInfo.getName());
+						stringObjectHashMap.put("coldStorageName",coldStorageSetMapper.findById(sysWarningsInfo.getObjid()).getName());
+						stringObjectHashMap.put("level",sysWarningsInfo.getLevel());
+						stringObjectHashMap.put("basTemp",sysWarningsInfo.getBasTemp());
+						stringObjectHashMap.put("diffTemp",sysWarningsInfo.getTempdiff());
+						stringObjectHashMap.put("ovtTempTime",sysWarningsInfo.getLongtime());
+						RemoteUtil.httpPost("http://liankur.com/i/warning/waringNotice",stringObjectHashMap);
 					 }
 					 this.sysWarningsInfoMapper.addSyswarningsinfo(warningList);
 			    }

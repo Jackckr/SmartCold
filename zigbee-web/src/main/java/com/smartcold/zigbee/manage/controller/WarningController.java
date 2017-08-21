@@ -75,4 +75,10 @@ public class WarningController {
 		}
 		return ResponseData.newSuccess();
 	}
+
+	@RequestMapping(value = "/waringNotice")
+	@ResponseBody
+	public void waringNotice(String rdc,String coldStorageName,String level,String basTemp,String diffTemp,String ovtTempTime,String telephone) throws ApiException {
+		new TelephoneVerifyUtil().waringNotice(rdc,coldStorageName,level,basTemp,diffTemp,ovtTempTime,telephone);
+	}
 }

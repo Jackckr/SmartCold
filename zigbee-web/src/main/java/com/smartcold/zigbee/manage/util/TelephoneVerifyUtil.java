@@ -101,6 +101,25 @@ public class TelephoneVerifyUtil {
 			System.err.println("注册验证码：code"+code);
 			return code;
 		}
+
+
+	/**
+	 * 360告警通知
+	 * @param telephone
+	 * @return
+	 * @throws ApiException
+	 */
+	public void waringNotice(String rdc,String coldStorageName,String level,String basTemp,String diffTemp,String ovtTempTime,String telephone) throws ApiException {
+		AlibabaAliqinFcSmsNumSendRequest req = new AlibabaAliqinFcSmsNumSendRequest();
+		req.setExtend("123456");
+		req.setSmsType("normal");
+		req.setSmsFreeSignName("冷库360");
+		req.setSmsParamString("{\"product\":\"冷库360\",\"rdc\":\""+rdc+"\",\"coldStorageName\":\"" + coldStorageName + "\",\"level\":\"" + level + "\",\"basTemp\":\"" + basTemp + "\",\"diffTemp\":\"" + diffTemp + "\",\"ovtTempTime\":\"" + ovtTempTime + "\"}");
+		req.setRecNum(telephone);
+		req.setSmsTemplateCode("SMS_12145749");
+		AlibabaAliqinFcSmsNumSendResponse rsp = client.execute(req);
+		System.out.println(rsp.getBody());
+	}
 		
 		/**
 		 * 向下单者发送订单通知
