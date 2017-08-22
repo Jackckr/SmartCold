@@ -149,70 +149,86 @@
 <script>
     var phoneReg=/^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/,usefulName=false,verCode=null,verFlag=false;
     function userNameExist() {//用户名检查
-        $.post('/i/user/userNameVerify',{
-            username:$("#username").val()
-        }, function(data){
-            if(!data){
-                layer.tips('用户名已存在', '#username', {
-                    tips: [1, '#0FA6D8'] //还可配置颜色
-                });
-                usefulName=false;
-                return false
-            }else{
-                usefulName=true
-            }
-        });
-    }
-    $("#getCode").click(function(){//发送验证码
-        $.ajax({url:"/i/user/checkTelephone",data:{telephone:$('input[name=telephone]').val()},type:"post",success:function (data) {
-            if(data){
-                if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test($("#username").val())){
-                    layer.tips('用户名不能为空并且不能有特殊字符', '#username', {
+        if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test($("#username").val())){
+            layer.tips('用户名不能为空并且不能有特殊字符', '#username', {
+                tips: [1, '#0FA6D8'] //还可配置颜色
+            });
+            usefulName=false;
+            return false
+        }else if(!/^[a-zA-Z0-9][a-zA-Z0-9]{2,23}$/.test($("#username").val())){
+            layer.tips('用户名不能包含中文和特殊字符，长度不得低于3位~', '#username', {
+                tips: [1, '#0FA6D8'] //还可配置颜色
+            });
+            usefulName=false;
+            return false
+        }else{
+            $.post('/i/user/userNameVerify',{
+                username:$("#username").val()
+            }, function(data){
+                if(!data){
+                    layer.tips('用户名已存在', '#username', {
                         tips: [1, '#0FA6D8'] //还可配置颜色
                     });
-                    return false
-                }else if(!/^[a-zA-Z0-9][a-zA-Z0-9]{2,23}$/.test($("#username").val())){
-                    layer.tips('用户名不能包含中文和特殊字符，长度不得低于3位~', '#username', {
-                        tips: [1, '#0FA6D8'] //还可配置颜色
-                    });
+                    usefulName=false;
                     return false
                 }else{
-                    if(phoneReg.test($('input[name=telephone]').val().trim())){
-                        $('input[name=telephone]').addClass('layui-disabled').attr('readonly','readonly');
-                        $("#getCode").addClass('layui-disabled').attr('disabled','disabled');
-                        $.post('/i/ShareRdcController/sharvistPhone.json',{
-                            telephone:$('input[name=telephone]').val().trim(),
-                            key : 'signUpCode'
-                        }, function(data){
-                           if(data.success){verCode=data.entity;}
-                            layer.tips(data.message, '#verifyCode', {
-                                tips: [1, '#0FA6D8'] //还可配置颜色
-                            });
-                        });
-                    }else{
-                        layer.tips('请输入正确的手机号', '#verifyCode', {
-                            tips: [1, '#0FA6D8'] //还可配置颜色
-                        });
-                    }
+                    usefulName=true
                 }
-            }else {
-                layer.tips('该手机号已被注册！', '#verifyCode', {
+            });
+        }
+
+    };
+    $("#verifyCode").keyup(function () {//手机号检查是否被注册
+        if(!usefulName){
+            layer.tips('用户名不可用，请更改', '#username', {
+                tips: [1, '#0FA6D8'] //还可配置颜色
+            });
+            return false
+        }else{
+            $.ajax({url:"/i/user/checkTelephone",data:{telephone:$('input[name=telephone]').val()},type:"post",success:function (data) {
+                if(!data){
+                    layer.tips('该手机号已被注册！', '#verifyCode', {
+                        tips: [1, '#0FA6D8'] //还可配置颜色
+                    });
+                    $("#getCode").addClass('layui-disabled').attr('disabled','disabled');
+                }else{
+                    $("#getCode").removeClass('layui-disabled').attr('disabled',false);
+                }
+            }});
+        }
+    })
+    $("#getCode").click(function() {//发送验证码
+        if (phoneReg.test($('input[name=telephone]').val().trim())) {
+            $('input[name=telephone]').addClass('layui-disabled').attr({'readonly': 'readonly','disabled': 'disabled'});
+            $("#getCode").addClass('layui-disabled').attr('disabled', 'disabled');
+            $.post('/i/ShareRdcController/sharvistPhone.json', {
+                telephone: $('input[name=telephone]').val().trim(),
+                key: 'signUpCode'
+            }, function (data) {
+                if (data.success) {
+                    verCode = data.entity;
+                }
+                layer.tips(data.message, '#verifyCode', {
                     tips: [1, '#0FA6D8'] //还可配置颜色
                 });
-            }
-        }});
+            });
+        } else {
+            layer.tips('请输入正确的手机号', '#verifyCode', {
+                tips: [1, '#0FA6D8'] //还可配置颜色
+            });
+        }
     });
-    $("#verCode").blur(function () {
+    $("#verCode").blur(function () {//验证码正确性检查
         var oval=$.trim($(this).val());
         if(oval==''){
             layer.tips('验证码不能为空~', '#verCode', {
-                tips: [1, '#0FA6D8'] //还可配置颜色
+                tips: [1, '#0FA6D8']
             });
             verFlag=false;
         }else{
             if(oval!=verCode){
                 layer.tips('验证码错误~请重新输入~', '#verCode', {
-                    tips: [1, '#0FA6D8'] //还可配置颜色
+                    tips: [1, '#0FA6D8']
                 });
                 verFlag=false;
             }else{
@@ -269,7 +285,7 @@
                 layer.alert('请确认您已同意链库使用协议', {icon:6});
                 return false
             }else if(!usefulName){
-                layer.alert('用户名已存在,请更换', {icon:6});
+                layer.alert('用户名不可用，请更改', {icon:6});
                 return false
             }
             $.ajax({
