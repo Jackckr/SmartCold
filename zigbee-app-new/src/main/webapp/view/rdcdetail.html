@@ -294,8 +294,8 @@
             <img ng-src="{{eva.avatar}}" alt=""/>
         </li>
         <li>
-            <p class='ellipsis'>{{(eva.commerName.trim()==undefined ||
-                eva.commerName.trim()=="")?eva.nickname:eva.commerName}}</p>
+            <p class='ellipsis'>{{(eva.nickname==undefined ||
+                eva.nickname=="")?eva.commerName:eva.nickname}}</p>
             <div class="equal clearfix">
                 <ul class='star fl'>
                     <li class="{{eva.grade>=1?'filled':''}}">★</li>

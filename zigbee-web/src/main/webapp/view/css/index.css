@@ -360,10 +360,42 @@
 .txtlist li>a:hover{
     color: #fff;
 }
+.txtlist li>a:hover p{
+    width: 200%;
+    -webkit-animation: marquee 5s linear infinite;
+    -moz-animation: marquee 5s linear infinite;
+    -ms-animation: marquee 5s linear infinite;
+    -o-animation: marquee 5s linear infinite;
+    animation: marquee 5s linear infinite;
+    -webkit-animation-delay:0.5s;
+    -moz-animation-delay:0.5s;
+    -ms-animation-delay:0.5s;
+    animation-delay:0.5s;
+}
 .txtlist li>a>p{
     background: transparent;
     position: relative;
     z-index:1;
+}
+@-webkit-keyframes marquee {
+    0% { left: 0; }
+    100% { left: -100%; }
+}
+@-moz-keyframes marquee {
+    0% { left: 0; }
+    100% { left: -100%; }
+}
+@-ms-keyframes marquee {
+    0% { left: 0; }
+    100% { left: -100%; }
+}
+@-o-keyframes marquee {
+    0% { left: 0; }
+    100% { left: -100%; }
+}
+@keyframes marquee {
+    0%{left:0}
+    100% { left: -100%; }
 }
 /*不要动画就删除以下代码 END*/
 .txtlist a span{

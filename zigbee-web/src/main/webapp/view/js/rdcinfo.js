@@ -241,8 +241,9 @@ function getList(typeCode,datatype,index) {
                     }else if(val.grade==3){grade='<i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont">&#xe60c;</i><i class="iconfont">&#xe60c;</i>';
                     }else if(val.grade==4){grade='<i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont">&#xe60c;</i>';
                     }else{grade='<i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i><i class="iconfont filled">&#xe60c;</i>';}
+                    val.nickname==undefined?commerName=val.commerName:commerName=val.nickname;
                     str='<div class="clearfix commentlist"><div class="imgleft">'+
-                        '<img src="'+val.avatar+'"><p>'+val.commerName+'</p><p>'+val.addTime+'</p><p>'+grade+'</p></div>'+
+                        '<img src="'+val.avatar+'"><p>'+commerName+'</p><p>'+val.addTime+'</p><p>'+grade+'</p></div>'+
                         '<div class="imgright"><p>'+val.content+'</p>'+
                         '<ul class="commentImg" id="commentImg'+i+'">'+imglist+'</ul></div></div>'
                 };
