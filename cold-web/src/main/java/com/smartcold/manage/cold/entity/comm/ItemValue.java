@@ -6,6 +6,8 @@ public class ItemValue {
 
 	private int id;
 
+	private String name;
+	
 	private double value;
 
 	private Date addtime;
@@ -15,12 +17,14 @@ public class ItemValue {
 		super();
 	}
 
-	public ItemValue(int id, double value, Date addtime) {
+	public ItemValue(int id, String name, double value) {
 		super();
 		this.id = id;
+		this.name = name;
 		this.value = value;
-		this.addtime = addtime;
 	}
+
+
 
 	public int getId() {
 		return id;
@@ -28,6 +32,14 @@ public class ItemValue {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public double getValue() {

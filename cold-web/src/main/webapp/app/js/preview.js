@@ -206,7 +206,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
 				 }
 		 };
 		 $scope.changeRdc=function(){
-			 $timeout(	 $scope.intData ,1500);
+			 $timeout(	 $scope.intData ,500);
 		 };
 		 
 	    $scope.intData=function(){
