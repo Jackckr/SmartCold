@@ -126,45 +126,10 @@
                             <span>最多五张(上传3-5张实体图片，且不能一张图片重复上传，图片每张小于10M)</span>
                         </td>
                     </tr>
+
                     <tr class="imgTd">
                         <td colspan="2">
                             <ul class="clearfix" id="storagePics">
-                            </ul>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>冷链委温度达标冷库：<b class="blue">*</b></td>
-                        <td class="rdcImg">
-                            <div id="tempStandDiv">
-                                <label><input value="1" type="radio" name="isJoinStand">是</label>
-                                <label><input value="2" type="radio" onclick="delstandard()"  name="isJoinStand">愿意申报</label>
-                                <label><input value="3" type="radio" onclick="delstandard()" name="isJoinStand">否</label>
-                            </div>
-                            <div id="successStand" style="display: none">
-                                <label class="orange ng-scope">已通过</label>
-                            </div>
-                            <div id="StandAuditing" style="display: none">
-                                <label class="orange ng-scope">审核中</label>
-                            </div>
-                            <ul id="tempStandUl">
-                                <li class="hide" id="li1">
-                                    <a href="javascript:;" class="ofile"><input id="storageStandPic" type="file" accept="image/gif, image/bmp, image/jpg, image/jpeg, image/png" onchange="standPicChange(this)">上传图片</a>
-                                    <span>请上传温度达标冷库认证铜牌或证书，小于10M</span>
-                                </li>
-                                <li class="hide" id="li2">
-                                    <span>请拨打010-88120448 或者400-1234567 申报</span>
-                                </li>
-                            </ul>
-                            <div>
-                                <span>是否愿意公开冷库温度曲线</span>
-                                <label><input value="1" type="radio" name="openLIne">是</label>
-                                <label><input value="2" type="radio" name="openLIne">否</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="imgTd">
-                        <td colspan="2">
-                            <ul class="clearfix" id="standardPic">
                             </ul>
                         </td>
                     </tr>
@@ -192,6 +157,42 @@
                         <td>备注：</td>
                         <td>
                             <textarea placeholder="备注" name="remark" id="remark"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>冷链委温度达标冷库：</td>
+                        <td class="rdcImg">
+                            <div id="tempStandDiv">
+                                <label><input value="1" type="radio" name="isJoinStand">是</label>
+                                <label><input value="2" type="radio" onclick="delstandard()"  name="isJoinStand">愿意申报</label>
+                                <label><input value="3" type="radio" onclick="delstandard()" name="isJoinStand">否</label>
+                            </div>
+                            <div id="successStand" style="display: none">
+                                <label class="orange ng-scope">已通过</label>
+                            </div>
+                            <div id="StandAuditing" style="display: none">
+                                <label class="orange ng-scope">审核中</label>
+                            </div>
+                            <ul id="tempStandUl">
+                                <li class="hide" id="li1">
+                                    <a href="javascript:;" class="ofile"><input id="storageStandPic" type="file" accept="image/gif, image/bmp, image/jpg, image/jpeg, image/png" onchange="standPicChange(this)">上传图片</a>
+                                    <span>请上传温度达标冷库认证铜牌或证书，小于10M</span>
+                                </li>
+                                <li class="hide" id="li2" style="text-indent: 2em">
+                                    <span>请拨打400-853-5606 申报</span>
+                                </li>
+                            </ul>
+                            <div>
+                                <span>是否愿意公开冷库温度曲线</span>
+                                <label><input value="1" type="radio" name="openLIne">是</label>
+                                <label><input value="2" type="radio" name="openLIne">否</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="imgTd">
+                        <td colspan="2">
+                            <ul class="clearfix" id="standardPic">
+                            </ul>
                         </td>
                     </tr>
                     <tr>

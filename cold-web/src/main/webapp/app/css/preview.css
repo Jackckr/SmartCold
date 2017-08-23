@@ -324,44 +324,6 @@
         transform: rotate(360deg);
     }
 }
-/*
-@keyframes running {
-    0%{
-        -webkit-transform: rotate(0);
-        -moz-transform: rotate(0);
-        -ms-transform: rotate(0);
-        -o-transform: rotate(0);
-        transform: rotate(0);
-    }
-    25%{
-        -webkit-transform: rotate(90deg);
-        -moz-transform: rotate(90deg);
-        -ms-transform: rotate(90deg);
-        -o-transform: rotate(90deg);
-        transform: rotate(90deg);
-    }
-    50%{
-        -webkit-transform: rotate(180deg);
-        -moz-transform: rotate(180deg);
-        -ms-transform: rotate(180deg);
-        -o-transform: rotate(180deg);
-        transform: rotate(180deg);
-    }
-    75%{
-        -webkit-transform: rotate(270deg);
-        -moz-transform: rotate(270deg);
-        -ms-transform: rotate(270deg);
-        -o-transform: rotate(270deg);
-        transform: rotate(270deg);
-    }
-    100%{
-        -webkit-transform: rotate(360deg);
-        -moz-transform: rotate(360deg);
-        -ms-transform: rotate(360deg);
-        -o-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}*/
 .ysj{
     height: 140px;
     border: 1px solid rgba(0, 0, 0, 0.24);
@@ -428,3 +390,65 @@
     cursor: pointer;
 }
 /*工具按钮 end*/
+/*rdc select*/
+.rdcBox {
+    position: relative;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.rdcSecList {
+    text-align: center;
+    background-color: #f4f4f4;
+    padding: 3px;
+    position: absolute;
+    top: 110%;
+    left: 0;
+    z-index: 300;
+}
+
+.rdcBox li {
+    color: #000;
+    min-width: 250px;
+}
+
+.rdcSpan {
+    margin: 0 5px 2px;
+    display: inline-block;
+    position: relative;
+    padding: 4px;
+    background-color: #e4e4e4;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    /*padding-right: 30px;*/
+}
+/*.rdcSpan i{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background-color: #e4e4e4;
+    text-align: center;
+    line-height: 26px;
+    height: 100%;
+    width: 26px;
+    cursor: pointer;
+    font-size: 18px;
+}
+.rdcSpan i:hover{
+    background-color: #f4f4f4;
+    color: #f00;
+}*/
+.showRdcDiv {
+    width: 250px;
+    padding:5px;
+    text-align: center;
+    background-color: #f4f4f4;
+    cursor: pointer;
+    border-radius: 3px;
+}
+.showRdcDiv i{
+    font-size: 10px;
+}

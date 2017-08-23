@@ -335,7 +335,7 @@ function coldValidation(vo) {
     }
     if (vo.name.trim() == "" || vo.provinceId.trim() == "" || vo.cityId.trim() == "" || vo.address.trim() == "" || vo.area.trim() == ""
         || vo.manageType.trim() == "" || vo.storageType.trim() == "" || vo.temperType.trim() == ""||vo.rentSqm.trim()==""||
-        vo.height.trim()=="" || vo.phoneNum.trim() == ""|| !vo.openLIne) {
+        vo.height.trim()=="" || vo.phoneNum.trim() == "") {
         layer.alert('请完善冷库信息！', {icon: 2});
         return false;
     }
@@ -380,10 +380,6 @@ function coldValidation(vo) {
     }
     if(vo.area-vo.rentSqm<0){
         layer.alert('冷库的可出租面积不能大于冷库的总面积！', {icon: 2});
-        return false;
-    }
-    if(vo.isJoinStand==1&&standPic.length<1){
-        layer.alert('请上传冷库温度达标认证图！', {icon: 2});
         return false;
     }
     var phoneNumRex =  /^1[34578]\d{9}$/;

@@ -43,6 +43,47 @@ coldWeb.controller('reportsAnalysis1', function ($scope, $http,$stateParams,$roo
 				$("#rpt_print").attr("disabled", !data.success);
 		}) ;
 	};
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+    $scope.showrdc=false;
+    $scope.showrdclist=function(e){$scope.showrdc=!$scope.showrdc;};
+    $scope.rdcArry=[];
+    function removeByValue(arr, val) {//移除数组中元素
+        for(var i=0; i<arr.length; i++) {
+            if(arr[i] == val) {
+                arr.splice(i, 1);
+                break;
+            }
+        }
+    }
+    $scope.showkeyrdcli=function($event,index){//展示下拉rdc
+        $scope.showrdc=true;
+        var em=$($event.target);
+        if(em.hasClass('select')){
+            em.removeClass("select");
+            removeByValue($scope.rdcArry, $event.target.innerText);
+		}else{
+            em.addClass("select");
+            $scope.rdcArry.push($event.target.innerText);
+		}
+
+        console.log($scope.rdcArry);
+    };
+    $scope.removerdcli=function (index) {//x号删除rdc
+        $scope.rdcArry.splice(index, 1);
+        console.log($scope.rdcArry);
+    };
+
+	
+	
+	
+>>>>>>> 4adba802cf62deb63ec099cae63358cf32e5afac
 	
 	
 	
@@ -71,14 +112,14 @@ coldWeb.controller('reportsAnalysis1', function ($scope, $http,$stateParams,$roo
           $("#rpt_asis_coment").printThis({ importCSS: true,importStyle: true,  pageTitle: $scope.sltit,printContainer: true,  removeInline: false, formValues: true  });//  loadCSS: "/Content/Themes/Default/style.css",
     };
 	$(document).bind('click',function(e){ 
-		if($scope.showobjgroup){
+		if($scope.showobjgroup||$scope.showrdc){
 			 e = e || window.event; //浏览器兼容性 
 			var elem = e.target || e.srcElement; 
 			while (elem) { //循环判断至跟节点，防止点击的是div子元素 
-			if (elem.id && elem.id=='filter_sl_div') {  return;  } 
+			if (elem.id && elem.id=='filter_sl_div'||elem.id=='rdcBox') {  return;  }
 			 elem = elem.parentNode; 
 			}
-			$scope.$apply(function () { $scope.showobjgroup=false; });
+			$scope.$apply(function () { $scope.showobjgroup=false;$scope.showrdc=false; });
 		}
 	});
 	//********************************************************************事件END**********************************************************************
