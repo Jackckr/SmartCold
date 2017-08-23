@@ -21,7 +21,7 @@ import com.smartcold.manage.cold.dao.olddb.QuantitySetMapper;
 import com.smartcold.manage.cold.dao.olddb.RdcMapper;
 import com.smartcold.manage.cold.dao.olddb.TempSetMapper;
 import com.smartcold.manage.cold.dao.olddb.UtilMapper;
-import com.smartcold.manage.cold.entity.comm.ItemObject;
+import com.smartcold.manage.cold.entity.comm.ItemValue;
 import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
 import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
 import com.smartcold.manage.cold.entity.newdb.StorageKeyValue;
@@ -428,7 +428,7 @@ public class QuantityTaskService  {
 		default:
 			return null;
 		}
-		ItemObject obj = this.utilMapper.findObjByID(table, oid);
+		ItemValue obj = this.utilMapper.findObjByID(table, oid);
 		if(obj!=null&&StringUtil.isnotNull(obj.getName())){
 			return new String[]{obj.getId()+"",obj.getName()};
 		}

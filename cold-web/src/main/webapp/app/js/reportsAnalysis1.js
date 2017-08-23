@@ -3,8 +3,8 @@
  * 分析报表
  */
 coldWeb.controller('reportsAnalysis1', function ($scope, $http,$stateParams,$rootScope) {
-    $("#oview").height($(".content-wrapper")[0].clientHeight);
-	$scope.slrdcid=[],$scope.slindex=0,$scope.keytype=1,$scope.sltit="温度分析";
+//    $("#oview").height($(".content-wrapper")[0].clientHeight);
+	$scope.sisrdcid=[],$scope.sisrdcname=[],$scope.slindex=0,$scope.keytype=1,$scope.sltit="温度分析";
 	if( $rootScope.user.role==3){$scope.rdclist=[$rootScope.vm.choserdc];}else{$scope.rdclist=$rootScope.vm.allUserRdcs;}//rdc策略
 	$scope.getDateTimeStringBefore = function(before){ return new Date(new Date().getTime() - before *24*60*60*1000).toISOString().replace("T"," ").replace(/\..*/g,''); };
 	$scope.begin = $scope.getDateTimeStringBefore(3).substr(0,10),$scope.end =$scope.getDateTimeStringBefore(0).substr(0,10),$scope.picktime = $scope.begin + ' - ' + $scope.end  ; 
@@ -19,51 +19,30 @@ coldWeb.controller('reportsAnalysis1', function ($scope, $http,$stateParams,$roo
 	//********************************************************************开始装逼模式**********************************************************************
 	$scope.initdata=function(){//模拟数据
 		 angular.forEach($scope.rdclist,function(rdc,i){
-			 $scope.slrdcid.push({id:rdc.id,name:rdc.name});
+			 $scope.sisrdcid.push(rdc.id);
+			 $scope.sisrdcname.push(rdc.name);
 		 });
 	};
-	
+	$scope.initdata();
 	
 	
 	$scope.search=function(isexpt){
-		console.log($scope.slindex+":"+$scope.keytype);
-		$.ajax({
-            type: "POST",
-            url:'i/AnalysisController/getCasesTotalSISAnalysis',
-            data:{rdcid:$scope.rdcid, index:$scope.slindex,urlid:$scope.urlid,isexpt:isexpt,type:typemode.type[$scope.slindex],confdata:datainfo, key:typemode.key[$scope.slindex],unit:typemode.unit[$scope.slindex], startTime:stentime[0],endTime:stentime[1]},//
-            success: function(data) {
-                if(data.success){
-                	isSuccess=true;
-                		if($scope.urlid==0||$scope.urlid==2){  
-                		  $scope.dldata(data);
-                	    }else{
-                		 $scope.cldata(data); 
-                		 } 
-	               }else{
-	            	   if(isexpt){ alert("导出失败！"+data.message);  }else{
-	            		   $scope.$apply(function () {
-	            			   $scope.rs_msg=data.message; 
-	            		   });
-	            		 }; //em.attr("disabled",false);
-	               }
-	               $("#rpt_print").attr("disabled",!isSuccess);
-            }
-        });
-		
-		
-		
-		
+		var stentime=$scope.picktime.split(" - "), keymod=typemode.key[$scope.slindex].split(';');
+		$scope.keyks=keymod[0].split(','),$scope.keyts=keymod[1].split(',');
+	    console.log($scope.slindex+":"+$scope.keytype);
+	    $http({  
+		    method:'POST',  
+		    url:'i/AnalysisReportController/getSisDataByRdc',  
+		    params:{type:typemode.type[$scope.slindex],keytype:$scope.keytype,key:typemode.key[$scope.slindex],rdcList:$scope.sisrdc, rdcIds:$scope.sisrdcid,rdcNames:$scope.sisrdcname,unit:typemode.unit[$scope.slindex],isexpt:isexpt,startTime:stentime[0],endTime:stentime[1]}
+		}).success(function(data){  
+			  if (data.success) {
+					$scope.resdata = data.data;
+				} else {
+					
+				}
+				$("#rpt_print").attr("disabled", !data.success);
+		}) ;
 	};
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

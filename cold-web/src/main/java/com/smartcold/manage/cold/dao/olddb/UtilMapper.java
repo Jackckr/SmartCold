@@ -1,8 +1,10 @@
 package com.smartcold.manage.cold.dao.olddb;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
-import com.smartcold.manage.cold.entity.comm.ItemObject;
+import com.smartcold.manage.cold.entity.comm.ItemValue;
 
 
 /*
@@ -12,7 +14,9 @@ import com.smartcold.manage.cold.entity.comm.ItemObject;
  */
 public interface UtilMapper {
 	
-  public ItemObject	findObjByID(@Param("table") String table,@Param("id") int id );
+  public ItemValue	findObjByID(@Param("table") String table,@Param("id") int id );
+  
+  public List<ItemValue> findObjByRdcId(@Param("table") String table,@Param("id") int id );
 	
 	
 }

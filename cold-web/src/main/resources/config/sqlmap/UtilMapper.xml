@@ -4,8 +4,11 @@
 
 <mapper namespace="com.smartcold.manage.cold.dao.olddb.UtilMapper">
     
-    <select id="findObjByID" parameterType="map" resultType="com.smartcold.manage.cold.entity.comm.ItemObject">
-      SELECT `id` ,`name`  from `${table}` where id=#{id};
+    <select id="findObjByID" parameterType="map" resultType="com.smartcold.manage.cold.entity.comm.ItemValue">
+      SELECT `id` ,`name`  from `${table}` where `id`=#{id};
+    </select>
+    <select id="findObjByRdcId" parameterType="map" resultType="com.smartcold.manage.cold.entity.comm.ItemValue">
+      SELECT `id` ,`name`  from `${table}` where `rdcid`=#{id};
     </select>
 
 

@@ -1,5 +1,7 @@
 package com.smartcold.manage.cold.enums;
 
+import java.util.HashMap;
+
 /**
  * 供丹弗斯/PLC读取配置
  * Created by corly on 16-8-13.
@@ -42,7 +44,7 @@ public enum SetTables {
 	CIRCULATINGPUMPSET(16, "circulatingpumpset", "防冻循环泵");
 
 //	WALL(17, "wallset", "冷库墙");
-	
+    private static HashMap<Integer, SetTables> cacheTableMap=new HashMap<Integer, SetTables>();
 	
 
 	private int type;
@@ -56,9 +58,12 @@ public enum SetTables {
 	}
 
 	public static SetTables getByType(int type) {
+		if(cacheTableMap.containsKey(type)){return cacheTableMap.get(type);}
 		for (SetTables item : SetTables.values()) {
-			if (item.type == type)
+			if (item.type == type){
+				cacheTableMap.put(type, item);
 				return item;
+			}
 		}
 		throw new IllegalArgumentException("invalid type");
 	}
