@@ -30,11 +30,17 @@
 					   <div class="clearfix rdcBox" id="rdcBox">
 						   <div class="showRdcDiv pull-left" ng-click='showrdclist()'>选择RDC<i class="sl_drop pull-right">▼</i></div>
 						   <ul class="rdcSecList" ng-show="showrdc">
-							   <li class="omg" ng-click="showkeyrdcli($event)">合肥rdc</li>
-							   <li class="omg" ng-click="showkeyrdcli($event)">上海rdc</li>
-							   <li class="omg" ng-click="showkeyrdcli($event)">北京rdc</li>
+							   <li class="omg" ng-click="showkeyrdcli($event,0)">合肥或多或少割发代首rdc</li>
+							   <li class="omg" ng-click="showkeyrdcli($event,1)">上海是大法官rdc</li>
+							   <li class="omg" ng-click="showkeyrdcli($event,2)">北京rdc</li>
+							   <li class="omg" ng-click="showkeyrdcli($event,3)">合肥或多或少割电饭锅发代首rdc</li>
+							   <li class="omg" ng-click="showkeyrdcli($event,4)">上海是大法的说法是官rdc</li>
+							   <li class="omg" ng-click="showkeyrdcli($event,5)">北京是滴rdc</li>
+							   <li class="omg" ng-click="showkeyrdcli($event,6)">合肥123或多或少割发代首rdc</li>
+							   <li class="omg" ng-click="showkeyrdcli($event,7)">上撒地方撒旦法海是大法官rdc</li>
+							   <li class="omg" ng-click="showkeyrdcli($event,8)">北12京rdc</li>
 						   </ul>
-						   <div class="pull-left"><span ng-repeat="x in rdcArry" class="rdcSpan">{{x}}<i>&times;</i></span></div>
+						   <div class="pull-left"><span ng-repeat="x in rdcArry" class="rdcSpan">{{x}}</span></div>
 					   </div>
 						<div id="filter_sl_div" class="pull-left groupobj" style="position: relative;z-index: 2;" ng-cloak>
 						  <span style="position:relative;display: inline-block;"><span class="form-control sl_group_obj" ng-click='slgroupsl()'>{{sltit}}</span><i class="sl_drop" ng-click='slgroupsl()'>▼</i></span>

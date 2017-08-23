@@ -63,12 +63,32 @@ coldWeb.controller('reportsAnalysis1', function ($scope, $http,$stateParams,$roo
     $scope.showrdc=false;
     $scope.showrdclist=function(e){$scope.showrdc=!$scope.showrdc;};
     $scope.rdcArry=[];
-    $scope.showkeyrdcli=function($event){
+    function removeByValue(arr, val) {//移除数组中元素
+        for(var i=0; i<arr.length; i++) {
+            if(arr[i] == val) {
+                arr.splice(i, 1);
+                break;
+            }
+        }
+    }
+    $scope.showkeyrdcli=function($event,index){//展示下拉rdc
         $scope.showrdc=true;
         var em=$($event.target);
-        em.addClass("select");
-        $scope.rdcArry.push($event.target.innerText);
+        if(em.hasClass('select')){
+            em.removeClass("select");
+            removeByValue($scope.rdcArry, $event.target.innerText);
+		}else{
+            em.addClass("select");
+            $scope.rdcArry.push($event.target.innerText);
+		}
+
+        console.log($scope.rdcArry);
     };
+    $scope.removerdcli=function (index) {//x号删除rdc
+        $scope.rdcArry.splice(index, 1);
+        console.log($scope.rdcArry);
+    };
+
 	
 	
 	
