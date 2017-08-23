@@ -28,32 +28,57 @@ coldWeb.controller('reportsAnalysis1', function ($scope, $http,$stateParams,$roo
 			$scope.keyks=[typemode.key[$scope.slindex]];
 			$scope.keyts=[typemode.title[$scope.slindex]];
 		}
-		
-	    console.log($scope.slindex+":"+$scope.keytype);
-	    $http({  
-		    method:'POST',  
-		    url:'i/AnalysisReportController/getSisDataByRdc',  
-		    params:{
-		    	type:typemode.type[$scope.slindex],
-		    	keytype:$scope.keytype,
-		    	title:typemode.title[$scope.slindex],
-		    	key:typemode.key[$scope.slindex], 
-		    	rdcIds:$scope.sisrdcid,
-		    	rdcNames:$scope.sisrdcname,
-		    	unit:typemode.unit[$scope.slindex],
-		    	isexpt:isexpt,startTime:stentime[0],endTime:stentime[1]}
-		}).success(function(data){  
-			  if (data.success) {
-					$scope.resdata = data.data;
-					$scope.cuttrdc = data.data[0] ;
-				} else {
-					
-				}
-				$("#rpt_print").attr("disabled", !data.success);
-		}) ;
+		if(isexpt){
+			$scope.expxls(stentime[0],stentime[1]);
+		}else{
+			$scope.refdata(stentime[0],stentime[1]);
+		}
+	   
 	};
 	
+	$scope.refdata=function(startTime,endTime){
+		 $http({  
+			    method:'POST',  
+			    url:'i/AnalysisReportController/getSisDataByRdc',  
+			    params:{
+			    	index:$scope.slindex,
+			    	type:typemode.type[$scope.slindex],
+			    	keytype:$scope.keytype,
+			    	title:typemode.title[$scope.slindex],
+			    	key:typemode.key[$scope.slindex], 
+			    	rdcIds:$scope.sisrdcid,
+			    	rdcNames:$scope.sisrdcname,
+			    	unit:typemode.unit[$scope.slindex],
+			    	startTime:startTime,endTime:endTime}
+			}).success(function(data){  
+				  if (data.success) {
+						$scope.resdata = data.data;
+						$scope.cuttrdc = data.data[0] ;
+					} else {
+						
+					}
+					$("#rpt_print").attr("disabled", !data.success);
+			}) ;
+	};
 	
+	$scope.expxls=function(startTime,endTime){
+		$("#rpt_expxls").attr("disabled",true);
+        var expfrom= $("<form>").attr('style', 'display:none').attr('method', 'post').attr('action', 'i/AnalysisController/expSISAnalysisData').attr('id', "expdataform");
+        expfrom.attr("Content-Type","application/json;charset=UTF-8");
+        expfrom.append($("<input>").attr("name","fileName").attr("value",$scope.sltit));
+        expfrom.append($("<input>").attr("name","index").attr("value",$scope.slindex));
+        expfrom.append($("<input>").attr("name","type").attr("value",typemode.type[$scope.slindex]));
+        expfrom.append($("<input>").attr("name","keytype").attr("value",$scope.keytype));
+        expfrom.append($("<input>").attr("name","title").attr("value",typemode.title[$scope.slindex]));
+        expfrom.append($("<input>").attr("name","key").attr("value",typemode.key[$scope.slindex]));
+        expfrom.append($("<input>").attr("name","rdcid").attr("value",$scope.sisrdcid));
+        expfrom.append($("<input>").attr("name","rdcNames").attr("value",$scope.sisrdcname));
+        expfrom.append($("<input>").attr("name","unit").attr("value",typemode.unit[$scope.slindex]));
+        expfrom.append($("<input>").attr("name","startTime").attr("value",startTime));
+        expfrom.append($("<input>").attr("name","endTime").attr("value",endTime));
+        expfrom.appendTo('body').submit().remove();
+        setTimeout(function () {$("#rpt_expxls").attr("disabled",false); }, 3000);
+	};
 	
 	 $scope.chan_data_view=function($event,index,rdcid){
 		 $scope.cuttrdc = $scope.resdata[index] ;
@@ -110,7 +135,7 @@ coldWeb.controller('reportsAnalysis1', function ($scope, $http,$stateParams,$roo
     }
 	$scope.slgroupsl=function(e){$scope.showobjgroup=!$scope.showobjgroup;};
 	$scope.showkeyli=function($event,index,keytype){//  urlid==0->单key  1:多key
-        var em=$($event.target),disid=em.attr("disid") ;if(!disid){ alert("你妹！"); return;}
+        var em=$($event.target),disid=em.attr("disid") ;if(!disid){ return;}
 		$scope.slindex=index,$scope.keytype=keytype;
 		$("#ul_key_list li").removeClass("select");
         em.addClass("select");
@@ -118,9 +143,9 @@ coldWeb.controller('reportsAnalysis1', function ($scope, $http,$stateParams,$roo
 		$scope.showobjgroup=false; 
 		$scope.cuttrdc =null;
 	};
-    $scope.Preview=function(){ //打印预览
-          $("#rpt_asis_coment").printThis({ importCSS: true,importStyle: true,  pageTitle: $scope.sltit,printContainer: true,  removeInline: false, formValues: true  });//  loadCSS: "/Content/Themes/Default/style.css",
-    };
+//    $scope.Preview=function(){ //打印预览
+//          $("#rpt_asis_coment").printThis({ importCSS: true,importStyle: true,  pageTitle: $scope.sltit,printContainer: true,  removeInline: false, formValues: true  });//  loadCSS: "/Content/Themes/Default/style.css",
+//    };
 	$(document).bind('click',function(e){ 
 		if($scope.showobjgroup||$scope.showrdc){
 			 e = e || window.event; //浏览器兼容性 
