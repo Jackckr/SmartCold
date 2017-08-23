@@ -3,8 +3,7 @@
  * 分析报表
  */
 coldWeb.controller('reportsAnalysis1', function ($scope, $http,$stateParams,$rootScope) {
-//    $("#oview").height($(".content-wrapper")[0].clientHeight);
-	$scope.sisrdcid=[],$scope.sisrdcname=[],$scope.slindex=0,$scope.keytype=1,$scope.sltit="温度分析";
+	$scope.cuttunit=null;$scope.resdata=null;$scope.sisrdcid=[],$scope.sisrdcname=[],$scope.slindex=0,$scope.keytype=1,$scope.sltit="温度分析";
 	if( $rootScope.user.role==3){$scope.rdclist=[$rootScope.vm.choserdc];}else{$scope.rdclist=$rootScope.vm.allUserRdcs;}//rdc策略
 	$scope.getDateTimeStringBefore = function(before){ return new Date(new Date().getTime() - before *24*60*60*1000).toISOString().replace("T"," ").replace(/\..*/g,''); };
 	$scope.begin = $scope.getDateTimeStringBefore(3).substr(0,10),$scope.end =$scope.getDateTimeStringBefore(0).substr(0,10),$scope.picktime = $scope.begin + ' - ' + $scope.end  ; 
@@ -17,76 +16,86 @@ coldWeb.controller('reportsAnalysis1', function ($scope, $http,$stateParams,$roo
 			key:["'MinTemp','MaxTemp','AvgTemp','ChaoWenCiShu','ChaoWenShiJian';最低温度(℃),最高温度(℃),平均温度(℃),超温次数,超温时长(min)","'TotalPWC'","'WaterCost'","'OpenTimes','TotalTime','AvgTime';次数,时长(min),平均时长(min)","'GoodsHeat','QFrost','QForklift','Qlighting','WallHeat','Qblower','Qctdoor';Q货,Q霜,Q叉,Q照,Q保,Q风,Q门","'RunningTime','DefrosingTime';制冷时间(H),化霜时间(H)","avg","'GoodsLiuTongYinZi'","'RunningTime','RunningCount','avg';运行总时间(H),运行总次数,平均时间(min)"] 
 	};
 	//********************************************************************开始装逼模式**********************************************************************
-	$scope.initdata=function(){//模拟数据
-		 angular.forEach($scope.rdclist,function(rdc,i){
-			 $scope.sisrdcid.push(rdc.id);
-			 $scope.sisrdcname.push(rdc.name);
-		 });
-	};
-	$scope.initdata();
-	
+
 	
 	$scope.search=function(isexpt){
-		var stentime=$scope.picktime.split(" - "), keymod=typemode.key[$scope.slindex].split(';');
-		$scope.keyks=keymod[0].split(','),$scope.keyts=keymod[1].split(',');
+		var stentime=$scope.picktime.split(" - ");
+		$scope.cuttunit=typemode.unite[$scope.slindex];
+		if($scope.keytype==1){
+			keymod=typemode.key[$scope.slindex].split(';');
+			$scope.keyks=keymod[0].split(','),$scope.keyts=keymod[1].split(',');
+		}else{
+			$scope.keyks=[typemode.key[$scope.slindex]];
+			$scope.keyts=[typemode.title[$scope.slindex]];
+		}
+		
 	    console.log($scope.slindex+":"+$scope.keytype);
 	    $http({  
 		    method:'POST',  
 		    url:'i/AnalysisReportController/getSisDataByRdc',  
-		    params:{type:typemode.type[$scope.slindex],keytype:$scope.keytype,key:typemode.key[$scope.slindex],rdcList:$scope.sisrdc, rdcIds:$scope.sisrdcid,rdcNames:$scope.sisrdcname,unit:typemode.unit[$scope.slindex],isexpt:isexpt,startTime:stentime[0],endTime:stentime[1]}
+		    params:{
+		    	type:typemode.type[$scope.slindex],
+		    	keytype:$scope.keytype,
+		    	title:typemode.title[$scope.slindex],
+		    	key:typemode.key[$scope.slindex], 
+		    	rdcIds:$scope.sisrdcid,
+		    	rdcNames:$scope.sisrdcname,
+		    	unit:typemode.unit[$scope.slindex],
+		    	isexpt:isexpt,startTime:stentime[0],endTime:stentime[1]}
 		}).success(function(data){  
 			  if (data.success) {
 					$scope.resdata = data.data;
+					$scope.cuttrdc = data.data[0] ;
 				} else {
 					
 				}
 				$("#rpt_print").attr("disabled", !data.success);
 		}) ;
 	};
-<<<<<<< HEAD
-=======
-
-
-
-
+	
+	
+	
+	 $scope.chan_data_view=function($event,index,rdcid){
+		 $scope.cuttrdc = $scope.resdata[index] ;
+	 };
 
 
     $scope.showrdc=false;
     $scope.showrdclist=function(e){$scope.showrdc=!$scope.showrdc;};
-    $scope.rdcArry=[];
-    function removeByValue(arr, val) {//移除数组中元素
-        for(var i=0; i<arr.length; i++) {
-            if(arr[i] == val) {
-                arr.splice(i, 1);
-                break;
-            }
-        }
-    }
-    $scope.showkeyrdcli=function($event,index){//展示下拉rdc
+    $scope.showkeyrdcli=function($event,index,rdcid,name){//展示下拉rdc
         $scope.showrdc=true;
         var em=$($event.target);
         if(em.hasClass('select')){
             em.removeClass("select");
-            removeByValue($scope.rdcArry, $event.target.innerText);
+            $scope.removearry( $scope.sisrdcid,rdcid);
+            $scope.removearry( $scope.sisrdcname,name);
 		}else{
             em.addClass("select");
-            $scope.rdcArry.push($event.target.innerText);
+            $scope.sisrdcid.push(rdcid);
+            $scope.sisrdcname.push(name);
 		}
-
-        console.log($scope.rdcArry);
     };
-    $scope.removerdcli=function (index) {//x号删除rdc
-        $scope.rdcArry.splice(index, 1);
-        console.log($scope.rdcArry);
-    };
-
 	
-	
-	
->>>>>>> 4adba802cf62deb63ec099cae63358cf32e5afac
-	
-	
-	
+	$scope.initdata=function(){//模拟数据
+	 angular.forEach($scope.rdclist,function(rdc,i){
+		 if(rdc.id==$rootScope.rdcId){
+			 $scope.sisrdcid.push(rdc.id);
+			 $scope.sisrdcname.push(rdc.name);
+		 }
+	 });
+   };
+   $scope.initdata();
+   
+   $scope.removearry=function(aray,val){
+	   var index = aray.indexOf(val);
+	   if (index > -1) {
+		   aray.splice(index, 1);
+	   }
+   };
+   
+   Array.prototype.remove = function(val) {
+	   
+	   };
 	//********************************************************************事件START  不要关心**********************************************************************
     function gettbcltit(value,cl){//获取标题1
 	    if(value==null||value==''||value=='null')return '<td  colspan="'+cl+'" ></td>';else return '<td colspan="'+cl+'">'+value+'</td>';
@@ -107,6 +116,7 @@ coldWeb.controller('reportsAnalysis1', function ($scope, $http,$stateParams,$roo
         em.addClass("select");
 		$scope.sltit=$event.target.innerText;
 		$scope.showobjgroup=false; 
+		$scope.cuttrdc =null;
 	};
     $scope.Preview=function(){ //打印预览
           $("#rpt_asis_coment").printThis({ importCSS: true,importStyle: true,  pageTitle: $scope.sltit,printContainer: true,  removeInline: false, formValues: true  });//  loadCSS: "/Content/Themes/Default/style.css",

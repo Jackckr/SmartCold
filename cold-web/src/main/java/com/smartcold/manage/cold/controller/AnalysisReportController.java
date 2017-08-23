@@ -4,27 +4,19 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.jsqlparser.expression.operators.relational.ItemsList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSON;
-import com.smartcold.manage.cold.dao.olddb.CongfigMapper;
 import com.smartcold.manage.cold.dao.olddb.UtilMapper;
 import com.smartcold.manage.cold.entity.comm.ItemValue;
 import com.smartcold.manage.cold.entity.newdb.ColdStorageAnalysisEntity;
-import com.smartcold.manage.cold.entity.olddb.PowerSetEntity;
 import com.smartcold.manage.cold.enums.SetTables;
 import com.smartcold.manage.cold.service.ColdStorageAnalysisService;
 import com.smartcold.manage.cold.util.ResponseData;
@@ -75,13 +67,13 @@ public class AnalysisReportController {
 	 */
 	@RequestMapping(value = "/getSisDataByRdc")
 	@ResponseBody
-	public ResponseData<Object> getCasesTotalSISAnalysis(HttpServletRequest request, HttpServletResponse response,Integer type, Integer keytype, String key, Integer[] rdcIds,String[] rdcNames, Integer[] unit, Boolean isexpt,String startTime, String endTime) {
+	public ResponseData<Object> getCasesTotalSISAnalysis(HttpServletRequest request, HttpServletResponse response,int type, int keytype,String title, String key, int[] rdcIds,String[] rdcNames, Integer[] unit, Boolean isexpt,String startTime, String endTime) {
 		try {
-			if (type == null || keytype == null || rdcIds == null|| rdcNames == null || StringUtil.isNull(key)) {return ResponseData.newFailure("非法请求！");}
+			if (rdcIds == null|| rdcNames == null || StringUtil.isNull(key)) {return ResponseData.newFailure("非法请求！");}
 			boolean isunit = false;
 			String[] keys = {}, keyts = {}, titls = {};
 			HashMap<String, Integer> keymap = new HashMap<String, Integer>();
-			if (keytype == 1) {
+			if (keytype == 1) {//
 				keys = StringUtil.splitString(key);
 				if (keys.length != 2) {
 					return ResponseData.newFailure("非法请求！key参数不完整");
@@ -97,6 +89,9 @@ public class AnalysisReportController {
 				if (unit != null && unit.length == keyts.length) {
 					isunit = true;
 				}// 判断是否进行单位转换
+			}else{
+				keys=new String[]{key};
+				keymap.put(key.replace("'", ""), 0);
 			}
 			List<Object> sisDataList=new ArrayList<Object>();
 			for (int i = 0; i < rdcIds.length; i++) {//RDC
@@ -106,9 +101,12 @@ public class AnalysisReportController {
 					LinkedHashMap< Object, Object> alllsisMap =new LinkedHashMap<Object, Object>();
 					for (ItemValue itemValue : itemList) {//子对象-->冷库
 						LinkedHashMap< Object, Object> subsisMap =new LinkedHashMap<Object, Object>();
-						Object sisdata = getRdcData(type,keytype, itemValue.getId(), keys[0],keymap, isunit, unit, startTime, endTime);
+						Object sisdata = getRdcData(type,keytype, itemValue.getId(),keys[0],keymap, isunit, unit, startTime, endTime);
 						subsisMap.put("obj", itemValue);
 						subsisMap.put("data", sisdata);
+						subsisMap.put("hasData", sisdata==null?false:true);
+						subsisMap.put("msge", sisdata==null?"没有查询到数据！":null);
+						
 						alllsisMap.put(itemValue.getId(), subsisMap);
 					}
 					rdcobj.put("id",  rdcIds[i]);
@@ -118,6 +116,7 @@ public class AnalysisReportController {
 					rdcobj.put("id",  rdcIds[i]);
 					rdcobj.put("name",  rdcNames[i]);
 					rdcobj.put("data", null);
+					rdcobj.put("errmsg", "没有"+""+"相关配置！");
 				}
 				sisDataList.add(rdcobj);
 			}
@@ -133,7 +132,7 @@ public class AnalysisReportController {
 	 * 
 	 * @return
 	 */
-	private Object getRdcData(Integer type,Integer keytype, int oid,String keys,HashMap<String, Integer> keymap , boolean isunit ,Integer[] unit,String startTime, String endTime) {
+	private Object getRdcData(int type,int keytype, int oid,String keys,HashMap<String, Integer> keymap , boolean isunit ,Integer[] unit,String startTime, String endTime) {
 		HashMap<String, Object> fileter = new HashMap<String, Object>();
 		fileter.put("type", type);
 		fileter.put("oid", oid);
@@ -153,7 +152,7 @@ public class AnalysisReportController {
 				} else {
 					objects = getObj(keymap.size());
 				}
-				double value = coldsis.getValue();
+				double value =  Double.parseDouble(dfformat.format(coldsis.getValue()));//、= Double.parseDouble(dfformat.format(value / unit[keyindex]));
 				if (isunit) {
 					value = Double.parseDouble(dfformat.format(value / unit[keyindex]));
 				} // 单位转换
@@ -169,10 +168,19 @@ public class AnalysisReportController {
 	private Object[]  getObj(int seize){
 		if(objMap.containsKey(seize)){return objMap.get(seize).clone();}
 		Object[] objects =new Object[seize];
-		for (int i = 0; i < seize; i++) {
-			objects[i]=0;
-		}
+		for (int i = 0; i < seize; i++) {objects[i]=0;}
 		objMap.put(seize, objects.clone());
 		return objects;
+	}
+	
+	
+	private List<ItemValue>  getItemList(int type,int redcid){
+		switch (type) {
+		case 4://风机数据->冷库->风机
+			return util.findSObjByRdcId(SetTables.STORAGESET.getTable(),SetTables.BLOWERSET.getTable(),"coldstorageid",redcid);
+		default:
+			return util.findObjByRdcId(SetTables.getByType(type).getTable(), redcid);
+		}
+		
 	}
 }

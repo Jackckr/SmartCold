@@ -8,9 +8,11 @@
       SELECT `id` ,`name`  from `${table}` where `id`=#{id};
     </select>
     <select id="findObjByRdcId" parameterType="map" resultType="com.smartcold.manage.cold.entity.comm.ItemValue">
-      SELECT `id` ,`name`  from `${table}` where `rdcid`=#{id};
+      SELECT `id` ,`name`  from `${table}` where `rdcid`=#{rdcid};
     </select>
-
+     <select id="findSObjByRdcId" parameterType="map" resultType="com.smartcold.manage.cold.entity.comm.ItemValue">
+        select `id` ,`name` from `${stable}` where `${colum}` in (select id from `${ptable}` where rdcid=#{rdcid});
+    </select>
 
     
   

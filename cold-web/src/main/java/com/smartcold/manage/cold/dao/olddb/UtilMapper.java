@@ -16,7 +16,9 @@ public interface UtilMapper {
 	
   public ItemValue	findObjByID(@Param("table") String table,@Param("id") int id );
   
-  public List<ItemValue> findObjByRdcId(@Param("table") String table,@Param("id") int id );
+  public List<ItemValue> findObjByRdcId(@Param("table") String table,@Param("rdcid") int rdcid );
+  
+  public List<ItemValue> findSObjByRdcId(@Param("ptable") String ptable,@Param("stable") String stable,@Param("colum") String colum,@Param("rdcid") int rdcid);
 	
 	
 }
