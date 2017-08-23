@@ -82,6 +82,7 @@ coldWeb.controller('reportsAnalysis1', function ($scope, $http,$stateParams,$roo
 	
 	 $scope.chan_data_view=function($event,index,rdcid){
 		 $scope.cuttrdc = $scope.resdata[index] ;
+         $($event.target).addClass('currentRdc').siblings('span').removeClass('currentRdc')
 	 };
 
 

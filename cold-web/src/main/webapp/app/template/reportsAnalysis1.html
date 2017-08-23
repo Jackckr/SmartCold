@@ -24,7 +24,7 @@
 				<div class="col-lg-12">
 					<div class="col-lg-12 clearfix" style="padding-left: 0">
 					   <div class="clearfix rdcBox" id="rdcBox">
-						   <div class="showRdcDiv pull-left" ng-click='showrdclist()'>{{sisrdcname.join('-')}}<i class="sl_drop pull-right">▼</i></div>
+						   <div class="showRdcDiv pull-left" ng-click='showrdclist()'>{{sisrdcname.join('-')}}<i class="sl_drop">▼</i></div>
 						   <ul class="rdcSecList" ng-show="showrdc">
 							   <li ng-repeat="rdc in rdclist" class="omg {{rdcId==rdc.id?'select':''}}"  ng-click="showkeyrdcli($event,$index,rdc.id,rdc.name)">{{rdc.name}}</li>
 						   </ul>
@@ -65,7 +65,7 @@
 						</form>
 					</div>
 					<div >
-					  <span ng-repeat="rdc in resdata" ng-click="chan_data_view($event,$index,rdc.id)">{{rdc.name}}</span>
+					  <span ng-repeat="rdc in resdata" class="rdcSpan" ng-click="chan_data_view($event,$index,rdc.id)">{{rdc.name}}</span>
 					</div>
 					<div id="rpt_asis_coment" class="col-lg-12 box bg-gray"  >
 		                    <div class="box-header with-border">
@@ -75,7 +75,7 @@
 								<table ng-repeat="sitem in cuttrdc.data" class="table table-bordered " style="border:2px solid #337ab7;text-align: center;">
 								  <thead ng-if="keytype==1" >
 								    <tr>
-								     <td rowspan="2">日期</td>
+								     <td rowspan="2" style="vertical-align: middle">日期</td>
 								     <td colspan="{{keyks.length}}">{{sitem.obj.name}}</td>
 								    </tr>
 								    <tr>
