@@ -123,8 +123,19 @@
                 <small class="text-warning">上传3-5张实体图片，不能重复上传，每张小于10M</small>
             </label>
         </li>
+
+        <li>
+            <label for="phone">联系电话<em>*</em></label>
+            <input type="number" ng-model="phoneNum" placeholder="请输入联系方式"/>
+        </li>
+    </ul>
+    <ul class="houseinfo black">
+        <li>
+            <label for="note">备注</label>
+            <input type="text" ng-model="remark" placeholder="选填"/>
+        </li>
         <li class="rdcImg">
-            <label>冷链委温度达标库<em>*</em></label>
+            <label>冷链委温度达标库</label>
             <div id="tempStandDiv" style="display: inline-block">
                 <label><input ng-value="1" type="radio" name="isJoinStand" ng-model="isJoinStand">是</label>
                 <label><input ng-value="2" type="radio" ng-click="droptempStandPic()" name="isJoinStand" ng-model="isJoinStand">愿意申报</label>
@@ -151,26 +162,16 @@
                     <span>请拨打400-853-5606 申报</span>
                 </li>
             </ul>
-           <!-- <div>
-                <span>是否愿意公开冷库温度曲线</span>
-                <label><input ng-value="1" ng-model="openLIne" type="radio" name="openLIne">是</label>
-                <label><input ng-value="2" ng-model="openLIne" type="radio" name="openLIne">否</label>
-            </div>-->
+            <!-- <div>
+                 <span>是否愿意公开冷库温度曲线</span>
+                 <label><input ng-value="1" ng-model="openLIne" type="radio" name="openLIne">是</label>
+                 <label><input ng-value="2" ng-model="openLIne" type="radio" name="openLIne">否</label>
+             </div>-->
         </li>
         <li>
-            <label>是否愿意公开冷库温度曲线<em>*</em></label>
-            <label><input ng-value="1" ng-model="openLIne" type="radio" name="openLIne">是</label>
+            <label>是否愿意公开冷库温度曲线</label>
+            <label style="margin-right: 0.5rem"><input ng-value="1" ng-model="openLIne" type="radio" name="openLIne">是</label>
             <label><input ng-value="2" ng-model="openLIne" type="radio" name="openLIne">否</label>
-        </li>
-        <li>
-            <label for="phone">联系电话<em>*</em></label>
-            <input type="number" ng-model="phoneNum" placeholder="请输入联系方式"/>
-        </li>
-    </ul>
-    <ul class="houseinfo black">
-        <li>
-            <label for="note">备注</label>
-            <input type="text" ng-model="remark" placeholder="选填"/>
         </li>
         <li class="number tac">
             <label>冷藏车数量</label>

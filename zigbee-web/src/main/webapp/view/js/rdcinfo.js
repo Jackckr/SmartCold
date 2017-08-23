@@ -81,12 +81,18 @@ function getRdcInfo() {
             smallImg.push('<li class="current"><a href="javascript:;"><img src="http://139.196.189.93:8089/app/rdcHeader.jpg"/><span class="border"></span><span class="mask"></span></a></li>');
         }
         baseInfo.push('<h2><b class="blue">'+rdc.name+'</b>');
-        var auditButton='<a class="blue" style="margin-left: 20px" href="approve.html?id='+rdc.rdcId+'">认证该冷库</a>';
-        /*if(window.lkuser && window.lkuser.vipType>0&&window.lkuser&&window.lkuser.id!=rdc.userid){
-            auditButton='<a class="blue" style="margin-left: 20px" href="approve.html?id='+rdc.rdcId+'">认证该冷库</a>';
-        }*/
+
         if(rdc.rdcId==1878){baseInfo.push('<b class="approve"><i class="iconfont">&#xe65d;</i>已通过</b>')}
-        else{if(rdc.audit==2){baseInfo.push('<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>')}else{baseInfo.push('<b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>')};}
+        else {
+            if (rdc.audit == 2) {
+                var auditButton='';
+                baseInfo.push('<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>')
+            } else {
+                var auditButton='<a class="blue" style="margin-left: 20px" href="approve.html?id='+rdc.rdcId+'">认证该冷库</a>';
+                baseInfo.push('<b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>')
+            }
+            ;
+        }
         if(rdc.istemperaturestandard==1){baseInfo.push('&nbsp;<b class="reachStand"><i class="iconfont">&#xe6e9;</i>冷链委温度达标库</b>');}
         var address=["["];
         $.ajax({url:"/i/city/findProvinceById",type:"get",data:{provinceId:rdc.provinceId},async:false,success:function (data) {

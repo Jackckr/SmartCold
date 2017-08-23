@@ -120,6 +120,20 @@
                         </div>
                     </div>
                 </li>
+
+                <li>
+                    <label for="phone">联系电话<em>*</em></label>
+                    <input type="number"  ng-model="phoneNum"/>
+                </li>
+                
+            </ul>
+            <ul class="houseinfo black">
+
+                <li>
+                    <label for="note">备注</label>
+                    <!-- <input type="text" style="width:80%" ng-model="remark"/> -->
+                    <textarea style="width:80%"class="autoText" ng-model="remark"></textarea>
+                </li>
                 <li class="rdcImg">
                     <label>冷链委温度达标库<em>*</em></label>
                     <label ng-if="standType==-1" style="font-size: .5rem;" class="orange">未通过。原因：{{standMsg}}。<br>如有疑问，请拨打400-8535606或者重新提交材料</label>
@@ -154,21 +168,8 @@
                 </li>
                 <li>
                     <label>是否愿意公开冷库温度曲线<em>*</em></label>
-                    <label><input ng-value="1" ng-model="openLIne" type="radio" name="openLIne">是</label>
+                    <label style="margin-right: 0.3rem"><input ng-value="1" ng-model="openLIne" type="radio" name="openLIne">是</label>
                     <label><input ng-value="2" ng-model="openLIne" type="radio" name="openLIne">否</label>
-                </li>
-                <li>
-                    <label for="phone">联系电话<em>*</em></label>
-                    <input type="number"  ng-model="phoneNum"/>
-                </li>
-                
-            </ul>
-            <ul class="houseinfo black">
-
-                <li>
-                    <label for="note">备注</label>
-                    <!-- <input type="text" style="width:80%" ng-model="remark"/> -->
-                    <textarea style="width:80%"class="autoText" ng-model="remark"></textarea>
                 </li>
                 <li class="number tac">
                     <label>冷藏车数量</label>

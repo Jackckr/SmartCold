@@ -73,6 +73,9 @@
 #tempStandDiv{
     margin-top: 0.5rem;
 }
+#tempStandDiv label{
+    margin-right: 0.3rem;
+}
 .position>i{
     font-size: .6rem;
 }

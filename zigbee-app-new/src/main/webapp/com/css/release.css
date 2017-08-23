@@ -122,32 +122,6 @@ section{
 	font-size: 0.8rem;
 	margin-top: 0.3rem;
 }
-/*.grid_kid.share_cold i{
-	color:#4287ff;
-}
-.grid_kid.share_goods i{
-	color:#F39826;
-}
-.grid_kid.share_store i{
-	color:#F1594B;
-}
-.share_cold,.share_goods,.share_store{
-	width: 100%;
-	height: 4rem;
-}
-.share_cold i,.share_goods i,.share_store i{
-	float: left;
-	width: 30%;
-	text-align: center;
-}
-.share_cold p.info,.share_goods p.info,.share_store p.info{
-	margin-top: 0;
-	text-align: left;
-}
-.share_cold a,.share_goods a,.share_store a{
-	padding-top: 0;
-	line-height: 3.5rem;
-}*/
 /*发布库*/
 .main{
 	padding:0.5rem 0.9rem;

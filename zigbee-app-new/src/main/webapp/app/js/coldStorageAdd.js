@@ -223,12 +223,6 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
         if ($scope.rentSqm == undefined || $scope.rentSqm == '') {
             flag = false;
         }
-        if ($scope.isJoinStand == undefined || $scope.isJoinStand == '') {
-            flag = false;
-        }
-        if ($scope.openLIne == undefined || $scope.openLIne == '') {
-            flag = false;
-        }
         return flag;
     }
     $scope.ChangLihuoState=function (val) {

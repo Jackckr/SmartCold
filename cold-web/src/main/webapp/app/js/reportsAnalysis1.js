@@ -54,13 +54,21 @@ coldWeb.controller('reportsAnalysis1', function ($scope, $http,$stateParams,$roo
 		
 		
 	};
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+    $scope.showrdc=false;
+    $scope.showrdclist=function(e){$scope.showrdc=!$scope.showrdc;};
+    $scope.rdcArry=[];
+    $scope.showkeyrdcli=function($event){
+        $scope.showrdc=true;
+        var em=$($event.target);
+        em.addClass("select");
+        $scope.rdcArry.push($event.target.innerText);
+    };
 	
 	
 	
@@ -92,14 +100,14 @@ coldWeb.controller('reportsAnalysis1', function ($scope, $http,$stateParams,$roo
           $("#rpt_asis_coment").printThis({ importCSS: true,importStyle: true,  pageTitle: $scope.sltit,printContainer: true,  removeInline: false, formValues: true  });//  loadCSS: "/Content/Themes/Default/style.css",
     };
 	$(document).bind('click',function(e){ 
-		if($scope.showobjgroup){
+		if($scope.showobjgroup||$scope.showrdc){
 			 e = e || window.event; //浏览器兼容性 
 			var elem = e.target || e.srcElement; 
 			while (elem) { //循环判断至跟节点，防止点击的是div子元素 
-			if (elem.id && elem.id=='filter_sl_div') {  return;  } 
+			if (elem.id && elem.id=='filter_sl_div'||elem.id=='rdcBox') {  return;  }
 			 elem = elem.parentNode; 
 			}
-			$scope.$apply(function () { $scope.showobjgroup=false; });
+			$scope.$apply(function () { $scope.showobjgroup=false;$scope.showrdc=false; });
 		}
 	});
 	//********************************************************************事件END**********************************************************************
