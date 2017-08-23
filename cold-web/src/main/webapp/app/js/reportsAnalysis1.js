@@ -52,8 +52,8 @@ coldWeb.controller('reportsAnalysis1', function ($scope, $http,$stateParams,$roo
 			    	startTime:startTime,endTime:endTime}
 			}).success(function(data){  
 				  if (data.success) {
-						$scope.resdata = data.data;
-						$scope.cuttrdc = data.data[0] ;
+						$scope.resdata = data.entity;
+						$scope.cuttrdc = data.entity[0] ;
 					} else {
 						
 					}
@@ -63,15 +63,15 @@ coldWeb.controller('reportsAnalysis1', function ($scope, $http,$stateParams,$roo
 	
 	$scope.expxls=function(startTime,endTime){
 		$("#rpt_expxls").attr("disabled",true);
-        var expfrom= $("<form>").attr('style', 'display:none').attr('method', 'post').attr('action', 'i/AnalysisController/expSISAnalysisData').attr('id', "expdataform");
+        var expfrom= $("<form>").attr('style', 'display:none').attr('method', 'post').attr('action', 'i/AnalysisReportController/expSISAnalysisData').attr('id', "expdataform");
         expfrom.attr("Content-Type","application/json;charset=UTF-8");
-        expfrom.append($("<input>").attr("name","fileName").attr("value",$scope.sltit));
+        expfrom.append($("<input>").attr("name","fileName").attr("value",$scope.sltit+"分析.xls"));
         expfrom.append($("<input>").attr("name","index").attr("value",$scope.slindex));
         expfrom.append($("<input>").attr("name","type").attr("value",typemode.type[$scope.slindex]));
         expfrom.append($("<input>").attr("name","keytype").attr("value",$scope.keytype));
         expfrom.append($("<input>").attr("name","title").attr("value",typemode.title[$scope.slindex]));
         expfrom.append($("<input>").attr("name","key").attr("value",typemode.key[$scope.slindex]));
-        expfrom.append($("<input>").attr("name","rdcid").attr("value",$scope.sisrdcid));
+        expfrom.append($("<input>").attr("name","rdcIds").attr("value",$scope.sisrdcid));
         expfrom.append($("<input>").attr("name","rdcNames").attr("value",$scope.sisrdcname));
         expfrom.append($("<input>").attr("name","unit").attr("value",typemode.unit[$scope.slindex]));
         expfrom.append($("<input>").attr("name","startTime").attr("value",startTime));
