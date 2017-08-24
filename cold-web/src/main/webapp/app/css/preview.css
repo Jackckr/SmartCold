@@ -114,10 +114,12 @@
     width: 24%;
     float: left;
     margin-right: 1.333333%;
-    margin-bottom: 15px;
     min-height: 80px;
     text-align: center;
     position: relative;
+}
+.singleModel .bodyModel>div{
+    margin-bottom: 15px;
 }
 .bodyModel .unitModel{
     background: #303e47;
@@ -448,4 +450,9 @@
     position: absolute;
     top:5px;
     right: 5px;
+}
+:root:-webkit-full-screen-ancestor {
+    overflow: scroll !important;
+    overflow-x: hidden;
+    overflow-y: scroll!important;
 }
