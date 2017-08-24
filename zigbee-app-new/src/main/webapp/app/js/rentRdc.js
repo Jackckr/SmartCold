@@ -104,6 +104,7 @@ $().ready(function () {
             dataType: 3,
             rdcID: rdcid,
             sqm: sqm,
+            uid:uid,
             managetype: sety,
             storagetempertype: smty,
             provinceid: adds,
