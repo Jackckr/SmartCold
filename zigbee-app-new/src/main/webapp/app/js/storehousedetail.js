@@ -104,7 +104,9 @@
      $scope.goWhere = function () {
 		 if($scope.checkUserLogin()){
 		 	if(localStorage.gowhere||localStorage.oURL){
-                if($scope.datatype==3){//1:出租/2:求租
+                if(localStorage.gowhere){
+                    goback();
+                }else if($scope.datatype==3){//1:出租/2:求租
                     if($scope.vo.typeCode==1){
                         location.href='rentstorage.html'
                     }else{
@@ -118,7 +120,7 @@
                     }
                 }else{
                     goback();
-				}
+                }
 			}else{
 		 		var rdcId="";
 		 		if(localStorage.saveRdcID){rdcId="?rdcid="+localStorage.saveRdcID;}
