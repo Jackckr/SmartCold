@@ -35,7 +35,7 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 
  * 仅238执行
  **/
-@Service
+//@Service
 public class WarningTaskService  {
 	@Autowired
 	private TempWarningService tempWarningServer;
