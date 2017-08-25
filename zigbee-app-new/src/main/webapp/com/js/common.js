@@ -71,6 +71,7 @@ function checkLocal() {
         }
     }
 }
+checkLocal();
 function goback() {
 	if (typeof ios_gohome == 'function') {
 		ios_gohome();return;
