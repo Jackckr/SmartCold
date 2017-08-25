@@ -27,7 +27,7 @@ public interface RdcService {
 
 	List<RdcDTO> findAllRdcDtos();
 
-	List<RdcAddDTO> findRDCDTOByRDCId(@RequestParam int rdcID, UserEntity user);
+	List<RdcAddDTO> findRDCDTOByRDCId(@RequestParam int rdcID, Integer uid);
 
 	List<RdcEntityDTO> findRdcDTOList();
 	
