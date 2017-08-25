@@ -208,7 +208,7 @@ public class RdcController {
 	@RequestMapping(value = "/findRDCDTOByRDCId", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findRDCDTOByRDCId(@RequestParam int rdcID, HttpSession session,Integer uid) {
-
+		if(uid==null){UserEntity user =(UserEntity)session.getAttribute("user");uid=user.getId();}
 		return rdcService.findRDCDTOByRDCId(rdcID,uid);
 	}
 
