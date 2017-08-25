@@ -415,7 +415,7 @@ $(function () {
     // 获取当前冷库的详情
      if($scope.rdcId){
 	    $http.get(ER.root+"/i/rdc/findRDCDTOByRDCId", {
-	        params: { "rdcID":  $scope.rdcId }
+	        params: { "rdcID":  $scope.rdcId,"uid":window.user.id }
 	    }).success(function (data) {
 	        $scope.name = data[0].name;
 	        $scope.address = data[0].address;

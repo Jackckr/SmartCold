@@ -148,7 +148,7 @@ public class RdcServiceImpl implements RdcService {
     }
 
     @Override
-    public List<RdcAddDTO> findRDCDTOByRDCId(@RequestParam int rdcID,UserEntity user) {
+    public List<RdcAddDTO> findRDCDTOByRDCId(@RequestParam int rdcID,Integer uid) {
         List<RdcEntity> rdcByRDCId = rdcDao.findRDCByRDCId(rdcID);
         List<RdcExtEntity> rdcExtByRDCId = rdcExtDao.findRDCExtByRDCId(rdcID);
         Double unitPrice = rdcShareMapper.getUnitPriceByRdcId(rdcID);
@@ -156,8 +156,8 @@ public class RdcServiceImpl implements RdcService {
         RdcAddDTO rdcAddDTO = new RdcAddDTO();
         rdcAddDTO.setUnitPrice(unitPrice);
         RdcEntity rdcEntity = rdcByRDCId.get(0);
-        if(user!=null){
-            List<RdcAuthEntity> rdcAuthList = rdcauthMapping.selAuditRdcId(rdcID,user.getId());
+        if(uid!=null){
+            List<RdcAuthEntity> rdcAuthList = rdcauthMapping.selAuditRdcId(rdcID,uid);
             if (rdcAuthList != null && rdcAuthList.size() != 0) {
                 rdcAddDTO.setAuditType(2);
                 if (rdcAuthList.get(0).getState() == 1) {
@@ -167,7 +167,7 @@ public class RdcServiceImpl implements RdcService {
                     rdcAddDTO.setAuditMsg(rdcAuthList.get(0).getNote());
                 }
             }else {
-                if(rdcEntity.getAudit()==2&&rdcEntity.getUserId()==user.getId()){
+                if(rdcEntity.getAudit()==2&&rdcEntity.getUserId()==uid){
                     rdcAddDTO.setAuditType(1);
                 }
             }

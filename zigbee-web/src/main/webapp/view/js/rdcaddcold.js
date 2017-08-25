@@ -150,7 +150,7 @@ function getFormValue(rdcId) {
     $("#pageTitle").html("链库-修改冷库");
     $("#submitButton").empty().append('<td colspan="2"><button class="oBtn" onclick="updateColdSubmit()">提交</button></td>');
     $("#submitRdc").append('<input type="hidden" name="rdcId" value="'+rdcId+'"/>');
-    $.ajax({url:"/i/rdc/findRDCDTOByRDCId",type:"get",data:{"rdcID":rdcId},success:function (data) {
+    $.ajax({url:"/i/rdc/findRDCDTOByRDCId",type:"get",data:{"rdcID":rdcId,"uid":window.lkuser.id},success:function (data) {
         var rdc=data[0];
         initCityList(rdc.provinceId);
         getDataToForm($("#submitRdc [name]").not("[name=openLIne],[name=isJoinStand]"),rdc);
