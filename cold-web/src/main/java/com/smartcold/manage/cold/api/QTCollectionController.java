@@ -1,13 +1,10 @@
 package com.smartcold.manage.cold.api;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,8 +20,6 @@ import com.smartcold.manage.cold.dao.newdb.DevStatusMapper;
 import com.smartcold.manage.cold.dao.newdb.StorageDataCollectionMapper;
 import com.smartcold.manage.cold.dto.DataResultDto;
 import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
-import com.smartcold.manage.cold.util.CacheManager;
-import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.StringUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 
@@ -44,8 +39,20 @@ public class QTCollectionController extends BaseController {
 	@Autowired
 	private StorageDataCollectionMapper storageDataCollectionDao;
 
-	
-
+	public static Boolean isUpdat=false;
+			
+	/**
+	 *http DEV数据上传接口
+	 * @param data
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/QTisUpdat")
+	@ResponseBody
+	public void QTisUpdat() {
+		QTCollectionController.isUpdat=!QTCollectionController.isUpdat;
+	} 		
+			
 	/**
 	 *http DEV数据上传接口
 	 * @param data
@@ -54,10 +61,10 @@ public class QTCollectionController extends BaseController {
 	 */
 	@RequestMapping(value = "/QTDataCollection", method = RequestMethod.POST)
 	@ResponseBody
-	public Object QTDataCollection(@RequestBody String data, HttpServletResponse response) {
+	public Object QTDataCollection(@RequestBody String data) {
 		try {
 			System.out.println(data);
-			if(StringUtil.isNull(data)){new DataResultDto(500);}
+			if(StringUtil.isNull(data)){return DataResultDto.newFailure();}
 			Map<String, Object> dataCollectionBatchEntity = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 			if(dataCollectionBatchEntity.containsKey("infos")){
 				String apID = dataCollectionBatchEntity.get("apID").toString();
@@ -73,12 +80,12 @@ public class QTCollectionController extends BaseController {
 				}
 				
 			}
+		   return DataResultDto.newSuccess(isUpdat);//更新数据服务
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("系统在："+TimeUtil.getDateTime()+"检测到QT数据解析异常：\r\n"+data);
-			return new DataResultDto(500);
+			return DataResultDto.newFailure();
 		}
-		return new DataResultDto(200);
 	} 
 	
 	
@@ -88,43 +95,26 @@ public class QTCollectionController extends BaseController {
 	 * @param response
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/QTDEVConfig")//
 	@ResponseBody
-	public Object schoolTime(@RequestBody String data, HttpServletResponse response) {
-		LinkedHashMap<String, Object> resMap=new LinkedHashMap<String, Object>();
-		resMap.put("status","200");resMap.put("time", TimeUtil.getLongtime().toString());
+	public Object QTDEVConfig( String apID) {
 		try {
-			if(StringUtil.isnotNull(data)){
-			    	ArrayList<StorageDataCollectionEntity> apsatusList = new ArrayList<StorageDataCollectionEntity>();
-			    	ArrayList<StorageDataCollectionEntity> devsatusList = new ArrayList<StorageDataCollectionEntity>();
-					Map<String, Object> dataMap = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
-					String apID = dataMap.get("apID").toString();
-					apsatusList.add(new StorageDataCollectionEntity(apID, null,"MSI", dataMap.get("MSI").toString(), new Date(Long.parseLong(dataMap.remove("time").toString()) * 1000)));
-//					if(dataMap.containsKey("LAC")){apsatusList.add(new StorageDataCollectionEntity(apID, null,"LAC", dataMap.get("LAC").toString(), aptime));}
-//					if(dataMap.containsKey("CID")){apsatusList.add(new StorageDataCollectionEntity(apID, null,"CID", dataMap.get("CID").toString(), aptime));}
-					if(dataMap.containsKey("infos")){//数据状态包
-						List<Map<String, String>> devinfos = (List<Map<String, String>>) dataMap.get("infos");
-						for (Map<String, String> info : devinfos) {
-							Date time = new Date(Long.parseLong(info.remove("time")) * 1000);
-							String deviceId = info.remove("devID").toString();
-							for (Entry<String, String> item : info.entrySet()) {
-								devsatusList.add(new StorageDataCollectionEntity(apID, deviceId, item.getKey(), item.getValue(), time));
-							}
-						}
-					}
-					if(SetUtil.isnotNullList(apsatusList)){
-						this.devplset.addAPStatusList(apsatusList);
-					}
-					if(SetUtil.isnotNullList(devsatusList)){
-						this.devplset.addDevStatusList(devsatusList);
-					}
-		   }
+			if(StringUtil.isNull(apID)){return DataResultDto.newFailure();}
+			LinkedHashMap<String, Object> resMap=new LinkedHashMap<String, Object>();
+			resMap.put("status","200");
+			resMap.put("time", TimeUtil.getMillTime());
+			if(Math.rint(10)%2==0||Math.rint(10)%3==0){	resMap.put("PL", "30");}
+            List<HashMap<String, Object>> infoHashMaps=new ArrayList<HashMap<String, Object>>();
+            HashMap<String, Object> dataHashMap=new HashMap<>();
+            dataHashMap.put("tagname", "低温库设定温度1");
+            dataHashMap.put("value", "-12.5");
+            infoHashMaps.add(dataHashMap);
+            resMap.put("infos", infoHashMaps);
+			return resMap;
 		} catch (Exception e) {
-			e.printStackTrace();
-			System.err.println("dev状态数据解析异常："+data);
+			return DataResultDto.newFailure();
 		}
-		return resMap;
+	
 	}  
 
 }

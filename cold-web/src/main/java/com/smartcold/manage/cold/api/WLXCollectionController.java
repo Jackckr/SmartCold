@@ -55,7 +55,7 @@ public class WLXCollectionController extends BaseController {
 	@ResponseBody
 	public Object wlxDataCollection(@RequestBody String data, HttpServletResponse response) {
 		try {
-			if(StringUtil.isNull(data)){new DataResultDto(500);}
+			if(StringUtil.isNull(data)){ return DataResultDto.newFailure();}
 			Map<String, Object> dataCollectionBatchEntity = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 			if(dataCollectionBatchEntity.containsKey("infos")){
 				String apID = dataCollectionBatchEntity.get("apID").toString();
@@ -78,9 +78,9 @@ public class WLXCollectionController extends BaseController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("系统在："+TimeUtil.getDateTime()+"检测到座头鲸DEV数据解析异常：\r\n"+data);
-			return new DataResultDto(500);
+			return DataResultDto.newFailure();
 		}
-		return new DataResultDto(200);
+		return  DataResultDto.newSuccess();
 	} 
 	
 }

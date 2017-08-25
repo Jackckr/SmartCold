@@ -47,9 +47,9 @@ public class YTCollectionController extends BaseController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("系统在："+TimeUtil.getDateTime()+"YT检测到数据解析异常：\r\n"+data);
-			return new DataResultDto(500);
+			return  DataResultDto.newFailure();
 		}
-		return new DataResultDto(200);
+		return  DataResultDto.newSuccess();
 	} 
 	
 }

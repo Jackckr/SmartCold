@@ -28,18 +28,20 @@
 // var dt='{"apID":"AP21","infos":[{"devID":"211","Temp":"-105.47","time":"1490583510"},{"devID":"212","AU":"220.00","AI":"13.00","BU":"223.00","BI":"12.50","CU":"220.00","CI":"13.00","PWC":"26.00","time":"1490583510"},{"devID":"213","Switch":"0","time":"1490583510"}]}';
 // var dat={"apID": "AP08", "infos": [{"devID": "48", "Temp": "00.00", "VoltA": "00.00", "CurrA": "00.00", "VoltB": "00.00", "CurrB": "00.00", "VoltC": "00.00", "CurrC": "00.00", "PWC": "00.00", "Switch": "1", "time": "1490670051"}]};
 var qt="{'apID':'200154545','time':'1490583510','infos':[{'tagname':'低温库温度1','value':'-18.5'},{'tagname':'CO2机组_低压压力','value':'40'}]}";
+// function step1(){
+//    $.ajax({
+// 			type : "POST",
+// 		    contentType: "application/json; charset=GBK",
+// 			dataType : "json",
+// 			url : "i/QTDataCollection",
+// 			data :qt,//
+// 			success : function(data) {
+// 				$("#dtid_ap1").html(data);
+// 			}
+// 		});
+// }
 
-   $.ajax({
-			type : "POST",
-		    contentType: "application/json; charset=GBK",
-			dataType : "json",
-			url : "i/QTDataCollection",
-			data :qt,//
-			success : function(data) {
-				$("#dtid_ap1").html(data);
-			}
-		});
-
+// var t1 = window.setInterval(step1,1); 
 //   function step1(){
 //       $.ajax({
 // 			type : "POST",

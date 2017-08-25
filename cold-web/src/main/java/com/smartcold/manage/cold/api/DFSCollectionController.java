@@ -63,7 +63,7 @@ public class DFSCollectionController extends BaseController {
 	@ResponseBody
 	public Object storageDataCollection(@RequestBody String data) {
         try {
-			if(StringUtil.isNull(data)){ return new DataResultDto(500);};
+			if(StringUtil.isNull(data)){ return DataResultDto.newFailure();};
 			DFSCollectionController.dfsdata=data;
 			Date date = new Date();
 			Map<String, Object> dataCollectionBatchEntity =DFSCollectionController.gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
@@ -71,7 +71,7 @@ public class DFSCollectionController extends BaseController {
             if(!DFSCollectionController.configchcateHashMap.containsKey(rdcid)){this.getConfig(rdcid); this.getConver(rdcid); }
 			HashMap<String, DFSDataCollectionEntity> config = configchcateHashMap.get(rdcid);
 			HashMap<String, ConversionEntity> unitConvers = unitConversMap.get(rdcid);
-		    if(config==null){return new DataResultDto(200);}
+		    if(config==null){return  DataResultDto.newSuccess();}
 		    ArrayList<DFSDataCollectionEntity> dataList = null;
 		    String table =null;  DFSDataCollectionEntity newdata=null;
 		    ArrayList<WarningsInfo> wardataList = new ArrayList<WarningsInfo>();
@@ -123,10 +123,10 @@ public class DFSCollectionController extends BaseController {
 			if(SetUtil.isnotNullList(wardataList)){
 				this.warningsInfoMapper.addwarningsinfos(wardataList);
 			}
-			return new DataResultDto(200);
+			return  DataResultDto.newSuccess();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new DataResultDto(200);
+			return  DataResultDto.newSuccess();
 		}
 	}
 

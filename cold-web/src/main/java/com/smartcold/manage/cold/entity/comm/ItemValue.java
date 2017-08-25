@@ -17,6 +17,16 @@ public class ItemValue {
 		super();
 	}
 
+	
+	
+	public ItemValue(String name, double value) {
+		super();
+		this.name = name;
+		this.value = value;
+	}
+
+
+
 	public ItemValue(int id, String name, double value) {
 		super();
 		this.id = id;
