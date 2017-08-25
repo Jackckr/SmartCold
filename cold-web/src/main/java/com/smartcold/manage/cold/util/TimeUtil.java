@@ -28,6 +28,9 @@ public class TimeUtil {
 	
 	
 	
+	public static String getMillTime(){
+		return (System.currentTimeMillis()+"").substring(0, 10);
+	}
 	public static Long getLongtime(){
 		return Long.parseLong( (System.currentTimeMillis()+"").substring(0, 10));
 	}

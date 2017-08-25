@@ -28,7 +28,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
     	   $scope.priveseting.isOverTemp=!$scope.priveseting.isOverTemp;
     	   if( !$scope.priveseting.isOverTemp){ angular.forEach($scope.isovTemp,function(item,index){  $scope.isovTemp[index]=false;}); }
        };
-       $scope.rdclist=$rootScope.vm.allUserRdcs;//拿到所有冷库
+     
 //       console.log("当前冷库长度"+$scope.rdclist.length);
 
        //=================================================================1.温度===================================================================================
@@ -214,6 +214,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
 	    	 $scope.init_pwc();
 	    	 $scope.initPWCchar();
 	    	 $scope.init_compressorGroups();
+	    	  $scope.rdclist=$rootScope.vm.allUserRdcs;//拿到所有冷库
 	    };
 	    //刷新数据
 	    $scope.refdata=function(){
