@@ -35,6 +35,6 @@
         SELECT `uid` FROM `collect` WHERE `collectId`=#{rdcId} and `collectType`=1
     </select>
     <select id="getByRdcId" resultType="com.smartcold.zigbee.manage.entity.CollectEntity">
-        SELECT * FROM `collect` WHERE `collectId`=#{rdcId} and `collectType`=1 and `uid`=#{uid}
+        SELECT * FROM `collect` WHERE `collectId`=#{rdcId} and `collectType`=1 and `uid`=#{uid} limit 1
     </select>
 </mapper>

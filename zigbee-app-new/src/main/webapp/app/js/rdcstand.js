@@ -107,7 +107,9 @@ $().ready(function() {
   			var sety=$("#ul_mtty_list li.active").attr("value");//经营类型
   			var adds=$("#ul_address_list li.active").attr("value");////地区
   			var keyword=$("#searchDara_div input").val().trim();////关键字搜索
-  		    var _options={ sqm:sqm, storagetempertype: smty,managementType:sety,provinceid:adds,keyword:keyword,istemperaturestandard:1};
+		    var uid;
+		    if(window.user){uid=window.user.id;}
+  		    var _options={uid:uid,sqm:sqm, storagetempertype: smty,managementType:sety,provinceid:adds,keyword:keyword,istemperaturestandard:1};
   		    var _filter={pageNum : pageNum,pageSize : pageSize};jQuery.extend(_filter, _options);
   		    return _filter;
   	 };
@@ -139,12 +141,8 @@ $().ready(function() {
     };
   	function gethtml(rdc){
         var collectWords='<a class="fr noCollect" onclick="collect(this,'+rdc.id+')"><i class="iconfont">&#xe605;</i><em>收藏</em></a>';
-        if(rdc.collectUserIds && window.user){
-            for(var i=0;i<rdc.collectUserIds.length;i++){
-                if(rdc.collectUserIds[i]==window.user.id){
-                    collectWords='<a class="fr hasCollect" onclick="collect(this,'+rdc.id+')"><i class="iconfont">&#xe60c;</i><em>已收藏</em></a>';
-                }
-            }
+        if(rdc.collectType==1){
+        	collectWords='<a class="fr hasCollect" onclick="collect(this,'+rdc.id+')"><i class="iconfont">&#xe60c;</i><em>已收藏</em></a>';
         }
          var approve='<i class="iconfont orange">&#xe6e9;</i>冷链委温度达标库';
   		 var score=['<li class="imgCell" ><a href="rdcdetail.html?id='+rdc.id+'" onclick="getSoll()"><span>达标冷库</span>' +
