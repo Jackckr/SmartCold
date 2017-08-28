@@ -27,5 +27,7 @@ coldWeb.controller('lightGroup', function ($rootScope, $scope, $state, $cookies,
 	  $scope.timeTicket = setInterval(function () { $scope.inintData(); }, 30000);
 	  $scope.$on('$destroy',function(){ clearInterval($scope.timeTicket);  });
 	  var watch =$scope.$watch('mystorages', $scope.inintData,true);//监听冷库变化
-    $("#oview").height($(".content-wrapper")[0].clientHeight);
+    //$("#oview").height($(".content-wrapper")[0].clientHeight);
 });
+
+function closeFn(em) { $(em).parents('.previewModel').remove(); }
