@@ -122,7 +122,7 @@
     margin-bottom: 15px;
 }
 .bodyModel .unitModel{
-    background: #303e47;
+    background:#314149;
     -webkit-box-shadow: 0px 1px 2px #0d1215;
     -moz-box-shadow: 0px 1px 2px #0d1215;
     -ms-box-shadow: 0px 1px 2px #0d1215;
@@ -455,4 +455,26 @@
     overflow: scroll !important;
     overflow-x: hidden;
     overflow-y: scroll!important;
+}
+/*灯组css*/
+.lightModel .bodyModel>div{
+    margin-bottom: 10px;
+}
+.lightModel .bodyModel>div>p{
+    position: relative;
+    line-height: 30px;
+}
+.lightModel .bodyModel>div>p:before{
+    content: '';
+    width: 20px;
+    height: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    border-radius: 4px;
+    position: absolute;
+    bottom:0;
+    left:50%;
+    margin-left: -10px;
+    background-color: #cc4b4b;
 }
