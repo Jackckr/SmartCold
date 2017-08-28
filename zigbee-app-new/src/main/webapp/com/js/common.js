@@ -28,8 +28,8 @@ var oHtml = document.documentElement;
 var _sysconfig={countdown:60,isdebug:true,resize:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
 getFont();$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
-  // var ER = {root:"http://www.liankur.com/",coldroot:"http://www.smartcold.org.cn"};
-var ER = {root:"http://192.168.1.114:8080",coldroot:"http://www.smartcold.org.cn"};
+//var ER = {root:"http://www.liankur.com/",coldroot:"http://www.smartcold.org.cn"};
+var ER = {root:"http://192.168.1.116:8081",coldroot:"http://www.smartcold.org.cn"};
 if ($.ajax) {jQuery.ajaxSetup({cache:false,xhrFields:{withCredentials:true}});}//支持ajax跨域
 if(localStorage.length>=14){for(var i in localStorage ){if(i.indexOf("BMap_")>=0){ localStorage.removeItem(i);}}}
 if(window.user==undefined ||window.user==null){
@@ -59,6 +59,7 @@ function getmsg(){if(window.user&&window.user.id!=0){$.post(ER.root+"/i/message/
 	});
 }}
 function getUrlParam(name){var reg=new RegExp("(^|&)"+name+"=([^&]*)(&|$)");var r=window.location.search.substr(1).match(reg);if(r!=null){return decodeURI(unescape(r[2]));return null;};}
+function getCookie(name){var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");if(arr=document.cookie.match(reg))return unescape(arr[2]);else	return null;}
 function checkLogin(msg,callback) {if(window.user!=null ){if(callback){callback(); } return true; }else{ window.user = null;window.location.href = "login.html"; return false;}}
 function checkLocal() {
     if(localStorage){
@@ -68,6 +69,8 @@ function checkLocal() {
             localStorage.removeItem("list_cache_goodlist")
         }else if(localStorage.list_cache_coldlist){
             localStorage.removeItem("list_cache_coldlist")
+        }else if(localStorage.saveRdcID){
+            localStorage.removeItem("saveRdcID")
         }
     }
 }
@@ -170,7 +173,8 @@ function setTime(obj) {
 };
 var util = {
 	setCookie:function(a,b,c){localStorage.setItem(a, b);},getCookie:function(a) {return localStorage.getItem(a);},  delCookie:function(a) {localStorage.removeItem(a);},
-	setimg : function(em, imgid, callback) {
+	setCookies:function (name,value){var Days = 30, exp = new Date();exp.setTime(exp.getTime() + Days*24*60*60*1000);document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();},
+    setimg : function(em, imgid, callback) {
 		var oFile = $(em)[0].files[0];
 		var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/i;
 		var msg = "*.gif,*.jpg,*.jpeg,*.png,*.bmp";
@@ -292,3 +296,11 @@ var formatTime = {
         return new Date(Date.parse(date.replace(/-/g, "/"))).getTime()
     }
 };
+
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+    var r = window.location.search.substr(1).match(reg);
+    if (r != null)
+        return unescape(r[2]);
+    return null;
+}/* 获取URL参数 */

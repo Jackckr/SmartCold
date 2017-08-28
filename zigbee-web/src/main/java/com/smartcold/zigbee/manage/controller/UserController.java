@@ -356,11 +356,20 @@ public class UserController extends BaseController {
 	
 	@RequestMapping(value = "/checkOldPassword")
 	@ResponseBody
-	public boolean checkOldPassword(HttpServletRequest request,String pwd){
+	public boolean checkOldPassword(HttpServletRequest request,String pwd,String token){
 		if(StringUtil.isNull(pwd)){return false;};
 		pwd=EncodeUtil.encodeByMD5(pwd);
-		UserEntity ol_user = (UserEntity)request.getSession().getAttribute("user");
-		UserEntity	new_user=this.userDao.findUserById(ol_user.getId());
+		UserEntity new_user=null;
+		UserEntity ol_user = (UserEntity) request.getSession().getAttribute("user");
+		if (ol_user==null){
+			if(StringUtil.isnotNull(token)){
+				CookieEntity effectiveCookie = cookieService.findEffectiveCookie(token);
+				ol_user = userDao.findUserByName(effectiveCookie.getUsername());
+			}else {
+				return false;
+			}
+		}
+		new_user=this.userDao.findUserById(ol_user.getId());
 		return pwd.equals(new_user.getPassword());
 	}
 	

@@ -131,7 +131,7 @@ function updatePwd() {
     $.ajax({
         url: "/i/user/checkOldPassword",
         type: "post",
-        data: {pwd: $("#old_password").val().trim()},
+        data: {pwd: $("#old_password").val().trim(),token:PageUtil.get_Cookie("token")},
         success: function (data) {
             var check2 = check(data);
             if (check2) {

@@ -123,11 +123,12 @@
                         url: ER.root + "/i/user/findUser",
                         success: function (userdata) {
                             if (userdata && userdata.id != 0) {
-                                util.setCookie("username", userName, "d7");
+                                util.setCookie("username", userName);
                                 window.localStorage.lkuser = JSON.stringify(userdata);
                                 window.localStorage.logtime = new Date().getTime();
                                 $.get(ER.root + "/i/user/isSubmitAuditUser", {userId: userdata.id},function (data) {checkState = data.status;});
-                                util.setCookie("token", token, "d7");
+                                util.setCookie("token", token);
+                                util.setCookies("token",token);
                                 if (window.location.hash != "") {
                                     backUrl = window.location.hash.substring(1);
                                 } else {
