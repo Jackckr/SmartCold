@@ -1,9 +1,9 @@
 /*各大模块css*/
 .skin-blue .wrapper, .skin-blue .main-sidebar, .skin-blue .left-side{
-    -webkit-box-shadow: 3px 0 4px #0d1215;
-    -moz-box-shadow: 3px 0 4px #0d1215;
-    -ms-box-shadow: 3px 0 4px #0d1215;
-    box-shadow: 3px 0 4px #0d1215;
+    -webkit-box-shadow: 1px 0 3px #0d1215;
+    -moz-box-shadow: 1px 0 3px #0d1215;
+    -ms-box-shadow: 1px 0 3px #0d1215;
+    box-shadow: 1px 0 3px #0d1215;
 }
 .myBg{background-color: #233038!important;}
 .body-color,
