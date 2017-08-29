@@ -10,21 +10,18 @@ $().ready(function() {
 	  var ul_select=$("#ul_rdcsL_list");
 	  var flag = document.getElementById('dataType').value;
 	  var flagobj=document.getElementById('goods_types').value;
-      gosharedile=function(sharid){
-    	  if(flag==3){
-              window.location.href ="releaserentstoragedetail.html?id="+sharid;
-		  }
-    	  else if(flag==1){
-    	  	if(flagobj==1){
-                window.location.href ="releasegoodsedetail.html?id="+sharid;
-			}else if(flagobj==2){
-                window.location.href ="releasebuygoods.html?id="+sharid;
-			}
-          }
-    	  else if(flag==2){
-              window.location.href ="releasehavecar.html?id="+sharid;
-          }
-      };
+    gosharedile = function (sharid) {
+        if (flag == 3) {
+            window.location.href = "releaserentstoragedetail.html?id=" + sharid;
+        }
+        else if (flag == 1) {
+            if (flagobj == 1) {
+                window.location.href = "releasegoodsedetail.html?id=" + sharid;
+            } else if (flagobj == 2) {
+                window.location.href = "releasebuygoods.html?id=" + sharid;
+            }
+        }
+    };
       initevg=function(){
    	    $(window).scroll(function(){
      	    var scrollTop = $(this).scrollTop();

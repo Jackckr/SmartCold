@@ -68,7 +68,7 @@ var gethtml = function(obj) {
 	switch (type) {
 	case 0:
 		return [
-				"<li class='clearfix' ><div  onclick='detailinfo("+ obj.id+")' class='clearfix'><div class='img fl'><img src='",obj.logo, "'/></div><p class='company'>", obj.name,
+				"<li class='clearfix' ><div  onclick='detailinfo("+ obj.id+")' class='clearfix'><div class='img fl'><img src='",obj.logo, "'/></div><p class='company omg'>", obj.name,
 				"</p><p class='position'><i class='iconfont'>&#xe66e;</i>",
 				obj.address,
 				"</p></div><p class='btnGroup'><button onclick='editinfo(", obj.id,
@@ -78,7 +78,7 @@ var gethtml = function(obj) {
 	case 1:
 		return [
 				"<li class='clearfix' ><div  onclick='detailinfo("+ obj.id+")' class='clearfix'><div class='img fl'  onclick='detailinfo("+ obj.id+")'><img src='",
-				obj.logo, "'/></div><p class='company'>", obj.title,
+				obj.logo, "'/></div><p class='company omg'>", obj.title,
 				"</p><p class='position'>", obj.typeText,
 				"</p></div><p class='btnGroup'><button onclick='editshareinfo(", obj.id,",",obj.dataType,
 				")'>修改</button><button onclick='delrdc(", obj.id,
@@ -87,7 +87,7 @@ var gethtml = function(obj) {
 	case 2:
 		return ["<li class='clearfix'><div  onclick='detailinfo("+ obj.orders.id+")' class='clearfix'><div class='img fl' ><img src='"
 				, obj.logo
-				, "'/></div><p class='company'>联络单名称："
+				, "'/></div><p class='company omg'>联络单名称："
 				, obj.orders.ordername
 				, "</p><p class='position'>联络单编号："
 				, obj.orders.orderid
@@ -99,7 +99,7 @@ var gethtml = function(obj) {
 	case 3:
 		return ["<li class='clearfix'><div class='clearfix'><div class='img fl' ><img src='"
 		        , obj.logo
-		        , "'/></div><p class='company'>名称："
+		        , "'/></div><p class='company omg'>名称："
 		        , obj.rdcname
 		        , "</p><p class='position' style='word-break: break-all;overflow : hidden;text-overflow: ellipsis;display: -webkit-box;color:#333;-webkit-line-clamp: 2;-webkit-box-orient: vertical;'>点评内容："
 		        , obj.commentdto.content

@@ -15,9 +15,27 @@
 		<script type="text/javascript" src="../com/js/common.js"></script>
         <script type="text/javascript" src="../com/js/layer.js"></script>
 	    <script type="text/javascript" src="../com/js/baguettebox.min.js"></script>
-		<script type="text/javascript" src="../app/js/colddetail.js"></script>
+		<script type="text/javascript">
+            var id  = getUrlParam("id");//当前rdc-id数据信息
+            var app = angular.module('app', []);
+            app.controller('commentList', function($http, $location,$scope) {
+                $scope.rdcid=id;
+                $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
+
+                $http.get(ER.root + "/i/comment/findCommentsByRDCId", {params: {npoint:200,rdcID:id}}).success(function(data) {//评价信息--npoint：记录条数
+                    $scope.evaList = data;//
+                    $scope.evatotal = data.length;//
+                });
+                $scope.initevg=function(){
+                    baguetteBox.run('.baguetteBoxOne', {animation: 'slideIn', buttons: true});
+                };
+                $scope.initevg();
+                $scope.$on('ngRepeatFinished', function (ngRepeatFinishedEvent) {baguetteBox.run('.baguetteBoxOne', {buttons:true});imgBoxHide()});
+            });
+            app.directive('onFinishRenderFilters', function ($timeout) { return { restrict: 'A', link: function(scope, element, attr) {   $timeout(function() { scope.$emit('ngRepeatFinished');  },100); } };});
+        </script>
     </head>
-    <body ng-app="app"  ng-controller="colddetail"  on-finish-render-filters>
+    <body ng-app="app"  ng-controller="commentList"  on-finish-render-filters>
         <!-- header -->
             <header>                 
                 <div class="area fl"> <a  onclick="goback();"><i class="iconfont">&#xe60e;</i></a></div>

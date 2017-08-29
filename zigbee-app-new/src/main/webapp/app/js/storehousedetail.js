@@ -126,9 +126,6 @@
                             }
                         }
                     }
-                    /*else{
-                        goback();
-                    }*/
                 }
 			}else{
 		 		var rdcId="";

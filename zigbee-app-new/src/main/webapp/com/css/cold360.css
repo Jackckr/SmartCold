@@ -381,6 +381,9 @@ b{
 	border-collapse: collapse;
 	border:1px solid #337ab7;
 }
+.actually+.cold_warn{
+	margin-bottom: 2.5rem;
+}
 .wxRecords .cold_warn{
 	word-break:keep-all;
 	white-space: nowrap;

@@ -189,51 +189,5 @@
 				<div class="flex"><span class="item">备注</span><p class="item">{{vo.note?vo.note:'无'}}</p></div>
 			</div>
 		</div>
-
-
-		<!--<div class="main">
-			&lt;!&ndash; =======================================================================================货物信息共享 &ndash;&gt;
-			<div ng-if="vo.dataType==1">
-			<ul class="infolist clearfix">
-				<li ><span class="type">品类：</span><span class="text"></span></li>
-
-				<li  style="width:100%;"><span class="type">有效开始时间：</span><span class="text"></span></li>
-				<li  style="width:100%;"><span class="type">有效结束时间：</span><span class="text"></span></li>
-			</ul>
-			</div>-->
-			<!-- ======================================================================================= 冷运信息共享-->
-			<!--<div ng-if="vo.dataType==2">
-			<ul class="infolist clearfix">
-				<li class="widthL" ng-if="vo.rdcID!=0"><span class="type">冷库名称：</span><span class="text">{{vo.name}}</span></li>
-				<li class="widthL" ng-if="vo.detlAddress!=''&&vo.detlAddress!=undefined"><span class="type">地理位置:</span><span class="text">{{vo.detlAddress}}</span></li>
-				<li ng-if="vo.codeLave1!=''&&vo.codeLave1!=undefined"><span class="type">业务类型：</span><span class="text">{{vo.codeLave1}}</span></li>
-				<li ng-if="vo.codeLave2!=''&&vo.codeLave2!=undefined"><span class="type">温度类型：</span><span class="text">{{vo.codeLave2}}</span></li>
-				<li ng-if="vo.codeLave3!=''&&vo.codeLave3!=undefined"><span class="type">车型：</span><span class="text">{{vo.codeLave3}}</span></li>
-				<li>
-					<span class="type fl">星级：</span>
-					<ul class='star fl'>
-						<li class="filled">★</li>
-						<li class="filled">★</li>
-						<li class="filled">★</li>
-						<li class="filled">★</li>
-						<li class="filled">★</li>
-					</ul>
-				</li>
-				<li vl={{vo.attrvalue1}}><span class="type">{{appmode[datatype].lab[1][0]}}：</span><span class="text">{{vo.unitPrice == '0.00' ?"面议":vo.unitPrice}}</span><span ng-if="vo.unitPrice != '0.00'"> {{vo.picunit}}</span></li>
-				<li style="width:100%;"><span class="type">出发地址：</span><span class="text">{{vo.unit1 }}</span><span class="text" ng-if="vo.staddress&&vo.attrvalue!=0">({{vo.staddress}})</span></li>
-				<li style="width:100%;"><span class="type">目的地址：</span><span class="text">{{vo.unit2 }}</span><span class="text" ng-if="vo.toaddress&&vo.attrvalue!=0">({{vo.toaddress}})</span></li>
-				<li  ng-if="vo.attrvalue1==5" style="width:100%;"><span class="type">始发信息：</span><span class="text">{{vo.validStartTime }}</span></li>
-				<li  ng-if="vo.attrvalue1==3" style="width:100%;"><span class="type">出发时间：</span><span class="text">{{vo.validEndTime |date:"yyyy-MM-dd" }}</span></li>
-			    <li  ng-if="vo.attrvalue1==3" style="width:100%;"><span class="type">到达时间：</span><span class="text">{{vo.validStartTime |date:"yyyy-MM-dd" }}</span></li>
-				<li ng-if="vo.attrvalue1==1||vo.attrvalue1==2||vo.attrvalue1==4" style="width:100%;"><span class="type">出发时间：</span><span class="text">{{vo.validStartTime  }}</span></li>
-				<li ng-if="vo.attrvalue1==1||vo.attrvalue1==2||vo.attrvalue1==4" style="width:100%;"><span class="type">到达时间：</span><span class="text">{{vo.validEndTime }}</span></li>
-			</ul>
-			</div>-->
-			<!-- ======================================================================================= -->
-			<!--<p class="dateline"><span class="type">备注：</span><span class="text"></span></p>
-			<button id="app_order" class="mybtn" ng-click="getOrder();"  >确认抢单</button>	&lt;!&ndash; disabled="disabled" &ndash;&gt;
-		</div>-->
-		<!--<div class="wxShare"><img src="../com/img/wx.png"></div>
-		<div class="webShare"><img src="../com/img/web.png"></div>-->
 	</body>
 </html>
