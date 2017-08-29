@@ -160,12 +160,12 @@
 <section class="more" ng-if="rdctotal" style="margin-top: 0;padding-bottom: .3rem">
     <ul class="listDad clearfix">
         <li class="fl">冷库出租&nbsp;(<span id="num">{{rdctotal}}</span>)</li>
-        <li class="fr"><a href="rentstorage.html?rdcid={{rdcid}}"><i class="iconfont">&#xe697;</i></a></li>
+        <li class="fr"><a href="rentstorage.html?rdcid={{rdcid}}" ng-click="gomorehistory()"><i class="iconfont">&#xe697;</i></a></li>
     </ul>
     <div class="coldlist">
         <ul class="imgTable">
             <li class="imgCell" ng-repeat="rdc in rdcList" style="background-color: transparent;">
-                <a href="storehousedetail.html?id={{rdc.id}}">
+                <a href="storehousedetail.html?id={{rdc.id}}" ng-click="gohistory()">
                     <img class="fl" ng-src="{{rdc.logo}}">
                     <div>
                         <p class='ellipsis'>【{{rdc.typeText}}】 {{rdc.title}} </p>
@@ -188,12 +188,12 @@
 <section class="more" ng-if="satotal" style="margin-top: 0;padding-bottom: .3rem">
     <ul class="listDad clearfix">
         <li class="fl">商品出售&nbsp;(<span id="num">{{satotal}}</span>)</li>
-        <li class="fr"><a href="salegoodslist.html?rdcid={{rdcid}}"><i class="iconfont">&#xe697;</i></a></li>
+        <li class="fr"><a href="salegoodslist.html?rdcid={{rdcid}}" ng-click="gomorehistory()"><i class="iconfont">&#xe697;</i></a></li>
     </ul>
     <div class="coldlist">
         <ul class="imgTable">
             <li class="imgCell" ng-repeat="good in saleList" style="background-color: transparent;">
-                <a href="storehousedetail.html?id={{good.id}}">
+                <a href="storehousedetail.html?id={{good.id}}"  ng-click="gohistory()">
                     <img class="fl" ng-src="{{good.logo}}">
                     <div class="">
                         <p class='ellipsis'>【{{good.typeText}}】{{good.title}}</p>
@@ -217,12 +217,12 @@
 <section class="more" ng-if="aptotal" style="margin-top: 0;padding-bottom: .3rem">
     <ul class="listDad clearfix">
         <li class="fl">商品求购&nbsp;(<span id="num">{{aptotal}}</span>)</li>
-        <li class="fr"><a href="buygoodslist.html?rdcid={{rdcid}}"><i class="iconfont">&#xe697;</i></a></li>
+        <li class="fr"><a href="buygoodslist.html?rdcid={{rdcid}}" ng-click="gomorehistory()"><i class="iconfont">&#xe697;</i></a></li>
     </ul>
     <div class="coldlist">
         <ul class="imgTable">
             <li class="imgCell" ng-repeat="good in applyList" style="background-color: transparent;">
-                <a href="storehousedetail.html?id={{good.id}}">
+                <a href="storehousedetail.html?id={{good.id}}"  ng-click="gohistory()">
                     <img class="fl" ng-src="{{good.logo}}">
                     <div class="">
                         <p class='ellipsis'>【{{good.typeText}}】{{good.title}}</p>

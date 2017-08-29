@@ -28,6 +28,8 @@ $().ready(function () {
     localStorage.removeItem('gowhere');
     localStorage.removeItem('oURL');
     localStorage.removeItem('goIndex');
+    localStorage.removeItem('rdcId');
+    localStorage.removeItem('moreId');
     var province = null, sccsize = 0, shear = false;
     if (window.localStorage.appLocalCity) {
         document.getElementById("city").innerHTML = JSON.parse(window.localStorage.appLocalCity).cityName;
