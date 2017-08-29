@@ -196,16 +196,25 @@
             <artifactId>quartz</artifactId>
             <version>2.2.2</version>
         </dependency>
-<!--         <dependency> -->
-<!-- 			<groupId>org.quartz-scheduler</groupId> -->
-<!-- 			<artifactId>quartz-jobs</artifactId> -->
-<!-- 			<version>2.2.1</version> -->
-<!-- 		</dependency> -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        	 <!-- https://mvnrepository.com/artifact/redis.clients/jedis redis 缓存管理2-->
+		<dependency>
+           <groupId>org.springframework.data</groupId>
+           <artifactId>spring-data-redis</artifactId>
+           <version>1.7.1.RELEASE</version>
+       </dependency>
+       <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+		<dependency>
+		    <groupId>redis.clients</groupId>
+		    <artifactId>jedis</artifactId>
+		    <version>2.9.0</version>
+		</dependency>
+        
+        
 
 	</dependencies>
 

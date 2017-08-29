@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,6 +42,11 @@ public class QTCollectionController extends BaseController {
 
 	public static Boolean isUpdat=false;
 			
+    private static Integer pl=30;
+    
+    
+    private static long time=0;
+    
 	/**
 	 *http DEV数据上传接口
 	 * @param data
@@ -50,9 +56,15 @@ public class QTCollectionController extends BaseController {
 	@RequestMapping(value = "/QTisUpdat")
 	@ResponseBody
 	public void QTisUpdat() {
-		QTCollectionController.isUpdat=!QTCollectionController.isUpdat;
+		QTCollectionController.isUpdat=true;
 	} 		
-			
+	
+	
+	@RequestMapping(value = "/QTpl")
+	@ResponseBody
+	public void QTpl(int pl) {
+		QTCollectionController.pl=pl;
+	} 
 	/**
 	 *http DEV数据上传接口
 	 * @param data
@@ -62,13 +74,17 @@ public class QTCollectionController extends BaseController {
 	@RequestMapping(value = "/QTDataCollection", method = RequestMethod.POST)
 	@ResponseBody
 	public Object QTDataCollection(@RequestBody String data) {
+		long cutime=System.currentTimeMillis();
+		long st=(cutime-time)/1000;
+		time=cutime;
+		 String apID="";
 		try {
-			System.out.println(data);
+//			System.out.println(data);
 			if(StringUtil.isNull(data)){return DataResultDto.newFailure();}
 			Map<String, Object> dataCollectionBatchEntity = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 			if(dataCollectionBatchEntity.containsKey("infos")){
-				String apID = dataCollectionBatchEntity.get("apID").toString();
-				System.err.println(apID);
+				 apID = dataCollectionBatchEntity.get("apID").toString();
+//				System.err.println(apID);
 				ArrayList<StorageDataCollectionEntity> arrayList = new ArrayList<StorageDataCollectionEntity>();
 				for (Map<String, String> info : (List<Map<String, String>>) dataCollectionBatchEntity.get("infos")) {
 					System.err.println(info);
@@ -80,7 +96,10 @@ public class QTCollectionController extends BaseController {
 				}
 				
 			}
-		   return DataResultDto.newSuccess(isUpdat);//更新数据服务
+			boolean cisupdat=isUpdat;
+			if(isUpdat){	isUpdat=!isUpdat;}
+			System.err.println("收到 QT数据："+apID+"====================间隔时间："+st+" 是否更新数据："+cisupdat+"时间"+TimeUtil.getDateTime());
+		   return DataResultDto.newSuccess(cisupdat);//更新数据服务
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("系统在："+TimeUtil.getDateTime()+"检测到QT数据解析异常：\r\n"+data);
@@ -97,19 +116,21 @@ public class QTCollectionController extends BaseController {
 	 */
 	@RequestMapping(value = "/QTDEVConfig")//
 	@ResponseBody
-	public Object QTDEVConfig( String apID) {
+	public Object QTDEVConfig(@RequestBody String data) {
 		try {
-			if(StringUtil.isNull(apID)){return DataResultDto.newFailure();}
+		
+			if(StringUtil.isNull(data)){return DataResultDto.newFailure();}
 			LinkedHashMap<String, Object> resMap=new LinkedHashMap<String, Object>();
 			resMap.put("status","200");
 			resMap.put("time", TimeUtil.getMillTime());
-			if(Math.rint(10)%2==0||Math.rint(10)%3==0){	resMap.put("PL", "30");}
+			if(Math.rint(10)%2==0||Math.rint(10)%3==0){	resMap.put("PL", QTCollectionController.pl+"");}
             List<HashMap<String, Object>> infoHashMaps=new ArrayList<HashMap<String, Object>>();
             HashMap<String, Object> dataHashMap=new HashMap<>();
             dataHashMap.put("tagname", "低温库设定温度1");
             dataHashMap.put("value", "-12.5");
             infoHashMaps.add(dataHashMap);
             resMap.put("infos", infoHashMaps);
+        	System.err.println("QT收到配置==================================");
 			return resMap;
 		} catch (Exception e) {
 			return DataResultDto.newFailure();

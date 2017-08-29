@@ -61,5 +61,9 @@ public class GoodsServiceTest {
 		List<BlowerDTO> list = compressorBlowerService.findByRdcId(5);
 		System.out.println(list.size());
 	}
+	
+	
+	
+	
 }
 

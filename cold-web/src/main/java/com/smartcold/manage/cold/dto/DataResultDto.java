@@ -71,6 +71,7 @@ public class DataResultDto<T> {
 	public static <T> DataResultDto<T> newSuccess() {
 		DataResultDto<T> rd = getInstance();
 		rd.setStatus("200");
+		rd.setUpdateConf(null);
 		rd.setTime(Long.toString(System.currentTimeMillis() / 1000));
 		return rd;
 	}
@@ -82,7 +83,7 @@ public class DataResultDto<T> {
 	public static <T> DataResultDto<T> newSuccess(Boolean update) {
 		DataResultDto<T> rd = getInstance();
 		rd.setStatus("200");
-		if(update){rd.setUpdateConf("true");}
+		if(update){rd.setUpdateConf("true");}else{rd.setUpdateConf(null);}
 		rd.setTime(Long.toString(System.currentTimeMillis() / 1000));
 		return rd;
 	}

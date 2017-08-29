@@ -1,6 +1,8 @@
 package com.smartcold.manage.cold.entity.olddb;
 
-public class UserEntity {
+import java.io.Serializable;
+
+public class UserEntity implements Serializable {
 
 	private int id;
 
@@ -17,6 +19,9 @@ public class UserEntity {
 	private String email;
 
 	private Integer vipType;
+	
+	private static final long serialVersionUID = -2875979349754314456L;
+	
 	public UserEntity() {
 		super();
 	}

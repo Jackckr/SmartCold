@@ -1,12 +1,8 @@
 package com.smartcold.manage.cold.api;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,8 +14,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.smartcold.manage.cold.controller.BaseController;
 import com.smartcold.manage.cold.dto.DataResultDto;
-import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
-import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 
 /**
@@ -42,7 +36,7 @@ public class CSACollectionController extends BaseController {
 	 */
 	@RequestMapping(value = "/CSDataCollection", method = RequestMethod.POST)
 	@ResponseBody
-	public Object CSDataCollection(@RequestBody String data, HttpServletResponse response) {
+	public Object CSDataCollection(@RequestBody String data) {
 		try {
 			Map<String, Object> dataCollectionBatchEntity = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 			if(cahceList.size()>100){for (int i = 0; i < 50; i++) {
