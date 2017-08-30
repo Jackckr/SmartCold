@@ -3,7 +3,7 @@
  */
 $().ready(function () {
     var maxSize = 10;
-    localStorage.isStand = 0;
+    localStorage.isStand = $("#isstand").val();
     var totalPages = currentPage = 1;  // 当前页
     var isLoadRB = false;
     var ul_select = $("#ul_rdcsL_list");
@@ -211,39 +211,54 @@ $().ready(function () {
     };
 
     function gethtml(rdc) {
-        if (rdc.audit == -1) {
-            return false
-        }
-        var approve = '';
-        if (rdc.audit == 2) {
-            if(rdc.id==1878){
-                approve = '<i class="iconfont green">&#xe61f;</i><i class="green">已通过</i>'
-            }else{
-                if (rdc.istemperaturestandard == 1) {
-                    approve = '<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
-                } else {
-                    approve = '<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i>'
-                }
+        if(localStorage.isStand==0){
+            if (rdc.audit == -1) {
+                return false
             }
+            var approve = '';
+            if (rdc.audit == 2) {
+                if(rdc.id==1878){
+                    approve = '<i class="iconfont green">&#xe61f;</i><i class="green">已通过</i>'
+                }else{
+                    if (rdc.istemperaturestandard == 1) {
+                        approve = '<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
+                    } else {
+                        approve = '<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i>'
+                    }
+                }
 
-        } else if (rdc.audit != 2) {
-            if (rdc.istemperaturestandard == 1) {
-                approve = '<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
-            } else {
-                approve = '<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i>'
-            }
-        }
-        ;
-        var collectWords = '<a class="fr noCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe605;</i><em>收藏</em></a>';
-                if (rdc.collectType == 1) {
-                    collectWords = '<a class="fr hasCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe60c;</i><em>已收藏</em></a>';
+            } else if (rdc.audit != 2) {
+                if (rdc.istemperaturestandard == 1) {
+                    approve = '<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
+                } else {
+                    approve = '<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i>'
                 }
-        var score = ['<li class="imgCell" ><a href="rdcdetail.html?id=' + rdc.id + '" onclick="getSoll()"><img class="fl" src="' + rdc.logo + '">' +
-        '<div><p class="ellipsis">' + rdc.name + '</p><p class="position omg"><i class="iconfont">&#xe66e;</i>' + rdc.address + '</p>' +
-        '<div class="star">' + approve + '</div></div></a>' +
-        '<div class="btnFn clearfix"><a href="rdcdetail.html?id=' + rdc.id + '" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>' +
-        collectWords + '<a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'];
-        return score.join("");
+            }
+            ;
+            var collectWords = '<a class="fr noCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe605;</i><em>收藏</em></a>';
+            if (rdc.collectType == 1) {
+                collectWords = '<a class="fr hasCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe60c;</i><em>已收藏</em></a>';
+            }
+            var score = ['<li class="imgCell" ><a href="rdcdetail.html?id=' + rdc.id + '" onclick="getSoll()"><img class="fl" src="' + rdc.logo + '">' +
+            '<div><p class="ellipsis">' + rdc.name + '</p><p class="position omg"><i class="iconfont">&#xe66e;</i>' + rdc.address + '</p>' +
+            '<div class="star">' + approve + '</div></div></a>' +
+            '<div class="btnFn clearfix"><a href="rdcdetail.html?id=' + rdc.id + '" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>' +
+            collectWords + '<a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'];
+            return score.join("");
+        }
+        else{
+            var collectWords='<a class="fr noCollect" onclick="collect(this,'+rdc.id+')"><i class="iconfont">&#xe605;</i><em>收藏</em></a>';
+            if(rdc.collectType==1){
+                collectWords='<a class="fr hasCollect" onclick="collect(this,'+rdc.id+')"><i class="iconfont">&#xe60c;</i><em>已收藏</em></a>';
+            }
+            var approve='<i class="iconfont orange">&#xe6e9;</i>冷链委温度达标库';
+            var score=['<li class="imgCell" ><a href="rdcdetail.html?id='+rdc.id+'" onclick="getSoll()"><span>达标冷库</span>' +
+            '<div style="padding-left: 2.5rem;"><p class="ellipsis">'+rdc.name+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.address+'</p>' +
+            '<div class="star orange">'+approve+'</div></div></a><i class="iconfont tj">&#xe686;</i>' +
+            '<div class="btnFn clearfix"><a href="rdcdetail.html?id='+rdc.id+'" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>'+
+            collectWords+'<a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'];
+            return score.join("");
+        }
     }
 
     function getPageData() {//启用无限加载

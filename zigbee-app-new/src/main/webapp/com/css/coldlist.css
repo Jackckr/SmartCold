@@ -142,7 +142,7 @@ section{
 	margin-bottom: 0.2rem;
 	color: #333;
 	font-size: 0.7rem;
-	/*text-indent: -0.05rem;*/
+	padding-right: 0.8rem;
 }
 .position{
 	color: #999;
@@ -841,7 +841,7 @@ section{
 }
 .rdcstand .coldlist li a .star{
 	margin-top: .3rem;
-	padding-left: 3rem;
+	padding-left: 0.5rem;
 }
 .rdcstand .coldlist li .grab{
 }
