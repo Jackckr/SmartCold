@@ -26,7 +26,7 @@
         SELECT * FROM `collect` WHERE `collectType`=2 AND `uid`=#{uid}
     </select>
     <select id="getByColId" resultType="com.smartcold.zigbee.manage.entity.CollectEntity">
-        SELECT * FROM `collect` WHERE `collectId`=#{colId} and `collectType`=2 and `uid`=#{uid}
+        SELECT * FROM `collect` WHERE `collectId`=#{colId} and `collectType`=2 and `uid`=#{uid} limit 1
     </select>
     <select id="getUsersIdByColId" resultType="java.lang.Integer">
         SELECT `uid` FROM `collect` WHERE `collectId`=#{colId} and `collectType`=2
@@ -35,6 +35,6 @@
         SELECT `uid` FROM `collect` WHERE `collectId`=#{rdcId} and `collectType`=1
     </select>
     <select id="getByRdcId" resultType="com.smartcold.zigbee.manage.entity.CollectEntity">
-        SELECT * FROM `collect` WHERE `collectId`=#{rdcId} and `collectType`=1 and `uid`=#{uid}
+        SELECT * FROM `collect` WHERE `collectId`=#{rdcId} and `collectType`=1 and `uid`=#{uid} limit 1
     </select>
 </mapper>

@@ -102,24 +102,30 @@
          };
      };
      $scope.goWhere = function () {
-		 if($scope.checkUserLogin()){
+		 if($scope.checkUserLogin()){//检查登录否
 		 	if(localStorage.gowhere||localStorage.oURL){
-                if(localStorage.gowhere){
+                if(localStorage.gowhere){//返回我的收藏
                     goback();
-                }else if($scope.datatype==3){//1:出租/2:求租
-                    if($scope.vo.typeCode==1){
-                        location.href='rentstorage.html'
-                    }else{
-                        location.href='lookstorage.html'
-                    }
-                }else if($scope.datatype==1){//1:出售/2:求购
-                    if($scope.vo.typeCode==1){
-                        location.href='salegoodslist.html'
-                    }else{
-                        location.href='buygoodslist.html'
-                    }
                 }else{
-                    goback();
+                    if(localStorage.rdcId){
+                        location.href='rdcdetail.html?id='+localStorage.rdcId;
+                    }else{
+                        var iD='';
+                        localStorage.moreId?iD='?rdcid='+localStorage.moreId:iD='';
+                        if($scope.datatype==3){//返回列表
+                            if($scope.vo.typeCode==1){//1:出租/2:求租
+                                location.href='rentstorage.html'+iD;
+                            }else{
+                                location.href='lookstorage.html'+iD;
+                            }
+                        }else if($scope.datatype==1){//1:出售/2:求购
+                            if($scope.vo.typeCode==1){
+                                location.href='salegoodslist.html'+iD;
+                            }else{
+                                location.href='buygoodslist.html'+iD;
+                            }
+                        }
+                    }
                 }
 			}else{
 		 		var rdcId="";

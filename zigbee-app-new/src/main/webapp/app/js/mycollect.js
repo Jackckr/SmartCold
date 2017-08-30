@@ -25,7 +25,7 @@ $().ready(function () {
                     return ["<li class='clearfix'><div class='clearfix'><p class='company'>该内容已被删除!</p><p class='btnGroup'><button onclick='cancelCollect("+item.id+","+index+")'>取消收藏</button></p></li>" ].join("");
                 }
                 return [
-                "<li class='clearfix' ><div class='clearfix'><div class='img fl'><img src='", obj.logo, "'/></div><p class='company'>", obj.title,
+                "<li class='clearfix' ><div class='clearfix'><div class='img fl'><img src='", obj.logo, "'/></div><p class='company omg'>", obj.title,
                 "</p><p class='position'>", obj.typeText,
                 "</p></div><p class='btnGroup'><a href='storehousedetail.html?id="+obj.id+"'><button>查看</button></a><button onclick='cancelCollect("+item.id+","+index+")'>取消收藏</button></p></li>" ].join("");
             case 2:
@@ -34,7 +34,7 @@ $().ready(function () {
                     return ["<li class='clearfix'><div class='clearfix'><p class='company'>该内容已被删除!</p><p class='btnGroup'><button onclick='cancelCollect("+item.id+","+index+")'>取消收藏</button></p></li>" ].join("");
                 }
                 return [
-                    "<li class='clearfix' ><div class='clearfix'><div class='img fl'><img src='"+obj.logo+"'/></div><p class='company'>", obj.name,
+                    "<li class='clearfix' ><div class='clearfix'><div class='img fl'><img src='"+obj.logo+"'/></div><p class='company omg'>", obj.name,
                     "</p><p class='position'><i class='iconfont'>&#xe66e;</i>",
                     obj.address,
                     "</p></div><p class='btnGroup'><a href='rdcdetail.html?id="+obj.id+"'><button>查看</button></a><button onclick='cancelCollect("+item.id+","+index+")'>取消收藏</button></p></li>" ].join("");

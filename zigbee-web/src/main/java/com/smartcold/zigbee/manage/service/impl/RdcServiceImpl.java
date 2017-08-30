@@ -156,7 +156,7 @@ public class RdcServiceImpl implements RdcService {
         RdcAddDTO rdcAddDTO = new RdcAddDTO();
         rdcAddDTO.setUnitPrice(unitPrice);
         RdcEntity rdcEntity = rdcByRDCId.get(0);
-        if(uid!=null){
+        if(uid!=null&&uid!=0){
             List<RdcAuthEntity> rdcAuthList = rdcauthMapping.selAuditRdcId(rdcID,uid);
             if (rdcAuthList != null && rdcAuthList.size() != 0) {
                 rdcAddDTO.setAuditType(2);

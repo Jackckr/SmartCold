@@ -385,6 +385,10 @@ b{
 	border-collapse: collapse;
 	border:1px solid #337ab7;
 }
+
+.actually+.cold_warn{
+	margin-bottom: 2.5rem;
+}
 .cold_warn td,.cold_warn th{
 	border:1px solid #337ab7;
 	text-align: center;

@@ -10,6 +10,8 @@
 	 };
  }
  localStorage.oURL=document.URL;
+ localStorage.removeItem('rdcId');
+ localStorage.removeItem('moreId');
 
  if(id==null||id==''){
 	 	$(document.body).html("");
@@ -37,6 +39,12 @@
          $scope.struct={};
          $scope.saveType={};
          $scope.isHave=["","有","无"];
+         $scope.gohistory=function () {//单个信息进入
+             localStorage.rdcId=id;
+         };
+         $scope.gomorehistory=function () {//从更多按钮进入
+             localStorage.moreId=id;
+         };
          //获取温度类型
          $http.get(ER.root+'/i/rdc/findAllTemperType').success(function (data) {
              angular.forEach(data,function (item, key) {

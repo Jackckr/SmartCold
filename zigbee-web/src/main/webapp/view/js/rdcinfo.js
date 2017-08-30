@@ -61,7 +61,7 @@ function getRdcInfo() {
         });
     }});
     var isHave=["","有","无"];
-    $.ajax({url:"/i/rdc/findRDCDTOByRDCId",type:"get",data:{"rdcID":rdcId,"uid":window.lkuser.id},success:function (data) {
+    $.ajax({url:"/i/rdc/findRDCDTOByRDCId",type:"get",data:{"rdcID":rdcId},success:function (data) {
         var rdc=data[0];
         var price=rdc.unitPrice?rdc.unitPrice+"元/㎡/天":"暂无";
         var rentSqm=rdc.rentSqm?rdc.rentSqm+"㎡":"暂无";
