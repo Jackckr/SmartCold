@@ -1,15 +1,20 @@
 /**
- * 冷库列表
+ * 出售求购列表
  */
 $().ready(function () {
     var maxSize = 10;
     var isLoadRB = false;
     var rdcid = getUrlParam("rdcid");
     var ul_select = $("#ul_goodlist_list");
-    var typeCode = 1, totalPages = currentPage = 1;  // 当前页//rental_type:出租类型:1:出租 2:求租
+    var typeCode = $("#rdcType").val(), totalPages = currentPage = 1;  // 当前页//rental_type:出租类型:1:出租 2:求租
     gosharedile = function (sharid) {//共享详情
         window.location.href = "storehousedetail.html?id=" + sharid;
     };
+    var match={area:'',mantype:'',temtype:'',sqm:'',goodtype:''};
+    var myFilter=null;
+    if(localStorage.match) {
+        myFilter = JSON.parse(localStorage.match);
+    }
     $(".transion").click(function () {
         $(".one").hide();
         $(".two").show();
@@ -17,10 +22,8 @@ $().ready(function () {
     $(".cancel").click(function () {
         $(".one").show();
         $(".two").hide();
-        currentPage = 1;
-        ul_select.empty();
-        $("#searchDara_div input").val(null);
-        getPageData();
+        localStorage.removeItem('match');
+        window.location.reload();
     });
     initevg = function () {
         $("#tool_but button").click(function (e) {
@@ -71,6 +74,11 @@ $().ready(function () {
             $("#ul_hascar_list li").click(function (event) {
                 addfilter(this);
             });
+            if(myFilter&&myFilter.provinceid) {
+                match.area=data[myFilter.provinceid-1].provinceName;
+                $("#filter_section").children('.droplist').eq(0).find('span').html(match.area);
+                $("#ul_hascar_list li").eq(myFilter.provinceid).addClass('active').siblings().removeClass('active');
+            }
         });
         $.post(ER.root + "/i/ShareRdcController/getGDFilterData", function (data) {
             if (data.success) {
@@ -82,6 +90,11 @@ $().ready(function () {
                 $("#ul_goodtype_list li").click(function (event) {
                     addfilter(this);
                 });
+                if(myFilter&&myFilter.goodtype) {
+                    match.goodtype=data.entity.gt[myFilter.goodtype-1].type_name+ "/" +data.entity.gt[myFilter.goodtype-1].type_desc;
+                    $("#filter_section").children('.droplist').eq(1).find('span').html(match.goodtype);
+                    $("#ul_goodtype_list li").eq(myFilter.goodtype).addClass('active').siblings().removeClass('active');
+                }
             }
         });
     };
@@ -96,7 +109,7 @@ $().ready(function () {
         var _options = {
             provinceid: adds,
             goodtype: gdty,
-            typeCode: 1,
+            typeCode: typeCode,
             dataType: 1,
             rdcID: rdcid,
             keyword: keyword,
@@ -104,6 +117,10 @@ $().ready(function () {
         };
         var _filter = {pageNum: pageNum, pageSize: pageSize};
         jQuery.extend(_filter, _options);
+        if(gdty||adds||keyword){
+            localStorage.match=JSON.stringify(_filter);
+            myFilter=_filter;
+        };
         return _filter;
     };
     getSoll = function () {
@@ -159,7 +176,7 @@ $().ready(function () {
             oprice=rdc.unitPrice+'元/'+unit[rdc.publishunit];
         }
         var score = [
-            '<li class="imgCell"><a href="storehousedetail.html?id=' + rdc.id + '" onclick="getSoll()"><span>出售货源</span><div>' +
+            '<li class="imgCell"><a href="storehousedetail.html?id=' + rdc.id + '" onclick="getSoll()"><span>'+rdc.typeText+'货源</span><div>' +
             '<p class="ellipsis">' + rdc.title + '</p><p class="position omg orange"><i class="iconfont">&#xe673;</i>' + rdc.sqm + unit[rdc.publishunit] + '</p><span class="grab green">[' + showTime + ']</span>' +
             '</div><div class="flex"><div class="item"><h4>' + usefulDate + '</h4>' +
             '<p>有效期</p></div><div class="item"><h4>' + validEndTime + '</h4><p>报价截止日</p>' +
@@ -202,7 +219,19 @@ $().ready(function () {
     };
     function getPageData() {//启用无限加载
         isLoadRB = true;
+        if($("#searchDara_div input").val().trim()){
+            $(".one").hide();
+            $(".two").show();
+        }
         var _filter = getFilter(currentPage, maxSize);
+        if(myFilter){
+            _filter=myFilter;
+            if(_filter.keyword){
+                $(".one").hide();
+                $(".two").show();
+                $("#searchDara_div input").val(_filter.keyword);
+            }
+        };
         $.post(ER.root + "/i/ShareRdcController/newGetSERDCList", _filter, function (data) {
             if (data.success && data.data.length > 0) {
                 totalPages = data.totalPages;
@@ -221,6 +250,8 @@ $().ready(function () {
         });
     };
     function initData() {//启用无限加载
+        initFilter();
+        initevg();
         if (localStorage.list_cache_goodlist) {
             var cachdata = JSON.parse(localStorage.list_cache_goodlist);
             totalPages = parseInt(cachdata.totalPages);
@@ -230,8 +261,6 @@ $().ready(function () {
         } else {
             getPageData();
         }
-        initFilter();
-        initevg();
 
     };
     function setRdcID() {

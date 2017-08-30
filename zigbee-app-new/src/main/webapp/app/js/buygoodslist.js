@@ -1,5 +1,5 @@
 /**
- * 冷库列表
+ * 已弃用
  */
 $().ready(function () {
     var maxSize = 10;
