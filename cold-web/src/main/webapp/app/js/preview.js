@@ -57,7 +57,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
     		   if(temp!=0){temp=temp/sccount;}
     		   if($scope.isNumber($scope.cuttTemp[oid])&&temp==0){ temp=$scope.cuttTemp[oid]; }
     		   $scope.cuttTemp[oid]=temp==0?"--": parseFloat(temp.toFixed(2));
-    		   $scope.cuttrestime[0]=new Date();
+    		   $scope.cuttrestime[0]=new Date().getTime()-300000;
     	   });
     	   if($scope.priveseting.isOverTemp){//加载告警
     		   $http.get('http://139.224.16.238/i/util/getColdAlarmStatus', { params: {oid: oid}}).success(function (result) {
@@ -79,7 +79,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
     		   var pwc=data[oid].length>0?data[oid][0]['value']:0;
     		   if($scope.isNumber($scope.cuttrepwc[oid])&&pwc==0){ pwc=$scope.cuttrepwc[oid]; }
     			$scope.cuttrepwc[oid]=pwc==0?"--":pwc.toFixed(2);
-    		    $scope.cuttrestime[1]=new Date();
+    		    $scope.cuttrestime[1]=new Date()-300000;
     	   });
     	   
        };
@@ -117,7 +117,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
     			   $http.get('/i/baseInfo/getKeyValuesByTime', { params: {type:5, oids:obj.id, 'key':'run', "startTime": baseTools.formatTime(startTime ), "endTime": baseTools.formatTime(endTime)}}).success(function (data) {
     				   obj.status=data[obj.id].length>0?$scope.statusmode[0][data[obj.id][0]['value']]:(obj.old_status?obj.old_status:'stop');//
     				   obj.old_status=obj.status;
-    				   $scope.cuttrestime[2]=new Date();
+    				   $scope.cuttrestime[2]=new Date()-300000;
     	    	   });
     		   });
     		   
@@ -134,7 +134,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
                             if( item.isRunning==1){item.st=1;}else if( item.isDefrosting==1){item.st=2;}else{item.st=0;}
                             item.cls= $scope.statusmode[1][item.st] ;
                   }); 
-                $scope.cuttrestime[3]=new Date();
+                $scope.cuttrestime[3]=new Date()-300000;
               
            });
        };
@@ -148,7 +148,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
               			 item.isDefrosting= data['isDefrosting'];
               			  if( item.isRunning==1){item.st=1;}else if( item.isDefrosting==1){item.st=2;}else{item.st=0;}
                           item.cls= $scope.statusmode[1][item.st] ;
-              			  $scope.cuttrestime[3]=new Date();
+              			  $scope.cuttrestime[3]=new Date()-300000;
               	   });
                  });
        };
@@ -219,9 +219,9 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
 	    //刷新数据
 	    $scope.refdata=function(){
 	    	var endtime=new Date();
-	    	$scope.refBlowers( $scope.cuttrestime[3] , endtime);
-	    	$scope.initTempset($scope.cuttrestime[0] ,endtime );
-	    	$scope.initCompressorStatus($scope.cuttrestime[2] , endtime);
+	    	$scope.refBlowers(new Date( $scope.cuttrestime[3]) , endtime);
+	    	$scope.initTempset(new Date($scope.cuttrestime[0] ),endtime );
+	    	$scope.initCompressorStatus(new Date($scope.cuttrestime[2] ), endtime);
 	    };
 	   
 	    $scope.$watch('rdcId', $scope.changeRdc,true);//监听冷库变化

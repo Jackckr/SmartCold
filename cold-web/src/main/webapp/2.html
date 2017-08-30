@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<head>
+<meta charset="utf-8">
+<meta http-equiv=”X-UA-Compatible” content=”IE=Edge,chrome=1″>
+<meta name="renderer" content="webkit|ie-stand" />
+<meta name="renderer" content="webkit">
+<title>冷库360-冷库能效在线管理系统</title>
+<meta charset="utf-8" name="keywords" content="冷库360,冷库监控,冷库智能管理,冷库能效评估，冷库认证与能耗管理" />
+<meta charset="utf-8" name="description" content="冷库360-冷库能效在线管理系统" />
+<!-- Tell the browser to be responsive to screen width -->
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<style type="text/css">
+/* #logtext{height: 100%;width:50%;} */
+
+
+#logtext {
+width: 100%;
+background: black;
+color: white;
+}
+#dtid_ap2 input{
+width: auto;
+max-width: 50%;
+}
+
+</style>
+</head>
+<body>
+   <div id="dtid_ap1" style="width: 80%;display: block;    float: left;">
+	   <textarea id="logtext" ></textarea>
+   </div>
+    <div id="dtid_ap2" style="float: right;display: block;border: 1px solid #cccccc;    width: 19%;">
+      <p>apid：<input id="txt_apid" value="400333444"></p>                        
+	  <p>                          频率：<input id="txt_pl">        </p> 
+	  <p>       key：<input   id  ="txt_key" value="点2">                      </p> 
+	  <p>       val：<input   id  ="txt_val" value="10">                      </p> 
+	  <p>       <button onclick="setConfig()">回写</button><button onclick=" $('#logtext').val('')">清屏</button>    </p> 
+      </div><!--  -->
+   <div id="dtid_ap3"></div>
+</body>
+<script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript">
+
+var pl=30,p4=200,iswert=false;
+var qt="{'apID':'400333444','time':'1490583510','infos':[{'tagname':'点4','value':'200'},{'tagname':'CO2机组_低压压力','value':'40'}]}";
+
+function getData(){
+   $.ajax({type : "GET",url : "i/getQTData",contentType: "application/json; charset=utf-8",success : function(data) {if(data.success&&data.message!=""){$("#logtext").val($("#logtext").val()+"\r\n"+data.message);}}});
+}
+function senddata(){
+	   $.ajax({
+				type : "POST",
+				dataType : "json",
+			    contentType: "application/json;charset=utf-8",
+				url : "i/QTDataCollection",
+				data :qt,
+				success : function(data) {
+				   if(data.updateConf){
+					   alert("收到配置更新指令！准备更新配置！");
+					   window.setTimeout(getConfig, 3000);
+				   }
+					
+				}
+			});
+	}
+
+function setConfig(){
+	var data={apid:$("#txt_apid").val(),pl:$("#txt_pl").val(),key:$("#txt_key").val(),val:$("#txt_val").val()};
+     $.ajax({type : "POST",url : "i/updateConfig",data:data ,success : function(data) {
+	   if(data){
+		  alert("指令已发送！等待请求更新！");
+	   }
+    }});
+}
+function getConfig(){
+	var data={apid:$("#txt_apid").val()};
+
+     $.ajax({type : "POST",url : "i/getQTConfig",data:data ,success : function(data) {
+		   alert("收到配置信息："+data) ;
+    }});
+}
+
+$().ready(function () {
+	if (window.innerWidth)
+		winWidth = window.innerWidth;
+		else if ((document.body) && (document.body.clientWidth))
+		winWidth = document.body.clientWidth;
+		// 获取窗口高度
+		if (window.innerHeight)
+		winHeight = window.innerHeight;
+		else if ((document.body) && (document.body.clientHeight))
+		winHeight = document.body.clientHeight;
+		// 通过深入 Document 内部对 body 进行检测，获取窗口大小
+		if (document.documentElement && document.documentElement.clientHeight && document.documentElement.clientWidth)
+		{
+		winHeight = document.documentElement.clientHeight;
+		winWidth = document.documentElement.clientWidth;
+	   }
+		width=winHeight-20;
+		width=width>500?width:500;
+	   $("#logtext").height(width);
+	   
+
+	   window.setInterval(getData,10000); 
+// 	  window.setInterval(senddata,pl*1000); 
+	
+});
+
+
+
+
+   
+
+
+</script>
+</html>
