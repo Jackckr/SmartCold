@@ -149,6 +149,9 @@
             <if test="cityid != null" >
                 `cityid` = #{cityid,jdbcType=INTEGER},
             </if>
+            <if test="clickcount != null">
+                `clickcount`=#{clickcount,jdbcType=INTEGER}
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -189,6 +192,8 @@
         r.audit,
         r.istemperaturestandard,
         r.infoIntegrity,
+        cl.CityName,
+        pl.ProvinceName,
         st.type tempTypeStr,
         sm.type manageTypeStr,
         (SELECT location FROM filedata f WHERE f.belongid = r.id AND f.category='storagePic' ORDER BY id DESC LIMIT 1 ) as logo
@@ -197,6 +202,8 @@
         LEFT JOIN rdcext t on r.id=t.RDCID
         LEFT JOIN storagetempertype st on st.id=t.storagetempertype
         LEFT JOIN storagemanagetype sm on sm.id=t.managetype
+        LEFT JOIN provincelist pl on pl.ProvinceId=r.provinceid
+        LEFT JOIN citylist cl on cl.CityId=r.cityid
         <where>
             r.audit!=-1
             <if test="sqm !=null and  sqm != ''"> and ${sqm} </if>

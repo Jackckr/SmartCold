@@ -5,14 +5,19 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 import com.smartcold.zigbee.manage.dao.*;
 
 import com.smartcold.zigbee.manage.entity.CollectEntity;
-import com.smartcold.zigbee.manage.entity.RdcEntity;
+import com.smartcold.zigbee.manage.service.RedisService;
+import com.smartcold.zigbee.manage.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -24,14 +29,10 @@ import com.smartcold.zigbee.manage.service.CommonService;
 import com.smartcold.zigbee.manage.service.DocLibraryService;
 import com.smartcold.zigbee.manage.service.RdcShareService;
 import com.smartcold.zigbee.manage.service.impl.WebvistsService;
-import com.smartcold.zigbee.manage.util.EncodeUtil;
-import com.smartcold.zigbee.manage.util.ResponseData;
-import com.smartcold.zigbee.manage.util.StringUtil;
-import com.smartcold.zigbee.manage.util.TelephoneVerifyUtil;
-import com.smartcold.zigbee.manage.util.TimeUtil;
 
 @Controller
 @RequestMapping(value = "/ShareRdcController")
+@CacheConfig(cacheNames = "ShareRdcController")
 public class ShareRdcController {
 
     private int pageNum;//当前页数
@@ -56,7 +57,8 @@ public class ShareRdcController {
     private StorageTemperTypeMapper storageTemperTypeMapper;
     @Autowired
     private CollectMapper collectMapper;
-
+    @Autowired
+    private RedisService redisService;
     /**
      * @author MaQiang
      * @date 2016年6月28日16:00:58
@@ -200,6 +202,14 @@ public class ShareRdcController {
     public ResponseData<RdcShareDTO> getSEByID(HttpServletRequest request, String id) {
         if (StringUtil.isnotNull(id)) {
             RdcShareDTO data = this.rdcShareService.getSEByID(id);
+            int sharedId = Integer.parseInt(id);
+            if(WebvistsService.shareClickCount.containsKey(sharedId)){
+                Integer count = WebvistsService.shareClickCount.get(sharedId);
+                count++;
+                WebvistsService.shareClickCount.put(sharedId,count);
+            }else {
+                WebvistsService.shareClickCount.put(sharedId,1);
+            }
             return ResponseData.newSuccess(data);
         }
         return ResponseData.newFailure("无效请求~");
@@ -221,7 +231,8 @@ public class ShareRdcController {
     @ResponseBody
     public ResponseData<RdcShareDTO> getSEListByUID(HttpServletRequest request, Integer uid) {
         if (uid == null || uid == 0) {
-            UserEntity user = (UserEntity) request.getSession().getAttribute("user");//警告 ->调用该方法必须登录
+            String token = CookieUnit.getCookie(request);
+            UserEntity user=redisService.putUserToken(token,null);
             if (user != null && user.getId() != 0) {
                 uid = user.getId();
             } else {
@@ -241,7 +252,14 @@ public class ShareRdcController {
     @ResponseBody
     public ResponseData<RdcShareDTO> newGetSEListByUID(HttpServletRequest request, Integer uid, String dataType, String username) {
         if (uid == null || uid == 0) {
-            UserEntity user = (UserEntity) request.getSession().getAttribute("user");//警告 ->调用该方法必须登录
+            String token="";
+            Cookie[] cookies = request.getCookies();
+            if(cookies!=null&&cookies.length>0){
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("token")) {token=	cookie.getValue();break;}
+                }
+            }
+            UserEntity user=redisService.putUserToken(token,null);
             if (user != null && user.getId() != 0) {
                 uid = user.getId();
             } else {
@@ -397,6 +415,8 @@ public class ShareRdcController {
     /*获得出租冷库最新12条信息*/
     @RequestMapping(value = "/getSERdc")
     @ResponseBody
+    @Cacheable(key="'getSERdc'+args[0]+'_'+args[1]")
+    @Transactional
     public Object getSERdc(Integer dataType, Integer typeCode) {
         return rdcShareMapper.getNewSERDCListByID(dataType, typeCode);
     }
@@ -469,7 +489,8 @@ public class ShareRdcController {
     public ResponseData<RdcShareDTO> getRdcByUid(HttpServletRequest request, Integer uid, Integer rdcId) {
         this.getPageInfo(request);//
         if (uid == null || uid == 0) {
-            UserEntity user = (UserEntity) request.getSession().getAttribute("user");
+            String token = CookieUnit.getCookie(request);
+            UserEntity user = redisService.putUserToken(token,null);
             if (user != null && user.getId() != 0) {
                 uid = user.getId();
             } else {
@@ -533,7 +554,8 @@ public class ShareRdcController {
             }
             Integer loguid = rdcShareDTO.getUid();
             if (uid == null && loguid == null) {
-                UserEntity user = (UserEntity) request.getSession().getAttribute("user");//警告 ->调用该方法必须登录
+                String token = CookieUnit.getCookie(request);
+                UserEntity user = redisService.putUserToken(token,null);
                 if (user != null && user.getId() != 0) {
                     uid = user.getId();
                 } else {
@@ -552,6 +574,7 @@ public class ShareRdcController {
                 this.rdcShareService.updateshareInfo(rdcShareDTO);//修改发布消息
             }
             this.docLibraryService.handleWMFile(rdcShareDTO.getId(), FileDataMapper.CATEGORY_SHARE_PIC, null, request);
+            redisService.delToAddShare();
             return ResponseData.newSuccess("发布成功~");
 
         } catch (Exception e) {

@@ -1,10 +1,12 @@
 package com.smartcold.zigbee.manage.entity;
 
+import java.io.Serializable;
+
 /**
  * Author: qiunian.sun
  * Date: qiunian.sun(2016-05-21 15:58)
  */
-public class ProvinceListEntity {
+public class ProvinceListEntity implements Serializable {
 
     private int provinceId;
 

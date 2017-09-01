@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.smartcold.zigbee.manage.service.RedisService;
+import com.smartcold.zigbee.manage.util.CookieUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +40,8 @@ public class ReviewController {
 	
 	@Autowired
 	private FileDataMapper fileDataDao;
+	@Autowired
+	private RedisService redisService;
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@ResponseBody
@@ -47,7 +51,8 @@ public class ReviewController {
 			CommentDTO commentDto, HttpServletRequest request) throws Exception {
 		MultipartFile[] files = { file0, file1, file2, file3, file4 };
 		CommentEntity commentEntity = new CommentEntity();
-		UserEntity user = (UserEntity) request.getSession().getAttribute("user");
+		String token = CookieUnit.getCookie(request);
+		UserEntity user=redisService.putUserToken(token,null);
 		String dir = String.format("%s/review/%s", basedir, commentDto.getRdcID());
 		if(user!=null){
 		commentEntity.setCommerID(user.getId());

@@ -9,12 +9,15 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSONObject;
 import com.smartcold.zigbee.manage.dao.*;
 import com.smartcold.zigbee.manage.entity.*;
+import com.smartcold.zigbee.manage.service.RedisService;
+import com.smartcold.zigbee.manage.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -38,11 +41,6 @@ import com.smartcold.zigbee.manage.service.CommonService;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcService;
 import com.smartcold.zigbee.manage.service.impl.WebvistsService;
-import com.smartcold.zigbee.manage.util.ResponseData;
-import com.smartcold.zigbee.manage.util.SetUtil;
-import com.smartcold.zigbee.manage.util.StringUtil;
-import com.smartcold.zigbee.manage.util.TimeUtil;
-import com.smartcold.zigbee.manage.util.VerifyUtil;
 
 @Controller
 @RequestMapping(value = "/rdc")
@@ -100,6 +98,9 @@ public class RdcController {
 
     @Autowired
     private CollectMapper collectMapper;
+
+    @Autowired
+    private RedisService redisService;
 
     @RequestMapping(value = "/attestationRdc", method = RequestMethod.POST)
     @ResponseBody
@@ -207,14 +208,17 @@ public class RdcController {
 
     @RequestMapping(value = "/findRDCDTOByRDCId", method = RequestMethod.GET)
     @ResponseBody
-    public Object findRDCDTOByRDCId(@RequestParam int rdcID, HttpSession session, Integer uid) {
-        if (uid == null) {
-            UserEntity user = (UserEntity) session.getAttribute("user");
-            if(user!=null){
-                uid = user.getId();
-            }
+    public Object findRDCDTOByRDCId(@RequestParam int rdcID, HttpSession session, Integer uid,HttpServletRequest request) {
+        String token = CookieUnit.getCookie(request);
+        UserEntity userEntity = redisService.putUserToken(token, null);
+        if (WebvistsService.rdcClickCount.containsKey(rdcID)){
+            Integer count = WebvistsService.rdcClickCount.get(rdcID);
+            count++;
+            WebvistsService.rdcClickCount.put(rdcID,count);
+        }else {
+            WebvistsService.rdcClickCount.put(rdcID,1);
         }
-        return rdcService.findRDCDTOByRDCId(rdcID, uid);
+        return rdcService.findRDCDTOByRDCId(rdcID,userEntity==null?0:userEntity.getId());
     }
 
     @RequestMapping(value = "/findAllRdcDtos", method = RequestMethod.GET)
@@ -323,7 +327,8 @@ public class RdcController {
         if (rdcAddDTO.getUserId() != 0) {
             rdcEntity.setUserId(rdcAddDTO.getUserId());
         } else {
-            UserEntity user = (UserEntity) request.getSession().getAttribute("user");
+            String token = CookieUnit.getCookie(request);
+            UserEntity user = redisService.putUserToken(token,null);
             if (user != null) {
                 rdcEntity.setUserId(user.getId());
             } else {
@@ -469,7 +474,8 @@ public class RdcController {
         if (rdcAddDTO.getUserId() != 0) {
             rdcEntity.setUserId(rdcAddDTO.getUserId());
         } else {
-            UserEntity user = (UserEntity) request.getSession().getAttribute("user");
+            String token = CookieUnit.getCookie(request);
+            UserEntity user = redisService.putUserToken(token,null);
             if (user != null) {
                 rdcEntity.setUserId(user.getId());
             } else {
@@ -1049,7 +1055,8 @@ public class RdcController {
 
         RdcEntity rdcEntity = rdcMapper.findRDCByRDCId(rdcId).get(0);
         String dir = String.format("%s/rdc/%s", baseDir, rdcId);
-        UserEntity user = (UserEntity) request.getSession().getAttribute("user");
+        String token = CookieUnit.getCookie(request);
+        UserEntity user = redisService.putUserToken(token,null);
         if (user == null && uid == null) {
             return new BaseDto(-1);
         }

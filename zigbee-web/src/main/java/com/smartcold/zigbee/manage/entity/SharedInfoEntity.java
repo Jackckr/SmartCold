@@ -4,11 +4,13 @@ package com.smartcold.zigbee.manage.entity;
  * Created by qiangzi on 2017/7/19.
  */
 public class SharedInfoEntity {
+    private Integer id;
     private Integer datatype;
     private Integer typecode;
     private Double sqm;
     private Double unitPrice;
     private Integer stauts;
+    private Integer clickcount;
 
     public Integer getDatatype() {
         return datatype;
@@ -48,5 +50,21 @@ public class SharedInfoEntity {
 
     public void setStauts(Integer stauts) {
         this.stauts = stauts;
+    }
+
+    public Integer getClickcount() {
+        return clickcount;
+    }
+
+    public void setClickcount(Integer clickcount) {
+        this.clickcount = clickcount;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
