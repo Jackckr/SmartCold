@@ -240,7 +240,7 @@ $().ready(function () {
                 collectWords = '<a class="fr hasCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe60c;</i><em>已收藏</em></a>';
             }
             var score = ['<li class="imgCell" ><a href="rdcdetail.html?id=' + rdc.id + '" onclick="getSoll()"><img class="fl" src="' + rdc.logo + '">' +
-            '<div><p class="ellipsis">' + rdc.name + '</p><p class="position omg"><i class="iconfont">&#xe66e;</i>' + rdc.address + '</p>' +
+            '<div><p class="ellipsis">' + rdc.name + '</p><p class="position omg"><i class="iconfont">&#xe66e;</i>' + rdc.provincename+'-'+rdc.cityname + '</p>' +
             '<div class="star">' + approve + '</div></div></a>' +
             '<div class="btnFn clearfix"><a href="rdcdetail.html?id=' + rdc.id + '" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>' +
             collectWords + '<a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'];
@@ -253,7 +253,7 @@ $().ready(function () {
             }
             var approve='<i class="iconfont orange">&#xe6e9;</i>冷链委温度达标库';
             var score=['<li class="imgCell" ><a href="rdcdetail.html?id='+rdc.id+'" onclick="getSoll()"><span>达标冷库</span>' +
-            '<div style="padding-left: 2.5rem;"><p class="ellipsis">'+rdc.name+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.address+'</p>' +
+            '<div style="padding-left: 2.5rem;"><p class="ellipsis">'+rdc.name+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.provincename+'-'+rdc.cityname+'</p>' +
             '<div class="star orange">'+approve+'</div></div></a><i class="iconfont tj">&#xe686;</i>' +
             '<div class="btnFn clearfix"><a href="rdcdetail.html?id='+rdc.id+'" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>'+
             collectWords+'<a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'];
