@@ -18,7 +18,7 @@ makeCode ();
 
 /*功能组件*/
 var rdcId;
-var user=window.sessionStorage.lkuser;
+var user=window.localStorage.lkuser;
 localStorage.OURL=document.URL;
 function getRdcInfo() {
     var smallImg=[];

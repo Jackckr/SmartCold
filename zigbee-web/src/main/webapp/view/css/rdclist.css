@@ -57,14 +57,14 @@
     width: 120px;
     text-align: right;
     padding: 3px 15px ;
-    margin: 5px 10px 5px 0;
+    margin: 3px 10px 3px 0;
 }
 .typeList ul{
-    padding-left: 150px;
+    padding-left: 160px;
 }
 .typeList ul li{
     padding: 3px 15px ;
-    margin: 5px 10px 5px 0;
+    margin: 3px 10px 3px 0;
     cursor: pointer;
 }
 .typeList ul li:hover{
@@ -74,6 +74,12 @@
     color: #fff;
     background-color:#186eff;
     border-radius: 2px;
+}
+.typeList #ul_province li{
+    padding: 0;
+    width: 50px;
+    text-align: center;
+    line-height: 24px;
 }
 .moreBtn{
     position: absolute;
@@ -90,6 +96,12 @@
     border:1px solid #d0d0d0;
     border-bottom-right-radius: 24px;
     border-bottom-left-radius: 24px;
+}
+#ul_cityid{
+    background: #e8eef4;
+    max-height: 160px;
+    overflow-y: scroll;
+    width: 1180px;
 }
 /*ad banner*/
 /* 本例子css */
