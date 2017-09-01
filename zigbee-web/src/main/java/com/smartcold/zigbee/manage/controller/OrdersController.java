@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.smartcold.zigbee.manage.service.RedisService;
+import com.smartcold.zigbee.manage.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,11 +32,6 @@ import com.smartcold.zigbee.manage.entity.OrdersEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.FtpService;
 import com.smartcold.zigbee.manage.service.RdcShareService;
-import com.smartcold.zigbee.manage.util.CometUtil;
-import com.smartcold.zigbee.manage.util.ResponseData;
-import com.smartcold.zigbee.manage.util.SetUtil;
-import com.smartcold.zigbee.manage.util.StringUtil;
-import com.smartcold.zigbee.manage.util.TelephoneVerifyUtil;
 import com.taobao.api.ApiException;
 
 @Controller
@@ -52,6 +49,8 @@ public class OrdersController extends BaseController {
 	private FileDataMapper fileDataDao;
     @Autowired
     private RdcShareService rdcShareService;
+    @Autowired
+	private RedisService redisService;
     /**
      * 根据用户id查询该用户所有的订单
      * @param userID 用户id
@@ -109,7 +108,8 @@ public class OrdersController extends BaseController {
 	public Object findOrderByOrderId(HttpServletRequest request,@RequestParam String id,Integer uid) {
 		HashMap<String, Object> dataMap=new HashMap<String, Object>();
 		if(uid==null||uid==0){
-			UserEntity user =(UserEntity) request.getSession().getAttribute("user");//警告 ->调用该方法必须登录
+			String token = CookieUnit.getCookie(request);
+			UserEntity user=redisService.putUserToken(token,null);
 			if(user==null||user.getId()==0){return ResponseData.newFailure("请登录后查看信息");}else{
 				uid=user.getId();
 			}
@@ -215,8 +215,9 @@ public class OrdersController extends BaseController {
 	public Object deleteByOrderID(HttpServletRequest request,Integer orderID,Integer uid) {
 		if (orderID <= 0) {return new BaseDto(-1);}
 		if(uid==null){
-			 UserEntity user =(UserEntity) request.getSession().getAttribute("user");//警告 ->调用该方法必须登录
-				if(user!=null&&user.getId()!=0){
+			String token = CookieUnit.getCookie(request);
+			UserEntity user = redisService.putUserToken(token,null);
+			if(user!=null&&user.getId()!=0){
 					uid=user.getId();
 				}else{
 					return new BaseDto(-1);

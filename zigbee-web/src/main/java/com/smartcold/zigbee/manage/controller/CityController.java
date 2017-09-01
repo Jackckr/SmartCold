@@ -3,7 +3,10 @@ package com.smartcold.zigbee.manage.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +18,7 @@ import com.smartcold.zigbee.manage.entity.CityListEntity;
 
 @Controller
 @RequestMapping(value = "/city")
+@CacheConfig(cacheNames = "city")
 public class CityController {
 
     @Autowired
@@ -24,7 +28,8 @@ public class CityController {
     private CityListMapper cityListDao;
 
     
-    @RequestMapping(value = "/findProvinceList", method = RequestMethod.GET)
+    @RequestMapping(value = "/findProvinceList")
+    @Cacheable(key = "'findProvinceList'")
     @ResponseBody
     public Object findProvinceList() {
         return provinceListMapper.findProvinceList();

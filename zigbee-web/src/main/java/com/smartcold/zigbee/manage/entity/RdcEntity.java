@@ -62,6 +62,8 @@ public class RdcEntity {
 
     private int isJoinStand;
 
+    private int clickcount;
+
     private String logo="http://139.196.189.93:8089/app/rdcHeader.jpg";
 	
 	public int getUserId() {
@@ -302,5 +304,13 @@ public class RdcEntity {
 
     public void setLogo(String logo) {
         this.logo = FtpService.READ_URL+ logo;
+    }
+
+    public int getClickcount() {
+        return clickcount;
+    }
+
+    public void setClickcount(int clickcount) {
+        this.clickcount = clickcount;
     }
 }

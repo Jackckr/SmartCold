@@ -1,5 +1,6 @@
 package com.smartcold.zigbee.manage.dto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import com.smartcold.zigbee.manage.service.FtpService;
  * 功能描述: 库共享
  * Create on MaQiang 2016-6-25 09:28:36
  */
-public class RdcShareDTO {
+public class RdcShareDTO implements Serializable {
 	private int id; //
 	private Integer uid;
 	private int rdcID; // 睿库的ID

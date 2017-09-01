@@ -1,10 +1,11 @@
 package com.smartcold.zigbee.manage.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.smartcold.zigbee.manage.service.FtpService;
 
-public class UserEntity {
+public class UserEntity implements Serializable{
 
 	private int id;
 
