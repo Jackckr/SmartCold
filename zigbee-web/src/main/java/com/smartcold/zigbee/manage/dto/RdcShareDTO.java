@@ -58,6 +58,8 @@ public class RdcShareDTO implements Serializable {
 	// rdc->关联rdc信息
 	private String name;
     private int provinceid;//s所在省
+    private String provincename;//s所在省
+    private String cityname;//s所在城市
     private int cityid;//s所在城市
 	private String address;//地址
 	private String detlAddress;//详细地址
@@ -408,5 +410,21 @@ public class RdcShareDTO implements Serializable {
 
 	public void setCollectUserIds(List<Integer> collectUserIds) {
 		this.collectUserIds = collectUserIds;
+	}
+
+	public String getProvincename() {
+		return provincename;
+	}
+
+	public void setProvincename(String provincename) {
+		this.provincename = provincename;
+	}
+
+	public String getCityname() {
+		return cityname;
+	}
+
+	public void setCityname(String cityname) {
+		this.cityname = cityname;
 	}
 }

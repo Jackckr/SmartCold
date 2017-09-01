@@ -303,9 +303,13 @@
 		r.coldtype,
 		r.sqm rdcSqm,
 		r.infoIntegrity,
+		cl.CityName,
+		pl.ProvinceName,
 		(SELECT location FROM filedata f WHERE f.belongid = s.id AND f.category ='sharePic' ORDER BY id DESC LIMIT 1 ) as logo
 		FROM
 		shared_info s LEFT JOIN `rdc` r ON r.`id`=s.`rdcID`
+		LEFT JOIN `citylist` cl ON cl.`CityId`=s.`cityid`
+		LEFT JOIN `provincelist` pl ON pl.`ProvinceId`=s.`provinceid`
 		<where>
 			s.dataType=#{dataType} and s.typeCode=#{typeCode}
 			<if test="sqm !=null and  sqm != ''"> and ${sqm} </if>
