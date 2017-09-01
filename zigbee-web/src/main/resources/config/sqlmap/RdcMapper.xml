@@ -186,6 +186,8 @@
     <select id="getNewRdcList" parameterType="map" resultMap="rdcLidMap">
         SELECT
         r.id,
+        r.provinceid,
+        r.cityid,
         r.name,
         r.address,
         r.sqm,
@@ -209,6 +211,7 @@
             <if test="sqm !=null and  sqm != ''"> and ${sqm} </if>
             <if test="keyword !=null and  keyword != ''"> and r.name like '%${keyword}%' </if>
             <if test="provinceid !=null and  provinceid != ''"> and r.provinceid = #{provinceid} </if>
+            <if test="cityid !=null and  cityid != ''"> and r.cityid in (${cityid}) </if>
             <if test="managetype !=null and  managetype != ''"> and t.manageType IN  (${managetype})</if>
             <if test="storagetempertype !=null and  storagetempertype != ''"> and t.storagetempertype in (${storagetempertype})</if>
             <if test="istemperaturestandard !=null and istemperaturestandard!=''">and r.istemperaturestandard in (${istemperaturestandard})</if>

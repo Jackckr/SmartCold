@@ -185,16 +185,22 @@
             });
             return false
         }else{
-            $.ajax({url:"/i/user/checkTelephone",data:{telephone:$('input[name=telephone]').val()},type:"post",success:function (data) {
-                if(!data){
-                    layer.tips('该手机号已被注册！', '#verifyCode', {
-                        tips: [1, '#0FA6D8'] //还可配置颜色
-                    });
-                    $("#getCode").addClass('layui-disabled').attr('disabled','disabled');
-                }else{
-                    $("#getCode").removeClass('layui-disabled').attr('disabled',false);
-                }
-            }});
+            if($('input[name=telephone]').val()){
+                $.ajax({url:"/i/user/checkTelephone",data:{telephone:$('input[name=telephone]').val()},type:"post",success:function (data) {
+                    if(!data){
+                        layer.tips('该手机号已被注册！', '#verifyCode', {
+                            tips: [1, '#0FA6D8'] //还可配置颜色
+                        });
+                        $("#getCode").addClass('layui-disabled').attr('disabled','disabled');
+                    }else{
+                        $("#getCode").removeClass('layui-disabled').attr('disabled',false);
+                    }
+                }});
+            }else{
+                layer.tips('请先输入手机号码~', '#verifyCode', {
+                    tips: [1, '#0FA6D8'] //还可配置颜色
+                });
+            }
         }
     })
     $("#getCode").click(function() {//发送验证码
