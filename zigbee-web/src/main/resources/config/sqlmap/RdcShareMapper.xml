@@ -250,12 +250,16 @@
 		r.address,
 		r.name,
 		r.coldtype,
+		cl.CityName,
+		pl.ProvinceName,
 		(SELECT location FROM filedata f WHERE f.belongid = s.id AND f.category ='sharePic' ORDER BY id DESC LIMIT 1 ) as logo
 		FROM
 		shared_info s
 		LEFT JOIN rdc r ON s.rdcID = r.id
 		LEFT JOIN rdcext t on s.rdcID=t.RDCID
 		LEFT JOIN storagetempertype st on st.id=s.codeLave2
+		LEFT JOIN citylist cl ON cl.`CityId`=s.`cityid`
+		LEFT JOIN provincelist pl ON pl.`ProvinceId`=s.`provinceid`
 		<where>
 			<if test="dataType != null">
 				s.dataType=#{dataType}
