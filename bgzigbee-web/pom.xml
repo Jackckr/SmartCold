@@ -177,6 +177,13 @@
 	      <systemPath>${project.basedir}/lib/json.jar</systemPath>
          </dependency>
 		
+					
+			<dependency>                                
+			    <groupId>org.apache.poi</groupId>       
+			    <artifactId>poi-ooxml</artifactId>      
+			    <version>3.10-FINAL</version>           
+			</dependency>                               
+		
 		
 		<!-- 支持富文本编辑器  -->
 	    <dependency>

@@ -2,7 +2,6 @@ package com.smartcold.manage.cold.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 
@@ -15,9 +14,6 @@ public class StringUtil
 {
 
 	public static final String	EMPTY_STRING	= "";
-
-	
-
 	
 	public static String getIdS(int [] oids)
 	{

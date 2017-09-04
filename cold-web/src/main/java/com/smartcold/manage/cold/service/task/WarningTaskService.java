@@ -7,21 +7,19 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
-import com.smartcold.manage.cold.dao.olddb.RdcMapper;
-import com.smartcold.manage.cold.entity.olddb.Rdc;
-import com.smartcold.manage.cold.util.RemoteUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Lists;
 import com.smartcold.manage.cold.dao.newdb.SysWarningsInfoMapper;
+import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
 import com.smartcold.manage.cold.entity.comm.ItemValue;
 import com.smartcold.manage.cold.entity.newdb.SysWarningsInfo;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
 import com.smartcold.manage.cold.jobs.taskutil.ScheduleJob;
 import com.smartcold.manage.cold.service.TempWarningService;
+import com.smartcold.manage.cold.util.RemoteUtil;
 import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.StringUtil;
 import com.smartcold.manage.cold.util.TimeUtil;

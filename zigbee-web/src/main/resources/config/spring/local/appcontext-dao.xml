@@ -39,6 +39,13 @@
  
 	<bean id="cacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
 	   <constructor-arg index="0" ref="redisTemplate"></constructor-arg>
+	    <property name="defaultExpiration" value="10"></property>
+	   <property name="expires">
+			<map>
+				<entry key="amount" value="10"></entry>
+			
+			</map>
+		</property>
 	</bean>-->
    	
   

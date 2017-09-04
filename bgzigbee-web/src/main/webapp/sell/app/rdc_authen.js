@@ -37,38 +37,46 @@ function updaterdcAuthen(id,ishandle,state,rdcId,authUserId,note,type){
     }
 }
 function user_upaudit(){
-	$('#rdc_state_authendialog').dialog({closed: true});
-    var obj=   getFormData('#rdc_state_auditForm');
-    if(obj.id!=""){
-        if(obj.state==-1&&obj.note.trim()==""){alert_errmsg("请输入不通过的原因！");return;}
-    		if(obj.oldstate!=obj.state&&obj.state==1){
-    			if(obj.rdcId!=undefined&&obj.authUserId!=undefined){
-    				$.post('../../i/authen/authRdc', {'rdcId': obj.rdcId, 'authUserId': obj.authUserId});//修改
-    			}
-    		}
-			if((obj.ishandle!=1||obj.oldstate!=obj.state||obj.oldnote!=obj.note)&&obj.state!=0){
-			    $.post('../../i/authen/updateAuthstate', {'id': obj.id, 'ishandle': 1,state:obj.oldstate!=obj.state?obj.state:null,note:obj.note});//修改
-			    reloaddata();
-			}
-    }
+	 $.messager.confirm('操作确认', '该认证不可撤销，确认确认是否执行？', function (r) {
+		     $('#rdc_state_authendialog').dialog({closed: true});
+		     if(r){
+			    	 var obj=   getFormData('#rdc_state_auditForm');
+			    	 if(obj.id!=""){
+			    		 if(obj.state==-1&&obj.note.trim()==""){alert_errmsg("请输入不通过的原因！");return;}
+			    		 if(obj.oldstate!=obj.state&&obj.state==1){
+			    			 if(obj.rdcId!=undefined&&obj.authUserId!=undefined){
+			    				 $.post('../../i/authen/authRdc', {'rdcId': obj.rdcId, 'authUserId': obj.authUserId});//修改
+			    			 }
+			    		 }
+			    		 if((obj.ishandle!=1||obj.oldstate!=obj.state||obj.oldnote!=obj.note)&&obj.state!=0){
+			    			 $.post('../../i/authen/updateAuthstate', {'id': obj.id, 'ishandle': 1,state:obj.oldstate!=obj.state?obj.state:null,note:obj.note});//修改
+			    			 reloaddata();
+			    		 }
+			    	 }
+		     }
+     });
 }
 
 function userAudit() {
-    $('#rdc_state_authendialog').dialog({closed: true});
-    var obj= getFormData('#rdc_state_auditForm');
-    if(obj.id!=""){
-        if(obj.state==-1&&obj.note.trim()==""){alert_errmsg("请输入不通过的原因！");return;}
-        if(obj.oldstate!=obj.state&&obj.state==1){
-            if(obj.authUserId!=undefined){
-                var vipType=obj.type==3?1:2;
-                $.post('../../i/user/auditVipUser', {'userId': obj.authUserId,'vipType':vipType});//修改
-            }
-        }
-        if((obj.ishandle!=1||obj.oldstate!=obj.state||obj.oldnote!=obj.note)&&obj.state!=0){
-            $.post('../../i/authen/updateAuthstate', {'id': obj.id, 'ishandle': 1,state:obj.oldstate!=obj.state?obj.state:null,note:obj.note});//修改
-            reloaddata();
-        }
-    }
+	 $.messager.confirm('操作确认', '该认证不可撤销，确认确认是否执行？', function (r) {
+		    $('#rdc_state_authendialog').dialog({closed: true});
+		    if(r){
+		    var obj= getFormData('#rdc_state_auditForm');
+		    if(obj.id!=""){
+		        if(obj.state==-1&&obj.note.trim()==""){alert_errmsg("请输入不通过的原因！");return;}
+		        if(obj.oldstate!=obj.state&&obj.state==1){
+		            if(obj.authUserId!=undefined){
+		                var vipType=obj.type==3?1:2;
+		                $.post('../../i/user/auditVipUser', {'userId': obj.authUserId,'vipType':vipType});//修改
+		            }
+		        }
+		        if((obj.ishandle!=1||obj.oldstate!=obj.state||obj.oldnote!=obj.note)&&obj.state!=0){
+		            $.post('../../i/authen/updateAuthstate', {'id': obj.id, 'ishandle': 1,state:obj.oldstate!=obj.state?obj.state:null,note:obj.note});//修改
+		            reloaddata();
+		        }
+		    }
+		    }
+	 });
 }
 
 function rdcStandAudit() {
