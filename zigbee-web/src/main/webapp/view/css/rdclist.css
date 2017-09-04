@@ -66,6 +66,7 @@
     padding: 3px 15px ;
     margin: 3px 10px 3px 0;
     cursor: pointer;
+    border: 1px solid #ddd;
 }
 .typeList ul li:hover{
     color: #186eff;
@@ -75,9 +76,9 @@
     background-color:#186eff;
     border-radius: 2px;
 }
-.typeList #ul_province li{
+.typeList #ul_provinceid li{
     padding: 0;
-    width: 50px;
+    width: 56px;
     text-align: center;
     line-height: 24px;
 }
@@ -101,7 +102,6 @@
     background: #e8eef4;
     max-height: 160px;
     overflow-y: scroll;
-    width: 1180px;
 }
 /*ad banner*/
 /* 本例子css */

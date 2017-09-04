@@ -1,0 +1,14 @@
+/*逸励广告*/
+.adInfo p{
+    text-indent:2em;
+    line-height: 1.85;
+}
+.adInfo .adimg img{
+    width: 46%;
+    margin: 20px 1%;
+    height: 400px;
+}
+.adInfo h2{
+    text-align: center;
+    margin: 15px 0;
+}

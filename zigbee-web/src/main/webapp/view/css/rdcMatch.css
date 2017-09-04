@@ -119,16 +119,16 @@
     width: 120px;
     text-align: right;
     padding: 3px 15px;
-    margin: 5px 10px 5px 0;
+    margin: 3px 10px 3px 0;
 }
 
 .typeList ul {
-    padding-left: 150px;
+    padding-left: 160px;
 }
 
 .typeList ul li {
     padding: 3px 15px;
-    margin: 5px 10px 5px 0;
+    margin: 3px 10px 3px 0;
     cursor: pointer;
     float: left;
     border: 1px solid #ddd;
@@ -144,7 +144,17 @@
     border-radius: 2px;
     border-color: #186eff;
 }
-
+.typeList ul[name=provinceid] li{
+    padding: 0;
+    width: 50px;
+    text-align: center;
+    line-height: 24px;
+}
+.ul_cityid{
+    background: #e8eef4;
+    max-height: 160px;
+    overflow-y: scroll;
+}
 /*信息主体css*/
 .msgHeader {
     background-color: #efefef;

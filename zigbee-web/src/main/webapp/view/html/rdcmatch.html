@@ -68,20 +68,28 @@
                 <!--筛选条件-->
                 <div class="filter">
                     <div class="filterHeader clearfix">
-                        <div class="fl">
+                      <!--  <div class="fl">
                             <label>
                                 区域　
                                 <select name="provinceid" id="provinceid">
 
                                 </select>
                             </label>
-                        </div>
+                        </div>-->
                         <div class="fr">
                             <input class="keyword" name="keyword" id="keyword" type="text" placeholder="请输入关键词">
                             <i name="search" id="search" class="iconfont zoom">&#xe609;</i>
                         </div>
                     </div>
                     <div class="filterBody">
+                        <div class="typeList clearfix">
+                            <span class="fl">区域:</span>
+                            <ul id="provinceid" class="clearfix" name="provinceid">
+                                <li value="-100" class="fl activeType" type="radio">不限</li>
+                            </ul>
+                            <ul   class="clearfix ul_cityid">
+                            </ul>
+                        </div>
                         <div class="typeList clearfix">
                             <span class="fl">经营类型:</span>
                             <ul class="clearfix" id="managetype">
@@ -118,12 +126,12 @@
                 <div class="filter">
                     <div class="filterHeader clearfix">
                         <div class="fl">
-                            <label>
+                           <!-- <label>
                                 区域　
                                 <select name="provinceid" id="goodsProvince">
 
                                 </select>
-                            </label>
+                            </label>-->
                         </div>
                         <div class="fr">
                             <input id="goodsKeyword" name="keyword" class="keyword" type="text" placeholder="请输入关键词">
@@ -131,6 +139,14 @@
                         </div>
                     </div>
                     <div class="filterBody">
+                        <div class="typeList clearfix">
+                            <span class="fl">区域:</span>
+                            <ul id="goodsProvince" class="clearfix" name="provinceid">
+                                <li value="-100" class="fl activeType" type="radio">不限</li>
+                            </ul>
+                            <ul class="clearfix ul_cityid">
+                            </ul>
+                        </div>
                         <div class="typeList clearfix">
                             <span class="fl">品类:</span>
                             <ul class="clearfix" id="goodsType">

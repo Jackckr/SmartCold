@@ -328,8 +328,11 @@ function init_filter() {
     if (window.localStorage.rdc_list_province) {
         $("#ul_provinceid").append(window.localStorage.rdc_list_province);
         $("#ul_provinceid li").bind('click', changeProvince);
-        $("#ul_cityid").append(window.localStorage.rdc_list_city);
-        $("#ul_cityid li").bind('click', changecity);
+        var histdata = JSON.stringify(PageUtil.getHashStringArgs());
+        if(histdata.indexOf('cityid')>-1){
+            $("#ul_cityid").append(window.localStorage.rdc_list_city);
+            $("#ul_cityid li").bind('click', changecity);
+        }
     } else {
         $.ajax({
             url: "/i/city/findProvinceList", type: "get", success: function (data) {
@@ -402,8 +405,8 @@ function initdata(isread) {
         $("#ul_audit li").bind('click', getAudit);
         $("#ul_hasCar li").bind('click', getHasCar);
         $("#ul_rdcsqm li").bind('click', getRdcSqm);
-        $("#ul_provinceid").bind('change', changeProvince);
-        $("#ul_city").bind('change', changecity);
+        $("#ul_provinceid").bind('click', changeProvince);
+        $("#ul_city").bind('click', changecity);
         $("#search").bind('click', getKeyword);
         $("#ul_keyword").keydown(function () {
             if (event.keyCode == "13") {
