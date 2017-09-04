@@ -19,6 +19,7 @@
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../com/js/baguettebox.min.js"></script>
     <script type="text/javascript" src="../com/js/layer.js"></script>
+    <script type="text/javascript" src="../com/js/md5.js"></script>
     <!-- <script type="text/javascript">if(window.user!=null){window.location.href="../index.html";}</script>-->
 </head>
 <body>
@@ -129,6 +130,8 @@
                                 $.get(ER.root + "/i/user/isSubmitAuditUser", {userId: userdata.id},function (data) {checkState = data.status;});
                                 util.setCookie("token", token);
                                 util.setCookies("token",token);
+                                /*var appkey = md5(userdata.id+"_"+userdata.username+new Date().getDate());
+                                util.setCookies("appkey",appkey);*/
                                 if (window.location.hash != "") {
                                     backUrl = window.location.hash.substring(1);
                                 } else {

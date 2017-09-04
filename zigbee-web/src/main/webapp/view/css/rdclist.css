@@ -102,6 +102,8 @@
     background: #e8eef4;
     max-height: 160px;
     overflow-y: scroll;
+    border: 1px solid rgb(178, 210, 255);
+    display: none;
 }
 /*ad banner*/
 /* 本例子css */

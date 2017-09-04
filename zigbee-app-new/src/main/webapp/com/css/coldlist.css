@@ -118,12 +118,21 @@ section{
 	cursor: pointer;
 	position: relative;
 }
+.droplist #ul_city_list>li{
+	width: 3rem;
+}
+
 .active{
 	background-color:#4287ff;
 	color: #fff;
 }
 .footer>.active{
 	background: #fff;
+}
+.droplist .list>.backLi{
+	background: #fb4545;
+	border-color: #fb4545;
+	color: #fff;
 }
 /*图文列表*/
 .coldlist{

@@ -124,26 +124,26 @@ function changeProvince() {
     if(slvalue==-100){
         screenParam.provinceid='';
         screenParam.cityid = '';
-        $("#ul_cityid").empty();
-        getRdcRentList();
+        $("#ul_cityid").empty().hide();
     }else{
         //初始化城市
         $.ajax({
             url: "/i/city/findCitysByProvinceId",data:{provinceID:screenParam.provinceid},type: "get", success: function (data) {
-                var cityArr = ['<li class="hide" value=""></li>'];
+                var cityArr = ['<li class="fl activeType" value="-100">全部</li>'];
                 data.forEach(function (val, index) {
                     cityArr.push('<li class="fl" value="' + val.cityID + '">' + val.cityName + '</li>');
                 });
                 window.localStorage.rdc_list_city = cityArr.join('');
-                $("#ul_cityid").empty().append(window.localStorage.rdc_list_city);
+                $("#ul_cityid").show().empty().append(window.localStorage.rdc_list_city);
                 $("#ul_cityid li").bind('click', changecity);
             }
         });
     }
+    getRdcRentList();
 }
 function changecity() {
     var slvalue = setStyle("#ul_cityid", this);
-    screenParam.cityid = slvalue;
+    screenParam.cityid = slvalue== -100 ? null : slvalue;
     screenParam.pageNum = 1;
     getRdcRentList();
 }
@@ -342,7 +342,7 @@ function init_filter() {
                 });
                 window.localStorage.rdc_list_province = provinceArr.join('');
                 $("#ul_provinceid").append(window.localStorage.rdc_list_province);
-                $("#ul_provinceid li").bind('click', changeProvince);
+               $("#ul_provinceid li").bind('click', changeProvince);
             }
         });
     }
@@ -405,8 +405,6 @@ function initdata(isread) {
         $("#ul_audit li").bind('click', getAudit);
         $("#ul_hasCar li").bind('click', getHasCar);
         $("#ul_rdcsqm li").bind('click', getRdcSqm);
-        $("#ul_provinceid").bind('click', changeProvince);
-        $("#ul_city").bind('click', changecity);
         $("#search").bind('click', getKeyword);
         $("#ul_keyword").keydown(function () {
             if (event.keyCode == "13") {

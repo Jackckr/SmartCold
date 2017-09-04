@@ -14,6 +14,7 @@ function init_table(){
         {field:'stauts',title:'状态',width:80,align:'center',sortable:true,formatter:isStauts},
         {field:'typeText',title:'共享类型',width:40,align:'center',sortable:true},
         {field:'telephone',title:'联系电话',width:40,align:'center',sortable:true},
+        {field:'addtime',title:'添加时间',width:40,align:'center',sortable:true,formatter: tool.col_format},
 //      {field:'detlAddress', title:'出发地-目的地',width:40,align:'center',sortable:true},
 //      {field:'updatetime',title:'更新时间',width:40,align:'center',sortable:true,formatter:tool.col_format},
         {field:'hand',title:'操作',width:100,align:'center',formatter:cellStyler}

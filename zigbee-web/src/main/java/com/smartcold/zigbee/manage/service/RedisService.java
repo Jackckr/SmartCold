@@ -12,4 +12,6 @@ public interface RedisService {
     void delUserToken(String token);
 
     void delToAddShare();
+
+    String putUserId(Integer userId,String token);
 }

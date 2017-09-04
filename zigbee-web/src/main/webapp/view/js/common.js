@@ -23,7 +23,7 @@ var PageUtil = {
 	goh5:function(){var sUserAgent=navigator.userAgent.toLowerCase(),bIsIpad=sUserAgent.match(/ipad/i)=="ipad",bIsIphoneOs=sUserAgent.match(/iphone os/i)=="iphone os",bIsMidp=sUserAgent.match(/midp/i)=="midp",bIsUc7=sUserAgent.match(/rv:1.2.3.4/i)=="rv:1.2.3.4",bIsUc=sUserAgent.match(/ucweb/i)=="ucweb",bIsAndroid=sUserAgent.match(/android/i)=="android",bIsCE=sUserAgent.match(/windows ce/i)=="windows ce",bIsWM=sUserAgent.match(/windows mobile/i)=="windows mobile";if(bIsIpad||bIsIphoneOs||bIsMidp||bIsUc7||bIsUc||bIsAndroid||bIsCE||bIsWM){window.location.href="http://m.liankur.com";}},
 };
 var DataUtil = {
-    getUser:function () {$.ajax({url: "/i/user/findUser", type: "get",cache : false,dataType: "json", success: function (data) {DataUtil.chUser(data);}});},
+    getUser:function () {$.ajax({url: "/i/user/findUser", type: "get",cache : false, success: function (data) {DataUtil.chUser(data);}});},
     delUser:function(){DataUtil.chUser(null);},
     logout:function(){$.ajax({type : "GET",cache : false,dataType : 'json',url : '/i/user/logout'}).success(function(data) {});PageUtil.del_Cookie("token");window.localStorage.clear();window.location.href = "../../index.html";},
     chUser:function (data) {if (data && data.username && data.id != 0) {window.lkuser = data;window.localStorage.lkuser = JSON.stringify(data);window.localStorage.longtime = new Date().getTime();} else {PageUtil.del_Cookie("token");window.lkuser = null;PageUtil.del_lS(['longtime', 'lkuser']);}DataUtil.chHtml();},
