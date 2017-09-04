@@ -168,8 +168,8 @@ function setStyle(parent, em) {
 
 function init_filter() {
     //初始化省
-    if (window.localStorage.rdc_list_province) {
-        $("#ul_provinceid").append(window.localStorage.rdc_list_province);
+    if (window.localStorage.rdc_stand_province) {
+        $("#ul_provinceid").append(window.localStorage.rdc_stand_province);
     } else {
         $.ajax({
             url: "/i/city/findProvinceList", type: "get", success: function (data) {
@@ -177,8 +177,8 @@ function init_filter() {
                 data.forEach(function (val, index) {
                     provinceArr.push('<option value="' + val.provinceId + '">' + val.provinceName + '</option>');
                 });
-                window.localStorage.rdc_list_province = provinceArr.join('');
-                $("#ul_provinceid").empty().append(window.localStorage.rdc_list_province);
+                window.localStorage.rdc_stand_province = provinceArr.join('');
+                $("#ul_provinceid").empty().append(window.localStorage.rdc_stand_province);
 
             }
         });
