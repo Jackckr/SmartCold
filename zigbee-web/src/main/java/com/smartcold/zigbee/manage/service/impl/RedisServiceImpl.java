@@ -31,4 +31,10 @@ public class RedisServiceImpl implements RedisService{
     public void delToAddShare() {
 
     }
+
+    @Override
+    @Cacheable(key = "'userId_'+args[0]")
+    public String putUserId(Integer userId, String token) {
+        return token;
+    }
 }

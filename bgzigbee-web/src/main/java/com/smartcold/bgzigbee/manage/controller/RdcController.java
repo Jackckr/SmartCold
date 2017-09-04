@@ -830,7 +830,7 @@ public class RdcController {
 
 	@RequestMapping(value = "/findExtByRdcId", method = RequestMethod.GET)
 	@ResponseBody
-	public RdcExtEntity findExtByRdcId(int rdcId) {
+	public RdcExtEntity findExtByRdcId(Integer rdcId) {
 		return rdcExtDao.findRDCExtByRDCId(rdcId).get(0);
 	}
 

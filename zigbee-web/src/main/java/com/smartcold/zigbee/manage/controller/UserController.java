@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.smartcold.zigbee.manage.service.RedisService;
 import com.smartcold.zigbee.manage.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -63,6 +64,7 @@ public class UserController extends BaseController {
 				String encode = EncodeUtil.encode("sha1", String.format("%s%s", userName, new Date().getTime()));
 				user.setPassword(null);
 				redisService.putUserToken(encode,user);
+				redisService.putUserId(user.getId(),encode);
 				user.setUpdateTime(new Date());
 				userDao.updateUser(user);
 	            return  ResponseData.newSuccess(String.format("token=%s", encode));
@@ -71,6 +73,13 @@ public class UserController extends BaseController {
 		}else{
 			return ResponseData.newFailure("用户名和密码不能为空~");
 		}
+	}
+
+	@RequestMapping(value = "/updateRedisUser")
+	@Cacheable("key=''")
+	@ResponseBody
+	public void updateRedisUser(Integer userId){
+
 	}
 
 	@RequestMapping(value = "/attestationUser")

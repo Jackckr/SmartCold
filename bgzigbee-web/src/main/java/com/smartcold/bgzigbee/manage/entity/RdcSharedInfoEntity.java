@@ -44,6 +44,7 @@ public class RdcSharedInfoEntity {
     private Date updatetime;
     private String attrvalue1;
     private String attrvalue2;
+    private String username;
     private RdcEntity rdcEntity;//映射rdc实体类
 
     public Integer getId() {
@@ -356,5 +357,13 @@ public class RdcSharedInfoEntity {
 
     public void setRdcEntity(RdcEntity rdcEntity) {
         this.rdcEntity = rdcEntity;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
