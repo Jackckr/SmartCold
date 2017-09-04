@@ -37,6 +37,11 @@ public class StringUtil
 	}
 	
 	
+
+	 public  static String getToken(){
+			  return EncodeUtil.encodeByMD5("toke"+TimeUtil.getDateHour());
+	}
+	
 	 public synchronized static boolean verifyToken(String toke){
 		   if(isnotNull(toke)){
 			   String mdtokn = EncodeUtil.encodeByMD5("toke"+TimeUtil.getDateHour());

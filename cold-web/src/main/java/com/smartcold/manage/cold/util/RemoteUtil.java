@@ -80,6 +80,7 @@ public class RemoteUtil {
  			connection.setInstanceFollowRedirects(true);
  			connection.setRequestProperty("accept", "*/*");
  			connection.setRequestProperty("connection", "Keep-Alive");
+ 		    connection.setRequestProperty("stoken",StringUtil.getToken());
  			connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
  			OutputStreamWriter paramout = new OutputStreamWriter(connection.getOutputStream(), "UTF-8");
  			String paramsStr = ""; // 拼接Post 请求的参数
@@ -121,6 +122,7 @@ public class RemoteUtil {
              URLConnection connection = realUrl.openConnection();   // 打开和URL之间的连接
              connection.setRequestProperty("accept", "*/*"); // 设置通用的请求属性
              connection.setRequestProperty("connection", "Keep-Alive");
+             connection.setRequestProperty("stoken",StringUtil.getToken());
              connection.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
              connection.connect(); // 建立实际的连接
              in = new BufferedReader(new InputStreamReader( connection.getInputStream()));
@@ -144,22 +146,6 @@ public class RemoteUtil {
          }
          return result;
      }
-     
-     private static URLConnection  getURLConnection(String url,boolean ispost) throws IOException {
-    	 URL realUrl = new URL(url);
-         URLConnection conn = realUrl.openConnection();
-         // 设置通用的请求属性
-         conn.setRequestProperty("accept", "*/*");
-         conn.setRequestProperty("connection", "Keep-Alive");
-         conn.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-         // 发送POST请求必须设置如下两行
-         if(ispost){
-          conn.setDoOutput(true);
-          conn.setDoInput(true);
-         }
-         return conn;
-         
-     }
 
      /**
       * 向指定 URL 发送POST方法的请求
@@ -175,8 +161,17 @@ public class RemoteUtil {
          BufferedReader in = null;
          String result = "";
          try {
+             URL realUrl = new URL(url);
              // 打开和URL之间的连接
-             URLConnection conn =getURLConnection(url,true);
+             URLConnection conn = realUrl.openConnection();
+             // 设置通用的请求属性
+             conn.setRequestProperty("accept", "*/*");
+             conn.setRequestProperty("connection", "Keep-Alive");
+             conn.setRequestProperty("stoken",StringUtil.getToken());
+             conn.setRequestProperty("user-agent",  "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+             // 发送POST请求必须设置如下两行
+             conn.setDoOutput(true);
+             conn.setDoInput(true);
              // 获取URLConnection对象对应的输出流
              out = new PrintWriter(conn.getOutputStream());
              // 发送请求参数

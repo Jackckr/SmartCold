@@ -6,7 +6,9 @@ import com.smartcold.bgzigbee.manage.entity.RoleUser;
 import com.smartcold.bgzigbee.manage.sc360.dao.CompanyUserMapper;
 import com.smartcold.bgzigbee.manage.sc360.entity.CompanyUser;
 import com.smartcold.bgzigbee.manage.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -31,6 +33,7 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private FileDataMapper fileDataMapper;
 
+    
     @Override
     public boolean deleteUserById(Integer userId) {
         userMapper.deleteUser(userId);

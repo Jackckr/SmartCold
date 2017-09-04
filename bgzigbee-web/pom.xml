@@ -177,7 +177,19 @@
 	      <systemPath>${project.basedir}/lib/json.jar</systemPath>
          </dependency>
 		
-					
+		<!-- https://mvnrepository.com/artifact/redis.clients/jedis redis 缓存管理2-->
+		<dependency>
+           <groupId>org.springframework.data</groupId>
+           <artifactId>spring-data-redis</artifactId>
+           <version>1.7.1.RELEASE</version>
+       </dependency>
+       <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+		<dependency>
+		    <groupId>redis.clients</groupId>
+		    <artifactId>jedis</artifactId>
+		    <version>2.9.0</version>
+		</dependency>
+        
 			<dependency>                                
 			    <groupId>org.apache.poi</groupId>       
 			    <artifactId>poi-ooxml</artifactId>      
@@ -193,6 +205,9 @@
 	      <scope>system</scope>
 	      <systemPath>${project.basedir}/lib/ueditor.jar</systemPath>
 	    </dependency>
+	    
+	    
+	    
 	</dependencies>
 
 	<build>

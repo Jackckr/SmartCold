@@ -1,11 +1,5 @@
 package com.smartcold.zigbee.manage.controller;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.OutputStream;
-import java.net.URL;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -44,13 +38,16 @@ public class UtilController   {
 	}
 	
 	/**
-	 * 更新模块
-	 * @param type
-	 */
+ 	 * 
+ 	 * @param type 0:删除 1添加 2更新 
+ 	 * @param keye 缓存key
+ 	 * @param oid  对象id
+ 	 * String key, Integer type,Integer oid
+ 	 */
 	@RequestMapping(value = "/removeCahe")
 	@ResponseBody
 	public void removeCahe(HttpServletRequest request,String key, Integer type,Integer oid) {
-	  System.err.println(request.getAttribute("apikey"));	
+	  System.err.println(request.getAttribute("stoken"));	
 	}
 	
 	

@@ -5,7 +5,9 @@ import java.net.URLDecoder;
 import java.util.Date;
 
 import com.smartcold.bgzigbee.manage.dao.RdcAuthMapper;
+import com.smartcold.bgzigbee.manage.service.CacheService;
 import com.smartcold.bgzigbee.manage.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -23,6 +25,7 @@ import com.smartcold.bgzigbee.manage.dto.NgRemoteValidateDTO;
 import com.smartcold.bgzigbee.manage.dto.ResultDto;
 import com.smartcold.bgzigbee.manage.entity.UserEntity;
 import com.smartcold.bgzigbee.manage.util.EncodeUtil;
+import com.smartcold.bgzigbee.manage.util.RemoteUtil;
 import com.smartcold.bgzigbee.manage.util.StringUtil;
 import com.smartcold.bgzigbee.manage.util.TableData;
 
@@ -38,6 +41,9 @@ public class UserController extends BaseController {
 	private UserService userService;
 	@Autowired
 	private RdcAuthMapper rdcAuthMapper;
+	@Autowired
+	private CacheService cahcCacheService;
+	
 
 	 //
     @RequestMapping(value = "/getUserByFilter", method = RequestMethod.POST)
@@ -81,6 +87,7 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public Object deleteUser(int userID) {
 		 userService.deleteUserById(userID);
+		 cahcCacheService.delUser(userID);
 		 return new BaseDto(0);
 	}
 	
@@ -90,6 +97,7 @@ public class UserController extends BaseController {
 	   if(userIDs!=null&&userIDs.length>0){
 			for (Integer userID : userIDs) {
 				userService.deleteUserById(userID);
+				 cahcCacheService.delUser(userID);
 			}
 			return new BaseDto(1);
 		}
@@ -100,6 +108,7 @@ public class UserController extends BaseController {
 	@RequestMapping(value="/changeAudit", method=RequestMethod.POST)
 	public Object changeAudit(int userID, int audit){
 		userDao.changeAudit(userID, audit);
+		 cahcCacheService.updateUser(userID);
 		return new BaseDto(0);
 	}
 	
@@ -113,6 +122,7 @@ public class UserController extends BaseController {
 		userEntity.setId(userID);
 		userEntity.setVipType(vipType);
 		userDao.updateUser(userEntity);
+		 cahcCacheService.updateUser(userID);
 		return new BaseDto(0);
 	}
 	
@@ -121,6 +131,7 @@ public class UserController extends BaseController {
 	public Object changeUserType(String ids, int type){
 		try {
 			userDao.changeUserType(ids, type);
+			 cahcCacheService.updateUser(ids);
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -130,8 +141,10 @@ public class UserController extends BaseController {
 	@ResponseBody
 	@RequestMapping(value="/changeAudits", method=RequestMethod.POST)
 	public Object changeAudits(int[] userIDs, int audit){
-		for(int userID:userIDs)
+		for(int userID:userIDs){
 			userDao.changeAudit(userID, audit);
+			 cahcCacheService.updateUser(userID);
+		}
 		return new BaseDto(0);
 	}
 	
