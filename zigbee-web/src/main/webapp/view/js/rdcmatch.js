@@ -87,10 +87,13 @@ function initColdParam() {
                 screenParam.provinceid.split(",").forEach(function (sval, index) {
                     $("ul[name=provinceid] li[value='" + sval + "']").addClass('activeType');
                 });
-                $(".ul_cityid").empty().append(window.localStorage.match_list_city);
-                screenParam.cityid.split(",").forEach(function (a, b) {
-                    $(".ul_cityid li[value='" + a + "']").addClass('activeType');
-                });
+                $(".ul_cityid").empty().show().append(window.localStorage.match_list_city);
+                if( screenParam.cityid){
+                    $(".ul_cityid li").removeClass("activeType");
+                    screenParam.cityid.split(",").forEach(function (a, b) {
+                        $(".ul_cityid li[value='" + a + "']").addClass('activeType');
+                    });
+                }
             }
         }
     });
@@ -107,31 +110,36 @@ function initColdParam() {
 
 /*省市筛选*/
 function changeProvince() {
-    screenParam.provinceid = $(this).val();
+    if($(this).hasClass('activeType')){
+        screenParam.provinceid = $(this).val();
+    }else{
+        screenParam.provinceid=''
+    }
     screenParam.pageNum = 1;
-    if(screenParam.provinceid==''){
+    if(screenParam.provinceid==''||screenParam.provinceid==-100){
         screenParam.cityid = '';
-        $("#ul_cityid").empty();
+        screenParam.provinceid = '';
+        $(".ul_cityid").empty().hide();
     }else{
         //初始化城市
         $.ajax({
             url: "/i/city/findCitysByProvinceId",data:{provinceID:screenParam.provinceid},type: "get", success: function (data) {
-                var cityArr = ['<li class="hide" value=""></li>'];
+                var cityArr = ['<li class="fl activeType" value="-100">全部</li>'];
                 data.forEach(function (val, index) {
                     cityArr.push('<li class="fl" value="' + val.cityID + '">' + val.cityName + '</li>');
                 });
                 window.localStorage.match_list_city = cityArr.join('');
-                $(".ul_cityid").empty().append(window.localStorage.match_list_city);
+                $(".ul_cityid").empty().show().append(window.localStorage.match_list_city);
             }
         });
     }
-
     screenParam.dataType == 3 ? initRentRdc() : initGoodsList();
 }
 function changecity() {
     var slval = [],aLI=$(this).parent().children(".activeType");
     aLI.each(function (a, b) {slval.push(b.value);});
     var slvalue = slval.join(",");
+    if(slvalue==-100){slvalue=null}
     screenParam.cityid = slvalue;
     screenParam.pageNum = 1;
     screenParam.dataType == 3 ? initRentRdc() : initGoodsList();
@@ -498,7 +506,7 @@ $(function () {
         initRentRdc();
     }
     $(".btnGroup button").click(function () {
-        $(".ul_cityid").empty();
+        $(".ul_cityid").empty().hide();
         screenParam.flag = $(this).val();
         initColdParam();
         var oIndex = $(this).index();
@@ -546,7 +554,8 @@ $(function () {
                     $(this).parent().children('li').eq(0).addClass('activeType');
                     screenParam.provinceid='';
                     screenParam.cityid = '';
-                    $("#ul_cityid").empty();
+                    $(".ul_cityid").empty().hide();
+                    localStorage.removeItem('match_list_city');
                 } else {
                     $(this).addClass('activeType').siblings().removeClass('activeType');
                 }
@@ -572,7 +581,7 @@ $(function () {
             getKeyword();
         }
     });
-    $(document).on('click', '#provinceid li', changeProvince);
+    $(document).on('click', '#ul_provinceid li', changeProvince);
     $(document).on('click', '#goodsProvince li', changeProvince);
     $(document).on('click', '.ul_cityid li', changecity);
     PageUtil.initialize();
