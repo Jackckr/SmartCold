@@ -45,11 +45,15 @@ function user_upaudit(){
 			    		 if(obj.state==-1&&obj.note.trim()==""){alert_errmsg("请输入不通过的原因！");return;}
 			    		 if(obj.oldstate!=obj.state&&obj.state==1){
 			    			 if(obj.rdcId!=undefined&&obj.authUserId!=undefined){
-			    				 $.post('../../i/authen/authRdc', {'rdcId': obj.rdcId, 'authUserId': obj.authUserId});//修改
+			    				 $.post('../../i/authen/authRdc', {'rdcId': obj.rdcId, 'authUserId': obj.authUserId},function (data) {
+
+			    	                });//修改
 			    			 }
 			    		 }
 			    		 if((obj.ishandle!=1||obj.oldstate!=obj.state||obj.oldnote!=obj.note)&&obj.state!=0){
-			    			 $.post('../../i/authen/updateAuthstate', {'id': obj.id, 'ishandle': 1,state:obj.oldstate!=obj.state?obj.state:null,note:obj.note});//修改
+			    			 $.post('../../i/authen/updateAuthstate', {'id': obj.id, 'ishandle': 1,state:obj.oldstate!=obj.state?obj.state:null,note:obj.note},function (data) {
+
+			                 });//修改
 			    			 reloaddata();
 			    		 }
 			    	 }
@@ -67,16 +71,21 @@ function userAudit() {
 		        if(obj.oldstate!=obj.state&&obj.state==1){
 		            if(obj.authUserId!=undefined){
 		                var vipType=obj.type==3?1:2;
-		                $.post('../../i/user/auditVipUser', {'userId': obj.authUserId,'vipType':vipType});//修改
+		                $.post('../../i/user/auditVipUser', {'userId': obj.authUserId,'vipType':vipType},function (data) {
+
+		                });//修改
 		            }
 		        }
 		        if((obj.ishandle!=1||obj.oldstate!=obj.state||obj.oldnote!=obj.note)&&obj.state!=0){
-		            $.post('../../i/authen/updateAuthstate', {'id': obj.id, 'ishandle': 1,state:obj.oldstate!=obj.state?obj.state:null,note:obj.note});//修改
+		            $.post('../../i/authen/updateAuthstate', {'id': obj.id, 'ishandle': 1,state:obj.oldstate!=obj.state?obj.state:null,note:obj.note},function (data) {
+
+	                });//修改
 		            reloaddata();
 		        }
 		    }
 		    }
 	 });
+
 }
 
 function rdcStandAudit() {
@@ -84,14 +93,18 @@ function rdcStandAudit() {
     var obj= getFormData('#rdc_state_auditForm');
     if(obj.id!=""){
         if(obj.state==-1&&obj.note.trim()==""){alert_errmsg("请输入不通过的原因！");return;}
-        if(obj.oldstate!=obj.state&&(obj.state==1||obj.state==-1)){
+        if(obj.state==1||obj.state==-1){
             if(obj.rdcId!=undefined){
                 var standType=obj.state==1?1:2;
-                $.post('../../i/rdc/changeStand', {'rdcID': obj.rdcId,'stand':standType});//修改
+                $.post('../../i/rdc/changeStand', {'rdcID': obj.rdcId,'stand':standType},function (data) {
+
+                });//修改
             }
         }
         if((obj.ishandle!=1||obj.oldstate!=obj.state||obj.oldnote!=obj.note)&&obj.state!=0){
-            $.post('../../i/authen/updateAuthstate', {'id': obj.id, 'ishandle': 1,state:obj.oldstate!=obj.state?obj.state:null,note:obj.note});//修改
+            $.post('../../i/authen/updateAuthstate', {'id': obj.id, 'ishandle': 1,state:obj.oldstate!=obj.state?obj.state:null,note:obj.note},function (data) {
+
+            });//修改
             reloaddata();
         }
     }

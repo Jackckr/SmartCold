@@ -13,7 +13,6 @@ import com.smartcold.zigbee.manage.service.CookieService;
 import com.smartcold.zigbee.manage.util.EncodeUtil;
 
 @Service(value="CookieService")
-@CacheConfig(cacheNames = "CookieServiceImpl")
 public class CookieServiceImpl implements CookieService {
 
 	@Autowired
@@ -33,12 +32,6 @@ public class CookieServiceImpl implements CookieService {
 		return encode;
 	}
 
-	@Override
-	@Cacheable(key="#cookie")
-	public CookieEntity findEffectiveCookie(String cookie) {
-		System.err.println("=======================================db===========================");
-		return cookieDao.findEffectiveCookie(cookie);
-	}
 
 	@Override
 	public void deleteCookie(String cookie) {

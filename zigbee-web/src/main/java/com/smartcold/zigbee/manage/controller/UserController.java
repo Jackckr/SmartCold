@@ -11,6 +11,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import com.smartcold.zigbee.manage.service.RedisService;
+import com.smartcold.zigbee.manage.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,19 +27,11 @@ import com.smartcold.zigbee.manage.dao.UserMapper;
 import com.smartcold.zigbee.manage.dto.ResultDto;
 import com.smartcold.zigbee.manage.dto.ResultDtoStr;
 import com.smartcold.zigbee.manage.dto.UploadFileEntity;
-import com.smartcold.zigbee.manage.entity.CookieEntity;
 import com.smartcold.zigbee.manage.entity.FileDataEntity;
 import com.smartcold.zigbee.manage.entity.RdcAuthEntity;
 import com.smartcold.zigbee.manage.entity.UserEntity;
-import com.smartcold.zigbee.manage.service.CookieService;
 import com.smartcold.zigbee.manage.service.DocLibraryService;
 import com.smartcold.zigbee.manage.service.FtpService;
-import com.smartcold.zigbee.manage.util.EncodeUtil;
-import com.smartcold.zigbee.manage.util.ResponseData;
-import com.smartcold.zigbee.manage.util.SetUtil;
-import com.smartcold.zigbee.manage.util.StringUtil;
-import com.smartcold.zigbee.manage.util.TelephoneVerifyUtil;
-import com.smartcold.zigbee.manage.util.TimeUtil;
 import com.taobao.api.ApiException;
 
 @Controller
@@ -47,8 +41,6 @@ public class UserController extends BaseController {
 	@Autowired
 	private UserMapper userDao;
 	@Autowired
-	private CookieService cookieService;
-	@Autowired
 	private FtpService ftpService;
 	@Autowired
 	private FileDataMapper fileDataDao;
@@ -56,6 +48,8 @@ public class UserController extends BaseController {
 	private RoleUserMapper roleUserMapper;
 	@Autowired
 	private RdcauthMapping rdcauthMapping;
+	@Autowired
+	private RedisService redisService;
 	@Resource(name="docLibraryService")
 	private DocLibraryService docLibraryService;
 
@@ -66,10 +60,12 @@ public class UserController extends BaseController {
 			this.logout(request);
 			UserEntity user = userDao.findUser(userName, EncodeUtil.encodeByMD5(password));
 			if (user != null) {
-				String cookie = cookieService.insertCookie(userName);
+				String encode = EncodeUtil.encode("sha1", String.format("%s%s", userName, new Date().getTime()));
 				user.setPassword(null);
-				request.getSession().setAttribute("user", user);
-	            return  ResponseData.newSuccess(String.format("token=%s", cookie));
+				redisService.putUserToken(encode,user);
+				user.setUpdateTime(new Date());
+				userDao.updateUser(user);
+	            return  ResponseData.newSuccess(String.format("token=%s", encode));
 			}
 			return ResponseData.newFailure("用户名或者密码不正确~");
 		}else{
@@ -150,7 +146,7 @@ public class UserController extends BaseController {
 		if(cookies!=null&&cookies.length>0){
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("token")) {
-					cookieService.deleteCookie(cookie.getValue());
+					redisService.delUserToken(cookie.getValue());
 				}
 			}
 		}
@@ -170,15 +166,9 @@ public class UserController extends BaseController {
 			}
 		}
 		if(StringUtil.isnotNull(token)){
-			CookieEntity effectiveCookie = cookieService.findEffectiveCookie(token);
-			if (effectiveCookie != null) {
-				user = userDao.findUserByName(effectiveCookie.getUsername());
-				if(user!=null){
-					user.setPassword(null);
-					request.getSession().setAttribute("user", user);
-					return user;
-				}
-			}
+			user= redisService.putUserToken(token, null);
+			if(user!=null){user.setPassword(null);}
+			return user;
 		}
 		return user;
 	}
@@ -325,7 +315,8 @@ public class UserController extends BaseController {
 	public Object updateUser(HttpServletRequest request,UserEntity user) throws ApiException {
 		try {
 			if(user.getId()==0){
-				UserEntity old_user = (UserEntity)request.getSession().getAttribute("user");
+				String token = CookieUnit.getCookie(request);
+				UserEntity old_user = redisService.putUserToken(token,null);
 				if(old_user!=null){
 					user.setId(old_user.getId());
 				}else{
@@ -360,14 +351,9 @@ public class UserController extends BaseController {
 		if(StringUtil.isNull(pwd)){return false;};
 		pwd=EncodeUtil.encodeByMD5(pwd);
 		UserEntity new_user=null;
-		UserEntity ol_user = (UserEntity) request.getSession().getAttribute("user");
+		UserEntity ol_user = redisService.putUserToken(token,null);
 		if (ol_user==null){
-			if(StringUtil.isnotNull(token)){
-				CookieEntity effectiveCookie = cookieService.findEffectiveCookie(token);
-				ol_user = userDao.findUserByName(effectiveCookie.getUsername());
-			}else {
-				return false;
-			}
+			return false;
 		}
 		new_user=this.userDao.findUserById(ol_user.getId());
 		return pwd.equals(new_user.getPassword());

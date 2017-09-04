@@ -1,1 +1,240 @@
-﻿eval(function(p,a,c,k,e,d){e=function(c){return(c<a?"":e(parseInt(c/a)))+((c=c%a)>35?String.fromCharCode(c+29):c.toString(36))};if(!''.replace(/^/,String)){while(c--)d[e(c)]=k[c]||e(c);k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1;};while(c--)if(k[c])p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c]);return p;}('b D="3r",1r,h=R,Z=R,2m=\'2j\';7 1S(){2a{$("#u .L-I").g(7(){$("#u").U("2f",$(l).X())})}2G(e){}}7 25(G){b 1o=1a;$.g(1r.P,7(i,n){$.g(n.P,7(j,o){9(o.G==G){1o=o}})});m 1o}7 2F(G){b c=\'c \';$.g(1r.P,7(i,n){$.g(n.P,7(j,o){9(o.G==G){c+=o.c}})});m c}7 22(q,f,c){9(!$(\'#8\').8(\'2I\',q)){$(\'#8\').8(\'1O\',{I:q,Y:1C(f),1h:16,c:c})}1p{$(\'#8\').8(\'1d\',q);$(\'#S-2H\').1i()}1j()}7 1j(){$(".8-2C").2y(7(){b q=$(l).1b(".8-1h").X();$(\'#8\').8(\'A\',q)});$("#8").2x(\'2w\',7(e){$(\'#S\').u(\'2B\',{2A:e.2z,M:e.2J});b q=$(l).1b(".8-1h").X();$(\'#S\').y("2S",q);$(\'#8\').8(\'1d\',q);m t})}7 1C(f){9(f==1a||f==""){m}m\'<14 2R="2W"  2V="0" 2U="0" 2Q="0"  Q="/2M/2L/\'+f+\'" 2K="2P:1I%;2O:1I%;"></14>\'}7 1P(){$(\'#S\').u({2b:7(1M){1K(1M.27)}});m t}7 1K(1J){b 1z=$(\'#8\').8(\'8\');b C=$(\'#8\').8(\'2g\');b H=[];$.g(1z,7(i,n){H.2d($(n).L(\'N\').I)});2c(1J){v"2e":b 14=$(C.L(\'N\').Y);b Q=14.15(\'Q\');$(\'#8\').8(\'28\',{29:C,N:{Y:1C(Q)}});x;v"A":b O=C.L(\'N\').I;9(O!=D){$(\'#8\').8(\'A\',O)}1p{1x("T",\'1w，\'+D+\'2q\',"1A")}x;v"2p":$.g(H,7(i,n){9(n!=D){$(\'#8\').8(\'A\',n)}});x;v"2s":b O=C.L(\'N\').I;$.g(H,7(i,n){9(n!=O&&n!=D){$(\'#8\').8(\'A\',n)}});x;v"2t":b J=$(\'#8\').8(\'1G\',C);9(J==1z.1N-1){1x("T",\'1w，2i，2l\',"1A");m t}$.g(H,7(i,n){9(i>J){9(n!=D){$(\'#8\').8(\'A\',n)}}});x;v"2o":b J=$(\'#8\').8(\'1G\',C);9(J==1){1x("T",\'1w，3s，3l。 ^@^!!\',"1A");m t}$.g(H,7(i,n){9(i<J){9(n!=D){$(\'#8\').8(\'A\',n)}}});x;v"3p":$(\'#3o\').u(\'3C\');x}}7 1g(){1H=3D.3E(\'3F\');b d=3y 3z();b s="";9(d.F()==0)s=" 3B";9(d.F()==1)s=" 3A";9(d.F()==2)s=" 3x";9(d.F()==3)s=" 33";9(d.F()==4)s=" 35";9(d.F()==5)s=" 36";9(d.F()==6)s=" 2Y";1H.2X=d.2Z()+"31"+(d.30()+1)+"38"+d.3g()+"3f "+d.3h()+":"+d.3i()+":"+d.3e()+" "+s;39(1g,3b)}7 1u(){b 19=\'\';$("#u").U({3d:16,3c:16,1F:t});$.g(Z,7(j,o){b 13=\'<1L 12="17">\';9(o.1c&&o.1c.1N>0){$.g(o.1c,7(k,p){13+=\'<z><18><a 32="\'+p.G+\'" K="#" 24="\'+p.f+\'" ><W 12="c \'+p.c+\'" > </W><W 12="26">\'+p.1y+\'</W></a></18> </z>\'})}13+=\'</1L>\';$(\'#u\').U(\'1O\',{I:o.1y,Y:13,1F:t,3k:\'c \'+o.c});9(j==0){19=o.1y}});$(\'#u\').U(\'1d\',19);$(\'.17 z a\').1i(7(){b 21=$(l).1b(\'.26\').X();b f=$(l).15("24");b c=$(l).25(\'.c\').15(\'12\');22(21,f,c);$(\'.17 z 18\').1s("23");$(l).1e().10("23")}).1f(7(){$(l).1e().10("1f")},7(){$(l).1e().1s("1f")})}7 1T(){$.1V.37(\'3j\',\'34?\',7(r){9(r){$.1v({f:\'/i/1k/1T\',11:\'1E\',1l:7(y){h=R;E.w.1m();M.B.K="1B://"+B.1D+"/V.1R"}})}})}7 1q(){$.1v({11:"1E",20:t,1Z:\'1Y\',f:"/i/1k/3a",1l:7(y){9(y.1U==1a||y.1U.27==0){$.1V.3q(\'T\',\'3m！3n！\',\'3u\');h=R;E.w.1m();b f="1B://"+B.1D+"/V.1W";M.B.K=f}}})}$().3v(7(){9(!E.w.1X||!E.w.1Q){M.B.K="1B://"+B.1D+"/V.1W";m}h=3w.3t(E.w.1X);9(E.w.1Q.2n(h.2k)!=-1&&h.2u&&h.11&&h.2v&&h.2r&&h.2h){$.1v({11:"1E",20:t,1Z:\'1Y\',f:"/i/1k/2N",1l:7(y){Z=y;9(!Z){E.w.1m();M.B.K="V.1R"}1j();1P();1g();$("#1n z").2T().10("1t");$(\'#1n z\').1i(7(){$(\'#1n z\').1s("1t");$(l).10("1t");1S();1u()});1u()}});2E(1q,2D);}1p{1q()}});',62,228,'|||||||function|tabs|if||var|icon|now||url|each|sysuser||||this|return||||subtitle||day|false|menu|case|sessionStorage|break|data|li|close|location|currentTab|onlyOpenTitle|window|getDay|menuid|allTabtitle|title|tabIndex|href|panel|top|options|currtab_title|menus|src|undefined|mm|警告|accordion|login|span|text|content|usermenus|addClass|type|class|menulist|iframe|attr|true|navlist|div|selectedPanelname|null|children|child|select|parent|hover|Time|closable|click|tabClose|admin|success|clear|navmain|obj|else|checkuser|_0|removeClass|active|InitLeftMenu|ajax|亲|msgShow|menuname|alltabs|warning|http|createFrame|host|GET|border|getTabIndex|t_div|100|action|closeTab|ul|item|length|add|tabCloseEven|asikey|htm|RemoveAccordion|logout|entity|messager|html|sysadmin|json|dataType|cache|tabTitle|addTab|selected|rel|find|nav|id|update|tab|try|onClick|switch|push|refresh|remove|getSelected|lastlogininfo|后边没有啦|1_1_0|token|无法关闭哦|web_version|indexOf|closeleft|closeall|是无法关闭哦|cuttlogininfo|closeother|closeright|role|adminname|contextmenu|bind|dblclick|pageX|left|show|inner|900000|setInterval|getIcon|catch|tabupdate|exists|pageY|style|viwe|sell|getUserMenu|height|width|frameborder|scrolling|currtab|first|marginwidth|marginheight|no|innerHTML|星期六|getFullYear|getMonth|年|ref|星期三|确认退出当前系统|星期四|星期五|confirm|月|setTimeout|findAdmin|1000|fit|animate|getSeconds|日|getDate|getHours|getMinutes|提示|iconCls|咱惹不起哦|当前会话已失效|请重新登录|closeMenu|exit|alert|首页|前边那个上头有人|parse|error|ready|JSON|星期二|new|Date|星期一|星期日|hide|document|getElementById|showtime'.split('|'),0,{}))
+﻿var onlyOpenTitle = "首页", _menus, sysuser = undefined, usermenus = undefined, web_version = '1_1_0';
+function RemoveAccordion() {
+    try {
+        $("#menu .panel-title").each(function () {
+            $("#menu").accordion("remove", $(this).text());
+        });
+    } catch (e) {
+    }
+}//删除菜单
+function find(menuid) {
+    var obj = null;
+    $.each(_menus.menus, function (i, n) {
+        $.each(n.menus, function (j, o) {
+            if (o.menuid == menuid) {
+                obj = o
+            }
+        })
+    });
+    return obj
+}
+function getIcon(menuid) {
+    var icon = 'icon ';
+    $.each(_menus.menus, function (i, n) {
+        $.each(n.menus, function (j, o) {
+            if (o.menuid == menuid) {
+                icon += o.icon;
+            }
+        });
+    });
+    return icon;
+}
+function addTab(subtitle, url, icon) {
+    if (!$('#tabs').tabs('exists', subtitle)) {
+        $('#tabs').tabs('add', {title: subtitle, content: createFrame(url), closable: true, icon: icon})
+    } else {
+        $('#tabs').tabs('select', subtitle);
+        $('#mm-tabupdate').click()
+    }
+    tabClose()
+}
+function tabClose() {
+    $(".tabs-inner").dblclick(function () {
+        var subtitle = $(this).children(".tabs-closable").text();
+        $('#tabs').tabs('close', subtitle)
+    });
+    $("#tabs").bind('contextmenu', function (e) {
+        $('#mm').menu('show', {left: e.pageX, top: e.pageY});
+        var subtitle = $(this).children(".tabs-closable").text();
+        $('#mm').data("currtab", subtitle);
+        $('#tabs').tabs('select', subtitle);
+        return false
+    })
+}
+function createFrame(url) {
+    if (url == null || url == "") {
+        return;
+    }
+    return '<iframe scrolling="no"  marginheight="0" marginwidth="0" frameborder="0"  src="/sell/viwe/' + url + '" style="width:100%;height:100%;"></iframe>';
+}
+function tabCloseEven() {
+    $('#mm').menu({
+        onClick: function (item) {
+            closeTab(item.id);
+        }
+    });
+    return false;
+}//绑定右键菜单事件
+function closeTab(action) {
+    var alltabs = $('#tabs').tabs('tabs');
+    var currentTab = $('#tabs').tabs('getSelected');
+    var allTabtitle = [];
+    $.each(alltabs, function (i, n) {
+        allTabtitle.push($(n).panel('options').title)
+    });
+    switch (action) {
+        case"refresh":
+            var iframe = $(currentTab.panel('options').content);
+            var src = iframe.attr('src');
+            $('#tabs').tabs('update', {tab: currentTab, options: {content: createFrame(src)}});
+            break;
+        case"close":
+            var currtab_title = currentTab.panel('options').title;
+            if (currtab_title != onlyOpenTitle) {
+                $('#tabs').tabs('close', currtab_title)
+            } else {
+                msgShow("警告", '亲，' + onlyOpenTitle + '是无法关闭哦', "warning")
+            }
+            break;
+        case"closeall":
+            $.each(allTabtitle, function (i, n) {
+                if (n != onlyOpenTitle) {
+                    $('#tabs').tabs('close', n)
+                }
+            });
+            break;
+        case"closeother":
+            var currtab_title = currentTab.panel('options').title;
+            $.each(allTabtitle, function (i, n) {
+                if (n != currtab_title && n != onlyOpenTitle) {
+                    $('#tabs').tabs('close', n)
+                }
+            });
+            break;
+        case"closeright":
+            var tabIndex = $('#tabs').tabs('getTabIndex', currentTab);
+            if (tabIndex == alltabs.length - 1) {
+                msgShow("警告", '亲，后边没有啦，无法关闭哦', "warning");
+                return false
+            }
+            $.each(allTabtitle, function (i, n) {
+                if (i > tabIndex) {
+                    if (n != onlyOpenTitle) {
+                        $('#tabs').tabs('close', n)
+                    }
+                }
+            });
+            break;
+        case"closeleft":
+            var tabIndex = $('#tabs').tabs('getTabIndex', currentTab);
+            if (tabIndex == 1) {
+                msgShow("警告", '亲，前边那个上头有人，咱惹不起哦。 ^@^!!', "warning");
+                return false
+            }
+            $.each(allTabtitle, function (i, n) {
+                if (i < tabIndex) {
+                    if (n != onlyOpenTitle) {
+                        $('#tabs').tabs('close', n)
+                    }
+                }
+            });
+            break;
+        case"exit":
+            $('#closeMenu').menu('hide');
+            break
+    }
+}
+function Time() {
+    t_div = document.getElementById('showtime');
+    var now = new Date();
+    var day = "";
+    if (now.getDay() == 0) day = " 星期日";
+    if (now.getDay() == 1) day = " 星期一";
+    if (now.getDay() == 2) day = " 星期二";
+    if (now.getDay() == 3) day = " 星期三";
+    if (now.getDay() == 4) day = " 星期四";
+    if (now.getDay() == 5) day = " 星期五";
+    if (now.getDay() == 6) day = " 星期六";
+    t_div.innerHTML = now.getFullYear() + "年" + (now.getMonth() + 1) + "月" + now.getDate() + "日 " + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds() + " " + day;
+    setTimeout(Time, 1000);
+}
+function InitLeftMenu() {
+    var selectedPanelname = '';
+    $("#menu").accordion({animate: true, fit: true, border: false});
+    $.each(usermenus, function (j, o) {
+        var menulist = '<ul class="navlist">';
+        if (o.child && o.child.length > 0) {
+            $.each(o.child, function (k, p) {
+                menulist += '<li><div><a ref="' + p.menuid + '" href="#" rel="' + p.url + '" ><span class="icon ' + p.icon + '" > </span><span class="nav">' + p.menuname + '</span></a></div> </li>'
+            });
+        }
+        menulist += '</ul>';
+        $('#menu').accordion('add', {title: o.menuname, content: menulist, border: false, iconCls: 'icon ' + o.icon});
+        if (j == 0) {
+            selectedPanelname = o.menuname
+        }
+    });
+    $('#menu').accordion('select', selectedPanelname);
+    $('.navlist li a').click(function () {
+        var tabTitle = $(this).children('.nav').text();
+        var url = $(this).attr("rel");
+        var icon = $(this).find('.icon').attr('class');
+        addTab(tabTitle, url, icon);
+        $('.navlist li div').removeClass("selected");
+        $(this).parent().addClass("selected")
+    }).hover(function () {
+        $(this).parent().addClass("hover")
+    }, function () {
+        $(this).parent().removeClass("hover")
+    })
+}
+function logout() {
+    $.messager.confirm('提示', '确认退出当前系统?', function (r) {
+        if (r) {
+            $.ajax({
+                url: '/i/admin/logout', type: 'GET', success: function (data) {
+                    sysuser = undefined;
+                    window.sessionStorage.clear();
+                    top.location.href = "http://" + location.host + "/login.htm";
+                }
+            });
+        }
+    });
+}
+function checkuser() {
+    $.ajax({
+        type: "GET", cache: false, dataType: 'json', url: "/i/admin/findAdmin", success: function (data) {
+            if (data.entity == null || data.entity.id == 0) {
+                $.messager.alert('警告', '当前会话已失效！请重新登录！', 'error');
+                sysuser = undefined;
+                window.sessionStorage.clear();
+                var url = "http://" + location.host + "/login.html";
+                top.location.href = url;
+            }
+        }
+    });
+}
+$().ready(function () {
+    if (!window.sessionStorage.sysadmin || !window.sessionStorage.asikey) {
+        top.location.href = "http://" + location.host + "/login.html"; return;
+    }
+    sysuser = JSON.parse(window.sessionStorage.sysadmin);
+    if(window.sessionStorage.asikey.indexOf(sysuser.token)!=-1&&sysuser.role&&sysuser.type&&sysuser.adminname&&sysuser.cuttlogininfo&&sysuser.lastlogininfo){
+        $.ajax({
+            type: "GET", cache: false, dataType: 'json', url: "/i/admin/getUserMenu", success: function (data) {
+                usermenus = data;
+                if (!usermenus) {
+                    window.sessionStorage.clear();
+                    top.location.href = "login.htm";
+                }
+                tabClose();
+                tabCloseEven();
+                Time();
+                $("#navmain li").first().addClass("active");
+                $('#navmain li').click(function () {
+                    $('#navmain li').removeClass("active");
+                    $(this).addClass("active");
+                    RemoveAccordion();
+                    InitLeftMenu();
+                });
+                InitLeftMenu();
+            }
+        });
+        setInterval(checkuser, 900000);//15分钟检查一次
+    }else{
+        checkuser();
+    }
+
+});//初始化数据
+
+

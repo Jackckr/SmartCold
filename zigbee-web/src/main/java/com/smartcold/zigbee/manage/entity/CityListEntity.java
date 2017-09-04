@@ -1,8 +1,9 @@
 package com.smartcold.zigbee.manage.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class CityListEntity {
+public class CityListEntity implements Serializable{
 	private int cityID;
 
 	private String cityName;

@@ -3,13 +3,18 @@
  */
 $().ready(function () {
     var maxSize = 10;
-    localStorage.isStand = 0;
+    localStorage.isStand = $("#isstand").val();
     var totalPages = currentPage = 1;  // 当前页
     var isLoadRB = false;
     var ul_select = $("#ul_rdcsL_list");
+    var match={area:'',mantype:'',temtype:'',sqm:'',goodtype:'',audit:''};
+    var myFilter=null;
     if (getUrlParam("key")) {
         $("#searchDara_div input").val(window.localStorage.getItem("shdatakey"));
         window.localStorage.removeItem("shdatakey");
+    }
+    if(localStorage.RDC) {
+        myFilter = JSON.parse(localStorage.RDC);
     }
     gosharedile = function (sharid) {
         window.location.href = "colddetail.html?id=" + sharid;
@@ -22,10 +27,8 @@ $().ready(function () {
         $(".cancel").click(function () {
             $(".one").show();
             $(".two").hide();
-            currentPage = 1;
-            ul_select.empty();
-            $("#searchDara_div input").val(null);
-            getPageData();
+            localStorage.removeItem('RDC');
+            window.location.reload();
         });
         $(".droplist a").click(function (e) {//条件过滤
             $(this).children('i').addClass('current').html('&#xe62e;');
@@ -92,6 +95,12 @@ $().ready(function () {
             $("#ul_address_list li").click(function (event) {
                 addfilter(this);
             });
+
+            if(myFilter&&myFilter.provinceid) {
+                match.area=data[myFilter.provinceid-1].provinceName;
+                $("#filter_section").children('.droplist').eq(0).find('span').html(match.area);
+                $("#ul_address_list li").eq(myFilter.provinceid).addClass('active').siblings().removeClass('active');
+            }
         });
         $.post(ER.root + "/i/rdc/getRDCFilterData", function (data) {
             if (data.success) {
@@ -109,6 +118,36 @@ $().ready(function () {
                 $("#ul_mtty_list li,#ul_stty_list li,#ul_sqm_list li,#ulApprove li").click(function (event) {
                     addfilter(this);
                 });
+                if(myFilter&&myFilter.managetype) {
+                    match.mantype=data.entity.mt[myFilter.managetype-1].type;
+                    $("#filter_section").children('.droplist').eq(1).find('span').html(match.mantype);
+                    $("#ul_mtty_list li").eq(myFilter.managetype).addClass('active').siblings().removeClass('active');
+                }
+                if(myFilter&&myFilter.storagetempertype) {
+                    match.temtype=data.entity.te[myFilter.storagetempertype-1].type;
+                    $("#filter_section").children('.droplist').eq(2).find('span').html(match.temtype);
+                    $("#ul_stty_list li").eq(myFilter.storagetempertype).addClass('active').siblings().removeClass('active');
+                }
+                if(myFilter&&myFilter.sqm) {
+                    var x=null;
+                    $("#filter_section").children('.droplist').eq(3).find('span').html(myFilter.sqm);
+                    if(myFilter.sqm=='1000以下'){x=1}
+                    else if(myFilter.sqm=='1000~3000'){x=2}
+                    else if(myFilter.sqm=='3000~6000'){x=3}
+                    else if(myFilter.sqm=='6000~12000'){x=4}
+                    else if(myFilter.sqm=='12000~20000'){x=5}
+                    else if(myFilter.sqm=='20000以上'){x=6}
+                    else{x=null}
+                    $("#ul_sqm_list li").eq(x).addClass('active').siblings().removeClass('active');
+                }
+                if(myFilter&&myFilter.audit) {
+                    var x=null;
+                    if(myFilter.audit==2){x=1;$("#filter_section").children('.droplist').eq(4).find('span').html('已认证');}
+                    else if(myFilter.audit=='-2,-1,0,1'){x=2; $("#filter_section").children('.droplist').eq(4).find('span').html('未认证');}
+                    else{x=0; myFilter.audit=''}
+
+                    $("#ulApprove li").eq(x).addClass('active').siblings().removeClass('active');
+                }
             }
         });
     };
@@ -125,6 +164,10 @@ $().ready(function () {
         var _options = {uid:uid,sqm: sqm, storagetempertype: smty, managetype: sety,audit:audit, provinceid: adds, keyword: keyword};
         var _filter = {pageNum: pageNum, pageSize: pageSize};
         jQuery.extend(_filter, _options);
+        if(sqm||audit||smty||sety||adds||keyword){
+            localStorage.RDC=JSON.stringify(_filter);
+            myFilter=_filter;
+        }
         return _filter;
     };
     getSoll = function () {
@@ -168,44 +211,71 @@ $().ready(function () {
     };
 
     function gethtml(rdc) {
-        if (rdc.audit == -1) {
-            return false
-        }
-        var approve = '';
-        if (rdc.audit == 2) {
-            if(rdc.id==1878){
-                approve = '<i class="iconfont green">&#xe61f;</i><i class="green">已通过</i>'
-            }else{
-                if (rdc.istemperaturestandard == 1) {
-                    approve = '<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
-                } else {
-                    approve = '<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i>'
-                }
+        if(localStorage.isStand==0){
+            if (rdc.audit == -1) {
+                return false
             }
+            var approve = '';
+            if (rdc.audit == 2) {
+                if(rdc.id==1878){
+                    approve = '<i class="iconfont green">&#xe61f;</i><i class="green">已通过</i>'
+                }else{
+                    if (rdc.istemperaturestandard == 1) {
+                        approve = '<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
+                    } else {
+                        approve = '<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i>'
+                    }
+                }
 
-        } else if (rdc.audit != 2) {
-            if (rdc.istemperaturestandard == 1) {
-                approve = '<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
-            } else {
-                approve = '<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i>'
-            }
-        }
-        ;
-        var collectWords = '<a class="fr noCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe605;</i><em>收藏</em></a>';
-                if (rdc.collectType == 1) {
-                    collectWords = '<a class="fr hasCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe60c;</i><em>已收藏</em></a>';
+            } else if (rdc.audit != 2) {
+                if (rdc.istemperaturestandard == 1) {
+                    approve = '<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
+                } else {
+                    approve = '<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i>'
                 }
-        var score = ['<li class="imgCell" ><a href="rdcdetail.html?id=' + rdc.id + '" onclick="getSoll()"><img class="fl" src="' + rdc.logo + '">' +
-        '<div><p class="ellipsis">' + rdc.name + '</p><p class="position omg"><i class="iconfont">&#xe66e;</i>' + rdc.address + '</p>' +
-        '<div class="star">' + approve + '</div></div></a>' +
-        '<div class="btnFn clearfix"><a href="rdcdetail.html?id=' + rdc.id + '" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>' +
-        collectWords + '<a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'];
-        return score.join("");
+            }
+            ;
+            var collectWords = '<a class="fr noCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe605;</i><em>收藏</em></a>';
+            if (rdc.collectType == 1) {
+                collectWords = '<a class="fr hasCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe60c;</i><em>已收藏</em></a>';
+            }
+            var score = ['<li class="imgCell" ><a href="rdcdetail.html?id=' + rdc.id + '" onclick="getSoll()"><img class="fl" src="' + rdc.logo + '">' +
+            '<div><p class="ellipsis">' + rdc.name + '</p><p class="position omg"><i class="iconfont">&#xe66e;</i>' + rdc.provincename+'-'+rdc.cityname + '</p>' +
+            '<div class="star">' + approve + '</div></div></a>' +
+            '<div class="btnFn clearfix"><a href="rdcdetail.html?id=' + rdc.id + '" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>' +
+            collectWords + '<a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'];
+            return score.join("");
+        }
+        else{
+            var collectWords='<a class="fr noCollect" onclick="collect(this,'+rdc.id+')"><i class="iconfont">&#xe605;</i><em>收藏</em></a>';
+            if(rdc.collectType==1){
+                collectWords='<a class="fr hasCollect" onclick="collect(this,'+rdc.id+')"><i class="iconfont">&#xe60c;</i><em>已收藏</em></a>';
+            }
+            var approve='<i class="iconfont orange">&#xe6e9;</i>冷链委温度达标库';
+            var score=['<li class="imgCell" ><a href="rdcdetail.html?id='+rdc.id+'" onclick="getSoll()"><span>达标冷库</span>' +
+            '<div style="padding-left: 2.5rem;"><p class="ellipsis">'+rdc.name+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.provincename+'-'+rdc.cityname+'</p>' +
+            '<div class="star orange">'+approve+'</div></div></a><i class="iconfont tj">&#xe686;</i>' +
+            '<div class="btnFn clearfix"><a href="rdcdetail.html?id='+rdc.id+'" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>'+
+            collectWords+'<a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'];
+            return score.join("");
+        }
     }
 
     function getPageData() {//启用无限加载
         isLoadRB = true;
+        if($("#searchDara_div input").val().trim()){
+            $(".one").hide();
+            $(".two").show();
+        }
         var _filter = getFilter(currentPage, maxSize);
+        if(myFilter){
+            _filter=myFilter;
+            if(_filter.keyword){
+                $(".one").hide();
+                $(".two").show();
+                $("#searchDara_div input").val(_filter.keyword);
+            }
+        };
         $.post(ER.root + "/i/rdc/newGetRdcList", _filter, function (data) {
             if (data.success && data.data.length > 0) {
                 totalPages = data.totalPages;
@@ -225,6 +295,8 @@ $().ready(function () {
     };
 
     function initData() {//启用无限加载
+        initFilter();
+        initevg();
         if (localStorage.list_cache_coldlist) {
             var cachdata = JSON.parse(localStorage.list_cache_coldlist);
             totalPages = parseInt(cachdata.totalPages);
@@ -234,8 +306,6 @@ $().ready(function () {
         } else {
             getPageData();
         }
-        initFilter();
-        initevg();
 
     };
     initData();

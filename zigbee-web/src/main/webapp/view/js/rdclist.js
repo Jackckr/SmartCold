@@ -7,6 +7,7 @@ var ajaxcont = 0, ui_laypage, pagination = {pageCount: -1, oldPageCount: -1}
     hasCar: null,
     keyword: null,
     provinceid: null,
+    cityid: null,
     goodSaveType: null,
     managetype: null,
     storagetempertype: null,
@@ -50,7 +51,7 @@ function getRdcRentList() {
                 }
               /*  if (window.lkuser && window.lkuser.vipType > 0) {*/
                     rdcRentInfo.push('<a onclick="realTimeTem(', rdcRent.id, ',\'', rdcRent.name, '\')">点击可查看实时库温</a></div><div class="rdcArea"><span>总面积', rdcRent.sqm, '㎡</span>|<span>', tempTypeStr, '</span><span>', manageTypeStr, '</span></div>',
-                        '<div class="rdcPosition"><b><i class="iconfont">&#xe648;</i>', rdcRent.address, '</b></div></div><div class="rdcPrice">');
+                        '<div class="rdcPosition"><b><i class="iconfont">&#xe648;</i>', rdcRent.provincename,'-',rdcRent.cityname, '</b></div></div><div class="rdcPrice">');
                 /*} else {
                     rdcRentInfo.push('</div><div class="rdcArea"><span>总面积', rdcRent.sqm, '㎡</span>|<span>', tempTypeStr, '</span><span>', manageTypeStr, '</span></div>',
                         '<div class="rdcPosition"><b><i class="iconfont">&#xe648;</i>', rdcRent.address, '</b></div></div><div class="rdcPrice">');
@@ -117,7 +118,32 @@ function flushPage() {
 
 /*change省市事件*/
 function changeProvince() {
-    screenParam.provinceid = $(this).val();
+    var slvalue = setStyle("#ul_provinceid", this);
+    screenParam.provinceid = $(this).attr('value');
+    screenParam.pageNum = 1;
+    if(slvalue==-100){
+        screenParam.provinceid='';
+        screenParam.cityid = '';
+        $("#ul_cityid").empty();
+        getRdcRentList();
+    }else{
+        //初始化城市
+        $.ajax({
+            url: "/i/city/findCitysByProvinceId",data:{provinceID:screenParam.provinceid},type: "get", success: function (data) {
+                var cityArr = ['<li class="hide" value=""></li>'];
+                data.forEach(function (val, index) {
+                    cityArr.push('<li class="fl" value="' + val.cityID + '">' + val.cityName + '</li>');
+                });
+                window.localStorage.rdc_list_city = cityArr.join('');
+                $("#ul_cityid").empty().append(window.localStorage.rdc_list_city);
+                $("#ul_cityid li").bind('click', changecity);
+            }
+        });
+    }
+}
+function changecity() {
+    var slvalue = setStyle("#ul_cityid", this);
+    screenParam.cityid = slvalue;
     screenParam.pageNum = 1;
     getRdcRentList();
 }
@@ -301,16 +327,19 @@ function init_filter() {
     //初始化省
     if (window.localStorage.rdc_list_province) {
         $("#ul_provinceid").append(window.localStorage.rdc_list_province);
+        $("#ul_provinceid li").bind('click', changeProvince);
+        $("#ul_cityid").append(window.localStorage.rdc_list_city);
+        $("#ul_cityid li").bind('click', changecity);
     } else {
         $.ajax({
             url: "/i/city/findProvinceList", type: "get", success: function (data) {
-                var provinceArr = ['<option value="">全部</option>'];
+                var provinceArr = [];
                 data.forEach(function (val, index) {
-                    provinceArr.push('<option value="' + val.provinceId + '">' + val.provinceName + '</option>');
+                    provinceArr.push('<li type="radio" class="fl" value="' + val.provinceId + '">' + val.provinceName + '</li>');
                 });
                 window.localStorage.rdc_list_province = provinceArr.join('');
-                $("#ul_provinceid").empty().append(window.localStorage.rdc_list_province);
-
+                $("#ul_provinceid").append(window.localStorage.rdc_list_province);
+                $("#ul_provinceid li").bind('click', changeProvince);
             }
         });
     }
@@ -332,6 +361,7 @@ function inithostfilter() {
 		hasCar : null,
 		keyword : null,
 		provinceid : null,
+		cityid : null,
 		goodSaveType : null,
 		managetype : null,
 		storagetempertype : null,
@@ -373,6 +403,7 @@ function initdata(isread) {
         $("#ul_hasCar li").bind('click', getHasCar);
         $("#ul_rdcsqm li").bind('click', getRdcSqm);
         $("#ul_provinceid").bind('change', changeProvince);
+        $("#ul_city").bind('change', changecity);
         $("#search").bind('click', getKeyword);
         $("#ul_keyword").keydown(function () {
             if (event.keyCode == "13") {

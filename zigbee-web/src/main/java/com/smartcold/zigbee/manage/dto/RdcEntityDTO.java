@@ -31,8 +31,10 @@ public class RdcEntityDTO {
     private String coldtype;
 
     private int provinceid;
+    private String provincename;
 
     private int cityid;
+    private String cityname;
 
     private String contact;
 
@@ -379,5 +381,21 @@ public class RdcEntityDTO {
 
     public void setCollectType(int collectType) {
         this.collectType = collectType;
+    }
+
+    public String getProvincename() {
+        return provincename;
+    }
+
+    public void setProvincename(String provincename) {
+        this.provincename = provincename;
+    }
+
+    public String getCityname() {
+        return cityname;
+    }
+
+    public void setCityname(String cityname) {
+        this.cityname = cityname;
     }
 }

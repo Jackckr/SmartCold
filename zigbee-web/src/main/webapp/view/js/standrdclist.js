@@ -37,7 +37,7 @@ function getRdcRentList() {
                 }
               /*  if (window.lkuser && window.lkuser.vipType > 0) {*/
                     rdcRentInfo.push('<a onclick="realTimeTem(', rdcRent.id, ',\'', rdcRent.name, '\')">点击可查看实时库温</a></div><div class="rdcArea"><span>总面积', rdcRent.sqm, '㎡</span>|<span>', tempTypeStr, '</span><span>', manageTypeStr, '</span></div>',
-                        '<div class="rdcPosition"><b><i class="iconfont">&#xe648;</i>', rdcRent.address, '</b></div></div><div class="rdcPrice">');
+                        '<div class="rdcPosition"><b><i class="iconfont">&#xe648;</i>',rdcRent.provincename,'-',rdcRent.cityname, '</b></div></div><div class="rdcPrice">');
                /* } else {
                     rdcRentInfo.push('</div><div class="rdcArea"><span>总面积', rdcRent.sqm, '㎡</span>|<span>', tempTypeStr, '</span><span>', manageTypeStr, '</span></div>',
                         '<div class="rdcPosition"><b><i class="iconfont">&#xe648;</i>', rdcRent.address, '</b></div></div><div class="rdcPrice">');

@@ -1,12 +1,17 @@
 /**
- * 求租冷库列表
+ * 出租求租冷库列表
  */
 $().ready(function () {
     var maxSize = 10;
     var isLoadRB = false;
     var ul_select = $("#ul_rdcsL_list");
     var rdcid = getUrlParam("rdcid");
-    var type = 1, totalPages = currentPage = 1;  // 当前页//rental_type:出租类型:1:出租 2:求租
+    var type = $("#rdcType").val(), totalPages = currentPage = 1;  // 当前页//rental_type:出租类型:1:出租 2:求租
+    var match={area:'',mantype:'',temtype:'',sqm:''};
+    var myFilter=null;
+    if(localStorage.match) {
+        myFilter = JSON.parse(localStorage.match);
+    }
     $(".transion").click(function () {
         $(".one").hide();
         $(".two").show();
@@ -14,10 +19,8 @@ $().ready(function () {
     $(".cancel").click(function () {
         $(".one").show();
         $(".two").hide();
-        currentPage = 1;
-        ul_select.empty();
-        $("#searchDara_div input").val(null);
-        getPageData();
+        localStorage.removeItem('match');
+        window.location.reload();
     });
     gosharedile = function (sharid) {//共享详情
         window.location.href = "storehousedetail.html?id=" + sharid;
@@ -33,11 +36,6 @@ $().ready(function () {
             $('.listcontain').hide();
             $(this).hide();
         });
-        /*$("#searchDara_div i").click(function (e) {//搜索
-         currentPage = 1;
-         ul_select.empty();
-         getPageData();
-         });*/
         $(window).scroll(function () {
             var scrollTop = $(this).scrollTop();
             var scrollHeight = $(document).height();
@@ -70,6 +68,11 @@ $().ready(function () {
             $("#ul_hascar_list li").click(function (event) {
                 addfilter(this);
             });
+            if(myFilter&&myFilter.provinceid) {
+                match.area=data[myFilter.provinceid-1].provinceName;
+                $("#filter_section").children('.droplist').eq(0).find('span').html(match.area);
+                $("#ul_hascar_list li").eq(myFilter.provinceid).addClass('active').siblings().removeClass('active');
+            }
         });
         $.post(ER.root + "/i/ShareRdcController/getSEFilterData", function (data) {
             if (data.success) {
@@ -85,6 +88,28 @@ $().ready(function () {
                 $("#ul_mtty_list li,#ul_stty_list li,#ul_sqm_list li").click(function (event) {
                     addfilter(this);
                 });
+                if(myFilter&&myFilter.managetype) {
+                    match.mantype=data.entity.mt[myFilter.managetype-1].type;
+                    $("#filter_section").children('.droplist').eq(1).find('span').html(match.mantype);
+                    $("#ul_mtty_list li").eq(myFilter.managetype).addClass('active').siblings().removeClass('active');
+                }
+                if(myFilter&&myFilter.storagetempertype) {
+                    match.temtype=data.entity.st[myFilter.storagetempertype-1].type;
+                    $("#filter_section").children('.droplist').eq(2).find('span').html(match.temtype);
+                    $("#ul_stty_list li").eq(myFilter.storagetempertype).addClass('active').siblings().removeClass('active');
+                }
+                if(myFilter&&myFilter.sqm) {
+                    var x=null;
+                    $("#filter_section").children('.droplist').eq(3).find('span').html(myFilter.sqm);
+                    if(myFilter.sqm=='1000以下'){x=1}
+                    else if(myFilter.sqm=='1000~3000'){x=2}
+                    else if(myFilter.sqm=='3000~6000'){x=3}
+                    else if(myFilter.sqm=='6000~12000'){x=4}
+                    else if(myFilter.sqm=='12000~20000'){x=5}
+                    else if(myFilter.sqm=='20000以上'){x=6}
+                    else{x=null}
+                    $("#ul_sqm_list li").eq(x).addClass('active').siblings().removeClass('active');
+                }
             }
         });
     };
@@ -100,7 +125,7 @@ $().ready(function () {
             uid = window.user.id;
         }
         var _options = {
-            typeCode: 1,
+            typeCode: type,
             dataType: 3,
             rdcID: rdcid,
             sqm: sqm,
@@ -112,6 +137,10 @@ $().ready(function () {
         };
         var _filter = {pageNum: pageNum, pageSize: pageSize};
         jQuery.extend(_filter, _options);
+        if(sqm||smty||sety||adds||keyword){
+            localStorage.match=JSON.stringify(_filter);
+            myFilter=_filter;
+        };
         return _filter;
     };
     getSoll = function () {
@@ -124,52 +153,103 @@ $().ready(function () {
         });
     };
     function gethtml(rdc) {
-        var approve = ''
-        if (rdc.audit == 2) {
-            if(rdc.rdcID==1878){
-                approve = '<i class="iconfont green">&#xe61f;</i><i class="green">已通过</i>'
-            }else{
+        if(type==1){
+            var approve = ''
+            if (rdc.audit == 2) {
+                if(rdc.rdcID==1878){
+                    approve = '<i class="iconfont green">&#xe61f;</i><i class="green">已通过</i>'
+                }else{
+                    if (rdc.istemperaturestandard == 1) {
+                        approve = '<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
+                    } else {
+                        approve = '<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i>'
+                    }
+                }
+            } else if (rdc.audit != 2) {
                 if (rdc.istemperaturestandard == 1) {
-                    approve = '<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
+                    approve = '<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
                 } else {
-                    approve = '<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i>'
+                    approve = '<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i>';
                 }
             }
-        } else if (rdc.audit != 2) {
-            if (rdc.istemperaturestandard == 1) {
-                approve = '<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
-            } else {
-                approve = '<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i>';
+            if (rdc.rdcSqm == undefined) {
+                rdc.rdcSqm = rdc.sqm;
             }
+            var collectWords = '<a class="fr noCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe605;</i><em>收藏</em></a>';
+            if (rdc.collectType == 1) {
+                collectWords = '<a class="fr hasCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe60c;</i><em>已收藏</em></a>';
+            }
+            var prices = null;
+            if (rdc.unitPrice == undefined || rdc.unitPrice == 0) {
+                prices = '面议';
+            }else if(rdc.unit1&&rdc.unit2&&rdc.unit1.trim()!=""&&rdc.unit2.trim()!=""){
+                prices=rdc.unitPrice+'<br><span>元/'+rdc.unit1+'/'+rdc.unit2+'</span>';
+            }else {
+                prices = rdc.unitPrice + '<br><span>元/天/㎡</span>';
+            }
+            var loseEffice = '';
+            if (rdc.name == null || rdc.name == '' || rdc.name == 'undefined') {
+                loseEffice = '<i class="iconfont loseEffice">&#xe667;</i>';
+            }
+            var score = [
+                '<li class="imgCell"><a href="storehousedetail.html?id=' + rdc.id + '"  onclick="getSoll()">' + loseEffice + '<span><img src="' + rdc.logo + '" alt=""></span><div>' +
+                '<p class="ellipsis">' + rdc.title + '</p><em>信息完整度<i class="blue">' + rdc.infoIntegrity + '%</i></em><p class="position omg">' + approve + '</p>' +
+                '<p class="grab orange">' + prices + '</p></div><div class="flex"><div class="item"><h4>' + rdc.rdcSqm + '㎡</h4>' +
+                '<p>总面积</p></div><div class="item"><h4>' + rdc.sqm + '㎡</h4><p>可租面积</p></div><div class="item"><h4>' + rdc.provincename+'-'+rdc.cityname + '</h4><p></p></div></div></a>' +
+                '<div class="btnFn clearfix"><a href="storehousedetail.html?id=' + rdc.id + '" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>' +
+                collectWords + '<a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'
+            ];
+            return score.join("");
+        }else{
+            var oStart = formatTime.mseconds(rdc.validStartTime);
+            var oEnd = formatTime.mseconds(rdc.validEndTime);
+            var today = new Date().getTime();
+            var validEndTime = formatTime.standTime(rdc.validEndTime).getFullYear() + '-' +
+                (formatTime.standTime(rdc.validEndTime).getMonth() + 1 < 10 ? '0' + (1 + formatTime.standTime(rdc.validEndTime).getMonth()) : formatTime.standTime(rdc.validEndTime).getMonth() + 1)
+                + '-' + formatTime.standTime(rdc.validEndTime).getDate();
+            var deadline = oEnd - oStart;
+            var days = deadline / 1000 / 60 / 60 / 24;
+            var daysRound = Math.floor(days);//租期
+            var showDate = Math.floor((today - oStart) / 1000 / 60 / 60 / 24);
+            var showTime = null;
+            if (showDate >= 30) {
+                showTime = Math.floor(showDate / 30) + '个月前发布';
+            } else {
+                if (showDate > 1) {
+                    showTime = showDate + '天前发布';
+                } else {
+                    showTime = '刚刚发布';
+                }
+            }
+            var usefulDate = rentDate[rdc.rentdate];
+            if (rdc.rentdate == undefined || rdc.rentdate == null || rdc.rentdate == 0) {
+                if (daysRound < 30) {
+                    usefulDate = daysRound + 1 + '天'
+                } else {
+                    if (daysRound / 30 > 12) {
+                        usefulDate = (daysRound / 30 / 12).toFixed(1) + '年'
+                    } else {
+                        usefulDate = (daysRound / 30).toFixed(1) + '个月'
+                    }
+                }
+            }
+            var collectWords = '<a class="fr noCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe605;</i><em>收藏</em></a>';
+            if (rdc.collectType == 1) {
+                collectWords = '<a class="fr hasCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe60c;</i><em>已收藏</em></a>';
+            }
+            if(!rdc.codeLave4){rdc.codeLave4='暂无信息'}
+
+            var score = [
+                '<li class="imgCell"><a href="storehousedetail.html?id=' + rdc.id + '" onclick="getSoll()"><span>求租冷库</span><div>' +
+                '<p class="ellipsis">' + rdc.title + '</p><p class="position omg orange"><i class="iconfont">&#xe673;</i>' + rdc.sqm + '㎡</p><span class="grab green">[' + showTime + ']</span>' +
+                '</div><div class="flex"><div class="item"><h4>' + usefulDate + '</h4>' +
+                '<p>租期</p></div><div class="item"><h4>' + validEndTime + '</h4><p>报价截止日</p>' +
+                '</div><div class="item"><h4 class="omg">' +rdc.codeLave4+ '</h4><p>存放产品</p></div></div></a>' +
+                '<div class="btnFn clearfix"><a href="storehousedetail.html?id=' + rdc.id + '" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>' +
+                collectWords + '<a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'
+            ];
+            return score.join("");
         }
-        if (rdc.rdcSqm == undefined) {
-            rdc.rdcSqm = rdc.sqm;
-        }
-        var collectWords = '<a class="fr noCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe605;</i><em>收藏</em></a>';
-        if (rdc.collectType == 1) {
-            collectWords = '<a class="fr hasCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe60c;</i><em>已收藏</em></a>';
-        }
-        var prices = null;
-        if (rdc.unitPrice == undefined || rdc.unitPrice == 0) {
-            prices = '面议';
-        }else if(rdc.unit1&&rdc.unit2&&rdc.unit1.trim()!=""&&rdc.unit2.trim()!=""){
-            prices=rdc.unitPrice+'<br><span>元/'+rdc.unit1+'/'+rdc.unit2+'</span>';
-        }else {
-            prices = rdc.unitPrice + '<br><span>元/天/㎡</span>';
-        }
-        var loseEffice = '';
-        if (rdc.name == null || rdc.name == '' || rdc.name == 'undefined') {
-            loseEffice = '<i class="iconfont loseEffice">&#xe667;</i>';
-        }
-        var score = [
-            '<li class="imgCell"><a href="storehousedetail.html?id=' + rdc.id + '"  onclick="getSoll()">' + loseEffice + '<span><img src="' + rdc.logo + '" alt=""></span><div>' +
-            '<p class="ellipsis">' + rdc.title + '</p><em>信息完整度<i class="blue">' + rdc.infoIntegrity + '%</i></em><p class="position omg">' + approve + '</p>' +
-            '<p class="grab orange">' + prices + '</p></div><div class="flex"><div class="item"><h4>' + rdc.rdcSqm + '㎡</h4>' +
-            '<p>总面积</p></div><div class="item"><h4>' + rdc.sqm + '㎡</h4><p>可租面积</p></div><div class="item"><h4>' + rdc.detlAddress + '</h4><p></p></div></div></a>' +
-            '<div class="btnFn clearfix"><a href="storehousedetail.html?id=' + rdc.id + '" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>' +
-            collectWords + '<a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'
-        ];
-        return score.join("");
     }
 
     collect = function (ops, id) {
@@ -208,7 +288,19 @@ $().ready(function () {
             ul_select.empty();
         }
         isLoadRB = true;
+        if($("#searchDara_div input").val().trim()){
+            $(".one").hide();
+            $(".two").show();
+        }
         var _filter = getFilter(currentPage, maxSize);
+        if(myFilter){
+            _filter=myFilter;
+            if(_filter.keyword){
+                $(".one").hide();
+                $(".two").show();
+                $("#searchDara_div input").val(_filter.keyword);
+            }
+        };
         $.post(ER.root + "/i/ShareRdcController/newGetSERDCList", _filter, function (data) {
             if (data.success && data.data.length > 0) {
                 totalPages = data.totalPages;
@@ -228,6 +320,8 @@ $().ready(function () {
     };
 
     function initData() {//启用无限加载
+        initFilter();
+        initevg();
         if (localStorage.list_cache_storehouse) {
             var cachdata = JSON.parse(localStorage.list_cache_storehouse);
             totalPages = parseInt(cachdata.totalPages);
@@ -237,8 +331,6 @@ $().ready(function () {
         } else {
             getPageData();
         }
-        initFilter();
-        initevg();
 
     };
 

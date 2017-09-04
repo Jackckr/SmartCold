@@ -88,4 +88,8 @@ public interface RdcShareMapper {
 	 SharedInfoEntity getSharedInfoEntity(int rdcId);
 
 	 int delByRdcId(int rdcId);
+
+	 void updateShare(SharedInfoEntity sharedInfoEntity);
+
+	 SharedInfoEntity getById(Integer id);
 }

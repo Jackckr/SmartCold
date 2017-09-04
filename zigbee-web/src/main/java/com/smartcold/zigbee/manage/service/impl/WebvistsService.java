@@ -2,13 +2,14 @@ package com.smartcold.zigbee.manage.service.impl;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.smartcold.zigbee.manage.dao.RdcMapper;
+import com.smartcold.zigbee.manage.dao.RdcShareMapper;
+import com.smartcold.zigbee.manage.entity.RdcEntity;
+import com.smartcold.zigbee.manage.entity.SharedInfoEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,11 @@ import com.smartcold.zigbee.manage.util.StringUtil;
 
 @Service
 public class WebvistsService  {
-	
+
+	@Autowired
+	private RdcMapper rdcMapper;
+	@Autowired
+	private RdcShareMapper shareMapper;
 	private static int release = 0; // -6
 	private static int share = 0; // -3
 	
@@ -38,7 +43,11 @@ public class WebvistsService  {
 	private static int sc360 = 0; // 11
 	private static int news = 0; // 12
 	private static int msg =0; // 13
-    
+
+	public static HashMap<Integer,Integer> shareClickCount=new HashMap<Integer, Integer>();
+
+	public static HashMap<Integer,Integer> rdcClickCount=new HashMap<Integer, Integer>();
+
 	@Autowired
 	private  WebvisitMapper webvisit;
 	public static LinkedList<HashMap<String, Object>> webaccectList = new LinkedList<HashMap<String, Object>>();
@@ -94,12 +103,37 @@ public class WebvistsService  {
 		}
 	}
 
+
+	@Scheduled(cron = "0 0 1 * * ?")
+	private void saveClickCount(){
+		Set<Integer> rdcs = rdcClickCount.keySet();
+		Iterator<Integer> rdcIterator = rdcs.iterator();
+		Set<Integer> shares = shareClickCount.keySet();
+		Iterator<Integer> shareIterator = shares.iterator();
+		if (rdcIterator.hasNext()){
+			Integer rdcId = rdcIterator.next();
+			RdcEntity rdcEntity = new RdcEntity();
+			rdcEntity.setId(rdcId);
+			RdcEntity byId = rdcMapper.getById(rdcId);
+			rdcEntity.setClickcount(rdcClickCount.get(rdcId)+byId.getClickcount());
+			rdcMapper.updateRdc(rdcEntity);
+		}
+		if (shareIterator.hasNext()){
+			Integer shareId = shareIterator.next();
+			SharedInfoEntity sharedInfoEntity = new SharedInfoEntity();
+			sharedInfoEntity.setId(shareId);
+			SharedInfoEntity byId = shareMapper.getById(shareId);
+			sharedInfoEntity.setClickcount(shareClickCount.get(shareId)+byId.getClickcount());
+			shareMapper.updateShare(sharedInfoEntity);
+		}
+	}
+
 	/**
 	 * 
 	 * @param request
 	 */
 	public static void  addHistory(HttpServletRequest request) {
-			String id = request.getSession().getId();
+			/*String id = request.getSession().getId();
 			HashMap<String, Object> aumap=null;
 	        if (AUMap.containsKey(id)) {
 	        	 aumap = AUMap.get(id);
@@ -111,7 +145,7 @@ public class WebvistsService  {
 	        aumap.put("url", request.getServletPath());
 	        aumap.put("uid", getuser(request));
 	        aumap.put("online",SessionListener.getonlineUser());
-	        webaccectList.add(aumap);
+	        webaccectList.add(aumap);*/
 	}
 	
 	
