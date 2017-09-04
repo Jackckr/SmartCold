@@ -68,7 +68,7 @@ public class AdminController extends BaseController {
 			    admin.setAdminpwd(null);
 			    admin.setToken(cookie);
 				request.getSession().setAttribute("admin", admin);
-				return	ResponseData.newSuccess(String.format("token=%s", cookie));
+				return	ResponseData.newSuccess(String.format("systoken=%s", cookie));
 			}
 			return ResponseData.newFailure("用户名或者密码不正确！");
 		} catch (Exception e) {
@@ -104,7 +104,7 @@ public class AdminController extends BaseController {
 				HashMap<String, Object> resdata=new HashMap<String, Object>();
 				resdata.put("user", admin);
 				resdata.put("SID", request.getSession().getId());
-				resdata.put("token", String.format("token=%s", cookie));
+				resdata.put("systoke", String.format("systoke=%s", cookie));
 				resdata.put("sltoken", StringUtil.getToken(admin.getAdminname()));
 				return	ResponseData.newSuccess(resdata);
 			}
@@ -122,7 +122,7 @@ public class AdminController extends BaseController {
 		Cookie[] cookies = request.getCookies();
 		if(cookies==null||cookies.length==0){return true;}
 		for (Cookie cookie : cookies) {
-			if (cookie.getName().equals("token")) {
+			if (cookie.getName().equals("systoke")) {
 				cookieService.deleteCookie(cookie.getValue());
 			}
 		}
@@ -165,7 +165,7 @@ public class AdminController extends BaseController {
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("token")) {
+				if (cookie.getName().equals("systoke")) {
 					CookieEntity effectiveCookie = cookieService
 							.findEffectiveCookie(cookie.getValue());
 					if (effectiveCookie != null) {

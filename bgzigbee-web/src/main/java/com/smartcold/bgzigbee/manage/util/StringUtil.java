@@ -269,7 +269,7 @@ public class StringUtil
 	
 	
 	public  static boolean verifyToken(String token){
-		  return EncodeUtil.encodeByMD5("token"+TimeUtil.getDateHour()).equals(token);
+		  return EncodeUtil.encodeByMD5("admin"+TimeUtil.getDateHour()).equals(token);
 	}
 	public static String  getToken(String token){
 		return EncodeUtil.encodeByMD5(token+TimeUtil.getDateHour());

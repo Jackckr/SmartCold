@@ -230,7 +230,7 @@ $().ready(function () {
                 InitLeftMenu();
             }
         });
-        setInterval(checkuser, 900000);//15分钟检查一次
+        setInterval(checkuser, 300000);//5分钟检查一次
     }else{
         checkuser();
     }

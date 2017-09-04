@@ -1,12 +1,12 @@
 package com.smartcold.zigbee.manage.service.impl;
 
-import com.smartcold.zigbee.manage.entity.UserEntity;
-import com.smartcold.zigbee.manage.service.RedisService;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
+import com.smartcold.zigbee.manage.entity.UserEntity;
+import com.smartcold.zigbee.manage.service.RedisService;
 
 /**
  * Created by qiangzi on 2017/8/29.
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 @CacheConfig(cacheNames = "RedisServiceImpl")
 public class RedisServiceImpl implements RedisService{
     @Override
-    @Cacheable(key="#token")
+    @Cacheable(key="#token" )
     public UserEntity putUserToken(String token, UserEntity userEntity) {
         return userEntity;
     }

@@ -11,7 +11,7 @@ public class ACLAdminNode {
 	int id;
 	String url;
 	String icon;
-	String token;
+//	String token;
 	String menuid;
 	String menuname;
 	private List<ACLAdminNode> child;
@@ -55,13 +55,13 @@ public class ACLAdminNode {
 		this.icon = icon;
 	}
 
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
+//	public String getToken() {
+//		return token;
+//	}
+//
+//	public void setToken(String token) {
+//		this.token = token;
+//	}
 
 	public String getMenuid() {
 		return menuid;
