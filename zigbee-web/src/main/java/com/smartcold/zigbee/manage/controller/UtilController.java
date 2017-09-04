@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,6 +28,8 @@ public class UtilController   {
 	
 	@Autowired
 	private CommonMapper commonMapper;
+	@Autowired
+	private RedisCacheManager redisCacheManager;
 	
 	
 	
@@ -47,8 +50,7 @@ public class UtilController   {
 	@RequestMapping(value = "/removeCahe")
 	@ResponseBody
 	public void removeCahe(HttpServletRequest request,String key, Integer type,Integer oid) {
-		
-		
+	  System.err.println(request.getAttribute("apikey"));	
 	}
 	
 	

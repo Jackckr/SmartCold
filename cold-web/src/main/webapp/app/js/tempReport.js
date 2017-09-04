@@ -108,7 +108,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	 *1.3 数据封装
 	 */
 	$scope.initTempAxis=function(data){
-	        var datumTemp =  parseFloat(data.startTemperature) + 0.5 * parseFloat(data.tempdiff), datumTemp1 =  datumTemp+2, datumTemp2 = datumTemp-2;//基准温度
+	        var datumTemp =  parseFloat(data.startTemperature) + 0.5 * parseFloat(data.tempdiff), datumTemp1 =  parseFloat(data.startTemperature) + parseFloat(data.tempdiff), datumTemp2 = data.startTemperature;//基准温度
 	        $scope.cuttstorage.datumTemp=datumTemp;
 	        var yData = [], tempMap = data.tempMap,temp=null,minval=null,maxval=null,sumvl=null, anysis=[];
 	    	var i= 0,tempList=[],newdata = [],vo=cuttime=lasttime=null;

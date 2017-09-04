@@ -46,7 +46,12 @@ function ckuid(type) {
         }
     }
 }
-
+$.ajax({
+    url: '/i/admin/logout', type: 'GET', success: function (data) {
+        sysuser = undefined;
+        window.sessionStorage.clear();
+    }
+});
 function login() {
     var adds = "127.0.0.1  本地登录", name = $("#userId"), password = $("#upassword");
     if (remote_ip_info != null && remote_ip_info != "") { adds = $("#keleyivisitorip").html() + " " + remote_ip_info["province"] + "省" + remote_ip_info["city"] + "市";} $("#uip").val(adds);

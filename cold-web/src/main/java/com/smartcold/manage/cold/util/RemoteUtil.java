@@ -144,6 +144,22 @@ public class RemoteUtil {
          }
          return result;
      }
+     
+     private static URLConnection  getURLConnection(String url,boolean ispost) throws IOException {
+    	 URL realUrl = new URL(url);
+         URLConnection conn = realUrl.openConnection();
+         // 设置通用的请求属性
+         conn.setRequestProperty("accept", "*/*");
+         conn.setRequestProperty("connection", "Keep-Alive");
+         conn.setRequestProperty("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
+         // 发送POST请求必须设置如下两行
+         if(ispost){
+          conn.setDoOutput(true);
+          conn.setDoInput(true);
+         }
+         return conn;
+         
+     }
 
      /**
       * 向指定 URL 发送POST方法的请求
@@ -159,17 +175,8 @@ public class RemoteUtil {
          BufferedReader in = null;
          String result = "";
          try {
-             URL realUrl = new URL(url);
              // 打开和URL之间的连接
-             URLConnection conn = realUrl.openConnection();
-             // 设置通用的请求属性
-             conn.setRequestProperty("accept", "*/*");
-             conn.setRequestProperty("connection", "Keep-Alive");
-             conn.setRequestProperty("user-agent",
-                     "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)");
-             // 发送POST请求必须设置如下两行
-             conn.setDoOutput(true);
-             conn.setDoInput(true);
+             URLConnection conn =getURLConnection(url,true);
              // 获取URLConnection对象对应的输出流
              out = new PrintWriter(conn.getOutputStream());
              // 发送请求参数
