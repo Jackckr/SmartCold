@@ -104,7 +104,7 @@
 			</ul>
 		</div>
  	</div>
-	<div id="print" ng-show="!isloaderr">
+	<div id="print" ng-show="!isloaderr" class="temP">
 	  <div id="page1" >
 	    <!-- 报表标题  -->
 	    <div class="print_title newlayout">
@@ -152,7 +152,7 @@
 	    			<div id="temperatureChart" class="chartHight" ng-show="isnotprint"></div>
 	    			<div id="temperatureChart_img"  ng-show="!isnotprint"></div>
 	    		</div>
-	    		<div> 
+	    		<div style="margin-bottom: 30px;">
 	    		        {{cuttstorage.name}}基准温度：<span style="color:red;">{{cuttstorage.datumTemp}}</span> ℃     
 	    		                            最高温度：<span style="color:#058DC7;">{{anysisdata.asisdata.maxval}} </span>℃
 	    		                            最低温度:<span style="color:#50B432;">{{anysisdata.asisdata.minval}} </span>℃
@@ -161,30 +161,25 @@
 	    </div>
 	    <!-- 超温时间及次数统计表 -->
 	    <div class="print_part chart_gap">
-	    	<p class="text-left">超温时长及次数统计表</p>
-	    	<div>
-	    		<div class="chartPart">
-	    			<div id="tempovertime" class="chartHight" ng-show="isnotprint"></div>
-	    			<div id="tempovertime_img"  ng-show="!isnotprint"></div>
-	    	     	<span class="warnmsgs">{{titmode[reportType]}} 超温总时长：<er>{{sumDatavalue[0][1]}}</er>分钟      超温总次数：<er>{{sumDatavalue[0][0]}} </er>次  </span>
-	    		</div>
-	    	</div>
-	    </div>
+	    	<!--<p class="text-left">超温时长及次数统计表</p>-->
+			<div class="chartPart">
+				<div id="tempovertime" class="chartHight" ng-show="isnotprint"></div>
+				<div id="tempovertime_img"  ng-show="!isnotprint"></div>
+			</div>
+			<div style="margin-bottom: 30px;">{{titmode[reportType]}} 超温总时长：<er>{{sumDatavalue[0][1]}}</er>分钟      超温总次数：<er>{{sumDatavalue[0][0]}} </er>次  </div>
 	   </div>
 	   <div id="page2">
 	    <!-- 超温时间及次数统计表 -->
 	    <div class="print_part chart_gap">
-	    	<p class="text-left">超温报警时长及次数统计表</p>
-	    	<div>
-	    		<div class="chartPart">
-	    			<div id="tempwarning" class="chartHight" ng-show="isnotprint"></div>
-	    			<div id="tempwarning_img"  ng-show="!isnotprint"></div>
-	    		</div>
-	    	</div>
+	    	<!--<p class="text-left">超温报警时长及次数统计表</p>-->
+			<div class="chartPart">
+				<div id="tempwarning" class="chartHight" ng-show="isnotprint"></div>
+				<div id="tempwarning_img"  ng-show="!isnotprint"></div>
+			</div>
 	    </div>
 		<div class="box ">
 			<div class="box-header with-border">
-				<h3 class="box-title">{{titmode[reportType]}}温度超标报警明细</h3>
+				<h3 class="box-title" style="font-size: 16px">{{titmode[reportType]}}温度超标报警明细</h3>
 				<div class="box-tools pull-right">
 					<button class="btn btn-box-tool" data-widget="collapse">
 						<i class="fa fa-minus"></i>
