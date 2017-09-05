@@ -6,6 +6,8 @@ body{
 	height: 100%;
     background: #F4F8FB;
 }
+.orange{
+	color: #f80;}
 .login{
 	margin-top: 2rem;
     padding: 0 0.9rem;
