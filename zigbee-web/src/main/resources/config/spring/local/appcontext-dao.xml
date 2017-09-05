@@ -38,7 +38,7 @@
 	</bean>
 	<bean id="cacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
 	   <constructor-arg index="0" ref="redisTemplate"></constructor-arg>
-		<property name="defaultExpiration" value="1800"></property>
+		<property name="defaultExpiration" value="21600"></property>
 	   <property name="expires">
 			<map>
 				<entry key="getSERdc1_null" value="0"></entry>

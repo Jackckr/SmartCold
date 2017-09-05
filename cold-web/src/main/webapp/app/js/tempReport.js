@@ -160,8 +160,8 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 			 chart: { renderTo: 'temperatureChart', zoomType: 'x'},
             title: { text: ''  },
             series:yData,
-            yAxis: {  title: {  text: '温度'  }, },
-            xAxis: { type: 'datetime', 	minRange:minRange ,labels: {  formatter: function() {   return  Highcharts.dateFormat(fm, this.value);  }  }  },//minRange:  86400000--间隔为每天显示, tickPixelInterval: 400 , 
+            yAxis: {  title: {  text: '温度'  }},
+            xAxis: { type: 'datetime',minRange:minRange ,labels: {  formatter: function() {   return  Highcharts.dateFormat(fm, this.value);  }  }  },//minRange:  86400000--间隔为每天显示, tickPixelInterval: 400 ,
             xDateFormat: '%Y-%m-%d',
             tooltip: { formatter: function () {  return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' + Highcharts.numberFormat(this.y, 2)+" ℃"; } },
     	    legend: {enabled: false },
@@ -193,10 +193,10 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	 $scope.dwoverTempAndCount=function(xAxis,count,time){
 		 $scope.charArray[1]= $('#tempovertime').highcharts({
 		        chart: { zoomType: 'x' },
-		        title: { text: '' },
+			    title: {text: '超温时长及次数统计表',align: 'left',x: 0,style:{fontWeight:700,fontSize:16}},
 		        subtitle: { text: '' },
 		        credits: { enabled: false},
-		        xAxis: [{ categories: xAxis, crosshair: true }],
+		        xAxis: [{ categories: xAxis, crosshair: true ,tickInterval: 3}],
 		        yAxis: [{
 		            labels: {  format: '{value}次' },
 		            title: { text: '超温次数(次）'  },
@@ -207,7 +207,8 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 		            labels: { format: '{value}分钟' }
 		        }],
 		        tooltip: {  shared: true },
-		        series: 
+			 	legend:{align:'right',verticalAlign: 'top',x: 0,y: -10},
+		        series:
 		         [{ name: '超温时长',type: 'column',yAxis: 1, data: time, tooltip: {  valueSuffix: '分钟' } ,min:0},
 		          { name: '超温次数', type: 'spline', data: count,tooltip: {  valueSuffix: ' 次'} }]
 		    });
@@ -243,9 +244,10 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 		$scope.cuttstorage.l1tailcount=l1tailcount;
 //		$scope.cuttstorage.score=score<0?0:score;
 		 $scope.charArray[2]= 	$('#tempwarning').highcharts({
-	        title: { text: null},
+	        title: { text: '超温报警时长及次数统计表',align: 'left',x: 0,style:{fontWeight:700,fontSize:16}},
+             legend:{align:'right',verticalAlign: 'top',x: 0,y: -10},
 	        chart: {  type: 'column' },
-	        xAxis: [{  categories: xdata, crosshair: true }],
+	        xAxis: [{  categories: xdata, crosshair: true,tickInterval: 3 }],
 	        yAxis: [{ title: { text: '报警次数 (次)' }, opposite: true },{ title: { text: '报警时长(m)', } } ],
 	        tooltip: { shared: true },
 	        credits: { enabled: false },
