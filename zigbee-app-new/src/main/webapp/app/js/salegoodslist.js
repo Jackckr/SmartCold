@@ -54,15 +54,26 @@ $().ready(function () {
             ;
         });
     };
-    addfilter = function (em) {
+    addfilter = function (em,city) {
         var $this = $(em).html();
+        if(city){
+            localStorage.cityShow=$this;
+        }
         $(em).addClass('active').siblings().removeClass('active').parent().parent().hide();
         $(em).parent().parent().siblings('a').children('span').html($this);
         $(".backDrop").hide();
         $(em).parent().parent().siblings().removeClass('current').children('i').removeClass('current').html('&#xe62d;');
         currentPage = 1;
         ul_select.empty();
+        if($(em).attr('data-val')){
+            myFilter.provinceid=myFilter.cityid='';
+            localStorage.removeItem('cityShow');
+        }
         getPageData();
+    };
+    backfilter=function () {
+        $("#ul_city_list").hide().prev('ul').show();
+        $("#ul_city_list li.active").attr("value",'');
     };
     initFilter = function () {
         var gdlist = [], prove = [];
@@ -72,11 +83,27 @@ $().ready(function () {
             });
             $("#ul_hascar_list").append(prove.join(""));
             $("#ul_hascar_list li").click(function (event) {
-                addfilter(this);
+                var provinceid=$(this).attr("value");
+                if(provinceid){
+                    $(this).addClass('active').siblings().removeClass('active');
+                    $("#ul_city_list").show().prev('ul').hide();
+                    $.ajax({
+                        url: ER.root + "/i/city/findCitysByProvinceId",data:{provinceID:provinceid},type: "get", success: function (data) {
+                            var cityArr = ['<li class="fl backLi" value="" onclick="backfilter()">返回</li><li class="fl active" value="" onclick="addfilter(this)">全部</li>'];
+                            data.forEach(function (val, index) {
+                                cityArr.push('<li  onclick="addfilter(this,1)" class="fl omg" value="' + val.cityID + '">' + val.cityName + '</li>');
+                            });
+                            window.localStorage.match_list_city = cityArr.join('');
+                            $("#ul_city_list").empty().show().append(window.localStorage.match_list_city);
+                        }
+                    });
+                }else{
+                    addfilter(this);
+                }
             });
             if(myFilter&&myFilter.provinceid) {
-                match.area=data[myFilter.provinceid-1].provinceName;
-                $("#filter_section").children('.droplist').eq(0).find('span').html(match.area);
+               // match.area=data[myFilter.provinceid-1].provinceName;
+                $("#filter_section").children('.droplist').eq(0).find('span').html(localStorage.cityShow);
                 $("#ul_hascar_list li").eq(myFilter.provinceid).addClass('active').siblings().removeClass('active');
             }
         });
@@ -102,12 +129,14 @@ $().ready(function () {
         var adds = $("#ul_hascar_list li.active").attr("value");////地区
         var gdty = $("#ul_goodtype_list li.active").attr("value");//商品类型
         var keyword = $("#searchDara_div input").val().trim();////关键字搜索
+        var citys = $("#ul_city_list li.active").attr("value");////地区
         var uid = null;
         if (window.user) {
             uid = window.user.id;
         }
         var _options = {
             provinceid: adds,
+            cityid:citys,
             goodtype: gdty,
             typeCode: typeCode,
             dataType: 1,

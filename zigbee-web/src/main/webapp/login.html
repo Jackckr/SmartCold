@@ -131,12 +131,6 @@
         //自定义验证规则
         form.verify({
             userName: function(value, item){ //value：表单的值、item：表单的DOM对象
-                if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)){
-                    return '用户名不能为空并且不能有特殊字符';
-                }
-                if(!/^[a-zA-Z0-9][a-zA-Z0-9]{2,23}$/.test(value)){
-                    return '用户名不能包含中文和特殊字符，长度不得低于3位~'
-                }
                 if(/(^\_)|(\__)|(\_+$)/.test(value)){
                     return '用户名首尾不能出现下划线\'_\'';
                 }

@@ -8,6 +8,7 @@ $().ready(function () {
     localStorage.removeItem('moreId');
     localStorage.removeItem('match');
     localStorage.removeItem('RDC');
+    localStorage.removeItem('cityShow');
     var province = null, sccsize = 0, shear = false;
     if (window.localStorage.appLocalCity) {
         document.getElementById("city").innerHTML = JSON.parse(window.localStorage.appLocalCity).cityName;
