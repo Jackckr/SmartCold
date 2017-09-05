@@ -155,7 +155,9 @@ public class UserController extends BaseController {
 		if(cookies!=null&&cookies.length>0){
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("token")) {
+					UserEntity userEntity = redisService.putUserToken(cookie.getValue(), null);
 					redisService.delUserToken(cookie.getValue());
+					redisService.delUserId(userEntity.getId());
 				}
 			}
 		}

@@ -27,6 +27,12 @@ public class RedisServiceImpl implements RedisService{
     }
 
     @Override
+    @CacheEvict(key = "'userId_'+args[0]",value = "RedisServiceImpl")
+    public void delUserId(Integer userId) {
+
+    }
+
+    @Override
     @CacheEvict(value = "ShareRdcController",allEntries = true)
     public void delToAddShare() {
 
