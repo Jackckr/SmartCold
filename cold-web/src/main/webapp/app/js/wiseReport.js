@@ -23,14 +23,15 @@ coldWeb.controller('wiseReport', function( $scope, $rootScope,$stateParams,$http
 	$scope.endTime=baseTools.formatTime(endDate); $scope.startTime= baseTools.formatTime(firstDate); $scope.timeuRange=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
 	//数据模型
 	var mode={url:["/i/coldStorage/findAnalysisByRdcidKeysDate","/i/coldStorage/findDoorSisByRdcidKeyDate"],
+		col:['goodStatus','noGoodStatus'],
 			  val:[[75,120],[2,5],[0.1,0.15],[30,50],[3,5], [25,50], [],[],[5,10,20]],
 			  tmg:[",温控",",温控",",温控",",开门操作",",开门操作",",货物流通情况",",温控",",温控",",温控",],
 			  msg:[["优良","一般","不理想"],["优良","一般","不理想"], ["优良","一般","不理想"],["优良","一般","不理想"],["规范","一般","频繁"],["优良","一般","不理想"],[],[], [0,1,2,3]]};
 	//===================================================================================工具类start==================================================================================
 	var util = {
 			getMsg:function(index,avgval){var vls=mode.val[index];for (var i = 0; i < vls.length; i++) {if(avgval<=vls[i]){ return mode.msg[index][i]; }}return mode.msg[index][mode.msg[index].length-1];},
-			getpieoption:function(title,unit,ldata,sData){return {title :{ text: title,  x:'center', y : 10 },tooltip:{trigger: 'item',formatter: function (obj) {return obj.name +":"+obj.value.toFixed(2)+ unit+' 占比：' + obj.percent + '%';} },legend: {x:'right',orient:'vertical',y: 30,data:ldata}, series : [ {type:'pie',radius : '55%',center: ['50%', '60%'],data:sData, precision: 2, itemStyle: {normal: {label: {show: true, position: 'top',formatter: function (obj) {return obj.name +":"+obj.value.toFixed(2)+ unit+' 占比：' + obj.percent + '%';}}} },}]};},
-			getlineoption:function(title,ldata,xData,seriesdata){return {series : seriesdata, tooltip : { trigger : 'axis' }, grid : { x:40,y2 : 30, width : '88%' ,height:'67%'},legend : { data : ldata, y : 35 },title : { text : title, x : 'center', y : 5 },yAxis : [ { type : 'value', axisLabel : { formatter : '{value}' } } ],xAxis : [ { type : 'category',splitLine:{show:false}, axisLabel : {rotate : '60',interval : 0},data :xData}]};}
+			getpieoption:function(title,unit,ldata,sData){return {title :{ text: title,  x:'left', y : 10 ,textStyle:{fontSize:16}},tooltip:{trigger: 'item',formatter: function (obj) {return obj.name +":"+obj.value.toFixed(2)+ unit+' 占比：' + obj.percent + '%';} },legend: {x:'right',y: 10,data:ldata}, series : [ {type:'pie',radius : '55%',center: ['50%', '60%'],data:sData, precision: 2, itemStyle: {normal: {label: {show: true, position: 'top',formatter: function (obj) {return obj.name +":"+obj.value.toFixed(2)+ unit+' 占比：' + obj.percent + '%';}}} },}]};},
+			getlineoption:function(title,ldata,xData,seriesdata){return {series : seriesdata, tooltip : { trigger : 'axis' }, grid : { x:40,x2:40,y2 : 30, width : '92%' ,height:'67%'},legend : { data : ldata, y : 10 ,x:'right'},title : { text : title, x : 'left', y : 5,textStyle:{fontSize:16} },yAxis : [ { type : 'value', axisLabel : { formatter : '{value}' } } ],xAxis : [ { type : 'category',splitLine:{show:false}, axisLabel : {interval : 2},data :xData}]};}
 	};
 	$scope.toolchart = function(index,url,emid,title,keys,nuit,msge,sunit ){
 		$scope.charresttit[index]=[msge,sunit];
@@ -54,7 +55,6 @@ coldWeb.controller('wiseReport', function( $scope, $rootScope,$stateParams,$http
 					myChart.setOption(util.getlineoption(title, ldata, xData, seriesdata));
 					$scope.charArray[index]=myChart;
 					$scope.charrestmsg[index]=restmsg;
-					
 				}else{
 					$scope.loadindex=11; //$scope.isloaderr=true;
 				}
@@ -169,7 +169,7 @@ coldWeb.controller('wiseReport', function( $scope, $rootScope,$stateParams,$http
     //============================================================================压缩机运行分析==============================================================================
     $scope.initcompruntime=function(){
 			var option6 = {
-					title : { text : '压缩机运行时间', x : 'center', y : 20 },
+					title : { text : '压缩机运行时间', x : 'left', y : 10,textStyle:{fontSize:16} },
 					tooltip : { trigger : 'axis' },
 					xAxis : [ { type : 'category', name:'min',  splitLine:{    show:false   },  axisLabel : { interval : 0 }, data : [ '<5', '5-9', '10-19', '20-29','30-59', '60-119', '120-300', '>300']} ],
 					grid : { x:40, y2 : 110, width : '80%' },
