@@ -178,7 +178,11 @@
                         <td width="25%">名称</td>
                         <td width="25%">{{charresttit[1][0]+'('+charresttit[1][1]+')'}}</td>
                         <td width="50%">分析结论</td></tr>
-                        <tr ng-repeat="obj in charrestmsg[1]"> <td>{{obj.name}}</td><td>{{obj.avgval}}</td><td><span class="statusColor">{{obj.asis}}</span></td></tr>
+                        <tr ng-repeat="obj in charrestmsg[1]"> <td>{{obj.name}}</td><td>{{obj.avgval}}</td>
+							<!--<td><span class="statusColor">{{obj.asis}}</span></td>-->
+							<td ng-if="obj.asis=='不理想'"><span class="statusColor noGoodStatus">{{obj.asis}}</span></td>
+							<td ng-if="obj.asis!='不理想'"><span class="statusColor goodStatus">{{obj.asis}}</span></td>
+						</tr>
                       </table>
 	    		</div>
 	    	</div>
@@ -186,49 +190,51 @@
 	    	
 	    <hr>
 	    <div class="print_part chart_gap">
-	    	<p class="tac w60"><span class="bgBlue">能耗分析</span></p>
-	        <div class="clearfix">
-	    		<div class="chartPart w60">
+	    	<p class="tac"><span class="bgBlue">能耗分析</span></p>
+	       <!-- <div class="clearfix">
+	    		<div class="chartPart w60">-->
+	    		<div class="chartPart">
 	    			<div id="electricId" class="chartHight" ng-show="isnotprint"></div>
 	    			<div id="electricId_img"  ng-show="!isnotprint"></div>
 	    		</div>
-	    		<div class="textPart w40">
+	    		<!--<div class="textPart w40">
 	    		     <p>累计耗电量：{{charressum[9] | number:2}}kw</p>
                      <ul class="w40"> 
     					<li ng-repeat="obj in charrestmsg[9]">
     						<span >{{obj.name}}-累计电耗-{{obj.value  | number:2}}kw 占比：{{obj.value/charressum[9]*100 | number:2}}%</span>
 						</li>
-    				</ul>
-<!--                      <table  class="table"> -->
-<!--                         <tr>  -->
-<!--                         <td width="25%">名称</td> -->
-<!--                         <td width="25%">{{charresttit[9][0]+'('+charresttit[9][1]+')'}}</td> -->
-<!--                         <td width="50%">分析结论</td></tr> -->
-<!--                         <tr ng-repeat="obj in charrestmsg[9]"> <td>{{obj.name}}</td><td>{{obj.avgval}}</td><td>{{obj.name}}</td></tr> -->
-<!--                       </table> -->
-	    		</div>
-	    	</div>
-	    	  <div class="clearfix">
-	    		<div class="chartPart w60">
+    				</ul>-->
+<!--                      <table  class="table">
+                         <tr>
+                         <td width="25%">名称</td>
+                         <td width="25%">{{charresttit[9][0]+'('+charresttit[9][1]+')'}}</td>
+                         <td width="50%">分析结论</td></tr>
+                         <tr ng-repeat="obj in charrestmsg[9]"> <td>{{obj.name}}</td><td>{{obj.avgval}}</td><td>{{obj.name}}</td></tr>
+                       </table> -->
+	    		<!--</div>-->
+	    	<!--</div>-->
+	    	  <!--<div class="clearfix">-->
+	    		<!--<div class="chartPart w60">-->
+	    		<div class="chartPart">
 	    			<div id="waterId" class="chartHight" ng-show="isnotprint"></div>
 	    			<div id="waterId_img"  ng-show="!isnotprint"></div>
 	    		</div>
-	    		<div class="textPart w40">
+	    		<!--<div class="textPart w40">
 	    		   <p>累计耗水量：{{charressum[10] | number:2}}kw</p>
 	    			<ul class="w50">  
 						<li ng-repeat="obj in charrestmsg[10]">
     						<span >{{obj.name}}-累计水耗-{{obj.value | number:2}}t 占比：{{obj.value/charressum[10]*100  | number:2}}%</span>
 						</li>
    				    </ul>
-	    		</div>
-	    	</div>
-	    </div>
+	    		</div>-->
+	    	<!--</div>-->
+	    <!--</div>-->
 	    </div>
 	    <!-- 运管分析部分 -->
 	    <hr>
 	    <div class="print_part chart_gap">
-	    	<p class="tac w60"><span class="bgBlue">运管分析</span></p>
-	    	<div class="clearfix">
+	    	<p class="tac"><span class="bgBlue">运管分析</span></p>
+	    	<!--<div class="clearfix">-->
 	    		<div class="chartPart ">
 	    			<div id="openDoorTimesId" class="chartHight" ng-show="isnotprint" style="height: 450px;"></div>
 	    			<div id="openDoorTimesId_img"  ng-show="!isnotprint"></div>
@@ -242,12 +248,16 @@
                         <td width="25%">名称</td>
                         <td width="25%">{{charresttit[3][0]+'('+charresttit[3][1]+')'}}</td>
                         <td width="50%">分析结论</td></tr>
-							<tr ng-repeat="obj in charrestmsg[3]"> <td>{{obj.name}}</td><td>{{obj.avgval}}</td><td><span class="statusColor">{{obj.asis}}</span></td></tr>
+							<tr ng-repeat="obj in charrestmsg[3]"> <td>{{obj.name}}</td><td>{{obj.avgval}}</td>
+								<!--<td><span class="statusColor">{{obj.asis}}</span></td>-->
+								<td ng-if="obj.asis=='不理想'"><span class="statusColor noGoodStatus">{{obj.asis}}</span></td>
+								<td ng-if="obj.asis!='不理想'"><span class="statusColor goodStatus">{{obj.asis}}</span></td>
+							</tr>
                       </table>
 	    		</div>
-	    	</div>
-	    	<hr>
-	    	<div class="clearfix">
+	    	<!--</div>-->
+	    	<!--<hr>-->
+	    	<!--<div class="clearfix">-->
 	    		<div class="chartPart ">
 	    			<div id="singleOpenDoorId" class="chartHight" ng-show="isnotprint"></div>
 	    			<div id="singleOpenDoorId_img"  ng-show="!isnotprint"></div>
@@ -261,11 +271,15 @@
                         <td width="25%">名称</td>
                         <td width="25%">{{charresttit[4][0]+'('+charresttit[4][1]+')'}}</td>
                         <td width="50%">分析结论</td></tr>
-						   <tr ng-repeat="obj in charrestmsg[4]"> <td>{{obj.name}}</td><td>{{obj.avgval}}</td><td><span class="statusColor">{{obj.asis}}</span></td></tr>
+						   <tr ng-repeat="obj in charrestmsg[4]"> <td>{{obj.name}}</td><td>{{obj.avgval}}</td>
+							   <!--<td><span class="statusColor">{{obj.asis}}</span></td>-->
+							   <td ng-if="obj.asis=='频繁'"><span class="statusColor noGoodStatus">{{obj.asis}}</span></td>
+							   <td ng-if="obj.asis!='频繁'"><span class="statusColor goodStatus">{{obj.asis}}</span></td>
+						   </tr>
                       </table>
 	    		</div>
-	    	</div>
-	    	<hr>
+	    	<!--</div>-->
+	    	<!--<hr>-->
 	    	<div class="clearfix" ng-if="charrestmsg[5].length>0">
 	    		<div class="chartPart ">
 	    			<div id="goodsId" class="chartHight" ng-show="isnotprint"></div>
@@ -288,13 +302,13 @@
 	    <!-- 制冷分析部分 -->
 	    <hr>
 	    <div class="print_part chart_gap">
-	    	<p class="tac w60"><span class="bgBlue">制冷分析</span></p>
-	    	<div class="clearfix partP">
-	    		<div class="chartPart w60">
+	    	<p class="tac"><span class="bgBlue">制冷分析</span></p>
+	    	<div class="partP">
+	    		<div class="chartPart">
 	    			<div id="ysjRunningTimeId" class="chartHight" ng-show="isnotprint"></div>
 	    			<div id="ysjRunningTimeId_img"  ng-show="!isnotprint"></div>
 	    		</div>
-	    		<div class="textPart w40">
+	    		<div class="textPart">
 	    			<p><strong>压缩机运行分析</strong></p>
 	    		</div>
 	    	</div>
@@ -344,11 +358,11 @@
 	     <!-- 告警分析部分 -->
 	    <hr>
 	    <div class="print_part chart_gap">
-	    	<p class="tac w60"><span class="bgBlue">告警及维修服务</span></p>
+	    	<p class="tac"><span class="bgBlue">告警及维修服务</span></p>
 	    	
 	    	<table class="table">
              <tr><td>报警级别</td><td>报警内容</td><td>处理状态</td><td>维修质量</td></tr>
-</table>
+			</table>
 	    	
 <!-- 	    	<div class="clearfix partP"> -->
 <!-- 	    		<div class="chartPart w60"> -->

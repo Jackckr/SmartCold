@@ -495,7 +495,7 @@
     text-align: left;
 }
 .wise .textPart p{
-    border-bottom: 2px solid #d9d9d9;
+    border-bottom: 1px solid #d9d9d9;
     line-height: 2;
 }
 .wise .textPart p strong{
@@ -531,4 +531,16 @@
 }
 .noGoodStatus{
     background: #ff5001;
+}
+.wise .chartPart{
+    position: relative;
+}
+.wise .chartPart:before{
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: #d9d9d9;
+    position: absolute;
+    top:30px;
+    left:0;
 }
