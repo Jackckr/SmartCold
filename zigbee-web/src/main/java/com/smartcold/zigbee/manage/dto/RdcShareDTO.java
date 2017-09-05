@@ -13,6 +13,9 @@ import com.smartcold.zigbee.manage.service.FtpService;
  * Create on MaQiang 2016-6-25 09:28:36
  */
 public class RdcShareDTO implements Serializable {
+	/**
+	 * 
+	 */
 	private int id; //
 	private Integer uid;
 	private int rdcID; // 睿库的ID
@@ -72,6 +75,8 @@ public class RdcShareDTO implements Serializable {
 	private int istemperaturestandard;
 	private int rdcscore;
 	private int infoIntegrity;
+	private static final long serialVersionUID = -6523747632098548741L;
+	
 	public int getId() {
 		return id;
 	}
