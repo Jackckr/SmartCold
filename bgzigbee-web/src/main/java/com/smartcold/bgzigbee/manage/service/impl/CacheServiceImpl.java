@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.smartcold.bgzigbee.manage.dao.CookieMapper;
 import com.smartcold.bgzigbee.manage.dao.UserMapper;
-import com.smartcold.bgzigbee.manage.entity.UserEntity;
 import com.smartcold.bgzigbee.manage.service.CacheService;
 import com.smartcold.bgzigbee.manage.util.StringUtil;
+import com.smartcold.zigbee.manage.entity.UserEntity;
 
 /**
  * Created by maqiang34 on 2017/6/19.
@@ -55,9 +55,10 @@ public class CacheServiceImpl implements CacheService{
 			for (String uid : uids) {
 				String token = getDataFromCache("userId_"+uid);
 				if (StringUtil.isnotNull(token)) {
+//					com.smartcold.zigbee.manage.entity.UserEntity
 					Object userObject= getDataFromCache(token);
 					if(userObject!=null){
-						UserEntity user = userMapper.findUserById(Integer.parseInt(uid));
+						com.smartcold.zigbee.manage.entity.UserEntity user = userMapper.findZWUserById(Integer.parseInt(uid));
 						putDataTocache(token, user);
 					}
 				} 

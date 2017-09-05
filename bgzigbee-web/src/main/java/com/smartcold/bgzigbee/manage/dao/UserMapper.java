@@ -21,17 +21,19 @@ public interface UserMapper {
 	void updateUser(UserEntity userEntity);
 	
 	UserEntity findUserById(@Param("id") int id);
-
-	UserEntity findUserByName(@Param("username") String username);
 	
+	UserEntity findUserByName(@Param("username") String username);
 	
 	int changeUserType(@Param("ids")String ids, @Param("type")int type);
 
 	int changeAudit(@Param("userID") int userID,@Param("audit") int audit);
+	
+	com.smartcold.zigbee.manage.entity.UserEntity findZWUserById(@Param("id") int id);
 	
 	UserEntity findUser(@Param("username") String username, @Param("password") String password);
 	
 	Page<UserEntity> findAllUser(@Param("audit")Integer audit,@Param("type")Integer type, @Param("keyword")String keyword);
 	
 	Page<UserEntity> findUserByFilter(@Param("type")Integer type,@Param("audit")Integer audit,@Param("coleam")String coleam,@Param("colval")String colval);
+	
 }

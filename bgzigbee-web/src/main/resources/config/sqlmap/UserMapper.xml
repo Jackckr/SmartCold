@@ -102,5 +102,10 @@
         </set>
         where id = #{id}
     </update>
+    
+    
+     <select id="findZWUserById" parameterType="map" resultType=" com.smartcold.bgzigbee.manage.entity.UserEntity">
+		SELECT u.*,rl.roleid,p1.ProvinceName address,p2.ProvinceName hometown FROM user u LEFT JOIN roleuser rl on u.id=rl.userid  LEFT JOIN provincelist p1 on p1.ProvinceID=u.addressid LEFT JOIN provincelist p2 on p2.ProvinceID=u.hometownid  WHERE u.id = #{id};
+	</select>
 	
 </mapper>
