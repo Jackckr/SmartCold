@@ -109,7 +109,7 @@ var app = angular.module('app', []).controller('findPassword', function ($http, 
                         } else {
                             layer.open({content: data.message, btn: '确定'});
                             $("#mention2").html("修改失败~请稍后重试~");
-                        }
+                        }‘
                     }
                 });
             }else{
