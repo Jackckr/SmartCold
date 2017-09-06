@@ -95,6 +95,7 @@ $().ready(function () {
         ul_select.empty();
         if($(em).attr('data-val')){
             myFilter.provinceid=myFilter.cityid='';
+            localStorage.RDC=JSON.stringify(myFilter);
             localStorage.removeItem('cityShow');
         }
         getPageData();
