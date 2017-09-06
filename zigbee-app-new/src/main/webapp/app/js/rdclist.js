@@ -15,10 +15,13 @@ $().ready(function () {
     }
     if(localStorage.RDC) {
         myFilter = JSON.parse(localStorage.RDC);
+        myFilter.pageNum=1;
     }
     gosharedile = function (sharid) {
         window.location.href = "colddetail.html?id=" + sharid;
     };
+
+
     initevg = function () {
         $(".transion").click(function () {
             $(".one").hide();
@@ -75,14 +78,27 @@ $().ready(function () {
             ;
         });
     };
-    addfilter = function (em) {
+
+    backfilter=function () {
+        $("#ul_city_list").hide().prev('ul').show();
+        $("#ul_city_list li.active").attr("value",'');
+    };
+    addfilter = function (em,city) {
         var $this = $(em).html();
+        if(city){
+            localStorage.cityShow=$this;
+        }
         $(em).addClass('active').siblings().removeClass('active').parent().parent().hide();
         $(em).parent().parent().siblings('a').children('span').html($this);
         $(".backDrop").hide();
         $(em).parent().parent().siblings().removeClass('current').children('i').removeClass('current').html('&#xe62d;');
         currentPage = 1;
         ul_select.empty();
+        if($(em).attr('data-val')){
+            myFilter.provinceid=myFilter.cityid='';
+            localStorage.RDC=JSON.stringify(myFilter);
+            localStorage.removeItem('cityShow');
+        }
         getPageData();
     };
     initFilter = function () {
@@ -92,13 +108,29 @@ $().ready(function () {
                 prove.push("<li value='" + vo.provinceId + "' >" + vo.provinceName + "</li>");
             });
             $("#ul_address_list").append(prove.join(""));
-            $("#ul_address_list li").click(function (event) {
-                addfilter(this);
+            $("#ul_address_list li").click(function () {
+                var provinceid=$(this).attr("value");
+                if(provinceid){
+                    $(this).addClass('active').siblings().removeClass('active');
+                    $("#ul_city_list").show().prev('ul').hide();
+                    $.ajax({
+                        url: ER.root + "/i/city/findCitysByProvinceId",data:{provinceID:provinceid},type: "get", success: function (data) {
+                            var cityArr = ['<li class="fl backLi" value="" onclick="backfilter()">返回</li><li class="fl active" value="" onclick="addfilter(this)">全部</li>'];
+                            data.forEach(function (val, index) {
+                                cityArr.push('<li  onclick="addfilter(this,1)" class="fl omg" value="' + val.cityID + '">' + val.cityName + '</li>');
+                            });
+                            window.localStorage.match_list_city = cityArr.join('');
+                            $("#ul_city_list").empty().show().append(window.localStorage.match_list_city);
+                        }
+                    });
+                }else{
+                    addfilter(this);
+                }
             });
 
             if(myFilter&&myFilter.provinceid) {
-                match.area=data[myFilter.provinceid-1].provinceName;
-                $("#filter_section").children('.droplist').eq(0).find('span').html(match.area);
+               // match.area=data[myFilter.provinceid-1].provinceName;
+                $("#filter_section").children('.droplist').eq(0).find('span').html(localStorage.cityShow);
                 $("#ul_address_list li").eq(myFilter.provinceid).addClass('active').siblings().removeClass('active');
             }
         });
@@ -158,10 +190,11 @@ $().ready(function () {
         var smty = $("#ul_stty_list li.active").attr("value");//温度
         var sety = $("#ul_mtty_list li.active").attr("value");//经营类型
         var adds = $("#ul_address_list li.active").attr("value");////地区
+        var citys = $("#ul_city_list li.active").attr("value");////地区
         var keyword = $("#searchDara_div input").val().trim();////关键字搜索
         var uid=null;
         if(window.user){uid=window.user.id;}
-        var _options = {uid:uid,sqm: sqm, storagetempertype: smty, managetype: sety,audit:audit, provinceid: adds, keyword: keyword};
+        var _options = {uid:uid,sqm: sqm, storagetempertype: smty, managetype: sety,audit:audit, provinceid: adds,cityid:citys, keyword: keyword};
         var _filter = {pageNum: pageNum, pageSize: pageSize};
         jQuery.extend(_filter, _options);
         if(sqm||audit||smty||sety||adds||keyword){
@@ -211,6 +244,8 @@ $().ready(function () {
     };
 
     function gethtml(rdc) {
+        var rdcAddress='';
+        rdc.cityname==0||rdc.cityname==undefined?rdcAddress=rdc.provincename:rdcAddress=rdc.provincename+'-'+rdc.cityname;
         if(localStorage.isStand==0){
             if (rdc.audit == -1) {
                 return false
@@ -240,7 +275,7 @@ $().ready(function () {
                 collectWords = '<a class="fr hasCollect" onclick="collect(this,' + rdc.id + ')"><i class="iconfont">&#xe60c;</i><em>已收藏</em></a>';
             }
             var score = ['<li class="imgCell" ><a href="rdcdetail.html?id=' + rdc.id + '" onclick="getSoll()"><img class="fl" src="' + rdc.logo + '">' +
-            '<div><p class="ellipsis">' + rdc.name + '</p><p class="position omg"><i class="iconfont">&#xe66e;</i>' + rdc.provincename+'-'+rdc.cityname + '</p>' +
+            '<div><p class="ellipsis">' + rdc.name + '</p><p class="position omg"><i class="iconfont">&#xe66e;</i>' + rdcAddress + '</p>' +
             '<div class="star">' + approve + '</div></div></a>' +
             '<div class="btnFn clearfix"><a href="rdcdetail.html?id=' + rdc.id + '" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>' +
             collectWords + '<a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'];
@@ -253,7 +288,7 @@ $().ready(function () {
             }
             var approve='<i class="iconfont orange">&#xe6e9;</i>冷链委温度达标库';
             var score=['<li class="imgCell" ><a href="rdcdetail.html?id='+rdc.id+'" onclick="getSoll()"><span>达标冷库</span>' +
-            '<div style="padding-left: 2.5rem;"><p class="ellipsis">'+rdc.name+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdc.provincename+'-'+rdc.cityname+'</p>' +
+            '<div style="padding-left: 2.5rem;"><p class="ellipsis">'+rdc.name+'</p><p class="position omg"><i class="iconfont">&#xe66e;</i>'+rdcAddress+'</p>' +
             '<div class="star orange">'+approve+'</div></div></a><i class="iconfont tj">&#xe686;</i>' +
             '<div class="btnFn clearfix"><a href="rdcdetail.html?id='+rdc.id+'" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>'+
             collectWords+'<a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'];
@@ -269,6 +304,7 @@ $().ready(function () {
         }
         var _filter = getFilter(currentPage, maxSize);
         if(myFilter){
+
             _filter=myFilter;
             if(_filter.keyword){
                 $(".one").hide();

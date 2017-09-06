@@ -49,13 +49,11 @@ function getRdcRentList() {
                 if (rdcRent.istemperaturestandard == 1) {
                     rdcRentInfo.push('<b class="reachStand"><i class="iconfont">&#xe6e9;</i>冷链委温度达标库</b>');
                 }
-              /*  if (window.lkuser && window.lkuser.vipType > 0) {*/
-                    rdcRentInfo.push('<a onclick="realTimeTem(', rdcRent.id, ',\'', rdcRent.name, '\')">点击可查看实时库温</a></div><div class="rdcArea"><span>总面积', rdcRent.sqm, '㎡</span>|<span>', tempTypeStr, '</span><span>', manageTypeStr, '</span></div>',
-                        '<div class="rdcPosition"><b><i class="iconfont">&#xe648;</i>', rdcRent.provincename,'-',rdcRent.cityname, '</b></div></div><div class="rdcPrice">');
-                /*} else {
-                    rdcRentInfo.push('</div><div class="rdcArea"><span>总面积', rdcRent.sqm, '㎡</span>|<span>', tempTypeStr, '</span><span>', manageTypeStr, '</span></div>',
-                        '<div class="rdcPosition"><b><i class="iconfont">&#xe648;</i>', rdcRent.address, '</b></div></div><div class="rdcPrice">');
-                }*/
+                var rdcAddress='';
+                rdcRent.cityname==0||rdcRent.cityname==undefined?rdcAddress=rdcRent.provincename:rdcAddress=rdcRent.provincename+'-'+rdcRent.cityname;
+
+                rdcRentInfo.push('<a onclick="realTimeTem(', rdcRent.id, ',\'', rdcRent.name, '\')">点击可查看实时库温</a></div><div class="rdcArea"><span>总面积', rdcRent.sqm, '㎡</span>|<span>', tempTypeStr, '</span><span>', manageTypeStr, '</span></div>',
+                    '<div class="rdcPosition"><b><i class="iconfont">&#xe648;</i>', rdcAddress, '</b></div></div><div class="rdcPrice">');
                 var collectWords = '<button class="collect" onclick="collection(this,' + rdcRent.id + ')"><i class="iconfont orange">&#xe634;</i><em>收藏</em></button>';
                 if (rdcRent.collectType == 1) {
                     collectWords = '<button class="collect" onclick="collection(this,' + rdcRent.id + ')"><i class="iconfont orange isLike">&#xe637;</i><em>已收藏</em></button>';
@@ -329,8 +327,8 @@ function init_filter() {
         $("#ul_provinceid").append(window.localStorage.rdc_list_province);
         $("#ul_provinceid li").bind('click', changeProvince);
         var histdata = JSON.stringify(PageUtil.getHashStringArgs());
-        if(histdata.indexOf('cityid')>-1){
-            $("#ul_cityid").append(window.localStorage.rdc_list_city);
+        if(histdata.indexOf('ul_cityid')>-1){
+            $("#ul_cityid").show().append(window.localStorage.rdc_list_city);
             $("#ul_cityid li").bind('click', changecity);
         }
     } else {

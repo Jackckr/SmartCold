@@ -16,13 +16,29 @@ var app = angular.module('app', []).controller('findPassword', function ($http, 
             $("#mention1").html("手机号格式有误~~");
         }
     };
-
+    function isChineseChar(str){
+        var reg = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
+        return reg.test(str);
+    }
     $scope.getVerCode = function () {
-        if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test($scope.username)){
-            layer.open({content: "用户名不能为空并且不能有特殊字符", btn: '确定'});
+        var oname=$scope.username;
+        if(oname==''||oname==undefined){
+            layer.open({
+                content: "用户名不能为空~"
+                ,btn: '确定'
+            });
             return false
-        }else if(!/^[a-zA-Z0-9][a-zA-Z0-9]{2,23}$/.test($scope.username)){
-            layer.open({content: "用户名不能包含中文和特殊字符，长度不得低于3位~", btn: '确定'});
+        }else if(isChineseChar(oname)){
+            layer.open({
+                content: "用户名不能包含中文~"
+                ,btn: '确定'
+            });
+            return false
+        }else if(oname.length>24||oname.length<3){
+            layer.open({
+                content: "用户名长度3~24位~"
+                ,btn: '确定'
+            });
             return false
         }else{
             if(phoneReg.test($scope.telephone)){

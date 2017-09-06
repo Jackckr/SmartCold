@@ -5,6 +5,8 @@ $(function () {
     var num=0;
     var timer;
     localStorage.removeItem('OURL');
+    localStorage.removeItem('match_list_city');
+    localStorage.removeItem('rdc_list_city');
     //封装跳转下一张的功能
     var liLen = $('.imgList li').length-1;
     function nextFn(event) {

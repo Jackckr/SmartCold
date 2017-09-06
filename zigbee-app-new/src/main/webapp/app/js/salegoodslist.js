@@ -14,6 +14,7 @@ $().ready(function () {
     var myFilter=null;
     if(localStorage.match) {
         myFilter = JSON.parse(localStorage.match);
+        myFilter.pageNum=1;
     }
     $(".transion").click(function () {
         $(".one").hide();
@@ -67,6 +68,10 @@ $().ready(function () {
         ul_select.empty();
         if($(em).attr('data-val')){
             myFilter.provinceid=myFilter.cityid='';
+<<<<<<< HEAD
+=======
+            localStorage.RDC=JSON.stringify(myFilter);
+>>>>>>> c5bb1045c0630ee8ec5feb88015f39e3f6a8b856
             localStorage.removeItem('cityShow');
         }
         getPageData();

@@ -11,6 +11,7 @@ $().ready(function () {
     var myFilter=null;
     if(localStorage.match) {
         myFilter = JSON.parse(localStorage.match);
+        myFilter.pageNum=1;
     }
     $(".transion").click(function () {
         $(".one").hide();
@@ -61,6 +62,10 @@ $().ready(function () {
         ul_select.empty();
         if($(em).attr('data-val')){
             myFilter.provinceid=myFilter.cityid='';
+<<<<<<< HEAD
+=======
+            localStorage.RDC=JSON.stringify(myFilter);
+>>>>>>> c5bb1045c0630ee8ec5feb88015f39e3f6a8b856
             localStorage.removeItem('cityShow');
         }
         getPageData();
@@ -216,15 +221,16 @@ $().ready(function () {
             }else {
                 prices = rdc.unitPrice + '<br><span>元/天/㎡</span>';
             }
-            var loseEffice = '';
+            var loseEffice = '',rdcAddress='';
             if (rdc.name == null || rdc.name == '' || rdc.name == 'undefined') {
                 loseEffice = '<i class="iconfont loseEffice">&#xe667;</i>';
             }
+            rdc.cityname==0||rdc.cityname==undefined?rdcAddress=rdc.provincename:rdcAddress=rdc.provincename+'-'+rdc.cityname;
             var score = [
                 '<li class="imgCell"><a href="storehousedetail.html?id=' + rdc.id + '"  onclick="getSoll()">' + loseEffice + '<span><img src="' + rdc.logo + '" alt=""></span><div>' +
                 '<p class="ellipsis">' + rdc.title + '</p><em>信息完整度<i class="blue">' + rdc.infoIntegrity + '%</i></em><p class="position omg">' + approve + '</p>' +
                 '<p class="grab orange">' + prices + '</p></div><div class="flex"><div class="item"><h4>' + rdc.rdcSqm + '㎡</h4>' +
-                '<p>总面积</p></div><div class="item"><h4>' + rdc.sqm + '㎡</h4><p>可租面积</p></div><div class="item"><h4>' + rdc.provincename+'-'+rdc.cityname + '</h4><p></p></div></div></a>' +
+                '<p>总面积</p></div><div class="item"><h4>' + rdc.sqm + '㎡</h4><p>可租面积</p></div><div class="item"><h4>' + rdcAddress + '</h4><p></p></div></div></a>' +
                 '<div class="btnFn clearfix"><a href="storehousedetail.html?id=' + rdc.id + '" class="fl"><i class="iconfont">&#xe65b;</i>查看</a>' +
                 collectWords + '<a class="fr"><i class="iconfont">&#xe66c;</i>咨询</a></div></li>'
             ];
