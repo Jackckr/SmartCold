@@ -7,6 +7,11 @@ $(function () {
     localStorage.removeItem('OURL');
     localStorage.removeItem('match_list_city');
     localStorage.removeItem('rdc_list_city');
+    localStorage.removeItem('rdc_list_ManageType');
+    localStorage.removeItem('rdc_list_TemperType');
+    localStorage.removeItem('rdc_list_StorageType');
+    localStorage.removeItem('rdc_list_province');
+    localStorage.removeItem('rdc_stand_province');
     //封装跳转下一张的功能
     var liLen = $('.imgList li').length-1;
     function nextFn(event) {
