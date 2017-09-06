@@ -44,6 +44,7 @@ angular.module('myapp', []).controller('oregister',function($http, $location, $s
                         ,btn: '确定'
                     });
                     victdata.extname=false;
+                    victdata.usefulName=false;
                     return false
                 }else{
                     victdata.usefulName=false;
