@@ -81,6 +81,7 @@ public class WebvistsService  {
 	 */
 	@Scheduled(cron = "0 0/10 * * * ?")
 	private void saveCount() {
+		System.err.println("=============================A==================================");
 		if (share    != 0) { webvisit.updateWebvisits( -3, share);share = 0;}
 		if (release  != 0) { webvisit.updateWebvisits( -6, release);release = 0;}
 		if (coldlist != 0) { webvisit.updateWebvisits( 1, coldlist);coldlist = 0;}
