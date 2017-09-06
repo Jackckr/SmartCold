@@ -87,6 +87,8 @@ $().ready(function () {
         var $this = $(em).html();
         if(city){
             localStorage.cityShow=$this;
+        }else if($this=='全部'){
+            localStorage.cityShow=$("#ul_address_list li.active").html();
         }
         $(em).addClass('active').siblings().removeClass('active').parent().parent().hide();
         $(em).parent().parent().siblings('a').children('span').html($this);
