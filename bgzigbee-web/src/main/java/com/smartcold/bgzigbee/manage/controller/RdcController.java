@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSONObject;
@@ -242,6 +243,32 @@ public class RdcController {
 	public Object findAllRdcDtos() {
 		return rdcService.findAllRdcDtos();
 	}
+	
+
+	/**
+	 * 导出请求。。。
+	 * 
+	 * @param request
+	 * @param response
+	 * @param fileName
+	 * @param title
+	 * @param sid
+	 * @param index
+	 * @param type
+	 */
+	@RequestMapping(value = "/expedcList")
+	@ResponseBody
+	public void expedcList(HttpServletRequest request, HttpServletResponse response,  String startTime, String endTime,String fileName, String title ) {
+		try {
+		    List<RdcEntity> list = this.rdcDao.findRDCByFilter(startTime, endTime);
+			String mode[][]={{"id","冷库名称","冷库面积","冷库地址","联系人","联系电话","备注","添加时间"},{"id","name","sqm","address","contact","cellphone","commit","addtime"},{"1","20","5","20","5","5","5","10"}};
+			ExportExcelUtil.expExcel(response, fileName, title, mode, list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 
 	@RequestMapping(value = "/findAllManageType", method = RequestMethod.GET)
 	@ResponseBody

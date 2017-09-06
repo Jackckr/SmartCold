@@ -15,7 +15,7 @@
 /* #logtext{height: 100%;width:50%;} */
 
 
-#logtext {
+.logtext {
 width: 100%;
 background: black;
 color: white;
@@ -29,14 +29,19 @@ max-width: 50%;
 </head>
 <body>
    <div id="dtid_ap1" style="width: 80%;display: block;    float: left;">
-	   <textarea id="logtext" ></textarea>
+	   <textarea id="logtext" class="logtext"></textarea>
    </div>
     <div id="dtid_ap2" style="float: right;display: block;border: 1px solid #cccccc;    width: 19%;">
-      <p>apid：<input id="txt_apid" value="400333444"></p>                        
-	  <p>                          频率：<input id="txt_pl">        </p> 
-	  <p>       key：<input   id  ="txt_key" value="点2">                      </p> 
-	  <p>       val：<input   id  ="txt_val" value="10">                      </p> 
-	  <p>       <button onclick="setConfig()">回写</button><button onclick=" $('#logtext').val('')">清屏</button>    </p> 
+			    <div style="border: 1px solid #cccccc;">
+			     <p>apid：<input id="txt_apid" value="400333444"></p>                        
+				  <p>                          频率：<input id="txt_pl">        </p> 
+				  <p>       key：<input   id  ="txt_key" value="点2">                      </p> 
+				  <p>       val：<input   id  ="txt_val" value="10">                      </p> 
+				  <p>       <button onclick="setConfig()">回写</button><button onclick=" $('#logtext').val('')">清屏</button>    </p> 
+			    </div>
+                <div>
+			        <textarea id="updateLog" class="logtext" style="margin: 0px;  height: 500px;"></textarea>
+               </div>
       </div><!--  -->
    <div id="dtid_ap3"></div>
 </body>
@@ -44,11 +49,20 @@ max-width: 50%;
 <script type="text/javascript">
 
 var pl=30,p4=200,iswert=false;
-var qt="{'apID':'400333444','time':'1490583510','infos':[{'tagname':'点4','value':'200'},{'tagname':'CO2机组_低压压力','value':'40'}]}";
-var qt="{'apID':'210333444','time':'1490583510','infos':[{'tagname':'点1','value':'10'},{'tagname':'s力','value':'40'}]}";
+
+
+
+function timegetdata(){
+	getData();
+	updateLog();
+}
+
 
 function getData(){
    $.ajax({type : "GET",url : "i/getQTData",contentType: "application/json; charset=utf-8", data:{apid:$("#txt_apid").val()  },success : function(data) {if(data.success&&data.message!=""){$("#logtext").val($("#logtext").val()+"\r\n"+data.message);}}});
+}
+function updateLog(){
+   $.ajax({type : "GET",url : "i/getQTUPlog",contentType: "application/json; charset=utf-8", data:{apid:$("#txt_apid").val()  },success : function(data) {$("#updateLog").val(data);}});
 }
 function setConfig(){
 	var data={apid:$("#txt_apid").val(),pl:$("#txt_pl").val(),key:$("#txt_key").val(),val:$("#txt_val").val()};
@@ -59,27 +73,27 @@ function setConfig(){
     }});
 }
 function getConfig(apid){
-     $.ajax({type : "POST",url : "i/getQTConfig",data:{apid:apid} ,success : function(data) {
-		   alert("收到配置信息："+data) ;
-    }});
+     $.ajax({type : "POST",url : "i/QTDEVConfig",contentType: "application/json; charset=utf-8",data:"{'apID':'"+apid+"'}" ,success : function(data) { alert("收到配置信息："+data) ; }});
 }
 
 
 
 
 function senddata1(){
-	  $.ajax({type : "POST",dataType : "json",contentType: "application/json;charset=utf-8",url : "i/QTDataCollection",data :qt,success : function(data) { 
+	
+	var qt1="{'apID':'400333444','time':'"+new Date().getTime()+"','infos':[{'tagname':'点4','value':'200'},{'tagname':'CO2机组_低压压力','value':'40'}]}";
+	  $.ajax({type : "POST",dataType : "json",contentType: "application/json;charset=utf-8",url : "i/QTDataCollection",data :qt1,success : function(data) { 
 		  if(data.updateConf){ 
 			  alert("收到配置更新指令！准备更新配置！");
 	           getConfig("400333444");
 	       }}});
 }
 function senddata2(){
-	  $.ajax({type : "POST",dataType : "json", contentType: "application/json;charset=utf-8",url : "i/QTDataCollection",data :qt,success : function(data) {
+    	var qt2="{'apID':'210333444','time':'"+new Date().getTime()+"','infos':[{'tagname':'点1','value':'10'},{'tagname':'s力','value':'40'}]}";
+	  $.ajax({type : "POST",dataType : "json", contentType: "application/json;charset=utf-8",url : "i/QTDataCollection",data :qt2,success : function(data) {
 		  if(data.updateConf){  
 			  alert("收到配置更新指令！准备更新配置！");
 			  getConfig("210333444");
-			  
 			}}});}
 /**/
 
@@ -104,10 +118,10 @@ $().ready(function () {
 	   $("#logtext").height(width);
 	   
 
-	   window.setInterval(getData,10000); 
+	   window.setInterval(timegetdata,10000); 
 	   
-	  window.setInterval(senddata1,pl*1000); 
-	  window.setInterval(senddata2,20000); 
+// 	  window.setInterval(senddata1,pl*1000); 
+// 	  window.setInterval(senddata2,20000); 
 	
 });
 

@@ -70,6 +70,24 @@ function init_table() {
 function onDblClickRow(index, field) {
     ck(field.id);
 }
+/**
+ * 支持导出
+ */
+function rdc_exp(){
+	$("#rdc_expxls").attr("disabled",true);
+	$('#rdc_expdialog').dialog('close');
+    var expfrom= $("<form>").attr('style', 'display:none').attr('method', 'post').attr('action', '../../i/rdc/expedcList').attr('id', "expdataform");
+    expfrom.attr("Content-Type","application/json;charset=UTF-8");
+//    expfrom.append($("<input>").attr("name","sid").attr("value",sid));
+    expfrom.append($("<input>").attr("name","fileName").attr("value","冷库导出.xls"));
+    expfrom.append($("<input>").attr("name","startTime").attr("value",$("#exp_startTime").val()));
+    expfrom.append($("<input>").attr("name","endTime").attr("value",$("#exp_endTime").val()));
+    expfrom.appendTo('body').submit().remove();
+    setTimeout(function () {$("#rdc_expxls").attr("disabled",false); }, 3000);
+	
+	
+}
+
 
 /*显示已选图片*/
 function showSelectPic() {

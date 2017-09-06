@@ -116,6 +116,18 @@ public class QTCollectionController extends BaseController {
 		return ResponseData.newFailure("没有数据");
 	}
 	
+	/**
+	 *http DEV数据上传接口
+	 * @param data
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/getQTUPlog")
+	@ResponseBody
+	public Object getQTUPlog(String apid) {
+			return updateLog.get(apid);
+	}
+	
 	 
 	
 	   /**
@@ -242,10 +254,13 @@ public class QTCollectionController extends BaseController {
 				
 			}
 		    resMap.put("infos", infoHashMaps);
-	     	String msg=    "更新"+apID+"配置:"+JSON.toJSONString(infoHashMaps);
+	     	String msg=  TimeUtil.getDateTime()+  "更新"+apID+"配置:"+JSON.toJSONString(infoHashMaps)+"\r\n";
 			System.err.println(msg);
 			if(updateLog.containsKey(apID)){
 			     List<String> list = updateLog.get(apID);
+			    if( list.size()>10){
+			    	list.clear();
+			    }
 			     list.add(msg);
 			}else{
 				List<String> loglist=new ArrayList<>(); 
@@ -254,6 +269,7 @@ public class QTCollectionController extends BaseController {
 			}
 			return resMap;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return DataResultDto.newFailure();
 		}
 	

@@ -93,6 +93,8 @@ section{
 	top: 2rem;
 	left: 0;
 	width:100%;
+	max-height: 90vh;
+	overflow-y: scroll;
 	display: none;
 	padding:0.2rem 0.9rem 3rem;	
 	background-color: #fff;
@@ -121,7 +123,6 @@ section{
 .droplist #ul_city_list>li{
 	width: 3rem;
 }
-
 .active{
 	background-color:#4287ff;
 	color: #fff;

@@ -6,30 +6,54 @@ var app=angular.module('app', []).controller('register',function($http, $locatio
         var mobile = /^(13[0-9]|14[0-9]|15[0-9]|17[0-9]|18[0-9])\d{8}$/;
         return telephone && length == 11&& mobile.test(telephone);
     };
+    function isChineseChar(str){
+        var reg = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
+        return reg.test(str);
+    }
     $("#username").blur(function () {
-        $.post(ER.root + '/i/user/userNameVerify',{
-            username:$("#username").val()
-        }, function(data){
-            if(!data){
-                layer.open({
-                    content: "用户名已存在,请更换~"
-                    ,btn: '确定'
-                });
-                victdata.extname=false;
-                return false
-            }else{
-                if(!/^[a-zA-Z0-9][a-zA-Z0-9]{2,23}$/.test($("#username").val())){
+        var oname=$.trim($("#username").val());
+        if(oname==''){
+            layer.open({
+                content: "用户名不能为空~"
+                ,btn: '确定'
+            });
+            victdata.usefulName=true;
+            return false
+        }else if(isChineseChar(oname)){
+            layer.open({
+                content: "用户名不能包含中文~"
+                ,btn: '确定'
+            });
+            victdata.usefulName=true;
+            return false
+        }else if(oname.length>24||oname.length<3){
+            layer.open({
+                content: "用户名长度3~24位~"
+                ,btn: '确定'
+            });
+            victdata.usefulName=true;
+            return false
+        }else{
+            $.post(ER.root + '/i/user/userNameVerify',{
+                username:oname
+            }, function(data){
+                if(!data){
                     layer.open({
-                        content: "用户名不能包含中文和特殊字符，长度3~24位~"
+                        content: "用户名已存在,请更换~"
                         ,btn: '确定'
                     });
-                    victdata.usefulName=true;
+                    victdata.extname=false;
                     return false
                 }else{
+                    victdata.usefulName=false;
                     victdata.extname=true;
+                    layer.open({
+                        content: '您的用户名是<b class="orange">'+$("#username").val()+'</b>,它将作为您登录链库的唯一凭证，一旦注册完成将无法更改，请牢记~'
+                        ,btn: '确定'
+                    });
                 }
-            }
-        });
+            });
+        }
     });
     $scope.vertelephone = function() {// 验证手机号码
         $("#code2").val('');$("#but_vercode").data('vc', false);
@@ -54,7 +78,7 @@ var app=angular.module('app', []).controller('register',function($http, $locatio
         }else{
             if(victdata.usefulName){
                 layer.open({
-                    content: "用户名不能包含中文和特殊字符，长度不得低于3位~"
+                    content: "用户名不能包含中文，长度3-24位~"
                     ,btn: '确定'
                 });
             }else{

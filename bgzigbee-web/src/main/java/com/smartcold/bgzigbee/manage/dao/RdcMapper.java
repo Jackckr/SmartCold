@@ -14,6 +14,9 @@ public interface RdcMapper {
 
 	List<RdcEntity> findRDCByRDCId(@Param("rdcID") int rdcID);
 	
+	
+	List<RdcEntity> findRDCByFilter(@Param("startTime")String startTime,@Param("endTime")String endTime);
+	
 	List<HashMap<String,Object>> getRdcByName(@Param("keyword")String keyword);
 	
 	

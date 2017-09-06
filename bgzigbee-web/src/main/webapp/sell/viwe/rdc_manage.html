@@ -22,9 +22,10 @@
     <div id="div_filteri" style="padding:2px 5px;">
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'rdc_add'" onclick="addCold()">添加</a>
         <a id="delButton" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'rdc_del'" onclick="dl()">删除</a>
+        <a id="rdc_expxls" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-exp'" onclick="$('#rdc_expdialog').dialog('open');">导出</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'pagination-load'" onclick="refresh()">刷新</a>
         <div style="float: right">
-            状态:
+                                                     状态:
             <select id="sel_audit" class="easyui-combobox" panelHeight="auto" style="width:100px">
                 <option value="8">全部</option>
                 <option value="0">待审核</option>
@@ -47,7 +48,7 @@
                     <input type="text" name="rdcName" disabled="disabled" style="border: none; background-color: transparent; color: red;">
                 </td>
             </tr>
-            <tr>
+             <tr>
                 <td>状   态:</td>
                 <td>
                     <input type="hidden" name="id">
@@ -56,6 +57,37 @@
                     <label><input type="radio" id="edit_audit_1" name="audit" value="1">已通过  </label>
                 </td>
             </tr>
+        </table>
+    </form>
+</div>
+<div id="rdc_expdialog" class="easyui-dialog"  data-options="title:'导出',iconCls:'icon-exp',modal: true,closed: true,buttons: [{text:'导出',iconCls:'icon-exp',handler:rdc_exp},{text:'取消',iconCls:'icon-cancel2',handler:function(){$('#rdc_expdialog').dialog('close');}}]" style="width: 600px;height: 220px" >
+    <form id="rdc_auditForm" style="padding:10px 20px;" >
+        <table class="fill" >
+            <tr style="height: 50px">
+                <td>时间范围:</td>
+                <td>
+                    <input id="exp_startTime" name="startTime" class="easyui-datebox" data-options=""><input id="exp_endTime" name="endTime" class="easyui-datebox" data-options="">
+                </td>
+            </tr>
+<!--              <tr> -->
+<!--                 <td >选项</td> -->
+<!--                 <td> -->
+<!--                     <label><input type="checkbox" disabled="disabled"   >达标冷库 </label> -->
+<!--                     <label><input type="checkbox" disabled="disabled"   >已认证冷库</label> -->
+<!--                     <label><input type="checkbox" disabled="disabled"    >360冷库 </label> -->
+<!--                 </td> -->
+<!--             </tr> -->
+<!--              <tr> -->
+<!--                 <td >分组</td> -->
+<!--                 <td> -->
+<!--                     <label><input type="checkbox" disabled="disabled"   >地区 </label> -->
+<!--                     <label><input type="checkbox" disabled="disabled"   >添加时间</label> -->
+<!--                 </td> -->
+<!--             </tr> -->
+            <tr><td colspan="2" style="color: red">* 不设置时间或只设置一个时间为导出全部数据！</td> </tr>
+            <tr><td colspan="2" style="color: red">* 如果需设置时间请设置正确数据范围</td> </tr>
+            <tr><td colspan="2" style="color: red">* 请使用兼容浏览器设置！否则可能无法正常下载！</td> </tr>
+           
         </table>
     </form>
 </div>

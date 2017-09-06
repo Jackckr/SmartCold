@@ -65,7 +65,7 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label"><i class="iconfont">&#xe63d;</i></label>
                             <div class="layui-input-block">
-                                <input type="text" name="username" id="username" lay-verify="userName" onblur="userNameExist()" autocomplete="off" placeholder="请输入用户名" class="layui-input">
+                                <input type="text" name="username" id="username" lay-verify="userName" onblur="userNameExist()" autocomplete="off" placeholder="请输入用户名(如手机号、邮箱等)" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item">
@@ -149,14 +149,21 @@
 <script>
     var phoneReg=/^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/,usefulName=false,verCode=null,verFlag=false;
     function userNameExist() {//用户名检查
-        if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test($("#username").val())){
-            layer.tips('用户名不能为空并且不能有特殊字符', '#username', {
+        var oname=$.trim($("#username").val());
+        if(oname==''){
+            layer.tips('用户名不能为空~', '#username', {
                 tips: [1, '#0FA6D8'] //还可配置颜色
             });
             usefulName=false;
             return false
-        }else if(!/^[a-zA-Z0-9][a-zA-Z0-9]{2,23}$/.test($("#username").val())){
-            layer.tips('用户名不能包含中文和特殊字符，长度不得低于3位~', '#username', {
+        }else if(isChineseChar(oname)){
+            layer.tips('用户名不能包含中文~', '#username', {
+                tips: [1, '#0FA6D8'] //还可配置颜色
+            });
+            usefulName=false;
+            return false
+        }else if(oname.length>24||oname.length<3){
+            layer.tips('用户名长度3~24位', '#username', {
                 tips: [1, '#0FA6D8'] //还可配置颜色
             });
             usefulName=false;
@@ -172,12 +179,16 @@
                     usefulName=false;
                     return false
                 }else{
+                    layer.alert('您的用户名是<b class="orange">'+$("#username").val()+'</b>,它将作为您登录链库的唯一凭证，一旦注册完成将无法更改，请牢记', {icon:6});
                     usefulName=true
                 }
             });
         }
-
     };
+    function isChineseChar(str){
+        var reg = /[\u4E00-\u9FA5\uF900-\uFA2D]/;
+        return reg.test(str);
+    }
     $("#verifyCode").keyup(function () {//手机号检查是否被注册
         if(!usefulName){
             layer.tips('用户名不可用，请更改', '#username', {
@@ -247,12 +258,6 @@
         //自定义验证规则
         form.verify({
             userName: function(value, item){ //value：表单的值、item：表单的DOM对象
-                if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)){
-                    return '用户名不能为空并且不能有特殊字符';
-                }
-                if(!/^[a-zA-Z0-9][a-zA-Z0-9]{2,15}$/.test(value)){
-                    return '用户名不能包含中文和特殊字符，长度不得低于3位~'
-                }
                 if(/(^\_)|(\__)|(\_+$)/.test(value)){
                     return '用户名首尾不能出现下划线\'_\'';
                 }
@@ -260,7 +265,7 @@
                     return '用户名长度不能超过24位';
                 }
                 if(!usefulName){
-                    return '用户名已存在,请更换~'
+                    return '用户名不可用,请更换~'
                 }//检查用户名重复hh
             }
             //我们既支持上述函数式的方式，也支持下述数组的形式

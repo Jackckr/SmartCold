@@ -273,14 +273,15 @@ function initRentRdc() {
                         }
                     }
                 }
-                var price="";
+                var price="",rdcAddress='';
+                rentRdc.cityname==0?rdcAddress=rentRdc.provincename:rdcAddress=rentRdc.provincename+'-'+rentRdc.cityname;
                 if(rentRdc.unit1&&rentRdc.unit2&&rentRdc.unit1!=""&&rentRdc.unit2!=""){
                     price = rentRdc.unitPrice == 0 ? '面议' : rentRdc.unitPrice+"元/"+rentRdc.unit1+"·"+rentRdc.unit2;
                 }else {
                     price = rentRdc.unitPrice == 0 ? '面议' : rentRdc.unitPrice+"元/天·平方米";
                 }
                 rentRdcArr.push('<ul class="msgBody clearfix"><li><img src="' + rentRdc.logo + '" onclick="openurl(' + rentRdc.id + ')"></li><li class="msgTitle"><p class="blue" onclick="openurl(' + rentRdc.id + ')">' + rentRdc.title + '</p>' +
-                    '<p><i class="iconfont">&#xe648;</i>' + rentRdc.provincename,'-',rentRdc.cityname + '</p></li><li>' + rentRdc.sqm + '</li><li>' + price + '</li>' +
+                    '<p><i class="iconfont">&#xe648;</i>' + rdcAddress + '</p></li><li>' + rentRdc.sqm + '</li><li>' + price + '</li>' +
                     '<li>' + rentRdc.codeLave2 + '</li><li>' + usefulDate + '</li>' +
                     '<li><button class="look" onclick="openurl(' + rentRdc.id + ')"><i class="iconfont">&#xe610;</i>查看</button>' + collectWords + '</li></ul>');
             });
@@ -386,10 +387,11 @@ function initGoodsList() {
                 if (goods.collectType == 1) {
                     collectWords = '<button class="collect" onclick="collection(this,' + goods.id + ')"><i class="iconfont orange isLike">&#xe637;</i><em>已收藏</em></button>';
                 }
-                var price = goods.unitPrice == 0 ? '面议' : goods.unitPrice + '元/' + unitPush[goods.publishunit];
+                var price = goods.unitPrice == 0 ? '面议' : goods.unitPrice + '元/' + unitPush[goods.publishunit],rdcAddress='';
+                goods.cityname==0?rdcAddress=goods.provincename:rdcAddress=goods.provincename+'-'+goods.cityname;
 
                 goodsArr.push('<ul class="msgBody clearfix"><li><img src="' + goods.logo + '" onclick="openurl(' + goods.id + ')"></li><li class="msgTitle"><p class="blue" onclick="openurl(' + goods.id + ')">' + goods.title + '</p>' +
-                    '<p><i class="iconfont">&#xe648;</i>' + goods.provincename,'-',goods.cityname + '</p></li><li>' + goods.sqm + unitPush[goods.publishunit] + '</li>' +
+                    '<p><i class="iconfont">&#xe648;</i>' + rdcAddress + '</p></li><li>' + goods.sqm + unitPush[goods.publishunit] + '</li>' +
                     '<li>' + price + '</li><li>' + goodsAllType[goods.codeLave1] + '</li><li>' + validStartTime + '</li><li>' + validEndTime + '</li>' +
                     '<li><button class="look"  onclick="openurl(' + goods.id + ')"><i class="iconfont">&#xe610;</i>查看</button>' + collectWords + '</li></ul>');
             });

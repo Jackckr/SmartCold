@@ -11,6 +11,10 @@
        SELECT `id`,`name` text FROM  `rdc`   
        <if test="keyword != null and keyword != ''"> where (name like "%"#{keyword}"%" or id like "%"#{keyword}"%") </if>  LIMIT #{row};
    </select>
+    <select id="findRDCByFilter" parameterType="map" resultType="com.smartcold.bgzigbee.manage.entity.RdcEntity">
+        SELECT * FROM `rdc`
+        <if test="startTime!=null and startTime!=''"> where  `addtime` &gt;= #{startTime} and `addtime` &lt;= #{endTime}</if>
+   </select>
     
 
     <select id="findRdcList" parameterType="int" resultType="com.smartcold.bgzigbee.manage.entity.RdcEntity">
