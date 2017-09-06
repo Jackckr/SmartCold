@@ -15,6 +15,7 @@ $().ready(function () {
     }
     if(localStorage.RDC) {
         myFilter = JSON.parse(localStorage.RDC);
+        myFilter.pageNum=1;
     }
     gosharedile = function (sharid) {
         window.location.href = "colddetail.html?id=" + sharid;

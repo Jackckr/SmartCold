@@ -327,8 +327,8 @@ function init_filter() {
         $("#ul_provinceid").append(window.localStorage.rdc_list_province);
         $("#ul_provinceid li").bind('click', changeProvince);
         var histdata = JSON.stringify(PageUtil.getHashStringArgs());
-        if(histdata.indexOf('cityid')>-1){
-            $("#ul_cityid").append(window.localStorage.rdc_list_city);
+        if(histdata.indexOf('ul_cityid')>-1){
+            $("#ul_cityid").show().append(window.localStorage.rdc_list_city);
             $("#ul_cityid li").bind('click', changecity);
         }
     } else {

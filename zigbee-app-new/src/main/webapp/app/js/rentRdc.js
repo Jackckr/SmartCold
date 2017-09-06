@@ -11,6 +11,7 @@ $().ready(function () {
     var myFilter=null;
     if(localStorage.match) {
         myFilter = JSON.parse(localStorage.match);
+        myFilter.pageNum=1;
     }
     $(".transion").click(function () {
         $(".one").hide();
