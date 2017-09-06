@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.smartcold.manage.cold.controller.BaseController;
@@ -42,11 +43,15 @@ public class QTCollectionController extends BaseController {
     
 	private static HashMap<String, Long> splittimeHashMap=new HashMap<>();
 	private static HashMap<String, Boolean> isupdate=new HashMap<String, Boolean>();
+	private static HashMap<String, List<String>> updateLog=new HashMap<String, List<String>>();
+	private static HashMap<String, String> dataLog=new HashMap<String, String>();
 	private static HashMap<String, Integer> plMap=new HashMap<String, Integer>();
 	private static HashMap<String, List<String []>> errMap=new HashMap<String ,List<String []>>();
 	private static HashMap<String, HashMap<String, Object>> updateData=new HashMap<String, HashMap<String, Object>>();
-    private static String alldata="";
-    private static boolean ispring=true;
+    
+    
+    
+    
 	
 	/**
 	 *http DEV数据上传接口
@@ -87,10 +92,14 @@ public class QTCollectionController extends BaseController {
 	 */
 	@RequestMapping(value = "/getQTData")
 	@ResponseBody
-	public ResponseData<String>  getQTData() {
-			String dString=alldata;
-			alldata="";
-			return ResponseData.newSuccess(dString);
+	public ResponseData<String>  getQTData(String apid) {
+		if(dataLog.containsKey(apid)){
+			String string = dataLog.get(apid);
+			dataLog.remove(apid);
+			return ResponseData.newSuccess(string);
+		}
+		return ResponseData.newSuccess("");
+			
 	}
 	/**
 	 *http DEV数据上传接口
@@ -106,17 +115,7 @@ public class QTCollectionController extends BaseController {
 		}
 		return ResponseData.newFailure("没有数据");
 	}
-	/**
-	 *http DEV数据上传接口
-	 * @param data
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(value = "/QTispring")
-	@ResponseBody
-	public void QTispring() {
-		ispring=!ispring;
-	}
+	
 	 
 	
 	   /**
@@ -198,27 +197,16 @@ public class QTCollectionController extends BaseController {
 				 }
 				 splittimeHashMap.put(apID, cutime);
 				 restAp(apID);
-//				System.err.println(apID);
-//				 if("400333444".equals(apID)&&ispring){
-//					 ArrayList<StorageDataCollectionEntity> arrayList = new ArrayList<StorageDataCollectionEntity>();
-						for (Map<String, String> info : (List<Map<String, String>>) dataCollectionBatchEntity.get("infos")) {
-							System.err.println(info);
-							alldata=data+"时间："+TimeUtil.getDateTime();
-//							Date time = new Date(Long.parseLong(info.remove("time")) * 1000);
-//							String deviceId = info.remove("devID").toString();
-//							for (Entry<String, String> item : info.entrySet()) {
-//								arrayList.add(new StorageDataCollectionEntity(apID, deviceId, item.getKey(), item.getValue(), time));
-//							}
-						}
-//				 }
-				
-				
 			}
+			
+		     dataLog.put(apID, data);
 			if(isupdate.containsKey(apID)){
 				cisupdat=true;
 				isupdate.remove(apID);
 			}
-			System.err.println("收到 QT数据："+apID+"====================间隔时间："+exptime+" 是否更新数据："+cisupdat+"时间"+TimeUtil.getDateTime());
+			String msg="收到 QT数据："+apID+"====================间隔时间："+exptime+" 是否更新数据："+cisupdat+"时间"+TimeUtil.getDateTime();
+			System.err.println(msg);
+			
 		   return DataResultDto.newSuccess(cisupdat);//更新数据服务
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -254,7 +242,16 @@ public class QTCollectionController extends BaseController {
 				
 			}
 		    resMap.put("infos", infoHashMaps);
-			System.err.println("更新"+apID+"配置=====================================");
+	     	String msg=    "更新"+apID+"配置:"+JSON.toJSONString(infoHashMaps);
+			System.err.println(msg);
+			if(updateLog.containsKey(apID)){
+			     List<String> list = updateLog.get(apID);
+			     list.add(msg);
+			}else{
+				List<String> loglist=new ArrayList<>(); 
+				loglist.add(msg);
+				updateLog.put(apID, loglist);	
+			}
 			return resMap;
 		} catch (Exception e) {
 			return DataResultDto.newFailure();

@@ -28,18 +28,13 @@ import com.smartcold.manage.cold.util.TimeUtil;
  *
  */
 @Controller
+@Deprecated
 public class SPACollectionController extends BaseController {
-
+/*
 	
 	private static Gson gson = new Gson();
 	private static List<String> cahceList=new ArrayList<String>();
 
-	/**
-	 *http DEV数据上传接口
-	 * @param data
-	 * @param response
-	 * @return
-	 */
 	@RequestMapping(value = "/SPADataCollection", method = RequestMethod.POST)
 	@ResponseBody
 	public Object SPADataCollection(@RequestBody String data, HttpServletResponse response) {
@@ -92,5 +87,5 @@ public class SPACollectionController extends BaseController {
 	  System.err.println("ok");
 
 	}
-	
+	*/
 }

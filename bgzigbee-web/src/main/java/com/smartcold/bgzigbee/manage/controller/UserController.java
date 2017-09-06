@@ -175,6 +175,7 @@ public class UserController extends BaseController {
 				user.setPassword(EncodeUtil.encodeByMD5(user.getPassword()));
 				userDao.updateUser(user);
 			}
+			 cahcCacheService.updateUser(user.getId());
 			return new BaseDto(0);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -207,6 +208,8 @@ public class UserController extends BaseController {
 		userEntity.setVipType(vipType);
 		userEntity.setUpdateTime(new Date());
 		userDao.updateUser(userEntity);
+		
+		 cahcCacheService.updateUser(userId);
 		return new ResultDto(1,"认证成功！");
 	}
 

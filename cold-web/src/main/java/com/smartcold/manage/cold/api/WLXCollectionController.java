@@ -29,7 +29,7 @@ import com.smartcold.manage.cold.util.TimeUtil;
 /**
  * 上海座头鲸接口
  * @author Administrator
- *
+ * 当前接口正常
  */
 @Controller
 public class WLXCollectionController extends BaseController {

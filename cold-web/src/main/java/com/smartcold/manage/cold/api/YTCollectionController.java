@@ -52,4 +52,8 @@ public class YTCollectionController extends BaseController {
 		return  DataResultDto.newSuccess();
 	} 
 	
+	
+	
+	
+	
 }

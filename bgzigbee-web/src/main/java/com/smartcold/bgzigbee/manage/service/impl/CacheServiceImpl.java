@@ -7,6 +7,7 @@ import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
 import com.smartcold.bgzigbee.manage.dao.CookieMapper;
 import com.smartcold.bgzigbee.manage.dao.UserMapper;
 import com.smartcold.bgzigbee.manage.service.CacheService;
@@ -59,6 +60,7 @@ public class CacheServiceImpl implements CacheService{
 					Object userObject= getDataFromCache(token);
 					if(userObject!=null){
 						com.smartcold.zigbee.manage.entity.UserEntity user = userMapper.findZWUserById(Integer.parseInt(uid));
+						System.err.println("收到更新数据指令============================="+JSON.toJSONString(user));
 						putDataTocache(token, user);
 					}
 				} 

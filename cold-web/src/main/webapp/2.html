@@ -45,27 +45,11 @@ max-width: 50%;
 
 var pl=30,p4=200,iswert=false;
 var qt="{'apID':'400333444','time':'1490583510','infos':[{'tagname':'点4','value':'200'},{'tagname':'CO2机组_低压压力','value':'40'}]}";
+var qt="{'apID':'210333444','time':'1490583510','infos':[{'tagname':'点1','value':'10'},{'tagname':'s力','value':'40'}]}";
 
 function getData(){
-   $.ajax({type : "GET",url : "i/getQTData",contentType: "application/json; charset=utf-8",success : function(data) {if(data.success&&data.message!=""){$("#logtext").val($("#logtext").val()+"\r\n"+data.message);}}});
+   $.ajax({type : "GET",url : "i/getQTData",contentType: "application/json; charset=utf-8", data:{apid:$("#txt_apid").val()  },success : function(data) {if(data.success&&data.message!=""){$("#logtext").val($("#logtext").val()+"\r\n"+data.message);}}});
 }
-function senddata(){
-	   $.ajax({
-				type : "POST",
-				dataType : "json",
-			    contentType: "application/json;charset=utf-8",
-				url : "i/QTDataCollection",
-				data :qt,
-				success : function(data) {
-				   if(data.updateConf){
-					   alert("收到配置更新指令！准备更新配置！");
-					   window.setTimeout(getConfig, 3000);
-				   }
-					
-				}
-			});
-	}
-
 function setConfig(){
 	var data={apid:$("#txt_apid").val(),pl:$("#txt_pl").val(),key:$("#txt_key").val(),val:$("#txt_val").val()};
      $.ajax({type : "POST",url : "i/updateConfig",data:data ,success : function(data) {
@@ -74,13 +58,30 @@ function setConfig(){
 	   }
     }});
 }
-function getConfig(){
-	var data={apid:$("#txt_apid").val()};
-
-     $.ajax({type : "POST",url : "i/getQTConfig",data:data ,success : function(data) {
+function getConfig(apid){
+     $.ajax({type : "POST",url : "i/getQTConfig",data:{apid:apid} ,success : function(data) {
 		   alert("收到配置信息："+data) ;
     }});
 }
+
+
+
+
+function senddata1(){
+	  $.ajax({type : "POST",dataType : "json",contentType: "application/json;charset=utf-8",url : "i/QTDataCollection",data :qt,success : function(data) { 
+		  if(data.updateConf){ 
+			  alert("收到配置更新指令！准备更新配置！");
+	           getConfig("400333444");
+	       }}});
+}
+function senddata2(){
+	  $.ajax({type : "POST",dataType : "json", contentType: "application/json;charset=utf-8",url : "i/QTDataCollection",data :qt,success : function(data) {
+		  if(data.updateConf){  
+			  alert("收到配置更新指令！准备更新配置！");
+			  getConfig("210333444");
+			  
+			}}});}
+/**/
 
 $().ready(function () {
 	if (window.innerWidth)
@@ -104,7 +105,9 @@ $().ready(function () {
 	   
 
 	   window.setInterval(getData,10000); 
-// 	  window.setInterval(senddata,pl*1000); 
+	   
+	  window.setInterval(senddata1,pl*1000); 
+	  window.setInterval(senddata2,20000); 
 	
 });
 
