@@ -274,7 +274,7 @@ function initRentRdc() {
                     }
                 }
                 var price="",rdcAddress='';
-                rentRdc.cityname==0rentRdc.cityname==undefined?rdcAddress=rentRdc.provincename:rdcAddress=rentRdc.provincename+'-'+rentRdc.cityname;
+                rentRdc.cityname==0||rentRdc.cityname==undefined?rdcAddress=rentRdc.provincename:rdcAddress=rentRdc.provincename+'-'+rentRdc.cityname;
                 if(rentRdc.unit1&&rentRdc.unit2&&rentRdc.unit1!=""&&rentRdc.unit2!=""){
                     price = rentRdc.unitPrice == 0 ? '面议' : rentRdc.unitPrice+"元/"+rentRdc.unit1+"·"+rentRdc.unit2;
                 }else {
