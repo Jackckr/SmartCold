@@ -293,7 +293,7 @@ header>div>a>.iconfont{
 }
 .layui-m-layercont{
 	font-size: .7rem!important;
-	line-height: 1.75;
+	line-height: 1.75!important;
 	padding: 1.5rem 1rem 0.5rem!important;
 }
 .layui-m-layer0 .layui-m-layerchild{

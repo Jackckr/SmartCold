@@ -23,26 +23,23 @@ var app = angular.module('app', []).controller('findPassword', function ($http, 
     }
     $scope.getVerCode = function () {
         var oname=$scope.username;
-        if(oname==''){
+        if(oname==''||oname==undefined){
             layer.open({
                 content: "用户名不能为空~"
                 ,btn: '确定'
             });
-            victdata.usefulName=true;
             return false
         }else if(isChineseChar(oname)){
             layer.open({
                 content: "用户名不能包含中文~"
                 ,btn: '确定'
             });
-            victdata.usefulName=true;
             return false
         }else if(oname.length>24||oname.length<3){
             layer.open({
                 content: "用户名长度3~24位~"
                 ,btn: '确定'
             });
-            victdata.usefulName=true;
             return false
         }else{
             if(phoneReg.test($scope.telephone)){
