@@ -554,12 +554,12 @@ $(function () {
                     $(this).removeClass('activeType');
                     $(this).parent().children('li').eq(0).addClass('activeType');
                     screenParam.provinceid='';
-                    screenParam.cityid = '';
                     $(".ul_cityid").empty().hide();
                     localStorage.removeItem('match_list_city');
                 } else {
                     $(this).addClass('activeType').siblings().removeClass('activeType');
                 }
+                screenParam.cityid = '';
             }else{
                 $(this).toggleClass('activeType');
                 if ($(this).hasClass('activeType') == false && $(this).siblings('li').hasClass('activeType') == false) {

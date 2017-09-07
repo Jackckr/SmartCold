@@ -121,7 +121,6 @@ function changeProvince() {
     screenParam.pageNum = 1;
     if(slvalue==-100){
         screenParam.provinceid='';
-        screenParam.cityid = '';
         $("#ul_cityid").empty().hide();
     }else{
         //初始化城市
@@ -137,6 +136,7 @@ function changeProvince() {
             }
         });
     }
+    screenParam.cityid = '';
     getRdcRentList();
 }
 function changecity() {
