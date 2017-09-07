@@ -160,7 +160,7 @@ $().ready(function () {
         jQuery.extend(_filter, _options);
         if(gdty||adds||keyword){
             localStorage.match=JSON.stringify(_filter);
-            if(citys==undefined){_filter.cityid=myFilter.cityid;};
+            if(citys==undefined&&myFilter.cityid){_filter.cityid=myFilter.cityid;};
             myFilter=_filter;
         };
         return _filter;

@@ -161,9 +161,15 @@ $().ready(function () {
         var citys = $("#ul_city_list li.active").attr("value");////地区
         var keyword = $("#searchDara_div input").val().trim();////关键字搜索
         var uid = null;
-        if (window.user) {
-            uid = window.user.id;
-        }
+        if (window.user) { uid = window.user.id;}
+       /* if(myFilter){//有缓存条件
+            if (myFilter.cityid && citys==undefined) {citys=myFilter.cityid;}
+            if (myFilter.sqm && sqm==undefined) {sqm=myFilter.sqm;}
+            if (myFilter.managetype && sety==undefined) {sety=myFilter.managetype;}
+            if (myFilter.storagetempertype && smty==undefined) {smty=myFilter.storagetempertype}
+            if (myFilter.provinceid && adds==undefined) {adds=myFilter.provinceid}
+            if (myFilter.keyword && keyword==undefined) {keyword=myFilter.keyword}
+        }*/
         var _options = {
             typeCode: type,
             dataType: 3,
@@ -180,7 +186,7 @@ $().ready(function () {
         jQuery.extend(_filter, _options);
         if(sqm||smty||sety||adds||keyword){
             localStorage.match=JSON.stringify(_filter);
-            if(citys==undefined){_filter.cityid=myFilter.cityid;};
+            if(citys==undefined&&myFilter.cityid){_filter.cityid=myFilter.cityid;}
             myFilter=_filter;
         };
         return _filter;
