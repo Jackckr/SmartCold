@@ -80,13 +80,6 @@ public class UserController extends BaseController {
 		}
 	}
 
-	@RequestMapping(value = "/updateRedisUser")
-	@Cacheable("key=''")
-	@ResponseBody
-	public void updateRedisUser(Integer userId){
-
-	}
-
 	@RequestMapping(value = "/attestationUser")
 	@ResponseBody
 	public ResultDto attestationUser(UserEntity u,MultipartFile authfile){
