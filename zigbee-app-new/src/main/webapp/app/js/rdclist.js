@@ -210,12 +210,7 @@ $().ready(function () {
         if(sqm||audit||smty||sety||adds||keyword){
             localStorage.RDC=JSON.stringify(_filter);
             if(myFilter){//有缓存条件
-                if (myFilter.provinceid && adds==undefined) {_filter.provinceid=myFilter.provinceid}
                 if (myFilter.cityid && citys==undefined) {_filter.cityid=myFilter.cityid;}
-                if (myFilter.sqm && sqm==undefined) {_filter.sqm=myFilter.sqm;}
-                if (myFilter.managetype && sety==undefined) {_filter.managetype=myFilter.managetype;}
-                if (myFilter.storagetempertype && smty==undefined) {_filter.storagetempertype=myFilter.storagetempertype}
-                if (myFilter.keyword && keyword==undefined) {_filter.keyword=myFilter.keyword}
             }
             myFilter=_filter;
         }
