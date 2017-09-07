@@ -209,7 +209,11 @@ $().ready(function () {
         jQuery.extend(_filter, _options);
         if(sqm||audit||smty||sety||adds||keyword){
             localStorage.RDC=JSON.stringify(_filter);
-            if(citys==undefined&&myFilter.cityid){_filter.cityid=myFilter.cityid;};
+            if(myFilter&&myFilter.cityid) {
+                if (citys == undefined) {
+                    _filter.cityid = myFilter.cityid;
+                }
+            }
             myFilter=_filter;
         }
         return _filter;
