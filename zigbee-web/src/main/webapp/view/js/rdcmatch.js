@@ -274,11 +274,7 @@ function initRentRdc() {
                     }
                 }
                 var price="",rdcAddress='';
-<<<<<<< HEAD
-                rentRdc.cityname==0?rdcAddress=rentRdc.provincename:rdcAddress=rentRdc.provincename+'-'+rentRdc.cityname;
-=======
                 rentRdc.cityname==0||rentRdc.cityname==undefined?rdcAddress=rentRdc.provincename:rdcAddress=rentRdc.provincename+'-'+rentRdc.cityname;
->>>>>>> c5bb1045c0630ee8ec5feb88015f39e3f6a8b856
                 if(rentRdc.unit1&&rentRdc.unit2&&rentRdc.unit1!=""&&rentRdc.unit2!=""){
                     price = rentRdc.unitPrice == 0 ? '面议' : rentRdc.unitPrice+"元/"+rentRdc.unit1+"·"+rentRdc.unit2;
                 }else {
@@ -392,12 +388,7 @@ function initGoodsList() {
                     collectWords = '<button class="collect" onclick="collection(this,' + goods.id + ')"><i class="iconfont orange isLike">&#xe637;</i><em>已收藏</em></button>';
                 }
                 var price = goods.unitPrice == 0 ? '面议' : goods.unitPrice + '元/' + unitPush[goods.publishunit],rdcAddress='';
-<<<<<<< HEAD
-                goods.cityname==0?rdcAddress=goods.provincename:rdcAddress=goods.provincename+'-'+goods.cityname;
-=======
                 goods.cityname==0||goods.cityname==undefined?rdcAddress=goods.provincename:rdcAddress=goods.provincename+'-'+goods.cityname;
->>>>>>> c5bb1045c0630ee8ec5feb88015f39e3f6a8b856
-
                 goodsArr.push('<ul class="msgBody clearfix"><li><img src="' + goods.logo + '" onclick="openurl(' + goods.id + ')"></li><li class="msgTitle"><p class="blue" onclick="openurl(' + goods.id + ')">' + goods.title + '</p>' +
                     '<p><i class="iconfont">&#xe648;</i>' + rdcAddress + '</p></li><li>' + goods.sqm + unitPush[goods.publishunit] + '</li>' +
                     '<li>' + price + '</li><li>' + goodsAllType[goods.codeLave1] + '</li><li>' + validStartTime + '</li><li>' + validEndTime + '</li>' +

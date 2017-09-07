@@ -59,6 +59,8 @@ $().ready(function () {
         var $this = $(em).html();
         if(city){
             localStorage.cityShow=$this;
+        }else if($this=='全部'){
+            localStorage.cityShow=$("#ul_hascar_list li.active").html();
         }
         $(em).addClass('active').siblings().removeClass('active').parent().parent().hide();
         $(em).parent().parent().siblings('a').children('span').html($this);
@@ -68,10 +70,7 @@ $().ready(function () {
         ul_select.empty();
         if($(em).attr('data-val')){
             myFilter.provinceid=myFilter.cityid='';
-<<<<<<< HEAD
-=======
             localStorage.RDC=JSON.stringify(myFilter);
->>>>>>> c5bb1045c0630ee8ec5feb88015f39e3f6a8b856
             localStorage.removeItem('cityShow');
         }
         getPageData();

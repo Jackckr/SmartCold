@@ -330,6 +330,7 @@ function init_filter() {
         if(histdata.indexOf('ul_cityid')>-1){
             $("#ul_cityid").show().append(window.localStorage.rdc_list_city);
             $("#ul_cityid li").bind('click', changecity);
+            inithostfilter()
         }
     } else {
         $.ajax({
@@ -340,7 +341,8 @@ function init_filter() {
                 });
                 window.localStorage.rdc_list_province = provinceArr.join('');
                 $("#ul_provinceid").append(window.localStorage.rdc_list_province);
-               $("#ul_provinceid li").bind('click', changeProvince);
+                $("#ul_provinceid li").bind('click', changeProvince);
+                inithostfilter()
             }
         });
     }
@@ -348,7 +350,7 @@ function init_filter() {
 }
 function inithostfilter() {
     ajaxcont++;
-    if (ajaxcont < 3) {
+    if (ajaxcont < 4) {
         return;
     }
     var histdata = PageUtil.getHashStringArgs(), key = null, val = null, em = null, type = null;

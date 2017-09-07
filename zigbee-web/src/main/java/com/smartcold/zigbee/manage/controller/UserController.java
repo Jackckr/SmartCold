@@ -10,9 +10,11 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.smartcold.zigbee.manage.service.RedisService;
 import com.smartcold.zigbee.manage.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
@@ -56,7 +58,7 @@ public class UserController extends BaseController {
 
 	@RequestMapping(value = "/login")
 	@ResponseBody
-	public ResponseData<String> login(HttpServletRequest request, String userName, String password) {
+	public ResponseData<String> login(HttpServletRequest request,HttpServletResponse response, String userName, String password) {
 		if(StringUtil.isnotNull(userName)&&StringUtil.isnotNull(password)){
 			this.logout(request);
 			UserEntity user = userDao.findUser(userName, EncodeUtil.encodeByMD5(password));
@@ -67,6 +69,9 @@ public class UserController extends BaseController {
 				redisService.putUserId(user.getId(),encode);
 				user.setUpdateTime(new Date());
 				userDao.updateUser(user);
+			    Cookie cookie = new Cookie("token",encode);  
+			    cookie.setMaxAge(3600);  
+			    response.addCookie(cookie);  
 	            return  ResponseData.newSuccess(String.format("token=%s", encode));
 			}
 			return ResponseData.newFailure("用户名或者密码不正确~");
