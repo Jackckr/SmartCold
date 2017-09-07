@@ -4,6 +4,7 @@ var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/;
 var msg = "*.gif,*.jpg,*.jpeg,*.png,*.bmp";
 var ajaxCount=0;
 /*冷库出租图change*/
+if (sessionStorage.submitRdcStatus == 0) {watchNavigator('发布');}else{watchNavigator('修改');}
 function rentRdcPicChange(e) {
     var files = e.files;
     for(var i=0;i<files.length;i++){

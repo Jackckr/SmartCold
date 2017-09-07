@@ -6,6 +6,7 @@ var flag = 0;//0---不关联冷库，1---关联冷库
 var ajaxCount = 0;
 /*============================================================关联冷库发布==========================================================================*/
 /*获取关联的冷库列表*/
+if (sessionStorage.submitRdcStatus == 0) {watchNavigator('发布');}else{watchNavigator('修改');}
 function getRdcList() {
     if (!window.lkuser) {
         return false;

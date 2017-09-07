@@ -76,13 +76,27 @@ Array.prototype.contains = function(obj) {
 	}
 	return -1;
 };
-function watchNavigator() {// /监测浏览器版本
+function watchNavigator(release) {// /监测浏览器版本
 	if (navigator.appName == "Microsoft Internet Explorer") {
 		if (navigator.appVersion.match(/7./i) == "7."
 				|| navigator.appVersion.match(/8./i) == "8."
 				|| navigator.appVersion.match(/9./i) == "9.") {
 			console.log(navigator.appVersion + '--it is IE');
-			alert('您的浏览器版本过低，可能部分功能不能完美实现。请更换网页底部推荐的浏览器，来获取更佳体验！');
+			if(release){
+                layer.open({
+                    title: '温馨提示'
+                    ,content: '您的浏览器版本过低，不能使用'+release+'功能。请更换网页底部推荐的浏览器，来获取更佳体验！'
+                    ,btn: ['返回首页', '取消']
+                    ,yes: function(index, layero){
+                        window.location.href='../../index.html'
+                    }
+                    ,btn2: function(index, layero){
+                        //return false 开启该代码可禁止点击该按钮关闭
+                    }
+                });
+            }else{
+                alert('您的浏览器版本过低，可能部分功能不能完美实现。请更换网页底部推荐的浏览器，来获取更佳体验！');
+			}
 		}
 	} else {
 		console.log(navigator.appVersion + '--it is perfect!');

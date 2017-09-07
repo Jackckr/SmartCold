@@ -1,5 +1,5 @@
 var $form, form, $, oFile;
-
+watchNavigator('修改');
 function changePic(em) {
     oFile = $(em)[0].files[0];
     var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/i;

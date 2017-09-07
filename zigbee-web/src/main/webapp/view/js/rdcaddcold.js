@@ -11,7 +11,7 @@ var delIds=[];
 var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/;
 var msg = "*.gif,*.jpg,*.jpeg,*.png,*.bmp";
 checkLogin();
-watchNavigator();
+if (sessionStorage.submitRdcStatus == 1) {watchNavigator('修改');}else{watchNavigator('发布');}
 /*冷库图片change*/
 function storagePicChange(e) {
     var files = e.files;
