@@ -123,6 +123,14 @@ $().ready(function () {
                             });
                             window.localStorage.match_list_city = cityArr.join('');
                             $("#ul_city_list").empty().show().append(window.localStorage.match_list_city);
+                            if(myFilter&&myFilter.cityid){
+                                for(var i=0,len=$("#ul_city_list li").length;i<len;i++){
+                                    if($("#ul_city_list li").eq(i).attr('value')==myFilter.cityid){
+                                        $("#ul_city_list li").eq(i).addClass('active').siblings().removeClass('active');
+                                        return
+                                    }
+                                }
+                            }
                         }
                     });
                 }else{
@@ -201,6 +209,7 @@ $().ready(function () {
         jQuery.extend(_filter, _options);
         if(sqm||audit||smty||sety||adds||keyword){
             localStorage.RDC=JSON.stringify(_filter);
+            if(citys==undefined){_filter.cityid=myFilter.cityid;};
             myFilter=_filter;
         }
         return _filter;
