@@ -13,6 +13,22 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	$("#date02").jeDate({  isinitVal:true,festival:false, ishmsVal:false,isToday:false, initAddVal:[-30],minDate: '2016-05-01 23:59:59', maxDate: $.nowDate(-30),  format:"YYYY-MM",zIndex:100});
 	$scope.note=false;
 	
+	
+	var formatDateTime = function (longtime) { 
+		var date=new Date(longtime);
+        var y = date.getFullYear();  
+        var m = date.getMonth() + 1;  
+        m = m < 10 ? ('0' + m) : m;  
+        var d = date.getDate();  
+        d = d < 10 ? ('0' + d) : d;  
+        var h = date.getHours();  
+        h=h < 10 ? ('0' + h) : h;  
+        var minute = date.getMinutes();  
+        minute = minute < 10 ? ('0' + minute) : minute;  
+        var second=date.getSeconds();  
+        second=second < 10 ? ('0' + second) : second;  
+        return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;  
+    };  
 	//设置的开始时间
 	 $scope.settime=function(){
 			if($scope.reportType==0){//日报
@@ -25,19 +41,22 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 				var newDate=$("#date01").val();
 		    	 firstDate = new Date(newDate+' 00:00:00'); endDate =  new Date(newDate+' 23:59:59');  
 		    	endDate.setDate(firstDate.getDate()+7);
-		    	selday=firstDate.getDate(),date=newDate.substr(0,8);
 		    	$scope.endTime= baseTools.formatTime(endDate); 
 		    	$scope.startTime= baseTools.formatTime(firstDate); 
 		    	var newtime=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
 		    	if(newtime==$scope.timeuRange){$("#loding").hide();return;}
 		    	$scope.timeuRange=newtime;
-			    $scope.datemod = [
-					[ $scope.startTime,date + selday + ' 23:59:59' ],
-					[ date + (selday + 1) + ' 00:00:00',date + (selday + 1) + ' 23:59:59' ],
-					[ date + (selday + 2) + ' 00:00:00',date + (selday + 2) + ' 23:59:59' ],
-					[ date + (selday + 3) + ' 00:00:00',date + (selday + 3) + ' 23:59:59' ],
-					[ date + (selday + 4) + ' 00:00:00',date + (selday + 4) + ' 23:59:59' ],
-					[ date + (selday + 5) + ' 00:00:00',date + (selday + 5) + ' 23:59:59' ],[ date + (selday + 6) + ' 00:00:00',date + (selday + 6) + ' 06:00:00' ],[ date + (selday + 6) + ' 06:00:00',$scope.endTime ] ];
+		    	var lst=firstDate.getTime(),len=endDate.getTime(), pver=(len-lst)/8;
+		    	 $scope.datemod = [
+						[ $scope.startTime,formatDateTime(lst+pver) ],
+						[formatDateTime(lst+pver  +1000), formatDateTime(lst+pver*2)],
+						[formatDateTime(lst+pver*2+1000),formatDateTime(lst+pver*3) ],
+						[formatDateTime(lst+pver*3+1000),formatDateTime(lst+pver*4)],
+						[formatDateTime(lst+pver*4+1000),formatDateTime(lst+pver*5)],
+						[formatDateTime(lst+pver*5+1000),formatDateTime(lst+pver*6) ],
+						[formatDateTime(lst+pver*6+1000),formatDateTime(lst+pver*7) ],
+						[formatDateTime(lst+pver*7+1000),$scope.endTime ] 
+						];
 			}else if($scope.reportType==2){
 		    	var data=$("#date02").val(),newDate=data.split("-");
 		    	if(newDate.length!=2){ return; }
