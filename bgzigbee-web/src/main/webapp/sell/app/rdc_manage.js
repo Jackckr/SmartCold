@@ -482,7 +482,7 @@ function loadProvince() {
 function getStorageManage() {
     var manageList=[];
     $.ajax({url:"/i/rdc/findAllManageType",type:"get",success:function (data) {
-        data.forEach(function (val, index) {
+        $.each(data,function (index, val) {
             manageList.push({"text": val.type, "value":val.id});
         });
         $("#manageType").combobox("loadData", manageList);
@@ -494,7 +494,7 @@ function getStructures() {
     var structures=[];
     $.ajax({url:"/i/rdc/findAllStorageStructureType",type:"get",success:function (data) {
         structures.push({"text": "", "value":0});
-        data.forEach(function (val, index) {
+        $.each(data,function (index, val) {
             structures.push({"text": val.type, "value":val.id});
         });
         $("#structure").combobox("loadData", structures);
@@ -505,7 +505,7 @@ function getStructures() {
 function getTemperTypes() {
     var temperTypes=[];
     $.ajax({url:"/i/rdc/findAllTemperType",type:"get",success:function (data) {
-        data.forEach(function (val, index) {
+        $.each(data,function (index, val) {
             temperTypes.push({"text": val.type, "value":val.id});
         });
         $("#temperType").combobox("loadData", temperTypes);
@@ -516,7 +516,7 @@ function getTemperTypes() {
 function getStorageTypes() {
     var storageTypes=[];
     $.ajax({url:"/i/rdc/findAllStorageType",type:"get",success:function (data) {
-        data.forEach(function (val, index) {
+        $.each(data,function (index, val) {
             storageTypes.push({"text": val.type, "value":val.id});
         });
         $("#storageType").empty().combobox("loadData", storageTypes);
@@ -528,7 +528,7 @@ function getStorageRefregs() {
     var storageRefregs=[];
     $.ajax({url:"/i/rdc/findAllStorageRefreg",type:"get",success:function (data) {
         storageRefregs.push({"text": "", "value":0});
-        data.forEach(function (val, index) {
+        $.each(data,function (index, val) {
             storageRefregs.push({"text": val.type, "value":val.id});
         });
         $("#storageRefreg").empty().combobox("loadData", storageRefregs);
