@@ -140,6 +140,7 @@ $().ready(function () {
 
             if(myFilter&&myFilter.provinceid) {
                // match.area=data[myFilter.provinceid-1].provinceName;
+                if(myFilter.cityid==undefined){localStorage.cityShow=data[myFilter.provinceid-1].provinceName}
                 $("#filter_section").children('.droplist').eq(0).find('span').html(localStorage.cityShow);
                 $("#ul_address_list li").eq(myFilter.provinceid).addClass('active').siblings().removeClass('active');
             }
@@ -173,12 +174,12 @@ $().ready(function () {
                 if(myFilter&&myFilter.sqm) {
                     var x=null;
                     $("#filter_section").children('.droplist').eq(3).find('span').html(myFilter.sqm);
-                    if(myFilter.sqm=='1000以下'){x=1}
+                    if(myFilter.sqm=='<1000'){x=1}
                     else if(myFilter.sqm=='1000~3000'){x=2}
                     else if(myFilter.sqm=='3000~6000'){x=3}
                     else if(myFilter.sqm=='6000~12000'){x=4}
                     else if(myFilter.sqm=='12000~20000'){x=5}
-                    else if(myFilter.sqm=='20000以上'){x=6}
+                    else if(myFilter.sqm=='>20000'){x=6}
                     else{x=null}
                     $("#ul_sqm_list li").eq(x).addClass('active').siblings().removeClass('active');
                 }

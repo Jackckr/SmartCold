@@ -115,6 +115,7 @@ $().ready(function () {
             });
             if(myFilter&&myFilter.provinceid) {
                // match.area=data[myFilter.provinceid-1].provinceName;
+                if(myFilter.cityid==undefined){localStorage.cityShow=data[myFilter.provinceid-1].provinceName}
                 $("#filter_section").children('.droplist').eq(0).find('span').html(localStorage.cityShow);
                 $("#ul_hascar_list li").eq(myFilter.provinceid).addClass('active').siblings().removeClass('active');
             }
