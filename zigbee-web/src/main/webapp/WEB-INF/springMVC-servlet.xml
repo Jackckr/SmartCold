@@ -24,6 +24,7 @@
 			</bean>
 		</constructor-arg>
 	</bean>
+	<bean id="loadPush" class="com.smartcold.zigbee.manage.util.push.BaseTest" init-method="beforeClass"></bean>
 	<!-- 设置使用注解的类所在的jar包 -->
 	<context:component-scan base-package="com.smartcold.zigbee.manage.controller"/>
 	<context:component-scan base-package="com.smartcold.zigbee.manage.service" />

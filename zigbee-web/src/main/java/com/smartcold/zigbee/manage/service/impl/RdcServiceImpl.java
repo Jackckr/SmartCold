@@ -148,7 +148,7 @@ public class RdcServiceImpl implements RdcService {
     }
 
     @Override
-    public List<RdcAddDTO> findRDCDTOByRDCId(@RequestParam int rdcID,Integer uid) {
+    public List<RdcAddDTO> findRDCDTOByRDCId(int rdcID,Integer uid) {
         List<RdcEntity> rdcByRDCId = rdcDao.findRDCByRDCId(rdcID);
         List<RdcExtEntity> rdcExtByRDCId = rdcExtDao.findRDCExtByRDCId(rdcID);
         Double unitPrice = rdcShareMapper.getUnitPriceByRdcId(rdcID);

@@ -3,6 +3,7 @@ package com.smartcold.zigbee.manage.dao;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.smartcold.zigbee.manage.entity.SharedInfoEntity;
 import org.apache.ibatis.annotations.Param;
@@ -92,4 +93,6 @@ public interface RdcShareMapper {
 	 void updateShare(SharedInfoEntity sharedInfoEntity);
 
 	 SharedInfoEntity getById(Integer id);
+
+	 Set<String> selectByProvince(@Param("dataType") Integer dataType, @Param("typeCode")Integer typeCode, @Param("provinceId")Integer provinceId);
 }
