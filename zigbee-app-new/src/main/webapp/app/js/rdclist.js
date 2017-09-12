@@ -208,7 +208,7 @@ $().ready(function () {
         var keyword = $("#searchDara_div input").val().trim();////关键字搜索
         var uid=null;
         if(window.user){uid=window.user.id;}
-        var _options = {uid:uid,sqm: sqm, storagetempertype: smty, managetype: sety,audit:audit, provinceid: adds,cityid:citys, keyword: keyword};
+        var _options = {uid:uid,sqm: sqm, storagetempertype: smty, managetype: sety,audit:audit, provinceid: adds,cityid:citys, keyword: keyword,istemperaturestandard:localStorage.isStand};
         var _filter = {pageNum: pageNum, pageSize: pageSize};
         jQuery.extend(_filter, _options);
         if(sqm||audit||smty||sety||adds||keyword||!(sqm&&audit&&smty&&sety&&adds)){
@@ -320,7 +320,7 @@ $().ready(function () {
     function gethtml(rdc) {
         var rdcAddress='';
         rdc.cityname==0||rdc.cityname==undefined?rdcAddress=rdc.provincename:rdcAddress=rdc.provincename+'-'+rdc.cityname;
-        if(localStorage.isStand==0){
+        if(localStorage.isStand!=1){
             if (rdc.audit == -1) {
                 return false
             }
