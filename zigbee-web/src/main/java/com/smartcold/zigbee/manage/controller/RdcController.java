@@ -209,8 +209,6 @@ public class RdcController {
     @RequestMapping(value = "/findRDCDTOByRDCId", method = RequestMethod.GET)
     @ResponseBody
     public Object findRDCDTOByRDCId(@RequestParam int rdcID, HttpSession session, Integer uid,HttpServletRequest request) {
-        String token = CookieUnit.getCookie(request);
-        UserEntity userEntity = redisService.putUserToken(token, null);
         if (WebvistsService.rdcClickCount.containsKey(rdcID)){
             Integer count = WebvistsService.rdcClickCount.get(rdcID);
             count++;
@@ -218,7 +216,7 @@ public class RdcController {
         }else {
             WebvistsService.rdcClickCount.put(rdcID,1);
         }
-        return rdcService.findRDCDTOByRDCId(rdcID,userEntity==null?0:userEntity.getId());
+        return rdcService.findRDCDTOByRDCId(rdcID,uid);
     }
 
     @RequestMapping(value = "/findAllRdcDtos", method = RequestMethod.GET)

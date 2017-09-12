@@ -24,6 +24,7 @@ $().ready(function () {
         $(".one").show();
         $(".two").hide();
         localStorage.removeItem('match');
+        localStorage.removeItem('cityShow');
         window.location.reload();
     });
     initevg = function () {
@@ -60,7 +61,10 @@ $().ready(function () {
         if(city){
             localStorage.cityShow=$this;
         }else if($this=='全部'){
+            $(em).attr('data-val',2);
             localStorage.cityShow=$("#ul_hascar_list li.active").html();
+        }else if($this=='不限'){
+            $(em).attr('data-val',2)
         }
         $(em).addClass('active').siblings().removeClass('active').parent().parent().hide();
         $(em).parent().parent().siblings('a').children('span').html($this);
@@ -68,9 +72,9 @@ $().ready(function () {
         $(em).parent().parent().siblings().removeClass('current').children('i').removeClass('current').html('&#xe62d;');
         currentPage = 1;
         ul_select.empty();
-        if($(em).attr('data-val')){
+        if($(em).attr('data-city')==1){
             myFilter.provinceid=myFilter.cityid='';
-            localStorage.RDC=JSON.stringify(myFilter);
+            //localStorage.match=JSON.stringify(myFilter);
             localStorage.removeItem('cityShow');
         }
         getPageData();
@@ -115,6 +119,7 @@ $().ready(function () {
             });
             if(myFilter&&myFilter.provinceid) {
                // match.area=data[myFilter.provinceid-1].provinceName;
+                if(myFilter.cityid==undefined){localStorage.cityShow=data[myFilter.provinceid-1].provinceName}
                 $("#filter_section").children('.droplist').eq(0).find('span').html(localStorage.cityShow);
                 $("#ul_hascar_list li").eq(myFilter.provinceid).addClass('active').siblings().removeClass('active');
             }
@@ -158,9 +163,50 @@ $().ready(function () {
         };
         var _filter = {pageNum: pageNum, pageSize: pageSize};
         jQuery.extend(_filter, _options);
-        if(gdty||adds||keyword){
+        if(gdty||adds||keyword||!(gdty&&adds)){
+            if(myFilter){//有缓存条件
+                if (gdty) {
+                } else {
+                    if ($("#ul_goodtype_list li.active").attr("data-val")) {
+                    } else {
+                        if (myFilter.goodtype && gdty == undefined||gdty=='') {
+                            _filter.goodtype = myFilter.goodtype;
+                        }
+                    }
+                }
+                if (adds) {
+                } else {
+                    if ($("#ul_hascar_list li.active").attr("data-val")) {
+                    } else {
+                        if (myFilter.provinceid && adds == undefined||adds=='') {
+                            _filter.provinceid = myFilter.provinceid;
+                        }
+                    }
+                }
+                if (citys) {
+                } else {
+                    if ($("#ul_city_list li.active").attr("data-val")) {
+                    } else {
+                        if (myFilter.cityid && citys == undefined||citys=='') {
+                            _filter.cityid = myFilter.cityid;
+                        }
+                    }
+                }
+                if (keyword) {
+                } else {
+                    if (myFilter.keyword) {
+                        _filter=myFilter;
+                        $(".one").hide();
+                        $(".two").show();
+                        $("#searchDara_div input").val(myFilter.keyword);
+                    } else {
+                        if (myFilter.keyword && keyword == undefined) {
+                            _filter.keyword = myFilter.keyword
+                        }
+                    }
+                }
+            }
             localStorage.match=JSON.stringify(_filter);
-            if(citys==undefined){_filter.cityid=myFilter.cityid;};
             myFilter=_filter;
         };
         return _filter;
@@ -266,14 +312,6 @@ $().ready(function () {
             $(".two").show();
         }
         var _filter = getFilter(currentPage, maxSize);
-        if(myFilter){
-            _filter=myFilter;
-            if(_filter.keyword){
-                $(".one").hide();
-                $(".two").show();
-                $("#searchDara_div input").val(_filter.keyword);
-            }
-        };
         $.post(ER.root + "/i/ShareRdcController/newGetSERDCList", _filter, function (data) {
             if (data.success && data.data.length > 0) {
                 totalPages = data.totalPages;

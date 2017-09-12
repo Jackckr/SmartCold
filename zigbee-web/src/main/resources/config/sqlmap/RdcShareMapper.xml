@@ -339,6 +339,9 @@
 	<select id="getById" resultType="com.smartcold.zigbee.manage.entity.SharedInfoEntity">
 		SELECT * FROM `shared_info` WHERE `id`=#{id}
 	</select>
+	<select id="selectByProvince" resultType="java.lang.String">
+		SELECT 	`username` FROM `shared_info` WHERE `datatype`=#{dataType} and `typecode`=#{typeCode} and `provinceId`=#{provinceId}
+	</select>
 	<insert id="addshareInfo" parameterType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
 	     <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
            SELECT LAST_INSERT_ID() AS id

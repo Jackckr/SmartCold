@@ -81,4 +81,7 @@ public interface RdcShareService {
 
 
 	    public PageInfo<RdcShareDTO> newGetSERDCList(int pageNum,int pageSize,HashMap<String, Object> filter);
+
+	    /*发布信息时ios推送*/
+	    void iOSPush(RdcShareDTO rdcShareDTO) throws Exception;
 }

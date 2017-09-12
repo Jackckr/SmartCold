@@ -535,7 +535,6 @@ public class ShareRdcController {
 
     /**
      * 免费发布消息
-     *
      * @param request
      * @param datatype
      * @param dataid
@@ -576,6 +575,7 @@ public class ShareRdcController {
             }
             this.docLibraryService.handleWMFile(rdcShareDTO.getId(), FileDataMapper.CATEGORY_SHARE_PIC, null, request);
             redisService.delToAddShare();
+//            rdcShareService.iOSPush(rdcShareDTO);
             return ResponseData.newSuccess("发布成功~");
 
         } catch (Exception e) {

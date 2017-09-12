@@ -31,6 +31,7 @@ $().ready(function () {
             $(".one").show();
             $(".two").hide();
             localStorage.removeItem('RDC');
+            localStorage.removeItem('cityShow');
             window.location.reload();
         });
         $(".droplist a").click(function (e) {//条件过滤
@@ -88,7 +89,10 @@ $().ready(function () {
         if(city){
             localStorage.cityShow=$this;
         }else if($this=='全部'){
+            $(em).attr('data-val',2);
             localStorage.cityShow=$("#ul_address_list li.active").html();
+        }else if($this=='不限'){
+            $(em).attr('data-val',2)
         }
         $(em).addClass('active').siblings().removeClass('active').parent().parent().hide();
         $(em).parent().parent().siblings('a').children('span').html($this);
@@ -96,7 +100,7 @@ $().ready(function () {
         $(em).parent().parent().siblings().removeClass('current').children('i').removeClass('current').html('&#xe62d;');
         currentPage = 1;
         ul_select.empty();
-        if($(em).attr('data-val')){
+        if($(em).attr('data-city')){
             myFilter.provinceid=myFilter.cityid='';
             localStorage.RDC=JSON.stringify(myFilter);
             localStorage.removeItem('cityShow');
@@ -139,7 +143,7 @@ $().ready(function () {
             });
 
             if(myFilter&&myFilter.provinceid) {
-               // match.area=data[myFilter.provinceid-1].provinceName;
+                if(myFilter.cityid==undefined){localStorage.cityShow=data[myFilter.provinceid-1].provinceName}
                 $("#filter_section").children('.droplist').eq(0).find('span').html(localStorage.cityShow);
                 $("#ul_address_list li").eq(myFilter.provinceid).addClass('active').siblings().removeClass('active');
             }
@@ -173,12 +177,12 @@ $().ready(function () {
                 if(myFilter&&myFilter.sqm) {
                     var x=null;
                     $("#filter_section").children('.droplist').eq(3).find('span').html(myFilter.sqm);
-                    if(myFilter.sqm=='1000以下'){x=1}
+                    if(myFilter.sqm=='<1000'){x=1}
                     else if(myFilter.sqm=='1000~3000'){x=2}
                     else if(myFilter.sqm=='3000~6000'){x=3}
                     else if(myFilter.sqm=='6000~12000'){x=4}
                     else if(myFilter.sqm=='12000~20000'){x=5}
-                    else if(myFilter.sqm=='20000以上'){x=6}
+                    else if(myFilter.sqm=='>20000'){x=6}
                     else{x=null}
                     $("#ul_sqm_list li").eq(x).addClass('active').siblings().removeClass('active');
                 }
@@ -204,12 +208,71 @@ $().ready(function () {
         var keyword = $("#searchDara_div input").val().trim();////关键字搜索
         var uid=null;
         if(window.user){uid=window.user.id;}
-        var _options = {uid:uid,sqm: sqm, storagetempertype: smty, managetype: sety,audit:audit, provinceid: adds,cityid:citys, keyword: keyword};
+        var _options = {uid:uid,sqm: sqm, storagetempertype: smty, managetype: sety,audit:audit, provinceid: adds,cityid:citys, keyword: keyword,istemperaturestandard:localStorage.isStand};
         var _filter = {pageNum: pageNum, pageSize: pageSize};
         jQuery.extend(_filter, _options);
-        if(sqm||audit||smty||sety||adds||keyword){
+        if(sqm||audit||smty||sety||adds||keyword||!(sqm&&audit&&smty&&sety&&adds)){
+            if(myFilter){//有缓存条件
+                if (sqm) {
+                } else {
+                    if ($("#ul_sqm_list li.active").attr("data-val")) {
+                    } else {
+                        if (myFilter.sqm && sqm == undefined||sqm=='') {
+                            _filter.sqm = myFilter.sqm;
+                        }
+                    }
+                }
+                if (smty) {
+                } else {
+                    if ($("#ul_stty_list li.active").attr("data-val")) {
+                    } else {
+                        if (myFilter.storagetempertype && smty == undefined||smty=='') {
+                            _filter.storagetempertype = myFilter.storagetempertype
+                        }
+                    }
+                }
+                if (sety) {
+                } else {
+                    if ($("#ul_mtty_list li.active").attr("data-val")) {
+                    } else {
+                        if (myFilter.managetype && sety == undefined||sety=='') {
+                            _filter.managetype = myFilter.managetype;
+                        }
+                    }
+                }
+                if (adds) {
+                } else {
+                    if ($("#ul_address_list li.active").attr("data-val")) {
+                    } else {
+                        if (myFilter.provinceid && adds == undefined||adds=='') {
+                            _filter.provinceid = myFilter.provinceid;
+                        }
+                    }
+                }
+                if (citys) {
+                } else {
+                    if ($("#ul_city_list li.active").attr("data-val")) {
+                    } else {
+                        if (myFilter.cityid && citys == undefined||citys=='') {
+                            _filter.cityid = myFilter.cityid;
+                        }
+                    }
+                }
+                if (keyword) {
+                } else {
+                    if (myFilter.keyword) {
+                        _filter=myFilter;
+                        $(".one").hide();
+                        $(".two").show();
+                        $("#searchDara_div input").val(myFilter.keyword);
+                    } else {
+                        if (myFilter.keyword && keyword == undefined) {
+                            _filter.keyword = myFilter.keyword
+                        }
+                    }
+                }
+            }
             localStorage.RDC=JSON.stringify(_filter);
-            if(citys==undefined){_filter.cityid=myFilter.cityid;};
             myFilter=_filter;
         }
         return _filter;
@@ -257,7 +320,7 @@ $().ready(function () {
     function gethtml(rdc) {
         var rdcAddress='';
         rdc.cityname==0||rdc.cityname==undefined?rdcAddress=rdc.provincename:rdcAddress=rdc.provincename+'-'+rdc.cityname;
-        if(localStorage.isStand==0){
+        if(localStorage.isStand!=1){
             if (rdc.audit == -1) {
                 return false
             }
@@ -314,15 +377,6 @@ $().ready(function () {
             $(".two").show();
         }
         var _filter = getFilter(currentPage, maxSize);
-        if(myFilter){
-
-            _filter=myFilter;
-            if(_filter.keyword){
-                $(".one").hide();
-                $(".two").show();
-                $("#searchDara_div input").val(_filter.keyword);
-            }
-        };
         $.post(ER.root + "/i/rdc/newGetRdcList", _filter, function (data) {
             if (data.success && data.data.length > 0) {
                 totalPages = data.totalPages;

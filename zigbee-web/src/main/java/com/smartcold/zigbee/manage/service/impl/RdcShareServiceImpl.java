@@ -1,10 +1,11 @@
 package com.smartcold.zigbee.manage.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import com.smartcold.zigbee.manage.dao.CityListMapper;
+import com.smartcold.zigbee.manage.entity.SharedInfoEntity;
+import com.smartcold.zigbee.manage.util.push.BaseTest;
+import com.smartcold.zigbee.manage.util.push.PushDemoTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,8 @@ public class RdcShareServiceImpl implements RdcShareService {
 	private FileDataMapper fileDataDao;
 	@Autowired
 	private RdcShareMapper rdcShareMapper;
+	@Autowired
+	private CityListMapper cityListMapper;
 	 /**
      * 
      */
@@ -131,6 +134,19 @@ public class RdcShareServiceImpl implements RdcShareService {
 		PageHelper.startPage(pageNum, pageSize);
 		Page<RdcShareDTO> serdcList = this.rdcShareMapper.getNewSERDCListByPage(parameters);
 		return new PageInfo<RdcShareDTO>(serdcList);
+	}
+
+	@Override
+	public void iOSPush(RdcShareDTO rdcShareDTO) throws Exception {
+		Set<String> usernameList = rdcShareMapper.selectByProvince(rdcShareDTO.getDataType(), rdcShareDTO.getTypeCode() == 1 ? 2 : 1,rdcShareDTO.getProvinceid());
+		if(usernameList.size()!=0){
+			PushDemoTest pushDemoTest = new PushDemoTest();
+			String account=usernameList.toString().substring(1,usernameList.toString().length()-1).replaceAll(" ","");
+			String summary="["+cityListMapper.findProvinceById(rdcShareDTO.getProvinceid()).getProvinceName()+"]"
+					+rdcShareDTO.getTitle()+"发布了"+rdcShareDTO.getTypeText()+"消息";
+			pushDemoTest.testPushNoticeToIOS_toAll("account",account,summary);
+		}
+
 	}
 
 	/**
