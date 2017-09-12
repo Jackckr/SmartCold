@@ -374,10 +374,10 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
                 var pageData = canvas.toDataURL('image/jpeg', 1.0);
                 var pdf = new jsPDF('', 'pt', 'a4');
                 if (leftHeight < pageHeight) {
-                   pdf.addImage(pageData, 'JPEG', 0, 0, 690, imgHeight );
+                   pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
                 } else {
                     while(leftHeight > 0) {
-                        pdf.addImage(pageData, 'JPEG', 0, position, 600, imgHeight);
+                        pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight);
                         leftHeight -= pageHeight;
                         position -= 841.89;
                         if(leftHeight > 0) { //避免添加空白页
