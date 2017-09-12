@@ -40,7 +40,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 			}else if($scope.reportType==1){
 				var newDate=$("#date01").val();
 		    	 firstDate = new Date(newDate+' 00:00:00'); endDate =  new Date(newDate+' 23:59:59');  
-		    	endDate.setDate(firstDate.getDate()+7);
+		    	endDate.setDate(firstDate.getDate()+6);
 		    	$scope.endTime= baseTools.formatTime(endDate); 
 		    	$scope.startTime= baseTools.formatTime(firstDate); 
 		    	var newtime=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
@@ -175,18 +175,29 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	 */
 	$scope.initHighchart=function(yData ){
 		var minRange= $scope.minRange_mode[0][$scope.reportType],fm=$scope.minRange_mode[1][$scope.reportType];
-		$scope.charArray[0]= new Highcharts.Chart({ 
-			 chart: { renderTo: 'temperatureChart', zoomType: 'x'},
-            title: { text: ''  },
-            series:yData,
-            yAxis: {  title: {  text: '温度'  }},
-            xAxis: { type: 'datetime',minRange:minRange ,labels: {  formatter: function() {   return  Highcharts.dateFormat(fm, this.value);  }  }  },//minRange:  86400000--间隔为每天显示, tickPixelInterval: 400 ,
-            xDateFormat: '%Y-%m-%d',
-            tooltip: { formatter: function () {  return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' + Highcharts.numberFormat(this.y, 2)+" ℃"; } },
-    	    legend: {enabled: false },
-    	    credits: { enabled: false},
-        });
-		$("#loding").hide(); 
+//		new Highcharts.Chart({ 
+//			 chart: { renderTo: 'temperatureChart', zoomType: 'x'},
+//            title: { text: ''  },
+//            series:yData,
+//            yAxis: {  title: {  text: '温度'  }},
+//            xAxis: { type: 'datetime',minRange:minRange ,labels: {  formatter: function() {   return  Highcharts.dateFormat(fm, this.value);  }  }  },//minRange:  86400000--间隔为每天显示, tickPixelInterval: 400 ,
+//            xDateFormat: '%Y-%m-%d',
+//            tooltip: { formatter: function () {  return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' + Highcharts.numberFormat(this.y, 2)+" ℃"; } },
+//    	    legend: {enabled: false },
+//    	    credits: { enabled: false},
+//        });
+		$scope.charArray[0]= $('#temperatureChart').highcharts({
+			 chart: {  zoomType: 'x'},
+			 title: { text: ''  },
+	            series:yData,
+	            yAxis: {  title: {  text: '温度'  }},
+	            xAxis: { type: 'datetime',minRange:minRange ,labels: {  formatter: function() {   return  Highcharts.dateFormat(fm, this.value);  }  }  },//minRange:  86400000--间隔为每天显示, tickPixelInterval: 400 ,
+	            xDateFormat: '%Y-%m-%d',
+	            tooltip: { formatter: function () {  return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' + Highcharts.numberFormat(this.y, 2)+" ℃"; } },
+	    	    legend: {enabled: false },
+	    	    credits: { enabled: false}
+       });
+	  $("#loding").hide(); 
 	};
 	//2.超温时间和次数图表====================================================================================================================================================================================
 	$scope.overTempAndCount=function(){
@@ -288,15 +299,25 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	 */
 	$scope.getColdstarageYinZi=function(){
 		$http.get('/i/AnalysisController/getAnalysisDataByKey', { params: {type:1, oid:$scope.cuttstorage.id, keys:'OverTempArea', startTime:$scope.startTime, endTime:$scope.endTime}}).success(function (data) {
-          
-			var sumarea=0,  score=100,day=data.OverTempArea.length;    
+			var sumarea=0,crscore=0, iszore=false ,day=data.OverTempArea.length;    
 			angular.forEach(data.OverTempArea, function(obj,i){ 
-				sumarea+=obj.value;
+				crscore= 	(86400-obj.value)/864;
+				if(crscore<=	0){
+					$scope.cuttstorage.score=0;
+					iszore=true;
+				}else{
+					sumarea+=crscore;
+				}
 			});
-			if(day>0){
-				 score=	((86400*day-	sumarea)/(day*864)).toFixed(2);
-			}
-			$scope.cuttstorage.score=score<0?0:score;
+			
+			if(iszore||sumarea<0){
+				sumarea=0;
+			}else if(day>0){
+				sumarea=	(sumarea/(day*864)).toFixed(2);
+			}else{
+				 sumarea=100;
+			};
+			$scope.cuttstorage.score=sumarea;
 		});
 	};
 	
@@ -353,10 +374,10 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
                 var pageData = canvas.toDataURL('image/jpeg', 1.0);
                 var pdf = new jsPDF('', 'pt', 'a4');
                 if (leftHeight < pageHeight) {
-                   pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight );
+                   pdf.addImage(pageData, 'JPEG', 0, 0, 690, imgHeight );
                 } else {
                     while(leftHeight > 0) {
-                        pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight);
+                        pdf.addImage(pageData, 'JPEG', 0, position, 600, imgHeight);
                         leftHeight -= pageHeight;
                         position -= 841.89;
                         if(leftHeight > 0) { //避免添加空白页

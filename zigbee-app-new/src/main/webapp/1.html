@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta charset="UTF-8">
+    <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
+    <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <title>链库网</title>
+		
+
+		
+	</head>
+		      <script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+		         <script type="text/javascript" src="com/js/jquery-3.1.0.min.js"></script>
+	<!-- This is a another test try ,please ignore it ^_^ -->
+	<body ng-app="app"  ng-controller="usercl">
+	</body>
+	<script type="text/javascript">
+	
+	console.log(document.cookie);
+	 var ER = {root:"http://192.168.1.138:8080",coldroot:"http://www.smartcold.org.cn"};
+	 
+	 
+	 	if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}//支持ajax跨域
+	 $.get(ER.root + "/i/user/findUser", function(data) {
+		 if(data.id!=0){alert("MMM");}
+		});//
+	 
+	 
+	var app = angular.module('app', []);
+//
+	app.controller('usercl', function ($http,  $scope) {
+		 $http.defaults.withCredentials = true;
+		 $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+          $http.get(ER.root + "/i/user/findUser").success(function (data) {
+//               if(data.id!=0){alert("nnnn");}
+           });
+	});
+	</script>
+</html>

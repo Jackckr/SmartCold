@@ -21,13 +21,14 @@ public class ResponseData<T> {
 	 * 获取当前可用的ResponseData对象
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "static-access" })
 	public static <T> ResponseData<T> getInstance() {
 		ResponseData<T> rd = TLRD.get();
 		if (rd == null) {
 			rd = new ResponseData<T>();
 			TLRD.set(rd);
 		}
+		rd.clear();
 		return rd;// new ResponseData<T>();
 	}
 

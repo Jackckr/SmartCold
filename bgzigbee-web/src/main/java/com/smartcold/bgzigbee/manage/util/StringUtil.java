@@ -6,6 +6,7 @@
 package com.smartcold.bgzigbee.manage.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -17,6 +18,28 @@ import java.util.List;
 public class StringUtil
 {
 	public static final String	EMPTY_STRING	= "";
+	
+	
+	public static String getIdS(int [] oids)
+	{
+		if(oids!=null){
+			String str= Arrays.toString(oids);
+			return str.substring(1,str.length()-1);
+		}
+		return "";
+	}
+	public static int [] getIdS(String oids)
+	{
+		if(isnotNull(oids)){
+			String[] ids = splitfhString(oids);
+			int [] newids=new int[ids.length];
+			for (int i = 0; i <ids.length; i++) {
+				newids[i]=Integer.parseInt(ids[i]);
+			}
+			return newids;
+		}
+		return null;
+	}
 	
 	/**
 	 * 判断字符串是否为null或者空字符串(即长度为0的字符串)

@@ -60,7 +60,7 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public ResponseData<String> login(HttpServletRequest request,HttpServletResponse response, String userName, String password) {
 		if(StringUtil.isnotNull(userName)&&StringUtil.isnotNull(password)){
-			this.logout(request);
+//			this.logout(request);
 			UserEntity user = userDao.findUser(userName, EncodeUtil.encodeByMD5(password));
 			if (user != null) {
 				String encode = EncodeUtil.encode("sha1", String.format("%s%s", userName, new Date().getTime()));
@@ -69,6 +69,7 @@ public class UserController extends BaseController {
 				redisService.putUserId(user.getId(),encode);
 				user.setUpdateTime(new Date());
 				userDao.updateUser(user);
+				request.getSession().setAttribute("user", user);
 			    Cookie cookie = new Cookie("token",encode);  
 			    cookie.setMaxAge(3600);  
 			    response.addCookie(cookie);  

@@ -103,7 +103,7 @@ function crspsh() {
     var fields = $('#objTable').datagrid('getColumnFields');
     for (var i = 0; i < fields.length; i++) {
         var opts = $('#objTable').datagrid('getColumnOption', fields[i]);
-        if (opts.field == 'ck' || opts.hidden || opts.field == 'hand') {
+        if (opts.field == 'ck' ||opts.field == 'id' || opts.hidden || opts.field == 'hand') {
             continue;
         }
         muits.push("<div id='" + fields[i] + "' name='" + fields[i] + "'  onclick='chclip(this);' data-options=\"iconCls:'icon-" + fields[i] + "'\">" + opts.title + "</div>");

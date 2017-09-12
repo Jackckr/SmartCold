@@ -46,6 +46,8 @@ public class AdminController extends BaseController {
 
 	@Autowired
 	private CookieService cookieService;
+	
+	private static List<ACLAdminNode> ml=new ArrayList<ACLAdminNode>();
 
 	
 	/**2017-10-12日过期
@@ -218,7 +220,37 @@ public class AdminController extends BaseController {
 	}
 	
 	public List<ACLAdminNode> getml(String alc) {
-		List<ACLAdminNode> ml=new ArrayList<ACLAdminNode>();
+		List<ACLAdminNode> ml = getMenu();
+		List<ACLAdminNode> nml=new ArrayList<ACLAdminNode>();
+		String[] split = alc.split("-");
+		String pacl=split[0];
+		String[] cacl=split[1].split("@");
+		int index=0,sindex=0,mlsize=ml.size();
+//		if(pacl.length()!=cacl.length){System.err.println("无效权限！");return null;}
+		for (char fix : pacl.toCharArray()) {
+			index=Integer.parseInt(fix+"");
+			if(index<mlsize){
+				ACLAdminNode aclAdminNode = ml.get(index);
+				List<ACLAdminNode> child = aclAdminNode.getChild();
+				List<ACLAdminNode> nchild = new ArrayList<ACLAdminNode>();
+				if(StringUtil.isnotNull(cacl[index])){
+					for (char sfix : cacl[index].toCharArray()) {
+						sindex=Integer.parseInt(sfix+"");
+						if(sindex<child.size()){
+							nchild.add(child.get(sindex));
+						}
+				    }
+					aclAdminNode.setChild(nchild);
+					nml.add(aclAdminNode);
+				}
+				
+			}
+		}
+		return nml;
+	}
+
+	private List<ACLAdminNode> getMenu() {
+		if(ml.size()>0){return ml;}
 		ACLAdminNode pml = new ACLAdminNode("0","main_platform",      "链库管理");
 		List<ACLAdminNode> mlList0=new ArrayList<ACLAdminNode>();
 		mlList0.add(new ACLAdminNode("0_0","icon-user",      "用户管理",      "user_manage.html"       ));
@@ -227,7 +259,8 @@ public class AdminController extends BaseController {
 		mlList0.add(new ACLAdminNode("0_3","main_ad",     "广告管理",         ""     ));
 		mlList0.add(new ACLAdminNode("0_4","icon-authe",     "认证管理",      "rdc_authen.html"        ));
 		mlList0.add(new ACLAdminNode("0_5","main_infmation", "资讯管理",      ""      ));
-		mlList0.add(new ACLAdminNode("0_6","icon-coldcf",    "冷库配置"   ,   "storageConfig.html"      ));
+		mlList0.add(new ACLAdminNode("0_6","icon-yy", "预约演示",      "appointment.html"      ));
+		mlList0.add(new ACLAdminNode("0_7","icon-coldcf",    "冷库配置"   ,   "storageConfig.html"      ));
 		pml.setChild(mlList0);ml.add(pml);
 		
 	    pml  = new ACLAdminNode("1"  ,"main_dev",     "设备管理");
@@ -275,34 +308,7 @@ public class AdminController extends BaseController {
 		List<ACLAdminNode> mlList6=new ArrayList<ACLAdminNode>();
 		mlList6.add(new ACLAdminNode("6_0","main_companyAcl",    "权限管理", "company_acl.html" ));
 		pml.setChild(mlList6);      ml.add(pml);
-
-
-		List<ACLAdminNode> nml=new ArrayList<ACLAdminNode>();
-		String[] split = alc.split("-");
-		String pacl=split[0];
-		String[] cacl=split[1].split("@");
-		int index=0,sindex=0,mlsize=ml.size();
-//		if(pacl.length()!=cacl.length){System.err.println("无效权限！");return null;}
-		for (char fix : pacl.toCharArray()) {
-			index=Integer.parseInt(fix+"");
-			if(index<mlsize){
-				ACLAdminNode aclAdminNode = ml.get(index);
-				List<ACLAdminNode> child = aclAdminNode.getChild();
-				List<ACLAdminNode> nchild = new ArrayList<ACLAdminNode>();
-				if(StringUtil.isnotNull(cacl[index])){
-					for (char sfix : cacl[index].toCharArray()) {
-						sindex=Integer.parseInt(sfix+"");
-						if(sindex<child.size()){
-							nchild.add(child.get(sindex));
-						}
-				    }
-					aclAdminNode.setChild(nchild);
-					nml.add(aclAdminNode);
-				}
-				
-			}
-		}
-		return nml;
+		return ml;
 	}
 	
 }

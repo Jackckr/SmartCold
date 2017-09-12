@@ -8,9 +8,9 @@ public enum SetTables {
 	
 	STORAGESET(1, "coldstorageset", "冷库"),
 
-	TEMPE(18, "tempset", "温度"),
+	TEMPE(18, "tempset", "温湿度"),
 	
-	HUMIDITY(19, "humidityset", "湿度"),
+//	HUMIDITY(19, "humidityset", "湿度"),
 	
 	DOORSET(2, "coldstoragedoorset", "冷库门"),
 

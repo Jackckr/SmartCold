@@ -1,4 +1,5 @@
 "use strict";
+console.log(document.cookie);
 if ((navigator.userAgent.indexOf('MSIE') >= 0) && (navigator.userAgent.indexOf('Opera') < 0)||//ie6,7,8,9,10
     (navigator.userAgent.indexOf('Trident') >= 0)||//ie11
     (navigator.userAgent.indexOf('Edge') >= 0)){//ie Edge
@@ -29,11 +30,11 @@ var _sysconfig={countdown:60,isdebug:true,resize:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
 getFont();$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
 //var ER = {root:"http://www.liankur.com/",coldroot:"http://www.smartcold.org.cn"};
-// var ER = {root:"http://192.168.1.138:8080",coldroot:"http://www.smartcold.org.cn"};
-var ER = {root:"http://www.liankur.com/",coldroot:"http://www.smartcold.org.cn"};
-var ER = {root:"http://192.168.1.114:8080",coldroot:"http://www.smartcold.org.cn"};
+ var ER = {root:"http://192.168.1.138:8080",coldroot:"http://www.smartcold.org.cn"};
+//var ER = {root:"http://www.liankur.com/",coldroot:"http://www.smartcold.org.cn"};
+//var ER = {root:"http://192.168.1.114:8080",coldroot:"http://www.smartcold.org.cn"};
 
-if ($.ajax) {jQuery.ajaxSetup({cache:false,xhrFields:{withCredentials:true}});}//支持ajax跨域
+if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}//支持ajax跨域
 if(localStorage.length>=14){for(var i in localStorage ){if(i.indexOf("BMap_")>=0){ localStorage.removeItem(i);}}}
 if(window.user==undefined ||window.user==null){
 	if(window.localStorage.logtime&&(new Date().getTime()-window.localStorage.logtime)/60000>1){
