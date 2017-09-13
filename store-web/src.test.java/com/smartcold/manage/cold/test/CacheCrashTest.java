@@ -25,6 +25,8 @@ public class CacheCrashTest {
 	private TempMapper tempServer;
 	//并发线程量
 	private static final int threadNum = 5000;
+	
+	private static final int oid=1;
 	//发令枪
 	private CountDownLatch cdl = new CountDownLatch(threadNum);
 	
@@ -60,7 +62,6 @@ public class CacheCrashTest {
 	private class TempRequest implements Runnable{
 		
 
-		@Override
 		public void run() {
 			this.getTempList();
 		}
@@ -72,22 +73,19 @@ public class CacheCrashTest {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-//			System.out.println(Thread.currentThread().getName()+"==============>"+ods.getOrderAmount(UUID.randomUUID().toString()));
-			List<ItemValue> TempList = tempServer.findVTByTime(0, 1, "Temp",starttime,endtime );
+			List<ItemValue> TempList = tempServer.findVTByTime(oid%10, oid, "Temp",starttime,endtime );
 			System.out.println(Thread.currentThread().getName()+"==============>"+TempList.size());
 		
 		}
 		
 	}
 	
+	
+
 
 	
 
-//	@Test
-//	public void testLock(){
-//		System.out.println(lock.getLock());
-//		lock.releaseLock();
-//	}
+
 
 
 }
