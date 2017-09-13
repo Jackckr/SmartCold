@@ -80,16 +80,16 @@ function getRdcInfo() {
             bigImg.push('<li><a href="javascript:;"><img src="http://139.196.189.93:8089/app/rdcHeader.jpg" alt="" width="700" height="320"/></a></li>');
             smallImg.push('<li class="current"><a href="javascript:;"><img src="http://139.196.189.93:8089/app/rdcHeader.jpg"/><span class="border"></span><span class="mask"></span></a></li>');
         }
-        baseInfo.push('<h2><b class="blue">'+rdc.name+'</b>');
+        baseInfo.push('<h2><b class="blue">'+rdc.name+'</b></h2>');
 
-        if(rdc.rdcId==1878){baseInfo.push('<b class="approve"><i class="iconfont">&#xe65d;</i>已通过</b>')}
+        if(rdc.rdcId==1878){baseInfo.push('<h2><b class="approve"><i class="iconfont">&#xe65d;</i>已通过</b>')}
         else {
             if (rdc.audit == 2) {
                 var auditButton='';
-                baseInfo.push('<b class="approve"><i class="iconfont">&#xe6ac;</i>已认证</b>')
+                baseInfo.push('<h2><b class="approve"><i class="iconfont" style="margin-left: 0;">&#xe6ac;</i>已认证</b>')
             } else {
                 var auditButton='<a class="blue" style="margin-left: 20px" href="approve.html?id='+rdc.rdcId+'">认证该冷库</a>';
-                baseInfo.push('<b class="reachStand"><i class="iconfont">&#xe63b;</i>未认证</b>')
+                baseInfo.push('<h2><b class="reachStand"><i class="iconfont" style="margin-left: 0;">&#xe63b;</i>未认证</b>')
             }
             ;
         }
