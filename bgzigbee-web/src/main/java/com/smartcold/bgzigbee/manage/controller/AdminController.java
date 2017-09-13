@@ -249,7 +249,7 @@ public class AdminController extends BaseController {
 		return nml;
 	}
 
-	private List<ACLAdminNode> getMenu() {
+	private synchronized List<ACLAdminNode> getMenu() {
 		if(ml.size()>0){return ml;}
 		ACLAdminNode pml = new ACLAdminNode("0","main_platform",      "链库管理");
 		List<ACLAdminNode> mlList0=new ArrayList<ACLAdminNode>();

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smartcold.manage.cold.dao.newdb.TempMapper">
+  <resultMap id="BaseResultMap" type="com.smartcold.manage.cold.entity.newdb.Temp">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="oid" jdbcType="INTEGER" property="oid" />
+    <result column="key" jdbcType="VARCHAR" property="key" />
+    <result column="value" jdbcType="DOUBLE" property="value" />
+    <result column="addtime" jdbcType="TIMESTAMP" property="addtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, oid, key, value, addtime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from temp
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from temp
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.smartcold.manage.cold.entity.newdb.Temp">
+    insert into temp (id, oid, key, 
+      value, addtime)
+    values (#{id,jdbcType=INTEGER}, #{oid,jdbcType=INTEGER}, #{key,jdbcType=VARCHAR}, 
+      #{value,jdbcType=DOUBLE}, #{addtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.smartcold.manage.cold.entity.newdb.Temp">
+    insert into temp
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="oid != null">
+        oid,
+      </if>
+      <if test="key != null">
+        key,
+      </if>
+      <if test="value != null">
+        value,
+      </if>
+      <if test="addtime != null">
+        addtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="oid != null">
+        #{oid,jdbcType=INTEGER},
+      </if>
+      <if test="key != null">
+        #{key,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=DOUBLE},
+      </if>
+      <if test="addtime != null">
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.smartcold.manage.cold.entity.newdb.Temp">
+    update temp
+    <set>
+      <if test="oid != null">
+        oid = #{oid,jdbcType=INTEGER},
+      </if>
+      <if test="key != null">
+        key = #{key,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        value = #{value,jdbcType=DOUBLE},
+      </if>
+      <if test="addtime != null">
+        addtime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.smartcold.manage.cold.entity.newdb.Temp">
+    update temp
+    set oid = #{oid,jdbcType=INTEGER},
+      key = #{key,jdbcType=VARCHAR},
+      value = #{value,jdbcType=DOUBLE},
+      addtime = #{addtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+
+  
+    <select id="findVTByTime" parameterType="map" resultType="com.smartcold.manage.cold.entity.comm.ItemValue">
+	    SELECT  `value`,`time` addtime FROM `st360_${tid}`.`temp`   WHERE  `time` > #{startTime} AND `time` &lt; #{endTime} and `oid`=#{oid} and `key`=#{key};
+	</select>
+	
+  
+  
+</mapper>

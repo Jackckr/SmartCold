@@ -93,9 +93,16 @@ bgzigbee-web/src/main/resources/config/spring/local/appcontext-db.xml
 cold-web/src/main/resources/log4j.properties
 zigbee-web/src/main/resources/log4j.properties
 bgzigbee-web/src/main/resources/log4j.properties
+store-web/src/main/resources/config/properties
+store-web/src/main/resources/config/properties
+store-web/src/main/resources/config/spring
+store-web/src/main/resources/config/springmvc
+
+
 Servers
 cold-web/target
 zigbee-web/target
 zigbee-web/target
 bgzigbee-web/target
+store-web/target
 
