@@ -258,8 +258,17 @@ $().ready(function () {
     };
     function gethtml(rdc) {
         if(type==1){
-            var approve = ''
-            if (rdc.audit == 2) {
+            var approve = '';
+            if(rdc.rdcID==1878){//解决出租列表出现未认证的情况：全部都给已认证
+                approve = '<i class="iconfont green">&#xe61f;</i><i class="green">已通过</i>'
+            }else{
+                if (rdc.istemperaturestandard == 1) {
+                    approve = '<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i><i class="iconfont orange">&#xe6e9;</i><i class="orange">冷链委温度达标库</i>'
+                } else {
+                    approve = '<i class="iconfont green">&#xe6ac;</i><i class="green">已认证</i>'
+                }
+            }
+            /*if (rdc.audit == 2) {
                 if(rdc.rdcID==1878){
                     approve = '<i class="iconfont green">&#xe61f;</i><i class="green">已通过</i>'
                 }else{
@@ -275,7 +284,7 @@ $().ready(function () {
                 } else {
                     approve = '<i class="iconfont orange">&#xe63b;</i><i class="orange">未认证</i>';
                 }
-            }
+            }*/
             if (rdc.rdcSqm == undefined) {
                 rdc.rdcSqm = rdc.sqm;
             }
