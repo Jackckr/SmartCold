@@ -12,14 +12,24 @@ public class ItemValue {
 	
 	private double value;
 
+	private Date time;
+	
 	private Date addtime;
 	
-	
+
 	public ItemValue() {
 		super();
 	}
 
 	
+	public ItemValue(int oid, String key, double value, Date time) {
+		super();
+		this.oid = oid;
+		this.key = key;
+		this.value = value;
+		this.time = time;
+	}
+
 
 
 	public int getId() {
@@ -62,6 +72,16 @@ public class ItemValue {
 	}
 
 
+	public Date getTime() {
+		return time;
+	}
+
+
+	public void setTime(Date time) {
+		this.time = time;
+	}
+
+
 	public Date getAddtime() {
 		return addtime;
 	}
@@ -70,9 +90,5 @@ public class ItemValue {
 	public void setAddtime(Date addtime) {
 		this.addtime = addtime;
 	}
-
-	
-	
-	
 	
 }

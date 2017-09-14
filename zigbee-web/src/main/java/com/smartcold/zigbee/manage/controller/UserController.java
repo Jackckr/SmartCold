@@ -296,7 +296,7 @@ public class UserController extends BaseController {
 	
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	@ResponseBody
-	public Object signup(HttpServletRequest request,String username, String password,String password1, String email,String telephone,String signUpCode,Integer type) throws ApiException {
+	public Object signup(HttpServletRequest request,String username, String password,String password1, String email,String telephone,String signUpCode,Integer type,MultipartFile authfile) throws ApiException {
 		if (username == null || password == null || !password.equals(password1)) {
 			return new ResultDtoStr("-1", "用户名密码输入错误");
 		}

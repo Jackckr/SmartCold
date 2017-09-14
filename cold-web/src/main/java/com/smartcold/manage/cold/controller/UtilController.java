@@ -14,6 +14,7 @@ import com.smartcold.manage.cold.service.task.WarningTaskService;
 import com.smartcold.manage.cold.service.task.ZsDevService;
 import com.smartcold.manage.cold.util.CacheManager;
 import com.smartcold.manage.cold.util.EncodeUtil;
+import com.smartcold.manage.cold.util.ResponseData;
 import com.smartcold.manage.cold.util.StringUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 
@@ -33,7 +34,7 @@ public class UtilController extends BaseController {
 	public Object getZWData()  {return CacheManager.zwdataList;}
 	//=====================================================丹弗斯数据接口管理=========================================================================================================================
 	@RequestMapping("/getDFSData")
-	public String getDFSData()  {return DFSCollectionController.dfsdata;}
+	public ResponseData<String> getDFSData()  {return ResponseData.newSuccess(DFSCollectionController.dfsdata); }
 	 @RequestMapping(value = "/gettoke")
 	 public String gettoke(String toke){if(("admin"+TimeUtil.getDateHour()).equals(toke)){ return EncodeUtil.encodeByMD5("toke"+TimeUtil.getDateHour());}return null;}
 	 @RequestMapping(value = "/get_dfsconfig")

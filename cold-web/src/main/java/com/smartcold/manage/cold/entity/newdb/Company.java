@@ -11,7 +11,21 @@ public class Company {
 
     private Date addtime;
 
-    public Integer getId() {
+    
+    
+    
+    public Company() {
+		super();
+	}
+
+	public Company(Integer id, String name, String address) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.address = address;
+	}
+
+	public Integer getId() {
         return id;
     }
 

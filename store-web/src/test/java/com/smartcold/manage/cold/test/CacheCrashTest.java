@@ -1,5 +1,6 @@
 package com.smartcold.manage.cold.test;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -24,9 +25,11 @@ public class CacheCrashTest {
 	@Resource
 	private TempMapper tempServer;
 	//并发线程量
-	private static final int threadNum = 5000;
+	private static final int threadNum = 10;
 	
 	private static final int oid=1;
+	
+	private   int avgtime=0;
 	//发令枪
 	private CountDownLatch cdl = new CountDownLatch(threadNum);
 	
@@ -34,6 +37,8 @@ public class CacheCrashTest {
 	private Date starttime=TimeUtil.pasDate("2017-09-13 06:00:00");
 	
    private Date endtime=TimeUtil.pasDate("2017-09-13 14:00:00");
+   
+   private List<Long> longs=new ArrayList<Long>();
 	
 	@Before
 	public void init(){
@@ -51,31 +56,36 @@ public class CacheCrashTest {
 		}
 		try {
 			Thread.currentThread().join();
+			Thread.sleep(3000);
+			System.err.println("平均时间："+(avgtime/threadNum));
+			
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
 		System.exit(0);
 		
 	}
 	
 	
 	private class TempRequest implements Runnable{
-		
-
 		public void run() {
 			this.getTempList();
 		}
-		
 		private void getTempList(){
 			try {
 				cdl.await();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			List<ItemValue> TempList = tempServer.findVTByTime(oid%10, oid, "Temp",starttime,endtime );
-			System.out.println(Thread.currentThread().getName()+"==============>"+TempList.size());
-		
+			Long sttine=System.currentTimeMillis();
+			List<ItemValue> TempList = tempServer.findVTByTime( oid, "Temp",starttime,endtime );
+			 sttine=System.currentTimeMillis()-sttine;
+			 
+				 avgtime+=sttine;
+//				 System.err.println(longs);
+//				 longs.add(sttine);
+//			System.out.println(Thread.currentThread().getName()+"==============>"+TempList.size()+"=============="+sttine);
 		}
 		
 	}

@@ -8,7 +8,11 @@ public class UserEntity implements Serializable {
 
 	private int role;//1 普通用户 2 集团用户 3 超级管理员
 	
+	private int roleid;
+	
 	private int type;//0:360用户 1:货主  2 :服务商
+	
+	private String avatar;//用户头像
 	
 	private String username;
 
@@ -36,6 +40,7 @@ public class UserEntity implements Serializable {
 			String password, String telephone, String email) {
 		super();
 		this.role = role;
+		this.roleid=role;
 		this.type = type;
 		this.username = username;
 		this.password = password;
@@ -89,6 +94,16 @@ public class UserEntity implements Serializable {
 
 	public void setRole(int role) {
 		this.role = role;
+		this.roleid=role;
+		
+	}
+
+	public int getRoleid() {
+		return roleid;
+	}
+
+	public void setRoleid(int roleid) {
+		this.roleid = roleid;
 	}
 
 	public int getType() {
@@ -106,4 +121,13 @@ public class UserEntity implements Serializable {
 	public void setVipType(Integer vipType) {
 		this.vipType = vipType;
 	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+	
 }
