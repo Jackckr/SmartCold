@@ -12,10 +12,7 @@
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/fonts/iconfont.css">
-    <link rel="stylesheet" href="app/css/login.css">
-    <style>
-
-    </style>
+    <link rel="stylesheet" id="link" href="app/css/login.css">
 </head>
 <body class="hold-transition login-page login_new">
 <!-- new login -->
@@ -63,7 +60,19 @@
 </div>
 <script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <script type="text/javascript">
-    // 	$("#loginCopyR").animate({"margin-left":"60%"}, 600);
+    /*function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return decodeURI(unescape(r[2]));
+            return null;
+        }
+        ;
+    }
+    var name=getUrlParam('name');
+    if (name!="undefined") {
+        $("#link").attr('href', 'app/css/' + name + '.css');
+    }*/
     var mainHeight = $(window).height();
     var url=["/main.html" +( window.location.hash != ""?window.location.hash:"#/cold360Physical"),"","/autIdentity.html","/audit.html"];
     $(".loginBody").height(mainHeight - 160);
@@ -110,14 +119,14 @@
             complete: function (e) { $(me).text("登录"); $(me).delay(500).data("isLoading", false); },
             success: function (data) {
                 if (data.status==1) {
-                	 $("#mention")[0].hidden = false;
-                     showErrorInfo(data.message);
+                    $("#mention")[0].hidden = false;
+                    showErrorInfo(data.message);
                 }else{
-                	document.cookie = data.message;
+                    document.cookie = data.message;
                     window.sessionStorage.sikey = data.message;
                     window.location.href =url[data.status];
                     window.Event.returnValue = false;
-                }	
+                }
             }
         });
     }
