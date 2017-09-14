@@ -3,3 +3,10 @@
 *Date: 2017/9/13 0013
 *Time: 16:41
 */
+#uiView{
+    background: #233038;
+    color: #8aa4af;
+}
+.setHeight{
+    height: 320px;
+}

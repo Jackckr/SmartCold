@@ -421,10 +421,8 @@
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Main content -->
-    <section class="content" ui-view=""></section>
-    <!-- /.content -->
+  <div class="content-wrapper" id="uiView">
+    <section class="content" ui-view></section>
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
@@ -451,6 +449,7 @@
 <script src="bower_components/angular/angular-ui-router.js" type="text/javascript"></script>
 <script src="bower_components/angular/ui-bootstrap.min.js" type="text/javascript"></script>
 <script src="bower_components/angular/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
+<script src="bower_components/charts/highcharts.js" type="text/javascript"></script>
 <!--Project js-->
 <script src="dist/controllers/app.js" type="text/javascript"></script>
 <script src="dist/controllers/blank.js" type="text/javascript"></script>
