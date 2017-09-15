@@ -31,7 +31,21 @@
 
 .menu-title { margin-left: 10px; font-weight: 500; color: white;}
 a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-events:none}.iconfont{font-style:normal;font-size:1pc;font-family:iconfont!important;-webkit-font-smoothing:antialiased;-webkit-text-stroke-width:.2px;-moz-osx-font-smoothing:grayscale}.omg{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tooltip-inner{background:rgba(0,0,0,.8);color:#fff;text-align:left}.angucomplete-dropdown{padding:0 0 0 6px;width:230px;max-height:280px;font-size:9pt}.quanxian{cursor:not-allowed}.quanxian:hover>a:hover,.quanxian>a,.quanxian>a i,.quanxian>a span{color:#444!important;pointer-events:none}.skin-blue .sidebar-menu>li.quanxian:hover>a{background:transparent!important;border-left-color:transparent!important}
-
+#div_msg_datil{
+    display:none;
+    position: fixed;
+    left: 50%;
+    margin-left: -300px;
+    width: 600px;
+    height: 200px;
+    line-height: 34px;
+    text-align: center;
+    border-radius: 3px;
+    color: #555;
+    cursor: pointer;
+    background-color: #f4f4f4;
+    z-index: 199999999
+}
 
 
 </style>
@@ -40,9 +54,24 @@ a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-
 	<div class="wrapper">
 		<!-- Main Header -->
 		<header class="main-header">
-			<div class="ring" ng-if="alarmMsgCount.alarmCount>0" ng-click="toalarmTemp()">
+			<div id="div_errmsg" class="ring hide"  onclick="$('#div_msg_datil').show();" >
 				<span class="ringBox"><i class="iconfont">&#xe6f0;</i></span>
-				<span>{{alarmMsgCount.alarmCount}}</span>
+				<span>{{alarm.totl}}</span>
+			</div>
+			<div id="div_msg_datil" onclick="$('#div_msg_datil').hide();">
+			             <ul class="">
+								<li class="header" >您有{{alarm.totl}}条最新报警信息</li>
+								<li>
+									<ul class="menu">
+										<li ng-if="alarm.TC>0"><a href="#" ng-click="toalarmTemp()"><i class="icon iconfont text-red"></i> 温度报警：{{alarm.TC}}</a></li>
+										<li ng-if="alarm.CC>0"><a href="#"><i class="iconfont text-red">&#xe76d;</i> 操作不当：{{alarm.CC}}</a></li>
+										<li ng-if="alarm.SC>0"><a href="#"><i class="icon iconfont text-red"></i> 系统报警：  {{alarm.SC}}</a></li>
+										<li ng-if="alarm.WC>0"><a href="#"><i class="icon iconfont text-red"></i> 维修告警：  {{alarm.WC}}</a></li>
+									</ul>
+								</li>
+								<li class="footer"><a href="#/alarmTemp">查看全部告警</a></li>
+							</ul>
+			
 			</div>
 			<a href="#/preview" class="logo"> 
 				<span class="logo-mini"><span class="glyphicon glyphicon-home"></span></span> 

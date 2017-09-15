@@ -94,7 +94,7 @@ public class DataCollectionController extends BaseController {
 	@ResponseBody
 	public Object schoolTime(@RequestBody String data, HttpServletResponse response) {
 		LinkedHashMap<String, Object> resMap=new LinkedHashMap<String, Object>();
-		resMap.put("status","200");resMap.put("time", TimeUtil.getLongtime().toString());
+		resMap.put("status","200");resMap.put("time", TimeUtil.getMillTime());
 		try {
 			if(StringUtil.isnotNull(data)){
 			    	ArrayList<StorageDataCollectionEntity> apsatusList = new ArrayList<StorageDataCollectionEntity>();

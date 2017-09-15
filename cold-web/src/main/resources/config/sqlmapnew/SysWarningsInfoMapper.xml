@@ -32,5 +32,8 @@
 		<if test="level!=null"> and `level`=#{level} </if>
 		<if test="starttime!=null and starttime!=''"> and `addtime` >#{starttime} and `addtime` &lt;#{endtime} </if>
 	</select>
+	<select id="getSysWarcountByFilter" parameterType="map" resultType="Integer">
+		SELECT count(id) from `syswarningsinfo` where  `addtime` >#{starttime} and `addtime` &lt;#{endtime} and `type`=#{type} and `rdcid`=#{rdcid}
+	</select>
 	
 </mapper>

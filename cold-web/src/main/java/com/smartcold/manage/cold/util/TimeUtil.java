@@ -3,6 +3,8 @@ package com.smartcold.manage.cold.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.smartcold.manage.cold.entity.newdb.NewColdStorageEntity;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,7 +27,7 @@ public class TimeUtil {
 	public static String  getDateTime(){return	TimeUtil.dateFormat.format(new Date());}//获得时间
 	public static String  getDateTime(Date date){return	TimeUtil.dateFormat.format(date);}
 	public static String  getFormatDate(Date date){return	TimeUtil.datefm.format(date);}
-	
+	public static String  getFormatDate(){return	TimeUtil.datefm.format(new Date());}
 	
 	
 	public static String getMillTime(){
@@ -40,6 +42,11 @@ public class TimeUtil {
 	 */
 	public static String getHextime(){
 		return Integer.toHexString( (int) (System.currentTimeMillis() / 1000)).toUpperCase();
+	}
+	
+	public static String[] getDayTime() {
+	    	String sourceDateStr =  getFormatDate();
+	    	return new String[]{ sourceDateStr+ " 00:00:01", sourceDateStr+ " 23:59:59"};
 	}
 
 	

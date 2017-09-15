@@ -120,7 +120,14 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 		            			 $rootScope.platformDoors = data;
 		             });
 		             $http.get('/i/AlarmController/getAlarmMsg',{params:{  userId: $rootScope.user.id, type: $rootScope.user.type, rdcId:$rootScope.rdcId,isgetMsg:false} }).success( function(data,status,headers,config){ //  初始化月台门
-		            	 $rootScope.alarmMsgCount = data;
+		            	 $rootScope.alarm = data;
+		            	 $rootScope.alarm.totl = data.CC+data.SC+data.TC;
+		            	if($rootScope.alarm.totl>0){
+		            		$("#div_errmsg").removeClass("hide");
+		            	}
+		            	 
+		            	 
+		            	 
 		             });
 		             $state.go('preview');
         	};
