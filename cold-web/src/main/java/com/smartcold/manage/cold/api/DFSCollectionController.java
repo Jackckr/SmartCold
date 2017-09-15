@@ -78,7 +78,13 @@ public class DFSCollectionController extends BaseController {
 		    HashMap<String, ArrayList<DFSDataCollectionEntity>> tempMap=new HashMap<String, ArrayList<DFSDataCollectionEntity>>();
 		    for (Map<String, String> info :  ((List<Map<String, String>>) dataCollectionBatchEntity.get("infos"))) {
 		    	String name = info.get("tagname");
-		    	if(name.indexOf("警")>-1){wardataList.add(new WarningsInfo(name,Integer.parseInt(rdcid),1,date));continue;}
+		    	if(name.indexOf("警")>-1)
+		    	{
+		    		if("1".equals(info.get("currentvalue"))){
+		    			wardataList.add(new WarningsInfo(name,Integer.parseInt(rdcid),1,date));
+		    		}
+		    		continue;
+		    	}
 		    	newdata = config.get(name);if(newdata==null){ continue;}
 		    	if(unitConvers.containsKey(name)){
 				     if(! counsValue(unitConvers, newdata, info, name)){//  加入转换对象

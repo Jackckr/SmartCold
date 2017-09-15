@@ -313,7 +313,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 			if(iszore||sumarea<0){
 				sumarea=0;
 			}else if(day>0){
-				sumarea=	(sumarea/(day*864)).toFixed(2);
+				sumarea=	(sumarea/day).toFixed(2);
 			}else{
 				 sumarea=100;
 			};

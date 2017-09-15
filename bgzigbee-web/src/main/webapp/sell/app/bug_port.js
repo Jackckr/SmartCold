@@ -96,11 +96,17 @@ function getdata(){
 			   return;
 		   }
 		   var rowdata={};//{ “total”:”30″,rows:[] }
-		   if(queryParams.portinedx==0){
-			   var tempdata=JSON.parse(data);
-			   var infos=tempdata.infos;
-			   rowdata.total=infos.length;
-			   rowdata.rows=infos;
+		   if(queryParams.portinedx==0){//
+			   if(data.success){
+				   var tempdata=JSON.parse(data.message);
+				   var infos=tempdata.infos;
+				   rowdata.total=infos.length;
+				   rowdata.rows=infos; 
+			   }else{
+				   rowdata.total=0;
+				   rowdata.rows=[]; 
+			   }
+			  
 		   }else if(queryParams.portinedx==1){
 			   var temp=[];
 			   if(data.length>0){
