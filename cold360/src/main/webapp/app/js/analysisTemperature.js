@@ -468,7 +468,7 @@ app.controller('analysisTemperature', function ($scope, $location,$timeout, $htt
             var chartId="Chart_"+storage.id;
             if ($scope.swiper < $scope.mystorages.length) {
                 var innerHTML = '<div class="swiper-slide">' +
-                    '<p class="actually">' + storage.name + '</p>' +
+                    '<p class="actually">' + storage.name + '&nbsp;&nbsp;超温时长及次数统计</p>' +
                     '<div id=' + chartId + '></div></div>';
                 $("#chartView").last().append(innerHTML);
                 $scope.swiper += 1;
@@ -540,7 +540,7 @@ app.controller('analysisTemperature', function ($scope, $location,$timeout, $htt
                 var mainId=storage.name+"Chart";
                 if ($scope.swiper < $scope.mystorages.length) {
                     var innerHTML = '<div class="swiper-slide">' +
-                        '<p class="actually">' + storage.name + '</p>' +
+                        '<p class="actually">' + storage.name + '&nbsp;&nbsp;30日超温比例统计</p>' +
                         '<div id=' + mainId + '></div></div>';
                     $("#chartView").last().append(innerHTML);
                     $scope.swiper += 1;

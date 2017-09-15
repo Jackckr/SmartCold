@@ -78,7 +78,7 @@ section{
 	color: #5BB789;
 }
 .door>i{
-	color: #448BCB;
+	color: #4287ff;
 }
 .tempture.other>i{
 	color: #EB5A4A;
@@ -93,47 +93,47 @@ section{
 	/*position: relative;*/
 }
 .other>i{
-	color: #448BCB;
+	color: #4287ff;
 }
 .tempture.current{
 	color: #EB5A4A;
-	border-bottom: 3px solid #438BCB;
+	border-bottom: 3px solid #4287ff;
 }
 .light.current{
 	color: #5BB789;
-	border-bottom: 3px solid #438BCB;
+	border-bottom: 3px solid #4287ff;
 }
 .door.current{
-	color: #448BCB;
-	border-bottom: 3px solid #438BCB;
+	color: #4287ff;
+	border-bottom: 3px solid #4287ff;
 }
 .tempture.other.current{
 	color: #EB5A4A;
-	border-bottom: 3px solid #438BCB;
+	border-bottom: 3px solid #4287ff;
 }
 .light.other.current{
 	color: #5BB789;
-	border-bottom: 3px solid #438BCB;
+	border-bottom: 3px solid #4287ff;
 }
 #runDoor.light.other.current,#runDoor.light.other>i,#runDoor.light>i,#runCooling.light>i{
 	color: #F39826;
 }
 .door.other.current{
 	color: #F39826;
-	border-bottom: 3px solid #438BCB;
+	border-bottom: 3px solid #4287ff;
 }
 #makeCold.door.other>i{
-	color: #448BCB;
+	color: #4287ff;
 }
 #runQuery.other>i{
 	color: #5BB789;
 }
 #makeCold.door.other.current{
-	color: #448BCB;
+	color: #4287ff;
 }
 .other.current{
-	color: #448BCB;
-	border-bottom: 3px solid #438BCB;
+	color: #4287ff;
+	border-bottom: 3px solid #4287ff;
 }
 #runQuery.other.current{
 	color: #5BB789;
@@ -198,7 +198,7 @@ section{
 	text-align: left;
 	font-size: 0.75rem;
 	font-weight: normal;
-	color: #438BCB;
+	color: #4287ff;
 	line-height: 1.5rem;
 }
 .temperaturenum{
@@ -264,7 +264,7 @@ b{
 }
 .search i{
 	font-size: 0.8rem;
-	color: #438BCB;
+	color: #4287ff;
 	position: absolute;
 	top: 50%;
 	-webkit-transform: translateY(-50%);
@@ -514,12 +514,12 @@ b{
 	transform: translate(-50%,-50%);
 	width: 70%;
 	height: 70%;
-	background-color: #438BCB;
+	background-color: #4287ff;
 	border-radius: 50%;
 	border: 0;
 }
 .my_list input[type='radio'].blue{
-	border-color: #438BCB;
+	border-color: #4287ff;
 }
 .my_list label{
 	display: inline-block;
@@ -560,7 +560,7 @@ b{
 }
 .historyData .br{
 	margin-bottom: .8rem;
-    color: #438BCB;
+    color: #4287ff;
 }
 .datainp{
 	width:12rem;
@@ -648,7 +648,7 @@ b{
 	text-align: center;
 	line-height: 2rem;
 	z-index: 10;
-	background: #438BCB;
+	background: #4287ff;
 	border-radius:4px;
 }
 .goTop i{
@@ -699,12 +699,12 @@ b{
 	margin-top: 1rem;
 }
 .current.applyLog{
-	color:#438BCB;
-	border-bottom: 3px solid #438BCB;
+	color:#4287ff;
+	border-bottom: 3px solid #4287ff;
 }
 .current.apply_log{
 	color:#F39826;
-	border-bottom: 3px solid #438BCB;
+	border-bottom: 3px solid #4287ff;
 }
 .wxRecords,.mainApply{
 	padding:0 0.9rem 0.5rem;
@@ -713,7 +713,7 @@ b{
 	padding-top: .5rem;
 	text-align: center;
 	font-size: 0.8rem;
-	color: #438BCB;
+	color: #4287ff;
 }
 #jedatebox{
 	z-index: 10000!important;
@@ -903,7 +903,7 @@ input[type='radio']:checked{
 	height: 2.2rem;
 	line-height: 2.2rem;
 	color: #fff;
-	background-color: #438bcb;
+	background-color: #4287ff;
 }
 .role_choose{
 	padding:0.9rem;
@@ -1043,7 +1043,7 @@ input[type='radio']:checked{
 	height: 90vh;
 }
 .auth_txt b{
-	color:#438BCB;
+	color:#4287ff;
 }
 .auth_txt p,.auth_txt h1{
 	margin-bottom: 0.3rem;
@@ -1122,7 +1122,7 @@ input[type='radio']:checked{
 .timeline-title h4{
 	margin: 0;
 	padding: 0;
-	color: #438BCB;
+	color: #4287ff;
 	font-size: .7rem;
 	font-weight: 400;
 }

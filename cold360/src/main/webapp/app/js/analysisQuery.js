@@ -21,7 +21,7 @@ app.controller('analysisQuery', function ($scope, $location, $http, $rootScope, 
         unit: ['(°C)', '(kWh)', '', '', '(kPa)', '(°C)'],
         type: [18, 10, 2, 11, 3, 5],
         key: ['Temp', 'PWC', 'Switch', 'Switch', 'highPress', 'exTemp'],
-        ismklin: [false, false, false, false, false, false]
+        ismklin: [true, true, false, false, true, true]
     };
     $scope.oids = [], $scope.sltit = "", $scope.sl_index = 0, $scope.oldnames = [], $scope.slgptit = "";
 

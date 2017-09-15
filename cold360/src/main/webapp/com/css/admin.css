@@ -166,7 +166,7 @@ section.show{
 	margin-left: 0.5rem;
 }
 .btnGroup .current{
-	background-color: #438BCB;
+	background-color: #4287ff;
 	color: #fff;
 	border-color: transparent;
 }
@@ -200,7 +200,7 @@ section.show{
 }
 .content h4{
 	font-size: 0.8rem;
-    color: #438BCB;
+    color: #4287ff;
     line-height: 1.75;
     font-weight: 400;
     margin: 1rem 0 0.2rem;
@@ -216,7 +216,7 @@ section.show{
     width: .3rem;
     height: .3rem;
     margin-right: 5px;
-    background-color: #438BCB;
+    background-color: #4287ff;
     border-radius: 50%;
 }
 .first{
@@ -244,7 +244,7 @@ section.show{
 	line-height: 1.75;
 }
 .object li>p:first-child{
-    color: #438BCB;
+    color: #4287ff;
     font-size: 0.75rem;
 }
 .logo{
@@ -258,7 +258,7 @@ section.show{
 }
 .tel .contact{
 	font-size: 0.75rem;
-	color: #438BCB;
+	color: #4287ff;
 	margin-top:.8rem;
 }
 .tel .contact+p{
@@ -350,7 +350,7 @@ section.show{
 	margin-top: -0.4rem;
 }
 .set{
-	color: #438BCB;
+	color: #4287ff;
 }
 .sex_set{
 	position:absolute;
@@ -380,7 +380,7 @@ section.show{
 	box-sizing: border-box;
 	line-height: 1.6rem;
 	margin-top: 0.2rem;
-	background-color: #438BCB;
+	background-color: #4287ff;
 	font-size: 0.7rem;
 	color: #fff;
 	text-align: center;
@@ -652,7 +652,7 @@ html,body{
 }
 .search i{
 	font-size: 0.8rem;
-	color: #438BCB;
+	color: #4287ff;
 	position: absolute;
 	top: 50%;
 	-webkit-transform: translateY(-50%);
