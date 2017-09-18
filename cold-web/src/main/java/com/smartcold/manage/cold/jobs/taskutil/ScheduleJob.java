@@ -20,12 +20,24 @@ public class ScheduleJob {
 	private int  warcount;//累计超温次数
     private boolean isTask;
     private Date startTime;//起始报警开始时间
-//    private Date endTime;//结束报警时间
+    private Date endTime;//结束报警时间
 	private ColdStorageSetEntity coldStorageSetEntity;
 	
 	public ScheduleJob() {
 		super();
 	}
+	
+	
+	
+	public ScheduleJob(int oid, String name, Date startTime) {
+		super();
+		this.oid = oid;
+		this.name = name;
+		this.startTime = startTime;
+	}
+
+
+
 	public ScheduleJob(int oid,String group, String name, Long croStartTime,Long addTime) {
 		super();
 		this.oid = oid;
@@ -33,7 +45,6 @@ public class ScheduleJob {
 		this.name = name;
 		this.addTime=addTime;
 		this.croStartTime = croStartTime;
-		
 	}
 	
 	
@@ -115,6 +126,18 @@ public class ScheduleJob {
 	}
 	public void setColdStorageSetEntity(ColdStorageSetEntity coldStorageSetEntity) {
 		this.coldStorageSetEntity = coldStorageSetEntity;
+	}
+
+
+
+	public Date getEndTime() {
+		return endTime;
+	}
+
+
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
 	}
 
 	

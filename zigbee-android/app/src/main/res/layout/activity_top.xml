@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#1E90FF">
+    <!-- head start -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:background="#3275c2">
+        <Spinner
+            android:id = "@+id/Spinner_city"
+            android:layout_width = "wrap_content"
+            android:layout_height ="wrap_content">
+        </Spinner>
+        <EditText
+            android:layout_width = "0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:drawableRight="@drawable/search_right"
+            android:background="@drawable/edittextshape"
+            android:hint="请输入搜索内容..." />
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/barcode" />
+    </LinearLayout>
+    <!-- Head end   -->
+</LinearLayout>

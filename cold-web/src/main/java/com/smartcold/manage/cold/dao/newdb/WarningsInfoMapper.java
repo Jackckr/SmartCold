@@ -1,5 +1,6 @@
 package com.smartcold.manage.cold.dao.newdb;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,9 +11,12 @@ import com.smartcold.manage.cold.entity.newdb.WarningsInfo;
 public interface WarningsInfoMapper {
 
 	public void addwarningsinfos(List<WarningsInfo> warningsInfos);
+	
 	public List<WarningsInfo> findAllWarningInfo(int rdcId);
 	
 	public List<WarningsInfo> findLastNWarningInfo(@Param("rdcId") int rdcId, @Param("point") int point);
+	
+	public List<WarningsInfo> findWarningByTime(@Param("rdcId")int rdcId, @Param("startTime") Date stTime, @Param("edTime")Date edTime);
 	
 	public List<HashMap<String, Object>> getWarCountByHPO(@Param("rdcId")int rdcId, @Param("stTime") String stTime, @Param("edTime")String edTime);
 }

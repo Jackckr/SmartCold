@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   <!--  <meta http-equiv="refresh" content="10"> -->
+    <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
+    <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <title>发布库</title>
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/release.css">
+    <script type="text/javascript" src="../js/jquery-1.12.0.min.js"></script>
+    <script type="text/javascript" src="../js/common.js"></script>
+</head>
+<body>
+    <!-- header -->
+        <header>
+        	<div class="timer"></div>
+            <div class="area fl">
+                <a  onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
+            </div>
+            <div class="zoom fr">
+                <a href="search.html"><i class="iconfont">&#xe62f;</i></a>
+            </div>
+            <div class="txt">
+                发布库
+            </div>
+        </header>
+    <!-- header end-->
+    <section class="main">
+        <form>
+            <ul class="houseinfo">
+                <li>
+                    <label for="name">名称</label>
+                    <input type="text"  id="name" placeholder="睿冷科技"/>
+                </li>
+                <li>
+                    <label for="province">省</label>
+                    <input type="text" id="province" />
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label for="city">市</label>
+                    <input type="text" id="city" />
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label for="geographic">地理位置</label>
+                    <input type="text"  id="geographic" />
+                </li>
+                <li>
+                    <label for="area">面积</label>
+                    <input type="text"  id="area" placeholder="冷库面积(㎡)" />
+                </li>
+                <li>
+                    <label for="operateType">冷库经营类型</label>
+                    <input type="text" id="operateType" />
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label for="storageType">商品存放类型</label>
+                    <input type="text" id="storageType" />
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label for="temperatureType">冷库温度类型</label>
+                    <input type="text" id="temperatureType" />
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li class="number">
+                    <div>冷藏车数量</div>
+                    <div>
+                        <div><span><1.8T</span><input type="text"><span>量</span></div>
+                        <div><span>1.8T-6T</span><input type="text"><span>量</span></div>
+                        <div><span>6T-14T</span><input type="text"><span>量</span></div>
+                        <div><span>>14T</span><input type="text"><span>量</span></div>
+                    </div>
+                </li>
+                <li>
+                    <label for="phone">联系电话</label>
+                    <input type="text"  id="phone"/>
+                </li>
+                <li>
+                    <label for="note">备注</label>
+                    <input type="text"  id="note"/>
+                </li>
+                <li>
+                    <label for="kg">吨位</label>
+                    <input type="text" id="kg" placeholder="(选填)"/>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label for="structure">结构</label>
+                    <input type="text" id="structure" placeholder="(选填)"/>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label for="deviceType">冷链设施类型</label>
+                    <input type="text" id="deviceType" placeholder="(选填)"/>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label for="moon">是否有月台</label>
+                    <input type="text" id="moon" placeholder="(选填)"/>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label for="cleanroom">是否有理货间</label>
+                    <input type="text" id="cleanroom" placeholder="(选填)"/>
+                </li>
+                <li>
+                    <label for="cleanarea">理货区面积</label>
+                    <input type="text" id="cleanarea" placeholder="(选填)"/>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label for="temperatureTypeCtr">理货区有无温控</label>
+                    <input type="text" id="temperatureTypeCtr" placeholder="(选填)"/>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label for="Cryogen">制冷剂类型</label>
+                    <input type="text" id="Cryogen" placeholder="(选填)"/>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+                <li>
+                    <label for="temperatureRecord">有无温度记录</label>
+                    <input type="text" id="temperatureRecord" placeholder="(选填)"/>
+                    <i class="iconfont fr moreinfo">&#xe60d;</i>
+                </li>
+            </ul>
+            <!--双箭头下拉-->
+            <div class="next"><i class="iconfont">&#xe649;</i></div>
+            <ul class="houseinfo black">
+                 <li>
+                     <label for="name">名称</label>
+                     <input type="text"  id="name" placeholder="睿冷科技"/>
+                 </li>
+                 <li>
+                     <label for="province">省</label>
+                     <input type="text" id="province" />
+                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                 </li>
+                 <li>
+                     <label for="city">市</label>
+                     <input type="text" id="city" />
+                     <i class="iconfont fr moreinfo">&#xe60d;</i>
+                 </li>
+             </ul>
+        </form>
+        <button class="mybtn" onclick="location.href='releasesuccess.html'">确认发布</button>
+    </section>
+
+    <ul class="footer">
+        <li>           
+            <a href="index.html">
+                <i class="iconfont">&#xe65a;</i>
+                <p class="info">首页</p>
+            </a>
+        </li>
+        <li class="active">            
+            <a href="release.html">
+                <i class="iconfont">&#xe666;</i>
+                <p class="info">发布</p>
+            </a>
+        </li>
+        <li>          
+            <a href="cold360.html">
+                <i class="iconfont">&#xe66c;</i>
+                <p class="info">冷库360</p>
+            </a>
+        </li>
+        <li>            
+            <a href="admin.html">
+                <i class="iconfont">&#xe65e;</i>
+                <p class="info">我的</p>
+            </a>
+        </li>
+    </ul>
+</body>
+</html>

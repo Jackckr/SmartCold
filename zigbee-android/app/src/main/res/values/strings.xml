@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">"链库"</string>
+    <string name="rdctext">"冷库"</string>
+    <string name="sharetext">"共享"</string>
+    <string name="home">"首页"</string>
+    <string name="news">"资讯"</string>
+    <string name="info">"消息"</string>
+    <string name="me">"我的"</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_view_pager_demo">ViewPagerDemo</string>
+</resources>

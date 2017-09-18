@@ -12,6 +12,9 @@
     select * from `warningsinfo` where rdcid=#{rdcId} order by addtime desc limit #{point}
 </select>
 
+<select id="findWarningByTime" resultType="WarningsInfo">
+	 select * from `warningsinfo`  where `rdcid`=#{rdcId} and  `date` BETWEEN #{stTime} and #{edTime}  ;
+</select>
 <select id="getWarCountByHPO" resultType="map">
 	SELECT `key` ,sum(`value`)  value FROM `coldstorageanalysis` where oid=#{rdcId} and `key` in('HighPressWarningCount','PowerWarningCount','OilWarningCount','LowWarningCount')  and  `date` BETWEEN #{stTime} and #{edTime} GROUP BY `key` ;
 </select>
