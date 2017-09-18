@@ -150,7 +150,7 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
                             });
 
                             var mainId = 'door' + doorId;
-                            if ($scope.swiper < $scope.coldStorageDoors.length * $scope.mystorages.length) {
+                            if ($scope.swiper < $scope.coldStorageDoors.length + $scope.mystorages.length) {
                                 if($scope.coldStorageDoors.length==1){
                                     $scope.doorName= storage.name
                                 }else{
@@ -165,7 +165,7 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
 
                             $('#' + mainId).highcharts({
                                 chart: {type: 'area'},
-                                title: {text: '冷库门开关监控',style: { fontSize:'0.7rem'}},
+                                title: {text: obj.name+'开关监控',style: { fontSize:'0.7rem'}},
                                 xAxis: {type: 'datetime',tickPixelInterval: 200},
                                 yAxis: {
                                     allowDecimals: false,
@@ -560,6 +560,7 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
 
     clearInterval($rootScope.timeTicket);
     $rootScope.timeTicket = setInterval(function () {
+        clearSwiper();
         if ($scope.activeEnergy == 'storageDoor' && $scope.mystorages && $scope.mystorages.length > 0) {
             for (var i = 0; i < $scope.mystorages.length; i++) {
                 $scope.drawDoor($scope.mystorages[i]);

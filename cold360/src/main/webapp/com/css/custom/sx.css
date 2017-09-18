@@ -255,15 +255,28 @@ input[type='radio']:checked{
 	background-color: #5eb95e;
 	color: #fff;
 }
-
+/*
+*逸励实业css
+*/
 header h1{
 	display: inline-block;
 	margin: 1rem;
-	background: url("../other/360_logo.png") no-repeat center;
+	background: url("../../other/Panasonic_b_posi.png") no-repeat center;
 	background-size: cover;
-	width: 10.8rem;
+	width: 9.8rem;
 	height:1.5rem;
 }
 .login{
 	margin-top: 3rem;
+}
+.login+div{
+	position: absolute;
+	bottom: 2.5rem;
+	text-align: center;
+	width: 100%;
+	font-size: .7rem;
+}
+.login+div p{
+	font-size: .7rem;
+	margin-top: .5rem;
 }

@@ -31,8 +31,8 @@ var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
 getFont();$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
 
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}//支持ajax跨域
-// var ER = {root:"http://www.liankur.com/",coldroot:"http://www.smartcold.org.cn"};
-var ER = {root:"http://192.168.1.114:8080",coldroot:"http://192.168.1.114:8889"};
+var ER = {root:"http://www.liankur.com/",coldroot:"http://www.smartcold.org.cn"};
+// var ER = {root:"http://192.168.1.114:8080",coldroot:"http://192.168.1.114:8889"};
 
 if(localStorage.length>=14){for(var i in localStorage ){if(i.indexOf("BMap_")>=0){ localStorage.removeItem(i);}}}
 if(window.user==undefined ||window.user==null){
