@@ -4,8 +4,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.smartcold.manage.cold.dao.newdb.SysWarningsInfoMapper;
 import com.smartcold.manage.cold.dao.newdb.WarningsInfoMapper;
@@ -23,6 +27,8 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 
  **/
 //@Service
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "classpath*:config/spring/local/appcontext*.xml" })
 public class WarningService  {
 	 
 	    @Autowired
@@ -36,7 +42,9 @@ public class WarningService  {
 	
 	    private static HashMap<Integer, List<ScheduleJob>> extdataHashMap=new HashMap<Integer, List<ScheduleJob>>();
 	
-	
+	    /**
+	     * 
+	     */
 	    @Scheduled(cron = "0 0 */1 * * ?")
 	    public  void timer() {
 	    	System.err.println("我执行了=====================================");
@@ -45,11 +53,17 @@ public class WarningService  {
   /**
    * findWarningByTime
    */
+	   @Test 
        public void excute(){
     	   Date startTime = TimeUtil.getBeforeHOUR(1),endTime =  new Date();
     	   List<Integer> findAllConfig = spiderConfigMapper.findAllConfig();
     	   for (Integer rdcid : findAllConfig) {
     		   List<WarningsInfo> findWarningByTime = wInfoMapper.findWarningByTime(rdcid, startTime, endTime);
+    		   System.err.println(findWarningByTime.size());
+    		   
+    		   
+    		   
+    		   
 		   }
        }
 

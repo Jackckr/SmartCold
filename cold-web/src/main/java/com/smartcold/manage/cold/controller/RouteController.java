@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class RouteController {
 
 	@RequestMapping(value = "/sx", method = RequestMethod.GET)
-	public Object sx(HttpSession session) {
+	public Object sx(HttpSession session,String cid,String name) {//
 		session.setAttribute("logincss", "sx.css");
 		session.setAttribute("company","1,松下技术服务有限公司,上海市普陀区");
-		return "../../login.jsp";
+		return "../../cid.html";
 	}
 	@RequestMapping(value = "/yl", method = RequestMethod.GET)
 	public Object yl(HttpSession session) {

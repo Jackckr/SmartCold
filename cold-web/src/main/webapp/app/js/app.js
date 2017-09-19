@@ -125,9 +125,6 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 		            	if($rootScope.alarm.totl>0){
 		            		$("#div_errmsg").removeClass("hide");
 		            	}
-		            	 
-		            	 
-		            	 
 		             });
 		             $state.go('preview');
         	};

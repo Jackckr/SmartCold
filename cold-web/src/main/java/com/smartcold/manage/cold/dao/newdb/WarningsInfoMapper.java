@@ -16,7 +16,7 @@ public interface WarningsInfoMapper {
 	
 	public List<WarningsInfo> findLastNWarningInfo(@Param("rdcId") int rdcId, @Param("point") int point);
 	
-	public List<WarningsInfo> findWarningByTime(@Param("rdcId")int rdcId, @Param("startTime") Date stTime, @Param("edTime")Date edTime);
+	public List<WarningsInfo> findWarningByTime(@Param("rdcId")int rdcId, @Param("stTime") Date stTime, @Param("edTime")Date edTime);
 	
 	public List<HashMap<String, Object>> getWarCountByHPO(@Param("rdcId")int rdcId, @Param("stTime") String stTime, @Param("edTime")String edTime);
 }

@@ -34,6 +34,17 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
+ <!-- 配置登陆过滤器 -->
+<!--    <filter> -->
+<!--        <filter-name>login</filter-name> -->
+<!--        <filter-class>com.jingxing.oa.filter.LoginFilter</filter-class> -->
+<!--    </filter> -->
+<!--    <filter-mapping> -->
+<!--        <filter-name>login</filter-name> -->
+<!--        <url-pattern>/a/*</url-pattern> -->
+<!--    </filter-mapping> -->
+
+
 	 <filter>  
 		  <filter-name>characterEncodingFilter</filter-name>  
 		  <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>  
