@@ -23,6 +23,8 @@ public class StringUtil
 	public static 	String getToken(){
 	  return 	EncodeUtil.encodeByMD5("token"+TimeUtil.getDateHour());
 	}
+
+	public static Boolean checkToken(String token){return getToken().equals(token);}
 	
 	
 	/**

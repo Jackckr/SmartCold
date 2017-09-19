@@ -3,6 +3,7 @@ package com.smartcold.zigbee.manage.util.push;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.http.ProtocolType;
 import com.aliyuncs.push.model.v20150827.*;
+import com.smartcold.zigbee.manage.entity.PushEntity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -40,23 +41,49 @@ public class PushDemoTest extends BaseTest {
      * <p>
      * 参见文档 https://help.aliyun.com/document_detail/30082.html
      */
-    public void testPushNoticeToAndroid_toDevice() throws Exception {
+    public void pushByAccountToAndroid(PushEntity pushEntity) throws Exception {
 
         PushNoticeToAndroidRequest androidRequest = new PushNoticeToAndroidRequest();
         //推送内容需要保护，请使用HTTPS协议
         androidRequest.setProtocol(ProtocolType.HTTPS);
         //推送内容较长，请使用POST请求
         androidRequest.setMethod(MethodType.POST);
-        androidRequest.setAppKey(appKey);
-        androidRequest.setTarget("device");
-        androidRequest.setTargetValue(deviceIds);
-        androidRequest.setTitle("Hello OpenAPI!");
-        androidRequest.setSummary("你好, PushNoticeToAndroid from OpenAPI!");
+        androidRequest.setAppKey(pushEntity.getAppKey());
+        androidRequest.setTarget("account");
+        androidRequest.setTargetValue(pushEntity.getUserIds());
+        androidRequest.setTitle(pushEntity.getTitle());
+        androidRequest.setSummary(pushEntity.getSummary());
 
         PushNoticeToAndroidResponse pushNoticeToAndroidResponse = client.getAcsResponse(androidRequest);
         System.out.printf("RequestId: %s, ResponseId: %s\n",
                 pushNoticeToAndroidResponse.getRequestId(), pushNoticeToAndroidResponse.getResponseId());
     }
+
+    /*
+    * 账户推送消息至ios
+    * */
+    public void pushByAccountToIos(PushEntity pushEntity) throws Exception {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd HH:mm:ss");
+
+        PushNoticeToiOSRequest iOSRequest = new PushNoticeToiOSRequest();
+        //推送内容需要保护，请使用HTTPS协议
+        iOSRequest.setProtocol(ProtocolType.HTTPS);
+        //推送内容较长，请使用POST请求
+        iOSRequest.setMethod(MethodType.POST);
+        iOSRequest.setAppKey(pushEntity.getAppKey());
+        // iOS的通知是通过APNS中心来发送的，需要填写对应的环境信息. DEV:表示开发环境, PRODUCT: 表示生产环境
+        iOSRequest.setEnv("DEV");
+        iOSRequest.setTarget("account");
+        iOSRequest.setTargetValue(pushEntity.getUserIds());
+        iOSRequest.setSummary(pushEntity.getSummary());
+        iOSRequest.setiOSExtParameters("{\"type\":\""+pushEntity.getType()+"\"}");
+        iOSRequest.setExt("{\"sound\":\"default\", \"badge\":\"42\"}");
+
+        PushNoticeToiOSResponse pushNoticeToiOSResponse = client.getAcsResponse(iOSRequest);
+        System.out.printf("RequestId: %s, ResponseId: %s\n",
+                pushNoticeToiOSResponse.getRequestId(), pushNoticeToiOSResponse.getResponseId());
+    }
+
 
     /**
      * 推送通知给android

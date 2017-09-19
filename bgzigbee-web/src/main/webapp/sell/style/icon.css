@@ -24,7 +24,7 @@
 
 .icon_add   {background:url('icons/1.png') no-repeat;}                               /*添加按钮1*/
 .icon_add1  {background:url('icons/1_1.png') no-repeat;}                             /*添加按钮2*/
-.icon_add2   {background: url(img/icons.png) no-repeat scroll -871px 0px rgba(0, 0, 0, 0);}                               /*添加按钮1*/
+.icon_add2   {background: url(img/icons.png) no-repeat scroll -871px 0px rgba(0, 0, 0, 0);}/*添加按钮1*/
 .icon_rem   {background:url('icons/2.png') no-repeat;}                               /*删除按钮1*/
 .icon_rem2  {background:url('icons/2_1.png') no-repeat;}                             /*删除按钮2*/
 .icon-delete{ background:url('icons/delete.png') no-repeat center center;}           /*删除按钮3*/
@@ -44,6 +44,7 @@
 .main_platform {background: url(img/icons.png) no-repeat scroll -481px -242px rgba(0, 0, 0, 0);}/*平台管理*/
 .main_dev {background: url(img/icons.png) no-repeat scroll -660px -32px rgba(0, 0, 0, 0);}/*设备管理*/
 .main_360 {background: url(img/icons.png) no-repeat scroll -961px -423px rgba(0, 0, 0, 0);}/*冷库360*/
+.main_store360 {background: url(img/icons.png) no-repeat scroll -1230px -600px rgba(0, 0, 0, 0);}/*门店360*/
 .main_coun {background: url(img/icons.png) no-repeat scroll -1px -361px rgba(0, 0, 0, 0);}/*网站统计*/
 .main_sys {background: url(img/icons.png) no-repeat scroll -60px -270px rgba(0, 0, 0, 0);}/*系统管理*/
 .main_fwq {background: url(img/icons.png) no-repeat scroll -960px -60px rgba(0, 0, 0, 0);}/*服务管理*/
@@ -69,6 +70,9 @@
 .dev_token {background: url(img/icons.png) no-repeat scroll -1050px -511px rgba(0, 0, 0, 0);}/*设备充电*/
 
 
+.store_manage {background: url(img/icons.png) no-repeat scroll -870px -662px rgba(0, 0, 0, 0);}/*门店管理*/
+
+
 .main_companyAcl {background: url(img/icons.png) no-repeat scroll -1052px -270px rgba(0, 0, 0, 0);}/*企业内部权限管理*/
 
 /*=====================================用户图标=====================================================*/
@@ -80,6 +84,9 @@
 /*====================================rdc图标=====================================================*/
 .rdc_add {background: url(img/icons.png) no-repeat scroll -1052px -392px rgba(0, 0, 0, 0);}
 .rdc_del {background: url(img/icons.png) no-repeat scroll -1082px -393px rgba(0, 0, 0, 0);}
+/*====================================门店管理图标=====================================================*/
+.store_add {background: url(img/icons.png) no-repeat scroll -511px -570px rgba(0, 0, 0, 0);}
+.store_del {background: url(img/icons.png) no-repeat scroll -540px -570px rgba(0, 0, 0, 0);}
 /*====================================共享信息图标=====================================================*/
 .rdcShare_del {background: url(img/icons.png) no-repeat scroll -1412px -183px rgba(0, 0, 0, 0);}
 /*====================================企业管理图标=====================================================*/
