@@ -256,9 +256,8 @@ input[type='radio']:checked{
 	color: #fff;
 }
 
-header h1{
-	display: inline-block;
-	margin: 1rem;
+.logoH1{
+	margin: 1rem auto;
 	background: url("../other/360_logo.png") no-repeat center;
 	background-size: cover;
 	width: 10.8rem;

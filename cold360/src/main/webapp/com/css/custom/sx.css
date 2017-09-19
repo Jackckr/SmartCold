@@ -258,9 +258,8 @@ input[type='radio']:checked{
 /*
 *逸励实业css
 */
-header h1{
-	display: inline-block;
-	margin: 1rem;
+.logoH1{
+	margin: 1rem auto;
 	background: url("../../other/Panasonic_b_posi.png") no-repeat center;
 	background-size: cover;
 	width: 9.8rem;
@@ -269,14 +268,13 @@ header h1{
 .login{
 	margin-top: 3rem;
 }
-.login+div{
-	position: absolute;
-	bottom: 2.5rem;
+.adTxt{
+	margin-top: 4rem;
 	text-align: center;
 	width: 100%;
 	font-size: .7rem;
 }
-.login+div p{
+.adTxt p{
 	font-size: .7rem;
 	margin-top: .5rem;
 }
