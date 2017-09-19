@@ -66,6 +66,10 @@
     </div>
 </footer>
 <script type="text/javascript">
+    /*跨域Android传user对象*/
+    function sendUserToAndroid(user) {
+        latte.event(user);
+    }
     $(function(){
         baguetteBox.run('.gallery', {
             buttons:'true'
@@ -126,6 +130,10 @@
                             if (userdata && userdata.id != 0) {
                                 util.setCookie("username", userName);
                                 window.localStorage.lkuser = JSON.stringify(userdata);
+                                var userAgent = navigator.userAgent.toLowerCase();//获取userAgent// isInapp = userAgent.indexOf("sunyuki")>=0;//查询是否有相关app的相关字段
+                                //alert(userAgent);
+                                userdata.action="push";
+                                sendUserToAndroid(JSON.stringify(userdata));
                                 window.localStorage.logtime = new Date().getTime();
                                 $.get(ER.root + "/i/user/isSubmitAuditUser", {userId: userdata.id},function (data) {checkState = data.status;});
                                 util.setCookie("token", token);
@@ -137,7 +145,7 @@
                                         backUrl=localStorage.oURL;
                                     }else{
                                         backUrl = "../index.html";
-                                    };
+                                    }
                                 }
                                 window.location.href = backUrl;
                                 window.Event.returnValue = false;

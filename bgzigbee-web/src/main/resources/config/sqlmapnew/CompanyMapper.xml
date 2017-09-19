@@ -13,21 +13,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from Company
+    from sc360.Company
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from Company
+    delete from sc360.Company
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.smartcold.bgzigbee.manage.sc360.entity.Company" >
-    insert into Company (id, name, address, 
+    insert into sc360.Company (id, name, address,
       addtime)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{addtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.smartcold.bgzigbee.manage.sc360.entity.Company" >
-    insert into Company
+    insert into sc360.Company
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -76,7 +76,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.smartcold.bgzigbee.manage.sc360.entity.Company" >
-    update Company
+    update sc360.Company
     <set >
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
@@ -100,14 +100,14 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.smartcold.bgzigbee.manage.sc360.entity.Company" >
-    update Company
+    update sc360.Company
     set name = #{name,jdbcType=VARCHAR},
       address = #{address,jdbcType=VARCHAR},
       addtime = #{addtime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="findAllCompany" parameterType="int" resultType="com.smartcold.bgzigbee.manage.sc360.entity.Company">
-    SELECT * FROM Company
+    SELECT * FROM sc360.Company
     <where>
       <if test="keyword != null">
         AND name like "%"#{keyword}"%"
@@ -116,9 +116,9 @@
     order by `addtime` desc
   </select>
   <select id="findCompanyByName" parameterType="map" resultType="com.smartcold.bgzigbee.manage.sc360.entity.Company">
-    SELECT * FROM Company WHERE `name` = #{name}
+    SELECT * FROM sc360.Company WHERE `name` = #{name}
   </select>
   <delete id="deleteCompany" parameterType="map">
-    DELETE FROM Company WHERE `id` = #{id}
+    DELETE FROM sc360.Company WHERE `id` = #{id}
   </delete>
 </mapper>

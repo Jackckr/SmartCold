@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>冷库管理</title>
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../comm/jquery/themes/default/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="../style/icon.css"/>
+    <link rel="stylesheet" type="text/css" href="../style/comm.css"/>
+    <link rel="stylesheet" type="text/css" href="../style/main/addRdc.css"/>
+    <link rel="stylesheet" href="../../comm/imgview/viewer.min.css">
+    <script type="text/javascript" src="../../comm/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../../comm/jquery/jquery.easyui.min.js"></script>
+    <script type="text/javascript"  src="../../comm/imgview/viewer.min.js"></script>
+    <script type="text/javascript" src="../app/comm.js"></script>
+    <script type="text/javascript" src="../app/store_company_manage.js"></script>
+</head>
+<body class="easyui-layout">
+<div data-options="region:'center'">
+    <table id="objTable" class="fill"></table>
+</div>
+<div id="div_filter" style="display: none;">
+    <div id="div_filteri" style="padding:2px 5px;">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'company_add'" onclick="addCold()">添加</a>
+        <a id="delButton" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'company_del'" onclick="dels()">删除</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'pagination-load'" onclick="refresh()">刷新</a>
+        <div style="float: right">
+            <input id="fddata" class="easyui-searchbox" val="ml" data-options="prompt:'请输入搜索条件...'" style="width:200px;display:inline;"/>
+        </div>
+    </div>
+</div>
+
+
+<div id="addCompany" class="easyui-dialog" title="添加集团" style="width:60%;height:95%;min-width: 540px;"
+     data-options="iconCls:'icon-save',modal:true,closed:true">
+    <form id="submitCompany">
+        <div class="formCtr">
+            <div class="formTitle">集团名称：<b>*</b><em id="showNameMessage" style="display: none"> 集团名已经被注册 </em></div>
+            <input type="hidden" name="id">
+            <div class="formContain">
+                <input type="text" name="name" id="name">
+            </div>
+        </div>
+        <div class="formCtr">
+            <div class="formTitle">集团地址：<b>*</b></div>
+            <div class="formContain">
+                <input type="text" name="address" id="address">
+            </div>
+        </div>
+        <div class="formCtr">
+            <div class="formTitle">集团负责人：<b>*</b></div>
+            <div class="formContain">
+                <input type="text" name="principal" id="principal">
+            </div>
+        </div>
+        <div class="formCtr">
+            <div class="formTitle">集团电话：<b>*</b></div>
+            <div class="formContain">
+                <input type="text" name="telephone" id="telephone">
+            </div>
+        </div>
+        <div class="formCtr">
+            <div class="formTitle">集团email：<b>*</b></div>
+            <div class="formContain">
+                <input type="text" name="email" id="email">
+            </div>
+        </div>
+        <div style="text-align: center;margin-top: 10px;">
+            <a id="companyButton" onclick="addCompanySubmit()" class="easyui-linkbutton btn">保存集团</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

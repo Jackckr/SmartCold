@@ -14,7 +14,16 @@
        <!--<property name="typeAliasesPackage" value="com.smartcold.bgzigbee.manage.entity" />  -->
 		<!--<property name="configLocation"  value="classpath:config/mybatis/mybatis-config.xml" />-->
     <!--</bean>-->
-
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.smartcold.bgzigbee.manage.dao.store360" />
+        <property name="sqlSessionFactoryBeanName" value="storeSqlSessionFactory"/>
+    </bean>
+    <bean id="sqlSessionFactoryStore" class="org.mybatis.spring.SqlSessionFactoryBean" name="storeSqlSessionFactory">
+        <property name="dataSource" ref="dataSourceStore" />
+        <property name="mapperLocations" value="classpath*:config/sqlmapstore/*.xml"/>
+        <property name="typeAliasesPackage" value="com.smartcold.bgzigbee.manage.entity.store360" />
+        <property name="configLocation"  value="classpath:config/mybatis/mybatis-config.xml" />
+    </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.smartcold.bgzigbee.manage.dao" />
         <property name="sqlSessionFactoryBeanName" value="newdbSqlSessionFactory"/>

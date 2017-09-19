@@ -1,7 +1,6 @@
 checkLogin();
 app.controller('alarmLog', function ($scope, $location, $http, $rootScope, userService) {
     $scope.user = window.user;
-    var myChart = echarts.init(document.getElementById('tem_div'));
     $http.defaults.withCredentials = true;
     $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
     $scope.searchUrl = ER.coldroot + "/i/rdc/searchRdc?type=1&filter=";
@@ -14,35 +13,38 @@ app.controller('alarmLog', function ($scope, $location, $http, $rootScope, userS
         $(this).addClass('current').siblings().removeClass('current');
     })
     $scope.initData=function(){
-        var oids=""; angular.forEach($rootScope.mystorages,function(storage){ oids+=storage.id+",";  });
-        oids=oids.substr(0,oids.length-1);$scope.model=["详细","关闭"];
-        $http.get(ER.coldroot +'/i/AlarmController/getOverTempAnalysis', {  params: { "oids": oids ,"rdcId": $rootScope.rdcId } }).success(function (data) {
-            $scope.tempwarLog=[];
-            if(data.success){
-                var datalist=  data.entity,xAxis=[],count=[],time=[];
-                angular.forEach(datalist,function(item,i){
-                    xAxis.push(i);
-                    time.push(item[0]);
-                    count.push(item[1]);
-                    if(item[1]>0){
+        $scope.tempwarLog={};
+        angular.forEach($rootScope.mystorages, function (storage) {
+            $http.get(ER.coldroot +'/i/AlarmController/getOverTempAnalysis', {  params: { "oids": storage.id ,"rdcId": $rootScope.rdcId } }).success(function (data) {
+                $scope.tempwaning=[];
+                if(data.success){
+                    var datalist=  data.entity,xAxis=[],count=[],time=[];
+                    angular.forEach(datalist,function(item,i){
+                        xAxis.push(i);
+                        time.push(item[0]);
+                        count.push(item[1]);
+                        if(item[1]>0){
+                            var msg=new Object();
+                            msg.time=i;
+                            msg.style="background:#ED3F1D";
+                            msg.count=item[1];
+                            msg.msg="当前所有冷库累计"+item[1]+"次告警,累计时长："+item[0]+"分钟";
+                            $scope.tempwaning.push(msg);
+                        }
+                    });
+                    if( $scope.tempwaning.length==0){
                         var msg=new Object();
-                        msg.time=i;
-                        msg.style="background:#ED3F1D";
-                        msg.count=item[1];
-                        msg.msg="当前所有冷库累计"+item[1]+"次告警,累计时长："+item[0]+"分钟";
-                        $scope.tempwarLog.push(msg);
+                        msg.time=time[7];
+                        msg.msg="暂无告警信息";
+                        msg.count=0;
+                        $scope.tempwaning.push(msg);
                     }
-                });
-                if( $scope.tempwarLog.length==0){
-                    var msg=new Object();
-                    msg.time=time[7];
-                    msg.msg="暂无告警信息";
-                    msg.count=0;
-                    $scope.tempwarLog.push(msg);
+                    $scope.tempwarLog[storage.id]=$scope.tempwaning.reverse();
+                    $scope.dwechar("tem_div_"+storage.id, xAxis, count, time);
                 }
-                $scope.dwechar(xAxis, count, time);
-            }
+            });
         });
+        $scope.model=["详细","关闭"];
     };
     $.getUrlParam = function (name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -126,8 +128,7 @@ app.controller('alarmLog', function ($scope, $location, $http, $rootScope, userS
         }
         obj.isshow=obj.isshow==1?0:1;
     };
-    $scope.dwechar=function(xAxis,count,time){
-
+    $scope.dwechar=function(emid,xAxis,count,time){
         // 指定图表的配置项和数据
         var option = {
             legend: { data:['告警次数','告警时长'] },
@@ -147,14 +148,12 @@ app.controller('alarmLog', function ($scope, $location, $http, $rootScope, userS
                 {
                     type: 'value',
                     name: '次数/次',
-                    min: 0,max: 20,interval: 1,
+                    interval: 1,
                     axisLabel: { formatter: '{value}' }
                 },
                 {
                     type: 'value',
                     name: '时长/min',
-                    min: 0,
-                    max: 240,
                     interval: 30,
                     axisLabel: {
                         formatter: '{value}'
@@ -181,7 +180,7 @@ app.controller('alarmLog', function ($scope, $location, $http, $rootScope, userS
                 }
             ]
         };
-
+        var myChart = echarts.init(document.getElementById(emid));
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
 

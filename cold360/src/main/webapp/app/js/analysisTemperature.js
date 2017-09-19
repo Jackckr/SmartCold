@@ -120,7 +120,8 @@ app.controller('analysisTemperature', function ($scope, $location,$timeout, $htt
         $http.get(ER.coldroot + '/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function (data) {
             if (data && data.length > 0) {
                 $scope.mystorages = data;
-                $scope.drawOverTemperature();
+                // $scope.drawOverTemperature();
+                $scope.initTemCount();
             }
         });
         $(".one").show();
@@ -455,11 +456,129 @@ app.controller('analysisTemperature', function ($scope, $location,$timeout, $htt
         })
     }
 
+
+    /*超温时间及次数*/
+    $scope.endTime = new Date();
+    $scope.startTime = new Date($scope.endTime.getTime() - 30 * 24 * 60 * 60 * 1000);
+    $scope.sumDatavalue={};
+    $scope.initTemCount=function(){
+        clearSwiper();
+        $scope.swiper = 0;
+        angular.forEach($scope.mystorages,function(storage){
+            var chartId="Chart_"+storage.id;
+            if ($scope.swiper < $scope.mystorages.length) {
+                var innerHTML = '<div class="swiper-slide">' +
+                    '<p class="actually">' + storage.name + '&nbsp;&nbsp;超温时长及次数统计</p>' +
+                    '<div id=' + chartId + '></div></div>';
+                $("#chartView").last().append(innerHTML);
+                $scope.swiper += 1;
+            }
+            $scope.overTempAndCount(storage);
+        });
+    };
+    $scope.overTempAndCount=function (storage) {
+        $http.get(ER.coldroot+'/i/AnalysisController/getAnalysisDataByKey',
+            { params: {type:1, oid:storage.id, keys:'ChaoWenShiJian,ChaoWenCiShu', startTime:formatTime($scope.startTime), endTime:formatTime($scope.endTime)}}).success(function (data) {
+            var val=0, ccount=0,ctime=0;
+            var otlist=	data['ChaoWenShiJian'],oclist=	data['ChaoWenCiShu'];
+            var xAxis=[],count=[],time=[],tempct=new Object();
+            if(oclist.length>0){
+                angular.forEach(oclist,function(item,index){
+                    tempct[item['date']]=item['value'];
+                });
+            }
+            if(otlist.length>0){
+                angular.forEach(otlist,function(item,index){
+                    val=parseFloat((item['value'] / 60).toFixed());ctime+=val;
+                    xAxis.unshift(formatTime(item['date']).split(" ")[0]);
+                    if( tempct[item['date']]){
+                        ccount+= tempct[item['date']];
+                        count.unshift( tempct[item['date']]);
+                    }else{
+                        count.unshift(val>0?1:0);
+                    }
+                    time.unshift(val);
+                });
+            }
+            $scope.sumDatavalue[storage.id]=[ccount,ctime];
+            $scope.dwoverTempAndCount("Chart_"+storage.id, xAxis, count, time);
+        });
+    };
+    $scope.dwoverTempAndCount=function(emid,xAxis,count,time){
+        var option={
+            tooltip : { trigger: 'axis' ,textStyle: { fontSize: 12 }},
+            backgroundColor: '#D2D6DE',
+            calculable : true,
+            grid: {x: 40,y: 40,width: '76%'},
+            legend: { data:['超温时间','超温次数'],y:'bottom' },
+            xAxis : [ { type : 'category', data : xAxis }  ],
+            yAxis : [ { type : 'value',name : '超温时间(分钟)', max : 1500 }, { type : 'value', name : '超温次数(次)' } ],
+            series :[ {name:'超温时间', type:'bar', data:time, tooltip: {  valueSuffix: '分钟' }}, {name:'超温次数', type:'line', yAxisIndex: 1, data:count,tooltip: {  valueSuffix: ' 次'}  } ]
+        };
+        var chart = echarts.init(document.getElementById(emid));
+        chart.setOption(option);
+    };
+    /*超温时间及次数 end*/
+    /*超温比例*/
+    $scope.initTemScore=function(){
+        clearSwiper();
+        $scope.swiper = 0;
+        $scope.overTempScore();
+    };
+    $scope.overTempScore = function(chartId){
+        $scope.showMap = {};
+        $http.get(ER.coldroot+'/i/coldStorage/findAnalysisByRdcidKeysDate',{
+            params: {
+                "startTime": formatTime($scope.startTime),
+                "endTime": formatTime($scope.endTime),
+                "rdcid": $scope.rdcId,
+                'keys':'ChaoWenYinZi,MaxTemp'
+            }
+        }).success(function(data){
+            $scope.data = data;
+            angular.forEach($scope.mystorages,function(storage){
+                var mainId=storage.name+"Chart";
+                if ($scope.swiper < $scope.mystorages.length) {
+                    var innerHTML = '<div class="swiper-slide">' +
+                        '<p class="actually">' + storage.name + '&nbsp;&nbsp;30日超温比例统计</p>' +
+                        '<div id=' + mainId + '></div></div>';
+                    $("#chartView").last().append(innerHTML);
+                    $scope.swiper += 1;
+                }
+            });
+            angular.forEach(data,function(storage,key){
+                $timeout(function(){
+                    yData1 = []; yData2 = []; xData = [];
+                    var chartId = key + "Chart";
+                    var chart = echarts.init(document.getElementById(chartId));
+                    $scope.showMap[chartId] = storage['ChaoWenYinZi'].length || storage['MaxTemp'].length;
+
+                    angular.forEach(storage['ChaoWenYinZi'],function(item,index){
+                        yData1.unshift(storage['ChaoWenYinZi'][index]['value'])
+                        yData2.unshift(storage['MaxTemp'][index]['value'])
+                        xData.unshift(formatTime(item['date']).split(" ")[0])
+                    });
+                    option = {
+                        tooltip : { trigger: 'axis' ,textStyle: { fontSize: 12 }},
+                        backgroundColor: '#D2D6DE',
+                        calculable : true,
+                        grid: {x: 35,x2: 35,y: 40,width: '78%'},
+                        legend: { data:['超温比例','最高温度'],y:'bottom' },
+                        xAxis : [  {type : 'category',  data : xData} ],
+                        yAxis : [  {type : 'value', name : '超温比例/%', max : 100, axisLabel : {  formatter: '{value}' } },{ type : 'value',name : '最高温度/°C', axisLabel : {formatter: '{value}' } }],
+                        series: [  { name:'超温比例', type:'bar', data:yData1}, { name:'最高温度', type:'line', yAxisIndex: 1, data:yData2 } ]
+                    };
+                    chart.setOption(option);
+                })
+            },0)
+        })
+    };
+    /*超温比例 end*/
     $scope.overTemperatureTemper = function () {
         clearSwiper();
         $scope.swiper = 0;
         $scope.drawOverTemperature();
-    }
+    };
     $scope.overTemperatureTime = function () {
         clearSwiper();
         $scope.swiper = 0;
@@ -588,4 +707,6 @@ app.controller('analysisTemperature', function ($scope, $location,$timeout, $htt
         };
         return option;
     }
+    console.log(rootRdcId)
+    console.log($scope.rdcId)
 });

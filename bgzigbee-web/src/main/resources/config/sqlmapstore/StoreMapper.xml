@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smartcold.bgzigbee.manage.dao.store360.StoreMapper" >
+    <insert id="insertStore">
+        INSERT INTO `smartstore`.`store`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name!=''">`name`,</if>
+            <if test="address != null and address!=''">`address`,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name !=''">#{name},</if>
+            <if test="address != null and address !=''">#{address},</if>
+        </trim>
+    </insert>
+    <update id="updateStore">
+        UPDATE `smartstore`.`store`
+        <set>
+            <if test="name != null and name !=''">`name` = #{name},</if>
+            <if test="address != null and address != ''">`address`=#{address},</if>
+        </set>
+        WHERE `id`=#{id}
+    </update>
+    <delete id="delStoreById">
+        DELETE FROM `smartstore`.`store` WHERE `id`=#{id}
+    </delete>
+
+    <select id="findListByFilter" resultType="com.smartcold.bgzigbee.manage.entity.store360.StoreEntity">
+        SELECT * FROM `smartstore`.`store`
+        <where>
+            <if test="keyword != null and keyword !=''">
+                `name` LIKE "%"#{keyword}"%"
+            </if>
+        </where>
+    </select>
+    <select id="findByName" resultType="com.smartcold.bgzigbee.manage.entity.store360.StoreEntity">
+        SELECT * FROM `smartstore`.`store` WHERE `name`=#{name}
+    </select>
+    <select id="selectById" resultType="com.smartcold.bgzigbee.manage.entity.store360.StoreEntity">
+        SELECT * FROM `smartstore`.`store` WHERE `id`=#{id}
+    </select>
+</mapper>

@@ -189,21 +189,21 @@ function companyOnDblClickRow(index,field){
 function changeUserTable(){
     cleanSearch();
     hideWindow();
-    init_user("<button style='margin-left: 10px' onclick='changeRdcTable()'>冷库</button><button onclick='changeUserTable()' style='background-color: #00a0e9;color: white;margin-left: 10px'>用户</button><button onclick='changeCompanyTable()' style='margin-left: 10px'>集团</button>",userStyler,"#objTable","#div_filteri");
+    init_user("<button style='margin-left: 10px' onclick='changeRdcTable()'>门店</button><button onclick='changeUserTable()' style='background-color: #00a0e9;color: white;margin-left: 10px'>用户</button><button onclick='changeCompanyTable()' style='margin-left: 10px'>集团</button>",userStyler,"#objTable","#div_filteri");
     roleFlag=2;
 }
 /*切换冷库表*/
 function changeRdcTable(){
     cleanSearch();
     hideWindow();
-    init_rdc("<button style='background-color: #00a0e9;color: white;margin-left: 10px' onclick='changeRdcTable()'>冷库</button><button onclick='changeUserTable()' style='margin-left: 10px'>用户</button><button onclick='changeCompanyTable()' style='margin-left: 10px'>集团</button>",rdcStyler,"#objTable","#div_filteri");
+    init_rdc("<button style='background-color: #00a0e9;color: white;margin-left: 10px' onclick='changeRdcTable()'>门店</button><button onclick='changeUserTable()' style='margin-left: 10px'>用户</button><button onclick='changeCompanyTable()' style='margin-left: 10px'>集团</button>",rdcStyler,"#objTable","#div_filteri");
     roleFlag=1;
 }
 /*切换集团表*/
 function changeCompanyTable(){
     cleanSearch();
     hideWindow();
-    init_company("<button style='margin-left: 10px' onclick='changeRdcTable()'>冷库</button><button onclick='changeUserTable()' style='margin-left: 10px'>用户</button><button onclick='changeCompanyTable()' style='background-color: #00a0e9;color: white;margin-left: 10px'>集团</button>",companyStyler,"#objTable","#div_filteri");
+    init_company("<button style='margin-left: 10px' onclick='changeRdcTable()'>门店</button><button onclick='changeUserTable()' style='margin-left: 10px'>用户</button><button onclick='changeCompanyTable()' style='background-color: #00a0e9;color: white;margin-left: 10px'>集团</button>",companyStyler,"#objTable","#div_filteri");
     roleFlag=3;
 }
 
@@ -404,7 +404,7 @@ function rdcCompanyUnbind(rdcId, companyId,rdcName,companyName) {
 
 //初始化数据
 $().ready(function() {
-    init_rdc("<button style='background-color: #00a0e9;color: white;margin-left: 10px' onclick='changeRdcTable()'>冷库</button><button onclick='changeUserTable()' style='margin-left: 10px'>用户</button><button onclick='changeCompanyTable()' style='margin-left: 10px'>集团</button>",rdcStyler,"#objTable","#div_filteri");
+    init_rdc("<button style='background-color: #00a0e9;color: white;margin-left: 10px' onclick='changeRdcTable()'>门店</button><button onclick='changeUserTable()' style='margin-left: 10px'>用户</button><button onclick='changeCompanyTable()' style='margin-left: 10px'>集团</button>",rdcStyler,"#objTable","#div_filteri");
     $('#fddata').searchbox({searcher:function(value){
         params.keyword=value;
         reloaddata(params);

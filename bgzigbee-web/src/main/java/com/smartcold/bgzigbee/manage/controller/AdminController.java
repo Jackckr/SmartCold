@@ -282,32 +282,42 @@ public class AdminController extends BaseController {
 		mlList2.add(new ACLAdminNode("2_4","main_relating" , "关联管理", "relating_manage.html" ));
 		mlList2.add(new ACLAdminNode("2_5","main_kv" , "键值管理", "kv_manage.html" ));
 		pml.setChild(mlList2);  ml.add(pml);
-		
-		pml  = new ACLAdminNode("3"  ,"main_coun",  "网站统计");
-		 List<ACLAdminNode> mlList3=new ArrayList<ACLAdminNode>();
-		mlList3.add(new ACLAdminNode("3_0","icon-role",    "网站统计", "" ));
-		mlList3.add(new ACLAdminNode("3_1","icon-role",    "轨迹分析", "" ));
-		mlList3.add(new ACLAdminNode("3_2","icon-role",    "用户体验",  "" ));
-		pml.setChild(mlList3);     ml.add(pml);
-		
-		pml  = new ACLAdminNode("4"  ,"main_sys",     "系统管理");
-		 List<ACLAdminNode> mlList4=new ArrayList<ACLAdminNode>();
-		mlList4.add(new ACLAdminNode("4_0","icon-role",    "系统消息", "sys_msg.html" ));
-		mlList4.add(new ACLAdminNode("4_1","icon-role",    "系统状态", "sys_state.html" ));
-		pml.setChild(mlList4);    ml.add(pml);
-		
-		pml  = new ACLAdminNode("5"  ,"main_debug",    "开发人员");
-	    List<ACLAdminNode> mlList5=new ArrayList<ACLAdminNode>();
-		mlList5.add(new ACLAdminNode("5_0","icon-role",    "接口监控", "bug_port.html" ));
-		mlList5.add(new ACLAdminNode("5_1","icon-role",    "日志查询", "sys_msg.html" ));
-		mlList5.add(new ACLAdminNode("5_2","icon-role",    "缓存管理", "sys_state.html" ));
-		mlList5.add(new ACLAdminNode("5_3","icon-role",    "任务调度", "bug/bug_task.html" ));
-		pml.setChild(mlList5);      ml.add(pml);
 
-		pml  = new ACLAdminNode("6"  ,"main_companyInner",    "企业内部");
-		List<ACLAdminNode> mlList6=new ArrayList<ACLAdminNode>();
-		mlList6.add(new ACLAdminNode("6_0","main_companyAcl",    "权限管理", "company_acl.html" ));
+		pml  = new ACLAdminNode("3"  ,"main_store360",  "门店360管理");
+		List<ACLAdminNode> mlList3=new ArrayList<ACLAdminNode>();
+		mlList3.add(new ACLAdminNode("3_0","main_company","集团管理","store_company_manage.html" ));
+		mlList3.add(new ACLAdminNode("3_1","icon-user","用户管理","store_user_manage.html"));
+		mlList3.add(new ACLAdminNode("3_2","store_manage","门店管理","store_manage.html" ));
+		mlList3.add(new ACLAdminNode("3_3","icon-role","报表管理","" ));
+		mlList3.add(new ACLAdminNode("3_4","main_relating","关联管理","store_relating_manage.html" ));
+		mlList3.add(new ACLAdminNode("3_5","main_kv","键值管理","store_kv_manage.html" ));
+		pml.setChild(mlList3);  ml.add(pml);
+		
+		pml  = new ACLAdminNode("4"  ,"main_coun",  "网站统计");
+		 List<ACLAdminNode> mlList4=new ArrayList<ACLAdminNode>();
+		mlList4.add(new ACLAdminNode("4_0","icon-role",    "网站统计", "" ));
+		mlList4.add(new ACLAdminNode("4_1","icon-role",    "轨迹分析", "" ));
+		mlList4.add(new ACLAdminNode("4_2","icon-role",    "用户体验",  "" ));
+		pml.setChild(mlList4);     ml.add(pml);
+		
+		pml  = new ACLAdminNode("5"  ,"main_sys",     "系统管理");
+		 List<ACLAdminNode> mlList5=new ArrayList<ACLAdminNode>();
+		mlList5.add(new ACLAdminNode("5_0","icon-role",    "系统消息", "sys_msg.html" ));
+		mlList5.add(new ACLAdminNode("5_1","icon-role",    "系统状态", "sys_state.html" ));
+		pml.setChild(mlList5);    ml.add(pml);
+		
+		pml  = new ACLAdminNode("6"  ,"main_debug",    "开发人员");
+	    List<ACLAdminNode> mlList6=new ArrayList<ACLAdminNode>();
+		mlList6.add(new ACLAdminNode("6_0","icon-role",    "接口监控", "bug_port.html" ));
+		mlList6.add(new ACLAdminNode("6_1","icon-role",    "日志查询", "sys_msg.html" ));
+		mlList6.add(new ACLAdminNode("6_2","icon-role",    "缓存管理", "sys_state.html" ));
+		mlList6.add(new ACLAdminNode("6_3","icon-role",    "任务调度", "bug/bug_task.html" ));
 		pml.setChild(mlList6);      ml.add(pml);
+
+		pml  = new ACLAdminNode("7"  ,"main_companyInner",    "企业内部");
+		List<ACLAdminNode> mlList7=new ArrayList<ACLAdminNode>();
+		mlList7.add(new ACLAdminNode("7_0","main_companyAcl",    "权限管理", "company_acl.html" ));
+		pml.setChild(mlList7);      ml.add(pml);
 		return ml;
 	}
 	

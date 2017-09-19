@@ -51,32 +51,35 @@
     </section>
     <div class="warn_sec alarmLog" style="padding: .9rem;min-height: 66vh;">
         <div>
-            <div id="tem_div" style="height:12.5rem;"></div>
-            <div id="timeline">
-                <div class="timeline-block" ng-repeat="obj in tempwarLog"><!-- time  start -->
-                    <div class="timeline-dot" style="{{obj.style}}"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-title">
-                            <div class="clearfix">
-                                <span class="fl" style="font-size: .6rem;">{{obj.time}}</span>
-                                <h4 ng-if="obj.count" class="fr">
-                                    <button class="show-more mybtn" style="padding: 0.1rem 0.5rem;"
-                                            ng-click="showdatil(obj)"
-                                            ng-init="model[obj.isshow]='详细'">
-                                        {{model[obj.isshow]}}
-                                    </button>
-                                </h4>
+            <div ng-repeat="storage in mystorages">
+                <p style="font-size: 0.75rem;">{{storage.name}}告警信息</p>
+                <div id="tem_div_{{storage.id}}" style="height:12.5rem;"></div>
+                <div id="timeline">
+                    <div class="timeline-block" ng-repeat="obj in tempwarLog[storage.id]"><!-- time  start -->
+                        <div class="timeline-dot" style="{{obj.style}}"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">
+                                <div class="clearfix">
+                                    <span class="fl" style="font-size: .6rem;">{{obj.time}}</span>
+                                    <h4 ng-if="obj.count" class="fr">
+                                        <button class="show-more mybtn" style="padding: 0.1rem 0.5rem;"
+                                                ng-click="showdatil(obj)"
+                                                ng-init="model[obj.isshow]='详细'">
+                                            {{model[obj.isshow]}}
+                                        </button>
+                                    </h4>
+                                </div>
+                                <h4>{{obj.msg}}</h4>
                             </div>
-                            <h4>{{obj.msg}}</h4>
-                        </div>
-                        <div class="timeline-content-more" ng-if="obj.isshow==1">
-                            <ul>
-                                <li ng-repeat="obj in obj.datilList">
-                                    <p>{{$index+1+'、'+obj.warnigmsg}}</p>
-                                    <p>{{" 开始超温时间："+obj.starttime}}</p>
-                                    <p>{{" 结束超温时间："+obj.endtime}}</p>
-                                </li>
-                            </ul>
+                            <div class="timeline-content-more" ng-if="obj.isshow==1">
+                                <ul>
+                                    <li ng-repeat="obj in obj.datilList">
+                                        <p>{{$index+1+'、'+obj.warnigmsg}}</p>
+                                        <p>{{" 开始超温时间："+obj.starttime}}</p>
+                                        <p>{{" 结束超温时间："+obj.endtime}}</p>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="制冷 空调设备 金属压力容器" />
+    <meta name="description" content="松下冷机系统（大连）有限公司主要从事制冷、空调设备、金属压力容器及有关零部件、
+        半成品的研发、制造、销售、安装维修保养、技术咨询、技术服务、技术转让，建筑安装工程施工、工程勘察设计、工程管理服务，
+        机电设备安装、压力管道安装及货物进出口、技术进出口业务。" />
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>松下冷机系统（大连）有限公司-登录</title>
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/iconfont.css">
+    <link rel="stylesheet" id="link" href="app/css/login.css">
+</head>
+<body class="hold-transition login-page login_new">
+<!-- new login -->
+<div class="smartCold">
+    <div class="loginDiv">
+        <h2>松下冷机系统（大连）有限公司</h2>
+    </div>
+    <div class="divide-wrap">
+
+        <div class="colorbar"></div>
+    </div>
+    <div class="loginBody login-box">
+        <div class="loginArea">
+            <div class="userinfo">
+                <i class="icon iconfont">&#xe6be;</i>
+                <input type="text" id="username" placeholder="用户名">
+            </div>
+            <div class="userinfo">
+                <i class="icon iconfont">&#xe6c1;</i>
+                <input type="password" id="password" placeholder="密码">
+            </div>
+            <div class="row">
+                <div class="col-xs-12" style="text-align: left;height: 30px;font-size: 12px;">
+                    <a style="color:red" id="mention"></a>
+                </div>
+            </div>
+            <div class="clearfix">
+                <p class="pull-left"><a href="passwordEdit.html">忘记密码</a></p>
+                <p class="pull-right"><a href="register.html">免费注册</a></p>
+            </div>
+            <div class="row noM">
+                <div class="col-xs-12 col-lg-12">
+                    <div class="checkbox icheck">
+                    </div>
+                </div>
+                <div class="col-lg-12 loginBtn">
+                    <button id="submit" onclick="login();" class="btn btn-primary btn-block btn-flat">登录</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="loginCopyR" class="loginCopyR">
+        <p>松下冷机系统（大连）有限公司&nbsp;&nbsp;&nbsp;&nbsp;<a href="http:\\www.miitbeian.gov.cn" style="color:#333;">沪ICP备 辽ICP备17006495号-1</a>
+            地址：中国辽宁省大连经济技术开发区松岚街8号 </p>
+    </div>
+</div>
+<script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript">
+    /*function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return decodeURI(unescape(r[2]));
+            return null;
+        }
+        ;
+    }
+    var name=getUrlParam('name');
+    if (name!="undefined") {
+        $("#link").attr('href', 'app/css/' + name + '.css');
+    }*/
+    var mainHeight = $(window).height();
+    var url=["/main.html" +( window.location.hash != ""?window.location.hash:"#/cold360Physical"),"","/autIdentity.html","/audit.html"];
+    $(".loginBody").height(mainHeight - 160);
+    window.onresize = function () {
+        var mainHeight = $(window).height();
+        $(".loginBody").height(mainHeight - 160);
+    };
+    function showErrorInfo(msg) {
+        var msgEl = $("#mention");
+        if (msg == null || msg == "") {
+            msgEl.hide();
+            msgEl.html("");
+        } else {
+            msgEl.show();
+            msgEl.html(msg);
+        }
+    };window.sessionStorage.removeItem("sikey");
+    function login() {
+        var me = "#submit";
+        if ($(me).data("isLoading") === true) {
+            return;
+        }
+        showErrorInfo("");
+        userName = $("#username").val();
+        password = $("#password").val();
+        if (userName == "") {
+            showErrorInfo("用户名不能为空！");
+            $("#username").focus();
+            return;
+        } else {
+            if (password == "") {
+                showErrorInfo("密码不能为空！");
+                $("#password").focus();
+                return;
+            }
+        }
+        $(me).text("登录中...");
+        $(me).data("isLoading", true);
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "/i/user/login",
+            data: {userName: userName, password: password},
+            complete: function (e) { $(me).text("登录"); $(me).delay(500).data("isLoading", false); },
+            success: function (data) {
+                if (data.status==1) {
+                    $("#mention")[0].hidden = false;
+                    showErrorInfo(data.message);
+                }else{
+                    document.cookie = data.message;
+                    window.sessionStorage.sikey = data.message;
+                    window.location.href =url[data.status];
+                    window.Event.returnValue = false;
+                }
+            }
+        });
+    }
+    $(document).on({
+        keyup: function (e) {
+            if (e.keyCode == "13") {
+                login();
+            }
+        }
+    });
+</script>
+</body>
+</html>

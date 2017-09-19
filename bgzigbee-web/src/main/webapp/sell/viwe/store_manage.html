@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>冷库管理</title>
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../comm/jquery/themes/default/easyui.css"/>
+    <link rel="stylesheet" type="text/css" href="../style/icon.css"/>
+    <link rel="stylesheet" type="text/css" href="../style/comm.css"/>
+    <link rel="stylesheet" type="text/css" href="../style/main/addRdc.css"/>
+    <link rel="stylesheet" href="../../comm/imgview/viewer.min.css">
+    <script type="text/javascript" src="../../comm/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../../comm/jquery/jquery.easyui.min.js"></script>
+    <script type="text/javascript"  src="../../comm/imgview/viewer.min.js"></script>
+    <script type="text/javascript" src="../app/comm.js"></script>
+    <script type="text/javascript" src="../app/store_manage.js"></script>
+</head>
+<body class="easyui-layout">
+<div data-options="region:'center'">
+    <table id="objTable" class="fill"></table>
+</div>
+<div id="div_filter" style="display: none;">
+    <div id="div_filteri" style="padding:2px 5px;">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'store_add'" onclick="addCold()">添加</a>
+        <a id="delButton" href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'store_del'" onclick="dels()">删除</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'pagination-load'" onclick="refresh()">刷新</a>
+        <div style="float: right">
+            <input id="fddata" class="easyui-searchbox" val="ml" data-options="prompt:'请输入搜索条件...'" style="width:200px;display:inline;"/>
+        </div>
+    </div>
+</div>
+
+
+<div id="addStore" class="easyui-dialog" title="添加门店" data-options="iconCls:'icon-save',width:400,height:150,modal:true,closed:true,buttons:[{text:'保存',iconCls:'icon-ok',handler:saveStore},{text:'取消',iconCls:'icon-cancel2',handler:function(){$('#addStore').dialog('close');}}]">
+    <form id="storeForm">
+        <table class="fill">
+            <tr>
+                <td>
+                    门店名称：<b>*</b><em id="showNameMessage" style="display: none"> 门店名已经被注册 </em>
+                </td>
+                <td>
+                    <input id="store_id" type="hidden" name="id" value="0">
+                    <input onchange="changeName(this)" class="easyui-validatebox textbox" data-options="prompt:'请输入用店名',required:true,validType:{length:[3,16],remote:['../../i/store/checkStoreName','name'],invalidMessage:'店名已存在!'}" type="text" name="name" id="name">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                   门店地址：<b>*</b>
+                </td>
+                <td>
+                    <input class="easyui-validatebox textbox" data-options="prompt:'请输入门店地址',required:true,validType:{length:[3,16]}" type="text" name="address" id="address">
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>
