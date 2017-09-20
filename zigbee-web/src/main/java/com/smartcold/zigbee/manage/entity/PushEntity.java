@@ -16,6 +16,8 @@ public class PushEntity {
 
     private Integer type;
 
+    private Integer rdcId;
+
     public String getTitle() {
         return title;
     }
@@ -62,5 +64,13 @@ public class PushEntity {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+    public Integer getRdcId() {
+        return rdcId;
+    }
+
+    public void setRdcId(Integer rdcId) {
+        this.rdcId = rdcId;
     }
 }

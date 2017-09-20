@@ -133,7 +133,9 @@
                                 var userAgent = navigator.userAgent.toLowerCase();//获取userAgent// isInapp = userAgent.indexOf("sunyuki")>=0;//查询是否有相关app的相关字段
                                 //alert(userAgent);
                                 userdata.action="push";
-                                sendUserToAndroid(JSON.stringify(userdata));
+                                try {
+                                    sendUserToAndroid(JSON.stringify(userdata));
+                                }catch(e) {}
                                 window.localStorage.logtime = new Date().getTime();
                                 $.get(ER.root + "/i/user/isSubmitAuditUser", {userId: userdata.id},function (data) {checkState = data.status;});
                                 util.setCookie("token", token);
