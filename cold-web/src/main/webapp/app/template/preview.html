@@ -1,6 +1,5 @@
 
-<link  href="assets/css/jquery.fullPage.css" />
-<script src="assets/plugins/fullPage/jquery.fullPage.min.js"></script>
+<link rel="stylesheet" href="assets/css/jquery.fullPage.css" />
 <style>
      @-webkit-keyframes magentaPulse {
             from {color: 	#FFFAFA; !imporeat}
@@ -16,7 +15,7 @@
         #fp-nav ul li .fp-tooltip.right{right:24px;}
         #fp-nav ul li .fp-tooltip{max-width: 400px;background: rgba(0, 0, 0, 0.42);padding: 2px 4px;border-radius:2px;}
 </style>
-
+<script src="assets/plugins/fullPage/jquery.fullPage.min.js"></script>
  <div id="main_count_div" class="myBg">
 	 <div class="toolbar">
 	     <div id="tool">
@@ -34,7 +33,7 @@
 	     <i class="toolI iconfont">&#xe60c;</i>
 	 </div>
 	 <div id="dowebok" class="hide">
-			<div  ng-repeat="rdc in allrdc"   class="section myBg" >
+			<div  ng-repeat="rdc in allrdc"   class="section myBg" style="overflow-y: scroll;">
 				<h3 class="text-center">{{rdc.name}}</h3>
 				<div id="rdc_datil_{{rdc.id}}" >
 				      <div class="previewBox groupModel">

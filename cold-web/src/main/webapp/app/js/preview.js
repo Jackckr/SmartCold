@@ -224,7 +224,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
 	        $('#dowebok').fullpage({ 
 		    	'navigation': true, 
 		    	continuousVertical: true,
-//		    	loopBottom: true,
+		    	loopBottom: true,
 		    	navigationTooltips: $scope.rdcnam,
 				onLeave: function(index,nextIndex,direction){
 					 $scope.index=nextIndex;
