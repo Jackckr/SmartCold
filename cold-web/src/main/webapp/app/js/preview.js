@@ -6,7 +6,7 @@
  */
 coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout, $interval,$http,$rootScope, baseTools) {
        $scope.endTime= new Date(),  
-       $scope.priveseting={isOverTemp:true,isRoll:true,islocke:false};//$scope.priveseting.islocke priveseting.isOverTemp
+       $scope.priveseting={isOverTemp:true,isRoll:true,shTemp:true,shpwc:true,shysj:true,shfolw:true};//$scope.priveseting.islocke priveseting.isOverTemp
        $scope.statusmode=[["stop","run"],['danger','runnings','warnings']];
        $scope.startTime = new Date($scope.endTime.getTime() - 1800000),
        $scope.ansisTime = new Date($scope.endTime.getTime() - 2592000000),
@@ -35,17 +35,26 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
        };
        //刷新当前页
        $scope.refdata=function(){
-    	   $scope.initRdc($scope.allrdc[$scope.index]);  
+    	   $scope.initalldata($scope.allrdc[$scope.index]);  
        };
        //=================================================================start 初始化所有数据及状态========================================================================================================
        $scope.initalldata=function(rdc){
-    	   $scope.initRdc(rdc);
-    	   
+    	   if($scope.priveseting.shTemp){
+    		   $scope.ininTempSet(rdc);
+    	   }
+    	   if($scope.priveseting.shpwc){
+    		   $scope.initPWCset(rdc);
+    	   }
+    	   if($scope.priveseting.shysj){
+    		   $scope.initCompressorset(rdc);
+    	   }
+    	   if($scope.priveseting.shfolw){
+    		   $scope.initBlowerset(rdc);
+    	   }
        };
-       
        //=================================================================start 1.温度========================================================================================================
 	    //初始化及刷新数据
-	    $scope.initRdc = function(rdc){
+	    $scope.ininTempSet = function(rdc){
 	    	 if(rdc.mystorages){//已经初始化过数据
 	    		 $scope.initTemp(rdc);
 	    	 }else{
@@ -55,7 +64,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
 	    			 var coun=0;
 	    			 angular.forEach( rdc.mystorages,function(item){
 	    				 $http.get('/i/temp/getTempsetByStorageID?oid=' + item.id).success(function(req,status,headers,config){
-	    					 coun++;
+	    					     coun++;
 		  	    			     var oids=new Array(),names=new Array();
 			        	    	 angular.forEach(req,function(obj,i){oids.push(obj.id);names.push(obj.name);});
 			        	    	 item.tempset={oids:oids,names:names };
@@ -88,55 +97,185 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
 		    	 }
 			});
 	    };
+
+	    //=================================================================2.电量===================================================================================
+	    //2.1获得各个电表总配置
+	       $scope.initPWCset=function(rdc){
+	    	   if(rdc.powers){//已经初始化过数据
+		    		 $scope.pwcdat(rdc);
+		       }else{
+		    		 $http.get('/i/power/findByRdcId?' ,{params: {rdcId:rdc.id}} ).success(function(data,status,headers,config){// 初始化冷库
+		    			 rdc.powers = data;
+		    			 $scope.pwcdat(rdc);
+		    			 $scope.initPWCchar(rdc);
+			       	 });
+		        }
+	      };
+	      //获得电量数据
+	      $scope.pwcdat=function(rdc){
+	  	    	 var endTime= new Date(), startTime = new Date(endTime.getTime() - 600000);
+	  	    	 angular.forEach(rdc.powers,function(item){
+	  	    		  $http.get('/i/baseInfo/getKeyValuesByTime', { params: {type:10, oids:item.id, 'key':'PWC', "startTime": baseTools.formatTime(startTime), "endTime": baseTools.formatTime(endTime)}}).success(function (data) {
+	  	    			item.pwc=data[item.id].length>0?data[item.id][0]['value'].toFixed(2):'--';
+	  		    	   });
+	  			 });
+	  	 };
+	     //初始化电量图标
+	      $scope.initPWCchar= function(rdc){
+	    	   angular.forEach(rdc.powers,function(item){	
+	    		   $http.get('/i/AnalysisController/getAnalysisDataByDate', { params: {type:10, oid:item.id, keys:'TotalPWC', startTime:baseTools.formatTime(  $scope.ansisTime ), endTime:baseTools.formatTime($scope.endTime)}}).success(function (data) {
+	    	   			var datalist=data['TotalPWC'],xAxis=[],ydate=[];
+	    	   		    if(datalist.length>0){
+	    	   		    	 angular.forEach(datalist,function(item,index){ 
+	    	   		    		   ydate.push(item['value']);
+	    	   		    		   xAxis.push(baseTools.formatTime(item['date']).split(" ")[0]);
+	    	   				 });
+	    	   		    }
+	    	   		   $scope.dwoverChar(rdc.id,item.id,xAxis,ydate);
+		  	   });
+	   		});
+	      };
+		    $scope.dwoverChar=function(rdcid,oid,xdata,ydata){
+		        	   var myChart = echarts.init(document.getElementById("powerchar_"+ rdcid+"_"+oid));
+			    	   var option=$scope.pwcoption;
+			    	   option.xAxis.data=xdata;
+			    	   option.series[0].data=ydata;
+			       	    myChart.setOption(option);
+		    };
+	       //=================================================================3.机组===================================================================================
+	       $scope.initCompressorset= function(rdc){//
+	    	   if(rdc.compressorGroups){//已经初始化过数据
+		    		 $scope.initCompressorstatus(rdc);
+		       }else{
+		    		 $http.get('/i/compressorGroup/findByRdcId' ,{params: {rdcId:rdc.id}} ).success(function(data,status,headers,config){// 初始化冷库
+		    			 rdc.compressorGroups = data;
+		    			 var count=0;
+		    			 angular.forEach( rdc.compressorGroups,function(item){
+		    				 $http.get('/i/compressor/findBygroupId?groupId=' + item.id).success(function(data,status,headers,config){
+		    					 item.compressors = data;
+		    					 count++;
+			    				 if(count==rdc.compressorGroups.length){
+			    					   $scope.initCompressorstatus(rdc);
+			    				  }	 
+		    				 }); }); });
+		    }};
+	        $scope.initCompressorstatus=function(rdc){
+	    	   var endTime= new Date(), startTime = new Date(endTime.getTime() - 600000);
+	    	   angular.forEach(rdc.compressorGroups,function(item){	
+	    		   angular.forEach(item.compressors,function(obj){	
+	    			   $http.get('/i/baseInfo/getKeyValuesByTime', { params: {type:5, oids:obj.id, 'key':'run', "startTime": baseTools.formatTime(startTime ), "endTime": baseTools.formatTime(endTime)}}).success(function (data) {
+	    				   obj.status=$scope.statusmode[0][data[obj.id][0]['value']];//
+	    	    	   });
+	    		   });
+	    		   
+	    	   });
+	       };
+	       
+	       //=================================================================4.风机===================================================================================
+	       //4.1获得风机配置
+	       $scope.initBlowerset  = function (rdc) {
+	    	   if(rdc.blowers){
+	    		   $scope.refBlowers(rdc);
+	    	   }else{
+	    		   $http.get('i/compressorBlower/findByRdcId', {  params: {  "rdcId":rdc.id } }).success(function (result) {
+	    			   rdc.blowers = result;
+	    			   var count=0;
+		               	angular.forEach( rdc.blowers ,function(item){ 
+		               		        count++;
+		                            item.runTime = parseFloat(item.runTime / 3600).toFixed(2);
+		                            item.defrostTime = parseFloat(item.defrostTime / 3600).toFixed(2);
+		                            if( item.isRunning==1){item.st=1;}else if( item.isDefrosting==1){item.st=2;}else{item.st=0;}
+		                            item.cls= $scope.statusmode[1][item.st] ;
+		                            if(count==rdc.blowers){
+		                            	 $scope.refBlowers(rdc);
+		                            }
+		                  }); 
+		           });
+	    	   }
+	          
+	       };
+	       //4.2刷新
+	       $scope.refBlowers  = function (rdc) {
+	              	angular.forEach(rdc.blowers,function(item){ 
+	              		 $http.get('/i/compressorBlower/findByBlowerId', { params: {blowerId:item.blowerId}}).success(function (data) {
+	              			 item.runTime = parseFloat(data.runTime / 3600).toFixed(2);
+	              			 item.defrostTime = parseFloat(data.defrostTime / 3600).toFixed(2);
+	              			 item.isRunning= data['isRunning'];
+	              			 item.isDefrosting= data['isDefrosting'];
+	              			  if( item.isRunning==1){item.st=1;}else if( item.isDefrosting==1){item.st=2;}else{item.st=0;}
+	                          item.cls= $scope.statusmode[1][item.st] ;
+	              	   });
+	                 });
+	       };
+	    
+	    
+	    
+	    
 	    //=================================================================end======================================================================================================
 	    $scope.full=function(){  
-	        angular.forEach($scope.allrdc,function(obj,i){   $scope.rdcnam.push(obj.name);});
+	        angular.forEach($scope.allrdc,function(obj,i){ 
+	        	if(obj!=null){
+	        		$scope.rdcnam.push(obj.name+"");
+	        	}else{
+	        		$scope.rdcnam.push("");
+	        	}
+	        
+	        });
 	        $('#dowebok').fullpage({ 
 		    	'navigation': true, 
 		    	continuousVertical: true,
+		    	loopBottom: true,
 		    	navigationTooltips: $scope.rdcnam,
 				onLeave: function(index,nextIndex,direction){
 					 $scope.index=nextIndex;
-					 $scope.refdata($scope.allrdc[nextIndex-1]);
+					 $scope.initalldata($scope.allrdc[nextIndex-1]);
 				},
 				afterRender:function(){
 					 $scope.fullpage=true;
 				}
-		   });
+		    });
 	        if($scope.index!=0){
-	        	  $timeout(function(){ $.fn.fullpage.moveTo($scope.index+1) ; } ,300);
-	        	  
+	        	  $timeout(function(){ $.fn.fullpage.moveTo($scope.index+1) ; } ,300);//滚动到指定的位置
 	        }
-	      $('#dowebok').removeClass("hide");
+	        $('#dowebok').removeClass("hide");
 	     
 	    };//避免闪动
 	   //系统切换事件，优先级1 ==========================================================================================================================================
 	   $scope.getRdc=function(){
 		   angular.forEach($scope.allrdc,function(obj,i){ 
-				  if(obj.id==$rootScope.rdcId){
+				  if(obj!=null&&obj.id==$rootScope.rdcId){
 					  $scope.index=i;
 					  return  $scope.index;
 				  }
 			  });
 	   };
+	   //系统入口
 	   $scope.watchrdc=function(){
-		   if( $scope.fullpage){
+		   if($rootScope.user.roleid==2){
+			   if( !$scope.allrdc){   
+				   $scope.allrdc= $rootScope.vm.allUserRdcs; 
+				   }
 			   $scope.getRdc();
-			   $.fn.fullpage.moveTo($scope.index+1) ;
+			   if( $scope.fullpage){
+				   $.fn.fullpage.moveTo($scope.index+1) ;
+			   }else{
+				   $scope.initalldata($scope.allrdc[$scope.index]);  
+				   $timeout($scope.full ,100);
+			   }
 		   }else{
-			   if($scope.allrdc==undefined){ 
-				   $scope.allrdc= $rootScope.vm.allUserRdcs;
-			   } 
-			   $scope.getRdc();
-			   $scope.refdata($scope.allrdc[$scope.index]);  
-			   $timeout($scope.full ,100);
-		   }
+			   $scope.allrdc=[];
+			   $scope.allrdc.push($rootScope.vm.allUserRdcs[$scope.index]);
+			   $scope.initalldata($scope.allrdc[$scope.index]);  
+			   $('#dowebok').removeClass("hide");
+		   }   
+		   
+		 
 	   };
        $scope.$watch('rdcId', $scope.watchrdc,true);//监听冷库变化  根据主机面初始化
        //系统轮巡事件，优先级2 ========================================================================================================================================== 
        $scope.gonex=function(){
 	    	if($scope.allrdc.length==1||!$scope.priveseting.isRoll){
-	    		$scope.refdata($scope.allrdc[$scope.index]);
+	    		$scope.initalldata($scope.allrdc[$scope.index]);
 	    	}else if($scope.priveseting.isRoll){//
 		    	$.fn.fullpage.moveSectionDown();//
 	    	};

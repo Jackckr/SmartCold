@@ -32,8 +32,9 @@
 				<h3 class="text-center">{{rdc.name}}</h3>
 				<div id="rdc_datil_{{rdc.id}}" >
 				      <div class="previewBox groupModel">
+				      
 						    <!--一个模块 start--><!--温度模块================================-->
-						    <div class="previewModel">
+						    <div class="previewModel" ng-show="priveseting.shTemp">
 						        <div class="headerModel myDefault">
 						            <div class="previewName myColor pull-left">实时温度</div>
 						            <div class="previewBtn pull-right">
@@ -52,8 +53,106 @@
 						            </div>
 						        </div>
 						    </div>
+						    <!--一个模块 end-->
+				
+				
+			              <!--一个模块 start--><!--温度模块================================-->
+						   <div class="previewModel" ng-show="rdc.powers.length>0&&priveseting.shpwc">
+						        <div class="headerModel myDefault">
+						            <div class="previewName myColor pull-left">实时电量</div>
+						            <div class="previewBtn pull-right">
+						                <button class="btn btn-danger btn-xs" onclick="closeFn(this)">关闭</button>
+						            </div>
+						        </div>
+						        <div class="bodyModel clearfix">
+						            <div ng-repeat="power in rdc.powers" >
+						                <div class="unitModel">
+						                    <div class="electricModel">
+						                        <div class="previewName myColor">{{power.name}}</div>
+						                    </div>
+						                    <div class="txtModel">
+						                        <h2 class="omg">{{power.pwc}}Kw·h</h2>
+						                    </div>
+						                </div>
+						                <div class="chartModel myDefault"  id="powerchar_{{rdc.id}}_{{power.id}}">
+						
+						                </div>
+						            </div>
+						        </div>
+						    </div>
+						    <!--一个模块 end-->
+				
+						    <!--一个模块 start--><!--压缩机模块===============================-->
+						    <div class="previewModel myDefault" ng-show="rdc.compressorGroups.length>0&&priveseting.shysj">
+						        <div class="headerModel">
+						            <div class="previewName myColor pull-left">压缩机</div>
+						            <div class="previewBtn pull-right">
+						                <button class="btn btn-danger btn-xs" onclick="closeFn(this)">关闭</button>
+						            </div>
+						        </div>
+						        <div class="bodyModel clearfix" >
+						            <div class="clearfix ysj" ng-repeat="compressorGroup in rdc.compressorGroups">
+						                <img ng-repeat="compressor in compressorGroup.compressors" ng-src="../assets/img/pressure{{compressor.type}}_{{compressor.status}}.png">
+						                <h6>{{compressorGroup.name}}</h6>
+						            </div>
+						        </div>
+						        <div class="text-center">
+						            <span><b></b>运行</span>
+						            <span><b></b>停止</span>
+						        </div>
+						    </div>
+						    <!--一个模块 end-->
+						    
+						    
+							<!--一个模块 start--><!--冷风机模块================================-->
+						    <div class="previewModel" ng-show="rdc.blowers.length>0">
+						        <div class="headerModel myDefault">
+						            <div class="previewName myColor pull-left">冷风机</div>
+						            <div class="previewBtn pull-right">
+						                <button ng-show="blowers.length>4" class="btn btn-success btn-xs" onclick="moreFn(this,4)">更多</button>
+						                <button class="btn btn-danger btn-xs" onclick="closeFn(this)">关闭</button>
+						            </div>
+						        </div>
+						        <div class="bodyModel clearfix">
+						            <div ng-repeat="blower in rdc.blowers" id="blowerPage" >
+						                <div class="unitModel"  >
+						                    <div class="electricModel myColor">
+						                        <div class="text-left omg">{{blower.coldStorageName}}的{{blower.name}}</div>
+						                    </div>
+						                    <div class="txtModel clearfix">
+						                        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+						                            <div class="unitIcon">
+						                                 <span class="unitBg {{blower.cls}}">
+						                                   <i  class="fa fa-support"></i>
+						                                </span>
+						
+						                            </div>
+						
+						                        </div>
+						                        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+						                            <p class="omg">制冷累计：{{blower.runTime}}H</p>
+						                            <p class="omg">化霜累计：{{blower.defrostTime}}H</p>
+						                        </div>
+						                    </div>
+						                </div>
+						            </div>
+						        </div>
+						        <div class="headerModel myDefault" style="margin-top: 1em;">
+						            <div class="text-center">
+						                <span><b style="background-color:#10c469;"></b>制冷</span>
+						                <span><b style="background-color:#f39938;"></b>化霜</span>
+						                <span><b style="background-color:#d93f3f;"></b>待机</span>
+						            </div>
+						        </div>
+						    </div>
+						    <!--一个模块 end-->
+								    
+						    
+						    
+						    
 						</div>
 				</div>
 			</div>
 		 </div>
 </div>
+<script src="assets/js/echarts.min.js"></script>

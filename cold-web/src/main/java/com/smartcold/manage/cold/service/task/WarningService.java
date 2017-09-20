@@ -27,8 +27,8 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 
  **/
 //@Service
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath*:config/spring/local/appcontext*.xml" })
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(locations = { "classpath*:config/spring/local/appcontext*.xml" })
 public class WarningService  {
 	 
 	    @Autowired
