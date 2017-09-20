@@ -91,6 +91,9 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
     $scope.goReport = function () {
         window.location.href = 'analysisReport.html?storageID=' + $scope.rdcId;
     }
+    $scope.goElectric = function () {
+        window.location.href='analysisElectric.html?storageID=' + $scope.rdcId;
+    };
 
     $scope.swiper = 0;
     $scope.defaltswiper = 0;

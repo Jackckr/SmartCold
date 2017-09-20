@@ -5,65 +5,59 @@
     <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
-    <title>分析--温度</title>
-    <link rel="stylesheet" type="text/css" href="../com/css/common.css">
-    <link rel="stylesheet" href="../com/css/swiper.min.css" />
-    <link rel="stylesheet" href="../com/css/cold360.css" />
-    <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
+    <title>分析--电耗</title>
+	<link rel="stylesheet" type="text/css" href="../com/css/common.css">
+	<link rel="stylesheet" href="../com/css/swiper.min.css" />
+	<link rel="stylesheet" href="../com/css/cold360.css" />
+	<script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
 	<script type="text/javascript" src="../com/js/angular.min.js"></script>
-    <script type="text/javascript" src="../com/js/swiper.min.js" ></script>
-    <script type="text/javascript" src="../com/js/echarts.min.js" ></script>
-	<script type="text/javascript" src="../com/js/highcharts.js"></script>
-    <script type="text/javascript" src="../com/js/common.js"></script>
-    <script type="text/javascript" src="../com/js/cold360.js" ></script>
-    <script type="text/javascript" src="../app/js/analysisTemperature.js" ></script>
+	<script type="text/javascript" src="../com/js/swiper.min.js" ></script>
+	<script type="text/javascript" src="../com/js/echarts.min.js" ></script>
+	<script type="text/javascript" src="../com/js/common.js"></script>
+	<script type="text/javascript" src="../com/js/cold360.js" ></script>
+	<script type="text/javascript" src="../app/js/analysisElectric.js" ></script>
 </head>
-<body ng-app="app" ng-controller="analysisTemperature" ng-cloak>
-    <!-- header -->
-         <header class="one">
+<body ng-app="app" ng-controller="monitorElectric" ng-cloak>
+     <!-- header -->
+        <header class="one">        	
             <div class="area fl">
                 <a href="../index.html"><i class="iconfont">&#xe60e;</i></a>
             </div>
             <div class="zoom fr" ng-show="user.roleid == 2 || user.roleid == 3">
-                <a class="transion"><i class="iconfont">&#xe73c;</i></a>
+                <a  class="transion"><i class="iconfont">&#xe73c;</i></a>
             </div>
             <div class="txt omg">
-                {{rdcName}}
+				{{rdcName}}
             </div>
             <ul class="rdcDropList" ng-repeat="storage in storages">
-                <li ng-click="viewStorage(storage.id)">{{storage.name}}</li>
+				<li ng-click="viewStorage(storage.id)">{{storage.name}}</li>
             </ul>
         </header>
         <header class="two">
         	<div class="area fl">
         		<a class="cancel"><i class="iconfont">&#xe60e;</i></a>
         	</div>
-
+        	
         	<div id="searchDara_div" class="search">
-        		<input type="text" placeholder="查找RDC..." ng-model="searchContent" ng-change="searchRdcs(searchContent)" ng-model-options="{debounce: 700}"/>
+				<input type="text" placeholder="查找RDC..." ng-model="searchContent" ng-change="searchRdcs(searchContent)" ng-model-options="{debounce: 700}"/>
         		<i class="iconfont" >&#xe62f;</i>
         	</div>
 	    </header>
     <!-- header end-->
     <section class="toggle">
-    	<div class="tempture current other" id="ml_acl110"><i class="iconfont">&#xe67f;</i>
-    		<span class="dropNext">
+        <div class="tempture other" id="ml_acl110" ng-click="goTemperature()"><i class="iconfont">&#xe67f;</i>
+            <span class="dropNext">
     			<b>温度</b><i class="iconfont">&#xe6f7;</i>
     		</span>
-            <ul class="otherList black">
-                <li id="ml_acl111"><a href="javascript:;" id="overTemperature" ng-click="initTemCount()">超温时长及次数统计</a></li>
-                <li id="ml_acl112"><a href="javascript:;" id="overTemperatureCount" ng-click="initTemScore()">超温比例统计</a></li>
-                <!--<li id="ml_acl111"><a href="javascript:;" id="overTemperature" ng-click="overTemperatureTemper()">超温时长统计</a></li>
-                <li id="ml_acl112"><a href="javascript:;" id="overTemperatureCount" ng-click="overTemperatureTime()">超温次数统计</a></li>
-                <li id="ml_acl113"><a href="javascript:;" id="overTemperatureYZ" ng-click="overTemperatureYZTemper()">超温因子统计</a></li>
-                <li id="ml_acl114"><a href="javascript:;" id="BWYZ" ng-click="BWYZTemper()">保温因子统计</a></li>
-                <li id="ml_acl115"><a href="javascript:;" id="WDZQYZ" ng-click="WDZQYZTemper()">温度周期因子统计</a></li>-->
-            </ul>
-    	</div>
-        <div class="light other" ng-click="goElectric()"><i class="iconfont">&#xe6f1;</i>
+        </div>
+        <div class="light other current" ng-click="goElectric()"><i class="iconfont">&#xe6f1;</i>
             <span class="dropNext">
     			<b>能耗</b><i class="iconfont">&#xe6f7;</i>
     		</span>
+            <ul class="otherList black">
+                <li id="ml_acl21"><a href="javascript:;" ng-click="powerEnergy()">电耗</a></li>
+                <li id="ml_acl22"><a href="javascript:;" ng-click="waterEnergy()">水耗</a></li>
+            </ul>
         </div>
         <div class="door other" id="ml_acl120" ng-click="goTransport()"><i class="iconfont">&#xe6ed;</i>
             <span class="dropNext">
@@ -75,27 +69,26 @@
                 <b>制冷</b><i class="iconfont">&#xe6f7;</i>
             </span>
         </div>
-        <!--<div class="other" id="ml_acl140" ng-click="goReport()"><i class="iconfont">&#xe7cc;</i><b>报表</b></div>-->
     </section>
     <div class="backDrop"></div>
 	<div class="swiper-container chart temperature">
-        <div class="swiper-wrapper" id="chartView"></div>
+		<div class="swiper-wrapper" id="chartView"></div>
         <!-- Add Pagination -->
         <div class="swiper-pagination"></div>
         <!-- Add Arrows -->
         <div class="swiper-button-next"><i class="iconfont">&#xe691;</i></div>
         <div class="swiper-button-prev"><i class="iconfont">&#xe692;</i></div>
   </div>
-	<!--rdc列表-------------------------------------------------->
+  <!--rdc列表--------------------------------------------------> 
 	 <section class="searchTop">
-	 	<ul class="rdcList">
-	 		<li class="omg" ng-repeat="rdclist in storages | filter:searchContent" ng-click="changeRdc(rdclist)"><i class='iconfont'>&#xe62f;</i><span>{{rdclist.name}}</span></li>
-	 	</ul>
+		 <ul class="rdcList">
+			 <li class="omg" ng-repeat="rdclist in storages | filter:searchContent" ng-click="changeRdc(rdclist)"><i class='iconfont'>&#xe62f;</i><span>{{rdclist.name}}</span></li>
+		 </ul>
 	 	<p>没有找到您要的信息~~~<br />请检查您的输入条件是否有误^_^</p>
 	 </section>
-	 <!--rdc列表----------------------------------------------->
+	 <!--rdc列表-----------------------------------------------> 
     <ul class="footer">
-        <li id="ml_acl1">           
+        <li id="ml_acl1">
             <a href="cold360.html">
                 <i class="iconfont">&#xe68d;</i>
                 <p class="info">监控</p>
@@ -107,7 +100,7 @@
                 <p class="info">查询</p>
             </a>
         </li>
-        <li class="active" id="ml_acl100">            
+        <li id="ml_acl100" class="active" >
             <a href="analysis.html">
                 <i class="iconfont">&#xe682;</i>
                 <p class="info">分析</p>
@@ -117,7 +110,7 @@
             <a href="alarmLog.html">
                 <i class="iconfont"><!--&#xe698;-->&#xe697;</i>
                 <p class="info">告警</p>
-                <span class="countNum" ng-if="alarmTotalCnt > 0" ng-bind="alarmTotalCnt"></span>
+				<span class="countNum" ng-if="alarmTotalCnt > 0" ng-bind="alarmTotalCnt"></span>
             </a>
         </li>
         <li id="ml_acl300">            
