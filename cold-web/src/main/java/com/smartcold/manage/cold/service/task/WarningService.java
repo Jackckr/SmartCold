@@ -17,6 +17,7 @@ import com.smartcold.manage.cold.dao.olddb.SpiderConfigMapper;
 import com.smartcold.manage.cold.entity.newdb.SysWarningsInfo;
 import com.smartcold.manage.cold.entity.newdb.WarningsInfo;
 import com.smartcold.manage.cold.jobs.taskutil.ScheduleJob;
+import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
 
 /**
@@ -40,12 +41,12 @@ public class WarningService  {
 	    private SpiderConfigMapper spiderConfigMapper;
 	    
 	
-	    private static HashMap<Integer, List<ScheduleJob>> extdataHashMap=new HashMap<Integer, List<ScheduleJob>>();
+	    private static HashMap<String, SysWarningsInfo> extdataHashMap=new HashMap<String,SysWarningsInfo>();
 	
 	    /**
 	     * 
 	     */
-	    @Scheduled(cron = "0 0 */1 * * ?")
+//	    @Scheduled(cron = "0 0 */1 * * ?")
 	    public  void timer() {
 	    	System.err.println("我执行了=====================================");
 	    }
@@ -59,7 +60,16 @@ public class WarningService  {
     	   List<Integer> findAllConfig = spiderConfigMapper.findAllConfig();
     	   for (Integer rdcid : findAllConfig) {
     		   List<WarningsInfo> findWarningByTime = wInfoMapper.findWarningByTime(rdcid, startTime, endTime);
-    		   System.err.println(findWarningByTime.size());
+    		  if(SetUtil.isnotNullList(findWarningByTime)){
+    			  for (WarningsInfo warningsInfo : findWarningByTime) {
+					  
+//    				  warningsInfo.getWarningname()
+    				  
+    				  
+				  }
+    			  
+    			  
+    		  }
     		   
     		   
     		   

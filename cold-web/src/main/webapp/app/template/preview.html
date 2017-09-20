@@ -1,4 +1,5 @@
 
+<link rel="stylesheet" href="assets/css/jquery.fullPage.css" />
 <style>
      @-webkit-keyframes magentaPulse {
             from {color: 	#FFFAFA; !imporeat}
@@ -8,16 +9,20 @@
         .wiltrue{-webkit-animation-iteration-count: infinite;}
         .magentaPulse.wiltrue{-webkit-animation-name:magentaPulse;-webkit-animation-duration:2s;}
         #main_count_div{width: 100%;height: 100%;}
+        #fp-nav ul li, .fp-slidesNav ul li{width:20px;height:19px;}
+        #fp-nav ul li a span, .fp-slidesNav ul li a span{width:16px;height:16px;border-color:#999;}
+        #fp-nav ul li a.active span, .fp-slidesNav ul li a.active span{background:#f80;}
+        #fp-nav ul li .fp-tooltip.right{right:24px;}
+        #fp-nav ul li .fp-tooltip{max-width: 400px;background: rgba(0, 0, 0, 0.42);padding: 2px 4px;border-radius:2px;}
 </style>
-<link rel="stylesheet" href="assets/css/jquery.fullPage.css" />
 <script src="assets/plugins/fullPage/jquery.fullPage.min.js"></script>
  <div id="main_count_div" class="myBg">
 	 <div class="toolbar">
 	     <div id="tool">
-	         <span><input type="checkbox" checked="checked" ng-click="">温度</span>
-	         <span><input type="checkbox" checked="checked" ng-click="">电量</span>
-	         <span><input type="checkbox" checked="checked" ng-click="">机组</span>
-	         <span><input type="checkbox" checked="checked" ng-click="">风机</span>
+	         <span><input type="checkbox"  ng-model="priveseting.shTemp" ng-click="changemode();">温度</span>
+	         <span><input type="checkbox"  ng-model="priveseting.shpwc"  ng-click="changemode();">电量</span>
+	         <span><input type="checkbox"  ng-model="priveseting.shysj"  ng-click="changemode();">机组</span>
+	         <span><input type="checkbox"  ng-model="priveseting.shfolw" ng-click="changemode();">风机</span>
 	          
 	         <span><input type="checkbox" checked="checked" ng-click="alarm()">告警</span>
 	         <span><input type="checkbox" checked="checked" ng-click="priveseting.isRoll=!priveseting.isRoll">轮巡</span>
@@ -28,7 +33,7 @@
 	     <i class="toolI iconfont">&#xe60c;</i>
 	 </div>
 	 <div id="dowebok" class="hide">
-			<div  ng-repeat="rdc in allrdc"   class="section ">
+			<div  ng-repeat="rdc in allrdc"   class="section myBg" >
 				<h3 class="text-center">{{rdc.name}}</h3>
 				<div id="rdc_datil_{{rdc.id}}" >
 				      <div class="previewBox groupModel">
@@ -38,11 +43,11 @@
 						        <div class="headerModel myDefault">
 						            <div class="previewName myColor pull-left">实时温度</div>
 						            <div class="previewBtn pull-right">
-						                <button class="	glyphicon glyphicon-remove" onclick="closeFn(this)"></button>
+						                <button class="btn btn-danger btn-xs glyphicon glyphicon-remove" onclick="closeFn(this)"></button>
 						            </div>
 						        </div>
 						        <div class="bodyModel clearfix">
-						            <div class="unitModel"ng-repeat="storage in rdc.mystorages" >
+						            <div class="unitModel" style="margin-bottom: 15px;" ng-repeat="storage in rdc.mystorages" >
 						                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 						                    <div class="unitIcon"><i class="iconfont  {{priveseting.isOverTemp&&storage.isovTemp?'magentaPulse wiltrue':'' }} "   >&#xe67c;</i></div>
 						                    <p class="omg">{{storage.name}}</p>
@@ -61,7 +66,7 @@
 						        <div class="headerModel myDefault">
 						            <div class="previewName myColor pull-left">实时电量</div>
 						            <div class="previewBtn pull-right">
-						                <button class="btn btn-danger btn-xs" onclick="closeFn(this)">关闭</button>
+						                <button class="btn btn-danger btn-xs glyphicon glyphicon-remove" onclick="closeFn(this)"></button>
 						            </div>
 						        </div>
 						        <div class="bodyModel clearfix">
@@ -83,11 +88,11 @@
 						    <!--一个模块 end-->
 				
 						    <!--一个模块 start--><!--压缩机模块===============================-->
-						    <div class="previewModel myDefault" ng-show="rdc.compressorGroups.length>0&&priveseting.shysj">
+						    <div class="previewModel myDefault" ng-show="priveseting.shysj&&rdc.compressorGroups.length>0">
 						        <div class="headerModel">
 						            <div class="previewName myColor pull-left">压缩机</div>
 						            <div class="previewBtn pull-right">
-						                <button class="btn btn-danger btn-xs" onclick="closeFn(this)">关闭</button>
+						                <button class="btn btn-danger btn-xs glyphicon glyphicon-remove" onclick="closeFn(this)"></button>
 						            </div>
 						        </div>
 						        <div class="bodyModel clearfix" >
@@ -105,12 +110,12 @@
 						    
 						    
 							<!--一个模块 start--><!--冷风机模块================================-->
-						    <div class="previewModel" ng-show="rdc.blowers.length>0">
+						    <div class="previewModel" ng-show="priveseting.shfolw&&rdc.blowers.length>0">
 						        <div class="headerModel myDefault">
 						            <div class="previewName myColor pull-left">冷风机</div>
 						            <div class="previewBtn pull-right">
 						                <button ng-show="blowers.length>4" class="btn btn-success btn-xs" onclick="moreFn(this,4)">更多</button>
-						                <button class="btn btn-danger btn-xs" onclick="closeFn(this)">关闭</button>
+						                <button class="btn btn-danger btn-xs glyphicon glyphicon-remove" onclick="closeFn(this)"></button>
 						            </div>
 						        </div>
 						        <div class="bodyModel clearfix">

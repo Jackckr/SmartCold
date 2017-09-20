@@ -5,22 +5,15 @@
  * 
  */
 coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout, $interval,$http,$rootScope, baseTools) {
-       $scope.endTime= new Date(),  
-       $scope.priveseting={isOverTemp:true,isRoll:true,shTemp:true,shpwc:true,shysj:true,shfolw:true};//$scope.priveseting.islocke priveseting.isOverTemp
        $scope.statusmode=[["stop","run"],['danger','runnings','warnings']];
+       $scope.endTime= new Date(),  
        $scope.startTime = new Date($scope.endTime.getTime() - 1800000),
        $scope.ansisTime = new Date($scope.endTime.getTime() - 2592000000),
        $scope.cuttTemp={},$scope.isovTemp={}, $scope.cuttrepwc={},$scope.cuttrestime={};
        $scope.isNumber=function(obj) {  return typeof obj === 'number' && isFinite(obj) ;}  ;
-       $scope.index=0; //
-       $scope.rdcnam=[];
-       $scope.fullpage=undefined;
-       $scope.allrdc=undefined;//当前索引,当前用户所有rdc
-       
-       //全屏
-       $scope.fullScreen=function(){
-    	   var docElm=document.getElementById("dowebok");if(docElm.requestFullscreen){docElm.requestFullscreen();}else{if(docElm.mozRequestFullScreen){docElm.mozRequestFullScreen();}else{if(docElm.webkitRequestFullScreen){docElm.webkitRequestFullScreen();}else{if(elem.msRequestFullscreen){elem.msRequestFullscreen();}}}};
-       };
+       $scope.index=0,$scope.rdcnam=[];
+       $scope.fullpage=undefined,$scope.allrdc=undefined;//当前索引,当前用户所有rdc
+       $scope.priveseting=window.localStorage["priveseting_"+$rootScope.user.id]?JSON.parse(window.localStorage["priveseting_"+$rootScope.user.id]):{isOverTemp:true,isRoll:true,shTemp:true,shpwc:true,shysj:true,shfolw:true};
        $scope.pwcoption = {
       	        tooltip:{ backgroundColor:'rgba(0,0,0,0.3)',formatter: "{a} <br/>{b}: {c} kwh"},
       	        grid:{left:40,top:20, bottom:66,right:30},
@@ -28,10 +21,18 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
       	        yAxis: {splitLine:{show: false}, axisLine:{ lineStyle:{color:'#eee'}},axisTick:{ lineStyle:{color:'#eee'}},axisLabel:{textStyle:{color:'#eee', fontSize:12} }},
       	        series: [{name: '电量',type: 'bar', smooth:true,lineStyle:{ normal:{color:'#188ae2' }},itemStyle:{ normal:{ color:'#188ae2'}} }]
        };
+       //全屏
+       $scope.fullScreen=function(){
+    	   var docElm=document.getElementById("dowebok");if(docElm.requestFullscreen){docElm.requestFullscreen();}else{if(docElm.mozRequestFullScreen){docElm.mozRequestFullScreen();}else{if(docElm.webkitRequestFullScreen){docElm.webkitRequestFullScreen();}else{if(elem.msRequestFullscreen){elem.msRequestFullscreen();}}}};
+       };
        //告警
        $scope.alarm=function(){ 
     	   $scope.priveseting.isOverTemp=!$scope.priveseting.isOverTemp;
     	   if( !$scope.priveseting.isOverTemp){ angular.forEach($scope.isovTemp,function(item,index){  $scope.isovTemp[index]=false;}); }
+       };
+       $scope.changemode=function(){
+    	   window.localStorage["priveseting_"+$rootScope.user.id]=JSON.stringify($scope.priveseting);
+    	   $scope.refdata();
        };
        //刷新当前页
        $scope.refdata=function(){
@@ -219,7 +220,6 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
 	        	}else{
 	        		$scope.rdcnam.push("");
 	        	}
-	        
 	        });
 	        $('#dowebok').fullpage({ 
 		    	'navigation': true, 
@@ -263,8 +263,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
 				   $timeout($scope.full ,100);
 			   }
 		   }else{
-			   $scope.allrdc=[];
-			   $scope.allrdc.push($rootScope.vm.allUserRdcs[$scope.index]);
+			   $scope.allrdc=[$rootScope.vm.choserdc];
 			   $scope.initalldata($scope.allrdc[$scope.index]);  
 			   $('#dowebok').removeClass("hide");
 		   }   
@@ -284,7 +283,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
 		//定时滚动任务30
 	    clearInterval($rootScope.timeTicket);
 	    $rootScope.timeTicket = setInterval( $scope.gonex, 30000);
-	    $scope.$on('$destroy',function(){ clearInterval($rootScope.timeTicket);  });
+	    $scope.$on('$destroy',function(){ $("#fp-nav").remove(); clearInterval($rootScope.timeTicket);  });
 });
 
 

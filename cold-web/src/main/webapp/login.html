@@ -62,19 +62,6 @@
 <script type="text/javascript">
     var lk360Entity={name:"冷库360",rightTopLogo:"assets/img/custom/360_logo.png",tijianLogo:"../../assets/img/leftTop.png",baobiaoLogo:"../../assets/img/lianku_black.png",baobiaoText:"冷库360"};
     window.localStorage.companyLoad=JSON.stringify(lk360Entity);
-    /*function getUrlParam(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-        var r = window.location.search.substr(1).match(reg);
-        if (r != null) {
-            return decodeURI(unescape(r[2]));
-            return null;
-        }
-        ;
-    }
-    var name=getUrlParam('name');
-    if (name!="undefined") {
-        $("#link").attr('href', 'app/css/' + name + '.css');
-    }*/
     var mainHeight = $(window).height();
     var url=["/main.html" +( window.location.hash != ""?window.location.hash:"#/cold360Physical"),"","/autIdentity.html","/audit.html"];
     $(".loginBody").height(mainHeight - 160);

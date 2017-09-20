@@ -115,33 +115,35 @@ public class UserController extends BaseController {
 
 	@RequestMapping(value = "/findUser", method = RequestMethod.GET)
 	@ResponseBody
-	public Object findUser(HttpServletRequest request) {
+	public Object findUser(HttpServletRequest request,String token) {
 		UserEntity user = (UserEntity)request.getSession().getAttribute("user");
 		if(user!=null){return user;}
 		Cookie[] cookies = request.getCookies();
 		if (cookies == null) {
 			return new UserEntity();
 		}
-		for (Cookie cookie : cookies) {
-			if (cookie.getName().equals("token")) {
-				CookieEntity effectiveCookie = cookieService.findEffectiveCookie(cookie.getValue());
-				if (effectiveCookie != null) {
-					user = userDao.findUserByName(effectiveCookie.getUsername());
-					if(user==null)return new UserEntity();
-					RoleUser roleUser = roleUserService.getRoleIdByUserId(user.getId());
-					if(roleUser!=null){
-					  Role role = roleService.getRoleByRoleId(roleUser.getRoleid());
-					  user.setRole(role.getId());
-					}
-					user.setPassword(null);
-					request.getSession().setAttribute("user", user);
-					return user;
+		if(StringUtil.isNull(token)){
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("token")) {
+					token=cookie.getValue();
+					break;
 				}
 			}
 		}
-		user = new UserEntity();
-
-		return user;
+		CookieEntity effectiveCookie = cookieService.findEffectiveCookie(token);
+		if (effectiveCookie != null) {
+			user = userDao.findUserByName(effectiveCookie.getUsername());
+			if(user==null)return new UserEntity();
+			RoleUser roleUser = roleUserService.getRoleIdByUserId(user.getId());
+			if(roleUser!=null){
+			  Role role = roleService.getRoleByRoleId(roleUser.getRoleid());
+			  user.setRole(role.getId());
+			}
+			user.setPassword(null);
+			request.getSession().setAttribute("user", user);
+			return user;
+		}
+		return new UserEntity();
 	}
 	
 	

@@ -50,7 +50,7 @@ public class UrlFilter {
 	          // 判断如果没有取到员工信息,就跳转到登陆页面
 //	          if (empId == null || "".equals(empId)) {
 //	              // 跳转到登陆页面
-//	              servletResponse.sendRedirect("/JingXing_OA/login.jsp");
+	              servletResponse.sendRedirect("/JingXing_OA/login.jsp");
 //	          } else {
 //	              // 已经登陆,继续此次请求
 	              chain.doFilter(request, response);

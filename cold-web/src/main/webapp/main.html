@@ -31,14 +31,13 @@
 
 .menu-title { margin-left: 10px; font-weight: 500; color: white;}
 a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-events:none}.iconfont{font-style:normal;font-size:1pc;font-family:iconfont!important;-webkit-font-smoothing:antialiased;-webkit-text-stroke-width:.2px;-moz-osx-font-smoothing:grayscale}.omg{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tooltip-inner{background:rgba(0,0,0,.8);color:#fff;text-align:left}.angucomplete-dropdown{padding:0 0 0 6px;width:230px;max-height:280px;font-size:9pt}.quanxian{cursor:not-allowed}.quanxian:hover>a:hover,.quanxian>a,.quanxian>a i,.quanxian>a span{color:#444!important;pointer-events:none}.skin-blue .sidebar-menu>li.quanxian:hover>a{background:transparent!important;border-left-color:transparent!important}
-
 </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini" oncontextmenu=self.event.returnValue=false onselectstart="return false">
 	<div class="wrapper">
 		<!-- Main Header -->
 		<header class="main-header">
-			<div id="div_errmsg" class="ring hide"  onclick="$('#div_msg_datil').show();" onmouseenter="$('#div_msg_datil').show();" >
+			<div id="div_errmsg" class="ring hide"  onclick="$('#div_msg_datil').show();"  >
 				<span class="ringBox"><i class="iconfont">&#xe6f0;</i></span>
 				<span>{{alarm.totl}}</span>
 			</div>
@@ -46,14 +45,10 @@ a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-
 				<ul>
 					<li>您有{{alarm.totl}}条最新报警信息</li>
 					<li>
-						<p ng-if="alarm.TC>0"><a href="#" ng-click="toalarmTemp()"><i
-								class="icon iconfont text-red"></i> 温度报警：{{alarm.TC}}</a></p>
-						<p ng-if="alarm.CC>0"><a href="#"><i class="iconfont text-red">&#xe76d;</i>
-							操作不当：{{alarm.CC}}</a></p>
-						<p ng-if="alarm.SC>0"><a href="#"><i class="icon iconfont text-red"></i> 系统报警：
-							{{alarm.SC}}</a></p>
-						<p ng-if="alarm.WC>0"><a href="#"><i class="icon iconfont text-red"></i> 维修告警：
-							{{alarm.WC}}</a></p>
+						<p ng-if="alarm.TC>0"><a href="#" ng-click="toalarmTemp()"><i class="icon iconfont text-red"></i> 温度报警：{{alarm.TC}}</a></p>
+						<p ng-if="alarm.CC>0"><a href="#"><i class="iconfont text-red">&#xe76d;</i>操作不当：{{alarm.CC}}</a></p>
+						<p ng-if="alarm.SC>0"><a href="#"><i class="icon iconfont text-red"></i> 系统报警：{{alarm.SC}}</a></p>
+						<p ng-if="alarm.WC>0"><a href="#"><i class="icon iconfont text-red"></i> 维修告警：{{alarm.WC}}</a></p>
 					</li>
 					<li><a href="#/alarmTemp" class="btn btn-success btn-block">查看全部告警</a></li>
 				</ul>
@@ -97,56 +92,55 @@ a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-
 						</li>
 						<!-- /.messages-menu -->
 						<!-- Notifications Menu -->
-						<li class="dropdown notifications-menu">
-							<!-- Menu toggle button --> <a href="#" class="dropdown-toggle"
-							data-toggle="dropdown"> <i class="fa fa-bell-o"
-								style="color: #fff"></i> <span class="label label-warning">{{alarmMsgCount.alarmCount}}</span>
-						</a>
-							<ul class="dropdown-menu">
-								<li class="header" ng-cloak>您有{{alarmMsgCount.alarmCount}}条最新报警信息</li>
-								<li>
+<!-- 						<li class="dropdown notifications-menu"> -->
+<!-- 							Menu toggle button <a href="#" class="dropdown-toggle" -->
+<!-- 							data-toggle="dropdown"> <i class="fa fa-bell-o" -->
+<!-- 								style="color: #fff"></i> <span class="label label-warning">{{alarmMsgCount.alarmCount}}</span> -->
+<!-- 						</a> -->
+<!-- 							<ul class="dropdown-menu"> -->
+<!-- 								<li class="header" ng-cloak>您有{{alarmMsgCount.alarmCount}}条最新报警信息</li> -->
+<!-- 								<li> -->
 									<!-- Inner Menu: contains the notifications -->
-									<ul class="menu">
-										<li><a href="#/warningMsg"> <i class="fa fa-users text-red"></i> 今天有五条报警</a>
-										</li>
+<!-- 									<ul class="menu"> -->
+<!-- 										<li><a href="#/warningMsg"> <i class="fa fa-users text-red"></i> 今天有五条报警</a> -->
+<!-- 										</li> -->
 										<!-- end notification -->
-									</ul>
-								</li>
-								<li class="footer"><a href="#/alarmTemp">浏览全部</a></li>
-							</ul>
-						</li>
+<!-- 									</ul> -->
+<!-- 								</li> -->
+<!-- 								<li class="footer"><a href="#/alarmTemp">浏览全部</a></li> -->
+<!-- 							</ul> -->
+<!-- 						</li> -->
 						<!-- Tasks Menu -->
-						<li class="dropdown tasks-menu">
-							<!-- Menu Toggle Button --> <a href="#" class="dropdown-toggle"
-							data-toggle="dropdown"> <i class="fa fa-flag-o"
-								style="color: #fff"></i> <span class="label label-danger">0</span>
-						</a>
-							<ul class="dropdown-menu">
-								<li class="header">You have 9 tasks</li>
-								<li>
+<!-- 						<li class="dropdown tasks-menu"> -->
+<!-- 							Menu Toggle Button <a href="#" class="dropdown-toggle" -->
+<!-- 							data-toggle="dropdown"> <i class="fa fa-flag-o" -->
+<!-- 								style="color: #fff"></i> <span class="label label-danger">0</span> -->
+<!-- 						  </a> -->
+<!-- 							<ul class="dropdown-menu"> -->
+<!-- 								<li class="header">You have 9 tasks</li> -->
+<!-- 								<li> -->
 									<!-- Inner menu: contains the tasks -->
-									<ul class="menu">
-										<li>
-											<!-- Task item --> <a href="#"> <!-- Task title and progress text -->
-												<h3>
-													Design some buttons <small class="pull-right">20%</small>
-												</h3> <!-- The progress bar -->
-												<div class="progress xs">
+<!-- 									<ul class="menu"> -->
+<!-- 										<li> -->
+											<!-- Task item --> 
+<!-- 													Design some buttons <small class="pull-right">20%</small> -->
+<!-- 												</h3> The progress bar -->
+<!-- 												<div class="progress xs"> -->
 													<!-- Change the css width attribute to simulate progress -->
-													<div class="progress-bar progress-bar-aqua"
-														style="width: 20%" role="progressbar" aria-valuenow="20"
-														aria-valuemin="0" aria-valuemax="100">
-														<span class="sr-only">20% Complete</span>
-													</div>
-												</div>
-										</a>
-										</li>
+<!-- 													<div class="progress-bar progress-bar-aqua" -->
+<!-- 														style="width: 20%" role="progressbar" aria-valuenow="20" -->
+<!-- 														aria-valuemin="0" aria-valuemax="100"> -->
+<!-- 														<span class="sr-only">20% Complete</span> -->
+<!-- 													</div> -->
+<!-- 												</div> -->
+<!-- 										</a> -->
+<!-- 										</li> -->
 										<!-- end task item -->
-									</ul>
-								</li>
-								<li class="footer"><a href="#/coldStorageDiv">View all tasks</a></li>
-							</ul>
-						</li>
+<!-- 									</ul> -->
+<!-- 								</li> -->
+<!-- 								<li class="footer"><a href="#/coldStorageDiv">View all tasks</a></li> -->
+<!-- 							</ul> -->
+<!-- 						</li> -->
 						<!-- User Account Menu -->
 						<li class="dropdown user user-menu">
 							<!-- Menu Toggle Button --> <a href="#" class="dropdown-toggle"
