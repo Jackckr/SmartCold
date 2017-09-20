@@ -2,7 +2,7 @@ var  params={keyword:null};
 var  userToRdcParams={userId:null};
 var  rdcToParams={rdcId:null};
 var  companyToParams={companyId:null};
-var roleFlag=1;//标记当前角色1.冷库2.用户3.集团
+var roleFlag=1;//标记当前角色1.门店2.用户3.集团
 var saveUser={"id":null,"username":null};
 var saveRdc={"id":null,"rdcName":null};
 var saverCompany={"id":null,"companyName":null};
@@ -52,17 +52,17 @@ function showWindow() {
 
 /*左用户操作按钮载入*/
 function userStyler(value,row){
-    return '<button class="btn" onclick="userToRdc('+ row.id+',\''+row.username+'\')">冷库关联</button><button class="btn btn-delete" onclick="userToCompany('+ row.id+',\''+row.username+'\')">集团关联</button>';
+    return '<button class="btn" onclick="userToRdc('+ row.id+',\''+row.username+'\')">门店关联</button><button class="btn btn-delete" onclick="userToCompany('+ row.id+',\''+row.username+'\')">集团关联</button>';
 }
-/*左冷库操作按钮载入*/
+/*左门店操作按钮载入*/
 function rdcStyler(value,row){
     return '<button class="btn" onclick="rdcToUser('+ row.id+',\''+row.name+'\')">用户关联</button><button class="btn btn-delete" onclick="rdcToCompany('+ row.id+',\''+row.name+'\')">集团关联</button>';
 }
 /*左集团操作按钮载入*/
 function companyStyler(value,row){
-    return '<button class="btn" onclick="companyToRdc('+ row.id+',\''+row.name+'\')">冷库关联</button><button class="btn btn-delete" onclick="companyToUser('+ row.id+',\''+row.name+'\')">用户关联</button>';
+    return '<button class="btn" onclick="companyToRdc('+ row.id+',\''+row.name+'\')">门店关联</button><button class="btn btn-delete" onclick="companyToUser('+ row.id+',\''+row.name+'\')">用户关联</button>';
 }
-/*中用户冷库解绑操作按钮*/
+/*中用户门店解绑操作按钮*/
 function userRdcUnbindStyler(value,row) {
     return '<button class="btn btn-delete" onclick="userRdcUnbind('+row.userid+','+ row.rdcid+',\''+row.user.username+'\',\''+row.rdc.name+'\')">解绑</button>';
 }
@@ -70,15 +70,15 @@ function userRdcUnbindStyler(value,row) {
 function userCompanyUnbindStyler(value, row) {
     return '<button class="btn btn-delete" onclick="userCompanyUnbind('+row.userid+','+ row.companyid+',\''+row.user.username+'\',\''+row.company.name+'\')">解绑</button>';
 }
-/*中冷库集团解绑操作按钮*/
+/*中门店集团解绑操作按钮*/
 function rdcCompanyUnbindStyler(value, row) {
     return '<button class="btn btn-delete" onclick="rdcCompanyUnbind('+row.rdcid+','+ row.companyid+',\''+row.rdc.name+'\',\''+row.company.name+'\')">解绑</button>';
 }
-/*右用户绑定冷库操作按钮载入*/
+/*右用户绑定门店操作按钮载入*/
 function userToRdcStyler(value,row){
     return '<button class="btn" onclick="userBindRdc('+saveUser.id+','+ row.id+',\''+saveUser.username+'\',\''+row.name+'\')">绑定</button>';
 }
-/*右冷库绑定用户操作按钮载入*/
+/*右门店绑定用户操作按钮载入*/
 function rdcToUserStyler(value,row){
     return '<button class="btn" onclick="userBindRdc('+ row.id+','+saveRdc.id+',\''+row.username+'\',\''+saveRdc.rdcName+'\')">绑定</button>';
 }
@@ -86,7 +86,7 @@ function rdcToUserStyler(value,row){
 function userToCompanyStyler(value, row) {
     return '<button class="btn" onclick="userBindCompany('+saveUser.id+','+ row.id+',\''+saveUser.username+'\',\''+row.name+'\')">绑定</button>';
 }
-/*右冷库绑定集团操作按钮载入*/
+/*右门店绑定集团操作按钮载入*/
 function rdcToCompanyStyler(value, row) {
     return '<button class="btn" onclick="rdcBindCompany('+saveRdc.id+','+ row.id+',\''+saveRdc.rdcName+'\',\''+row.name+'\')">绑定</button>';
 }
@@ -94,7 +94,7 @@ function rdcToCompanyStyler(value, row) {
 function companyToUserStyler(value, row) {
     return '<button class="btn" onclick="userBindCompany('+row.id+','+ saverCompany.id+',\''+row.username+'\',\''+saverCompany.companyName+'\')">绑定</button>';
 }
-/*右集团绑定冷库操作按钮载入*/
+/*右集团绑定门店操作按钮载入*/
 function companyToRdcStyler(value, row) {
     return '<button class="btn" onclick="rdcBindCompany('+row.id+','+ saverCompany.id+',\''+row.name+'\',\''+saverCompany.companyName+'\')">绑定</button>';
 }
@@ -113,12 +113,12 @@ function init_user(title,tol,tableId,searchTol){
     ]];
     newInitTable(title,"icon-msgType", "POST", "../../i/user/getUserList", params,searchTol,null, col,true, userOnDblClickRow,tableId);
 }
-/*初始化冷库表*/
+/*初始化门店表*/
 function init_rdc(title,tol,tableId,searchTol){
     var col=[[
         {field:'id',title:'ID',sortable:true},
-        {field:'name',title:'冷库名', width: 80, align: 'center',sortable:true},
-        {field:'address',title:'冷库地址', width: 80, align: 'center',sortable:true},
+        {field:'name',title:'门店名', width: 80, align: 'center',sortable:true},
+        {field:'address',title:'门店地址', width: 80, align: 'center',sortable:true},
         {field:'hand',title:'操作', width: 80, align: 'center',formatter:tol}
     ]];
     newInitTable(title,"icon-msgType", "POST", "../../i/rdc/getRdcDTOByPage", params,searchTol,null, col,true, rdcOnDblClickRow,tableId);
@@ -133,13 +133,13 @@ function init_company(title,tol,tableId,searchTol) {
     ]];
     newInitTable(title,"icon-msgType", "POST", "../../i/company/getCompanyList", params,searchTol,null, col,true, companyOnDblClickRow,tableId);
 }
-/*初始化用户冷库关联表*/
+/*初始化用户门店关联表*/
 function init_userToRdc(title, tol, tableId,url,params) {
     var col=[[
         {field:'userid',title:'用户ID',sortable:true},
         {field:'user',title:'用户名', width: 80, align: 'center',sortable:true,formatter:getUserName},
-        {field:'rdcid',title:'冷库ID', width: 80, align: 'center',sortable:true},
-        {field:'rdc',title:'冷库名', width: 80, align: 'center',sortable:true,formatter:getRdcName},
+        {field:'rdcid',title:'门店ID', width: 80, align: 'center',sortable:true},
+        {field:'rdc',title:'门店名', width: 80, align: 'center',sortable:true,formatter:getRdcName},
         {field:'hand',title:'操作', width: 80, align: 'center',formatter:tol}
     ]];
     newInitTable(title,"icon-msgType", "POST", url, params,null,null, col,true, null,tableId);
@@ -155,13 +155,13 @@ function init_userToCompany(title, tol, tableId,url,params) {
     ]];
     newInitTable(title,"icon-msgType", "POST",url , params,null,null, col,true, null,tableId);
 }
-/*初始化冷库集团关联表*/
+/*初始化门店集团关联表*/
 function init_rdcToCompany(title, tol, tableId, url, params) {
     var col=[[
         {field:'companyid',title:'集团ID',sortable:true},
         {field:'company',title:'集团名', width: 80, align: 'center',sortable:true,formatter:getCompanyName},
-        {field:'rdcid',title:'冷库ID', width: 80, align: 'center',sortable:true},
-        {field:'rdc',title:'冷库名', width: 80, align: 'center',sortable:true,formatter:getRdcName},
+        {field:'rdcid',title:'门店ID', width: 80, align: 'center',sortable:true},
+        {field:'rdc',title:'门店名', width: 80, align: 'center',sortable:true,formatter:getRdcName},
         {field:'hand',title:'操作', width: 80, align: 'center',formatter:tol}
     ]];
     newInitTable(title,"icon-msgType", "POST", url, params,null,null, col,true, null,tableId);
@@ -174,7 +174,7 @@ function init_rdcToCompany(title, tol, tableId, url, params) {
 function userOnDblClickRow(index,field){
 
 }
-/*冷库双击事件*/
+/*门店双击事件*/
 function rdcOnDblClickRow(index,field){
 
 }
@@ -189,21 +189,21 @@ function companyOnDblClickRow(index,field){
 function changeUserTable(){
     cleanSearch();
     hideWindow();
-    init_user("<button style='margin-left: 10px' onclick='changeRdcTable()'>冷库</button><button onclick='changeUserTable()' style='background-color: #00a0e9;color: white;margin-left: 10px'>用户</button><button onclick='changeCompanyTable()' style='margin-left: 10px'>集团</button>",userStyler,"#objTable","#div_filteri");
+    init_user("<button style='margin-left: 10px' onclick='changeRdcTable()'>门店</button><button onclick='changeUserTable()' style='background-color: #00a0e9;color: white;margin-left: 10px'>用户</button><button onclick='changeCompanyTable()' style='margin-left: 10px'>集团</button>",userStyler,"#objTable","#div_filteri");
     roleFlag=2;
 }
-/*切换冷库表*/
+/*切换门店表*/
 function changeRdcTable(){
     cleanSearch();
     hideWindow();
-    init_rdc("<button style='background-color: #00a0e9;color: white;margin-left: 10px' onclick='changeRdcTable()'>冷库</button><button onclick='changeUserTable()' style='margin-left: 10px'>用户</button><button onclick='changeCompanyTable()' style='margin-left: 10px'>集团</button>",rdcStyler,"#objTable","#div_filteri");
+    init_rdc("<button style='background-color: #00a0e9;color: white;margin-left: 10px' onclick='changeRdcTable()'>门店</button><button onclick='changeUserTable()' style='margin-left: 10px'>用户</button><button onclick='changeCompanyTable()' style='margin-left: 10px'>集团</button>",rdcStyler,"#objTable","#div_filteri");
     roleFlag=1;
 }
 /*切换集团表*/
 function changeCompanyTable(){
     cleanSearch();
     hideWindow();
-    init_company("<button style='margin-left: 10px' onclick='changeRdcTable()'>冷库</button><button onclick='changeUserTable()' style='margin-left: 10px'>用户</button><button onclick='changeCompanyTable()' style='background-color: #00a0e9;color: white;margin-left: 10px'>集团</button>",companyStyler,"#objTable","#div_filteri");
+    init_company("<button style='margin-left: 10px' onclick='changeRdcTable()'>门店</button><button onclick='changeUserTable()' style='margin-left: 10px'>用户</button><button onclick='changeCompanyTable()' style='background-color: #00a0e9;color: white;margin-left: 10px'>集团</button>",companyStyler,"#objTable","#div_filteri");
     roleFlag=3;
 }
 
@@ -211,16 +211,16 @@ function changeCompanyTable(){
 /*获得用户具体类型*/
 function getUserType(value) {
     if (value==0){
-        return "冷库主";
+        return "门店账号";
     }else if (value==1){
-        return "货主";
+        return "区域经理";
     }else if(value==2){
-        return "维修商";
+        return "集团用户";
     }else {
         return "";
     }
 }
-/*获得冷库名*/
+/*获得门店名*/
 function getRdcName(value) {
     return value.name;
 }
@@ -235,15 +235,15 @@ function getCompanyName(value) {
 
 
 
-/*用户关联冷库*/
+/*用户关联门店*/
 function userToRdc(id,username) {
     cleanSearch();
     showWindow();
     saveUser.id=id;
     saveUser.username=username;
     userToRdcParams.userId=id;
-    init_userToRdc("用户\""+username+"\"所关联的冷库",userRdcUnbindStyler,"#objTable1","../../i/rdcUser/getRdcUserByUserId",userToRdcParams);
-    init_rdc("请选择关联的冷库",userToRdcStyler,"#objTable2","#div_filteri");
+    init_userToRdc("用户\""+username+"\"所关联的门店",userRdcUnbindStyler,"#objTable1","../../i/rdcUser/getRdcUserByUserId",userToRdcParams);
+    init_rdc("请选择关联的门店",userToRdcStyler,"#objTable2","#div_filteri");
 }
 /*用户关联集团*/
 function userToCompany(id,username) {
@@ -255,24 +255,24 @@ function userToCompany(id,username) {
     init_userToCompany("用户\""+username+"\"所关联的集团",userCompanyUnbindStyler,"#objTable1","../../i/companyUser/getByUserId",userToRdcParams);
     init_company("请选择关联的集团",userToCompanyStyler,"#objTable2","#div_filteri");
 }
-/*冷库关联用户*/
+/*门店关联用户*/
 function rdcToUser(id, rdcName) {
     cleanSearch();
     showWindow();
     saveRdc.id=id;
     saveRdc.rdcName=rdcName;
     rdcToParams.rdcId=id;
-    init_userToRdc("冷库\""+rdcName+"\"所关联的用户",userRdcUnbindStyler,"#objTable1","../../i/rdcUser/getRdcUserByRdcId",rdcToParams);
+    init_userToRdc("门店\""+rdcName+"\"所关联的用户",userRdcUnbindStyler,"#objTable1","../../i/rdcUser/getRdcUserByRdcId",rdcToParams);
     init_user("请选择关联的用户",rdcToUserStyler,"#objTable2","#div_filteri");
 }
-/*冷库关联集团*/
+/*门店关联集团*/
 function rdcToCompany(id, rdcName) {
     cleanSearch();
     showWindow();
     saveRdc.id=id;
     saveRdc.rdcName=rdcName;
     rdcToParams.rdcId=id;
-    init_rdcToCompany("冷库\""+rdcName+"\"所关联的集团",rdcCompanyUnbindStyler,"#objTable1","../../i/companyRdc/getByRdcId",rdcToParams);
+    init_rdcToCompany("门店\""+rdcName+"\"所关联的集团",rdcCompanyUnbindStyler,"#objTable1","../../i/companyRdc/getByRdcId",rdcToParams);
     init_company("请选择关联的集团",rdcToCompanyStyler,"#objTable2","#div_filteri");
 }
 /*集团关联用户*/
@@ -285,24 +285,24 @@ function companyToUser(id, companyName) {
     init_userToCompany("集团\""+companyName+"\"所关联的用户",userCompanyUnbindStyler,"#objTable1","../../i/companyUser/getByCompanyId",companyToParams);
     init_user("请选择关联的用户",companyToUserStyler,"#objTable2","#div_filteri");
 }
-/*集团关联冷库*/
+/*集团关联门店*/
 function companyToRdc(id, companyName) {
     cleanSearch();
     showWindow();
     saverCompany.id=id;
     saverCompany.companyName=companyName;
     companyToParams.companyId=id;
-    init_rdcToCompany("集团\""+companyName+"\"所关联的冷库",rdcCompanyUnbindStyler,"#objTable1","../../i/companyRdc/getByCompanyId",companyToParams);
-    init_rdc("请选择关联的冷库",companyToRdcStyler,"#objTable2","#div_filteri");
+    init_rdcToCompany("集团\""+companyName+"\"所关联的门店",rdcCompanyUnbindStyler,"#objTable1","../../i/companyRdc/getByCompanyId",companyToParams);
+    init_rdc("请选择关联的门店",companyToRdcStyler,"#objTable2","#div_filteri");
 }
 
 
 
 
 
-/*用户绑定冷库*/
+/*用户绑定门店*/
 function userBindRdc(userId,rdcId,username,rdcName) {
-    $.messager.confirm('提示','确认和冷库\''+rdcName+'\'绑定?',function(r){
+    $.messager.confirm('提示','确认和门店\''+rdcName+'\'绑定?',function(r){
         if (r){
             $.ajax({
                 url:"/i/rdcUser/insertRdcUser",
@@ -316,9 +316,9 @@ function userBindRdc(userId,rdcId,username,rdcName) {
         }
     });
 }
-/*用户冷库解绑*/
+/*用户门店解绑*/
 function userRdcUnbind(userId,rdcId,username,rdcName){
-    $.messager.confirm('提示','确认和冷库\''+rdcName+'\'解绑?',function(r){
+    $.messager.confirm('提示','确认和门店\''+rdcName+'\'解绑?',function(r){
         if (r){
             $.ajax({
                 url:"/i/rdcUser/delRdcUser",
@@ -366,17 +366,17 @@ function userCompanyUnbind(userId,companyId,username,companyName) {
         }
     });
 }
-/*冷库绑定集团*/
+/*门店绑定集团*/
 function rdcBindCompany(rdcId, companyId,rdcName,companyName) {
-    $.messager.confirm('提示','确认将冷库\"'+rdcName+'\"和集团\"'+companyName+'\"绑定?',function(r){
+    $.messager.confirm('提示','确认将门店\"'+rdcName+'\"和集团\"'+companyName+'\"绑定?',function(r){
         if (r){
             $.ajax({
                 url:"/i/company/addCompanyRdc",
                 type:"POST",
                 data:{"rdcId":rdcId,"companyId":companyId},
                 success:function (data) {
-                    var message=data.status==1?"绑定失败！该冷库已经绑定集团不得再次绑定":"绑定成功！\""+rdcName+"\"已成为\""+companyName+"\"的集团用户！"
-                    if (data.status==2){message="绑定失败！该冷库和集团\""+companyName+"\"已成立绑定关系";}
+                    var message=data.status==1?"绑定失败！该门店已经绑定集团不得再次绑定":"绑定成功！\""+rdcName+"\"已成为\""+companyName+"\"的集团用户！"
+                    if (data.status==2){message="绑定失败！该门店和集团\""+companyName+"\"已成立绑定关系";}
                     $.messager.alert('提示',message,'info');
                     roleFlag==1?rdcToCompany(rdcId,rdcName):companyToRdc(companyId,companyName);
                 }
@@ -384,9 +384,9 @@ function rdcBindCompany(rdcId, companyId,rdcName,companyName) {
         }
     });
 }
-/*冷库集团解绑*/
+/*门店集团解绑*/
 function rdcCompanyUnbind(rdcId, companyId,rdcName,companyName) {
-    $.messager.confirm('提示','确认将冷库\"'+rdcName+'\"和集团\"'+companyName+'\"解除绑定?',function(r){
+    $.messager.confirm('提示','确认将门店\"'+rdcName+'\"和集团\"'+companyName+'\"解除绑定?',function(r){
         if (r){
             $.ajax({
                 url:"/i/company/delCompanyRdc",
@@ -404,7 +404,7 @@ function rdcCompanyUnbind(rdcId, companyId,rdcName,companyName) {
 
 //初始化数据
 $().ready(function() {
-    init_rdc("<button style='background-color: #00a0e9;color: white;margin-left: 10px' onclick='changeRdcTable()'>冷库</button><button onclick='changeUserTable()' style='margin-left: 10px'>用户</button><button onclick='changeCompanyTable()' style='margin-left: 10px'>集团</button>",rdcStyler,"#objTable","#div_filteri");
+    init_rdc("<button style='background-color: #00a0e9;color: white;margin-left: 10px' onclick='changeRdcTable()'>门店</button><button onclick='changeUserTable()' style='margin-left: 10px'>用户</button><button onclick='changeCompanyTable()' style='margin-left: 10px'>集团</button>",rdcStyler,"#objTable","#div_filteri");
     $('#fddata').searchbox({searcher:function(value){
         params.keyword=value;
         reloaddata(params);

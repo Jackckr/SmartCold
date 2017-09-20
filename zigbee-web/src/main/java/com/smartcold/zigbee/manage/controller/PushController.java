@@ -15,18 +15,19 @@ import java.util.Date;
 @Controller
 @RequestMapping("/push")
 public class PushController {
-    private static long ios_360_appKey=24627462;
-    private static long ios_lianku_appKey=24615505;
-    private static long android_lianku_appKey=24627414;
+    private static long appKey_360=24628597;
+    private static long appKey_360_sx=24628984;
+    private static long appKey_lianku=24628617;
 
     @RequestMapping(value = "/push360Alarm")
     @ResponseBody
     public void push360Alarm(PushEntity pushEntity) throws Exception {
         //if(!StringUtil.checkToken(pushEntity.getToken())){return;}
         PushDemoTest pushDemoTest = new PushDemoTest();
-        pushEntity.setAppKey(ios_360_appKey);
+        pushEntity.setAppKey(appKey_360);
         pushDemoTest.pushByAccountToIos(pushEntity);
-        pushEntity.setAppKey(android_lianku_appKey);
         pushDemoTest.pushByAccountToAndroid(pushEntity);
+        pushEntity.setAppKey(appKey_360_sx);
+        pushDemoTest.pushByAccountToIos(pushEntity);
     }
 }

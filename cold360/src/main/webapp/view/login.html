@@ -58,6 +58,10 @@
 		</div>
 	</footer> -->
 	<script  type="text/javascript">
+		/*跨域Android传user对象*/
+        function sendUserToAndroid(user) {
+            latte.event(user);
+        }
 	if(!navigator.cookieEnabled){ /* alert("请打开手机Cookie"); */layer.open({content: '请打开手机Cookie~',btn: '确定'});}
       try { window.localStorage.sfhide = "foobar";} catch(_) {layer.open({content: '请关闭隐身模式再浏览……',btn: '确定'});}
 	  $("#username").val(util.getCookie("username"));
@@ -88,6 +92,10 @@
 					  $.ajax({type:"GET",cache:false,timeout : 5000,dataType:"json",data:{token:token}, url:ER.root + "/i/user/findUser",success:function(userdata) {if (userdata && userdata.id != 0) {
 						util.setCookie("username",userName,"d7");
 						window.localStorage.lkuser=JSON.stringify(userdata);
+                          userdata.action="push";
+                          try {
+                              sendUserToAndroid(JSON.stringify(userdata));
+                          }catch(e) {}
 // 						window.sessionStorage.lkuser=window.localStorage.lkuser; 
 						util.setCookie("token",token,"d7");
 						if (window.location.hash != "") {

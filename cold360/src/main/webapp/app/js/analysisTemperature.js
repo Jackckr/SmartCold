@@ -157,6 +157,9 @@ app.controller('analysisTemperature', function ($scope, $location,$timeout, $htt
     $scope.goReport = function () {
         window.location.href = 'analysisReport.html?storageID=' + $scope.rdcId;
     }
+    $scope.goElectric = function () {
+        window.location.href='analysisElectric.html?storageID=' + $scope.rdcId;
+    };
 
     $scope.swiper = 0;
     $scope.defaltswiper = 0;

@@ -376,7 +376,7 @@
     border-radius: 3px 0 0 3px;
 }
 .toolbar:hover{
-    width: 222px;
+    width: 444px;
 }
 .toolbar:hover .toolI{
     -webkit-border-radius: 0;
