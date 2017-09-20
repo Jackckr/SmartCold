@@ -123,6 +123,9 @@ app.controller('analysisQuery', function ($scope, $location, $http, $rootScope, 
         $scope.rdcId = rdc.id;
         $scope.rdcName = rdc.name;
         $scope.searchContent = "";
+        $scope.seletedDatas = '';
+        $scope.oids = [];
+        $("#historyChart").empty();
         $scope.viewStorage(rdc.id);
         initAllByRdcId(rdc.id);
     }
