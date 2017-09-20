@@ -32,16 +32,16 @@ import com.smartcold.manage.cold.util.TimeUtil;
 //@ContextConfiguration(locations = { "classpath*:config/spring/local/appcontext*.xml" })
 public class WarningService  {
 	 
-	    @Autowired
-	    private SysWarningsInfoMapper sysInfoMapper;
-	    
-	    @Autowired
-	    private WarningsInfoMapper wInfoMapper;
-	    @Autowired
-	    private SpiderConfigMapper spiderConfigMapper;
-	    
-	
-	    private static HashMap<String, SysWarningsInfo> extdataHashMap=new HashMap<String,SysWarningsInfo>();
+//	    @Autowired
+//	    private SysWarningsInfoMapper sysInfoMapper;
+//	    
+//	    @Autowired
+//	    private WarningsInfoMapper wInfoMapper;
+//	    @Autowired
+//	    private SpiderConfigMapper spiderConfigMapper;
+//	    
+//	
+//	    private static HashMap<String, SysWarningsInfo> extdataHashMap=new HashMap<String,SysWarningsInfo>();
 	
 	    /**
 	     * 
@@ -56,25 +56,25 @@ public class WarningService  {
    */
 	   @Test 
        public void excute(){
-    	   Date startTime = TimeUtil.getBeforeHOUR(1),endTime =  new Date();
-    	   List<Integer> findAllConfig = spiderConfigMapper.findAllConfig();
-    	   for (Integer rdcid : findAllConfig) {
-    		   List<WarningsInfo> findWarningByTime = wInfoMapper.findWarningByTime(rdcid, startTime, endTime);
-    		  if(SetUtil.isnotNullList(findWarningByTime)){
-    			  for (WarningsInfo warningsInfo : findWarningByTime) {
-					  
-//    				  warningsInfo.getWarningname()
-    				  
-    				  
-				  }
-    			  
-    			  
-    		  }
+//    	   Date startTime = TimeUtil.getBeforeHOUR(1),endTime =  new Date();
+//    	   List<Integer> findAllConfig = spiderConfigMapper.findAllConfig();
+//    	   for (Integer rdcid : findAllConfig) {
+//    		   List<WarningsInfo> findWarningByTime = wInfoMapper.findWarningByTime(rdcid, startTime, endTime);
+//    		  if(SetUtil.isnotNullList(findWarningByTime)){
+//    			  for (WarningsInfo warningsInfo : findWarningByTime) {
+//					  
+////    				  warningsInfo.getWarningname()
+//    				  
+//    				  
+//				  }
+//    			  
+//    			  
+//    		  }
     		   
     		   
     		   
     		   
-		   }
+//		   }
        }
 
 }

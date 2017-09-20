@@ -224,7 +224,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
 	        $('#dowebok').fullpage({ 
 		    	'navigation': true, 
 		    	continuousVertical: true,
-		    	loopBottom: true,
+//		    	loopBottom: true,
 		    	navigationTooltips: $scope.rdcnam,
 				onLeave: function(index,nextIndex,direction){
 					 $scope.index=nextIndex;
@@ -283,7 +283,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
 		//定时滚动任务30
 	    clearInterval($rootScope.timeTicket);
 	    $rootScope.timeTicket = setInterval( $scope.gonex, 30000);
-	    $scope.$on('$destroy',function(){ $("#fp-nav").remove(); clearInterval($rootScope.timeTicket);  });
+	    $scope.$on('$destroy',function(){ $("#fp-nav").remove(); $("body").css("overflow","");   clearInterval($rootScope.timeTicket);  });
 });
 
 
