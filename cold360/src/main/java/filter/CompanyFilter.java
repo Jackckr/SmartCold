@@ -19,9 +19,14 @@ public class CompanyFilter implements Filter {
         HttpServletRequest request= (HttpServletRequest) servletRequest;
         HttpServletResponse response= (HttpServletResponse) servletResponse;
         String requestURL = request.getRequestURL().toString();
-        int yili = requestURL.indexOf("127");
+        int yili = requestURL.indexOf("yl");
+        int sx = requestURL.indexOf("sx");
         if (yili>=0){
-            response.sendRedirect("http://localhost:8021/yili.html");
+            System.out.println(requestURL);
+            response.sendRedirect("http://m.cold360.cn/yili.html");
+        }else if(sx>=0){
+            System.out.println(requestURL);
+            response.sendRedirect("http://m.cold360.cn/sx.html");
         }else {
             filterChain.doFilter(servletRequest,servletResponse);
         }

@@ -19,10 +19,11 @@ public class CompanyFilter implements Filter{
         HttpServletRequest request= (HttpServletRequest) servletRequest;
         HttpServletResponse response= (HttpServletResponse) servletResponse;
         String url = request.getRequestURL().toString();
-        int yili = url.indexOf("yili");
-        int songxia = url.indexOf("127");
+        int yili = url.indexOf("yl");
+        int songxia = url.indexOf("sx");
         if (songxia>=0){
-            response.sendRedirect("http://localhost:8082/sx.html");
+            System.out.println(url);
+            response.sendRedirect("http://www.smartcold.org.cn/sx.html");
         }else {
             filterChain.doFilter(servletRequest,servletResponse);
         }
