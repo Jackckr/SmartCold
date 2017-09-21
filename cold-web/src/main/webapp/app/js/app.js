@@ -60,6 +60,7 @@ coldWeb.factory('baseTools',['$rootScope',function(){
 coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootScope, $state,$http) {
     return {
         setUser: function (user) {
+        	$rootScope.companyLoad=JSON.parse(localStorage.companyLoad);
             $rootScope.user = user, $rootScope.userType=$rootScope.user.type;
             $rootScope.logout = function () {
 	        	 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/logout'}).success(function(data){});

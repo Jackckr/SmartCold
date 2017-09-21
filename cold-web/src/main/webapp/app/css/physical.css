@@ -14,14 +14,15 @@
 	box-sizing: border-box;
 }
 
-.cold_bg:before {
-	content: "";
+.cold_bg>b {
 	position: absolute;
 	top: 0;
 	left: 0;
 	width: 177px;
 	height: 68px;
-	background-image: url(../../assets/img/leftTop.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	/*background-image: url(../../assets/img/leftTop.png);*/
 }
 
 .radius_bg {
