@@ -4,22 +4,22 @@
 	version="2.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://java.sun.com/xml/ns/javaee">
 
-	<context-param>  
-        <param-name>log4jConfigLocation</param-name>  
-        <param-value>/WEB-INF/classes/log4j.properties</param-value>  
-    </context-param>  
-    
+	<context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>/WEB-INF/classes/log4j.properties</param-value>
+    </context-param>
+
     <listener>
         <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
     </listener>
-    
+
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
             classpath*:config/spring/local/appcontext-db.xml
         </param-value>
 	</context-param>
-	
+
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
@@ -45,21 +45,21 @@
 <!--    </filter-mapping> -->
 
 
-	 <filter>  
-		  <filter-name>characterEncodingFilter</filter-name>  
-		  <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>  
-		  <init-param>  
-		   <param-name>encoding</param-name>  
-		   <param-value>UTF-8</param-value>  
-		  </init-param>  
-		  <init-param>  
-		   <param-name>forceEncoding</param-name>  
-		   <param-value>true</param-value>  
-		  </init-param>  
-		</filter>  
-		<filter-mapping>  
-		  <filter-name>characterEncodingFilter</filter-name>  
-		  <url-pattern>/*</url-pattern>  
+	 <filter>
+		  <filter-name>characterEncodingFilter</filter-name>
+		  <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		  <init-param>
+		   <param-name>encoding</param-name>
+		   <param-value>UTF-8</param-value>
+		  </init-param>
+		  <init-param>
+		   <param-name>forceEncoding</param-name>
+		   <param-value>true</param-value>
+		  </init-param>
+		</filter>
+		<filter-mapping>
+		  <filter-name>characterEncodingFilter</filter-name>
+		  <url-pattern>/*</url-pattern>
 		</filter-mapping>
 
 	<filter>
@@ -70,14 +70,23 @@
 		<filter-name>cors</filter-name>
 		<url-pattern>/i/*</url-pattern>
 	</filter-mapping>
-	
+
 	<filter>
 		<filter-name>noheader</filter-name>
 		<filter-class>com.smartcold.manage.cold.filter.NoHeaderFilter</filter-class>
 	</filter>
+	<filter>
+		<filter-name>companyFilter</filter-name>
+		<filter-class>com.smartcold.manage.cold.filter.CompanyFilter</filter-class>
+	</filter>
+
 	<filter-mapping>
 		<filter-name>noheader</filter-name>
 		<url-pattern>/api/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>companyFilter</filter-name>
+		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
 	<servlet-mapping>

@@ -4,8 +4,15 @@
 			$http.get(ER.root+'/i/user/logout');
            	$scope.user=window.user  = null;
            	util.delCookie("token");
+           	var company=localStorage.company;
            	localStorage.clear();
-           	gohome();
+           	if(company=="yili"){
+                window.location.href ="../yili.html";
+			}else if(company=="sx"){
+           		window.location.href="../sx.html";
+			}else {
+				gohome();
+			}
      };
 	$scope.initdata=function(){
 		 $http.get(ER.root+'/i/city/findProvinceList').success(function(data) {

@@ -1,0 +1,194 @@
+/*
+*2017-6-20
+*different themes
+*class = smartcold is default
+*
+*/
+body{overflow-x: hidden}
+ul, li {
+    list-style: none;
+    margin: 0;
+    padding:0;
+}
+.iconfont {
+    font-family: iconfont !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale
+}
+
+.login_new {
+    background: #fff;
+    font-family: "微软雅黑", Microsoft YaHei, Helvetica, '宋体', Tahoma, Arial, sans-serif
+}
+
+.loginDiv {
+    padding: 0 100px;
+    height:80px;
+    text-align: left;
+}
+.loginDiv img{
+    margin-top: 25px;
+}
+.loginBody{
+    height: 440px;
+    position: relative;
+    z-index:1;
+}
+.loginBody .bg {
+    position: absolute;
+    top:0;
+    left:0;
+    background: url(../../assets/sx/banner4.jpg) no-repeat center;
+    text-align: right;
+    height: 100%;
+    width: 100%;
+}
+
+.loginCopyR {
+    text-align: right
+}
+
+.loginArea {
+    position: absolute;
+    top:30px;
+    right: 100px;
+    width: 326px;
+    background: #fff;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    z-index:2;
+}
+.loginArea>p{
+    color: #214cce;
+    border-bottom: 1px solid #ccc;
+    line-height: 2;
+    margin-bottom: 22px;
+    font-size: 16px;
+}
+.userinfo {
+    position: relative;
+    margin-bottom: 20px
+}
+
+.userinfo input {
+    width: 100%;
+    padding-left: 2em;
+    border-radius: 3px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset;
+    -webkit-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset;
+    -moz-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset;
+    -ms-box-shadow: 0 2px 3px 0 rgba(0, 0, 0, .1) inset;
+    outline: 0
+}
+
+.userinfo input:focus {
+    border: 2px solid #214cce;
+}
+
+.userinfo .icon {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    font-size: 20px;
+    color: #999;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%)
+}
+
+.loginArea .clearfix a {
+    color: #666
+}
+
+.noM {
+    margin: 0
+}
+
+.loginBtn {
+    padding: 0
+}
+
+.loginBtn .btn {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-radius: 3px;
+    background:url("btnBg.png") center;
+}
+.imglists{
+    margin-top: 10px;
+}
+.imglists li{
+    text-align: center;
+    padding:0;
+
+}
+.imglists li img{
+    width: 99%;
+}
+@media screen and (min-width: 1367px) {
+    .loginBody{
+        height: 600px;
+        position: relative;
+        z-index:1;
+    }
+    .loginArea{
+        top:100px;
+    }
+}
+/*登录边框*/
+.loginArea>span{
+    position: absolute;
+    background: #214cce;
+}
+.loginArea>span:nth-child(2n){
+    width: 60px;
+    height: 6px;
+}
+.loginArea>span:nth-child(2n+1){
+    width: 6px;
+    height: 60px;
+}
+.borderBg1{
+    top:-4px;
+    left:-4px;
+}
+.borderBg2{
+    top:-4px;
+    left:2px;
+}
+.borderBg3{
+    top:-4px;
+    right:-4px;
+}
+.borderBg4{
+    top:-4px;
+    right:-4px;
+}
+.borderBg5{
+    bottom:-4px;
+    left:-4px;
+}
+.borderBg6{
+    bottom:-4px;
+    left:2px;
+}
+.borderBg7{
+    bottom:-4px;
+    right:-4px;
+}
+.borderBg8{
+    bottom:-4px;
+    right:2px;
+}
