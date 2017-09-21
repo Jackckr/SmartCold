@@ -141,8 +141,8 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
             		var data=JSON.parse(window.sessionStorage.cactrdcdata);
             		var cutrdc=JSON.parse(window.sessionStorage.cactrdc);
             		$rootScope.vm = {choserdc:cutrdc,allUserRdcs:data};
-    				$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
     				$rootScope.userrdcids=JSON.parse(window.sessionStorage.userrdcids);
+    				$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
             	}else{
             		$http.get('/i/rdc/findRDCsByUserid?userid=' + $rootScope.user.id).success(function(data,status,headers,config){
         				if(data.length == 0){document.location.href = "/notAudit.html";return;}

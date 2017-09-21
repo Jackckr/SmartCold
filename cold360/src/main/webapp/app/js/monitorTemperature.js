@@ -143,10 +143,10 @@ app.controller('monitorTemperature',function ($scope, $location, $http, $rootSco
 						 vo=tempList[i];
 						 if(i>0){ lasttime=newdata[newdata.length-1].x;}
 						 cuttime=new Date(vo.addtime).getTime();
-	                	 if(cuttime-lasttime>120000){ newdata.push({ x: lasttime+60000,y: null });} //修正中间数据短传问题1
+	                	 if(cuttime-lasttime>900000){ newdata.push({ x: lasttime+60000,y: null });} //修正中间数据短传问题1
 	                	 newdata.push({ x: cuttime,y: vo.value });
 					}
-	                if( systime-cuttime>1800000&&systime-maxTime<600000){//大于半个小时。。提醒
+	                if( systime-cuttime>1800000&&systime-maxTime<900000){//大于半个小时。。提醒
 	                	newdata.push({ x: maxTime,y:null }); 
 	                }   //修正尾部数据短传问题2
 	               if(newdata[newdata.length-1].y!=null){ curtemper.push(newdata[newdata.length-1].y.toFixed(2));}

@@ -129,6 +129,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	$scope.initTempAxis=function(data){
 	        var datumTemp =  parseFloat(data.startTemperature) + 0.5 * parseFloat(data.tempdiff), datumTemp1 =  parseFloat(data.startTemperature) + parseFloat(data.tempdiff), datumTemp2 = data.startTemperature;//基准温度
 	        $scope.cuttstorage.datumTemp=datumTemp;
+	        $scope.cuttstorage.templist=data;
 	        var yData = [], tempMap = data.tempMap,temp=null,minval=null,maxval=null,sumvl=null, anysis=[];
 	    	var i= 0,tempList=[],newdata = [],vo=cuttime=lasttime=null;
 	        for(var key in tempMap) { 
@@ -175,18 +176,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	 */
 	$scope.initHighchart=function(yData ){
 		var minRange= $scope.minRange_mode[0][$scope.reportType],fm=$scope.minRange_mode[1][$scope.reportType];
-//		new Highcharts.Chart({ 
-//			 chart: { renderTo: 'temperatureChart', zoomType: 'x'},
-//            title: { text: ''  },
-//            series:yData,
-//            yAxis: {  title: {  text: '温度'  }},
-//            xAxis: { type: 'datetime',minRange:minRange ,labels: {  formatter: function() {   return  Highcharts.dateFormat(fm, this.value);  }  }  },//minRange:  86400000--间隔为每天显示, tickPixelInterval: 400 ,
-//            xDateFormat: '%Y-%m-%d',
-//            tooltip: { formatter: function () {  return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' + Highcharts.numberFormat(this.y, 2)+" ℃"; } },
-//    	    legend: {enabled: false },
-//    	    credits: { enabled: false},
-//        });
-		$scope.charArray[0]= $('#temperatureChart').highcharts({
+		 $('#temperatureChart').highcharts({
 			 chart: {  zoomType: 'x'},
 			 title: { text: ''  },
 	            series:yData,
@@ -197,7 +187,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	    	    legend: {enabled: false },
 	    	    credits: { enabled: false}
        });
-	  $("#loding").hide(); 
+	   $("#loding").hide(); 
 	};
 	//2.超温时间和次数图表====================================================================================================================================================================================
 	$scope.overTempAndCount=function(){

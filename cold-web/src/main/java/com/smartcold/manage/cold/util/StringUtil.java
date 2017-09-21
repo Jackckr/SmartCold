@@ -36,19 +36,27 @@ public class StringUtil
 		return null;
 	}
 	
+	 /**
+	  * 密码加解密
+	  * @param pwd
+	  * @param toke
+	  * @return
+	  */
+	 public synchronized static String MD5pwd(String pwd,String toke){
+		   if(StringUtil.isnotNull(pwd)){
+			   return toke.substring(0, 20)+pwd.substring(0, 18)+toke.substring(20)+pwd.substring(18);
+		   }
+		   return toke.substring(20, 38)+toke.substring(58);
+	 }
 	
-
 	 public  static String getToken(){
 			  return EncodeUtil.encodeByMD5("toke"+TimeUtil.getDateHour());
-	}
-	
+	 }
+	 
 	 public synchronized static boolean verifyToken(String toke){
-		   if(isnotNull(toke)){
-			   String mdtokn = EncodeUtil.encodeByMD5("toke"+TimeUtil.getDateHour());
-			   return mdtokn.equals(toke);
-		   }
-		   return false;
-	}
+		   if(isnotNull(toke)){ return getToken().equals(toke); }return false;
+	 }
+	 
 	
 	/**
 	 * 判断字符串是否为null或者空字符串(即长度为0的字符串)

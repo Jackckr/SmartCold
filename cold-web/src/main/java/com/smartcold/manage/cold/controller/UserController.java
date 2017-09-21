@@ -1,5 +1,8 @@
 package com.smartcold.manage.cold.controller;
 
+import java.util.Calendar;
+import java.util.HashMap;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -65,7 +68,7 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/login")
 	@ResponseBody
 	public Object login(HttpServletRequest request, HttpServletResponse response, String userName, String password) {
-		if(StringUtil.isNull(userName)||StringUtil.isNull(password)){return new ResultDto(1, "用户名或密码错误！");}
+		if(StringUtil.isNull(userName)||StringUtil.isNull(password)){return new ResultDto(1, "请输入完整信息！");}
 		UserEntity user = userService.getUserByNAndP(userName, EncodeUtil.encodeByMD5(password));
 		if (user.getId() != 0) {
 			String cookie = cookieService.insertCookie(userName);
@@ -85,6 +88,42 @@ public class UserController extends BaseController {
 		}
 		return new ResultDto(1, "用户名或密码错误！");
 	}
+	
+	/**
+	 * 
+	 * @param request
+	 * @param userName:用户名
+	 * @param password:密码
+	 * @param sik:过滤标识
+	 * @param isAuto：是否为自动登录
+	 * @return
+	 */
+	@RequestMapping(value = "/userlogin",method= RequestMethod.POST)
+	@ResponseBody
+	public Object userlogin(HttpServletRequest request,String userName,String password, int sik,Boolean isAuto) {
+		try {
+			if(StringUtil.isNull(userName)||StringUtil.isNull(password)||sik!=Calendar.getInstance().get(Calendar.HOUR_OF_DAY)){ return new ResultDto(1, "请输入完整信息！");}
+			this.logout(request);
+			if(isAuto==null||!isAuto){password = EncodeUtil.encodeByMD5(password);}
+			
+			UserEntity user = userService.getUserByNAndP(userName, password);
+			if (user != null) {
+				String cookie = cookieService.insertCookie(userName);
+				user.setToken(cookie);
+				user.setPassword(null);
+				HashMap<String, Object> resdata=new HashMap<String, Object>();
+				resdata.put("user", user);
+				resdata.put("SID", request.getSession().getId());
+				resdata.put("systoke", password);
+				return	ResponseData.newSuccess(resdata);
+			}
+			return ResponseData.newFailure("用户名或者密码不正确！");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseData.newFailure("数据连接异常！请稍后重试！");
+		}
+	}
+
 	
 	/**
 	 * 身份校验
@@ -116,8 +155,7 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/findUser", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findUser(HttpServletRequest request,String token) {
-		UserEntity user = (UserEntity)request.getSession().getAttribute("user");
-		if(user!=null){return user;}
+		UserEntity user =new UserEntity();// (UserEntity)request.getSession().getAttribute("user");//		if(user!=null){return user;}
 		Cookie[] cookies = request.getCookies();
 		if (cookies == null) {
 			return new UserEntity();
@@ -130,6 +168,7 @@ public class UserController extends BaseController {
 				}
 			}
 		}
+		if(StringUtil.isNull(token)){return user;}
 		CookieEntity effectiveCookie = cookieService.findEffectiveCookie(token);
 		if (effectiveCookie != null) {
 			user = userDao.findUserByName(effectiveCookie.getUsername());
