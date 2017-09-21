@@ -119,7 +119,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 		             $http.get('/i/platformDoor/findByRdcId?rdcId=' + rdcId).success( function(data,status,headers,config){ //  初始化月台门
 		            			 $rootScope.platformDoors = data;
 		             });
-		             $http.get('/i/AlarmController/getAlarmMsg',{params:{  userId: $rootScope.user.id, type: $rootScope.user.type, rdcId:$rootScope.rdcId,isgetMsg:false} }).success( function(data,status,headers,config){ //  初始化月台门
+		             $http.get('/i/AlarmController/getAlarmMsgByUser',{params:{  userId: $rootScope.user.id, role: $rootScope.user.role, rdcIds:$rootScope.userrdcids,isgetMsg:false} }).success( function(data,status,headers,config){ //  初始化月台门
 		            	 $rootScope.alarm = data;
 		            	 $rootScope.alarm.totl = data.CC+data.SC+data.TC;
 		            	if($rootScope.alarm.totl>0){
@@ -134,7 +134,6 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
             		$rootScope.vm.choserdc = value.originalObject;
         		}
         		$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
-        		
         	};
         	
             if ($rootScope.user != null && $rootScope.user!='' && $rootScope.user!= undefined && $rootScope.user.id != 0){
@@ -143,11 +142,21 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
             		var cutrdc=JSON.parse(window.sessionStorage.cactrdc);
             		$rootScope.vm = {choserdc:cutrdc,allUserRdcs:data};
     				$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
+    				$rootScope.userrdcids=JSON.parse(window.sessionStorage.userrdcids);
             	}else{
             		$http.get('/i/rdc/findRDCsByUserid?userid=' + $rootScope.user.id).success(function(data,status,headers,config){
         				if(data.length == 0){document.location.href = "/notAudit.html";return;}
         				window.sessionStorage.cactrdcdata=JSON.stringify(data);
         				$rootScope.vm = {choserdc:data[0],allUserRdcs:data};
+        				if($rootScope.user.role==3){
+        					 $rootScope.userrdcids=[$rootScope.vm.choserdc.id];
+        				}else{
+        					$rootScope.userrdcids=[];
+       					    angular.forEach($rootScope.vm.allUserRdcs,function(obj,i){ 
+       					    	$rootScope.userrdcids.push(obj.id);
+       					    });
+        				}
+        				window.sessionStorage.userrdcids=JSON.stringify($rootScope.userrdcids);
         				$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
         	       });
             	}

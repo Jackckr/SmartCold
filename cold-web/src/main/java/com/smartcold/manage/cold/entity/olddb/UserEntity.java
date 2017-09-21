@@ -12,7 +12,6 @@ public class UserEntity implements Serializable {
 	
 	private int type;//0:360用户 1:货主  2 :服务商
 	
-	private String avatar;//用户头像
 	
 	private String username;
 
@@ -23,6 +22,8 @@ public class UserEntity implements Serializable {
 	private String email;
 
 	private Integer vipType;
+	
+	private String avatar="http://139.196.189.93:8089/app/userimg.jpg";//用户头像->add
 	
 	private static final long serialVersionUID = -2875979349754314456L;
 	
