@@ -30,7 +30,10 @@
                     <div class="col-lg-3" ng-class-odd="'slideInLeft animated'" ng-class-even="'slideInRight animated'" ng-repeat="blower in blowers" id="blowerPage">
                         <div class="box bg-gray">
                             <div class="box-header with-border">
-                                <h3 class="box-title omg" style="display: block;padding-right: 45px;">{{blower.coldStorageName}}的{{blower.name}}</h3>
+                                <h3 class="box-title omg" style="display: block;padding-right: 45px;" data-toggle="tooltip" data-placement="top"
+                                    title="{{blower.coldStorageName}}的{{blower.name}}30日超温比例统计">
+                                    {{blower.coldStorageName}}的{{blower.name}}30日超温比例统计
+                                </h3>
 
                                 <div class="box-tools pull-right">
                                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>

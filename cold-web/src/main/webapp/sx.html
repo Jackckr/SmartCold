@@ -13,64 +13,74 @@
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/fonts/iconfont.css">
-    <link rel="stylesheet" id="link" href="app/css/login.css">
+    <link rel="stylesheet" id="link" href="assets/sx/sx_login.css">
 </head>
 <body class="hold-transition login-page login_new">
 <!-- new login -->
-<div class="smartCold">
-    <div class="loginDiv">
-        <h2>松下冷机系统（大连）有限公司</h2>
-    </div>
-    <div class="divide-wrap">
-
-        <div class="colorbar"></div>
-    </div>
-    <div class="loginBody login-box">
-        <div class="loginArea">
-            <div class="userinfo">
-                <i class="icon iconfont">&#xe6be;</i>
-                <input type="text" id="username" placeholder="用户名">
-            </div>
-            <div class="userinfo">
-                <i class="icon iconfont">&#xe6c1;</i>
-                <input type="password" id="password" placeholder="密码">
-            </div>
-            <div class="row">
-                <div class="col-xs-12" style="text-align: left;height: 30px;font-size: 12px;">
-                    <a style="color:red" id="mention"></a>
-                </div>
-            </div>
-            <div class="clearfix">
-                <p class="pull-left"><a href="passwordEdit.html">忘记密码</a></p>
-                <p class="pull-right"><a href="register.html">免费注册</a></p>
-            </div>
-            <div class="row noM">
-                <div class="col-xs-12 col-lg-12">
-                    <div class="checkbox icheck">
-                    </div>
-                </div>
-                <div class="col-lg-12 loginBtn">
-                    <button id="submit" onclick="login();" class="btn btn-primary btn-block btn-flat">登录</button>
-                </div>
+<div class="loginDiv">
+    <img src="assets/sx/name.png" alt="" class="pull-left">
+    <img src="assets/sx/logo.png" alt="" class="pull-right hidden-sm hidden-xs">
+</div>
+<div class="loginBody login-box">
+    <div class="bg"></div>
+    <div class="loginArea">
+        <p>登录</p>
+        <div class="userinfo">
+            <i class="icon iconfont">&#xe6be;</i>
+            <input type="text" id="username" placeholder="用户名">
+        </div>
+        <div class="userinfo">
+            <i class="icon iconfont">&#xe6c1;</i>
+            <input type="password" id="password" placeholder="密码">
+        </div>
+        <div class="row">
+            <div class="col-xs-12" style="text-align: left;height: 30px;font-size: 12px;">
+                <a style="color:red" id="mention"></a>
             </div>
         </div>
-    </div>
-    <div id="loginCopyR" class="loginCopyR">
-        <p>松下冷机系统（大连）有限公司&nbsp;&nbsp;&nbsp;&nbsp;<a href="http:\\www.miitbeian.gov.cn" style="color:#333;">沪ICP备 辽ICP备17006495号-1</a>
-            地址：中国辽宁省大连经济技术开发区松岚街8号 </p>
+        <div class="clearfix">
+            <p class="pull-left"><a href="passwordEdit.html">忘记密码</a></p>
+            <p class="pull-right"><a href="register.html">免费注册</a></p>
+        </div>
+        <div class="row noM">
+            <div class="col-xs-12 col-lg-12">
+                <div class="checkbox icheck">
+                </div>
+            </div>
+            <div class="col-lg-12 loginBtn">
+                <button id="submit" onclick="login();" class="btn btn-primary btn-block btn-flat">登录</button>
+            </div>
+        </div>
+        <span class="borderBg1"></span>
+        <span class="borderBg2"></span>
+        <span class="borderBg3"></span>
+        <span class="borderBg4"></span>
+        <span class="borderBg5"></span>
+        <span class="borderBg6"></span>
+        <span class="borderBg7"></span>
+        <span class="borderBg8"></span>
     </div>
 </div>
+<ul class="imglists row">
+    <li class="col-lg-3 col-md-3 col-sm-6 col-xs-6"><img src="assets/sx/img1.png" alt=""></li>
+    <li class="col-lg-3 col-md-3 col-sm-6 col-xs-6"><img src="assets/sx/img2.png" alt=""></li>
+    <li class="col-lg-3 col-md-3 col-sm-6 col-xs-6"><img src="assets/sx/img3.png" alt=""></li>
+    <li class="col-lg-3 col-md-3 col-sm-6 col-xs-6"><img src="assets/sx/img4.png" alt=""></li>
+</ul>
+<!--<div id="loginCopyR" class="loginCopyR">
+    <p>松下冷机系统（大连）有限公司&nbsp;&nbsp;&nbsp;&nbsp;<a href="http:\\www.miitbeian.gov.cn" style="color:#333;">沪ICP备 辽ICP备17006495号-1</a>
+        地址：中国辽宁省大连经济技术开发区松岚街8号 </p>
+</div>-->
 <script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <script type="text/javascript">
-    var sxEntity={name:"sx",leftTopLogo:"assets/img/custom/Panasonic_b_posi.png",tijianLogo:"../../assets/img/custom/Panasonic_b_posi.png",baobiaoLogo:"../../assets/img/custom/Panasonic_blue.png",baobiaoText:"松下冷机"};
+    var sxEntity={name:"sx",leftTopLogo:"assets/img/custom/Panasonic_b_posi.png",
+        tijianLogo:"../../assets/img/custom/Panasonic_b_posi.png",
+        baobiaoLogo:"../../assets/img/custom/Panasonic_report.png",baobiaoText:"松下冷机",
+        copyR:'备案号：辽ICP备17006495号-1 公安局备案号：21021702000137'
+    };
     window.localStorage.companyLoad=JSON.stringify(sxEntity);
     var mainHeight = $(window).height();
     var url=["/main.html" +( window.location.hash != ""?window.location.hash:"#/cold360Physical"),"","/autIdentity.html","/audit.html"];
-    $(".loginBody").height(mainHeight - 160);
-    window.onresize = function () {
-        var mainHeight = $(window).height();
-        $(".loginBody").height(mainHeight - 160);
-    };
     function showErrorInfo(msg) {
         var msgEl = $("#mention");
         if (msg == null || msg == "") {

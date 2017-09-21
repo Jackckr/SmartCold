@@ -575,6 +575,7 @@ html, body {
 	line-height: 1.2;
 	letter-spacing: 3px;
 	text-align: center;
+	font-weight: 700;
 }
 .rightLogo p>span>span{
 	font-size: 12px;
