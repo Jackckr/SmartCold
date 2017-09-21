@@ -152,7 +152,7 @@ a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-
 								<li class="user-header">
 									<img ng-src="{{user.avatar}}" class="img-circle" alt="{{user.username}}" />
 									<p>
-										{{user.username}}<small>Smart Cold Nov. 2016</small>
+										{{user.username}}<small>{{companyLoad.name=='sx'?'Panasonic':companyLoad.name}} {{todayTime | date:'yyyy-MM-dd'}}</small>
 									</p>
 									
 								</li>

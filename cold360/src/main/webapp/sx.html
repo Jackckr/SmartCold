@@ -19,31 +19,24 @@
     <script type="text/javascript" src="com/js/layer.js"></script>
 </head>
 <body>
-	<h1 class="logoH1"></h1>
 	<div class="login">
 		<div class="inputBd">
 			<i class="iconfont">&#xe6be;</i>
-			<input id="username" type="text" name="username"  value="" placeholder="用户名"/>
+			<input id="username" type="text" name="username"  value="" placeholder="用户名(手机/邮箱/帐号)"/>
 		</div>
 		<div class="inputBd">
 			<i class="iconfont">&#xe6c1;</i>
 			<input id="password" type="password" name="password"  value="" placeholder="密码"/>
 		</div>
+		<div class="txt-right">
+			<a href="view/findpasswordfir.html">忘记密码？</a>
+			<!--<div class="fr"><a href="view/register.html">新用户注册</a></div>-->
+		</div>
 		<div class="warnInfo">
 			<a hidden="true" id="mention"></a>
 		</div>
 		<button id="btn_login" class="mybtn" type="button" onclick="login()">登录</button>
-		<div class="register">
-			<div class="fl"><a href="view/findpasswordfir.html">找回密码</a></div>
-			<!--<div class="fr"><a href="view/register.html">新用户注册</a></div>-->
-		</div>
 	</div>
-	<div class="adTxt">
-		<b>松下冷机系统(大连)有限公司</b>
-		<p>全国热线：<a href="tel:0411-39255200">0411-39255200</a></p>
-	</div>
-
-
 	<script type="text/javascript">
         window.localStorage.company="sx";
 		/*跨域Android传user对象*/
