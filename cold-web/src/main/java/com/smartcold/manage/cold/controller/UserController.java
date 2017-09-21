@@ -6,6 +6,7 @@ import java.util.HashMap;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -105,7 +106,6 @@ public class UserController extends BaseController {
 			if(StringUtil.isNull(userName)||StringUtil.isNull(password)||sik!=Calendar.getInstance().get(Calendar.HOUR_OF_DAY)){ return new ResultDto(1, "请输入完整信息！");}
 			this.logout(request);
 			if(isAuto==null||!isAuto){password = EncodeUtil.encodeByMD5(password);}
-			
 			UserEntity user = userService.getUserByNAndP(userName, password);
 			if (user != null) {
 				String cookie = cookieService.insertCookie(userName);
@@ -113,8 +113,9 @@ public class UserController extends BaseController {
 				user.setPassword(null);
 				HashMap<String, Object> resdata=new HashMap<String, Object>();
 				resdata.put("user", user);
-				resdata.put("SID", request.getSession().getId());
-				resdata.put("systoke", password);
+				resdata.put("sid", request.getSession().getId());
+				resdata.put("toke",cookie);
+				resdata.put("systoke", StringUtil.MD5pwd(password, cookie));
 				return	ResponseData.newSuccess(resdata);
 			}
 			return ResponseData.newFailure("用户名或者密码不正确！");
@@ -124,6 +125,15 @@ public class UserController extends BaseController {
 		}
 	}
 
+	
+	@RequestMapping(value = "/isLogin", method = RequestMethod.GET)
+	@ResponseBody
+	public Object isLogin(HttpSession session) {
+		String id = session.getId();
+		
+		
+		return new UserEntity();
+	}
 	
 	/**
 	 * 身份校验

@@ -34,7 +34,10 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 			if($scope.reportType==0){//日报
 				var newDate=$("#date00").val();firstDate = new Date(newDate+' 00:00:00'); endDate =  new Date(newDate+' 23:59:59');  
 		    	$scope.endTime= baseTools.formatTime(endDate),$scope.startTime= baseTools.formatTime(firstDate), newtime=$scope.startTime.substring(0,10);
-		    	if(newtime==$scope.timeuRange){$("#loding").hide();return;}
+		    	if(newtime==$scope.timeuRange){
+//		    		$("#loding").hide();
+		    		return;
+		    		}
 		    	$scope.timeuRange=newtime;
 		    	$scope.datemod = [[ $scope.startTime, newDate + ' 02:59:59' ],[ newDate + ' 03:00:00',newDate + ' 05:59:59' ],[ newDate + ' 06:00:00',newDate + ' 09:59:59' ],[ newDate + ' 10:00:00',newDate + ' 12:59:59' ],[ newDate + ' 13:00:00',newDate + ' 15:59:59' ],[ newDate + ' 16:00:00',newDate + ' 18:59:59' ],[ newDate + ' 19:00:00',newDate + ' 20:59:59' ],[ newDate + ' 21:00:00',$scope.endTime ] ];
 			}else if($scope.reportType==1){
@@ -44,7 +47,9 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 		    	$scope.endTime= baseTools.formatTime(endDate); 
 		    	$scope.startTime= baseTools.formatTime(firstDate); 
 		    	var newtime=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
-		    	if(newtime==$scope.timeuRange){$("#loding").hide();return;}
+		    	if(newtime==$scope.timeuRange){
+//		    		$("#loding").hide();
+		    		return;}
 		    	$scope.timeuRange=newtime;
 		    	var lst=firstDate.getTime(),len=endDate.getTime(), pver=(len-lst)/8;
 		    	 $scope.datemod = [
@@ -64,7 +69,9 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 		    	 endDate = new Date(firstDate);  endDate.setMonth(firstDate.getMonth()+1); endDate.setDate(0);endDate.setHours(23); endDate.setMinutes(59); endDate.setSeconds(59);//设置上月的最后一天
 		    	$scope.endTime=baseTools.formatTime(endDate); $scope.startTime= baseTools.formatTime(firstDate); 
 		    	var newtime=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
-		    	if(newtime==$scope.timeuRange){$("#loding").hide();return;} 
+		    	if(newtime==$scope.timeuRange){
+		    		//$("#loding").hide();
+		    		return;} 
 		    	$scope.timeuRange=newtime;
 							    $scope.datemod = [
 									[ $scope.startTime, data + '-03 23:59:59' ],[ data + '-04 00:00:00',data + '-07 23:59:59' ],
@@ -187,7 +194,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	    	    legend: {enabled: false },
 	    	    credits: { enabled: false}
        });
-	   $("#loding").hide(); 
+//	   $("#loding").hide(); 
 	};
 	//2.超温时间和次数图表====================================================================================================================================================================================
 	$scope.overTempAndCount=function(){
@@ -313,7 +320,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	
 	//初始化系统入口====================================================================================================================================================================================
 	 $scope.initdata=function(){
-            $("#loding").show();
+//            $("#loding").show();
 			$scope.cuttstorage=$rootScope.mystorages[$scope.index];
 			$scope.initTemp();	
 			$scope.dwrtemplin();
@@ -385,7 +392,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	  * 查询事件
 	  */
 	$scope.getreport=function(){
-		$("#loding").show();
+//		$("#loding").show();
 		$scope.settime();
 		 $scope.initdata();
 	};
@@ -393,7 +400,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	 * 切换冷库事件
 	 */
 	$scope.changestorage=function(index,storageid,$event){
-		$("#loding").show();
+//		$("#loding").show();
 		var em=$($event.target);
 		em.addClass('select').siblings().removeClass('select');
 		$scope.index=index;
