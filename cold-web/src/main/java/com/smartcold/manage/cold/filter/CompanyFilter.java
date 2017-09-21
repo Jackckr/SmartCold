@@ -18,12 +18,17 @@ public class CompanyFilter implements Filter{
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request= (HttpServletRequest) servletRequest;
         HttpServletResponse response= (HttpServletResponse) servletResponse;
-        String url = request.getRequestURL().toString();
-        int yili = url.indexOf("yl");
-        int songxia = url.indexOf("sx");
-        if (songxia>=0){
-            System.out.println(url);
-            response.sendRedirect("http://www.smartcold.org.cn/sx.html");
+        String uri = request.getRequestURI();
+        if(uri.equals("/")){
+            String url = request.getRequestURL().toString();
+            int yili = url.indexOf("yl");
+            int songxia = url.indexOf("sx");
+            if (songxia>=0){
+                System.out.println(url);
+                response.sendRedirect("sx.html");
+            }else {
+                filterChain.doFilter(servletRequest,servletResponse);
+            }
         }else {
             filterChain.doFilter(servletRequest,servletResponse);
         }
