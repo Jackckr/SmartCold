@@ -146,7 +146,10 @@
 	    </div>
 	    <!-- 月度曲线图 -->
 	    <div class="print_part chart_gap">
-	    	<p class="text-left">{{titmode[reportType]}}温度曲线图</p>
+	    	<p class="text-left">{{titmode[reportType]}}温度曲线图
+				<button class="btn btn-info btn-xs fr">表格/图表</button>
+				<button class="btn btn-success btn-xs fr" style="margin: 0 5px;">导出</button>
+			</p>
 	    	<div>
 	    		<div class="chartPart">
 	    			<div id="temperatureChart" class="chartHight" ng-show="isnotprint"></div>
@@ -251,6 +254,3 @@
                                 正在生成报表，请稍后！
       </div>
 </div>
-
-
-
