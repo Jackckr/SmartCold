@@ -1,5 +1,6 @@
 package com.smartcold.zigbee.manage.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.smartcold.zigbee.manage.entity.PushEntity;
 import com.smartcold.zigbee.manage.util.StringUtil;
 import com.smartcold.zigbee.manage.util.push.PushDemoTest;
@@ -21,8 +22,9 @@ public class PushController {
 
     @RequestMapping(value = "/push360Alarm")
     @ResponseBody
-    public void push360Alarm(PushEntity pushEntity) throws Exception {
-        //if(!StringUtil.checkToken(pushEntity.getToken())){return;}
+    public void push360Alarm(String appKey, String title, String summary, String token, String userIds, String type, String rdcId) throws Exception {
+        PushEntity pushEntity = new PushEntity(Long.parseLong(appKey), title, summary, token, userIds, Integer.parseInt(type), Integer.parseInt(rdcId));
+        if(!StringUtil.checkToken(pushEntity.getToken())){return;}
         PushDemoTest pushDemoTest = new PushDemoTest();
         pushEntity.setAppKey(appKey_360);
         pushDemoTest.pushByAccountToIos(pushEntity);
