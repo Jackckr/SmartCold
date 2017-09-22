@@ -168,10 +168,10 @@ public class UserController extends BaseController {
 	public Object findUser(HttpServletRequest request,String token) {
 		UserEntity user =new UserEntity();// (UserEntity)request.getSession().getAttribute("user");//		if(user!=null){return user;}
 		Cookie[] cookies = request.getCookies();
-		if (cookies == null) {
-			return new UserEntity();
-		}
 		if(StringUtil.isNull(token)){
+			if (cookies == null) {
+				return new UserEntity();
+			}
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("token")) {
 					token=cookie.getValue();

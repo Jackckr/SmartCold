@@ -45,7 +45,7 @@ a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-
 				<ul>
 					<li>您有{{alarm.totl}}条最新报警信息</li>
 					<li>
-						<p ng-if="alarm.TC>0"><a href="#/alarmLog/1" ng-click="updateconfig();toalarmTemp();"><i class="icon iconfont text-red"></i> 温度报警：{{alarm.TC}}</a></p>
+						<p ng-if="alarm.TC>0"><a href="#" ng-click="updateconfig();toalarmTemp();"><i class="icon iconfont text-red"></i> 温度报警：{{alarm.TC}}</a></p>
 						<p ng-if="alarm.CC>0"><a href="#"><i class="iconfont text-red">&#xe76d;</i>操作不当：{{alarm.CC}}</a></p>
 						<p ng-if="alarm.SC>0"><a href="#"><i class="icon iconfont text-red"></i> 系统报警：{{alarm.SC}}</a></p>
 						<p ng-if="alarm.WC>0"><a href="#"><i class="icon iconfont text-red"></i> 维修告警：{{alarm.WC}}</a></p>

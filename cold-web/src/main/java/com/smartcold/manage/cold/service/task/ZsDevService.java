@@ -15,6 +15,7 @@ import java.util.concurrent.ThreadFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
