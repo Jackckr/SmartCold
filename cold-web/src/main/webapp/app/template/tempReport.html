@@ -146,37 +146,37 @@
 	    </div>
 	    <!-- 月度曲线图 -->
 	    <div class="print_part chart_gap">
-	    	<p class="text-left">{{titmode[reportType]}}温度{{config.isexpdata?'表格':'曲线图' }}
-				<button class="btn btn-info btn-xs fr" ng-click="config.isexpdata=!config.isexpdata">表格/图表</button>
-				<button class="btn btn-success btn-xs fr" style="margin: 0 5px;">导出</button>
-			</p>
+<!-- 	    	<p class="text-left"> -->
+<!-- 				<button class="btn btn-info btn-xs fr" ng-click="config.isexpdata=!config.isexpdata">表格/图表</button> -->
+<!-- 				<button class="btn btn-success btn-xs fr" style="margin: 0 5px;">导出</button> -->
+<!-- 			</p> -->
 
 	    	<div>
 	    		<div class="chartPart">
 	    			<div id="temperatureChart" class="chartHight" ng-show="config.isnotprint||!config.isexpdata"></div>
 	    			<div id="temperatureChart_img"  ng-show="!config.isnotprint"></div>
-	    			<div id="temperatureChart_data" ng-show="config.isexpdata">
-	    			   <table class="table" ng-repeat="tempobj in cuttstorage.templist" >
-						<thead>
-						   <TR >
-						     <TD COLSPAN="3">{{tempobj.name}}</TD>
-						   </TR>
-							<tr class="success" >
-								<th>序号</th>
-								<th>温度</th>
-								<th>时间</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="item in tempobj.data" class="success">
-								<td>{{$index+1}}</td>
-								<td>{{item.y}}</td>
-								<td>{{formatDateTime(item.x)}}</td>
-							</tr>
-						</tbody>
-					</table>
+<!-- 	    			<div id="temperatureChart_data" ng-show="config.isexpdata"> -->
+<!-- 	    			   <table class="table" ng-repeat="tempobj in cuttstorage.templist" > -->
+<!-- 						<thead> -->
+<!-- 						   <TR > -->
+<!-- 						     <TD COLSPAN="3">{{tempobj.name}}</TD> -->
+<!-- 						   </TR> -->
+<!-- 							<tr class="success" > -->
+<!-- 								<th>序号</th> -->
+<!-- 								<th>温度</th> -->
+<!-- 								<th>时间</th> -->
+<!-- 							</tr> -->
+<!-- 						</thead> -->
+<!-- 						<tbody> -->
+<!-- 							<tr ng-repeat="item in tempobj.data" class="success"> -->
+<!-- 								<td>{{$index+1}}</td> -->
+<!-- 								<td>{{item.y}}</td> -->
+<!-- 								<td>{{formatDateTime(item.x)}}</td> -->
+<!-- 							</tr> -->
+<!-- 						</tbody> -->
+<!-- 					</table> -->
 	    			
-	    			</div>
+<!-- 	    			</div> -->
 	    		</div>
 	    		<div style="margin-bottom: 30px;">
 	    		        {{cuttstorage.name}}基准温度：<span style="color:red;">{{cuttstorage.datumTemp}}</span> ℃     

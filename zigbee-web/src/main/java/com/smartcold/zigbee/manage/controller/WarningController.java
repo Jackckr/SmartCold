@@ -1,9 +1,11 @@
 package com.smartcold.zigbee.manage.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.smartcold.zigbee.manage.dao.MessageMapper;
 import com.smartcold.zigbee.manage.entity.MessageEntity;
 import com.smartcold.zigbee.manage.util.CometUtil;
@@ -78,7 +80,8 @@ public class WarningController {
 
 	@RequestMapping(value = "/waringNotice")
 	@ResponseBody
-	public void waringNotice(String rdc,String coldStorageName,String level,String basTemp,String diffTemp,String ovtTempTime,String telephone) throws ApiException {
-		new TelephoneVerifyUtil().waringNotice(rdc,coldStorageName,level,basTemp,diffTemp,ovtTempTime,telephone);
+	public void waringNotice(String userIds, String rdc,String rdcName,String coldStorageName,String level,String basTemp,String diffTemp,String ovtTempTime,String telephone) throws ApiException {
+//		new TelephoneVerifyUtil().waringNotice(rdc,coldStorageName,level,basTemp,diffTemp,ovtTempTime,telephone);//短信告警
+		
 	}
 }

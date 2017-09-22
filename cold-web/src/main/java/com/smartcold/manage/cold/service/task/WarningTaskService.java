@@ -33,7 +33,7 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 
  * 仅238执行
  **/
-//@Service
+@Service
 public class WarningTaskService  {
 	@Autowired
 	private TempWarningService tempWarningServer;
@@ -263,6 +263,8 @@ public class WarningTaskService  {
 						warningList.add(sysWarningsInfo);
 						HashMap<String, Object> stringObjectHashMap = new HashMap<>();
 						stringObjectHashMap.put("rdc",sysWarningsInfo.getName());
+						stringObjectHashMap.put("userIds",sysWarningsInfo.getName());
+						stringObjectHashMap.put("rdcName",sysWarningsInfo.getName());
 						stringObjectHashMap.put("coldStorageName",coldStorageSetMapper.findById(sysWarningsInfo.getObjid()).getName());
 						stringObjectHashMap.put("level",sysWarningsInfo.getLevel());
 						stringObjectHashMap.put("basTemp",sysWarningsInfo.getBasTemp());

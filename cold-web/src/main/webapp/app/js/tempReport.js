@@ -34,7 +34,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 				var newDate=$("#date00").val();firstDate = new Date(newDate+' 00:00:00'); endDate =  new Date(newDate+' 23:59:59');  
 		    	$scope.endTime= baseTools.formatTime(endDate),$scope.startTime= baseTools.formatTime(firstDate), newtime=$scope.startTime.substring(0,10);
 		    	if(newtime==$scope.timeuRange){
-//		    		$("#loding").hide();
+		    		$("#loding").hide();
 		    		return;
 		    		}
 		    	$scope.timeuRange=newtime;
@@ -47,7 +47,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 		    	$scope.startTime= baseTools.formatTime(firstDate); 
 		    	var newtime=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
 		    	if(newtime==$scope.timeuRange){
-//		    		$("#loding").hide();
+		    		$("#loding").hide();
 		    		return;}
 		    	$scope.timeuRange=newtime;
 		    	var lst=firstDate.getTime(),len=endDate.getTime(), pver=(len-lst)/8;
@@ -69,7 +69,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 		    	$scope.endTime=baseTools.formatTime(endDate); $scope.startTime= baseTools.formatTime(firstDate); 
 		    	var newtime=$scope.startTime.substring(0,10)+"至"+$scope.endTime.substring(0,10);
 		    	if(newtime==$scope.timeuRange){
-		    		//$("#loding").hide();
+		    		$("#loding").hide();
 		    		return;} 
 		    	$scope.timeuRange=newtime;
 							    $scope.datemod = [
@@ -185,16 +185,16 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 		var minRange= $scope.minRange_mode[0][$scope.reportType],fm=$scope.minRange_mode[1][$scope.reportType];
 		 $('#temperatureChart').highcharts({
 			 chart: {  zoomType: 'x'},
-			 title: { text: ''  },
+			 title: { text: $scope.titmode[$scope.reportType]+'温度曲线图',align: 'left',x: 0,style:{fontWeight:700,fontSize:16}  },
 	            series:yData,
 	            yAxis: {  title: {  text: '温度'  }},
 	            xAxis: { type: 'datetime',minRange:minRange ,labels: {  formatter: function() {   return  Highcharts.dateFormat(fm, this.value);  }  }  },//minRange:  86400000--间隔为每天显示, tickPixelInterval: 400 ,
 	            xDateFormat: '%Y-%m-%d',
 	            tooltip: { formatter: function () {  return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' + Highcharts.numberFormat(this.y, 2)+" ℃"; } },
-	    	    legend: {enabled: false },
+	    	    legend: {align:'right',verticalAlign: 'top',x: 0,y: -10},
 	    	    credits: { enabled: false}
        });
-//	   $("#loding").hide(); 
+	   $("#loding").hide(); 
 	};
 	//2.超温时间和次数图表====================================================================================================================================================================================
 	$scope.overTempAndCount=function(){
@@ -320,7 +320,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	
 	//初始化系统入口====================================================================================================================================================================================
 	 $scope.initdata=function(){
-//            $("#loding").show();
+            $("#loding").show();
 			$scope.cuttstorage=$rootScope.mystorages[$scope.index];
 			$scope.initTemp();	
 			$scope.dwrtemplin();
@@ -392,7 +392,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	  * 查询事件
 	  */
 	$scope.getreport=function(){
-//		$("#loding").show();
+		$("#loding").show();
 		$scope.settime();
 		 $scope.initdata();
 	};
@@ -400,7 +400,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	 * 切换冷库事件
 	 */
 	$scope.changestorage=function(index,storageid,$event){
-//		$("#loding").show();
+		$("#loding").show();
 		var em=$($event.target);
 		em.addClass('select').siblings().removeClass('select');
 		$scope.index=index;
