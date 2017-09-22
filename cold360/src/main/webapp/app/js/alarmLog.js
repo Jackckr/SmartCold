@@ -120,9 +120,9 @@ app.controller('alarmLog', function ($scope, $location, $http, $rootScope, userS
         }
     };
     //展示详细信息
-    $scope.showdatil=function(obj){
+    $scope.showdatil=function(obj,storageId){
         if(obj.datilList==undefined){
-            $http.get(ER.coldroot + '/i/AlarmController/getOverTempDetail', {  params: { "rdcId":  $rootScope.rdcId ,time:obj.time  } }).success(function (data) {
+            $http.get(ER.coldroot + '/i/AlarmController/getOverTempDetail', {  params: { "rdcId":  $rootScope.rdcId ,time:obj.time,oids:storageId } }).success(function (data) {
                 obj.datilList=data;
             });
         }

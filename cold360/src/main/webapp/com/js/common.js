@@ -3,8 +3,8 @@ var oHtml = document.documentElement;
 var _sysconfig={countdown:60,isdebug:true,resize:true};
 var screenWidth = oHtml.clientWidth,screenHeight = oHtml.clientHeight;
 getFont();$(window).resize(function(event) { if(_sysconfig.resize)getFont();});
-// var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
-var ER = {root:"http://192.168.1.114:8080",coldroot:"http://192.168.1.114:8889"};
+var ER = {root:"http://liankur.com",coldroot:"http://www.smartcold.org.cn"};
+// var ER = {root:"http://192.168.1.114:8080",coldroot:"http://192.168.1.114:8889"};
 if ($.ajax) {jQuery.ajaxSetup({xhrFields:{withCredentials:true}});}//支持ajax跨域
 if(localStorage.length>=14){for(var i in localStorage ){if(i.indexOf("BMap_")>=0){ localStorage.removeItem(i);}}}
 if(window.user==undefined ||window.user==null){var userjson=window.localStorage.lkuser;if(userjson){window.user=JSON.parse(userjson);userjson=undefined;}}
@@ -127,26 +127,27 @@ function imgBoxHide(){
 }
 /*监控铃铛报警信息*/
 function getAlarmBillCount() {
-//    if(!window.localStorage.intervalTime || new Date().getTime()-window.localStorage.intervalTime>=300000){
-//        window.localStorage.intervalTime=new Date().getTime();
-//        $.ajax({url:ER.coldroot+"/i/AlarmController/getAlarmMsg",type:"post",data:{"userId":window.user.id,"type":window.user.type,"rdcId":window.rdcId,"isgetMsg":false},
-//            success:function (data) {
-//                window.localStorage.alarmCount=data.alarmCount;
-//                if(window.localStorage.alarmCount!="undefined" && window.localStorage.alarmCount!=0){
-//                    $("#alarmBill").show();
-//                    $("#alarmBillCount").html(window.localStorage.alarmCount);
-//                }else {
-//                    $("#alarmBill").hide();
-//                }
-//            }
-//        });
-//    }
-//    if(window.localStorage.alarmCount!="undefined" && window.localStorage.alarmCount!=0){
-//        $("#alarmBill").show();
-//        $("#alarmBillCount").html(window.localStorage.alarmCount);
-//    }else {
-//        $("#alarmBill").hide();
-//    }
+   if(!window.localStorage.intervalTime || new Date().getTime()-window.localStorage.intervalTime>=300000){
+       window.localStorage.intervalTime=new Date().getTime();
+       $.ajax({url:ER.coldroot+"/i/AlarmController/getAlarmMsg",type:"post",
+           data:{"userId":window.user.id,"type":window.user.type,"rdcId":window.rdcId,"isgetMsg":false},
+           success:function (data) {
+               window.localStorage.alarmCount=data.alarmCount;
+               if(window.localStorage.alarmCount!="undefined" && window.localStorage.alarmCount!=0){
+                   $("#alarmBill").show();
+                   $("#alarmBillCount").html(window.localStorage.alarmCount);
+               }else {
+                   $("#alarmBill").hide();
+               }
+           }
+       });
+   }
+   if(window.localStorage.alarmCount!="undefined" && window.localStorage.alarmCount!=0){
+       $("#alarmBill").show();
+       $("#alarmBillCount").html(window.localStorage.alarmCount);
+   }else {
+       $("#alarmBill").hide();
+   }
 }
 /**
  * 事件
