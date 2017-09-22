@@ -33,7 +33,7 @@
 	     <i class="toolI iconfont">&#xe60c;</i>
 	 </div>
 	 <div id="dowebok" class="hide">
-			<div  ng-repeat="rdc in allrdc"   class="section myBg" style="overflow-y: scroll;">
+			<div  ng-repeat="rdc in allrdc"   class="section myBg" style="overflow-y: scroll;max-height: 840px;">
 				<h3 class="text-center">{{rdc.name}}</h3>
 				<div id="rdc_datil_{{rdc.id}}" >
 				      <div class="previewBox groupModel">
@@ -96,7 +96,7 @@
 						            </div>
 						        </div>
 						        <div class="bodyModel clearfix" >
-						            <div class="clearfix ysj" ng-repeat="compressorGroup in rdc.compressorGroups">
+						            <div class="clearfix ysj" ng-repeat="compressorGroup in rdc.compressorGroups" style="margin-bottom: 15px;">
 						                <img ng-repeat="compressor in compressorGroup.compressors" ng-src="../assets/img/pressure{{compressor.type}}_{{compressor.status}}.png">
 						                <h6>{{compressorGroup.name}}</h6>
 						            </div>

@@ -82,7 +82,7 @@ coldWeb.controller('reportsAnalysis1', function ($scope, $http,$stateParams,$roo
 	
 	 $scope.chan_data_view=function($event,index,rdcid){
 		 $scope.cuttrdc = $scope.resdata[index] ;
-         $($event.target).addClass('currentRdc').siblings('span').removeClass('currentRdc')
+         $($event.target).addClass('currentRdc').siblings('span').removeClass('currentRdc');
 	 };
 
 
@@ -104,10 +104,10 @@ coldWeb.controller('reportsAnalysis1', function ($scope, $http,$stateParams,$roo
 	
 	$scope.initdata=function(){//模拟数据
 	 angular.forEach($scope.rdclist,function(rdc,i){
-		 if(rdc.id==$rootScope.rdcId){
+//		 if(rdc.id==$rootScope.rdcId){
 			 $scope.sisrdcid.push(rdc.id);
 			 $scope.sisrdcname.push(rdc.name);
-		 }
+//		 }
 	 });
    };
    $scope.initdata();

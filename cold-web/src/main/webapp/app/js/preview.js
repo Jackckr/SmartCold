@@ -165,7 +165,9 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
 	    	   angular.forEach(rdc.compressorGroups,function(item){	
 	    		   angular.forEach(item.compressors,function(obj){	
 	    			   $http.get('/i/baseInfo/getKeyValuesByTime', { params: {type:5, oids:obj.id, 'key':'run', "startTime": baseTools.formatTime(startTime ), "endTime": baseTools.formatTime(endTime)}}).success(function (data) {
-	    				   obj.status=$scope.statusmode[0][data[obj.id][0]['value']];//
+	    				 if(data[obj.id].length>0){
+	    					 obj.status=$scope.statusmode[0][data[obj.id][0]['value']];//
+	    				 }
 	    	    	   });
 	    		   });
 	    		   

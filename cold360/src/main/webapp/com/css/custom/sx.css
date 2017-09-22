@@ -1,27 +1,31 @@
 ﻿html{
-	height: 100%;;
+	height: 100%;
 }
 body{
 	width: 100%;
-	height: 100%;
-    background: #F4F8FB;
+	padding-top: 18rem;
+    background: url("../../other/sxbg.png") no-repeat center;
+	-webkit-background-size: cover;
+	background-size: cover;
 }
 .orange{
-	color: #f80;}
+	color: #f80;
+}
 .login{
-	margin-top: 2rem;
     padding: 0 0.9rem;
     box-sizing: border-box;
 }
 .inputBd{
 	position: relative;
+	background: #fff;
+	border:0.5px solid #e6e6e6;
+	margin-bottom: 0.6rem;
 }
 .inputBd input{
 	display: block;
 	width: 100%;
 	padding: 0.8rem 0;
 	font-size: 0.8rem;
-	border-bottom: 1px solid #E1E4E5;
 	background-color: transparent;
     box-sizing: border-box;
 }
@@ -36,13 +40,19 @@ body{
 	-webkit-transform: translateY(-50%);
 	transform: translateY(-50%);
 	font-size: 1rem;
-	color: #BDBDBE;
+	color: #2635d7;
+	font-weight: 700;
 }
 .mybtn{
 	display: block;
 	width: 100%;
-	margin: 1.5rem auto 0.5rem;
+	margin: 0 auto 0.5rem;
 	font-size: 0.8rem;
+	background-color: #4287ff;
+	background: -webkit-linear-gradient(right,#0805c2,#1c5dfc); /* Safari 5.1 - 6.0 */
+	background: -ms-linear-gradient(right,#0805c2,#1c5dfc); /* ie */
+	background: -moz-linear-gradient(right,#0805c2,#1c5dfc); /* Firefox 3.6 - 15 */
+	background: linear-gradient(to right,#0805c2,#1c5dfc); /* 标准的语法 */
 }
 .register{
 	height: 2rem;
@@ -169,9 +179,9 @@ section .inputBd input{
 	height:1.5rem;
 	line-height:1.5rem;
 }
-.warnInfo+.mybtn{
+/*.warnInfo+.mybtn{
 	margin-top:1rem;
-}
+}*/
 .warnInfo a{
 	color:#f80;
 	font-size:0.75rem;
@@ -255,26 +265,9 @@ input[type='radio']:checked{
 	background-color: #5eb95e;
 	color: #fff;
 }
-/*
-*逸励实业css
-*/
-.logoH1{
-	margin: 1rem auto;
-	background: url("../../other/Panasonic_b_posi.png") no-repeat center;
-	background-size: cover;
-	width: 9.8rem;
-	height:1.5rem;
+.txt-right{
+	text-align: right;
 }
-.login{
-	margin-top: 3rem;
-}
-.adTxt{
-	margin-top: 4rem;
-	text-align: center;
-	width: 100%;
-	font-size: .7rem;
-}
-.adTxt p{
-	font-size: .7rem;
-	margin-top: .5rem;
+.txt-right a{
+	font-size: 0.7rem;
 }

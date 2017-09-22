@@ -26,14 +26,14 @@
 	</select>
 	
 	<select id="getSysWarningByFilter" parameterType="map" resultType="SysWarningsInfo">
-		SELECT * from `syswarningsinfo` where `rdcid`=#{rdcid}
+		SELECT * from `syswarningsinfo` where `rdcid`in (${rdcids})
 		<if test="oids!=null and oids!=''"> and `oid` in (${oids}) </if>
 		<if test="type!=null"> and `type`=#{type} </if>
 		<if test="level!=null"> and `level`=#{level} </if>
 		<if test="starttime!=null and starttime!=''"> and `addtime` >#{starttime} and `addtime` &lt;#{endtime} </if>
 	</select>
 	<select id="getSysWarcountByFilter" parameterType="map" resultType="Integer">
-		SELECT count(id) from `syswarningsinfo` where  `addtime` >#{starttime} and `addtime` &lt;#{endtime} and `type`=#{type} and `rdcid`=#{rdcid}
+		SELECT count(id) from `syswarningsinfo` where  `addtime` >#{starttime} and `addtime` &lt;#{endtime} and `type`=#{type} and `rdcid` in (${rdcids});
 	</select>
 	
 </mapper>

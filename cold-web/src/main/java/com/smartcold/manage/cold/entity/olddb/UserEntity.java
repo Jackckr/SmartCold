@@ -12,7 +12,6 @@ public class UserEntity implements Serializable {
 	
 	private int type;//0:360用户 1:货主  2 :服务商
 	
-	private String avatar;//用户头像
 	
 	private String username;
 
@@ -23,6 +22,16 @@ public class UserEntity implements Serializable {
 	private String email;
 
 	private Integer vipType;
+	
+	
+	private String token;//
+	//登录安全检查信息
+	private boolean loginRisk;//当前登录环境是否正常
+	private String  lastlogininfo;//上的登录环境信息
+	private String  cuttlogininfo;//本次登录环境信息
+	
+	
+	private String avatar="http://139.196.189.93:8089/app/userimg.jpg";//用户头像->add
 	
 	private static final long serialVersionUID = -2875979349754314456L;
 	
@@ -128,6 +137,42 @@ public class UserEntity implements Serializable {
 
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public boolean isLoginRisk() {
+		return loginRisk;
+	}
+
+	public void setLoginRisk(boolean loginRisk) {
+		this.loginRisk = loginRisk;
+	}
+
+	public String getLastlogininfo() {
+		return lastlogininfo;
+	}
+
+	public void setLastlogininfo(String lastlogininfo) {
+		this.lastlogininfo = lastlogininfo;
+	}
+
+	public String getCuttlogininfo() {
+		return cuttlogininfo;
+	}
+
+	public void setCuttlogininfo(String cuttlogininfo) {
+		this.cuttlogininfo = cuttlogininfo;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
 }

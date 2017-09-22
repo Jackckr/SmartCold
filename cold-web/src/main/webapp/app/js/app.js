@@ -57,14 +57,28 @@ coldWeb.factory('baseTools',['$rootScope',function(){
 }]);
 
 
+
+
 coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootScope, $state,$http) {
     return {
         setUser: function (user) {
+        	if(localStorage.appconfig){
+        		$rootScope.appconfig=JSON.parse(localStorage.appconfig);
+        		if(new Date().getDate()!=$rootScope.appconfig.day){
+        			$rootScope.appconfig.alrd=false,$rootScope.appconfig.day=new Date().getDate();
+        		}
+        	}else{
+        		$rootScope.appconfig={alrd:false,day:new Date().getDate()};
+        		localStorage.appconfig=JSON.stringify($rootScope.appconfig);
+        	}
+        	
         	$rootScope.companyLoad=JSON.parse(localStorage.companyLoad);
+            $rootScope.todayTime=new Date();
             $rootScope.user = user, $rootScope.userType=$rootScope.user.type;
             $rootScope.logout = function () {
 	        	 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/logout'}).success(function(data){});
-	        	 $rootScope.user =window.user=user=undefined;  window.sessionStorage.clear();
+	        	 $rootScope.user =window.user=user=undefined; 
+	        	 window.sessionStorage.clear();
 	        	 var company=JSON.parse(window.localStorage.companyLoad);
 	        	 window.localStorage.clear();
 	        	 if(company.name=="sx"){
@@ -126,7 +140,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 		             $http.get('/i/platformDoor/findByRdcId?rdcId=' + rdcId).success( function(data,status,headers,config){ //  初始化月台门
 		            			 $rootScope.platformDoors = data;
 		             });
-		             $http.get('/i/AlarmController/getAlarmMsg',{params:{  userId: $rootScope.user.id, type: $rootScope.user.type, rdcId:$rootScope.rdcId,isgetMsg:false} }).success( function(data,status,headers,config){ //  初始化月台门
+		             $http.get('/i/AlarmController/getAlarmMsgByUser',{params:{  userId: $rootScope.user.id, role: $rootScope.user.role, rdcIds:$rootScope.userrdcids,isgetMsg:false} }).success( function(data,status,headers,config){ //  初始化月台门
 		            	 $rootScope.alarm = data;
 		            	 $rootScope.alarm.totl = data.CC+data.SC+data.TC;
 		            	if($rootScope.alarm.totl>0){
@@ -141,7 +155,6 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
             		$rootScope.vm.choserdc = value.originalObject;
         		}
         		$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
-        		
         	};
         	
             if ($rootScope.user != null && $rootScope.user!='' && $rootScope.user!= undefined && $rootScope.user.id != 0){
@@ -149,12 +162,22 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
             		var data=JSON.parse(window.sessionStorage.cactrdcdata);
             		var cutrdc=JSON.parse(window.sessionStorage.cactrdc);
             		$rootScope.vm = {choserdc:cutrdc,allUserRdcs:data};
+    				$rootScope.userrdcids=JSON.parse(window.sessionStorage.userrdcids);
     				$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
             	}else{
             		$http.get('/i/rdc/findRDCsByUserid?userid=' + $rootScope.user.id).success(function(data,status,headers,config){
         				if(data.length == 0){document.location.href = "/notAudit.html";return;}
         				window.sessionStorage.cactrdcdata=JSON.stringify(data);
         				$rootScope.vm = {choserdc:data[0],allUserRdcs:data};
+        				if($rootScope.user.role==3){
+        					 $rootScope.userrdcids=[$rootScope.vm.choserdc.id];
+        				}else{
+        					$rootScope.userrdcids=[];
+       					    angular.forEach($rootScope.vm.allUserRdcs,function(obj,i){ 
+       					    	$rootScope.userrdcids.push(obj.id);
+       					    });
+        				}
+        				window.sessionStorage.userrdcids=JSON.stringify($rootScope.userrdcids);
         				$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
         	       });
             	}
@@ -171,6 +194,11 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
             $rootScope.tomaintenancealarm = function () {$state.go('maintenancealarm', {'st': 1});};
             $rootScope.tomaintenancehist = function () {$state.go('maintenancealarm', {'st':2});};
             $rootScope.toalarmTemp = function () {$state.go('alarmTemp');};
+            $rootScope.updateconfig=function(){
+            	$rootScope.appconfig.alrd=true;
+            	$('#div_errmsg span:first').removeClass('ringBox');
+            	localStorage.appconfig=JSON.stringify($rootScope.appconfig);
+            };
         }
     };
 }]);
@@ -370,7 +398,7 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	controller: 'hotAnalysis',
         templateUrl: 'app/template/hotAnalysis.html'
     }).state('alarmLog',{//告警日志
-    	url:'/alarmLog',
+    	url:'/alarmLog/{type}',
     	controller: 'alarmLog',
         templateUrl: 'app/template/alarmLog.html'
     }).state('alarmTemp',{//温度告警
