@@ -4,17 +4,16 @@
  */
 coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http ,$timeout,$state,baseTools) {
 	$scope.colors= ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'];  Highcharts.setOptions({  global: {useUTC: false } ,colors:$scope.colors });
-	$scope.reportType=0;  $scope.isnotprint=false; $scope.charArray=[], $scope.anysisdata={};
+	$scope.reportType=0;  $scope.config={isnotprint:false,isexpdata:false}; $scope.charArray=[], $scope.anysisdata={};
 	$scope.titmode=["日","七天","月度"],$scope.timemode=[0,7,30],$scope.minRange_mode=[[3600000,86400000,86400000],['%H:%M:%S','%Y-%m-%d','%Y-%m-%d']] , $scope.fontcol=['red' ,'#ED561B' ,'#058DC7' ];
 	$scope.sumDatavalue=[[0,0],[0,0]];
-	$scope.rdcId = $stateParams.rdcId;$scope.isnotprint=true;$scope.index=0;
+	$scope.rdcId = $stateParams.rdcId;$scope.index=0;
 	$("#date00").jeDate({  isinitVal:true, initAddVal:[0], festival: true, format: 'YYYY-MM-DD'});
 	$("#date01").jeDate({  isinitVal:true, initAddVal:[-7], festival: true, format: 'YYYY-MM-DD',maxDate: $.nowDate(-7),});
 	$("#date02").jeDate({  isinitVal:true,festival:false, ishmsVal:false,isToday:false, initAddVal:[-30],minDate: '2016-05-01 23:59:59', maxDate: $.nowDate(-30),  format:"YYYY-MM",zIndex:100});
+	
 	$scope.note=false;
-	
-	
-	var formatDateTime = function (longtime) { 
+	$scope.formatDateTime = function (longtime) { 
 		var date=new Date(longtime);
         var y = date.getFullYear();  
         var m = date.getMonth() + 1;  
@@ -53,14 +52,14 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 		    	$scope.timeuRange=newtime;
 		    	var lst=firstDate.getTime(),len=endDate.getTime(), pver=(len-lst)/8;
 		    	 $scope.datemod = [
-						[ $scope.startTime,formatDateTime(lst+pver) ],
-						[formatDateTime(lst+pver  +1000), formatDateTime(lst+pver*2)],
-						[formatDateTime(lst+pver*2+1000),formatDateTime(lst+pver*3) ],
-						[formatDateTime(lst+pver*3+1000),formatDateTime(lst+pver*4)],
-						[formatDateTime(lst+pver*4+1000),formatDateTime(lst+pver*5)],
-						[formatDateTime(lst+pver*5+1000),formatDateTime(lst+pver*6) ],
-						[formatDateTime(lst+pver*6+1000),formatDateTime(lst+pver*7) ],
-						[formatDateTime(lst+pver*7+1000),$scope.endTime ] 
+						[ $scope.startTime,$scope.formatDateTime(lst+pver) ],
+						[$scope.formatDateTime(lst+pver  +1000), $scope.formatDateTime(lst+pver*2)],
+						[$scope.formatDateTime(lst+pver*2+1000),$scope.formatDateTime(lst+pver*3) ],
+						[$scope.formatDateTime(lst+pver*3+1000),$scope.formatDateTime(lst+pver*4)],
+						[$scope.formatDateTime(lst+pver*4+1000),$scope.formatDateTime(lst+pver*5)],
+						[$scope.formatDateTime(lst+pver*5+1000),$scope.formatDateTime(lst+pver*6) ],
+						[$scope.formatDateTime(lst+pver*6+1000),$scope.formatDateTime(lst+pver*7) ],
+						[$scope.formatDateTime(lst+pver*7+1000),$scope.endTime ] 
 						];
 			}else if($scope.reportType==2){
 		    	var data=$("#date02").val(),newDate=data.split("-");
@@ -136,7 +135,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	$scope.initTempAxis=function(data){
 	        var datumTemp =  parseFloat(data.startTemperature) + 0.5 * parseFloat(data.tempdiff), datumTemp1 =  parseFloat(data.startTemperature) + parseFloat(data.tempdiff), datumTemp2 = data.startTemperature;//基准温度
 	        $scope.cuttstorage.datumTemp=datumTemp;
-	        $scope.cuttstorage.templist=data;
+	        $scope.cuttstorage.templist=[];
 	        var yData = [], tempMap = data.tempMap,temp=null,minval=null,maxval=null,sumvl=null, anysis=[];
 	    	var i= 0,tempList=[],newdata = [],vo=cuttime=lasttime=null;
 	        for(var key in tempMap) { 
@@ -160,6 +159,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	                 anysis.push({'key':key,'minval':minval,'maxTemp':maxval,'avgTemp':sumvl/ tempList.length}) ;
 	             }
 	             yData.push({"name": key, "data": newdata,turboThreshold:0,    marker: {enabled: false }});
+	             $scope.cuttstorage.templist.push({"name": key, "data": newdata});
 	        } 
 	        if(anysis.length>0){
 	        	minval=anysis[0].minval,maxval=anysis[0].maxTemp,sumavg=0;
@@ -346,12 +346,12 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
     	$(".textPart p>span,.textPart>ul>li span,.textPart p>strong").addClass('font10');
     	$.print('#print');}
     function chanpangstatus(){
-    	$scope.isnotprint=true;
+    	$scope.config.isnotprint=true;
     	$(".chartPart").css('border','1px solid #eee');
     	$(".textPart p>span,.textPart>ul>li span,.textPart p>strong").removeClass('font10');
     }
 	$scope.Preview=function(){ //打印预览
-		  $scope.isnotprint=false;
+		 $scope.config.isnotprint=false;
 		  angular.forEach($scope.charArray,function(item){ 
 			  item.exportChart("png") ;
 			   var imgURL = item.getDataURL('png');//获取base64编码

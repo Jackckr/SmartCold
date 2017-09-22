@@ -107,14 +107,15 @@ coldWeb.controller('alarmTemp', function($rootScope, $scope, $http,$timeout) {
 	       	 if(tempwaning.length==0){
 	   			 tempwaning.push({time:time[7],msg:storage.name+'暂无告警信息',count:0});
 	   		 }
-	       	 $scope.tempwarLog[storage.id  ]=tempwaning.reverse();
+	       	
+	       	 $scope.tempwarLog[storage.id  ]=tempwaning;
 	       	 $scope.dwechar("tem_div_"+storage.id  ,xAxis, count, time); 
 		});
 	};
 	
 	//展示详细信息
 	$scope.showdatil=function(obj){
-		if(obj.datilList==undefined){$http.get('i/AlarmController/getOverTempDetail', {  params: { "rdcId":  $rootScope.rdcId ,time:obj.time  } }).success(function (data) {obj.datilList=data;});}
+		if(obj.datilList==undefined){$http.get('i/AlarmController/getOverTempDetail', {  params: { "rdcId":  $rootScope.rdcId ,"oids":storage.id ,time:obj.time  } }).success(function (data) {obj.datilList=data;});}
 		obj.isshow=obj.isshow==1?0:1;
 	};
 

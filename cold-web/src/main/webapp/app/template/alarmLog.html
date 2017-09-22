@@ -1,15 +1,20 @@
 <link rel="stylesheet" href="assets/plugins/datatables/dataTables.bootstrap.css">
 <div class="page-header">
-  &nbsp;&nbsp;报警日志
+  &nbsp;&nbsp;告警
 </div>
 <div class="box baoyang_bg slideInDown animated" style="color:#333">
+
+  <p>超温报警</p> <p>操作不当</p><P>系统告警</P>
   <div class="box-body table-responsive">
     <table id="alarmLog" class="table table-bordered table-striped">
       <thead>
         <tr class="row">
           <th class="col-lg-1 col-md-1 col-sm-1 text-center">序号</th>
-          <th class="col-lg-9 col-md-8 col-sm-7">报警信息</th>
-          <th class="col-lg-2 col-md-3 col-sm-4 text-center">报警时间</th>
+          <th class="col-lg-9 col-md-1 col-sm-1">标题</th>
+          <th class="col-lg-2 col-md-4 col-sm-1 text-center">内容</th>
+          <th class="col-lg-2 col-md-2 col-sm-1 text-center">开始时间</th>
+          <th class="col-lg-2 col-md-3 col-sm-1 text-center">结束时间</th>
+          <th class="col-lg-2 col-md-1 col-sm-1 text-center">持续时长</th>
         </tr>
       </thead>
       <tbody>

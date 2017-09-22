@@ -109,9 +109,9 @@ public class AlarmController extends BaseController {
 	 */
 	@RequestMapping(value = "/getOverTempDetail")
 	@ResponseBody
-	public List<SysWarningsInfo> getOverTempDetail(Integer rdcId,String time) {
+	public List<SysWarningsInfo> getOverTempDetail(int rdcId,int oids,String time) {
 		String starttime=time+" 00:00:00",endtime=time+" 23:59:59";
-		return this.syswarninginfoMapper.getSysWarningByFilter(rdcId, null, 1, null, starttime, endtime);
+		return this.syswarninginfoMapper.getSysWarningByFilter(rdcId, oids, 1, null, starttime, endtime);
 	}
 	
 	/**

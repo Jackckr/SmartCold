@@ -37,15 +37,15 @@ a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-
 	<div class="wrapper">
 		<!-- Main Header -->
 		<header class="main-header">
-			<div id="div_errmsg" class="ring hide"  onclick="$('#div_msg_datil').show();"  >
-				<span class="ringBox"><i class="iconfont">&#xe6f0;</i></span>
+			<div id="div_errmsg" class="ring hide"  onclick=" $('#div_msg_datil').show();"  >
+				<span class="{{appconfig.alrd?'':'ringBox'}}" ><i class="iconfont" style="color:{{appconfig.alrd?'grey':'red'}}">&#xe6f0;</i></span>
 				<span>{{alarm.totl}}</span>
 			</div>
 			<div id="div_msg_datil" onclick="$('#div_msg_datil').hide();">
 				<ul>
 					<li>您有{{alarm.totl}}条最新报警信息</li>
 					<li>
-						<p ng-if="alarm.TC>0"><a href="#" ng-click="toalarmTemp()"><i class="icon iconfont text-red"></i> 温度报警：{{alarm.TC}}</a></p>
+						<p ng-if="alarm.TC>0"><a href="#" ng-click="updateconfig();toalarmTemp();"><i class="icon iconfont text-red"></i> 温度报警：{{alarm.TC}}</a></p>
 						<p ng-if="alarm.CC>0"><a href="#"><i class="iconfont text-red">&#xe76d;</i>操作不当：{{alarm.CC}}</a></p>
 						<p ng-if="alarm.SC>0"><a href="#"><i class="icon iconfont text-red"></i> 系统报警：{{alarm.SC}}</a></p>
 						<p ng-if="alarm.WC>0"><a href="#"><i class="icon iconfont text-red"></i> 维修告警：{{alarm.WC}}</a></p>

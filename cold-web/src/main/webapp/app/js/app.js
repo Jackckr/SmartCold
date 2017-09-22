@@ -57,14 +57,27 @@ coldWeb.factory('baseTools',['$rootScope',function(){
 }]);
 
 
+
+
 coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootScope, $state,$http) {
     return {
         setUser: function (user) {
+        	if(localStorage.appconfig){
+        		$rootScope.appconfig=JSON.parse(localStorage.appconfig);
+        		if(new Date().getDate()!=$rootScope.appconfig.day){
+        			$rootScope.appconfig.alrd=false,$rootScope.appconfig.day=new Date().getDate();
+        		}
+        	}else{
+        		$rootScope.appconfig={alrd:false,day:new Date().getDate()};
+        		localStorage.appconfig=JSON.stringify($rootScope.appconfig);
+        	}
+        	
         	$rootScope.companyLoad=JSON.parse(localStorage.companyLoad);
             $rootScope.user = user, $rootScope.userType=$rootScope.user.type;
             $rootScope.logout = function () {
 	        	 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/logout'}).success(function(data){});
-	        	 $rootScope.user =window.user=user=undefined;  window.sessionStorage.clear();
+	        	 $rootScope.user =window.user=user=undefined; 
+	        	 window.sessionStorage.clear();
 	        	 var company=JSON.parse(window.localStorage.companyLoad);
 	        	 window.localStorage.clear();
 	        	 if(company.name=="sx"){
@@ -180,6 +193,11 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
             $rootScope.tomaintenancealarm = function () {$state.go('maintenancealarm', {'st': 1});};
             $rootScope.tomaintenancehist = function () {$state.go('maintenancealarm', {'st':2});};
             $rootScope.toalarmTemp = function () {$state.go('alarmTemp');};
+            $rootScope.updateconfig=function(){
+            	$rootScope.appconfig.alrd=true;
+            	$('#div_errmsg span:first').removeClass('ringBox');
+            	localStorage.appconfig=JSON.stringify($rootScope.appconfig);
+            };
         }
     };
 }]);
@@ -379,7 +397,7 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	controller: 'hotAnalysis',
         templateUrl: 'app/template/hotAnalysis.html'
     }).state('alarmLog',{//告警日志
-    	url:'/alarmLog',
+    	url:'/alarmLog/{type}',
     	controller: 'alarmLog',
         templateUrl: 'app/template/alarmLog.html'
     }).state('alarmTemp',{//温度告警

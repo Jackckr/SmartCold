@@ -25,5 +25,5 @@ public interface SysWarningsInfoMapper {
     
     Integer getSysWarcountByFilter(@Param("rdcids")Object rdcids,@Param("type")Integer type,@Param("starttime")String starttime,@Param("endtime")String endtime );
     
-    List<SysWarningsInfo> getSysWarningByFilter(@Param("rdcids")Object rdcids,@Param("oids")String oids,@Param("type")Integer type,@Param("level")Integer level,@Param("starttime")String starttime,@Param("endtime")String endtime );
+    List<SysWarningsInfo> getSysWarningByFilter(@Param("rdcids")Object rdcids,@Param("oids")Object oids,@Param("type")Integer type,@Param("level")Integer level,@Param("starttime")String starttime,@Param("endtime")String endtime );
 }
