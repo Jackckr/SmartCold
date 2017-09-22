@@ -261,6 +261,7 @@ public class AdminController extends BaseController {
 		mlList0.add(new ACLAdminNode("0_5","main_infmation", "资讯管理",      ""      ));
 		mlList0.add(new ACLAdminNode("0_6","icon-yy", "预约演示",      "appointment.html"      ));
 		mlList0.add(new ACLAdminNode("0_7","icon-coldcf",    "冷库配置"   ,   "storageConfig.html"      ));
+		mlList0.add(new ACLAdminNode("0_8","main_weixin",    "微信id配置"   ,   "weixinConfig.html"      ));
 		pml.setChild(mlList0);ml.add(pml);
 		
 	    pml  = new ACLAdminNode("1"  ,"main_dev",     "设备管理");
