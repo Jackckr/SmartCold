@@ -69,13 +69,9 @@ public class AlarmController extends BaseController {
 	 */
 	@RequestMapping(value = "/getDatilAlarmMsg")
 	@ResponseBody
-	public  HashMap<String, Object> getDatilAlarmMsg(int userId,int type,int rdcId) {
+	public  List<SysWarningsInfo> getDatilAlarmMsg(int userId,int type,int rdcId) {
 		String[] time = TimeUtil.getDayTime();
-		HashMap<String, Object> reasHashMap=new HashMap<String, Object>();
-		reasHashMap.put("TM", this.syswarninginfoMapper.getSysWarningByFilter(rdcId, null, 1, null, time[0], time[0]));//超温消息
-		reasHashMap.put("CM", this.syswarninginfoMapper.getSysWarningByFilter(rdcId, null, 2, null, time[0], time[0]));//操作不当消息
-		reasHashMap.put("SM", this.syswarninginfoMapper.getSysWarningByFilter(rdcId, null, 3, null, time[0], time[0]));//系统告警
-		return reasHashMap;    
+		return this.syswarninginfoMapper.getSysWarningByFilter(rdcId, null, type, null, time[0], time[0]);
 	}
 	
 	/**

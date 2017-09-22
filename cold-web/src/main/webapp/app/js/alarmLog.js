@@ -114,8 +114,8 @@ coldWeb.controller('alarmTemp', function($rootScope, $scope, $http,$timeout) {
 	};
 	
 	//展示详细信息
-	$scope.showdatil=function(obj){
-		if(obj.datilList==undefined){$http.get('i/AlarmController/getOverTempDetail', {  params: { "rdcId":  $rootScope.rdcId ,"oids":storage.id ,time:obj.time  } }).success(function (data) {obj.datilList=data;});}
+	$scope.showdatil=function(obj,oids){
+		if(obj.datilList==undefined){$http.get('i/AlarmController/getOverTempDetail', {  params: { "rdcId":  $rootScope.rdcId ,"oids":oids ,time:obj.time  } }).success(function (data) {obj.datilList=data;});}
 		obj.isshow=obj.isshow==1?0:1;
 	};
 
