@@ -18,6 +18,15 @@ public class PushEntity {
 
     private Integer rdcId;
 
+    public PushEntity( String title, String summary, String token, String userIds, Integer type, Integer rdcId) {
+        this.title = title;
+        this.summary = summary;
+        this.token = token;
+        this.userIds = userIds;
+        this.type = type;
+        this.rdcId = rdcId;
+    }
+
     public String getTitle() {
         return title;
     }

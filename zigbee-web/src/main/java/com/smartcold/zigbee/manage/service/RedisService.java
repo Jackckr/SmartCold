@@ -16,4 +16,8 @@ public interface RedisService {
     void delToAddShare();
 
     String putUserId(Integer userId,String token);
+
+    String putWXToken(String access_token);
+
+    void delWXToken();
 }

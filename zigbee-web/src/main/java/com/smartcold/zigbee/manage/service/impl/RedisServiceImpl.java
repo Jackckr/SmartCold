@@ -43,4 +43,16 @@ public class RedisServiceImpl implements RedisService{
     public String putUserId(Integer userId, String token) {
         return token;
     }
+
+    @Override
+    @Cacheable(key = "'access_token'",value = "access_token")
+    public String putWXToken(String access_token) {
+        return access_token;
+    }
+
+    @Override
+    @CacheEvict(value ="access_token",allEntries = true)
+    public void delWXToken() {
+
+    }
 }

@@ -76,8 +76,7 @@ public class PushDemoTest extends BaseTest {
         iOSRequest.setTarget("account");
         iOSRequest.setTargetValue(pushEntity.getUserIds());
         iOSRequest.setSummary(pushEntity.getSummary());
-        iOSRequest.setiOSExtParameters("{\"type\":\""+pushEntity.getType()+"\"}");
-        iOSRequest.setiOSExtParameters("{\"rdcId\":\""+pushEntity.getRdcId()+"\"}");
+        iOSRequest.setiOSExtParameters("{\"rdcId\":\""+pushEntity.getRdcId()+"\",\"type\":\""+pushEntity.getType()+"\"}");
         iOSRequest.setExt("{\"sound\":\"default\", \"badge\":\"42\"}");
 
         PushNoticeToiOSResponse pushNoticeToiOSResponse = client.getAcsResponse(iOSRequest);
