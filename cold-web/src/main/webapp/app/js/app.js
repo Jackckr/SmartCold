@@ -94,6 +94,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
         		     $rootScope.rdcId = rdcId;
         		     window.sessionStorage.smrdcId=rdcId;//缓存rdcid
         		     window.sessionStorage.cactrdc=JSON.stringify($rootScope.vm.choserdc);
+        		     if($rootScope.user.role==3){ $rootScope.userrdcids=[$rootScope.vm.choserdc.id];  window.sessionStorage.userrdcids=JSON.stringify($rootScope.userrdcids);}
 		        	 $http({method:'POST',url:'i/acl/getRUACL',params:{rdcid : $rootScope.rdcId,uid : $rootScope.user.id}}).success(function (data) {
 		        			    $rootScope.aclml=data.aclml;
 		        			    $rootScope.aclmap={};
@@ -169,19 +170,16 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
         				if(data.length == 0){document.location.href = "/notAudit.html";return;}
         				window.sessionStorage.cactrdcdata=JSON.stringify(data);
         				$rootScope.vm = {choserdc:data[0],allUserRdcs:data};
-        				if($rootScope.user.role==3){
-        					 $rootScope.userrdcids=[$rootScope.vm.choserdc.id];
-        				}else{
+        				if($rootScope.user.role!=3){
         					$rootScope.userrdcids=[];
        					    angular.forEach($rootScope.vm.allUserRdcs,function(obj,i){ 
        					    	$rootScope.userrdcids.push(obj.id);
        					    });
+       					    window.sessionStorage.userrdcids=JSON.stringify($rootScope.userrdcids);
         				}
-        				window.sessionStorage.userrdcids=JSON.stringify($rootScope.userrdcids);
         				$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
         	       });
             	}
-            	
             }
             $rootScope.toMyCompressor = function (compressorID) {  $state.go('compressorPressure', {'compressorID': compressorID}); };
             $rootScope.toMyBlowers = function () { $state.go('compressorBlower', {'rdcId': $rootScope.rdcId}); };

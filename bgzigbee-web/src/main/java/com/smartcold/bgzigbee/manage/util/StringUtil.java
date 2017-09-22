@@ -300,4 +300,12 @@ public class StringUtil
 	public static String  getToken(String token){
 		return EncodeUtil.encodeByMD5(token+TimeUtil.getDateHour());
 	}
+	
+	public static void main(String[] args) {
+		
+		
+		
+		
+	}
+	
 }
