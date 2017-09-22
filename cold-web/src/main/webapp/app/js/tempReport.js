@@ -4,7 +4,7 @@
  */
 coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http ,$timeout,$state,baseTools) {
 	$scope.colors= ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'];  Highcharts.setOptions({  global: {useUTC: false } ,colors:$scope.colors });
-	$scope.reportType=0;  $scope.config={isnotprint:false,isexpdata:false}; $scope.charArray=[], $scope.anysisdata={};
+	$scope.reportType=0;  $scope.config={isnotprint:true,isexpdata:false}; $scope.charArray=[], $scope.anysisdata={};
 	$scope.titmode=["日","七天","月度"],$scope.timemode=[0,7,30],$scope.minRange_mode=[[3600000,86400000,86400000],['%H:%M:%S','%Y-%m-%d','%Y-%m-%d']] , $scope.fontcol=['red' ,'#ED561B' ,'#058DC7' ];
 	$scope.sumDatavalue=[[0,0],[0,0]];
 	$scope.rdcId = $stateParams.rdcId;$scope.index=0;

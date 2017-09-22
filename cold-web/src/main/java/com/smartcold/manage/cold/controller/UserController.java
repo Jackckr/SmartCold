@@ -167,8 +167,8 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public Object findUser(HttpServletRequest request,String token) {
 		UserEntity user =new UserEntity();// (UserEntity)request.getSession().getAttribute("user");//		if(user!=null){return user;}
-		Cookie[] cookies = request.getCookies();
 		if(StringUtil.isNull(token)){
+			Cookie[] cookies = request.getCookies();
 			if (cookies == null) {
 				return new UserEntity();
 			}

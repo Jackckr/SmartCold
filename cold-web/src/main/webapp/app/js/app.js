@@ -78,7 +78,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
             $rootScope.logout = function () {
 	        	 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/logout'}).success(function(data){});
 	        	 $rootScope.user =window.user=user=undefined; 
-	        	 window.sessionStorage.clear();
+	        	// window.sessionStorage.clear();
 	        	 var company=JSON.parse(window.localStorage.companyLoad);
 	        	 window.localStorage.clear();
 	        	 if(company.name=="sx"){
