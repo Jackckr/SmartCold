@@ -92,9 +92,44 @@ $(function() {
 var app = angular.module('app', []);
 app.service('userService', function($rootScope,  $http) {
     initAllByRdcId= function(rootRdcId){
+
+        $http.get(ER.coldroot +'/i/rdc/findRDCsByUserid?userid=' + user.id).success(function(data){
+            window.sessionStorage.cactrdcdata=JSON.stringify(data);
+            $rootScope.vm = {choserdc:data[0],allUserRdcs:data};
+            window.sessionStorage.vm=JSON.stringify($rootScope.vm);
+            if(user.role!=3){
+                $rootScope.userrdcids=[];
+                angular.forEach($rootScope.vm.allUserRdcs,function(obj,i){
+                    $rootScope.userrdcids.push(obj.id);
+                });
+                window.sessionStorage.userrdcids=JSON.stringify($rootScope.userrdcids);
+            }
+            if(user.role==3){ $rootScope.userrdcids=[$rootScope.vm.choserdc.id];  window.sessionStorage.userrdcids=JSON.stringify($rootScope.userrdcids);}
+            /*
+            * 铃铛告警
+            *
+            **/
+            $http.get(ER.coldroot+'/i/AlarmController/getAlarmMsgByUser',{params:{  userId: user.id, role: user.role, rdcIds:$rootScope.userrdcids,isgetMsg:false} }).success( function(data,status,headers,config){ //  初始化月台门
+                $rootScope.alarm = data;
+                $rootScope.alarm.totl = data.CC+data.SC+data.TC;
+                window.localStorage.alarmCount=$rootScope.alarm.totl;
+                if(window.localStorage.alarmCount!="undefined" && window.localStorage.alarmCount!=0){
+                    $("#alarmBill").show();
+                    $("#alarmBillCount").html(window.localStorage.alarmCount);
+                }else {
+                    $("#alarmBill").hide();
+                }
+            });
+            if(window.localStorage.alarmCount!="undefined" && window.localStorage.alarmCount!=0){
+                $("#alarmBill").show();
+                $("#alarmBillCount").html(window.localStorage.alarmCount);
+            }else {
+                $("#alarmBill").hide();
+            }
+            /*铃铛告警*/
+        });
         $rootScope.rdcId = rootRdcId;
         window.rdcId=rootRdcId;
-        getAlarmBillCount();
         $http({method:'POST',url:ER.coldroot + '/i/acl/getRUACL',params:{rdcid : $rootScope.rdcId,uid : window.user.id}}).success(function (data) {
             $rootScope.aclml=data.aclml;
             $rootScope.aclmap={};

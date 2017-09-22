@@ -1177,8 +1177,8 @@ input[type='radio']:checked{
 	height: 1rem;
 }
 #alarmBill{
-	height: 2rem;
-	line-height: 2rem;
+	height: 1.6rem;
+	line-height: 1.6rem;
 	width: 6rem;
 	position: fixed;
 	left: 50%;
@@ -1192,7 +1192,8 @@ input[type='radio']:checked{
 #alarmBill i{
 	color: red;
 	margin-top: 1rem;
-	font-size: 1.5rem;
+	margin-right: 1rem;
+	font-size: 1.2rem;
 	animation:ring 2s infinite;
 	-moz-animation:ring 2s infinite; /* Firefox */
 	-webkit-animation:ring 2s infinite; /* Safari and Chrome */

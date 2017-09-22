@@ -81,11 +81,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 	        	// window.sessionStorage.clear();
 	        	 var company=JSON.parse(window.localStorage.companyLoad);
 	        	 window.localStorage.clear();
-	        	 if(company.name=="sx"){
-	        	 	window.location.href="sx.html";
-				 }else {
-                     window.location.href="login.html";
-				 }
+                 window.location.href=company.login+".html";
 	        };
         },
         setStorage: function () {
@@ -466,4 +462,4 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
 }*/
 
 //导航栏选中的高亮显示
-function activeLi(ops){$('.my_sidebar li').removeClass('active');$(ops).addClass('active');}
+function activeLi(ops){$('.my_sidebar li').removeClass('active');$(ops).addClass('active');window.scroll(0,0);}
