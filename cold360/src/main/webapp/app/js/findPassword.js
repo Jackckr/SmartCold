@@ -100,6 +100,13 @@ var app = angular.module('app', []).controller('findPassword', function ($http, 
                                 content: data.message,
                                 btn: '确定',
                                 yes: function(){
+                                    if(localStorage.company=='sx'){
+                                        window.location.href = "../sx.html";
+                                        return
+                                    }else if(localStorage.company=='yili'){
+                                        window.location.href = "../yili.html";
+                                        return
+                                    }
                                     window.location.href = "../index.html";
                                 }
                             });
