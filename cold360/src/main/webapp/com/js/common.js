@@ -125,30 +125,7 @@ function imgBoxHide(){
         }
     }, false);
 }
-/*监控铃铛报警信息*/
-function getAlarmBillCount() {
-   if(!window.localStorage.intervalTime || new Date().getTime()-window.localStorage.intervalTime>=300000){
-       window.localStorage.intervalTime=new Date().getTime();
-       $.ajax({url:ER.coldroot+"/i/AlarmController/getAlarmMsg",type:"post",
-           data:{"userId":window.user.id,"type":window.user.type,"rdcId":window.rdcId,"isgetMsg":false},
-           success:function (data) {
-               window.localStorage.alarmCount=data.alarmCount;
-               if(window.localStorage.alarmCount!="undefined" && window.localStorage.alarmCount!=0){
-                   $("#alarmBill").show();
-                   $("#alarmBillCount").html(window.localStorage.alarmCount);
-               }else {
-                   $("#alarmBill").hide();
-               }
-           }
-       });
-   }
-   if(window.localStorage.alarmCount!="undefined" && window.localStorage.alarmCount!=0){
-       $("#alarmBill").show();
-       $("#alarmBillCount").html(window.localStorage.alarmCount);
-   }else {
-       $("#alarmBill").hide();
-   }
-}
+
 /**
  * 事件
  */

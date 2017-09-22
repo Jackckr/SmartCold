@@ -33,7 +33,7 @@ ul, li {
     margin-top: 25px;
 }
 .loginBody{
-    height: 440px;
+    height: 400px;
     position: relative;
     z-index:1;
 }
