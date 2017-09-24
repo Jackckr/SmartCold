@@ -50,7 +50,7 @@ public class StringUtil
 	 }
 	
 	 public  static String getToken(){
-			  return EncodeUtil.encodeByMD5("toke"+TimeUtil.getDateHour());
+			  return EncodeUtil.encodeByMD5("token"+TimeUtil.getDateHour());
 	 }
 	 
 	 public synchronized static boolean verifyToken(String toke){

@@ -98,12 +98,13 @@ coldWeb.controller('alarmLog', function($rootScope, $scope, $http,$timeout) {
 coldWeb.controller('alarmTempDatil', function($rootScope, $scope, $http,$timeout) {
 	 //根据rdcid查询该rdc的报警信息
 	$(".mainHeight").height( $(".content-wrapper").height());
+	  $scope.alarm=[];
 	$scope.initData=function(){
 		if( $rootScope.user.role==3){$scope.rdclist=[$rootScope.vm.choserdc];}else{$scope.rdclist=$rootScope.vm.allUserRdcs;}//rdc策略
 		  angular.forEach($scope.rdclist,function(obj,i){ 
 			  $http.get('/i/AlarmController/getDatilAlarmMsg',{params:{  userId: $rootScope.user.id,type:1, rdcId:obj.id} }).success( function(data,status,headers,config){ // 
 				  if(data.length>0){
-					  $scope.alarm[obj.id]=data;
+					  $scope.alarm.push({name:obj.name,alarm:data });
 				  }
 		         });
 		  });

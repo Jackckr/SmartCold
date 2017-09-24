@@ -34,14 +34,14 @@ public class TempServiceTest {
 	public static HashMap<Integer, String[]> rdcCacheHashMap=new HashMap<>(); 
 	@Test
     public void pushTest(){
-		String[] rdcName = getRdcName(1063);
-		if(rdcName==null){return;}
-		System.err.println(rdcName);
+//		String[] rdcName = getRdcName(1063);
+//		if(rdcName==null){return;}
+//		System.err.println(rdcName);
 		HashMap<String, Object> stringObjectHashMap = new HashMap<>();
 		stringObjectHashMap.put("token",StringUtil.getToken());//超温时长
 		stringObjectHashMap.put("userIds","1");//发送对象---？
 		stringObjectHashMap.put("rdcid",1063);//rdc -跳转
-		stringObjectHashMap.put("rdcName",rdcName[0]);//--rdc名称 ？？
+		stringObjectHashMap.put("rdcName","合肥老母鸡");//--rdc名称 ？？
 		stringObjectHashMap.put("coldStorageName","冷库1");
 		stringObjectHashMap.put("basTemp",-18);
 		stringObjectHashMap.put("diffTemp",4);
@@ -49,7 +49,7 @@ public class TempServiceTest {
 		stringObjectHashMap.put("starttime","2017-9-23 10:54:13");//开始时间
 		stringObjectHashMap.put("ovtTempTime",30);//超温时长
 		try {
-			RemoteUtil.httpPost("http://139.196.167.165/i/warning/waringNotice",stringObjectHashMap);
+			RemoteUtil.httpPost("http://127.0.0.1:8080/i/warning/waringNotice",stringObjectHashMap);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
