@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
 import com.smartcold.manage.cold.dao.newdb.SysWarningsInfoMapper;
 import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
+import com.smartcold.manage.cold.dao.olddb.RdcMapper;
 import com.smartcold.manage.cold.entity.comm.ItemValue;
 import com.smartcold.manage.cold.entity.newdb.SysWarningsInfo;
 import com.smartcold.manage.cold.entity.olddb.ColdStorageSetEntity;
@@ -35,6 +36,9 @@ import com.smartcold.manage.cold.util.TimeUtil;
  **/
 @Service
 public class WarningTaskService  {
+	
+	@Autowired
+	private RdcMapper rdcMapper;
 	@Autowired
 	private TempWarningService tempWarningServer;
 	@Autowired
@@ -51,8 +55,12 @@ public class WarningTaskService  {
 	public synchronized static void addExtsid(int key) {extsid.add(key);}
 	public synchronized static void clerextsid() {extsid.clear();}
 	public synchronized static HashSet<Integer> getExtsid() {return extsid;}
-	  //当前任务
+	//推送人缓存
+	public static HashMap<Integer, String[]> rdcCacheHashMap=new HashMap<>(); 
+	 //当前任务
 	public static HashMap<Integer, ScheduleJob> tempListen=new HashMap<Integer, ScheduleJob>();
+	
+	
 	/**
 	 * 每天凌晨1:5点触发
 	 * 清除黑名单
@@ -132,6 +140,7 @@ public class WarningTaskService  {
 		String endtime =TimeUtil.getDateTime();
 		String starttime =TimeUtil.getDateTime(sttime);
 		if(allMonitorTempSet.size()==0||excute>12){
+			rdcCacheHashMap.clear();
 			allMonitorTempSet = this.tempWarningServer.getAllMonitorTempSet();//1.获得正常监控温度信息
 		}
 		int key=0;float baseTemp=0;
@@ -228,7 +237,7 @@ public class WarningTaskService  {
 											double overtime = Tv[i];//不同级别超温数据不定
 											long minuteBetween = TimeUtil.minuteBetween(Lt[i],temp.getAddtime());
 							                 if(minuteBetween >=overtime){
-							                	 allWarningList.put(colditem.getId(), new SysWarningsInfo(colditem.getRdcId(), colditem.getId(), 1,1, TimeUtil.getDateTime(Lt[i]),TimeUtil.getDateTime(temp.getAddtime()),minuteBetween,colditem.getName()+"超温" , colditem.getName()+"发生超温1级超温告警,超基准温度（"+basTemp+"）:+"+((i+1)*2)+" ℃, 超温时长："+minuteBetween+"分钟，超温次数：1次", TimeUtil.getDateTime(),colditem.getName(),colditem.getBaseTemp(),colditem.getTempdiff()));
+							                	 allWarningList.put(colditem.getId(), new SysWarningsInfo(colditem.getRdcId(), colditem.getId(), 1,1, TimeUtil.getDateTime(Lt[i]),TimeUtil.getDateTime(temp.getAddtime()),minuteBetween,i*2,colditem.getName()+"超温" , colditem.getName()+"发生超温1级超温告警,超基准温度（"+basTemp+"）:+"+((i+1)*2)+" ℃, 超温时长："+minuteBetween+"分钟，超温次数：1次", TimeUtil.getDateTime(),colditem.getName(),colditem.getBaseTemp(),colditem.getTempdiff()));
 							            		 isreturn=true;
 							            		 break;
 							            	 }
@@ -245,7 +254,7 @@ public class WarningTaskService  {
 										double overtime = Tv[i];//不同级别超温数据不定
 										long minuteBetween = TimeUtil.minuteBetween(Lt[i],endtime)+1;
 						                 if(minuteBetween >=overtime){
-						                	 allWarningList.put(colditem.getId(),new SysWarningsInfo(colditem.getRdcId(), colditem.getId(), 1,i>2?1:3, TimeUtil.getDateTime(Lt[i]),TimeUtil.getDateTime(endtime),minuteBetween, colditem.getName()+"超温" , colditem.getName()+"在"+TimeUtil.getDateTime(Lt[i])+"发生"+(i>2?1:3)+"级超温告警,超基准温度（"+basTemp+"）:+"+((i+1)*2)+" ℃, 超温时长："+minuteBetween+"分钟，超温次数：1次", TimeUtil.getDateTime(),colditem.getName(),colditem.getBaseTemp(),colditem.getTempdiff()));
+						                	 allWarningList.put(colditem.getId(),new SysWarningsInfo(colditem.getRdcId(), colditem.getId(), 1,i>2?1:3, TimeUtil.getDateTime(Lt[i]),TimeUtil.getDateTime(endtime),minuteBetween,i*2, colditem.getName()+"超温" , colditem.getName()+"在"+TimeUtil.getDateTime(Lt[i])+"发生"+(i>2?1:3)+"级超温告警,超基准温度（"+basTemp+"）:+"+((i+1)*2)+" ℃, 超温时长："+minuteBetween+"分钟，超温次数：1次", TimeUtil.getDateTime(),colditem.getName(),colditem.getBaseTemp(),colditem.getTempdiff()));
 						                	 break;
 						            	 }
 									}
@@ -261,16 +270,21 @@ public class WarningTaskService  {
 					    newextsid.remove(key);
 						SysWarningsInfo sysWarningsInfo = allWarningList.get(key);
 						warningList.add(sysWarningsInfo);
-						HashMap<String, Object> stringObjectHashMap = new HashMap<>();
-						stringObjectHashMap.put("rdc",sysWarningsInfo.getName());
-						stringObjectHashMap.put("userIds",sysWarningsInfo.getName());
-						stringObjectHashMap.put("rdcName",sysWarningsInfo.getName());
-						stringObjectHashMap.put("coldStorageName",coldStorageSetMapper.findById(sysWarningsInfo.getObjid()).getName());
-						stringObjectHashMap.put("level",sysWarningsInfo.getLevel());
-						stringObjectHashMap.put("basTemp",sysWarningsInfo.getBasTemp());
-						stringObjectHashMap.put("diffTemp",sysWarningsInfo.getTempdiff());
-						stringObjectHashMap.put("ovtTempTime",sysWarningsInfo.getLongtime());
-						RemoteUtil.httpPost("http://liankur.com/i/warning/waringNotice",stringObjectHashMap);
+						String[] rdcName =this.getRdcName(sysWarningsInfo.getRdcid());
+						if(rdcName!=null){
+							HashMap<String, Object> stringObjectHashMap = new HashMap<>();
+							stringObjectHashMap.put("token",StringUtil.getToken());//超温时长
+							stringObjectHashMap.put("userIds",rdcName[1]);//发送对象---？
+							stringObjectHashMap.put("rdcid",sysWarningsInfo.getRdcid());//rdc -跳转
+							stringObjectHashMap.put("rdcName",rdcName[0]);//--rdc名称 ？？
+							stringObjectHashMap.put("coldStorageName",sysWarningsInfo.getName());
+							stringObjectHashMap.put("basTemp",sysWarningsInfo.getBasTemp());
+							stringObjectHashMap.put("diffTemp",sysWarningsInfo.getTempdiff());
+							stringObjectHashMap.put("overTemp",sysWarningsInfo.getOverTemp());//
+							stringObjectHashMap.put("starttime",sysWarningsInfo.getStarttime());//开始时间
+							stringObjectHashMap.put("ovtTempTime",sysWarningsInfo.getLongtime());//超温时长
+							RemoteUtil.httpPost("http://liankur.com/i/warning/waringNotice",stringObjectHashMap);
+						}
 					 }
 					 this.sysWarningsInfoMapper.addSyswarningsinfo(warningList);
 			    }
@@ -287,8 +301,26 @@ public class WarningTaskService  {
 		
 	}
 		
+	}
 	
-		
-		
+
+    private String [] getRdcName(Integer rdcId){
+		if(rdcCacheHashMap.containsKey(rdcId)){
+			return rdcCacheHashMap.get(rdcId);
+		}else{
+			String rdcName = rdcMapper.getRdcName(rdcId);
+			if(StringUtil.isNull(rdcName)){
+				rdcCacheHashMap.put(rdcId, null);
+				return null;
+			}
+			List<Integer> rdcMangerUID = rdcMapper.getRdcMangerUID(rdcId);	
+			if(SetUtil.isnotNullList(rdcMangerUID)){
+			     String rdcinfo[]=   new String[]{ rdcName,SetUtil.listtoString(rdcMangerUID)}	;
+				rdcCacheHashMap.put(rdcId, rdcinfo);
+				return rdcinfo;
+			}
+			rdcCacheHashMap.put(rdcId, null);
+			return null;
+		}
 	}
 }

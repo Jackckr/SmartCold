@@ -146,43 +146,41 @@
 	    </div>
 	    <!-- 月度曲线图 -->
 	    <div class="print_part chart_gap">
-<!-- 	    	<p class="text-left"> -->
-<!-- 				<button class="btn btn-info btn-xs fr" ng-click="config.isexpdata=!config.isexpdata">表格/图表</button> -->
-<!-- 				<button class="btn btn-success btn-xs fr" style="margin: 0 5px;">导出</button> -->
-<!-- 			</p> -->
-
 	    	<div>
 	    		<div class="chartPart">
-	    			<div id="temperatureChart" class="chartHight" ng-show="config.isnotprint||!config.isexpdata"></div>
+	    		  <button class="btn btn-info btn-xs fr"  ng-click="config.isTable=!config.isTable;initTemp();" style="     margin-top: -23px;">表格/图表</button>
+	    			<div id="temperatureChart" class="chartHight" ng-show="!config.isTable"></div>
 	    			<div id="temperatureChart_img"  ng-show="!config.isnotprint"></div>
-<!-- 	    			<div id="temperatureChart_data" ng-show="config.isexpdata"> -->
-<!-- 	    			   <table class="table" ng-repeat="tempobj in cuttstorage.templist" > -->
-<!-- 						<thead> -->
-<!-- 						   <TR > -->
-<!-- 						     <TD COLSPAN="3">{{tempobj.name}}</TD> -->
-<!-- 						   </TR> -->
-<!-- 							<tr class="success" > -->
-<!-- 								<th>序号</th> -->
-<!-- 								<th>温度</th> -->
-<!-- 								<th>时间</th> -->
-<!-- 							</tr> -->
-<!-- 						</thead> -->
-<!-- 						<tbody> -->
-<!-- 							<tr ng-repeat="item in tempobj.data" class="success"> -->
-<!-- 								<td>{{$index+1}}</td> -->
-<!-- 								<td>{{item.y}}</td> -->
-<!-- 								<td>{{formatDateTime(item.x)}}</td> -->
-<!-- 							</tr> -->
-<!-- 						</tbody> -->
-<!-- 					</table> -->
-	    			
-<!-- 	    			</div> -->
+	    			<div id="temperatureChart_data" ng-show="config.isTable">
+	    			   <table class="table"  >
+						<thead>
+							<tr class="success" >
+								<th>日期</th>
+								<th>最低温度(℃)</th>
+								<th>最高温度(℃)</th>
+								<th>平均温度(℃)</th>
+								<th>超温次数</th>
+								<th>超温时长(min)</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="(k,item) in anysisdata.tpmsisdata" class="success">
+								<td>{{k}}</td>
+								<td>{{item[0]}}</td>
+								<td>{{item[1]}}</td>
+								<td>{{item[2]}}</td>
+								<td>{{item[3]}}</td>
+								<td>{{item[4]}}</td>
+							</tr>
+						</tbody>
+					</table>
+	    			</div>
 	    		</div>
-	    		<div style="margin-bottom: 30px;">
+	    		<div style="margin-bottom: 30px;    font-size: 20px;">
 	    		        {{cuttstorage.name}}基准温度：<span style="color:red;">{{cuttstorage.datumTemp}}</span> ℃     
-	    		                            最高温度：<span style="color:#058DC7;">{{anysisdata.asisdata.maxval}} </span>℃
-	    		                            最低温度:<span style="color:#50B432;">{{anysisdata.asisdata.minval}} </span>℃
-	    		                             平均温度    <span style="color:#ED561B;">{{anysisdata.asisdata.avgTemp}} </span>℃ </div>
+	    		                            最低温度:<span style="color:#058DC7;"> {{anysisdata.avgtpmsisdata[0]}} </span>℃
+	    		                           最高温度： <span style="color:#50B432;"> {{anysisdata.avgtpmsisdata[1]}} </span>℃
+	    		                             平均温度    <span style="color:#ED561B;"> {{anysisdata.avgtpmsisdata[2]}} </span>℃ </div>
 	    	</div>
 	    </div>
 	    <!-- 超温时间及次数统计表 -->

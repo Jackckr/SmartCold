@@ -25,10 +25,13 @@
 					<div class="col-lg-12 clearfix" style="padding-left: 0">
 					   <div class="clearfix rdcBox" id="rdcBox">
 						   <div class="showRdcDiv pull-left" ng-click='showrdclist()'>{{sisrdcname.join('-')}}<i class="sl_drop">▼</i></div>
-						   <ul class="rdcSecList" ng-show="showrdc">
-							   <li ng-repeat="rdc in rdclist" class="omg select"  ng-click="showkeyrdcli($event,$index,rdc.id,rdc.name)">{{rdc.name}}</li>
+						   <ul id="ul_rdclist" class="rdcSecList" ng-show="showrdc">
+						       <li>
+						            <button id="ck_selall_rdc"  ng-click="selrdc(true)" data="false">全选/取消</button>
+						            <button  ng-click="selrdc(false)">反选</button>
+						        </li>
+							   <li ng-repeat="rdc in rdclist" class="omg {{rdcId==rdc.id?'select':''}}"   ng-click="showkeyrdcli($event,$index,rdc.id,rdc.name)">{{rdc.name}}</li>
 						   </ul>
-<!-- 						   <div class="pull-left"><span ng-repeat="x in rdcArry" class="rdcSpan">{{x}}</span></div> -->
 					   </div>
 						<div id="filter_sl_div" class="pull-left groupobj" style="position: relative;z-index: 2;" ng-cloak>
 						  <span style="position:relative;display: inline-block;"><span class="form-control sl_group_obj" ng-click='slgroupsl()'>{{sltit}}</span><i class="sl_drop" ng-click='slgroupsl()'>▼</i></span>

@@ -4,7 +4,7 @@
  */
 coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http ,$timeout,$state,baseTools) {
 	$scope.colors= ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'];  Highcharts.setOptions({  global: {useUTC: false } ,colors:$scope.colors });
-	$scope.reportType=0;  $scope.config={isnotprint:true,isexpdata:false}; $scope.charArray=[], $scope.anysisdata={};
+	$scope.reportType=0;  $scope.config={isnotprint:true,isTable:false}; $scope.charArray=[], $scope.anysisdata={};
 	$scope.titmode=["日","七天","月度"],$scope.timemode=[0,7,30],$scope.minRange_mode=[[3600000,86400000,86400000],['%H:%M:%S','%Y-%m-%d','%Y-%m-%d']] , $scope.fontcol=['red' ,'#ED561B' ,'#058DC7' ];
 	$scope.sumDatavalue=[[0,0],[0,0]];
 	$scope.rdcId = $stateParams.rdcId;$scope.index=0;
@@ -86,24 +86,43 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 		$scope.compName=(data.message&&data.message!=""&&data.message!="null")?data.message:$rootScope.vm.choserdc.name;
 	});
 	//1.初始化温度图表====================================================================================================================================================================================
+	
+	
 	/**
 	 * 1.1初始化冷库温度对象集合（基础数据）
 	 */
 	$scope.initTemp=function(){
-			if($rootScope.Tempset&&$rootScope.Tempset[$scope.storageID]){
-		   		 $scope.oids=$rootScope.Tempset[$scope.storageID].oids;
-		   		 $scope.names=$rootScope.Tempset[$scope.storageID].names;
-		   		 $scope.loadTemp();
-		   	}else{
-		   		 $http.get('/i/temp/getTempsetByStorageID', { params: {"oid": $scope.cuttstorage.id}}).success(function (data) {if(data){
-		   		    	var oids=[],names=[];
-		   			      angular.forEach(data,function(obj,i){oids.push(obj.id);names.push(obj.name);  });
-		   		    	 	 $rootScope.Tempset[$scope.cuttstorage.id]={oids:oids,names:names};
-		   		    	      $scope.oids=oids; $scope.names=names;
-		   		    	   	 $scope.loadTemp();
-		   		 };});	
-		   	};
+		$scope.sisdata=	$scope.reportType==0&&($scope.formatDateTime(new Date().getTime()).substring(0, 10)==$("#date00").val()) 
+		if($scope.config.isTable){
+			if($scope.anysisdata.avgtpmsisdata){return;}//数据已经分析  
+			if($scope.sisdata){
+				$scope.initTemproule();//计算当天温度曲线
+			}else{
+				$scope.initasisTemp();
+			}
+		}else{
+		    if( $scope.charArray[0]!=null){return;}
+		    $scope.initasisTemp();
+			$scope.initTemproule();//绘制温度曲线
+		}
 	};
+	
+	$scope.initTemproule=function(){
+		if($rootScope.Tempset&&$rootScope.Tempset[$scope.storageID]){
+	   		 $scope.oids=$rootScope.Tempset[$scope.storageID].oids;
+	   		 $scope.names=$rootScope.Tempset[$scope.storageID].names;
+	   		 $scope.loadTemp();
+	   	}else{
+	   		 $http.get('/i/temp/getTempsetByStorageID', { params: {"oid": $scope.cuttstorage.id}}).success(function (data) {if(data){
+	   		    	var oids=[],names=[];
+	   			      angular.forEach(data,function(obj,i){oids.push(obj.id);names.push(obj.name);  });
+	   		    	 	 $rootScope.Tempset[$scope.cuttstorage.id]={oids:oids,names:names};
+	   		    	      $scope.oids=oids; $scope.names=names;
+	   		    	   	 $scope.loadTemp();
+	   		 };});	
+	   	};
+	};
+	
 	/**
 	 * 1.2加载数据
 	 */
@@ -146,9 +165,11 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	            	 lasttime=new Date(tempList[0].addtime).getTime();
 	                 for ( i = 0; i < tempList.length; i++) {
 						 vo=tempList[i], temp= vo.value;
-						 sumvl+=temp;
-						 if(temp<minval){minval=temp; }
-						 if(temp>maxval){maxval=temp; }
+						 if($scope.sisdata){
+							 sumvl+=temp;
+							 if(temp<minval){minval=temp; }
+							 if(temp>maxval){maxval=temp; }
+						 }
 						 cuttime= new Date(vo.addtime).getTime();
 						 if( cuttime-lasttime>1800000){
 							 newdata.push({x:cuttime+3000,y:null});
@@ -156,34 +177,72 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 						 newdata.push({x:cuttime,y:temp});
 						 lasttime=cuttime;
 					}
-	                 anysis.push({'key':key,'minval':minval,'maxTemp':maxval,'avgTemp':sumvl/ tempList.length}) ;
+	                if($scope.sisdata){
+	                	 anysis.push({'key':key,'minval':minval,'maxTemp':maxval,'avgTemp':sumvl/ tempList.length}) ;
+	                }
 	             }
 	             yData.push({"name": key, "data": newdata,turboThreshold:0,    marker: {enabled: false }});
 	             $scope.cuttstorage.templist.push({"name": key, "data": newdata});
 	        } 
-	        if(anysis.length>0){
-	        	minval=anysis[0].minval,maxval=anysis[0].maxTemp,sumavg=0;
-	        	for(var i in anysis){
-	        		if(anysis[i].minval<minval){minval=anysis[i].minval;};
-	        		if(anysis[i].maxTemp>maxval){maxval=anysis[i].maxTemp;};
-	        		sumavg+=anysis[i].avgTemp;
-		        }
-	        	sumavg=sumavg/anysis.length;
-	        	$scope.anysisdata.asisarry=anysis;
-	        	$scope.anysisdata.asisdata={'minval':minval.toFixed(2),'maxval':maxval.toFixed(2),'avgTemp':sumavg.toFixed(2)};
-	        	yData.push({ name: '平均温度', color: '#32CD32', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:sumavg},{ x:endDate.getTime(),y:sumavg}],dashStyle:'dash'});//处理基准温度
+	       if(anysis.length>0){//图表自身分析数据
+	        		minval=anysis[0].minval,maxval=anysis[0].maxTemp,sumavg=0,cutime=$scope.timeuRange+"";
+		        	for(var i in anysis){
+		        		if(anysis[i].minval<minval){minval=anysis[i].minval;};
+		        		if(anysis[i].maxTemp>maxval){maxval=anysis[i].maxTemp;};
+		        		sumavg+=anysis[i].avgTemp;
+			        }
+		        	sumavg=sumavg/anysis.length;
+		        	$scope.anysisdata.avgtpmsisdata=[minval.toFixed(2),maxval.toFixed(2),sumavg.toFixed(2),0,0];//
+		        	var data={};data[$scope.timeuRange.toString()]=$scope.anysisdata.avgtpmsisdata;
+		        	$scope.anysisdata.tpmsisdata=data;
 	        }
-	        yData.push({ name: '基准温度', color: 'red', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:datumTemp},{ x:endDate.getTime(),y:datumTemp}]});//处理基准温度
-	        yData.push({ name: '报警基线', color: '#f39c12',marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:datumTemp1},{ x:endDate.getTime(),y:datumTemp1}],dashStyle:'dash'});//处理基准温度
-	        yData.push({ name: ' ', color: '#f39c12', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:datumTemp2},{ x:endDate.getTime(),y:datumTemp2}],dashStyle:'dash'});//处理基准温度
-	        $scope.initHighchart(yData);
+	        
+	       
+	        if(!$scope.config.isTable){
+	        	yData.push({ name: '基准温度', color: 'red', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:datumTemp},{ x:endDate.getTime(),y:datumTemp}]});//处理基准温度
+	        	yData.push({ name: '报警基线', color: '#f39c12',marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:datumTemp1},{ x:endDate.getTime(),y:datumTemp1}],dashStyle:'dash'});//处理基准温度
+	        	yData.push({ name: ' ', color: '#f39c12', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:datumTemp2},{ x:endDate.getTime(),y:datumTemp2}],dashStyle:'dash'});//处理基准温度
+	        	if($scope.anysisdata.avgtpmsisdata){
+	        		yData.push({ name: '平均温度', color: '#32CD32', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:parseFloat($scope.anysisdata.avgtpmsisdata[2])},{ x:endDate.getTime(),y:parseFloat($scope.anysisdata.avgtpmsisdata[2])}],dashStyle:'dash'});//处理基准温度
+	        	}
+	        	$scope.initHighchart(yData);
+	        };
 	};
+	
+
+	/**
+	 * 1.5查询分析数据
+	 */
+	$scope.initasisTemp=function(){
+		if($scope.reportType==0&&$scope.formatDateTime(new Date().getTime()).substring(0, 10)==$("#date00").val()){return; };
+		 $http.get('/i/AnalysisReportController/getOidAnsis', { params: {type:1,keytype:1,"oid": $scope.cuttstorage.id,key:"'MinTemp','MaxTemp','AvgTemp','ChaoWenCiShu','ChaoWenShiJian';最低温度(℃),最高温度(℃),平均温度(℃),超温次数,超温时长(min)",unit:[1,1,1,1,60],startTime:$scope.startTime,endTime:$scope.endTime }}).success(function (data) {
+		   		    if(data.success){
+		   		    	$scope.anysisdata.tpmsisdata=data.entity;
+		   		    		var minval=100,maxval=-100,sumvl=0,count=0;
+		   		    		angular.forEach(data.entity,function(obj,i){
+		   		    			if(obj[0]<minval){
+		   		    				minval=	obj[0];
+		   		    			}
+		   		    			if(obj[1]>maxval){
+		   		    				maxval=	obj[1];
+		   		    			}
+		   		    			sumvl+=obj[2];
+		   		    			count++;
+		   		    		});
+		   		    		$scope.anysisdata.avgtpmsisdata=[minval.toFixed(2),maxval.toFixed(2),(sumvl/count).toFixed(2),0,0];//
+		   		    }else{
+		   		     	$scope.anysisdata.avgtpmsisdata=[];//
+		   		    }
+		   });
+		   $("#loding").hide(); 
+	};
+	
 	/**
 	 * 1.4绘制图表
 	 */
 	$scope.initHighchart=function(yData ){
 		var minRange= $scope.minRange_mode[0][$scope.reportType],fm=$scope.minRange_mode[1][$scope.reportType];
-		 $('#temperatureChart').highcharts({
+		 $scope.charArray[0]=  $('#temperatureChart').highcharts({
 			 chart: {  zoomType: 'x'},
 			 title: { text: $scope.titmode[$scope.reportType]+'温度曲线图',align: 'left',x: 0,style:{fontWeight:700,fontSize:16}  },
 	            series:yData,
@@ -196,6 +255,9 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
        });
 	   $("#loding").hide(); 
 	};
+	
+	
+	
 	//2.超温时间和次数图表====================================================================================================================================================================================
 	$scope.overTempAndCount=function(){
 		$http.get('/i/AnalysisController/getAnalysisDataByDate', { params: {type:1, oid:$scope.cuttstorage.id, keys:'ChaoWenShiJian,ChaoWenCiShu,', startTime:$scope.startTime, endTime:$scope.endTime}}).success(function (data) {
@@ -253,7 +315,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	   $scope.dwrtemplin=function(){
 			$http.get('/i/AnalysisController/getAnalysisDataByKey', { params: {type:1, oid:$scope.cuttstorage.id, keys:'OverTempL1Time,OverTempL2Time,OverTempL3Time,OverTempL1Count,OverTempL2Count,OverTempL3Count', startTime:$scope.startTime, endTime:$scope.endTime}}).success(function (data) {
 				if(data&&data.OverTempL1Time){
-					$scope.dwrc(data);//第一套逻辑
+					$scope.dwrc(data);
 				}
 			});
 	};
@@ -321,6 +383,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	//初始化系统入口====================================================================================================================================================================================
 	 $scope.initdata=function(){
             $("#loding").show();
+            $scope.charArray=[], $scope.anysisdata={};
 			$scope.cuttstorage=$rootScope.mystorages[$scope.index];
 			$scope.initTemp();	
 			$scope.dwrtemplin();

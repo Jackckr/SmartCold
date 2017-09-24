@@ -78,9 +78,9 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
             $rootScope.logout = function () {
 	        	 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/logout'}).success(function(data){});
 	        	 $rootScope.user =window.user=user=undefined; 
-	        	// window.sessionStorage.clear();
+	        	 window.sessionStorage.clear();
 	        	 var company=JSON.parse(window.localStorage.companyLoad);
-	        	 window.localStorage.clear();
+	        	// window.localStorage.clear();
                  window.location.href=company.login+".html";
 	        };
         },
@@ -219,19 +219,22 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	templateUrl: 'app/template/waterAnalysis.html'
     })
     //
-    .state('warncoldAnalysis', {//制冷告警统计
-        url: '/warncoldAnalysis/{rdcId}',
-        controller: 'warncoldAnalysis',
-        templateUrl: 'app/template/warncoldAnalysis.html'
-    }).state('coldStorageMonitor', {
-        url: '/coldStorageMonitor/:storageID',
-        controller: 'coldStorageMonitor',
-        templateUrl: 'app/template/coldStorageMonitor.html'
-    }).state('compressorMonitor', {
-        url: '/compressorMonitor/:storageID',
-        controller: 'compressorMonitor',
-        templateUrl: 'app/template/compressorMonitor.html'
-    }).state('coldStorageDoor', {
+//    .state('warncoldAnalysis', {//制冷告警统计
+//        url: '/warncoldAnalysis/{rdcId}',
+//        controller: 'warncoldAnalysis',
+//        templateUrl: 'app/template/warncoldAnalysis.html'
+//    })
+//    .state('coldStorageMonitor', {
+//        url: '/coldStorageMonitor/:storageID',
+//        controller: 'coldStorageMonitor',
+//        templateUrl: 'app/template/coldStorageMonitor.html'
+//    })
+//    .state('compressorMonitor', {
+//        url: '/compressorMonitor/:storageID',
+//        controller: 'compressorMonitor',
+//        templateUrl: 'app/template/compressorMonitor.html'
+//    })
+    .state('coldStorageDoor', {
         url: '/coldStorageDoor/:storageID',
         controller: 'coldStorageDoor',
         templateUrl: 'app/template/coldStorageDoor.html'
@@ -239,11 +242,11 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url: '/coldStorageInOutGoods',
         controller: 'coldStorageInOutGoods',
         templateUrl: 'app/template/coldStorageInOutGoods.html'
-    }).state('coldStorageTemper', {
+    }).state('coldStorageTemper', {//温度监控
         url: '/coldStorageTemper/:storageID',
         controller: 'coldStorageTemper',
         templateUrl: 'app/template/coldStorageTemper.html'
-    }).state('coldStorageHumidity', {
+    }).state('coldStorageHumidity', {//湿度监控
         url: '/coldStorageHumidity/:storageID',
         controller: 'coldStorageHumidity',
         templateUrl: 'app/template/coldStorageHumidity.html'
@@ -333,7 +336,7 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     })
     
     
-    .state('cpswaterCost',{//
+    .state('cpswaterCost',{//实时水耗
     	url: '/cpswaterCost/{groupID}',
     	controller: 'cpswaterCost',
         templateUrl: 'app/template/waterCostGroup.html'
@@ -390,19 +393,28 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/hotAnalysis',
     	controller: 'hotAnalysis',
         templateUrl: 'app/template/hotAnalysis.html'
-    }).state('alarmLog',{//告警日志
-    	url:'/alarmLog/{type}',
-    	controller: 'alarmLog',
-        templateUrl: 'app/template/alarmLog.html'
-    }).state('alarmTemp',{//温度告警
+    })
+//    .state('alarmLog',{//告警日志
+//    	url:'/alarmLog/',
+//    	controller: 'alarmLog',
+//        templateUrl: 'app/template/alarmLog.html'
+//    })
+    .state('alarmTemp',{//温度告警
     	url:'/alarmTemp',
     	controller: 'alarmTemp',
         templateUrl: 'app/template/alarmTemp.html'
-    }).state('designStorage',{//选型
-    	url:'/designStorage',
-    	controller: 'designStorage',
-        templateUrl: 'app/template/designStorage.html'
-    }).state('lightGroup',{//灯组
+    })
+    .state('alarmTempDatil',{//告警预览--》针对集团多账号
+    	url:'/alarmTempDatil',
+    	controller: 'alarmTempDatil',
+        templateUrl: 'app/template/alarmTempDatil.html'
+    })
+//    .state('designStorage',{//选型
+//    	url:'/designStorage',
+//    	controller: 'designStorage',
+//        templateUrl: 'app/template/designStorage.html'
+//    })
+    .state('lightGroup',{//灯组
     	url:'/lightGroup',
     	controller: 'lightGroup',
         templateUrl: 'app/template/lightGroup.html'

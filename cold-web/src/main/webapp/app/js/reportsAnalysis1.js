@@ -101,13 +101,31 @@ coldWeb.controller('reportsAnalysis1', function ($scope, $http,$stateParams,$roo
             $scope.sisrdcname.push(name);
 		}
     };
+    $scope.selrdc=function(isSUall){//展示下拉rdc
+    	if(isSUall){
+    		
+    		var issellall=$("#ck_selall_rdc").attr("data");
+    		if(issellall=="true"){
+	    			$("#ck_selall_rdc").attr("data",false);
+	    			$("#ul_rdclist li.omg").addClass("select");
+    			}else{
+    				$("#ck_selall_rdc").attr("data",true);
+    				$("#ul_rdclist li.omg").removeClass("select");
+    			};
+    		
+    	}else{
+    		$("#ul_rdclist li.omg").toggleClass("select");
+    	}
+    	
+    };
+    
 	
 	$scope.initdata=function(){//模拟数据
 	 angular.forEach($scope.rdclist,function(rdc,i){
-//		 if(rdc.id==$rootScope.rdcId){
+		 if(rdc.id==$rootScope.rdcId){
 			 $scope.sisrdcid.push(rdc.id);
 			 $scope.sisrdcname.push(rdc.name);
-//		 }
+		 }
 	 });
    };
    $scope.initdata();

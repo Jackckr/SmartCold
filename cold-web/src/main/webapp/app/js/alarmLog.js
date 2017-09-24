@@ -86,6 +86,40 @@ coldWeb.controller('alarmLog', function($rootScope, $scope, $http,$timeout) {
     };
     $scope.$watch('rdcId', $scope.changerdc,true);//监听冷库变化
 });
+
+
+
+
+
+
+/**
+ * 告警详情
+ */
+coldWeb.controller('alarmTempDatil', function($rootScope, $scope, $http,$timeout) {
+	 //根据rdcid查询该rdc的报警信息
+	$(".mainHeight").height( $(".content-wrapper").height());
+	$scope.initData=function(){
+		if( $rootScope.user.role==3){$scope.rdclist=[$rootScope.vm.choserdc];}else{$scope.rdclist=$rootScope.vm.allUserRdcs;}//rdc策略
+		  angular.forEach($scope.rdclist,function(obj,i){ 
+			  $http.get('/i/AlarmController/getDatilAlarmMsg',{params:{  userId: $rootScope.user.id,type:1, rdcId:obj.id} }).success( function(data,status,headers,config){ // 
+				  if(data.length>0){
+					  $scope.alarm[obj.id]=data;
+				  }
+		         });
+		  });
+	};
+	$scope.inittable=function(){
+//		$("#alarmLog").DataTable();
+	};
+   $scope.changerdc=function(){
+   	$scope.initData();
+   	$timeout($scope.inittable,500);
+   };
+   $scope.$watch('rdcId', $scope.changerdc,true);//监听冷库变化
+});
+
+
+
 //温度告警
 coldWeb.controller('alarmTemp', function($rootScope, $scope, $http,$timeout) {
 	$(".mainHeight").height( $(".content-wrapper").height());//	 //根据rdcid查询该rdc的报警信息

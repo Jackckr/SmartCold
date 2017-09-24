@@ -388,7 +388,7 @@ public class AnalysisReportController {
 			LinkedHashMap< Object, Object> alllsisMap =new LinkedHashMap<Object, Object>();
 			for (ItemValue itemValue : itemList) {//子对象-->冷库
 				LinkedHashMap< Object, Object> subsisMap =new LinkedHashMap<Object, Object>();
-				Object sisdata = getRdcData(type,keytype, itemValue.getId(),keys,keymap, isunit, unit, startTime, endTime);//keys[0]
+				Object sisdata = getRdcData(type, itemValue.getId(),keys,keymap, isunit, unit, startTime, endTime);//keys[0]
 				subsisMap.put("obj", itemValue);
 				subsisMap.put("data", sisdata);
 				subsisMap.put("hasData", sisdata==null?false:true);
@@ -407,12 +407,42 @@ public class AnalysisReportController {
 		
 	}
 
+	
+	
+	@RequestMapping(value = "/getOidAnsis")
+	@ResponseBody
+	public Object getOidAnsis(int type,int keytype,int oid,String key, boolean isunit ,Integer[] unit,String startTime, String endTime) {
+		String[] keys = {}, keyts = {}, titls = {};
+		HashMap<String, Integer> keymap = new HashMap<String, Integer>();
+		if (keytype == 1) {//
+			keys = StringUtil.splitString(key);
+			if (keys.length != 2) {
+				return  ResponseData.newFailure("非法请求！key参数不完整");
+			}
+			keyts = StringUtil.splitfhString(keys[0]);// 主key
+			titls = StringUtil.splitfhString(keys[1]);// key标题
+			if (keyts.length != titls.length) {
+				return  ResponseData.newFailure("非法请求！key参数不完整");
+			}
+			for (int i = 0; i < keyts.length; i++) {
+				keymap.put(keyts[i].replace("'", ""), i);
+			}
+			if (unit != null && unit.length == keyts.length) {
+				isunit = true;
+			}// 判断是否进行单位转换
+		}else{
+			keys=new String[]{key};
+			keymap.put(key.replace("'", ""), 0);
+		}
+		 Object rdcData = getRdcData(type, oid, keys[0], keymap, isunit, unit, startTime, endTime);
+		 if(rdcData!=null){return ResponseData.newSuccess(rdcData);}else{return ResponseData.newFailure("没有查询到数据！");}
+	}
 	/**
 	 * 考虑使用多线程
 	 * 
 	 * @return
 	 */
-	private Object getRdcData(int type,int keytype, int oid,String keys,HashMap<String, Integer> keymap , boolean isunit ,Integer[] unit,String startTime, String endTime) {
+	private Object getRdcData(int type,int oid,String keys,HashMap<String, Integer> keymap , boolean isunit ,Integer[] unit,String startTime, String endTime) {
 		HashMap<String, Object> fileter = new HashMap<String, Object>();
 		fileter.put("type", type);
 		fileter.put("oid", oid);

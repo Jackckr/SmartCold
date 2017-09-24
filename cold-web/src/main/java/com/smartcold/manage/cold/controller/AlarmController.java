@@ -41,7 +41,19 @@ public class AlarmController extends BaseController {
 	@Autowired
 	private ColdStorageAnalysisService coldStorageAnalysisService;
 	
-	
+	/**
+	 * 
+	 * @param userId
+	 * @param type:
+	 * @param rdcId
+	 * @return
+	 */
+	@RequestMapping(value = "/getDatilAlarmMsg")
+	@ResponseBody
+	public  List<SysWarningsInfo> getDatilAlarmMsg(int userId,int type,int rdcId) {
+		String[] time = TimeUtil.getDayTime();
+		return this.syswarninginfoMapper.getSysWarningByFilter(rdcId, null, type, null, time[0], time[1]);
+	}
 	
 	/**
 	 * 
@@ -56,23 +68,11 @@ public class AlarmController extends BaseController {
 		String[] time = TimeUtil.getDayTime();
 		HashMap<String, Object> reasHashMap=new HashMap<String, Object>();
 		reasHashMap.put("TC", this.syswarninginfoMapper.getSysWarcountByFilter(rdcId,  1,time[0], time[1]));//获得超温告警信息
-		reasHashMap.put("CC", this.syswarninginfoMapper.getSysWarcountByFilter(rdcId,  2,time[0], time[1]));//获得操作不当信息
-		reasHashMap.put("SC", this.syswarninginfoMapper.getSysWarcountByFilter(rdcId,  3,time[0], time[1]));//获得系统告警信息
+		reasHashMap.put("CC",0);//获得操作不当信息this.syswarninginfoMapper.getSysWarcountByFilter(rdcId,  2,time[0], time[1])
+		reasHashMap.put("SC",0);//获得系统告警信息this.syswarninginfoMapper.getSysWarcountByFilter(rdcId,  3,time[0], time[1])
 		return reasHashMap;    
 	}
-	/**
-	 * 
-	 * @param userId
-	 * @param type:
-	 * @param rdcId
-	 * @return
-	 */
-	@RequestMapping(value = "/getDatilAlarmMsg")
-	@ResponseBody
-	public  List<SysWarningsInfo> getDatilAlarmMsg(int userId,int type,int rdcId) {
-		String[] time = TimeUtil.getDayTime();
-		return this.syswarninginfoMapper.getSysWarningByFilter(rdcId, null, type, null, time[0], time[0]);
-	}
+	
 	
 	/**
 	 * 
@@ -89,12 +89,12 @@ public class AlarmController extends BaseController {
 		String ids = StringUtil.getIdS(rdcIds);
 		HashMap<String, Object> reasHashMap=new HashMap<String, Object>();
 		reasHashMap.put("TC", this.syswarninginfoMapper.getSysWarcountByFilter(ids,  1,time[0], time[1]));//获得超温告警信息
-		reasHashMap.put("CC", this.syswarninginfoMapper.getSysWarcountByFilter(ids,  2,time[0], time[1]));//获得操作不当信息
-		reasHashMap.put("SC", this.syswarninginfoMapper.getSysWarcountByFilter(ids,  3,time[0], time[1]));//获得系统告警信息
+		reasHashMap.put("CC", 0);//获得操作不当信息this.syswarninginfoMapper.getSysWarcountByFilter(ids,  2,time[0], time[1])
+		reasHashMap.put("SC", 0);//获得系统告警信息this.syswarninginfoMapper.getSysWarcountByFilter(ids,  3,time[0], time[1])
 		if(isgetMsg!=null&&isgetMsg){
 			reasHashMap.put("TM", this.syswarninginfoMapper.getSysWarningByFilter(ids, null, 1, null, time[0], time[0]));//超温消息
-			reasHashMap.put("CM", this.syswarninginfoMapper.getSysWarningByFilter(ids, null, 2, null, time[0], time[0]));//操作不当消息
-			reasHashMap.put("SM", this.syswarninginfoMapper.getSysWarningByFilter(ids, null, 3, null, time[0], time[0]));//系统告警
+			reasHashMap.put("CM", 0);//操作不当消息this.syswarninginfoMapper.getSysWarningByFilter(ids, null, 2, null, time[0], time[0])
+			reasHashMap.put("SM", 0);//系统告警this.syswarninginfoMapper.getSysWarningByFilter(ids, null, 3, null, time[0], time[0])
 		}
 		return reasHashMap;    
 	}

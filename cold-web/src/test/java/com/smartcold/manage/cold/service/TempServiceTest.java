@@ -1,96 +1,80 @@
-/*
+
 package com.smartcold.manage.cold.service;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.alibaba.fastjson.JSONArray;
-import com.smartcold.manage.cold.dao.newdb.DeviceObjectMappingMapper;
-import com.smartcold.manage.cold.dao.olddb.ColdStorageSetMapper;
-import com.smartcold.manage.cold.dao.olddb.MessageMapper;
-import com.smartcold.manage.cold.entity.newdb.DeviceObjectMappingEntity;
-import com.smartcold.manage.cold.entity.olddb.SystemInformEntity;
+import com.smartcold.manage.cold.dao.olddb.RdcMapper;
+import com.smartcold.manage.cold.util.RemoteUtil;
 import com.smartcold.manage.cold.util.SetUtil;
-import com.smartcold.manage.cold.util.TimeUtil;
+import com.smartcold.manage.cold.util.StringUtil;
 
-*/
+
 /**
- * Author: qiunian.sun
- * Date: qiunian.sun(2016-08-18 09:28)
- *//*
+ * Author:maqiang34
+ * Date: maqiang34
+ */
 
 @Transactional(rollbackFor = Exception.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:config/spring/local/appcontext*.xml"})
 public class TempServiceTest {
 
-    @Autowired
-    private RdcService rdcService;
-    @Autowired
-	private StorageService storageService;
-    @Autowired
-	private MessageMapper msMappergMapper;
 	@Autowired
-	private DeviceObjectMappingMapper deviceMapper;
-	@Autowired
-	private ColdStorageSetMapper coldStorageSetMapper;
+	private RdcMapper rdcMapper;
 	
-    @Test
-    @Rollback(true)
-    public void findRdcsByUserId()  {
-    	this.resetDevStatus();
-    	this.LowbatteryAlarm();
+	//推送人缓存
+	public static HashMap<Integer, String[]> rdcCacheHashMap=new HashMap<>(); 
+	@Test
+    public void pushTest(){
+		String[] rdcName = getRdcName(1063);
+		if(rdcName==null){return;}
+		System.err.println(rdcName);
+		HashMap<String, Object> stringObjectHashMap = new HashMap<>();
+		stringObjectHashMap.put("token",StringUtil.getToken());//超温时长
+		stringObjectHashMap.put("userIds","1");//发送对象---？
+		stringObjectHashMap.put("rdcid",1063);//rdc -跳转
+		stringObjectHashMap.put("rdcName",rdcName[0]);//--rdc名称 ？？
+		stringObjectHashMap.put("coldStorageName","冷库1");
+		stringObjectHashMap.put("basTemp",-18);
+		stringObjectHashMap.put("diffTemp",4);
+		stringObjectHashMap.put("overTemp",5);//
+		stringObjectHashMap.put("starttime","2017-9-23 10:54:13");//开始时间
+		stringObjectHashMap.put("ovtTempTime",30);//超温时长
+		try {
+			RemoteUtil.httpPost("http://139.196.167.165/i/warning/waringNotice",stringObjectHashMap);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
-    
-    */
-/**
-	 * 重置DEV
-	 *//*
+    private String [] getRdcName(Integer rdcId){
+		if(rdcCacheHashMap.containsKey(rdcId)){
+			return rdcCacheHashMap.get(rdcId);
+		}else{
+			String rdcName = rdcMapper.getRdcName(rdcId);
+			if(StringUtil.isNull(rdcName)){
+				rdcCacheHashMap.put(rdcId, null);
+				return null;
+			}
+			List<Integer> rdcMangerUID = rdcMapper.getRdcMangerUID(rdcId);	
+			if(SetUtil.isnotNullList(rdcMangerUID)){
+			     String rdcinfo[]=   new String[]{ rdcName,SetUtil.listtoString(rdcMangerUID)}	;
+				rdcCacheHashMap.put(rdcId, rdcinfo);
+				return rdcinfo;
+			}
+			rdcCacheHashMap.put(rdcId, null);
+			return null;
+		}
+	}
 
-	private void resetDevStatus(){
-        try {
-			HashMap<String, Object> filter  = new HashMap<String, Object>();
-			filter.put("status", 0);filter.put("type", 18);// 仅检查温度
-			List<DeviceObjectMappingEntity> devciceList = this.deviceMapper.findInfoByfilter(filter);
-			if(SetUtil.isnotNullList(devciceList)){
-				Date endTime = new Date();Date startTime = TimeUtil.getBeforeMinute(30);
-				StringBuffer devmapid=new StringBuffer();
-				StringBuffer devid=new StringBuffer();
-				for (DeviceObjectMappingEntity obj : devciceList) {
-					Integer size = this.storageService .findCounSizeByTime(obj.getType(), obj.getOid(), obj.getDeviceid(), "Temp", startTime, endTime);//keyval.get(obj.getType())
-					if(size>0){devmapid.append(obj.getId()+",");devid.append(obj.getDeviceid()+",");}
-				}
-				if(devmapid.length()>0){
-					this.deviceMapper.resetDevByID(devmapid.substring(0, devmapid.length()-1));
-					String msg= "系统在"+TimeUtil.getDateTime()+"自动重置{"+devid.subSequence(0, devid.length()-1)+"}设备！";
-					this.msMappergMapper.addsystemInform(new SystemInformEntity(1,2, null, null, 0, 0, 0,"DEV自动重置",msg));//添加至系统通知
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	//低电量 
-	private void LowbatteryAlarm(){
-        try {
-			List<HashMap<String, Object>> lowPower = this.deviceMapper.getLowPower(TimeUtil.getDateTime(TimeUtil.getBeforeHOUR(12)));
-			if(SetUtil.isnotNullList(lowPower)){
-				String msg= "系统在"+TimeUtil.getDateTime()+"检测到设备电压过低"+ JSONArray.toJSON(lowPower);
-				this.msMappergMapper.addsystemInform(new SystemInformEntity(1,2, null, null, 0, 0, 0,"DEV低电量告警",msg));//添加至系统通知
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+
 }
-*/

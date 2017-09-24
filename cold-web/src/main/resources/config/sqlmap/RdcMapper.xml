@@ -84,6 +84,12 @@
     SELECT * FROM `Rdc` where `latitude`!=0 and `longitude`!=0 order by `addTime` desc
   </select>
 
+  <select id="getRdcName" parameterType="java.lang.Integer" resultType="String">
+   SELECT `name` FROM `rdc` where `id` =#{rdcID};
+  </select>
+  <select id="getRdcMangerUID" parameterType="java.lang.Integer" resultType="String">
+     SELECT cu.id  FROM `sc360`.`companyrdc` cr LEFT JOIN `sc360`.`companyuser` cu on cu.`companyid` =cr.`companyid`  where `rdcid` =#{rdcID} UNION (SELECT `userid`  FROM `smartcold`.`rdcuser` where `rdcid` =#{rdcID});
+  </select>
 
   <select id="findRDCByRDCId" parameterType="map" resultType="Rdc">
     SELECT * FROM `Rdc` WHERE `id` = #{rdcID}

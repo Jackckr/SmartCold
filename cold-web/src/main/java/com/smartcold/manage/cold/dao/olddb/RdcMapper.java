@@ -23,6 +23,10 @@ public interface RdcMapper {
 	List<Rdc> findRdcList();
 	
 	//获得冷库的管理者电话号码
+	String getRdcName(@Param("rdcID") Integer rdcID );
+	//获得管理者信息进行推送
+	List<Integer> getRdcMangerUID(@Param("rdcID") Integer rdcID );
+	
 	String findRdcManger(@Param("rdcID") Integer rdcID );
      
 	List<Rdc> findRDCByRDCId(@Param("rdcID") int rdcID);

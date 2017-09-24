@@ -27,6 +27,11 @@ public class SetUtil
 	{
 		return value.toArray(new String[value.size()]);
 	}
+	public static String listtoString(List<?>  value)
+	{
+		 String string = value.toString();
+		 return string.substring(1, string.length()-1).replaceAll(" ", "");
+	}
 
 	/**
 	 * 判断list是否为null或者不包含任何元素(即size为0)
