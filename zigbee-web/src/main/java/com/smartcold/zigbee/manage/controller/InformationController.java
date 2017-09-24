@@ -200,14 +200,14 @@ public class InformationController extends BaseController {
 		return inforCategoryDao.findAllInforCategory();
 	}
 	
-	/**
-	 * 每天8点更新资讯
-	 */
-	 @Scheduled(cron = "0 0 8 * * ?") 
-	  public void randinformation(){
-		 this.informationDao.randinformation(1);
-		 this.informationDao.randinformation(2);
-	  }	 
+//	/**
+//	 * 每天8点更新资讯
+//	 */
+//	 @Scheduled(cron = "0 0 8 * * ?") 
+//	  public void randinformation(){
+//		 this.informationDao.randinformation(1);
+//		 this.informationDao.randinformation(2);
+//	  }	 
 	
 	/*@ResponseBody
 	@RequestMapping(value="/changeAudit", method=RequestMethod.POST)

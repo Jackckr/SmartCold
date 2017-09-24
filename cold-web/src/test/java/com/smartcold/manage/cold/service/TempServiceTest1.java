@@ -39,8 +39,8 @@ public class TempServiceTest1 {
 		stringObjectHashMap.put("starttime","2017-9-23 10:54:13");//开始时间
 		stringObjectHashMap.put("ovtTempTime",30);//超温时长
 		try {
-//			RemoteUtil.httpPost("http://lianku.org.cn/i/warning/waringNotice",stringObjectHashMap);
-			RemoteUtil.httpPost("http://127.0.0.1:8080/i/warning/waringNotice",stringObjectHashMap);
+//			RemoteUtil.httpPost("http://lianku.org.cn/i/warning/waringNotice",stringObjectHashMap,false);
+			RemoteUtil.httpPost("http://139.196.167.165/i/warning/waringNotice",stringObjectHashMap);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

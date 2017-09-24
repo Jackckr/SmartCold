@@ -283,7 +283,7 @@ public class WarningTaskService  {
 							stringObjectHashMap.put("overTemp",sysWarningsInfo.getOverTemp());//
 							stringObjectHashMap.put("starttime",sysWarningsInfo.getStarttime());//开始时间
 							stringObjectHashMap.put("ovtTempTime",sysWarningsInfo.getLongtime());//超温时长
-							RemoteUtil.httpPost("http://liankur.com/i/warning/waringNotice",stringObjectHashMap);
+							pushmsg(stringObjectHashMap);
 						}
 					 }
 					 this.sysWarningsInfoMapper.addSyswarningsinfo(warningList);
@@ -303,7 +303,15 @@ public class WarningTaskService  {
 		
 	}
 	
-
+	private void pushmsg(HashMap<String, Object>  data){
+		try {
+			RemoteUtil.httpPost("http://139.196.167.165/i/warning/waringNotice",data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
     private String [] getRdcName(Integer rdcId){
 		if(rdcCacheHashMap.containsKey(rdcId)){
 			return rdcCacheHashMap.get(rdcId);
