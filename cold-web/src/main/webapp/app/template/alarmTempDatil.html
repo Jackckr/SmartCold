@@ -1,0 +1,33 @@
+<div class="page-header">
+  &nbsp;&nbsp;温度告警
+</div>
+
+<div class="box baoyang_bg" style="color:#333"  ng-repeat="storage in mystorages">
+    <h4>{{storage.name}}告警信息</h4>
+	<div id="tem_div_{{storage.id}}" style="height:300px;"></div>
+	<div id="timeline_{{storage.id}}" class="ovtimeline">
+		<div class="timeline-block" ng-repeat="obj in tempwarLog[storage.id]"><!-- time  start -->
+			<div class="timeline-txt">
+				{{obj.time}}
+			</div>
+			<div class="timeline-dot" style="{{obj.style}}"></div>
+			<div class="timeline-content">
+				<div class="timeline-title">
+					<h4 class="pull-left">{{obj.msg}}</h4>
+					<h4  class="pull-right" ng-if="obj.count!=0"><button class="show-more btn btn-info btn-xs" ng-click="showdatil(obj,storage.id)" ng-init="model[obj.isshow]='详细'">{{model[obj.isshow]}}</button></h4>
+				</div>
+				<div ng-if="obj.isshow==1">
+				   <ul class="warnUl">
+					   <li ng-repeat="obj in obj.datilList">
+						   <p>{{$index+1+'、'+obj.warnigmsg}}</p>
+						   <p class="clearfix">
+							   <span class="pull-left">{{"开始超温时间："+obj.starttime}}</span>
+							   <span class="pull-left">{{"结束超温时间："+obj.endtime}}</span>
+						   </p>
+					   </li>
+				   </ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
