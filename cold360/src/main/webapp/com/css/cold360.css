@@ -1397,7 +1397,7 @@ input[type='radio']:checked {
     width: 6rem;
     position: fixed;
     left: 50%;
-    margin-left: -3rem;
+    margin-left: -3.8rem;
     top: 4rem;
     z-index: 100;
     background: rgba(0, 0, 0, 0.5);
@@ -1545,9 +1545,9 @@ input[type='radio']:checked {
 }
 
 .allRing > p {
-    font-size: 0.7rem;
-    margin-bottom: 0.5rem;
-}
+     font-size: 0.7rem;
+     margin-bottom: 0.5rem;
+ }
 
 .allRing li {
     margin-bottom: 0.5rem;
@@ -1555,4 +1555,17 @@ input[type='radio']:checked {
     border-radius: 0.25em;
     padding: .5rem;
     box-shadow: 0 3px 0 #d7e4ed;
+}
+.closeRing{
+    position: absolute;
+    width: 1.6rem;
+    text-align: center;
+    line-height: 1.6rem;
+    background: #dc0404;
+    color: #fff;
+    font-size: 1rem;
+    top:0;
+    right: -1.5rem;
+    border-bottom-right-radius: 0.2rem;
+    border-top-right-radius: 0.2rem;
 }
