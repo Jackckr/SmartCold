@@ -89,13 +89,10 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
         		     console.log("rdc:"+rdcId);
         		     $rootScope.rdcId = rdcId;
         		     window.sessionStorage.smrdcId=rdcId;//缓存rdcid
-        		     window.sessionStorage.cactrdc=JSON.stringify($rootScope.vm.choserdc);
         		     if($rootScope.user.role==3){ $rootScope.userrdcids=[$rootScope.vm.choserdc.id];  window.sessionStorage.userrdcids=JSON.stringify($rootScope.userrdcids);}else{
         		    	 $rootScope.userrdcids=[];
-    					    angular.forEach($rootScope.vm.allUserRdcs,function(obj,i){ 
-    					    	$rootScope.userrdcids.push(obj.id);
-    					    });
-    					    window.sessionStorage.userrdcids=JSON.stringify($rootScope.userrdcids);
+    					 angular.forEach($rootScope.vm.allUserRdcs,function(obj,i){ $rootScope.userrdcids.push(obj.id);});
+    					  window.sessionStorage.userrdcids=JSON.stringify($rootScope.userrdcids);
         		     }
 		        	 $http({method:'POST',url:'i/acl/getRUACL',params:{rdcid : $rootScope.rdcId,uid : $rootScope.user.id}}).success(function (data) {
 		        			    $rootScope.aclml=data.aclml;
@@ -146,9 +143,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 		             $http.get('/i/AlarmController/getAlarmMsgByUser',{params:{  userId: $rootScope.user.id, role: $rootScope.user.role, rdcIds:$rootScope.userrdcids,isgetMsg:false} }).success( function(data,status,headers,config){ //  初始化月台门
 		            	 $rootScope.alarm = data;
 		            	 $rootScope.alarm.totl = data.CC+data.SC+data.TC;
-		            	if($rootScope.alarm.totl>0){
-		            		$("#div_errmsg").removeClass("hide");
-		            	}
+		                 if($rootScope.alarm.totl>0){$("#div_errmsg").removeClass("hide");}
 		             });
 		             $state.go('preview');
         	};
@@ -162,14 +157,14 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
         	
             if ($rootScope.user != null && $rootScope.user!='' && $rootScope.user!= undefined && $rootScope.user.id != 0){
             	if(window.sessionStorage.cactrdcdata&&window.sessionStorage.cactrdc){
-            		var data=JSON.parse(window.sessionStorage.cactrdcdata);
-            		var cutrdc=JSON.parse(window.sessionStorage.cactrdc);
+            		var data=JSON.parse(window.sessionStorage.cactrdcdata),cutrdc=parseInt(sessionStorage.smrdcId);
+           		    angular.forEach(data,function(obj,i){if(cutrdc==obj.id){cutrdc=obj;}});
             		$rootScope.vm = {choserdc:cutrdc,allUserRdcs:data};
     				$rootScope.userrdcids=JSON.parse(window.sessionStorage.userrdcids);
     				$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
             	}else{
             		$http.get('/i/rdc/findRDCsByUserid?userid=' + $rootScope.user.id).success(function(data,status,headers,config){
-        				if(data.length == 0){document.location.href = "/notAudit.html";return;}
+        				if(data==null||data.length == 0){document.location.href = "/notAudit.html";return;}
         				window.sessionStorage.cactrdcdata=JSON.stringify(data);
         				$rootScope.vm = {choserdc:data[0],allUserRdcs:data};
         				$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
