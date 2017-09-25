@@ -37,6 +37,7 @@ public class WXPushServiceImpl implements WXPushService{
     @Override
     public void wxPushAlarm(String userId, String date,String dev,String type,String desc) {
         String access_token = redisService.putWXToken(null);
+        if(access_token==null){updateWXToken();}
         String url="https://api.weixin.qq.com/cgi-bin/message/template/send?access_token="+access_token;
         HttpService httpService = new HttpServiceImpl();
         String openId = userOpenIdMapper.selectByUserId(Integer.parseInt(userId));

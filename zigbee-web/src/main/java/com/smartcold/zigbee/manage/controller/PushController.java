@@ -2,7 +2,6 @@ package com.smartcold.zigbee.manage.controller;
 
 import com.smartcold.zigbee.manage.entity.PushEntity;
 import com.smartcold.zigbee.manage.service.WXPushService;
-import com.smartcold.zigbee.manage.util.StringUtil;
 import com.smartcold.zigbee.manage.util.push.PushDemoTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +25,6 @@ public class PushController {
     @ResponseBody
     public void push360Alarm (String title, String summary, String token, String userIds, String type, String rdcId) throws Exception {
         PushEntity pushEntity = new PushEntity(title, summary, token, userIds, Integer.parseInt(type), Integer.parseInt(rdcId));
-        //if(!StringUtil.checkToken(pushEntity.getToken())){return;}
         PushDemoTest pushDemoTest = new PushDemoTest();
         pushEntity.setAppKey(appKey_360);
         pushDemoTest.pushByAccountToIos(pushEntity);

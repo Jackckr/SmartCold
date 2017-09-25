@@ -93,6 +93,5 @@ public class WarningController {
 				pushController.pushWXAlarm(id,starttime,"冷库"+rdcName+"-"+coldStorageName,"超温告警","超基准温度（"+basTemp+"）:+"+overTemp+" ℃, 超温时长："+ovtTempTime+"分钟");
 			}
 		}
-		
 	}
 }
