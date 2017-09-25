@@ -155,10 +155,16 @@ app.service('userService', function($rootScope,  $http) {
             });
         });
     };
-    $("body").append('<div id="alarmBill" style="display: none;"><i class="iconfont">&#xe7ad;</i><span id="alarmBillCount"></span></div>');
-    $("#alarmBill").click(function () {
+    $("body").append('<div id="alarmBill" style="display: none;"><i class="iconfont">&#xe7ad;</i><span id="alarmBillCount"></span><span class="closeRing">&times;</span></div>');
+    $("#alarmBill").click(function (event) {
+        window.location.href='alarmTempDatil.html';
+        event.stopPropagation();
+        event.preventDefault();
+    })
+    $(".closeRing").click(function (event) {
         $("#alarmBill").remove();
-        window.location.href='alarmLog.html';
+        event.stopPropagation();
+        event.preventDefault();
     })
 })
 

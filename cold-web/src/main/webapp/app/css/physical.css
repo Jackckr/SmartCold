@@ -1118,7 +1118,7 @@ legend{
 .ring i{
 	color: red;
 	font-size: 20px;
-	display: block;
+	/*display: block;*/
 }
 .ring .ringBox{
 	margin-right: 8px;
