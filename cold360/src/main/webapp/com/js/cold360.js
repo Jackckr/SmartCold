@@ -158,7 +158,7 @@ app.service('userService', function($rootScope,  $http) {
     $("body").append('<div id="alarmBill" style="display: none;"><i class="iconfont">&#xe7ad;</i><span id="alarmBillCount"></span></div>');
     $("#alarmBill").click(function () {
         $("#alarmBill").remove();
-        window.location.href='alarmLog.html';
+        window.location.href='alarmTempDatil.html';
     })
 })
 

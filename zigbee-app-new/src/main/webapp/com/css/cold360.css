@@ -1270,5 +1270,16 @@ input[type='radio']:checked{
 	100% {background: #ff2b5b;}
 }
 
+.allRing > p {
+	font-size: 0.7rem;
+	margin-bottom: 0.5rem;
+}
 
+.allRing li {
+	margin-bottom: 0.5rem;
+	background: rgba(0, 0, 0, 0.18);
+	border-radius: 0.25em;
+	padding: .5rem;
+	box-shadow: 0 3px 0 #d7e4ed;
+}
 
