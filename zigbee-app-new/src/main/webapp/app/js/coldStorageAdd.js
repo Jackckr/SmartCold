@@ -2,7 +2,7 @@ localStorage.oURL=document.URL;
 checkLogin();
 angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldStorageAdd', function($scope,$http, Upload){
 	 $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
-	$scope.phoneNum = parseFloat(window.user.telephone.trim());
+	$scope.phoneNum = parseFloat(window.user.telephone);
 	$scope.haveOrNots = [{id: 1,name: "有"},{ id: 2,name: "无"}];
     // 获取省列表
 	$.ajax({ url: ER.root+"/i/UtilController/setVisited",type: "POST",data:{type:6}});
@@ -337,7 +337,7 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 coldTruck3 : $scope.coldTruck3,
                 coldTruck4 : $scope.coldTruck4,
                 phoneNum : $scope.phoneNum.toString().trim(),
-                remark: $scope.structure == undefined ? '' : encodeURI($scope.remark, "UTF-8"),
+                remark: $scope.remark == undefined ? '' : encodeURI($scope.remark, "UTF-8"),
                // tonnage : $scope.tonnage,
                 structure: $scope.structure == undefined ? '' : encodeURI($scope.structure, "UTF-8"),
                 //companyDevice : $scope.companyDevice,

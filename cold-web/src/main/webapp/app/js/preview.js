@@ -221,6 +221,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
 	        $('#dowebok').fullpage({ 
 		    	'navigation': true, 
 		    	continuousVertical: true,
+                scrollOverflow:true,
 		    	loopBottom: true,
 		    	navigationTooltips: $scope.rdcnam,
 				onLeave: function(index,nextIndex,direction){
@@ -261,7 +262,8 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
 			   }
 		   }else{
 			   $scope.allrdc=[$rootScope.vm.choserdc];
-			   $scope.initalldata($scope.allrdc[$scope.index]);  
+			   $scope.initalldata($scope.allrdc[$scope.index]);
+               $timeout($scope.full ,100);
 			   $('#dowebok').removeClass("hide");
 		   }   
 		   
