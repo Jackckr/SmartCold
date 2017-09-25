@@ -26,7 +26,7 @@
 <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-table.min.css" />
 <link rel="stylesheet" href="assets/plugins/daterangepicker/daterangepicker-bs3.css" />
 <link rel="stylesheet" href="assets/plugins/layer/skin/default/layer.css" />
-<script id="ckecklogin" type="text/javascript"> if(window.sessionStorage.sikey==undefined){document.location.href = "/login.html";}</script>
+<script id="ckecklogin" type="text/javascript"> if(window.sessionStorage.sikey==undefined){document.location.href = "/"+JSON.parse(window.localStorage.companyLoad).login+".html";}</script>
 <style type="text/css">
 
 .menu-title { margin-left: 10px; font-weight: 500; color: white;}
@@ -379,9 +379,11 @@ a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-
 									<input ng-model="reNewPassword" type="password" class="form-control" placeholder="请再次输入新密码">
 								</div>
 							</div>
-							<div><span ng-show="pwdLengthErr">密码长度需在3-16位之间</span></div>
-							<div><span ng-show="pwdDiff">两次新密码不一致</span></div>
-							<div><span ng-show="oldPwdErr">旧密码输入有误</span></div>
+							<div class="text-danger text-right">
+								<p ng-show="pwdLengthErr" class="text-danger">密码长度需在3-16位之间</p>
+								<p ng-show="newPassword!=reNewPassword" class="text-danger">两次新密码不一致</p>
+								<p ng-show="oldPwdErr" class="text-danger">旧密码输入有误</p>
+							</div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
