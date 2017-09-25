@@ -59,7 +59,7 @@ coldWeb.factory('baseTools',['$rootScope',function(){
 
 
 
-coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootScope, $state,$http) {
+coldWeb.factory('userService', ['$rootScope', '$state', '$http','$cookies',function ($rootScope, $state,$http,$cookies) {
     return {
         setUser: function (user) {
         	if(localStorage.appconfig){
@@ -191,6 +191,25 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
             	$rootScope.appconfig.alrd=true;
             	$('#div_errmsg span:first').removeClass('ringBox');
             	localStorage.appconfig=JSON.stringify($rootScope.appconfig);
+            };
+            $rootScope.checkOldPassword=function () {
+                $http({method:'POST',url:'/i/user/checkOldPassword',params:{token:$cookies.get("token"),pwd:$rootScope.oldPassword}}).success(function (data) {
+                    $rootScope.oldPwdErr = !data;
+                });
+            };
+            $rootScope.submitChangePwd=function () {
+            	$rootScope.pwdRex=/^[0-9A-Za-z]{3,16}$/;
+            	if(!$rootScope.oldPwdErr){
+                    $rootScope.pwdLengthErr=!$rootScope.pwdRex.test($rootScope.newPassword);
+                    if (!$rootScope.pwdLengthErr){
+                        $rootScope.pwdDiff=($rootScope.newPassword!=$rootScope.reNewPassword);
+                    }
+				}
+				if($rootScope.pwdLengthErr||$rootScope.oldPwdErr||$rootScope.pwdDiff){return false;}
+                $http({method:'POST',url:'/i/user/updateUser',params:{id:$rootScope.user.id,password:$rootScope.newPassword}}).success(function (data) {
+                    if(data){alert("修改成功！");}else {alert("修改失败！");}
+                    $('#editPassword').modal('hide');
+                });
             };
         }
     };

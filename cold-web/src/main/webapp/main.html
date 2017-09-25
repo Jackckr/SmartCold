@@ -359,30 +359,35 @@ a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-
 		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		                <h4 class="modal-title" id="myModalLabel">修改密码</h4>
 		            </div>
-		            <div class="modal-body form-horizontal">
-		            	<div class="form-group">
-							<label class="col-sm-2 control-label">旧密码</label>
-							<div class="col-sm-10">
-								<input type="password" class="form-control" placeholder="请输旧密码">
+					<form name="changePwdForm">
+						<div class="modal-body form-horizontal">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">旧密码</label>
+								<div class="col-sm-10">
+									<input ng-change="checkOldPassword()" ng-model="oldPassword" type="password" class="form-control" placeholder="请输旧密码">
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">新密码</label>
-							<div class="col-sm-10">
-								<input type="password" class="form-control" placeholder="请输入新密码">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">新密码</label>
+								<div class="col-sm-10">
+									<input ng-model="newPassword" type="password" class="form-control" placeholder="请输入新密码">
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">再次输入</label>
-							<div class="col-sm-10">
-								<input type="password" class="form-control" placeholder="请再次输入新密码">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">再次输入</label>
+								<div class="col-sm-10">
+									<input ng-model="reNewPassword" type="password" class="form-control" placeholder="请再次输入新密码">
+								</div>
 							</div>
+							<div><span ng-show="pwdLengthErr">密码长度需在3-16位之间</span></div>
+							<div><span ng-show="pwdDiff">两次新密码不一致</span></div>
+							<div><span ng-show="oldPwdErr">旧密码输入有误</span></div>
 						</div>
-		            </div>
-		            <div class="modal-footer">
-		                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-		                <button type="button" class="btn btn-primary">提交更改</button>
-		            </div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+							<button type="button" ng-click="submitChangePwd()" class="btn btn-primary">提交更改</button>
+						</div>
+					</form>
 		        </div><!-- /.modal-content -->
 		    </div><!-- /.modal -->
 		</div>
