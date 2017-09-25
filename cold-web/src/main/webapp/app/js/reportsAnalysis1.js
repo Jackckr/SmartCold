@@ -3,7 +3,10 @@
  * 分析报表
  */
 coldWeb.controller('reportsAnalysis1', function ($scope, $http,$stateParams,$rootScope) {
-	$scope.cuttunit=null;$scope.resdata=null;$scope.sisrdcid=[],$scope.sisrdcname=[],$scope.slindex=0,$scope.keytype=1,$scope.sltit="温度分析";
+	$scope.cuttunit=null;$scope.resdata=null; $scope.showrdc=false;
+	$scope.sisrdcid=[],$scope.sisrdcname=[],
+	
+	$scope.slindex=0,$scope.keytype=1,$scope.sltit="温度分析";
 	if( $rootScope.user.role==3){$scope.rdclist=[$rootScope.vm.choserdc];}else{$scope.rdclist=$rootScope.vm.allUserRdcs;}//rdc策略
 	$scope.getDateTimeStringBefore = function(before){ return new Date(new Date().getTime() - before *24*60*60*1000).toISOString().replace("T"," ").replace(/\..*/g,''); };
 	$scope.begin = $scope.getDateTimeStringBefore(3).substr(0,10),$scope.end =$scope.getDateTimeStringBefore(0).substr(0,10),$scope.picktime = $scope.begin + ' - ' + $scope.end  ; 
@@ -28,11 +31,16 @@ coldWeb.controller('reportsAnalysis1', function ($scope, $http,$stateParams,$roo
 			$scope.keyks=[typemode.key[$scope.slindex]];
 			$scope.keyts=[typemode.title[$scope.slindex]];
 		}
-		if(isexpt){
+//		 $scope.getselrdc();
+		 if($scope.sisrdcid.length==0){
+			 alert("请选择一个冷库进行分析");
+			 return;
+		 }
+		 if(isexpt){
 			$scope.expxls(stentime[0],stentime[1]);
-		}else{
+		 }else{
 			$scope.refdata(stentime[0],stentime[1]);
-		}
+		 }
 	   
 	};
 	
@@ -84,39 +92,38 @@ coldWeb.controller('reportsAnalysis1', function ($scope, $http,$stateParams,$roo
 		 $scope.cuttrdc = $scope.resdata[index] ;
          $($event.target).addClass('currentRdc').siblings('span').removeClass('currentRdc');
 	 };
-
-
-    $scope.showrdc=false;
-    $scope.showrdclist=function(e){$scope.showrdc=!$scope.showrdc;};
+    
     $scope.showkeyrdcli=function($event,index,rdcid,name){//展示下拉rdc
         $scope.showrdc=true;
-        var em=$($event.target);
-        if(em.hasClass('select')){
-            em.removeClass("select");
-            $scope.removearry( $scope.sisrdcid,rdcid);
-            $scope.removearry( $scope.sisrdcname,name);
-		}else{
-            em.addClass("select");
-            $scope.sisrdcid.push(rdcid);
-            $scope.sisrdcname.push(name);
-		}
+        $($event.target).toggleClass('select');
+        $scope.getselrdc();
     };
+    
+    $scope.getselrdc=function(){
+    	var lis=$("#ul_rdclist li.omg.select");
+		$scope.sisrdcid=[],$scope.sisrdcname=[];
+		 angular.forEach(lis,function(obj,i){
+			    var em=$(obj);
+			    $scope.sisrdcid.push(parseInt(em.attr("data_id")));
+	            $scope.sisrdcname.push( em.attr("data_anme"));
+		 });
+    };
+    
     $scope.selrdc=function(isSUall){//展示下拉rdc
     	if(isSUall){
-    		
     		var issellall=$("#ck_selall_rdc").attr("data");
     		if(issellall=="true"){
 	    			$("#ck_selall_rdc").attr("data",false);
 	    			$("#ul_rdclist li.omg").addClass("select");
+	    			
     			}else{
     				$("#ck_selall_rdc").attr("data",true);
     				$("#ul_rdclist li.omg").removeClass("select");
     			};
-    		
     	}else{
     		$("#ul_rdclist li.omg").toggleClass("select");
     	}
-    	
+    	 $scope.getselrdc();
     };
     
 	
@@ -137,9 +144,6 @@ coldWeb.controller('reportsAnalysis1', function ($scope, $http,$stateParams,$roo
 	   }
    };
    
-   Array.prototype.remove = function(val) {
-	   
-	   };
 	//********************************************************************事件START  不要关心**********************************************************************
     function gettbcltit(value,cl){//获取标题1
 	    if(value==null||value==''||value=='null')return '<td  colspan="'+cl+'" ></td>';else return '<td colspan="'+cl+'">'+value+'</td>';

@@ -15,6 +15,7 @@
         #fp-nav ul li .fp-tooltip.right{right:24px;}
         #fp-nav ul li .fp-tooltip{max-width: 400px;background: rgba(0, 0, 0, 0.42);padding: 2px 4px;border-radius:2px;}
 </style>
+<script src="https://cdn.bootcss.com/jQuery-slimScroll/1.3.3/jquery.slimscroll.js"></script>
 <script src="assets/plugins/fullPage/jquery.fullPage.min.js"></script>
  <div id="main_count_div" class="myBg">
 	 <div class="toolbar">
@@ -24,8 +25,8 @@
 	         <span><input type="checkbox"  ng-model="priveseting.shysj"  ng-click="changemode();">机组</span>
 	         <span><input type="checkbox"  ng-model="priveseting.shfolw" ng-click="changemode();">风机</span>
 	          
-	         <span><input type="checkbox" checked="checked" ng-click="alarm()">告警</span>
-	         <span><input type="checkbox" checked="checked" ng-click="priveseting.isRoll=!priveseting.isRoll">轮巡</span>
+	         <span><input type="checkbox"  ng-model="priveseting.isOverTemp" ng-click="changemode();">告警</span>
+	         <span><input type="checkbox"  ng-model="priveseting.isRoll" ng-click="changemode();">轮巡</span>
 	         <span class="glyphicon glyphicon-repeat" title="重置"></span>
 	         <span ng-click="refdata()" class="glyphicon glyphicon-refresh" title="刷新"></span>
 	         <span ng-click="fullScreen()" class="glyphicon glyphicon-fullscreen" title="全屏"></span>
@@ -49,7 +50,9 @@
 						        <div class="bodyModel clearfix">
 						            <div class="unitModel" style="margin-bottom: 15px;" ng-repeat="storage in rdc.mystorages" >
 						                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						                    <div class="unitIcon"><i class="iconfont  {{priveseting.isOverTemp&&storage.isovTemp?'magentaPulse wiltrue':'' }} "   >&#xe67c;</i></div>
+						                    <div class="unitIcon">
+						                       <i class="iconfont  {{priveseting.isOverTemp&&storage.isovTemp?'magentaPulse wiltrue':'' }} "   >&#xe67c;</i>
+						                    </div>
 						                    <p class="omg">{{storage.name}}</p>
 						                </div>
 						                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
@@ -59,7 +62,6 @@
 						        </div>
 						    </div>
 						    <!--一个模块 end-->
-				
 				
 			              <!--一个模块 start--><!--温度模块================================-->
 						   <div class="previewModel" ng-show="rdc.powers.length>0&&priveseting.shpwc">
