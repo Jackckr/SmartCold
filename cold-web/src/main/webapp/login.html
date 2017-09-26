@@ -60,8 +60,16 @@
 <script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <script type="text/javascript">
     sessionStorage.clear();
-    var lk360Entity={name:"冷库360",leftTopLogo:"assets/img/custom/360_logo.png",tijianLogo:"../../assets/img/leftTop.png",
-        baobiaoLogo:"../../assets/img/lianku_black.png",baobiaoText:"冷库360",copyR:'备案号：沪ICP备 16004753',login:'login'};
+    var lk360Entity = {
+        name: "冷库360",
+        nameId: 0,
+        leftTopLogo: "assets/img/custom/360_logo.png",
+        tijianLogo: "../../assets/img/leftTop.png",
+        baobiaoLogo: "../../assets/img/lianku_black.png",
+        baobiaoText: "冷库360",
+        copyR: '备案号：沪ICP备 16004753',
+        login: 'login'
+    };
     window.localStorage.companyLoad=JSON.stringify(lk360Entity);
     var mainHeight = $(window).height();
     var url=["/main.html" +( window.location.hash != ""?window.location.hash:"#/cold360Physical"),"","/autIdentity.html","/audit.html"];
