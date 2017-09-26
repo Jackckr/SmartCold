@@ -33,7 +33,7 @@ ul, li {
     margin-top: 25px;
 }
 .loginBody{
-    height: 400px;
+    height: 360px;
     position: relative;
     z-index:1;
 }
@@ -57,7 +57,7 @@ ul, li {
     right: 100px;
     width: 326px;
     background: #fff;
-    padding: 30px 20px;
+    padding: 14px;
     box-sizing: border-box;
     z-index:2;
 }
@@ -145,6 +145,7 @@ ul, li {
     }
     .loginArea{
         top:100px;
+        padding:30px 20px;
     }
 }
 /*登录边框*/
