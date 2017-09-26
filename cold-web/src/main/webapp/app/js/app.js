@@ -194,6 +194,10 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http','$cookies',funct
             };
             $rootScope.submitChangePwd=function () {
             	$rootScope.pwdRex=/^[0-9A-Za-z]{3,16}$/;
+            	if($rootScope.oldPassword==undefined||$rootScope.newPassword==undefined||$rootScope.reNewPassword==undefined){
+            		alert('密码不能为空哦~');
+            		return false
+				}
             	if(!$rootScope.oldPwdErr){
                     $rootScope.pwdLengthErr=!$rootScope.pwdRex.test($rootScope.newPassword);
                     if (!$rootScope.pwdLengthErr){
