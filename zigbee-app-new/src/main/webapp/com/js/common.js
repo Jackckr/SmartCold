@@ -1,5 +1,4 @@
 "use strict";
-console.log(document.cookie);
 if ((navigator.userAgent.indexOf('MSIE') >= 0) && (navigator.userAgent.indexOf('Opera') < 0)||//ie6,7,8,9,10
     (navigator.userAgent.indexOf('Trident') >= 0)||//ie11
     (navigator.userAgent.indexOf('Edge') >= 0)){//ie Edge
