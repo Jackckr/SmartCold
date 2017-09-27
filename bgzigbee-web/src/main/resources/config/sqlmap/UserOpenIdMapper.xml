@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smartcold.bgzigbee.manage.dao.UserOpenIdMapper" >
+    <insert id="insertByEntity">
+        INSERT INTO `useropenid` (`userid`,`wxuserid`,`addtime`) VALUES (#{userid},#{wxuserid},#{addtime})
+    </insert>
+    <update id="updateByEntity">
+        UPDATE `useropenid`
+        <set>
+            <if test="userid != null">`userid`=#{userid}</if>
+        </set>
+        where `id`=#{id}
+    </update>
+    <delete id="delByUser">
+        DELETE FROM `useropenid` WHERE `userid`=#{userid} and `wxuserid`=#{wxuserid}
+    </delete>
+
+    <select id="findByFilter" resultType="com.smartcold.bgzigbee.manage.entity.UserOpenIdEntity">
+        SELECT o.*,w.`nickname`,u.`username` FROM `useropenid` o LEFT JOIN `wxuser` w ON o.`wxuserid`=w.`id` LEFT JOIN `user` u ON u.`id`=o.`userid`
+        <where>
+            <if test="userid!=null and userid!=''">
+                and `userid` =#{userid}
+            </if>
+            <if test="wxuserid != null and wxuserid!=''">
+                and `wxuserid`=#{wxuserid}
+            </if>
+        </where>
+    </select>
+    <select id="findByUser" resultType="com.smartcold.bgzigbee.manage.entity.UserOpenIdEntity">
+        SELECT * FROM `useropenid` WHERE `userid`=#{userid} and `wxuserid`=#{wxuserid}
+    </select>
+</mapper>

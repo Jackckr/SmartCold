@@ -8,7 +8,9 @@ import java.util.Date;
 public class UserOpenIdEntity {
     private Integer id;
     private Integer userid;
-    private String openId;
+    private Integer wxuserid;
+    private String username;
+    private String nickname;
     private Date addtime;
 
     public Integer getId() {
@@ -27,12 +29,12 @@ public class UserOpenIdEntity {
         this.userid = userid;
     }
 
-    public String getOpenId() {
-        return openId;
+    public Integer getWxuserid() {
+        return wxuserid;
     }
 
-    public void setOpenId(String openId) {
-        this.openId = openId;
+    public void setWxuserid(Integer wxuserid) {
+        this.wxuserid = wxuserid;
     }
 
     public Date getAddtime() {
@@ -41,5 +43,21 @@ public class UserOpenIdEntity {
 
     public void setAddtime(Date addtime) {
         this.addtime = addtime;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

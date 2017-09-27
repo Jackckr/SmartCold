@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>用户管理</title>
+    <meta name="content-type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../../comm/jquery/themes/default/easyui.css"  />
+    <link rel="stylesheet" type="text/css" href="../style/icon.css"  />
+    <link rel="stylesheet" type="text/css" href="../style/comm.css"  />
+    <style type="text/css">
+        form tr{height:35px;}
+        .pagination-btn-separator {float: none;}
+    </style>
+    <script type="text/javascript"  src="../../comm/jquery/jquery.min.js"></script>
+    <script type="text/javascript"  src="../../comm/jquery/jquery.easyui.min.js"></script>
+    <script type="text/javascript"  src="../app/comm.js"></script>
+    <script type="text/javascript"  src="../app/weixin_manage.js"></script>
+</head>
+
+<body id="maindiv" >
+<table id="objTable" class="fill"></table>
+
+<div style="display: none;">
+    <div id="user_filter" class="clearfix" style="padding:5px 0;">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'wx_del'" onclick="deleteUsers()">删除</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'pagination-load'" onclick="reloaddata()">刷新</a>
+        <div style="display: inline-block; float: right;">
+            <div id="div_st_filter">
+                <input id="fddata" class="easyui-searchbox" val="ml" data-options="prompt:'请输入搜索条件...'" style="width:200px;display:inline;"/>
+            </div>
+        </div>
+    </div>
+    <div id="userdialog" class="easyui-dialog" title="微信配置"  data-options="modal: true,closed: true,width:600,height:350,buttons: [{text:'保存',iconCls:'icon-ok',handler:saveConfig},{text:'取消',iconCls:'icon-cancel2',handler:function(){$('#userdialog').dialog('close');}}]"  >
+        <form id="userForm" style="padding:10px 20px;" >
+            <table class="fill" >
+                <tr>
+                    <td>微信昵称:</td>
+                    <td>
+                        <input id="id" type="hidden" name="id" value="0">
+                        <span id="nickname" style="color: #00a65a"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>配置的平台用户:</td>
+                    <td>
+                        <select id="sel_user_slid" name="userId" class="easyui-combobox" data-options="valueField:'id', textField:'username', panelHeight:'200'"></select>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -262,7 +262,7 @@ public class AdminController extends BaseController {
 		mlList0.add(new ACLAdminNode("0_5","main_infmation", "资讯管理",      ""      ));
 		mlList0.add(new ACLAdminNode("0_6","icon-yy", "预约演示",      "appointment.html"      ));
 		mlList0.add(new ACLAdminNode("0_7","icon-coldcf",    "冷库配置"   ,   "storageConfig.html"      ));
-		mlList0.add(new ACLAdminNode("0_8","main_weixin",    "微信id配置"   ,   "weixinConfig.html"      ));
+		mlList0.add(new ACLAdminNode("0_8","main_weixin",    "微信id配置"   ,   "weixin_manage.html"      ));
 		pml.setChild(mlList0);ml.add(pml);
 		
 	    pml  = new ACLAdminNode("1"  ,"main_dev",     "设备管理");
@@ -283,6 +283,7 @@ public class AdminController extends BaseController {
 		mlList2.add(new ACLAdminNode("2_3","icon-role",     "报表管理", "" ));
 		mlList2.add(new ACLAdminNode("2_4","main_relating" , "关联管理", "relating_manage.html" ));
 		mlList2.add(new ACLAdminNode("2_5","main_kv" , "键值管理", "kv_manage.html" ));
+		mlList2.add(new ACLAdminNode("2_6","main_wxConfig" , "微信配置", "wx_config.html" ));
 		pml.setChild(mlList2);  ml.add(pml);
 
 		pml  = new ACLAdminNode("3"  ,"main_store360",  "门店360管理");
