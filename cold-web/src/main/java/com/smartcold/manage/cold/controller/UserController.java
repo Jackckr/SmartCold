@@ -162,6 +162,17 @@ public class UserController extends BaseController {
 			return new ResultDto(1,"身份验证失败！");
 	}
 
+	@RequestMapping(value = "/updateUser")
+	@ResponseBody
+	public boolean updateUser(int id,String password){
+		UserEntity userEntity = new UserEntity();
+		userEntity.setId(id);
+		userEntity.setPassword(EncodeUtil.encodeByMD5(password));
+		userEntity.setAvatar(null);
+		int i = userDao.updateByPrimaryKeySelective(userEntity);
+		return i>0;
+	}
+
 
 	@RequestMapping(value = "/findUser", method = RequestMethod.GET)
 	@ResponseBody
@@ -233,5 +244,21 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public Boolean checkTelephone(String telephone){
 		return this.userDao.findUserByTelephone(telephone)==null?true:false;
+	}
+
+	@RequestMapping(value = "/checkOldPassword")
+	@ResponseBody
+	public boolean checkOldPassword(HttpServletRequest request,String pwd,String token){
+		if(StringUtil.isNull(pwd)){return false;};
+		pwd=EncodeUtil.encodeByMD5(pwd);
+		UserEntity new_user=null;
+		CookieEntity effectiveCookie = cookieService.findEffectiveCookie(token);
+		if (effectiveCookie != null) {
+			new_user = userDao.findUserByName(effectiveCookie.getUsername());
+			if (new_user==null){return false;}
+		}else {
+			return false;
+		}
+		return pwd.equals(new_user.getPassword());
 	}
 }

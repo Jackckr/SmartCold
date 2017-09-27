@@ -1,0 +1,14 @@
+/*招标采购css*/
+.bid h1{
+    font-size: 20px;
+    text-align: center;
+    color: coral;
+    margin: 40px 0;
+}
+.bid p,
+.bid h2{
+    line-height: 1.8;
+}
+.bid h2{
+    text-indent:2em;
+}
