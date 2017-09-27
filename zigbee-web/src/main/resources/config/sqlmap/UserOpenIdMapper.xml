@@ -3,6 +3,6 @@
 <mapper namespace="com.smartcold.zigbee.manage.dao.UserOpenIdMapper">
 
     <select id="selectByUserId" resultType="java.lang.String">
-        SELECT `openId` FROM `useropenid` WHERE `userid`=#{userid}
+        SELECT w.`openid` FROM `useropenid` o LEFT JOIN `wxuser` w ON o.`wxuserid`=w.`id` WHERE `userid`=#{userid}
     </select>
 </mapper>

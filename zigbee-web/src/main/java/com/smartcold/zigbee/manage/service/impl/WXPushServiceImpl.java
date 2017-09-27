@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by qiangzi on 2017/9/22.
@@ -37,12 +38,14 @@ public class WXPushServiceImpl implements WXPushService{
     @Override
     public void wxPushAlarm(String userId, String date,String dev,String type,String desc) {
         String access_token = redisService.putWXToken(null);
-        if(access_token==null){updateWXToken();}
+        if(access_token==null){updateWXToken();access_token=redisService.putWXToken(null);}
         String url="https://api.weixin.qq.com/cgi-bin/message/template/send?access_token="+access_token;
         HttpService httpService = new HttpServiceImpl();
-        String openId = userOpenIdMapper.selectByUserId(Integer.parseInt(userId));
-        JSONObject alarmMode = createAlarmMode(openId, date,dev,type,desc);
-        httpService.sendPostByJson(url,alarmMode);
+        List<String> openids = userOpenIdMapper.selectByUserId(Integer.parseInt(userId));
+        for (String openId:openids){
+            JSONObject alarmMode = createAlarmMode(openId, date,dev,type,desc);
+            httpService.sendPostByJson(url,alarmMode);
+        }
     }
 
     private JSONObject createAlarmMode(String openId, String date,String dev,String type,String desc){

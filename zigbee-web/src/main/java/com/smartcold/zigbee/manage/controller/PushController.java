@@ -1,12 +1,18 @@
 package com.smartcold.zigbee.manage.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.smartcold.zigbee.manage.entity.PushEntity;
+import com.smartcold.zigbee.manage.service.RedisService;
 import com.smartcold.zigbee.manage.service.WXPushService;
+import com.smartcold.zigbee.manage.service.base.HttpService;
+import com.smartcold.zigbee.manage.service.base.impl.HttpServiceImpl;
 import com.smartcold.zigbee.manage.util.push.PushDemoTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.HashMap;
 
 /**
  * Created by qiangzi on 2017/9/18.
@@ -16,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class PushController {
     @Autowired
     private WXPushService wxPushService;
+    @Autowired
+    private RedisService redisService;
 
     private static long appKey_360=24628597;
     private static long appKey_360_sx=24628984;
@@ -37,5 +45,22 @@ public class PushController {
     @ResponseBody
     public void pushWXAlarm(String userId,String date,String dev,String type,String desc){
         wxPushService.wxPushAlarm(userId,date,dev,type,desc);
+    }
+
+    @RequestMapping(value = "/getOpenId")
+    @ResponseBody
+    public void getOpenId(String code,Integer state){
+        System.out.println("进入微信回调接口code："+code+"state:"+state);
+        HttpService httpService = new HttpServiceImpl();
+        String openIdStr = httpService.sendGet("https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx57e766b379bdd9f7&secret=8bc1902f106fa48d8a1d4c262d93164e&code=" + code + "&grant_type=authorization_code");
+        HashMap openIdEntity = JSONObject.parseObject(openIdStr, HashMap.class);
+        String openid = openIdEntity.get("openid").toString();
+        String access_token = redisService.putWXToken(null);
+        if (access_token==null){
+            wxPushService.updateWXToken();
+            access_token=redisService.putWXToken(null);
+        }
+        String wxUserStr = httpService.sendGet("https://api.weixin.qq.com/cgi-bin/user/info?access_token=" + access_token + "&openid=" + openid + "&lang=zh_CN");
+        HashMap wxUserEntity = JSONObject.parseObject(wxUserStr, HashMap.class);
     }
 }
