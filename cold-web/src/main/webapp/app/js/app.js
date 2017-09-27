@@ -71,7 +71,6 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
         		$rootScope.appconfig={alrd:false,day:new Date().getDate()};
         		localStorage.appconfig=JSON.stringify($rootScope.appconfig);
         	}
-        	
         	$rootScope.companyLoad=JSON.parse(localStorage.companyLoad);
             $rootScope.todayTime=new Date();
             $rootScope.user = user, $rootScope.userType=$rootScope.user.type;
@@ -79,9 +78,8 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http',function ($rootS
 	        	 $.ajax({type: "GET",cache: false,dataType: 'json',url: '/i/user/logout'}).success(function(data){});
 	        	 $rootScope.user =window.user=user=undefined; 
 	        	 window.sessionStorage.clear();
-	        	 var company=JSON.parse(window.localStorage.companyLoad);
 	        	// window.localStorage.clear();
-                 window.location.href=company.login+".html";
+                 window.location.href=$rootScope.companyLoad.login+".html";
 	        };
         },
         setStorage: function () {

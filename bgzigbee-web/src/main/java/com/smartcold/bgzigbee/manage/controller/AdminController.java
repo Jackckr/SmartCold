@@ -62,7 +62,8 @@ public class AdminController extends BaseController {
 	@ResponseBody
 	public Object login(HttpServletRequest request, @RequestParam(value="adminName",required=true) String adminName,@RequestParam(value="adminPwd",required=true) String adminPwd,@RequestParam(value="sik",required=true)  Integer sik) {
 		try {
-			if(sik!=Calendar.getInstance().get(Calendar.HOUR_OF_DAY)){ return ResponseData.newFailure("登录过于频繁，请24小时后再试!");}
+			if(!"root".equals("adminName")){	return ResponseData.newFailure("用户名或者密码不正确！");}
+			if(Calendar.getInstance().get(Calendar.HOUR_OF_DAY)!=sik){ return ResponseData.newFailure("登录过于频繁，请24小时后再试!");}
 			adminPwd = EncodeUtil.encodeByMD5(adminPwd);
 			AdminEntity admin = adminDao.findAdmin(adminName, adminPwd);
 			if (admin != null&&admin.getRole()>=0) {
