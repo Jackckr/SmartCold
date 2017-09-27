@@ -281,7 +281,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
 	    //初始化冷库配置
 		//定时滚动任务30
 	    clearInterval($rootScope.timeTicket);
-	    $rootScope.timeTicket = setInterval( $scope.gonex, 30000);
+	    $rootScope.timeTicket = setInterval( $scope.gonex, 15000);
 	    $scope.$on('$destroy',function(){ $("#fp-nav").remove(); $('body,html').attr('style','');
   clearInterval($rootScope.timeTicket);  });
 });

@@ -68,7 +68,8 @@
 	    		<p class="list_name set">修改</p>
 	    	</div>
     	</li>
-		<li class="clearfix" onclick="location.href='sys_message.html'" ng-if="user.type==0&&user.role>0">
+		<li class="clearfix" onclick="location.href='sys_message.html'" ng-if="userinfo.type==0&&userinfo.role>1">
+			<!-- role:1：普通用户，2：集团用户，3：超级管理员；type：0:360库主 1：货主，2：服务商 -->
 			<div class="myicon fl" style="width:auto;">
 				<span>系统消息</span>
 			</div>

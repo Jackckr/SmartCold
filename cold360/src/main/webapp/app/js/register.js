@@ -48,7 +48,7 @@ var app=angular.module('app', []).controller('register',function($http, $locatio
                     victdata.usefulName=false;
                     victdata.extname=true;
                     layer.open({
-                        content: '您的用户名是<b class="orange">'+$("#username").val()+'</b>,它将作为您登录链库的唯一凭证，一旦注册完成将无法更改，请牢记~'
+                        content: '您的用户名是<b class="orange">'+$("#username").val()+'</b>,它将作为您登录链库/冷库360的唯一凭证，一旦注册完成将无法更改，请牢记~'
                         ,btn: '确定'
                     });
                 }
