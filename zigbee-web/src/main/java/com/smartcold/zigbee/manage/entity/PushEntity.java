@@ -18,13 +18,16 @@ public class PushEntity {
 
     private Integer rdcId;
 
-    public PushEntity( String title, String summary, String token, String userIds, Integer type, Integer rdcId) {
+    private String rdcName;
+
+    public PushEntity( String title, String summary, String token, String userIds, Integer type, Integer rdcId,String rdcName) {
         this.title = title;
         this.summary = summary;
         this.token = token;
         this.userIds = userIds;
         this.type = type;
         this.rdcId = rdcId;
+        this.rdcName=rdcName;
     }
 
     public String getTitle() {
@@ -81,5 +84,13 @@ public class PushEntity {
 
     public void setRdcId(Integer rdcId) {
         this.rdcId = rdcId;
+    }
+
+    public String getRdcName() {
+        return rdcName;
+    }
+
+    public void setRdcName(String rdcName) {
+        this.rdcName = rdcName;
     }
 }

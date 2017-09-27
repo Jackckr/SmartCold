@@ -31,8 +31,8 @@ public class PushController {
 
     @RequestMapping(value = "/push360Alarm")
     @ResponseBody
-    public void push360Alarm (String title, String summary, String token, String userIds, String type, String rdcId) throws Exception {
-        PushEntity pushEntity = new PushEntity(title, summary, token, userIds, Integer.parseInt(type), Integer.parseInt(rdcId));
+    public void push360Alarm (String title, String summary, String token, String userIds, String type, String rdcId,String rdcName) throws Exception {
+        PushEntity pushEntity = new PushEntity(title, summary, token, userIds, Integer.parseInt(type), Integer.parseInt(rdcId),rdcName);
         PushDemoTest pushDemoTest = new PushDemoTest();
         pushEntity.setAppKey(appKey_360);
         pushDemoTest.pushByAccountToIos(pushEntity);
