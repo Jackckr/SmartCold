@@ -1,6 +1,7 @@
 package com.smartcold.zigbee.manage.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.smartcold.zigbee.manage.dao.WxUserMapper;
 import com.smartcold.zigbee.manage.entity.PushEntity;
 import com.smartcold.zigbee.manage.service.RedisService;
 import com.smartcold.zigbee.manage.service.WXPushService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -24,6 +26,8 @@ public class PushController {
     private WXPushService wxPushService;
     @Autowired
     private RedisService redisService;
+    @Autowired
+    private WxUserMapper wxUserMapper;
 
     private static long appKey_360=24628597;
     private static long appKey_360_sx=24628984;
@@ -50,9 +54,8 @@ public class PushController {
     @RequestMapping(value = "/getOpenId")
     @ResponseBody
     public void getOpenId(String code,Integer state){
-        System.out.println("进入微信回调接口code："+code+"state:"+state);
         HttpService httpService = new HttpServiceImpl();
-        String openIdStr = httpService.sendGet("https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx57e766b379bdd9f7&secret=8bc1902f106fa48d8a1d4c262d93164e&code=" + code + "&grant_type=authorization_code");
+        String openIdStr = httpService.sendGet("https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx57e766b379bdd9f7&secret=0e82c94e0c21f0ba8e106a4a2bc016ef&code=" + code + "&grant_type=authorization_code");
         HashMap openIdEntity = JSONObject.parseObject(openIdStr, HashMap.class);
         String openid = openIdEntity.get("openid").toString();
         String access_token = redisService.putWXToken(null);
@@ -62,5 +65,12 @@ public class PushController {
         }
         String wxUserStr = httpService.sendGet("https://api.weixin.qq.com/cgi-bin/user/info?access_token=" + access_token + "&openid=" + openid + "&lang=zh_CN");
         HashMap wxUserEntity = JSONObject.parseObject(wxUserStr, HashMap.class);
+        wxUserEntity.put("addtime",new Date());
+        int i =0;
+        if(wxUserMapper.findByOpenId(openid)==null){
+            i = wxUserMapper.insertByMap(wxUserEntity);
+        }
+        String msg=i>0?"微信用户\""+wxUserEntity.get("nickname")+"\"信息已存入数据库":"该用户已存在，添加失败！";
+        System.out.println(msg);
     }
 }
