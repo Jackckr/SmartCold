@@ -67,10 +67,14 @@ public class PushController {
         HashMap wxUserEntity = JSONObject.parseObject(wxUserStr, HashMap.class);
         wxUserEntity.put("addtime",new Date());
         int i =0;
+        String msg="";
         if(wxUserMapper.findByOpenId(openid)==null){
-            i = wxUserMapper.insertByMap(wxUserEntity);
+            wxUserMapper.insertByMap(wxUserEntity);
+            msg="添加成功，微信用户\""+wxUserEntity.get("nickname").toString()+"\"信息已存入数据库";
+        }else {
+            wxUserMapper.updateNickname(openid, wxUserEntity.get("nickname").toString(),new Date());
+            msg="更新成功，微信用户\""+wxUserEntity.get("nickname").toString()+"已更新";
         }
-        String msg=i>0?"微信用户\""+wxUserEntity.get("nickname")+"\"信息已存入数据库":"该用户已存在，添加失败！";
         System.out.println(msg);
     }
 }
