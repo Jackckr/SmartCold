@@ -72,7 +72,7 @@ public class PushDemoTest extends BaseTest {
         iOSRequest.setMethod(MethodType.POST);
         iOSRequest.setAppKey(pushEntity.getAppKey());
         // iOS的通知是通过APNS中心来发送的，需要填写对应的环境信息. DEV:表示开发环境, PRODUCT: 表示生产环境
-        iOSRequest.setEnv("DEV");
+        iOSRequest.setEnv("PRODUCT");
         iOSRequest.setTarget("account");
         iOSRequest.setTargetValue(pushEntity.getUserIds());
         iOSRequest.setSummary(pushEntity.getSummary());
