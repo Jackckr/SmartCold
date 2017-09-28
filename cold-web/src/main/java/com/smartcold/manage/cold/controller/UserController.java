@@ -22,6 +22,7 @@ import com.smartcold.manage.cold.entity.olddb.CookieEntity;
 import com.smartcold.manage.cold.entity.olddb.Role;
 import com.smartcold.manage.cold.entity.olddb.RoleUser;
 import com.smartcold.manage.cold.entity.olddb.UserEntity;
+import com.smartcold.manage.cold.service.CacheService;
 import com.smartcold.manage.cold.service.CookieService;
 import com.smartcold.manage.cold.service.RoleService;
 import com.smartcold.manage.cold.service.RoleUserService;
@@ -51,6 +52,11 @@ public class UserController extends BaseController {
 
 	@Autowired
 	private CookieService cookieService;
+	@Autowired
+	private CacheService cahcCacheService;
+	
+	
+	
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	@ResponseBody
@@ -60,6 +66,7 @@ public class UserController extends BaseController {
 		if(cookies==null||cookies.length==0){return true;}
 		for (Cookie cookie : cookies) {
 			if (cookie.getName().equals("token")) {
+				cahcCacheService.cleraChace(request.getSession().getId());
 				cookieService.deleteCookie(cookie.getValue());
 			}
 		}
@@ -78,6 +85,8 @@ public class UserController extends BaseController {
 			user.setRole(roleUser==null?0:roleUser.getRoleid());
 			request.getSession().setAttribute("user", user);
 			response.addCookie(new Cookie("token", cookie));
+			cahcCacheService.putDataTocache(request.getSession().getId(), user);
+			cahcCacheService.putDataTocache(cookie, user);
 			if(roleUser==null){//判断有没有申请
 				if(user.getType()==0){
 					return new ResultDto(this.rdcauthMapping.getRdcAuthByUid(user.getId())==0?2:3, String.format("token=%s", cookie));//未授权
@@ -177,7 +186,18 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/findUser", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findUser(HttpServletRequest request,String token) {
-		UserEntity user =new UserEntity();// (UserEntity)request.getSession().getAttribute("user");//		if(user!=null){return user;}
+		System.err.println("服务器A："+request.getSession().getId());
+		if(StringUtil.isnotNull(token)){
+			UserEntity user = cahcCacheService.getDataFromCache(token);
+			if(user!=null){
+				return user;
+			}
+		}
+		UserEntity user = cahcCacheService.getDataFromCache(request.getSession().getId());
+		if(user!=null){
+			return user;
+		}
+	    user =new UserEntity();// (UserEntity)request.getSession().getAttribute("user");//		if(user!=null){return user;}
 		if(StringUtil.isNull(token)){
 			Cookie[] cookies = request.getCookies();
 			if (cookies == null) {

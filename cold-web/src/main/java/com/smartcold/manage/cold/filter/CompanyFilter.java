@@ -19,19 +19,29 @@ public class CompanyFilter implements Filter{
         HttpServletRequest request= (HttpServletRequest) servletRequest;
         HttpServletResponse response= (HttpServletResponse) servletResponse;
         String uri = request.getRequestURI();
-        if(uri.equals("/")){
-            String url = request.getRequestURL().toString();
-            int yili = url.indexOf("yl");
-            int songxia = url.indexOf("sx");
-            if (songxia>=0){
-                System.out.println(url);
-                response.sendRedirect("sx.html");
-            }else {
-                filterChain.doFilter(servletRequest,servletResponse);
-            }
-        }else {
-            filterChain.doFilter(servletRequest,servletResponse);
-        }
+        switch (uri) {
+		case "http://rsdl-panasonic.cn/":
+		case "http://sx.cold360.cn/":
+			response.sendRedirect("sx.html");
+			break;
+			
+		default:
+			 filterChain.doFilter(servletRequest,servletResponse);
+			break;
+		}
+//        if(uri.equals("/")){
+//            String url = request.getRequestURL().toString();
+//            int yili = url.indexOf("yl");
+//            int songxia = url.indexOf("sx");
+//            if (songxia>=0){
+//                System.out.println(url);
+//                response.sendRedirect("sx.html");
+//            }else {
+//                filterChain.doFilter(servletRequest,servletResponse);
+//            }
+//        }else {
+//            filterChain.doFilter(servletRequest,servletResponse);
+//        }
     }
 
     @Override
