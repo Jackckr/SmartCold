@@ -4,4 +4,7 @@
     <insert id="insertByMap" parameterType="map">
         INSERT INTO `wxuser` (`nickname`,`openid`,`addtime`) VALUES (#{nickname},#{openid},#{addtime})
     </insert>
+    <select id="findByOpenId" resultType="java.util.HashMap">
+        SELECT * FROM `wxuser` WHERE `openid`=#{openid}
+    </select>
 </mapper>

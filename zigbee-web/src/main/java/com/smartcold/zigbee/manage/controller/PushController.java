@@ -66,8 +66,11 @@ public class PushController {
         String wxUserStr = httpService.sendGet("https://api.weixin.qq.com/cgi-bin/user/info?access_token=" + access_token + "&openid=" + openid + "&lang=zh_CN");
         HashMap wxUserEntity = JSONObject.parseObject(wxUserStr, HashMap.class);
         wxUserEntity.put("addtime",new Date());
-        int i = wxUserMapper.insertByMap(wxUserEntity);
-        String msg=i>0?"微信用户\""+wxUserEntity.get("nickname")+"\"信息已存入数据库":"添加失败";
+        int i =0;
+        if(wxUserMapper.findByOpenId(openid)==null){
+            i = wxUserMapper.insertByMap(wxUserEntity);
+        }
+        String msg=i>0?"微信用户\""+wxUserEntity.get("nickname")+"\"信息已存入数据库":"该用户已存在，添加失败！";
         System.out.println(msg);
     }
 }
