@@ -491,3 +491,5 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
 
 //导航栏选中的高亮显示
 function activeLi(ops){$('.my_sidebar li').removeClass('active');$(ops).addClass('active');window.scroll(0,0);}
+$('.goTop').click(function(event){$('html,body').stop().animate({'scrollTop':0}, 400);});
+$(window).scroll(function(event) {if ($(window).scrollTop() >= $(window).height()) {$('.goTop').show();} else {$('.goTop').hide();}});//一键回到顶部

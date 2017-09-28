@@ -288,7 +288,4 @@ coldWeb.controller('wiseReport', function( $scope, $rootScope,$stateParams,$http
             }
         });
 	 };
-	$('.goTop').click(function(event){$('html,body').stop().animate({'scrollTop':0}, 200);});
-	$(window).scroll(function(event) {if ($(window).scrollTop() >= $(window).height()) {$('.goTop').show();} else {$('.goTop').hide();}});//一键回到顶部
-   
 });

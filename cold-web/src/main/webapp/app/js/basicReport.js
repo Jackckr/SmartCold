@@ -274,16 +274,6 @@ coldWeb.controller('basicReport', function( $scope, $rootScope,$stateParams,$htt
 		  angular.forEach($scope.charArray,function(item){ $("#"+item.dom.id+"_img").html(item.getImage('jpeg').outerHTML); });
 		  $timeout(printpage,0); $timeout(chanpangstatus,0);//加入js队列
 	 };
-	 $('.goTop').click(function(event) {
-			$('html,body').stop().animate({'scrollTop':0}, 200);
-	});
-	$(window).scroll(function(event) {
-		if ($(window).scrollTop() >= $(window).height()) {
-			$('.goTop').show();
-		} else {
-			$('.goTop').hide();
-		}
-	});//一键回到顶部
 	
 	
 	

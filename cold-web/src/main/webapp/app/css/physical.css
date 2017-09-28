@@ -1031,6 +1031,8 @@ legend{
 	line-height: 3em;
 	background: #00a1cb;
 	border-radius: 3px;
+	z-index:200;
+	text-align: center;
 }
 .goTop .iconfont{
 	font-size: 2em;
