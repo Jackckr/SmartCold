@@ -1,0 +1,18 @@
+<div class="clearfix mainHeight">
+  <div class="baoyang_bg" style="min-height:100%;">
+  		<div class="binglian"  ng-repeat="(key,value) in  compressorGroups" >
+  			<p><span class="blysj">{{value.name}}</span></p>
+  			<div class="row">
+  				<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 alarm_bg" ng-repeat="obj in  value.compressors" >
+  					<strong class="remain" oid="{{obj.id}}"><i>{{obj.sytm}}</i></strong>
+  					<p><b>{{obj.name}}距离下次定期保养</b></p>
+  					<i id="st_tm_{{obj.id}}" class="by_myicon iconfont">&#xe7f4;</i>
+  				</div>
+  			</div>
+  			
+  		</div>
+  		<div ng-show='compressorGroups.length<1'>
+  		  <div class="alert alert-info text-center">您还没有压缩机组信息哦</div>
+  		</div>
+  </div> 
+</div>

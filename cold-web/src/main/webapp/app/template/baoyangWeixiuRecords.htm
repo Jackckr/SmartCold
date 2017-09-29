@@ -1,0 +1,169 @@
+<link rel="stylesheet" href="assets/plugins/datatables/dataTables.bootstrap.css">
+<div class="box myrecord">
+  <div class="box-header with-border">
+  	<h3 class="box-title">维修完结记录</h3>
+  	<div class="box-tools pull-right">
+        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+    </div>
+  </div>
+  <div class="box-body">
+  	<div class="form-group">
+		<div class="col-md-5 col-md-offset-6">
+			<input type="text" class="form-control" ng-model="keyword" placeholder="请输入机组名称" ng-change="goSearch1();">
+		</div>		
+		<label class="col-md-1 control-label"><button class="btn btn-primary" ng-click="goSearch1()">搜索</button></label>
+	</div>
+    <table id="records" class="table table-bordered table-striped table-condensed">
+      <thead>
+        <tr>
+          <th class="text-center">序号</th>
+          <th>机组名称</th>
+          <th>维修原因/保养要求</th>
+          <th>预约维修时间</th>
+          <th>实际维修时间</th>
+          <th>维修详情</th>
+          <th>备注</th>
+          <th>维修评价</th>
+          <th class="text-center">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+         <tr ng-repeat="maintenance1 in Maintenances1">
+          	<td class="text-center">{{$index+1}}</td>
+          	<td>{{maintenance1.unitname}}</td>
+          	<td ng-if="maintenance1.reason=='undefined'"></td> 
+          	<td ng-if="maintenance1.reason!='undefined'">{{maintenance1.reason}}</td> 	
+          	<td>{{maintenance1.ordertime}}</td>   
+          	<td>{{maintenance1.fixtime}}</td> 
+          	<td ng-if="maintenance1.detail=='undefined'"></td> 
+          	<td ng-if="maintenance1.detail!='undefined'">{{maintenance1.detail}}</td> 	
+          	<td ng-if="maintenance1.note=='undefined'"></td> 
+          	<td ng-if="maintenance1.note!='undefined'">{{maintenance1.note}}</td> 	
+          	<td><textarea placeholder="请输入评价内容" ng-model="maintenance1.appraise" ng-blur="change(maintenance1.id,maintenance1.appraise)"></textarea></td> 
+          	<td class="text-center">
+          		<button class="btn btn-danger btn-xs"  ng-click="goDeleteMaintenance(maintenance1.id)">删除</button>
+       		</td>    
+        </tr>
+      </tbody>
+    </table>
+               <!-- 翻页功能 -->
+               <div class="row" style="text-align:center">
+                    <pagination ng-change="pageChanged()" total-items="bigTotalItems"
+                             ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm"
+                             boundary-links="true" rotate="false" num-pages="numPages"></pagination>
+                </div>
+  </div>
+  <!-- /.box-body -->
+</div>
+<!-- 故障申请记录 -->
+<div class="box myrecord">
+  <div class="box-header with-border">
+  	<h3 class="box-title">待维修记录</h3>
+  	<div class="box-tools pull-right">
+        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+    </div>
+  </div>
+  <div class="box-body">
+    <table id="applyRecords" class="table table-bordered table-striped table-condensed">
+      <thead>
+        <tr>
+          <th class="text-center">序号</th>
+          <th>机组名称</th>
+          <th>维修原因/保养要求</th>
+          <th>预约维修时间</th>
+          <th class="text-center">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="maintenance0 in Maintenances0">
+          	<td class="text-center">{{$index+1}}</td>
+          	<td>{{maintenance0.unitname}}</td>
+          	<td ng-if="maintenance0.reason=='undefined'"></td> 
+          	<td ng-if="maintenance0.reason!='undefined'">{{maintenance0.reason}}</td> 	
+          	<td>{{maintenance0.ordertime}}</td>   
+          	<td class="text-center">
+          		<button class="btn btn-success btn-xs" data-toggle="modal" data-target="#myApply" ng-click="weixiuapply(maintenance0.id)">维修</button>
+          		<button class="btn btn-danger btn-xs"  ng-click="goDeleteMaintenance(maintenance0.id)">删除</button>
+       		</td>    	
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- /.box-body -->
+</div>
+
+<!-- 维修模态框（Modal） -->
+<div class="modal fade form-horizontal" id="myApply" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">维修操作</h4>
+            </div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label class="col-sm-3 control-label">机组名称</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" ng-model="updateMaintenance0.unitname"
+							placeholder="请输入需要维修机组的名称">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">维修详情</label>
+					<div class="col-sm-9">
+						<textarea class="form-control" style="resize: vertical;" ng-model="updateMaintenance0.detail"
+							placeholder="请输入维修详情"></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">实际维修时间</label>
+					<div class="col-sm-9">
+						<div class="input-group date form_date col-md-12" data-date=""
+							data-date-format="yyyy-mm-dd" data-link-field="dtp_input2"
+							data-link-format="yyyy-mm-dd">
+							<input ng-model="updateMaintenance0.fixtime" class="form-control" size="16"
+								type="text" value="" readonly placeholder="请填写实际维修时间"><span
+								class="input-group-addon"><span
+								class="glyphicon glyphicon-remove"></span></span> <span
+								class="input-group-addon"><span
+								class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+						<input type="hidden" id="dtp_input2" value="" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-3 control-label">备注</label>
+					<div class="col-sm-9">
+						<textarea class="form-control" ng-model="updateMaintenance0.note" style="resize: vertical;width: 100%;"
+							placeholder="请输入文字(选填)"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" ng-click="submitfix()">提交维修</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!-- <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script> -->
+<!-- <script src="assets/plugins/datatables/dataTables.bootstrap.min.js"></script> -->
+
+<!-- SlimScroll -->
+<!-- <script src="assets/plugins/slimScroll/jquery.slimscroll.min.js"></script> -->
+<!-- FastClick -->
+<!-- <script src="assets/plugins/fastclick/fastclick.js"></script> -->
+<script type="text/javascript">
+	$('.form_date').datetimepicker({
+		format: 'yyyy-mm-dd',
+	    weekStart: 1,
+	    todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		minView: 2,
+		forceParse: 0
+	});
+</script>
