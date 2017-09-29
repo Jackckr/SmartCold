@@ -1,0 +1,42 @@
+<div class="clearfix" >
+  <div class="page-header"></div>
+  <div class="col-lg-4 col-md-4 col-sm-12 zoomInLeft animated">
+  	<div class="box bg-gray">
+       <div class="box-header with-border">
+           <h3 class="box-title">实时水耗</h3>
+           <div class="box-tools pull-right">
+               <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+               <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+           </div>
+       </div>
+       <div class="box-body">
+           <div class="row" style="height:300px">
+				<div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 text-center" style="position: relative;line-height: 260px;">
+					<span class="tNum">{{currentWater}}</span>
+					<span class="tUiit">&nbsp;t</span>	
+				</div>	
+           </div>
+       </div><!-- /.box-body -->
+   </div><!-- /.box -->
+  </div>
+  <div class="col-lg-8 col-md-8 col-sm-12 zoomInRight animated">
+  	<div class="box bg-gray">
+         <div class="box-header with-border">
+             <h3 class="box-title">日实时累积耗水量</h3>
+             <div class="box-tools pull-right">
+                 <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                 <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+             </div>
+         </div>
+         <div class="box-body">
+             <div class="chart">
+                 <div id="line" style="height: 300px;"></div>
+             </div>
+         </div><!-- /.box-body -->
+     </div><!-- /.box -->
+    <!-- <div class="box box-gray bg-gray" style="margin-top:10px;">
+      <div id="line" style="height: 300px;"></div>
+    </div> -->
+  </div>
+</div>
+<script src="../../assets/js/echarts.min.js"></script>

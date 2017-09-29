@@ -18,17 +18,26 @@ public class CompanyFilter implements Filter{
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request= (HttpServletRequest) servletRequest;
         HttpServletResponse response= (HttpServletResponse) servletResponse;
-        String uri = request.getRequestURI();
-        switch (uri) {
-		case "http://rsdl-panasonic.cn/":
-		case "http://sx.cold360.cn/":
-			response.sendRedirect("sx.html");
-			break;
-			
-		default:
-			 filterChain.doFilter(servletRequest,servletResponse);
-			break;
-		}
+        String uri = request.getRequestURI();  
+        System.err.println(uri);
+        if("/".equals(uri)){
+        	String url=  request.getRequestURL().toString();
+        	   System.err.println(url);
+            switch (url) {
+    		case "http://www.rsdl-panasonic.cn/":
+    			response.sendRedirect("sx.html");
+    			break;
+    		default:
+    			 filterChain.doFilter(servletRequest,servletResponse);
+    			break;
+    		}
+        }else{
+        	 filterChain.doFilter(servletRequest,servletResponse);
+        }
+        
+        
+     
+        
 //        if(uri.equals("/")){
 //            String url = request.getRequestURL().toString();
 //            int yili = url.indexOf("yl");

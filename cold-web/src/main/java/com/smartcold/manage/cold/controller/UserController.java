@@ -1,12 +1,8 @@
 package com.smartcold.manage.cold.controller;
 
-import java.util.Calendar;
-import java.util.HashMap;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -186,7 +182,7 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/findUser", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findUser(HttpServletRequest request,String token) {
-		System.err.println("服务器A："+request.getSession().getId());
+		System.err.println("服务器B："+request.getSession().getId());
 		if(StringUtil.isnotNull(token)){
 			UserEntity user = cahcCacheService.getDataFromCache(token);
 			if(user!=null){

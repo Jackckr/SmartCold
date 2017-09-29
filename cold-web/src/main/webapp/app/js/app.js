@@ -216,253 +216,205 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     coldWeb.stateProvider=$stateProvider;
     //index
     $stateProvider
-    .state('preview',{
+    .state('preview',{//预览
 		url:'/preview',
 		controller: 'preview',
-	    templateUrl: 'app/template/preview.html'
-    })
-    .state('cold360Physical',{
+	    templateUrl: 'app/template/preview.htm'
+    }).state('cold360Physical',{//体检
 		url:'/cold360Physical/{rdcId}',
 		controller: 'cold360Physical',
-	    templateUrl: 'app/template/cold360Physical.html'
-    }).state('powerAnalysis',{ //分析--->电耗分析=============================================================f
-		url:'/powerAnalysis/{rdcId}',
-		controller: 'powerAnalysis',
-	    templateUrl: 'app/template/powerAnalysis.html'
-    }).state('waterAnalysis',{// //分析--->水耗分析=============================================================f
-    	url:'/waterAnalysis/{rdcId}',
-    	controller: 'waterAnalysis',
-    	templateUrl: 'app/template/waterAnalysis.html'
-    })
-    //
-//    .state('warncoldAnalysis', {//制冷告警统计
-//        url: '/warncoldAnalysis/{rdcId}',
-//        controller: 'warncoldAnalysis',
-//        templateUrl: 'app/template/warncoldAnalysis.html'
-//    })
-//    .state('coldStorageMonitor', {
-//        url: '/coldStorageMonitor/:storageID',
-//        controller: 'coldStorageMonitor',
-//        templateUrl: 'app/template/coldStorageMonitor.html'
-//    })
-//    .state('compressorMonitor', {
-//        url: '/compressorMonitor/:storageID',
-//        controller: 'compressorMonitor',
-//        templateUrl: 'app/template/compressorMonitor.html'
-//    })
-    .state('coldStorageDoor', {
-        url: '/coldStorageDoor/:storageID',
-        controller: 'coldStorageDoor',
-        templateUrl: 'app/template/coldStorageDoor.html'
-    }).state('coldStorageInOutGoods', {
-        url: '/coldStorageInOutGoods',
-        controller: 'coldStorageInOutGoods',
-        templateUrl: 'app/template/coldStorageInOutGoods.html'
+	    templateUrl: 'app/template/cold360Physical.htm'
     }).state('coldStorageTemper', {//温度监控
         url: '/coldStorageTemper/:storageID',
         controller: 'coldStorageTemper',
-        templateUrl: 'app/template/coldStorageTemper.html'
+        templateUrl: 'app/template/coldStorageTemper.htm'
     }).state('coldStorageHumidity', {//湿度监控
         url: '/coldStorageHumidity/:storageID',
         controller: 'coldStorageHumidity',
-        templateUrl: 'app/template/coldStorageHumidity.html'
+        templateUrl: 'app/template/coldStorageHumidity.htm'
+    }).state('powerAnalysis',{ //分析--->电耗分析=============================================================f
+		url:'/powerAnalysis/{rdcId}',
+		controller: 'powerAnalysis',
+	    templateUrl: 'app/template/powerAnalysis.htm'
+    }).state('waterAnalysis',{// //分析--->水耗分析=============================================================f
+    	url:'/waterAnalysis/{rdcId}',
+    	controller: 'waterAnalysis',
+    	templateUrl: 'app/template/waterAnalysis.htm'
+    }).state('coldStorageDoor', {
+        url: '/coldStorageDoor/:storageID',
+        controller: 'coldStorageDoor',
+        templateUrl: 'app/template/coldStorageDoor.htm'
+    }).state('coldStorageInOutGoods', {
+        url: '/coldStorageInOutGoods',
+        controller: 'coldStorageInOutGoods',
+        templateUrl: 'app/template/coldStorageInOutGoods.htm'
     }).state('compressorPressure', {
         url: '/compressorPressure/:compressorID',
         controller: 'compressorPressure',
-        templateUrl: 'app/template/compressorPressure.html'
+        templateUrl: 'app/template/compressorPressure.htm'
     }).state('compressorBlower', {
         url: '/compressorBlower/{rdcId}',
         controller: 'compressorBlower',
-        templateUrl: 'app/template/compressorBlower.html'
-    })
-   
-    .state('rdcPower', {
-        url: '/rdcPower/:rdcId',
-        controller: 'rdcPower',
-        templateUrl: 'app/template/rdcPower.html'
+        templateUrl: 'app/template/compressorBlower.htm'
     }).state('historyData',{
     	url:'/historyData',
     	controller: 'historyData',
-        templateUrl: 'app/template/historyData.html'
+        templateUrl: 'app/template/historyData.htm'
     }).state('exphistoryData',{
     	url:'/exphistoryData',
     	controller: 'exphistoryData',
-    	templateUrl: 'app/template/exphistoryData.html'
+    	templateUrl: 'app/template/exphistoryData.htm'
     }).state('power',{
     	url:'/power/{powerid}',
     	controller: 'power',
-        templateUrl: 'app/template/power.html'
+        templateUrl: 'app/template/power.htm'
     }).state('waterCost',{
     	url:'/waterCost',
     	controller: 'waterCost',
-        templateUrl: 'app/template/waterCost.html'
+        templateUrl: 'app/template/waterCost.htm'
     }).state('platformDoor',{
     	url:'/platformDoor/{doorid}',
     	controller: 'platformDoor',
-        templateUrl: 'app/template/platformDoor.html'
+        templateUrl: 'app/template/platformDoor.htm'
     }).state('other',{
     	url:'/otherDevice',
     	controller: 'other',
-        templateUrl: 'app/template/other.html'
+        templateUrl: 'app/template/other.htm'
     }).state('light',{
     	url:'/light/:storageID',
     	controller: 'light',
-        templateUrl: 'app/template/light.html'
+        templateUrl: 'app/template/light.htm'
     })
     .state('reportsAnalysis',{//分析报表 -参数 rdcID
     	url: '/reportsAnalysis/{rdcId}',
     	controller: 'reportsAnalysis',
-        templateUrl: 'app/template/reportsAnalysis.html'
+        templateUrl: 'app/template/reportsAnalysis.htm'
     })
     .state('reportsAnalysis1',{//分析报表 -参数 rdcID
     	url: '/reportsAnalysis1/',
     	controller: 'reportsAnalysis1',
-    	templateUrl: 'app/template/reportsAnalysis1.html'
+    	templateUrl: 'app/template/reportsAnalysis1.htm'
     })
     .state('coolingAnalysis',{//制冷系统分析  -参数 rdcID
     	url: '/coolingAnalysis/{rdcId}',
     	controller: 'coolingAnalysis',
-        templateUrl: 'app/template/coolingAnalysis.html'
+        templateUrl: 'app/template/coolingAnalysis.htm'
     }).state('runningAnalysis',{//制冷系统分析  -运行分析--jhy
     	url: '/runningAnalysis/{rdcId}',
     	controller: 'runningAnalysis',
-        templateUrl: 'app/template/runningAnalysis.html'
+        templateUrl: 'app/template/runningAnalysis.htm'
     }).state('goodsYzAnalysis',{//运管分析  -货物因子分析--jhy
     	url: '/goodsYzAnalysis/{rdcId}',
     	controller: 'goodsYzAnalysis',
-        templateUrl: 'app/template/goodsYzAnalysis.html'
+        templateUrl: 'app/template/goodsYzAnalysis.htm'
     }).state('monthReport',{//分析  -分析报告--jhy--2016-10-31
     	url: '/monthReport/{rdcId}',
     	controller: 'monthReport',
-        templateUrl: 'app/template/monthReport.html'
+        templateUrl: 'app/template/monthReport.htm'
     })
     //============================================================分析报告================================================================
     .state('tempReport',{//温度分析报告  -分析报告--jhy--2017-06-19 新版
         url: '/tempReport/{rdcId}',
         controller: 'tempReport',
-        templateUrl: 'app/template/tempReport.html'
+        templateUrl: 'app/template/tempReport.htm'
     }).state('basicReport',{//基本版析报告  -分析报告--jhy--2017-06-19 新版
         url: '/basicReport/{rdcId}',
         controller: 'basicReport',
-        templateUrl: 'app/template/basicReport.html'
+        templateUrl: 'app/template/basicReport.htm'
     }).state('wiseReport',{//聪慧版析报告  -分析报告--jhy--2017-06-19 新版
         url: '/wiseReport/{rdcId}',
         controller: 'wiseReport',
-        templateUrl: 'app/template/wiseReport.html'
-    })
-    
-    
-    .state('cpswaterCost',{//实时水耗
+        templateUrl: 'app/template/wiseReport.htm'
+    }).state('cpswaterCost',{//实时水耗
     	url: '/cpswaterCost/{groupID}',
     	controller: 'cpswaterCost',
-        templateUrl: 'app/template/waterCostGroup.html'
-    })
-//    .state('overTemperatureTime',{
-//    	url:'/overTemperatureTime/{rdcId}',
-//    	controller: 'overTemperatureTime',
-//    	templateUrl: 'app/template/overTemperatureTime.html'
-//    })
-//    .state('overTemperature',{
-//    	url:'/overTemperature/{rdcId}',
-//    	controller: 'overTemperature',
-//        templateUrl: 'app/template/overTemperature.html'
-//    })
-//    .state('overTemperatureCount',{
-//    	url:'/overTemperatureCount/{rdcId}',
-//    	controller: 'overTemperatureCount',
-//        templateUrl: 'app/template/overTemperatureCount.html'
-//    })
-    .state('overTempCountAndTime',{
+        templateUrl: 'app/template/waterCostGroup.htm'
+    }).state('overTempCountAndTime',{
     	url:'/overTempCountAndTime/{rdcId}',
     	controller: 'overTempCountAndTime',
-        templateUrl: 'app/template/overTempCountAndTime.html'
-    })
-    .state('overTemperatureYZ',{
+        templateUrl: 'app/template/overTempCountAndTime.htm'
+    }).state('overTemperatureYZ',{
     	url:'/overTemperatureYZ/{rdcId}',
     	controller: 'overTemperatureYZ',
-        templateUrl: 'app/template/overTemperatureYZ.html'
+        templateUrl: 'app/template/overTemperatureYZ.htm'
     }).state('BWYZ',{
     	url:'/BWYZ/{rdcId}',
     	controller: 'BWYZ',
-        templateUrl: 'app/template/BWYZ.html'
+        templateUrl: 'app/template/BWYZ.htm'
     }).state('WDZQYZ',{
     	url:'/WDZQYZ/{rdcId}',
     	controller: 'WDZQYZ',
-        templateUrl: 'app/template/WDZQYZ.html'
+        templateUrl: 'app/template/WDZQYZ.htm'
     }).state('doorAnalysis',{
     	url:'/doorAnalysis/{rdcId}',
     	controller: 'doorAnalysis',
-        templateUrl: 'app/template/doorAnalysis.html'
+        templateUrl: 'app/template/doorAnalysis.htm'
     }).state('baoyangReminder',{
     	url:'/baoyangReminder',
     	controller: 'baoyangReminder',
-        templateUrl: 'app/template/baoyangReminder.html'
+        templateUrl: 'app/template/baoyangReminder.htm'
     }).state('baoyangWeixiuRecords',{
     	url:'/baoyangWeixiuRecords',
     	controller: 'baoyangWeixiuRecords',
-        templateUrl: 'app/template/baoyangWeixiuRecords.html'
+        templateUrl: 'app/template/baoyangWeixiuRecords.htm'
     }).state('baoyangWeixiuApply',{
     	url:'/baoyangWeixiuApply',
     	controller: 'baoyangWeixiuApply',
-        templateUrl: 'app/template/baoyangWeixiuApply.html'
+        templateUrl: 'app/template/baoyangWeixiuApply.htm'
     }).state('hotAnalysis',{
     	url:'/hotAnalysis',
     	controller: 'hotAnalysis',
-        templateUrl: 'app/template/hotAnalysis.html'
-    })
-//    .state('alarmLog',{//告警日志
-//    	url:'/alarmLog/',
-//    	controller: 'alarmLog',
-//        templateUrl: 'app/template/alarmLog.html'
-//    })
-    .state('alarmTemp',{//温度告警
+        templateUrl: 'app/template/hotAnalysis.htm'
+    }).state('alarmTemp',{//温度告警
     	url:'/alarmTemp',
     	controller: 'alarmTemp',
-        templateUrl: 'app/template/alarmTemp.html'
+        templateUrl: 'app/template/alarmTemp.htm'
     })
     .state('alarmTempDatil',{//告警预览--》针对集团多账号
     	url:'/alarmTempDatil',
     	controller: 'alarmTempDatil',
-        templateUrl: 'app/template/alarmTempDatil.html'
-    })
-//    .state('designStorage',{//选型
-//    	url:'/designStorage',
-//    	controller: 'designStorage',
-//        templateUrl: 'app/template/designStorage.html'
-//    })
-    .state('lightGroup',{//灯组
+        templateUrl: 'app/template/alarmTempDatil.htm'
+    }).state('lightGroup',{//灯组
     	url:'/lightGroup',
     	controller: 'lightGroup',
-        templateUrl: 'app/template/lightGroup.html'
+        templateUrl: 'app/template/lightGroup.htm'
     }).state('maintainComfirm',{//maintainComfirm
     	url:'/maintainComfirm',
     	controller: 'maintainComfirm',
-        templateUrl: 'app/template/maintainComfirm.html' 
+        templateUrl: 'app/template/maintainComfirm.htm'
     }).state('maintenancealarm',{//维修告警
     	url:'/maintenancealarm/{st}',
     	controller: 'maintenancealarm',
-        templateUrl: 'app/template/maintenancealarm.html' 
+        templateUrl: 'app/template/maintenancealarm.htm'
     }).state('maintenancenotice',{//服务商维修通知
     	url:'/maintenancenotice',
     	controller: 'maintenancenotice',
-        templateUrl: 'app/template/maintenancenotice.html' 
+        templateUrl: 'app/template/maintenancenotice.htm'
     }).state('maintainRequest',{//冷库维修通知单
     	url:'/maintainRequest/{ids}_{st}',
     	controller: 'maintainRequest',
-        templateUrl: 'app/template/maintainRequest.html' 
+        templateUrl: 'app/template/maintainRequest.htm'
     }).state('maintainRepair',{//冷库维修确认单
     	url:'/maintainRepair/{ids}_{st}',
     	controller: 'maintainRepair',
-        templateUrl: 'app/template/maintainRepair.html' 
+        templateUrl: 'app/template/maintainRepair.htm'
     }).state('personInfo',{//冷库维修确认单
     	url:'/personInfo',
     	controller: 'personInfo',
-        templateUrl: 'app/template/personInfo.html' 
+        templateUrl: 'app/template/personInfo.htm'
     }).state('message',{//所有告警信息
         url:'/message',
         controller: 'message',
-        templateUrl: 'app/template/message.html'
-    });
+        templateUrl: 'app/template/message.htm'
+    })
+    .state('rdcPower', {//rdc用电量----Temp
+        url: '/rdcPower/:rdcId',
+        controller: 'rdcPower',
+        templateUrl: 'app/template/rdcPower.htm'
+    })
+    
+    
+    ;
     //    .state('myColdStorage',{维修确认单
 //    	url:'/myColdStorage/:storageID',
 //    	controller: 'myColdStorage',
@@ -478,7 +430,47 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
 //        controller: 'coldStorageMap',
 //        templateUrl: 'app/template/coldStorageMap.html'
 //    })
-   
+    //
+//  .state('warncoldAnalysis', {//制冷告警统计
+//      url: '/warncoldAnalysis/{rdcId}',
+//      controller: 'warncoldAnalysis',
+//      templateUrl: 'app/template/warncoldAnalysis.html'
+//  })
+//  .state('coldStorageMonitor', {
+//      url: '/coldStorageMonitor/:storageID',
+//      controller: 'coldStorageMonitor',
+//      templateUrl: 'app/template/coldStorageMonitor.html'
+//  })
+//  .state('compressorMonitor', {
+//      url: '/compressorMonitor/:storageID',
+//      controller: 'compressorMonitor',
+//      templateUrl: 'app/template/compressorMonitor.html'
+//  })
+//  .state('designStorage',{//选型
+//	url:'/designStorage',
+//	controller: 'designStorage',
+//    templateUrl: 'app/template/designStorage.html'
+//})
+//  .state('alarmLog',{//告警日志
+//	url:'/alarmLog/',
+//	controller: 'alarmLog',
+//    templateUrl: 'app/template/alarmLog.html'
+//})
+//  .state('overTemperatureTime',{
+//	url:'/overTemperatureTime/{rdcId}',
+//	controller: 'overTemperatureTime',
+//	templateUrl: 'app/template/overTemperatureTime.html'
+//})
+//.state('overTemperature',{
+//	url:'/overTemperature/{rdcId}',
+//	controller: 'overTemperature',
+//    templateUrl: 'app/template/overTemperature.html'
+//})
+//.state('overTemperatureCount',{
+//	url:'/overTemperatureCount/{rdcId}',
+//	controller: 'overTemperatureCount',
+//    templateUrl: 'app/template/overTemperatureCount.html'
+//})
 });
 
 //var locationChangeStartOff = $rootScope.$on('$locationChangeStart', locationChangeStart);  
