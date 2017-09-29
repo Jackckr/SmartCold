@@ -85,13 +85,13 @@ public class WarningController {
 	@ResponseBody
 	public void waringNotice(String userIds, String rdcid,String rdcName,String coldStorageName,String basTemp,String diffTemp,String ovtTempTime,String overTemp,String starttime,String token) throws Exception {
 //		new TelephoneVerifyUtil().waringNotice(rdc,coldStorageName,level,basTemp,diffTemp,ovtTempTime,telephone);//短信告警
-		//if(StringUtil.checkToken(token)){
+		if(StringUtil.checkToken(token)){
 			String summary="冷库"+rdcName+"-"+coldStorageName+"在"+starttime+"发生超温告警,超基准温度（"+basTemp+"）:+"+overTemp+" ℃, 超温时长："+ovtTempTime+"分钟";
 			pushController.push360Alarm("冷库超温告警",summary,token,userIds,"1",rdcid,rdcName);
 			String[] useIdArr = userIds.split(",");
 			for (String id:useIdArr){
 				pushController.pushWXAlarm(id,starttime,"冷库"+rdcName+"-"+coldStorageName,"超温告警","超基准温度（"+basTemp+"）:+"+overTemp+" ℃, 超温时长："+ovtTempTime+"分钟");
 			}
-		//}
+		}
 	}
 }
