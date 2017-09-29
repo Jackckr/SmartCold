@@ -219,7 +219,7 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     .state('preview',{
 		url:'/preview',
 		controller: 'preview',
-	    templateUrl: 'app/template/preview.html'
+	    templateUrl: 'app/template/preview.htm'
     })
     .state('cold360Physical',{
 		url:'/cold360Physical/{rdcId}',
@@ -261,7 +261,7 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     }).state('coldStorageTemper', {//温度监控
         url: '/coldStorageTemper/:storageID',
         controller: 'coldStorageTemper',
-        templateUrl: 'app/template/coldStorageTemper.html'
+        templateUrl: 'app/template/coldStorageTemper.htm'
     }).state('coldStorageHumidity', {//湿度监控
         url: '/coldStorageHumidity/:storageID',
         controller: 'coldStorageHumidity',
