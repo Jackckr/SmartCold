@@ -1,0 +1,84 @@
+<div class="clearfix" >
+  <div class="page-header"></div>
+  <div class="col-lg-5 fadeInLeftBig animated">
+  	<div class="box bg-gray">
+       <div class="box-header with-border">
+           <h3 class="box-title">实时电量</h3>
+           <div class="box-tools pull-right">
+               <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+               <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+           </div>
+       </div>
+       <div class="box-body">
+           <div class="row" style="height:300px">
+				<div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 text-center" style="position: relative;">
+					<span style="font-size: 4em;color: coral">{{currentPower}}</span>
+					<span style="font-size: 3em;color: coral">&nbsp;kW·h</span>	
+				</div>	
+			    <div class="col-lg-6 col-md-6 col-xs-6">
+			    <div class="box box-primary box-solid">
+			      <div class="box-header with-border">
+			       <h3 class="box-title">A相电压&nbsp;{{electricMap.AU.value}}&nbsp;V</h3>
+			      </div>
+			     </div>
+			    </div>
+			    <div class="col-lg-6 col-md-6 col-xs-6">
+			    <div class="box box-primary box-solid">
+			      <div class="box-header with-border">
+			       <h3 class="box-title">A相电流&nbsp;{{electricMap.AI.value}}&nbsp;A</h3>
+			      </div>
+			     </div>
+			    </div>
+			    <div class="col-lg-6 col-md-6 col-xs-6">
+			    <div class="box box-primary box-solid">
+			      <div class="box-header with-border">
+			       <h3 class="box-title">B相电压&nbsp;{{electricMap.BU.value}}&nbsp;V</h3>
+			      </div>
+			     </div>
+			    </div>
+			    <div class="col-lg-6 col-md-6 col-xs-6">
+			    <div class="box box-primary box-solid">
+			      <div class="box-header with-border">
+			       <h3 class="box-title">B相电流&nbsp;{{electricMap.BI.value}}&nbsp;A</h3>
+			      </div>
+			     </div>
+			    </div>
+			    <div class="col-lg-6 col-md-6 col-xs-6">
+			    <div class="box box-primary box-solid">
+			      <div class="box-header with-border">
+			       <h3 class="box-title">C相电压&nbsp;{{electricMap.CU.value}}&nbsp;V</h3>
+			      </div>
+			     </div>
+			    </div>
+			    <div class="col-lg-6 col-md-6 col-xs-6">
+			    <div class="box box-primary box-solid">
+			      <div class="box-header with-border">
+			       <h3 class="box-title">C相电流&nbsp;{{electricMap.CI.value}}&nbsp;A</h3>
+			      </div>
+			     </div>
+			    </div>
+           </div>
+       </div><!-- /.box-body -->
+   </div><!-- /.box -->
+  </div>
+  <div class="col-lg-7 fadeInRightBig animated">
+  	<div class="box bg-gray">
+         <div class="box-header with-border">
+             <h3 class="box-title">累积电量实时监控</h3>
+             <div class="box-tools pull-right">
+                 <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                 <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+             </div>
+         </div>
+         <div class="box-body">
+             <div class="chart">
+                 <div id="line" style="height: 300px;"></div>
+             </div>
+         </div><!-- /.box-body -->
+     </div><!-- /.box -->
+    <!-- <div class="box box-gray bg-gray" style="margin-top:10px;">
+      <div id="line" style="height: 300px;"></div>
+    </div> -->
+  </div>
+</div>
+<script src="../../assets/js/echarts.min.js"></script>

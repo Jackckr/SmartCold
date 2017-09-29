@@ -1,0 +1,36 @@
+<div class="page-content">
+    <div class="page-header">
+
+    </div>
+
+    <section class="content">
+        <div class="row">
+
+            <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 animated" ng-repeat="(key,dt) in data">
+
+                <!-- Storage CHART -->
+                <div class="box bg-gray" ng-show="showMap[key+'Chart'] != 0">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">{{key}}&nbsp;&nbsp;&nbsp;&nbsp;
+                        	<span data-toggle="tooltip" data-placement="bottom" 
+                        		title="温度周期因子：温度周期因子包含降温（蓝色）和升温（红色）两个参数，能综合反应制冷速度，进货状态，存货状态等等。在冷库体检功能中我们会针对该项数据综合分析，并结合大数据给出综合评价。">
+                        		30日温度周期因子趋势图
+                       		</span>
+                        </h3>
+                         <div class="box-tools pull-right">
+                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="chart">
+                            <div id="{{key}}Chart" style="height:300px;"></div>
+                        </div>
+                    </div>
+                </div><!-- 2 -->
+
+            </div>
+        </div>
+    </section>
+</div>
+<script src="../../assets/js/echarts-all.js"></script>

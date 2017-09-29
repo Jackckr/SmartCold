@@ -1,0 +1,108 @@
+<style type="text/css">
+.border{
+border-color: orange;
+border-width: 1px;
+border-style: solid;
+}
+.hr{
+color: orange;
+border-width: 1px;
+border-style: solid;
+border-top-color:orange;
+}
+.font{
+color:rgba(30,144,255,0.8);
+font-size:25px;
+font-family:微软雅黑;
+font-weight:bolder;
+fill:rgba(30,144,255,0.8);
+}
+@media screen and (max-width: 1366px) {
+    .myImg{
+    	width:100%;
+    }
+    
+}
+@media screen and (min-width: 1367px) {
+    .myImg{
+    	width:75%;
+    }
+}
+</style>
+
+<div class="page-content">
+    <div class="page-header">
+
+    </div>
+
+    <section class="content">
+        <div class="row">
+
+            <div class="col-md-12 flipInX animated">
+
+                <!-- Pressure CHART -->
+                <div class="box bg-gray">
+                    <div class="box-body">
+                        <div class="chart">
+                        
+                          <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
+                            <div id="pressureChart" style="height:220px;"
+                             class="col-lg-3 col-sm-3 col-xs-3 col-md-3 border slideInLeft animated"></div>
+                            <div id="runChart" style="height:220px;" class="col-lg-9 col-sm-9 col-xs-9 col-md-9 slideInRight animated">
+                            <div class="col-lg-12 text-center">
+                            <img src="assets/img/run.png"/> 运行 <img src="assets/img/stop.png"/> 停止
+                            <a style="float:right;"><font class="font">状态监控</font></a>
+                            </div>
+                            <div ng-repeat="compressor in compressors" 
+                            style="width:16.66%;margin-top:40px;float:left;" class="text-center">
+                            <img ng-if="compressor.type == 1 && compressor.keyValues.isRunning==1" src="assets/img/pressure1_run.png" style="width:100%;float:left;" >
+                            <img ng-if="compressor.type == 1 && compressor.keyValues.isRunning==0" src="assets/img/pressure1_stop.png" style="width:100%;float:left;" >
+                            <img ng-if="compressor.type == 2 && compressor.keyValues.isRunning==1" src="assets/img/pressure2_run.png" style="width:100%;float:left;" >
+                            <img ng-if="compressor.type == 2 && compressor.keyValues.isRunning==0" src="assets/img/pressure2_stop.png" style="width:100%;float:left;" >
+                            <label>{{compressor.name}}</label>
+                            </div>
+                            </div>
+                          </div>
+                          
+                          <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12" style="margin-top: 10px;">
+                          	<hr class="hr">
+                            <div id="floatPressureChart" style="height:220px;" class="col-lg-3 col-sm-3 col-xs-3 col-md-3 border slideInLeft animated"></div>
+                            <div id="exTempChart" style="height:220px;" class="col-lg-9 col-sm-9 col-xs-9 col-md-9 slideInRight animated">
+                          </div>
+                          
+                          <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12" style="margin-top: 10px;">
+                            <hr class="hr">
+                             <div class="col-lg-3 col-sm-3 col-xs-3 col-md-3 border text-center slideInLeft animated"
+                             style="height:220px;margin-top:10px;">
+                              <label class="font">冷凝系统水泵</label>
+	                          <img ng-if="evaporative.evaWater && evaporative.evaWater.isRunning" alt="" src="assets/img/evawater_run.png" style="margin-top:10px;" class="myImg">
+	                          <img ng-if="evaporative.evaWater && !evaporative.evaWater.isRunning" alt="" src="assets/img/evawater_stop.png" style="margin-top:10px;" class="myImg">
+                             </div>
+                             <div id="runChart" style="height:220px;" class="col-lg-9 col-sm-9 col-xs-9 col-md-9 slideInRight animated">
+                             <div class="col-lg-12 text-center">
+                               <img src="assets/img/eva_run.png"/> 运行 <img src="assets/img/stop.png"/> 停止
+                            	<a style="float:right;"><font class="font">冷凝系统风机</font></a>
+                             </div>
+                             <div ng-repeat="evaBlowers in evaporative.evaBlowers" 
+                            style="margin-top:10px;float:left;margin-left: {{$index == 0?0:30}}px;" class="text-center">
+                            <img ng-if="evaBlowers.isRunning==1" src="assets/img/evablower_run.png" style="float:left;width:100px;height:100px;" class="myImg">
+                            <img ng-if="evaBlowers.isRunning==0" src="assets/img/evablower_stop.png" style="float:left;width:100px;height:100px;" class="myImg">
+                            <!-- <img ng-if="compressor.type == 2 && compressor.isRunning==1" src="assets/img/evablower_run.png" style="width:100%;float:left;" >
+                            <img ng-if="compressor.type == 2 && compressor.isRunning==0" src="assets/img/evablower_run.png" style="width:100%;float:left;" > -->
+                            <label>{{evaBlowers.name}}</label>
+                            </div>
+                            </div>
+                           </div>
+                           
+                          <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12">
+                          <hr class="hr">
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</div>
+<script src="../../assets/js/echarts-all.js"></script>
