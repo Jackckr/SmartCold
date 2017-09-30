@@ -266,6 +266,7 @@ header>div>a>.iconfont{
 	color: #fff;
 	text-align: center;
 	line-height: 0.8rem;
+	display: none!important;
 }
 .footer i{
 	font-size: 1.2rem;

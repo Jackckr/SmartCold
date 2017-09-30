@@ -43,15 +43,6 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
 
     $scope.viewStorage = function (rdcId) {
         window.localStorage.rdcId = $scope.rdcId;
-        //根据rdcid查询该rdc的报警信息
-        $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {params: {
-            "rdcId": rdcId
-        }
-        }).success(function (data) {
-            if (data && data.length > 0) {
-                $scope.alarmTotalCnt = data.length;
-            }
-        });
         $http.get(ER.coldroot + '/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function (data) {
             if (data && data.length > 0) {
                 $scope.mystorages = data;
