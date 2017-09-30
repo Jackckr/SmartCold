@@ -92,7 +92,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	 * 1.1初始化冷库温度对象集合（基础数据）
 	 */
 	$scope.initTemp=function(){
-		$scope.sisdata=	$scope.reportType==0&&($scope.formatDateTime(new Date().getTime()).substring(0, 10)==$("#date00").val()) 
+		$scope.sisdata=	$scope.reportType==0&&($scope.formatDateTime(new Date().getTime()).substring(0, 10)==$("#date00").val()) ;
 		if($scope.config.isTable){
 			if($scope.anysisdata.avgtpmsisdata){return;}//数据已经分析  
 			if($scope.sisdata){
@@ -201,7 +201,7 @@ coldWeb.controller('tempReport', function( $scope, $rootScope,$stateParams,$http
 	        if(!$scope.config.isTable){
 	        	yData.push({ name: '基准温度', color: 'red', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:datumTemp},{ x:endDate.getTime(),y:datumTemp}]});//处理基准温度
 	        	yData.push({ name: '报警基线', color: '#f39c12',marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:datumTemp1},{ x:endDate.getTime(),y:datumTemp1}],dashStyle:'dash'});//处理基准温度
-	        	yData.push({ name: ' ', color: '#f39c12', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:datumTemp2},{ x:endDate.getTime(),y:datumTemp2}],dashStyle:'dash'});//处理基准温度
+	        	yData.push({ name: '设定温度', color: '#f39c12', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:datumTemp2},{ x:endDate.getTime(),y:datumTemp2}],dashStyle:'dash'});//处理基准温度
 	        	if($scope.anysisdata.avgtpmsisdata){
 	        		yData.push({ name: '平均温度', color: '#32CD32', marker: { symbol: 'circle' },data:[{x:firstDate.getTime(),y:parseFloat($scope.anysisdata.avgtpmsisdata[2])},{ x:endDate.getTime(),y:parseFloat($scope.anysisdata.avgtpmsisdata[2])}],dashStyle:'dash'});//处理基准温度
 	        	}
