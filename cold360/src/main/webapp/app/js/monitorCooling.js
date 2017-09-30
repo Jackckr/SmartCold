@@ -70,7 +70,7 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope,
     }
 
     $scope.goTempture = function () {
-        window.location.href='monitorTemperature.html?storageID=' + $scope.rdcId;
+        window.location.href='cold360.html?storageID=' + $scope.rdcId;
     }
     $scope.goElectric = function () {
         window.location.href='monitorElectric.html?storageID=' + $scope.rdcId;
@@ -83,15 +83,6 @@ app.controller('monitorCooling', function ($scope, $location, $http, $rootScope,
 
     $scope.initCompressorPressure = function (rdcId) {
         window.localStorage.rdcId = $scope.rdcId;
-        //根据rdcid查询该rdc的报警信息
-        $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {params: {
-            "rdcId": rdcId
-        }
-        }).success(function (data) {
-            if (data && data.length > 0) {
-                $scope.alarmTotalCnt = data.length;
-            }
-        });
         // 初始化压缩机组
         $http.get(ER.coldroot + '/i/compressorGroup/findByRdcId?rdcId=' + rdcId).success(
             function (data) {

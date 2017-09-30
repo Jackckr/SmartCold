@@ -372,7 +372,7 @@ b {
 
 /* other */
 .zhengFaSys {
-    height: 4rem;
+    min-height: 4rem;
     margin-bottom: .5rem;
     background-color: #CCE8CF;
 }

@@ -46,16 +46,6 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
 
     $scope.viewStorage = function (rdcId) {
         window.localStorage.rdcId = $scope.rdcId;
-        //根据rdcid查询该rdc的报警信息
-        $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {
-            params: {
-                "rdcId": rdcId
-            }
-        }).success(function (data) {
-            if (data && data.length > 0) {
-                $scope.alarmTotalCnt = data.length;
-            }
-        });
         // 初始化电量
         $http.get(ER.coldroot + '/i/power/findByRdcId?rdcId=' + rdcId).success(function (data) {
             if (data && data.length > 0) {

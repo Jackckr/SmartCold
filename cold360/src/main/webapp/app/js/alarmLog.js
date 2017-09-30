@@ -94,17 +94,6 @@ app.controller('alarmLog', function ($scope, $location, $http, $rootScope, userS
 
     $scope.viewStorage = function (rdcId) {
         window.localStorage.rdcId = $scope.rdcId;
-        //根据rdcid查询该rdc的报警信息
-        $http.get(ER.coldroot + '/i/warlog/getWarningInfoByRdcID', {
-            params: {
-                "rdcId": rdcId
-            }
-        }).success(function (data) {
-            if (data) {
-                $scope.warLog = data.warLog;
-                $scope.warInfo = data.warInfo;
-            }
-        });
         $(".one").show();
         $(".two").hide();
         $('.searchTop').hide();
