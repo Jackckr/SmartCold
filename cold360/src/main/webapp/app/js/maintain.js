@@ -83,16 +83,6 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
     $scope.sytime = undefined;
     $scope.viewStorage = function (rdcId) {
         window.localStorage.rdcId = $scope.rdcId;
-        //根据rdcid查询该rdc的报警信息
-        $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {
-            params: {
-                "rdcId": $scope.rdcId
-            }
-        }).success(function (data) {
-            if (data && data.length > 0) {
-                $scope.alarmTotalCnt = data.length;
-            }
-        });
         $http.get(ER.coldroot + '/i/compressorGroup/findByRdcId?rdcId=' + rdcId).success(function (data) {
             $scope.compressorGroups = data;
             var oid = [];

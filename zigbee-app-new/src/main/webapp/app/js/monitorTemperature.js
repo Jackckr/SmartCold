@@ -48,12 +48,6 @@ app.controller('monitorTemperature',function ($scope, $location, $http, $rootSco
         $http.get(ER.coldroot + '/i/temp/getTempsetByRdcId', {params: {"rdcId": rdcId } }).success(function (data) {
         		$scope.tempsets = data;
         });
-        //根据rdcid查询该rdc的报警信息
-        $http.get(ER.coldroot + '/i/warlog/findWarningLogsByRdcID', {params: {"rdcId": rdcId } }).success(function (data) {
-            if (data && data.length > 0) {
-                $scope.alarmTotalCnt = data.length;
-            }
-        });
         $http.get(ER.coldroot + '/i/coldStorageSet/findStorageSetByRdcId?rdcID=' + rdcId).success(function (data) {
             if (data && data.length > 0) {
                 $scope.mystorages = data;
