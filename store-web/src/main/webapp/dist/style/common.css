@@ -3,10 +3,21 @@
 *Date: 2017/9/13 0013
 *Time: 16:41
 */
+/*层叠adminLTE样式*/
+.skin-blue .main-header .navbar,
+.skin-blue .main-header .logo{
+    background-color: #154561;
+}
+.skin-blue .main-header .logo:hover,
+.skin-blue .main-header .navbar .sidebar-toggle:hover{
+    background-color: #142d40;
+}
 #uiView{
     background: #233038;
     color: #8aa4af;
 }
+
+/*自定义样式*/
 .setHeight{
     height: 320px;
 }
