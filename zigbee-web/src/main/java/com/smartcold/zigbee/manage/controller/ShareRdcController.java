@@ -527,6 +527,7 @@ public class ShareRdcController {
 //		UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
         if (uid != null && uid != 0) {
             this.rdcShareService.delShareInfoByid(id, uid);
+            redisService.delToAddShare();
             return ResponseData.newSuccess();
         } else {
             return ResponseData.newFailure("非法操作~");
