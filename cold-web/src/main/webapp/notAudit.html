@@ -39,16 +39,13 @@
 	<body>
 		<div class="noAudit">
 			<img src="assets/img/fail.png">
-			<p><b>您的账号还没有认证，不能登录，请到<a href="http://liankur.com">链库网主站</a>进行认证~</b></p>
+			<p><b>您的账号还没有认证，不能登录，请到<a  href="http://liankur.com">链库网主站</a>进行认证~</b></p>
 			<button class="btn btn-primary" onclick="chanUser();">切换账号</button>
 			
 		</div>
 	</body>
 <script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <script type="text/javascript">
-function chanUser(){
-  $.ajax({ type: "get",url:"i/user/logout", success: function(data) {window.location.href ="login.html"; } });
-}
-
+function chanUser(){ $.ajax({ type: "get",url:"i/user/logout", success: function(data) {window.location.href =JSON.parse(localStorage.companyLoad).login+".html"; } });}
 </script>
 </html>

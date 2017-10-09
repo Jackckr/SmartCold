@@ -1,5 +1,9 @@
 package com.smartcold.manage.cold.controller;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,12 +18,9 @@ import com.smartcold.manage.cold.dao.olddb.MessageRecordMapping;
 import com.smartcold.manage.cold.dao.olddb.RdcauthMapping;
 import com.smartcold.manage.cold.dao.olddb.UserMapper;
 import com.smartcold.manage.cold.dto.ResultDto;
-import com.smartcold.manage.cold.entity.olddb.CookieEntity;
-import com.smartcold.manage.cold.entity.olddb.Role;
 import com.smartcold.manage.cold.entity.olddb.RoleUser;
 import com.smartcold.manage.cold.entity.olddb.UserEntity;
 import com.smartcold.manage.cold.service.CacheService;
-import com.smartcold.manage.cold.service.CookieService;
 import com.smartcold.manage.cold.service.RoleService;
 import com.smartcold.manage.cold.service.RoleUserService;
 import com.smartcold.manage.cold.service.UserService;
@@ -47,8 +48,6 @@ public class UserController extends BaseController {
 	private UserMapper userDao;
 
 	@Autowired
-	private CookieService cookieService;
-	@Autowired
 	private CacheService cahcCacheService;
 	
 	
@@ -56,14 +55,16 @@ public class UserController extends BaseController {
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	@ResponseBody
-	public Object logout(HttpServletRequest request) {
-		request.getSession().setAttribute("user", null);
-		Cookie[] cookies = request.getCookies();
-		if(cookies==null||cookies.length==0){return true;}
-		for (Cookie cookie : cookies) {
-			if (cookie.getName().equals("token")) {
-				cahcCacheService.cleraChace(request.getSession().getId());
-				cookieService.deleteCookie(cookie.getValue());
+	public Object logout(HttpServletRequest request,String token) {
+		if(StringUtil.isnotNull(token)){ 
+			cahcCacheService.cleraChace(request.getSession().getId());
+		}else{
+			Cookie[] cookies = request.getCookies();
+			if(cookies==null||cookies.length==0){return true;}
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("token")) {
+					cahcCacheService.cleraChace(cookie.getValue());
+				}
 			}
 		}
 		return true;
@@ -75,13 +76,10 @@ public class UserController extends BaseController {
 		if(StringUtil.isNull(userName)||StringUtil.isNull(password)){return new ResultDto(1, "请输入完整信息！");}
 		UserEntity user = userService.getUserByNAndP(userName, EncodeUtil.encodeByMD5(password));
 		if (user.getId() != 0) {
-			String cookie = cookieService.insertCookie(userName);
+			String cookie = EncodeUtil.encode("sha1", String.format("%s%s", userName, new Date().getTime()));
 			RoleUser roleUser = roleUserService.getRoleIdByUserId(user.getId());
 			user.setPassword(null);
 			user.setRole(roleUser==null?0:roleUser.getRoleid());
-			request.getSession().setAttribute("user", user);
-			response.addCookie(new Cookie("token", cookie));
-			cahcCacheService.putDataTocache(request.getSession().getId(), user);
 			cahcCacheService.putDataTocache(cookie, user);
 			if(roleUser==null){//判断有没有申请
 				if(user.getType()==0){
@@ -104,22 +102,21 @@ public class UserController extends BaseController {
 	 * @param isAuto：是否为自动登录
 	 * @return
 	 */
-	/*
+	
 	@RequestMapping(value = "/userlogin",method= RequestMethod.POST)
 	@ResponseBody
 	public Object userlogin(HttpServletRequest request,String userName,String password, int sik,Boolean isAuto) {
 		try {
 			if(StringUtil.isNull(userName)||StringUtil.isNull(password)||sik!=Calendar.getInstance().get(Calendar.HOUR_OF_DAY)){ return new ResultDto(1, "请输入完整信息！");}
-			this.logout(request);
 			if(isAuto==null||!isAuto){password = EncodeUtil.encodeByMD5(password);}else{password =StringUtil.MD5pwd(null, password);  }
 			UserEntity user = userService.getUserByNAndP(userName, password);
 			if (user != null) {
-				String cookie = cookieService.insertCookie(userName);
+				String cookie =  EncodeUtil.encode("sha1", String.format("%s%s", userName, new Date().getTime()));
 				user.setToken(cookie);
 				user.setPassword(null);
+				cahcCacheService.putDataTocache(cookie, user);
 				HashMap<String, Object> resdata=new HashMap<String, Object>();
 				resdata.put("user", user);
-				resdata.put("sid", request.getSession().getId());
 				resdata.put("toke",cookie);
 				resdata.put("systoke", StringUtil.MD5pwd(password, cookie));
 				return	ResponseData.newSuccess(resdata);
@@ -132,15 +129,8 @@ public class UserController extends BaseController {
 	}
 
 	
-	@RequestMapping(value = "/isLogin", method = RequestMethod.GET)
-	@ResponseBody
-	public Object isLogin(HttpSession session) {
-		String id = session.getId();
-		
-		
-		return new UserEntity();
-	}
-	*/
+
+
 	/**
 	 * 身份校验
 	 * @param request
@@ -182,18 +172,10 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/findUser", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findUser(HttpServletRequest request,String token) {
-		System.err.println("服务器B："+request.getSession().getId());
 		if(StringUtil.isnotNull(token)){
 			UserEntity user = cahcCacheService.getDataFromCache(token);
-			if(user!=null){
-				return user;
-			}
+			if(user!=null){return user;}
 		}
-		UserEntity user = cahcCacheService.getDataFromCache(request.getSession().getId());
-		if(user!=null){
-			return user;
-		}
-	    user =new UserEntity();// (UserEntity)request.getSession().getAttribute("user");//		if(user!=null){return user;}
 		if(StringUtil.isNull(token)){
 			Cookie[] cookies = request.getCookies();
 			if (cookies == null) {
@@ -202,23 +184,10 @@ public class UserController extends BaseController {
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("token")) {
 					token=cookie.getValue();
-					break;
+					UserEntity user = cahcCacheService.getDataFromCache(token);
+					if(user!=null){return user;}else{return new UserEntity();}
 				}
 			}
-		}
-		if(StringUtil.isNull(token)){return user;}
-		CookieEntity effectiveCookie = cookieService.findEffectiveCookie(token);
-		if (effectiveCookie != null) {
-			user = userDao.findUserByName(effectiveCookie.getUsername());
-			if(user==null)return new UserEntity();
-			RoleUser roleUser = roleUserService.getRoleIdByUserId(user.getId());
-			if(roleUser!=null){
-			  Role role = roleService.getRoleByRoleId(roleUser.getRoleid());
-			  user.setRole(role.getId());
-			}
-			user.setPassword(null);
-			request.getSession().setAttribute("user", user);
-			return user;
 		}
 		return new UserEntity();
 	}
@@ -229,13 +198,13 @@ public class UserController extends BaseController {
 	public Object signup(HttpServletRequest request,String username, String password,String telephone,String signUpCode) {
 		if (StringUtil.isNull(username)||StringUtil.isNull(password)||StringUtil.isNull(telephone)||StringUtil.isNull(signUpCode)) {return  ResponseData.newFailure("请输入必填信息！");}
 		try {
-			this.logout(request);//q
+			
 			UserEntity user = new UserEntity();
 			user.setUsername(username);
 			user.setPassword(EncodeUtil.encodeByMD5(password));
 			user.setTelephone(telephone);
 			this.userDao.insertUser(user);
-			String cookie = this.cookieService.insertCookie(username);
+			String cookie = EncodeUtil.encode("sha1", String.format("%s%s", username, new Date().getTime()));
 			return  ResponseData.newSuccess(String.format("token=%s", cookie));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -265,16 +234,14 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/checkOldPassword")
 	@ResponseBody
 	public boolean checkOldPassword(HttpServletRequest request,String pwd,String token){
-		if(StringUtil.isNull(pwd)){return false;};
+		if(StringUtil.isNull(pwd)||StringUtil.isNull(token)){return false;};
 		pwd=EncodeUtil.encodeByMD5(pwd);
-		UserEntity new_user=null;
-		CookieEntity effectiveCookie = cookieService.findEffectiveCookie(token);
-		if (effectiveCookie != null) {
-			new_user = userDao.findUserByName(effectiveCookie.getUsername());
-			if (new_user==null){return false;}
-		}else {
+		UserEntity user = cahcCacheService.getDataFromCache(token);
+		if(user!=null){
+			user = userDao.findById(user.getId());
+		}else{
 			return false;
 		}
-		return pwd.equals(new_user.getPassword());
+		return pwd.equals(user.getPassword());
 	}
 }

@@ -37,7 +37,7 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 数据存在重复（准备处理）
  * 
  **/
-@Service
+//@Service
 public class ZsDevService  {
 	    private static boolean isRuning=true;
 	    

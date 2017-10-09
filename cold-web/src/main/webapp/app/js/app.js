@@ -1,7 +1,21 @@
+
 var user, coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox','ngSanitize','ui.select', 'ngCookies', 'xeditable','ngFileUpload','angucomplete-alt','angular-table', 'bsTable']);
 angular.element(document).ready(function($ngCookies, $location,$rootScope,$http) {
 	   $.ajax({url: '/i/user/findUser',type: "GET", dataType: 'json',cache: false}).success(function(data){user = data;
-	    	if(user.username == null){document.location.href = "/login.html";return; }
+	    	if(user.username == null){
+	    		var bakurl="login";
+	    		if(localStorage.companyLoad){
+	    			 bakurl="/"+JSON.parse(localStorage.companyLoad).login;
+	    		}else{
+	    			var host=location.host;
+	    			if("www.rsdl-panasonic.cn"==host||"sx.cold360.cn"==host){
+	    				 bakurl="sx";
+	    			}else if("yl.cold360.cn"==host){
+	    				 bakurl="yili";
+	    			}
+	    		}
+	    		document.location.href= bakurl+".html";return;
+	    	}
 	    	angular.bootstrap(document, ['ColdWeb']);
 	    });
 });
@@ -143,7 +157,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http','$cookies',funct
 		            	 $rootScope.alarm.totl = data.CC+data.SC+data.TC;
 		                 if($rootScope.alarm.totl>0){$("#div_errmsg").removeClass("hide");}
 		             });
-		             $state.go('preview');
+//		             $state.go('preview');
         	};
         	$rootScope.changeRdc = function(value){
         		if(value){
@@ -173,7 +187,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http','$cookies',funct
             $rootScope.toMyBlowers = function () { $state.go('compressorBlower', {'rdcId': $rootScope.rdcId}); };
             $rootScope.openColdDiv = function (){ $state.go('coldStorageDiv',{'storageID': $rootScope.rdcId}); };
             $rootScope.openLightDiv = function (){ $state.go('light',{'storageID': $rootScope.rdcId});};
-            $rootScope.openWarn = function (){$state.go('warn',{'rdcId': $rootScope.rdcId});};
+//            $rootScope.openWarn = function (){$state.go('warn',{'rdcId': $rootScope.rdcId});};
             $rootScope.toRdcPower = function () { $state.go('rdcPower', {'rdcId': $rootScope.rdcId}); };
             $rootScope.toMyStorageTemper = function (storageID) {$state.go('coldStorageTemper', {'storageID': storageID});};
             $rootScope.toMyStorageDoor = function (storageID) {$state.go('coldStorageDoor', {'storageID': storageID});};
@@ -407,14 +421,14 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         controller: 'message',
         templateUrl: 'app/template/message.htm'
     })
-    .state('rdcPower', {//rdc用电量----Temp
-        url: '/rdcPower/:rdcId',
-        controller: 'rdcPower',
-        templateUrl: 'app/template/rdcPower.htm'
-    })
     
     
     ;
+//    .state('rdcPower', {//rdc用电量----Temp
+//        url: '/rdcPower/:rdcId',
+//        controller: 'rdcPower',
+//        templateUrl: 'app/template/rdcPower.htm'
+//    })
     //    .state('myColdStorage',{维修确认单
 //    	url:'/myColdStorage/:storageID',
 //    	controller: 'myColdStorage',
