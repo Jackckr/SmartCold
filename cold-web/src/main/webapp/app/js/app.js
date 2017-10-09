@@ -7,10 +7,10 @@ angular.element(document).ready(function($ngCookies, $location,$rootScope,$http)
 	    		if(localStorage.companyLoad){
 	    			 bakurl="/"+JSON.parse(localStorage.companyLoad).login;
 	    		}else{
-	    			var l=location.host;
-	    			if("www.rsdl-panasonic.cn"==l){
+	    			var host=location.host;
+	    			if("www.rsdl-panasonic.cn"==host||"sx.cold360.cn"==host){
 	    				 bakurl="sx";
-	    			}else if("sx.cold360.cn"==l){
+	    			}else if("yl.cold360.cn"==host){
 	    				 bakurl="yili";
 	    			}
 	    		}
