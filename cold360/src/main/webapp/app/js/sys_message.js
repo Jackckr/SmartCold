@@ -228,7 +228,10 @@ function allmsg(ops) {//全部消息按钮
     allMsgAjax(-1);
 };
 function syswarn() {
-    alert("暂无");
+    layer.open({
+        content: "暂无！"
+        ,btn: '确定'
+    });
 }
 /*无限加载*/
 $(window).scroll(function(){
@@ -244,7 +247,10 @@ $(window).scroll(function(){
 //模态框
 function sysModal(title,message,id,sType,uid,valId,status,step,uType,isRead) {
     if (status == 1 || status == -1) {
-        alert("该条内容已处理完毕~")
+        layer.open({
+            content: "该条内容已处理完毕！"
+            ,btn: '确定'
+        });
         return
     }
     var oLi='';
@@ -281,7 +287,10 @@ function handleFn(sType,uid,valId,step,isRead,status,onOff) {//0关闭操作，1
                 str.push($(this).val());
             });
             if (str.length == 0) {
-                alert("请选择授权的冷库！");
+                layer.open({
+                    content: "请选择授权的冷库！"
+                    ,btn: '确定'
+                });
                 return
             } else {
                 oid = str.toString();

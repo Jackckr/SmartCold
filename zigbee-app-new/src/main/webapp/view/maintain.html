@@ -427,6 +427,7 @@
 						ng-click="addMaintenance()">发送维修申请</button>
 						<button ng-if="cuttusertype" class="btn btn-success col-lg-4 col-md-4 col-sm-12 col-xs-12 col-md-offset-1" style="margin-bottom: 5px;" ng-click="tol_advice(false,6,'您确定签字？')">同意</button>
 					</div>
+					<button class="btn btn-success btn-block" ng-if="rep==1" ng-click="golist(1)">返回列表</button>
 					</form>
 				</div>			
 			<!------------------ 维修清单确认end---------------------->
@@ -947,6 +948,7 @@
 						<textarea id="txt_evaluate" placeholder="请输入文字/选填" class="datainp"></textarea>
 					</div>
 				</div>
+				<button class="btn btn-success btn-block" ng-if="st==1&&rep==10" ng-click="golist(2)">返回列表</button>
 			</div>
 		</div>
 	</div>

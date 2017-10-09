@@ -50,7 +50,10 @@ myApp.controller('coldRole',function ($scope, $http, Upload) {
             });
             $scope.step = 3;
         }else {
-            alert("请完善冷库认证信息！");
+            layer.open({
+                content: "请完善冷库认证信息！"
+                ,btn: '确定'
+            });
         }
     };
     $scope.goStep4 = function () {
@@ -86,10 +89,16 @@ myApp.controller('coldRole',function ($scope, $http, Upload) {
             var extName="GIF,BMP,JPG,JPEG,PNG";
             //首先对格式进行验证
             if(extName.indexOf(extEndName.toUpperCase())==-1) {
-                alert("只能上传"+extName+"格式的文件");
+                layer.open({
+                    content: "只能上传"+extName+"格式的文件"
+                    ,btn: '确定'
+                });
                 return false;
             }else if(files[j].size > 10485760){
-                alert("最大只能上传10M的图片");
+                layer.open({
+                    content: "最大只能上传10M的图片"
+                    ,btn: '确定'
+                });
                 return false;
             }else{
                 if ($scope.totalauthfiles.length + files.length > 1) {

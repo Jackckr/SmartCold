@@ -112,7 +112,10 @@ app.controller('analysisCooling', function ($scope, $location, $http, $rootScope
                     series: data.entity.chdata
                 });
             } else {
-                alert(data.message);
+                layer.open({
+                    content: data.message
+                    ,btn: '确定'
+                });
             }
         });
     }

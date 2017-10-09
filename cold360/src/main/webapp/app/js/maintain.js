@@ -141,10 +141,13 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
 
 
     /*tab切换*/
-    $(".mylog").click(function (event) {
+    $(".mylog").click(function () {
         var _index = $(this).index();
+        $scope.golist(_index);
+    });
+    $scope.golist = function (_index) {
         $('.mainTainBottomL>div').eq(_index).show().siblings().hide();
-        $(this).addClass('current').siblings().removeClass('current');
+        $(".mylog").eq(_index).addClass('current').siblings().removeClass('current');
         $scope.setp=1;$scope.st=null;$scope.rep=null;
         if(_index==2){
             //维修记录
@@ -162,7 +165,7 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
                 $scope.initData();
             }
         }
-    })
+    }
     /**
      * **********************************************************************222**********************************************************************
      * 新版维修
@@ -244,9 +247,15 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
             if(!confirm(msg)){return;}
             $http({method: 'POST',url: ER.coldroot + '/i/warningMint/rejectMaintenanceByWarId',params: {isreject:isreject, wid:$scope.warids, mid:$scope.maintenance.id, status:status}}).success(function (data) {
                 if(data){
-                    alert("提交成功！");
+                    layer.open({
+                        content: "提交成功！"
+                        ,btn: '确定'
+                    });
                 }else{
-                    alert("提交失敗！流程已锁定！");
+                    layer.open({
+                        content: "提交失敗！流程已锁定！"
+                        ,btn: '确定'
+                    });
                 }
                 $scope.st=null;
                 $scope.step=1;
@@ -329,7 +338,17 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
                 $scope.tol_advice=function(isreback,status,msg){
                     $http({method: 'POST',url:  ER.coldroot + '/i/warningMint/rejectMaintconfirmaById',
                         params: {  isreback:isreback, wid:$scope.wids, mid:$scope.maintid, status:status, score :$("#star input").val(), evaluate:$("#txt_evaluate").val()}}).success(function (data) {
-                        if(data){alert("维修完成！");}else{alert("提交失敗！流程已锁定！");}
+                        if (data) {
+                            layer.open({
+                                content: "维修完成！"
+                                ,btn: '确定'
+                            });
+                        } else {
+                            layer.open({
+                                content: "提交失敗！流程已锁定！"
+                                ,btn: '确定'
+                            });
+                        }
                         $scope.st=null;
                         $scope.initData();
                     });
@@ -352,16 +371,28 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
             var extName="GIF,BMP,JPG,JPEG,PNG";
             //首先对格式进行验证
             if(extName.indexOf(extEndName.toUpperCase())==-1) {
-                alert("只能上传"+extName+"格式的文件");
+                layer.open({
+                    content: "只能上传"+extName+"格式的文件"
+                    ,btn: '确定'
+                });
                 return false
             }else if(files[j].size > 10485760){
-                alert("最大只能上传10M的图片");
+                layer.open({
+                    content: "最大只能上传10M的图片"
+                    ,btn: '确定'
+                });
                 return false
             }
         }
         if(files.length==0){return;};
         var allfiles = $scope.totalfiles.concat(files);
-        if(allfiles.length>10){alert("最多选择10张！");return;}
+        if (allfiles.length > 10) {
+            layer.open({
+                content: "最多选择10张"
+                ,btn: '确定'
+            });
+            return;
+        }
         $scope.totalfiles=allfiles;
     };
     $scope.drophonor = function(honorfile){
@@ -397,7 +428,10 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
             headers: {'Content-Transfer-Encoding': 'utf-8'}
         }).then(function (resp) {
             layer.closeAll();
-            alert('提交成功');
+            layer.open({
+                content: "提交成功"
+                ,btn: '确定'
+            });
             $scope.tol_back(); $scope.initData();
         });
     };
@@ -512,7 +546,10 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
                 $scope.maintenance.bookingtime=$("#orderTime").val();
                 $scope.maintenance.faultmapper=JSON.stringify( $scope.nwardata);
                 $.ajax({type: 'POST',data: $scope.maintenance,url: ER.coldroot + "/i/warningMint/addMaintenance",success: function(data){
-                    alert("维修确认单已发送！");
+                    layer.open({
+                        content: "维修确认单已发送"
+                        ,btn: '确定'
+                    });
                     $scope.st = 2;
                     $scope.rep = null;
                     $scope.initData_notice();
@@ -543,7 +580,17 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
             $scope.tol_advice=function(isreject,status,msg){
                 if(!confirm(msg)){return;}
                 $http({method: 'POST',url:ER.coldroot + '/i/warningMint/rejectMaintenanceByWarId',params: {isreject:isreject, wid:$scope.warids, mid:$scope.maintenance.id, status:status}}).success(function (data) {
-                    if(data){alert("提交成功！");}else{alert("提交失敗！流程已锁定！");}
+                    if (data) {
+                        layer.open({
+                            content: "提交成功"
+                            ,btn: '确定'
+                        });
+                    } else {
+                        layer.open({
+                            content: "提交失敗！流程已锁定！"
+                            ,btn: '确定'
+                        });
+                    }
                 });
             };
         }
@@ -664,7 +711,17 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
                         serverType:servertype
                     };
                     $http({ method:'POST', params: vo,  url: ER.coldroot + '/i/warningMint/addMaintConfirma' }).success(function(data){
-                        alert(data?"提交成功！":"提交失败");
+                        if (data) {
+                            layer.open({
+                                content: "提交成功"
+                                ,btn: '确定'
+                            });
+                        } else {
+                            layer.open({
+                                content: "提交失敗！"
+                                ,btn: '确定'
+                            });
+                        }
                         $scope.st = $scope.rep =null;
                         $scope.initData_notice();
                         // $state.go("maintenancenotice");
@@ -712,7 +769,17 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
                     $scope.tol_advice=function(isreback,status,msg){
                         $http({method: 'POST',url:  ER.coldroot + '/i/warningMint/rejectMaintconfirmaById',
                             params: {  isreback:isreback, wid:$scope.wids, mid:$scope.maintid, status:status, score :$("#star input").val(), evaluate:$("#txt_evaluate").val()}}).success(function (data) {
-                            if(data){alert("维修完成！");}else{alert("提交失敗！流程已锁定！");}
+                            if (data) {
+                                layer.open({
+                                    content: "维修完成！"
+                                    ,btn: '确定'
+                                });
+                            } else {
+                                layer.open({
+                                    content: "提交失敗！流程已锁定！"
+                                    ,btn: '确定'
+                                });
+                            }
                             $scope.initData_notice();
                         });
                     };
@@ -742,7 +809,10 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
     };
     //合并处理
     $scope.tol_batch_notice=function(){
-        alert('开发ing')
+        layer.open({
+            content: "开发ing"
+            ,btn: '确定'
+        });
     };
     /**
      * maintenancenotice
