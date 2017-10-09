@@ -413,6 +413,7 @@
 							</textarea>
 							</div>
 						</div>
+						<button class="btn btn-success btn-block" ng-if="rep==1" ng-click="golist(1)">返回列表</button>
 						<div class="applyKid textA clearfix">
 							<button ng-if="st==0&&user.type==2" class="btn btn-success btn-block"
 									ng-disabled="aForm.name.$dirty && aForm.name.$invalid ||
@@ -933,6 +934,7 @@
 							<textarea id="txt_evaluate" placeholder="请输入文字/选填" class="datainp"></textarea>
 						</div>
 					</div>
+					<button class="btn btn-success btn-block" ng-if="st==1&&rep==10" ng-click="golist(2)">返回列表</button>
 				</div>
 			</div>
 		</div>

@@ -136,7 +136,10 @@ var app=angular.module('app', []).controller('register',function($http, $locatio
     $scope.ischeck=true;
     $scope.savedata = function () {// 修改密码
         if ($scope.ischeck == false) {
-            alert("请确认您已同意冷库360使用协议~");
+            layer.open({
+                content: "请确认您已同意冷库360使用协议~"
+                ,btn: '确定'
+            });
             return
         }
         $("#mention2").html(""); //防止再次点击

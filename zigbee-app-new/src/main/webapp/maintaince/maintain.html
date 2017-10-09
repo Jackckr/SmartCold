@@ -7,12 +7,14 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <title>360维护</title>
     <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+	<link rel="stylesheet" type="text/css" href="../com/css/layer.css">
     <link rel="stylesheet" href="../com/css/swiper.min.css" />
 	<link rel="stylesheet" type="text/css" href="../com/css/baguettebox.min.css">
 	<link rel="stylesheet" type="text/css" href="../com/css/bootstrap.min.css">
     <link rel="stylesheet" href="../com/css/cold360.css" />
     <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
 	<script type="text/javascript" src="../com/js/baguettebox.min.js"></script>
+	<script type="text/javascript" src="../com/js/layer.js"></script>
 	<script type="text/javascript" src="../com/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../com/js/angular.min.js"></script>
 	<script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
@@ -425,6 +427,7 @@
 						ng-click="addMaintenance()">发送维修申请</button>
 						<button ng-if="cuttusertype" class="btn btn-success col-lg-4 col-md-4 col-sm-12 col-xs-12 col-md-offset-1" style="margin-bottom: 5px;" ng-click="tol_advice(false,6,'您确定签字？')">同意</button>
 					</div>
+					<button class="btn btn-success btn-block" ng-if="rep==1" ng-click="golist(1)">返回列表</button>
 					</form>
 				</div>			
 			<!------------------ 维修清单确认end---------------------->
@@ -934,6 +937,7 @@
 						<textarea id="txt_evaluate" placeholder="请输入文字/选填" class="datainp"></textarea>
 					</div>
 				</div>
+				<button class="btn btn-success btn-block" ng-if="st==1&&rep==10" ng-click="golist(2)">返回列表</button>
 			</div>
 		</div>
 	</div>
