@@ -342,6 +342,9 @@
 	<select id="selectByProvince" resultType="java.lang.String">
 		SELECT 	`username` FROM `shared_info` WHERE `datatype`=#{dataType} and `typecode`=#{typeCode} and `provinceId`=#{provinceId}
 	</select>
+	<select id="selectByRdcId" resultType="com.smartcold.zigbee.manage.entity.SharedInfoEntity">
+		SELECT * FROM `shared_info` WHERE `rdcID`=#{rdcid} ORDER BY id desc limit 1
+	</select>
 	<insert id="addshareInfo" parameterType="com.smartcold.zigbee.manage.dto.RdcShareDTO">
 	     <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
            SELECT LAST_INSERT_ID() AS id
@@ -385,7 +388,8 @@
 								<if test=" cityid        !=0">	                        cityid          =#{cityid           }  ,</if>
 								<if test=" address       !=null and address    !=''">	address         =#{address          }  ,</if>
 								<if test=" detlAddress   !=null and detlAddress!=''">	detlAddress     =#{detlAddress      }  ,</if>
-								<if test=" dataType      !=0">	                        dataType        =#{dataType         }   </if>
+								<if test=" dataType      !=0">	                        dataType        =#{dataType         }  ,</if>
+			  addtime=now(),updatetime=now()
 		</set>    
 	</insert>
 	<update id="updateshareInfo" parameterType="com.smartcold.zigbee.manage.dto.RdcShareDTO" >
@@ -428,7 +432,8 @@
 								<if test=" cityid        !=0">	                        cityid          =#{cityid           }  ,</if>
 								<if test=" address       !=null and address    !=''">	address         =#{address          }  ,</if>
 								<if test=" detlAddress   !=null and detlAddress!=''">	detlAddress     =#{detlAddress      }  ,</if>
-								<if test=" dataType      !=0">	                        dataType        =#{dataType         }   </if>
+								<if test=" dataType      !=0">	                        dataType        =#{dataType         }  ,</if>
+			addtime=now(),updatetime=now()
         </set>
         where id = #{id};
     </update>

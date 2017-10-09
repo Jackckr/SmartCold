@@ -1,6 +1,7 @@
 package com.smartcold.zigbee.manage.dao;
 
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -93,6 +94,8 @@ public interface RdcShareMapper {
 	 void updateShare(SharedInfoEntity sharedInfoEntity);
 
 	 SharedInfoEntity getById(Integer id);
+
+	 SharedInfoEntity selectByRdcId(Integer rdcid);
 
 	 Set<String> selectByProvince(@Param("dataType") Integer dataType, @Param("typeCode")Integer typeCode, @Param("provinceId")Integer provinceId);
 }

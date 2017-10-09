@@ -1,9 +1,6 @@
 package com.smartcold.zigbee.manage.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -12,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.smartcold.zigbee.manage.dao.*;
 
 import com.smartcold.zigbee.manage.entity.CollectEntity;
+import com.smartcold.zigbee.manage.entity.SharedInfoEntity;
 import com.smartcold.zigbee.manage.service.RedisService;
 import com.smartcold.zigbee.manage.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -559,6 +557,12 @@ public class ShareRdcController {
                 return ResponseData.newFailure("数据不能包含特殊字符~");
             }
             RdcShareDTO rdcShareDTO = JSON.parseObject(data, RdcShareDTO.class);//页面数据/ /1.获得表单数据
+            if (rdcShareDTO.getRdcID()!=0){
+                SharedInfoEntity dbRdcShare = rdcShareMapper.selectByRdcId(rdcShareDTO.getRdcID());
+                if (dbRdcShare!=null &&dbRdcShare.getTypecode()==rdcShareDTO.getTypeCode()&&dbRdcShare.getDatatype()==rdcShareDTO.getDataType() &&dbRdcShare.getAddtime()!=null && System.currentTimeMillis()-dbRdcShare.getAddtime().getTime()<7*24*60*60*1000) {
+                    return ResponseData.newFailure("~关联该冷库已发布过需求匹配，7天内不能重复发布！~");
+                }
+            }
             if ("".equals(rdcShareDTO.getUnitPrice()) || "undefined".equals(rdcShareDTO.getUnitPrice())) {
                 rdcShareDTO.setUnitPrice("0");
             }
