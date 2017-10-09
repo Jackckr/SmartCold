@@ -1,5 +1,6 @@
 package com.smartcold.zigbee.manage.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -418,7 +419,16 @@ public class ShareRdcController {
     @Cacheable(key="'getSERdc'+args[0]+'_'+args[1]")
     @Transactional
     public Object getSERdc(Integer dataType, Integer typeCode) {
-        return rdcShareMapper.getNewSERDCListByID(dataType, typeCode);
+        List<RdcShareDTO> SERDCListByID = rdcShareMapper.getNewSERDCListByID(dataType, typeCode);
+        ArrayList<Integer> username_list = new ArrayList<Integer>();
+        List<RdcShareDTO> newSERDCListByID=new ArrayList<RdcShareDTO>();
+        for (RdcShareDTO rdcShareDTO:SERDCListByID){
+            if (!username_list.contains(rdcShareDTO.getReleaseID())){
+                username_list.add(rdcShareDTO.getReleaseID());
+                newSERDCListByID.add(rdcShareDTO);
+            }
+        }
+        return newSERDCListByID;
     }
 
     /**
