@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.router', 'ngCookies']);
+var app = angular.module('app', ['ui.router']);
 
 app.service('userService', function($rootScope,$http) {
 	$rootScope.tab=1;

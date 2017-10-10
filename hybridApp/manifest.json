@@ -10,7 +10,7 @@
 	"icons": {
 		"72": "icon.png"
 	},
-	"launch_path": "login.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+	"launch_path": "index.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
 	"developer": {
 		"name": "",/*开发者名称*/
 		"email": "",/*开发者邮箱地址*/
@@ -101,7 +101,7 @@
         },
         "NativeObj":{
         	"description": "原生对象"
-        }
+        },"Push":{},"Share":{},"OAuth":{},"Payment":{},"Statistic":{}
 	},
 	"plus": {
 		"splashscreen": {
@@ -124,7 +124,7 @@
 				"keystore": "",/*Android应用打包使用的密钥库文件*/
 				"password": "",/*Android应用打包使用密钥库中证书的密码*/
 				"aliasname": "",/*Android应用打包使用密钥库中证书的别名*/
-				"permissions": ["<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>","<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.READ_LOGS\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-feature android:name=\"android.hardware.camera.autofocus\"/>","<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>","<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>","<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>","<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>","<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>","<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>","<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"]
+				"permissions": ["<uses-permission android:name=\"android.permission.RECORD_AUDIO\"/>","<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>","<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>","<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\"/>","<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>","<uses-permission android:name=\"android.permission.READ_CONTACTS\"/>","<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>","<uses-permission android:name=\"android.permission.VIBRATE\"/>","<uses-permission android:name=\"android.permission.READ_LOGS\"/>","<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>","<uses-permission android:name=\"android.permission.CALL_PHONE\"/>","<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>","<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>","<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>","<uses-feature android:name=\"android.hardware.camera.autofocus\"/>","<uses-feature android:name=\"android.hardware.camera\"/>","<uses-permission android:name=\"android.permission.WRITE_CONTACTS\"/>","<uses-permission android:name=\"android.permission.ACCESS_FINE_LOCATION\"/>","<uses-permission android:name=\"android.permission.RECEIVE_USER_PRESENT\"/>","<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>","<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>","<uses-permission android:name=\"android.permission.RECEIVE_BOOT_COMPLETED\"/>","<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\"/>","<uses-permission android:name=\"android.permission.CAMERA\"/>"]
 			},
 			"orientation": ["portrait-primary", "portrait-secondary"],/*应用支持的方向，portrait-primary：竖屏正方向；portrait-secondary：竖屏反方向；landscape-primary：横屏正方向；landscape-secondary：横屏反方向*/
 			"icons": {
@@ -188,6 +188,133 @@
 					"xxhdpi": ""
 				}
 			}
+		}
+	},
+	"dependencies":{
+		"pages": {
+			"view/monitor_electric.html": {
+				"href": "view/monitor_electric.html",
+				"priority": 0
+			},
+			"view/maintain.html": {
+				"href": "view/maintain.html",
+				"priority": 1
+			},
+			"view/warning.html": {
+				"href": "view/warning.html",
+				"priority": 2
+			},
+			"view/monitor.html": {
+				"href": "view/monitor.html",
+				"priority": 3
+			},
+			"view/monitor_water.html": {
+				"href": "view/monitor_water.html",
+				"priority": 4
+			},
+			"view/analysis.html": {
+				"href": "view/analysis.html",
+				"priority": 5
+			},
+			"view/query.html": {
+				"href": "view/query.html",
+				"priority": 6
+			},
+			"setting.html": {
+				"href": "setting.html",
+				"resources": [
+					"js/components/mui.min.js",
+					"js/components/mui.view.js",
+					"js/components/feedback.js",
+					"css/mui.min.css",
+					"fonts/mui.ttf",
+					"css/feedback.css"
+				],
+				"priority": 7
+			},
+			"index.html": {
+				"href": "index.html",
+				"resources": [
+					"js/components/mui.min.js",
+					"js/components/angular.min.js",
+					"js/components/angular-ui-router.js",
+					"js/components/angular-cookies.min.js",
+					"js/controller/app.js",
+					"js/controller/monitor.js",
+					"js/controller/monitor_electric.js",
+					"js/controller/monitor_water.js",
+					"js/controller/query.js",
+					"js/controller/analysis.js",
+					"js/controller/warning.js",
+					"js/controller/maintain.js",
+					"css/mui.min.css",
+					"fonts/mui.ttf",
+					"css/style/common.css",
+					"fonts/iconfont.eot",
+					"fonts/iconfont.woff",
+					"fonts/iconfont.ttf",
+					"fonts/iconfont.svg",
+					"css/style/monitor.css",
+					"images/cbd.jpg"
+				],
+				"refer": [
+					"view/monitor_electric.html",
+					"view/maintain.html",
+					"view/warning.html",
+					"view/monitor.html",
+					"view/monitor_water.html",
+					"view/analysis.html",
+					"view/query.html",
+					"setting.html"
+				],
+				"priority": 0
+			},
+			"reg.html": {
+				"href": "reg.html",
+				"resources": [
+					"css/mui.min.css",
+					"fonts/mui.ttf",
+					"js/components/mui.min.js"
+				],
+				"priority": 1
+			},
+			"forget_password.html": {
+				"href": "forget_password.html",
+				"resources": [
+					"css/mui.min.css",
+					"fonts/mui.ttf",
+					"js/components/mui.min.js"
+				],
+				"priority": 2
+			},
+			"login.html": {
+				"href": "login.html",
+				"resources": [
+					"css/mui.min.css",
+					"fonts/mui.ttf",
+					"js/components/mui.min.js",
+					"js/components/mui.enterfocus.js",
+					"js/components/app.js",
+					"js/components/angular.min.js",
+					"images/360_logo.png"
+				],
+				"refer": [
+					"index.html",
+					"reg.html",
+					"forget_password.html"
+				],
+				"priority": 0
+			}
+		},
+		"idle": {
+			"resources": [
+				"view/monitor_tem.html",
+				"fonts/iconfont.css",
+				"fonts/iconfont.js",
+				"js/components/mui.locker.js",
+				"js/components/feedback-page.js",
+				"css/mui.css"
+			]
 		}
 	}
 }

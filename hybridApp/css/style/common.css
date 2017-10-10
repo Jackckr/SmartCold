@@ -26,13 +26,27 @@
 	-webkit-border-radius: 50%;
 	border-radius: 50%;
 }
+/*层叠mui样式表*/
 .mui-bar .mui-icon:active{
 	opacity: 1;
 }
-#uiView nav{
-	position: relative;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
+header.mui-bar{
+	background-color: #4287ff;
+}
+header>.mui-title,
+header>.mui-pull-right{
+	color: #fff;
+}
+/*默认颜色*/
+.red{
+	color: #EB5A4A!important;
+}
+.green{
+	color: #5bb789!important;
+}
+.gold{
+	color: #f39826!important;
+}
+.blue{
+	color: #4287ff!important;
 }
