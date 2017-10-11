@@ -86,9 +86,6 @@ app.controller('monitorElectric', function ($scope, $location, $http, $rootScope
     $scope.goCooling = function () {
         window.location.href = 'analysisCooling.html?storageID=' + $scope.rdcId;
     }
-    $scope.goElectric = function () {
-        window.location.href='analysisElectric.html?storageID=' + $scope.rdcId;
-    };
 
     var getFormatTimeString = function (delta) {
         delta = delta ? delta + 8 * 60 * 60 * 1000 : 8 * 60 * 60 * 1000;

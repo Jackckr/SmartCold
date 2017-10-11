@@ -45,9 +45,19 @@
 	</div>
 	<script src="../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="../js/jquery-1.9.0.js" type="text/javascript"></script>
+	<script src="../js/controller/index.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		mui.init();
-			/*特殊tab处理---温度*/
+		mui.ready(function() {
+			localtionURL("HY_My_Visit", "HY_My_Visit.html");
+			localtionURL("EidtData", "EidtData.html");
+			localtionURL("HY_My_Details", "HY_My_Details.html");
+			localtionURL("HY_My_Mdou", "HY_My_Mdou.html");
+			localtionURL("HY_My_Wallet", "HY_My_Wallet.html");
+			localtionURL("HY_My_HeiYue", "HY_My_HeiYue.html");
+		});
+		
+		/*特殊tab处理---温度*/
 		$('.rlTab a').eq(0).on("tap",function(){
 		  $('.rlTab').find("b").css('color','#555');
 		  $(this).addClass('activeTab').siblings().removeClass('activeTab');
