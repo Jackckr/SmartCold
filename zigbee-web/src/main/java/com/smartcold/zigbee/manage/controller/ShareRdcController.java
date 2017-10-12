@@ -558,7 +558,7 @@ public class ShareRdcController {
                 return ResponseData.newFailure("数据不能包含特殊字符~");
             }
             RdcShareDTO rdcShareDTO = JSON.parseObject(data, RdcShareDTO.class);//页面数据/ /1.获得表单数据
-            if (rdcShareDTO.getRdcID()!=0){
+            if (rdcShareDTO.getRdcID()!=0&&rdcShareDTO.getId()==0){
                 SharedInfoEntity dbRdcShare = rdcShareMapper.selectByRdcId(rdcShareDTO.getRdcID());
                 if (dbRdcShare!=null &&dbRdcShare.getTypecode()==rdcShareDTO.getTypeCode()&&dbRdcShare.getDatatype()==rdcShareDTO.getDataType() &&dbRdcShare.getAddtime()!=null && System.currentTimeMillis()-dbRdcShare.getAddtime().getTime()<7*24*60*60*1000) {
                     return ResponseData.newFailure("~关联该冷库已发布过需求匹配，7天内不能重复发布！~");
