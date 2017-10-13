@@ -8,12 +8,35 @@
 }
 .iconfont {
   font-family:"iconfont"!important;
-  font-size:16px;
   font-style:normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/*层叠mui样式表*/
+body,
+.mui-title,
+.iconfont{
+	font-size: 16px;
+}
+ul,li{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.mui-bar .mui-icon:active{
+	opacity: 1;
+}
+header.mui-bar{
+	background-color: #4287ff;
+}
+header>.mui-title,
+header>.mui-pull-right{
+	color: #fff;
+}
+ /*
+ * 自定义通用样式
+ */
 .userImg{
 	width: 44px;
 	height:44px;
@@ -26,16 +49,10 @@
 	-webkit-border-radius: 50%;
 	border-radius: 50%;
 }
-/*层叠mui样式表*/
-.mui-bar .mui-icon:active{
-	opacity: 1;
-}
-header.mui-bar{
-	background-color: #4287ff;
-}
-header>.mui-title,
-header>.mui-pull-right{
-	color: #fff;
+.chart {
+	height: 400px;
+	margin: 20px 5px 0px;
+	padding: 0px;
 }
 /*默认颜色*/
 .red{
