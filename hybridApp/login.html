@@ -80,7 +80,7 @@
 		</div>
 		<script src="js/mui.min.js"></script>
 		<script src="js/mui.enterfocus.js"></script>
-		<script src="js/controller/common.js"></script>
+		<script src="js/controller/index.js"></script>
 		<script>
 			(function($, doc) {
 				$.init({
@@ -97,7 +97,7 @@
 				this.innerText = '登录中...';
 				this.setAttribute('disabled', true);
 				var loginButton = this;
-				mui.ajax(ER.coldroot + '/i/user/login', {
+				mui.ajax(smartCold + '/i/user/login', {
 					data: {
 						userName: account,
 						password: password
@@ -112,7 +112,7 @@
 							mui.alert('密码用户名不匹配', '提示', '确认');
 						} else {
 							document.cookie = data.message;
-							mui.ajax(ER.coldroot + '/i/user/findUser', {
+							mui.ajax(smartCold + '/i/user/findUser', {
 								headers: {
 									'Cookie': "JSESSIONID=" +document.cookie.token
 								},
@@ -122,8 +122,8 @@
 								success: function(data) {
 									window.localStorage.user = JSON.stringify(data);
 									mui.openWindow({
-										url: 'login.html',
-										id: 'login',
+										url: 'index.html',
+										id: 'index',
 										waiting: {
 											autoShow: true, //自动显示等待框，默认为true
 											title: '正在加载...' //等待对话框上显示的提示内容}})
