@@ -5,23 +5,35 @@
  * Created by sunqiunian on 16/3/3.
  */
 coldWeb.controller('coldStorageHumidity', function ($scope, $location, $stateParams, $http,$rootScope, baseTools) {
+//	$scope.demolist=[491,492,493,494],$scope.demoset=[607,609,680, 420];
     $scope.isErr=false;$scope.fstartTime=undefined; $scope.oids=[],$scope.names=[];$scope.storageID= $stateParams.storageID;  console.log("storageID:"+$scope.storageID);   
     $scope.colors= ['#058DC7', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'];  Highcharts.setOptions({  global: {useUTC: false } ,colors:$scope.colors });
     $scope.getTempset = function () {
-    	if($rootScope.Tempset&&$rootScope.Tempset[$scope.storageID]){
-    		 $scope.oids=$rootScope.Tempset[$scope.storageID].oids;$scope.names=$rootScope.Tempset[$scope.storageID].names;$scope.load();
+    	if( $scope.storageID=='491'|| $scope.storageID=='492'|| $scope.storageID=='493'|| $scope.storageID=='494'){//松下测试
+    	    switch ($scope.storageID) {
+			case '491': $scope.oids=[380];break;
+			case '492': $scope.oids=[382];break;
+			case '493': $scope.oids=[383];break;
+			case '494': $scope.oids=[420];break;
+			default: $scope.oids=[420];break;}
+    		 $scope.names=['湿度'];
+    		 $scope.load();
     	}else{
-    		 $http.get('/i/temp/getTempsetByStorageID', { params: {"oid": $scope.storageID}}).success(function (data) {
-    		    	if(data){
-    		    	 	angular.forEach(data,function(obj,i){
-    		    	 		$scope.oids.push(obj.id);$scope.names.push(obj.name);
-    		    	 	});
-    		    	 	 $rootScope.Tempset[$scope.storageID]={oids:$scope.oids,names:$scope.names };
-    		    	 	 $scope.load();
-    		    	}else{
-    		    		$("#mgs_div2").removeClass("hidden");
-    		    	}
-    		    });	
+    		if($rootScope.Tempset&&$rootScope.Tempset[$scope.storageID]){
+       		 $scope.oids=$rootScope.Tempset[$scope.storageID].oids;$scope.names=$rootScope.Tempset[$scope.storageID].names;$scope.load();
+       	}else{
+       		 $http.get('/i/temp/getTempsetByStorageID', { params: {"oid": $scope.storageID}}).success(function (data) {
+       		    	if(data){
+       		    	 	angular.forEach(data,function(obj,i){
+       		    	 		$scope.oids.push(obj.id);$scope.names.push(obj.name);
+       		    	 	});
+       		    	 	 $rootScope.Tempset[$scope.storageID]={oids:$scope.oids,names:$scope.names };
+       		    	 	 $scope.load();
+       		    	}else{
+       		    		$("#mgs_div2").removeClass("hidden");
+       		    	}
+       		    });	
+         	}
     	}
     };
     $("#oview").height($(".content-wrapper")[0].clientHeight);

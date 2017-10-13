@@ -19,9 +19,10 @@ public class CompanyFilter implements Filter{
         HttpServletRequest request= (HttpServletRequest) servletRequest;
         HttpServletResponse response= (HttpServletResponse) servletResponse;
         String uri = request.getRequestURI();  
+//        System.err.println(uri);
         if("/".equals(uri)){
         	String url=  request.getRequestURL().toString();
-            System.err.println(url);
+//        	   System.err.println(uri);
             switch (url) {
     		case "http://www.rsdl-panasonic.cn/":
     		case "http://sx.cold360.cn/":

@@ -55,7 +55,6 @@ public class UtilController extends BaseController {
 	 public Object deldevcache(String toke){if(StringUtil.verifyToken(toke)){ZsDevService.clerCache();	return true;}return false;}
 	 
 	 
-	 
 	 @RequestMapping(value = "/getZsDevStatus")
 	 public  HashMap<String, StorageDataCollectionEntity>  getZsDevStatus(int type){ switch (type) {case 1: return ZsDevService.msimap;case 2: return ZsDevService.bsimap;case 3: return ZsDevService.dumap;default:return null;}}
 	 //=====================================================系统接口管理==========================================================================================================================
@@ -73,5 +72,7 @@ public class UtilController extends BaseController {
 	 @RequestMapping("/getColdAlarmStatus") //判断指定冷库是否超温
 	 public HashMap<String, Boolean> getColdAlarmStatus(int oid )	{ HashMap<String, Boolean> tempHashMap=new HashMap<String, Boolean>();tempHashMap.put("isAlarm",  WarningTaskService.tempListen.containsKey(oid)&& WarningTaskService.tempListen.get(oid).getWarcount()>3);tempHashMap.put("isBlack",  WarningTaskService.extBlacklist.containsKey(oid));	 return   tempHashMap;}
 
+	 //=====================================================时序数据库测试==========================================================================================================================
+	
 	
 }

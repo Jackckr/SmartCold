@@ -33,7 +33,7 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * @author Administrator
  *
  */
-@Controller
+//@Controller
 public class ZWCollectionController extends BaseController {
 
 	private static Gson gson = new Gson();

@@ -11,7 +11,7 @@ public class Client {
 	
 	public static void main(String[] args) throws Exception {
 		User user=new User(1,25,1,"HH");
-		Socket	server = new Socket("192.168.1.136", 2196);
+		Socket	server = new Socket("192.168.1.138", 2196);
 		BufferedReader in = new BufferedReader(new InputStreamReader( server.getInputStream()));
 		PrintWriter out = new PrintWriter(server.getOutputStream());
 	    String jsonString = JSON.toJSONString(user);

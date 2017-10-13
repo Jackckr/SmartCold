@@ -9,7 +9,13 @@ coldWeb.controller('lightGroup', function ($rootScope, $scope, $state, $cookies,
 					      $scope.isshow=false;
 					      angular.forEach($rootScope.mystorages,function(item){ 
 							   var lightGroups=[];
-							   angular.forEach(data,function(obj){  if(obj.coldStorageId==item.id){ lightGroups.push(obj); } }); 
+							   angular.forEach(data,function(obj){  if(obj.coldStorageId==item.id){ 
+								   if(obj.id==81||obj.id==83||obj.id==85||obj.id==87||obj.id==88){
+                                       obj.isRunning=1;
+                                    }
+								   lightGroups.push(obj);
+								   
+							   } }); 
 							   item.lightGroups=lightGroups;
 						   }); 
 					      

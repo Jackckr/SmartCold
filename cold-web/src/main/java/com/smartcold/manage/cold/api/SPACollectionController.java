@@ -27,7 +27,7 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * @author Administrator
  *
  */
-@Controller
+//@Controller
 @Deprecated
 public class SPACollectionController extends BaseController {
 /*

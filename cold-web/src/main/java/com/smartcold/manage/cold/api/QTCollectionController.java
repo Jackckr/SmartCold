@@ -194,13 +194,12 @@ public class QTCollectionController extends BaseController {
 	 */
 	@RequestMapping(value = "/QTDataCollection", method = RequestMethod.POST)
 	@ResponseBody
-	public Object QTDataCollection(@RequestBody String data) {		long cutime=System.currentTimeMillis(),exptime=0;boolean cisupdat=false;;
+	public Object QTDataCollection(@RequestBody String data) {		
+		long cutime=System.currentTimeMillis(),exptime=0;boolean cisupdat=false;;
 		 String apID="";
-		 
 		try {
 //			System.out.println(data);
 			if(StringUtil.isNull(data)){return DataResultDto.newFailure();}
-			
 			Map<String, Object> dataCollectionBatchEntity = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 			if(dataCollectionBatchEntity.containsKey("infos")){
 				 apID = dataCollectionBatchEntity.get("apID").toString();

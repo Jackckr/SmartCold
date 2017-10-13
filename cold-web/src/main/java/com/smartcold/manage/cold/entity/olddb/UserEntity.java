@@ -11,25 +11,20 @@ public class UserEntity implements Serializable {
 	private int roleid;
 	
 	private int type;//0:360用户 1:货主  2 :服务商
-	
-	
+	private int level;//0:管理员   1：低级管理员 2  3
 	private String username;
+	private String password;//管理员密码
 
-	private String password;
-
+	
+	
 	private String telephone;
-
 	private String email;
-
 	private Integer vipType;
-	
-	
-	private String token;//
 	//登录安全检查信息
+	private String token;//
 	private boolean loginRisk;//当前登录环境是否正常
 	private String  lastlogininfo;//上的登录环境信息
 	private String  cuttlogininfo;//本次登录环境信息
-	
 	
 	private String avatar="http://139.196.189.93:8089/app/userimg.jpg";//用户头像->add
 	
@@ -174,5 +169,15 @@ public class UserEntity implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	
+	
 	
 }

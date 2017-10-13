@@ -105,19 +105,20 @@ public class UserController extends BaseController {
 	
 	@RequestMapping(value = "/userlogin",method= RequestMethod.POST)
 	@ResponseBody
-	public Object userlogin(HttpServletRequest request,String userName,String password, int sik,Boolean isAuto) {
+	public Object userlogin(HttpServletRequest request,  String userName,String password, int sik,Boolean isAuto) {
 		try {
 			if(StringUtil.isNull(userName)||StringUtil.isNull(password)||sik!=Calendar.getInstance().get(Calendar.HOUR_OF_DAY)){ return new ResultDto(1, "请输入完整信息！");}
 			if(isAuto==null||!isAuto){password = EncodeUtil.encodeByMD5(password);}else{password =StringUtil.MD5pwd(null, password);  }
-			UserEntity user = userService.getUserByNAndP(userName, password);
+			UserEntity user = userDao.Login(userName, password);
 			if (user != null) {
+				if (user.getLevel()==-1) {
+					return ResponseData.newFailure("用户名或者密码不正确！");	
+				}
 				String cookie =  EncodeUtil.encode("sha1", String.format("%s%s", userName, new Date().getTime()));
 				user.setToken(cookie);
-				user.setPassword(null);
-				cahcCacheService.putDataTocache(cookie, user);
+				cahcCacheService.putDataTocache(cookie, user);//缓存token 
 				HashMap<String, Object> resdata=new HashMap<String, Object>();
 				resdata.put("user", user);
-				resdata.put("toke",cookie);
 				resdata.put("systoke", StringUtil.MD5pwd(password, cookie));
 				return	ResponseData.newSuccess(resdata);
 			}

@@ -8,7 +8,7 @@ import com.smartcold.manage.cold.entity.olddb.UserEntity;
 
 public interface UserMapper {
 
-	public UserEntity findByPassword(@Param("username") String username, @Param("password") String password);
+
 
 	public UserEntity findById(@Param("id") int id);
 	
@@ -37,4 +37,8 @@ public interface UserMapper {
 	void updateTypeById(UserEntity userEntity);
 
     UserEntity findUserByTelephone(String phone);
+    
+	public UserEntity Login(@Param("username") String username, @Param("password") String password);
+	@Deprecated
+	public UserEntity findByPassword(@Param("username") String username, @Param("password") String password);
 }
