@@ -14,7 +14,7 @@
 	"icons": {
 		"72": "icon.png"
 	},
-	"launch_path": "index.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+	"launch_path": "login.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
 	"developer": {
 		"name": "",/*开发者名称*/
 		"email": "",/*开发者邮箱地址*/
@@ -250,7 +250,17 @@
 			},
 			"view/monitor.html": {
 				"href": "view/monitor.html",
-				"priority": 3
+				"priority": 3,
+				"resources": [
+					"css/style/monitor.css",
+					"js/mui.min.js",
+					"css/mui.min.css",
+					"css/style/common.css",
+					"js/controller/index.js",
+					"js/jquery-1.9.0.js",
+					"fonts/iconfont.woff"
+				],
+				"refer": []
 			},
 			"view/monitor_water.html": {
 				"href": "view/monitor_water.html",
@@ -272,9 +282,13 @@
 					"js/components/feedback.js",
 					"css/mui.min.css",
 					"fonts/mui.ttf",
-					"css/feedback.css"
+					"css/feedback.css",
+					"js/feedback.js",
+					"js/mui.view.js",
+					"js/mui.min.js"
 				],
-				"priority": 7
+				"priority": 7,
+				"refer": []
 			},
 			"index.html": {
 				"href": "index.html",
@@ -299,17 +313,20 @@
 					"fonts/iconfont.ttf",
 					"fonts/iconfont.svg",
 					"css/style/monitor.css",
-					"images/cbd.jpg"
+					"images/cbd.jpg",
+					"js/jquery-1.9.0.js",
+					"view/monitor.html",
+					"js/mui.min.js"
 				],
 				"refer": [
 					"view/monitor_electric.html",
 					"view/maintain.html",
 					"view/warning.html",
-					"view/monitor.html",
 					"view/monitor_water.html",
 					"view/analysis.html",
 					"view/query.html",
-					"setting.html"
+					"setting.html",
+					"login.html"
 				],
 				"priority": 0
 			},
@@ -320,7 +337,8 @@
 					"fonts/mui.ttf",
 					"js/components/mui.min.js"
 				],
-				"priority": 1
+				"priority": 1,
+				"refer": []
 			},
 			"forget_password.html": {
 				"href": "forget_password.html",
@@ -340,11 +358,14 @@
 					"js/components/mui.enterfocus.js",
 					"js/components/app.js",
 					"js/components/angular.min.js",
-					"images/360_logo.png"
+					"images/360_logo.png",
+					"js/mui.enterfocus.js",
+					"js/mui.min.js",
+					"reg.html",
+					"js/controller/common.js"
 				],
 				"refer": [
 					"index.html",
-					"reg.html",
 					"forget_password.html"
 				],
 				"priority": 0
