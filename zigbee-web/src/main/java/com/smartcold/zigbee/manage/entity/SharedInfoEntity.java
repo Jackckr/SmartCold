@@ -1,5 +1,7 @@
 package com.smartcold.zigbee.manage.entity;
 
+import java.util.Date;
+
 /**
  * Created by qiangzi on 2017/7/19.
  */
@@ -11,6 +13,7 @@ public class SharedInfoEntity {
     private Double unitPrice;
     private Integer stauts;
     private Integer clickcount;
+    private Date addtime;
 
     public Integer getDatatype() {
         return datatype;
@@ -66,5 +69,13 @@ public class SharedInfoEntity {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Date getAddtime() {
+        return addtime;
+    }
+
+    public void setAddtime(Date addtime) {
+        this.addtime = addtime;
     }
 }

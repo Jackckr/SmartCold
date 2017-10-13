@@ -1,8 +1,6 @@
 package com.smartcold.zigbee.manage.controller;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -11,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.smartcold.zigbee.manage.dao.*;
 
 import com.smartcold.zigbee.manage.entity.CollectEntity;
+import com.smartcold.zigbee.manage.entity.SharedInfoEntity;
 import com.smartcold.zigbee.manage.service.RedisService;
 import com.smartcold.zigbee.manage.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -418,7 +417,16 @@ public class ShareRdcController {
     @Cacheable(key="'getSERdc'+args[0]+'_'+args[1]")
     @Transactional
     public Object getSERdc(Integer dataType, Integer typeCode) {
-        return rdcShareMapper.getNewSERDCListByID(dataType, typeCode);
+        List<RdcShareDTO> SERDCListByID = rdcShareMapper.getNewSERDCListByID(dataType, typeCode);
+        ArrayList<Integer> username_list = new ArrayList<Integer>();
+        List<RdcShareDTO> newSERDCListByID=new ArrayList<RdcShareDTO>();
+        for (RdcShareDTO rdcShareDTO:SERDCListByID){
+            if (!username_list.contains(rdcShareDTO.getReleaseID())){
+                username_list.add(rdcShareDTO.getReleaseID());
+                newSERDCListByID.add(rdcShareDTO);
+            }
+        }
+        return newSERDCListByID;
     }
 
     /**
@@ -519,6 +527,7 @@ public class ShareRdcController {
 //		UserEntity user =(UserEntity) SessionUtil.getSessionAttbuter(request, "user");//警告 ->调用该方法必须登录
         if (uid != null && uid != 0) {
             this.rdcShareService.delShareInfoByid(id, uid);
+            redisService.delToAddShare();
             return ResponseData.newSuccess();
         } else {
             return ResponseData.newFailure("非法操作~");
@@ -549,6 +558,12 @@ public class ShareRdcController {
                 return ResponseData.newFailure("数据不能包含特殊字符~");
             }
             RdcShareDTO rdcShareDTO = JSON.parseObject(data, RdcShareDTO.class);//页面数据/ /1.获得表单数据
+            if (rdcShareDTO.getRdcID()!=0&&rdcShareDTO.getId()==0){
+                SharedInfoEntity dbRdcShare = rdcShareMapper.selectByRdcId(rdcShareDTO.getRdcID());
+                if (dbRdcShare!=null &&dbRdcShare.getTypecode()==rdcShareDTO.getTypeCode()&&dbRdcShare.getDatatype()==rdcShareDTO.getDataType() &&dbRdcShare.getAddtime()!=null && System.currentTimeMillis()-dbRdcShare.getAddtime().getTime()<7*24*60*60*1000) {
+                    return ResponseData.newFailure("~关联该冷库已发布过需求匹配，7天内不能重复发布！~");
+                }
+            }
             if ("".equals(rdcShareDTO.getUnitPrice()) || "undefined".equals(rdcShareDTO.getUnitPrice())) {
                 rdcShareDTO.setUnitPrice("0");
             }

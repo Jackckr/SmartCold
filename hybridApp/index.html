@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html>
 	<head>
 		<meta charset="utf-8">
 		<title>冷库能效在线管理系统</title>
@@ -10,7 +10,7 @@
 		<link rel="stylesheet" href="css/mui.min.css">
 		<!--App自定义的css-->
 		<link rel="stylesheet" type="text/css" href="css/style/common.css"/>
-		<link rel="stylesheet" type="text/css" href="css/style/monitor.css"/>
+		
 	</head>
 
 	<body>
@@ -19,147 +19,119 @@
 			<h1 class="mui-title">上海众萃冷链物流有限公司合肥RDC</h1>
 			<a class="mui-pull-right"><span class="mui-icon iconfont">&#xe73d;</span></a>
 		</header>
-		<div class="mui-content" id="uiView">
-			<div ng-if="tab==1" class="mui-control-content mui-active"><!--监控路由-->
-				<nav class="mui-bar mui-bar-tab topTab">
-					<a class="mui-tab-item omg mui-active" href="#/monitor">
-						<span class="mui-icon iconfont">&#xe67f;</span>温度
-					</a>
-					<a class="mui-tab-item omg" href="#Popover_0">
-						<span class="mui-icon iconfont">&#xe78b;</span>能耗
-					</a>
-					<a class="mui-tab-item omg" href="#Popover_1">
-						<span class="mui-icon iconfont">&#xe6ed;</span>运管
-					</a>
-					<a class="mui-tab-item omg" href="#Popover_2">
-						<span class="mui-icon iconfont">&#xe7b6;</span>制冷
-					</a>
-				</nav>
-				<div id="Popover_0" class="mui-popover mui-bar-popover">
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell"><a href="#/monitor_electric">电耗</a></li>
-						<li class="mui-table-view-cell"><a href="#/monitor_water">水耗</a></li>
-					</ul>
-				</div>
-				<div id="Popover_1" class="mui-popover mui-bar-popover">
-					<div class="mui-popover-arrow"></div>
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell"><a href="#">冷库门</a></li>
-						<li class="mui-table-view-cell"><a href="#">月台门</a></li>
-						<li class="mui-table-view-cell"><a href="#">货物</a></li>
-						<li class="mui-table-view-cell"><a href="#">照明</a></li>
-						<li class="mui-table-view-cell"><a href="#">其他设施</a></li>
-					</ul>
-				</div>
-				<div id="Popover_2" class="mui-popover mui-bar-popover">
-					<div class="mui-popover-arrow"></div>
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell"><a href="#">制冷机组</a></li>
-						<li class="mui-table-view-cell"><a href="#">排气温度及液位</a></li>
-						<li class="mui-table-view-cell"><a href="#">冷凝系统</a></li>				
-						<li class="mui-table-view-cell"><a href="#">蒸发系统</a></li>
-					</ul>
-				</div>
-			</div>
-			<div ng-if="tab==2" class="mui-control-content"></div><!--查询路由-->
-			<div ng-if="tab==3" class="mui-control-content"><!--分析路由-->
-				<nav class="mui-bar mui-bar-tab topTab">
-					<a class="mui-tab-item omg mui-active" href="#Popover_3">
-						<span class="mui-icon iconfont">&#xe67f;</span>温度
-					</a>
-					<a class="mui-tab-item omg" href="#Popover_4">
-						<span class="mui-icon iconfont">&#xe78b;</span>能耗
-					</a>
-					<a class="mui-tab-item omg" href="#Popover_5">
-						<span class="mui-icon iconfont">&#xe6ed;</span>运管
-					</a>
-					<a class="mui-tab-item omg" href="#Popover_6">
-						<span class="mui-icon iconfont">&#xe7b6;</span>制冷
-					</a>
-				</nav>
-				
-				<div id="Popover_3" class="mui-popover mui-bar-popover">
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell"><a href="#/monitor.electric">超温时长及次数统计</a></li>
-						<li class="mui-table-view-cell"><a href="#/monitor.water">超温比例统计</a></li>
-					</ul>
-				</div>
-				<div id="Popover_4" class="mui-popover mui-bar-popover">
-					<div class="mui-popover-arrow"></div>
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell"><a href="#/monitor.electric">电耗</a></li>
-						<li class="mui-table-view-cell"><a href="#/monitor.water">水耗</a></li>
-					</ul>
-				</div>
-				<div id="Popover_5" class="mui-popover mui-bar-popover">
-					<div class="mui-popover-arrow"></div>
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell"><a href="#">冷库门运行分析</a></li>
-						<li class="mui-table-view-cell"><a href="#">货物因子分析</a></li>
-						<li class="mui-table-view-cell"><a href="#">冷库日热量分析</a></li>
-					</ul>
-				</div>
-				<div id="Popover_6" class="mui-popover mui-bar-popover">
-					<div class="mui-popover-arrow"></div>
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell"><a href="#">效率分析</a></li>
-						<li class="mui-table-view-cell"><a href="#">运行分析</a></li>
-					</ul>
-				</div>
-			</div>
-			<div ng-if="tab==4" class="mui-control-content"></div><!--告警路由-->
-			<div ng-if="tab==5" class="mui-control-content"><!--维护路由-->
-				<nav class="mui-bar mui-bar-tab topTab">
-					<a class="mui-tab-item omg mui-active">
-						<span class="mui-icon iconfont">&#xe67f;</span>维护提醒
-					</a>
-					<a class="mui-tab-item omg">
-						<span class="mui-icon iconfont">&#xe78b;</span>维修
-					</a>
-					<a class="mui-tab-item omg">
-						<span class="mui-icon iconfont">&#xe6ed;</span>维修记录
-					</a>
-				</nav>
-			</div>
-
-			<div ui-view></div>
-		</div>	 <!--底部菜单-->
+		
+		<!--底部菜单-->
 		<nav class="mui-bar mui-bar-tab">
-			<a class="mui-tab-item mui-active" href="#/monitor">
+			<a data-index="0" class="mui-tab-item mui-active" href="view/monitor.html">
 				<span class="mui-icon iconfont">&#xe68d;</span>
 				<span class="mui-tab-label">监控</span>
 			</a>
-			<a class="mui-tab-item" href="#/query">
+			<a data-index="1" class="mui-tab-item" href="view/query.html">
 				<span class="mui-icon iconfont">&#xe709;</span>
 				<span class="mui-tab-label">查询</span>
 			</a>
-			<a class="mui-tab-item" href="#/analysis">
+			<a data-index="2" class="mui-tab-item" href="view/analysis.html">
 				<span class="mui-icon iconfont">&#xe682;</span>
 				<span class="mui-tab-label">分析</span>
 			</a>
-			<a class="mui-tab-item" href="#/warning">
+			<a data-index="3" class="mui-tab-item" href="view/warning.html">
 				<span class="mui-icon iconfont">&#xe697;</span>
 				<span class="mui-tab-label">告警</span>
 			</a>
-			<a class="mui-tab-item" href="#/maintain">
+			<a data-index="4" class="mui-tab-item" href="view/maintain.html">
 				<span class="mui-icon iconfont">&#xe6a5;</span>
 				<span class="mui-tab-label">维护</span>
 			</a>
 		</nav>
 	</body>
-	<script src="js/components/mui.min.js"></script>
-	<script src="js/components/angular.min.js" type="text/javascript"></script>
-	<script src="js/components/angular-ui-router.js" type="text/javascript"></script>
-	<script src="js/components/angular-cookies.min.js" type="text/javascript"></script>
-	<script src="js/controller/app.js" type="text/javascript"></script>
-	<script src="js/controller/monitor.js" type="text/javascript"></script>
-	<script src="js/controller/monitor_electric.js" type="text/javascript"></script>
-	<script src="js/controller/monitor_water.js" type="text/javascript"></script>
-	<script src="js/controller/query.js" type="text/javascript"></script>
-	<script src="js/controller/analysis.js" type="text/javascript"></script>
-	<script src="js/controller/warning.js" type="text/javascript"></script>
-	<script src="js/controller/maintain.js" type="text/javascript"></script>
+	<script src="js/mui.min.js"></script>
+	<script src="js/jquery-1.9.0.js"></script>
 	<script>
-		//mui.init();
+		mui.init();
+		var subpages = ['view/monitor.html', 'view/query.html', 'view/analysis.html', 'view/warning.html','view/maintain.html'];
+		var subpage_style = {
+			top: '44px',
+			bottom: '53px'
+		};
+		
+		var aniShow = {};
+		
+		var index = localStorage.getItem('subpages');
+		
+		 //创建子页面，首个选项卡页面显示，其它均隐藏；
+		mui.plusReady(function() {
+			var self = plus.webview.currentWebview();
+			for (var i = 0; i < 5; i++) {
+				var temp = {};
+				var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
+				if (i > 0) {
+					sub.hide();
+				}else{
+					temp[subpages[index]] = "true";
+					mui.extend(aniShow,temp);
+				}
+				self.append(sub);
+			}
+		});
+		 //当前激活选项
+		var activeTab = subpages[0];
+		var title = document.getElementById("title");
+		 //选项卡点击事件
+		mui('.mui-bar-tab').on('tap', 'a', function(e) {
+			var LoginValue = localStorage.getItem('user');
+			var targetTab = this.getAttribute('href');
+			var index = parseInt(this.getAttribute("data-index"));
+		
+			if (targetTab == activeTab) {
+				return;
+			}
+			//显示目标选项卡
+			//若为iOS平台或非首次显示，则直接显示
+			if(mui.os.ios||aniShow[targetTab]){
+				plus.webview.show(targetTab);
+			}else{
+				//否则，使用fade-in动画，且保存变量
+				var temp = {};
+				temp[targetTab] = "true";
+				mui.extend(aniShow,temp);
+				plus.webview.show(targetTab,"fade-in",300);
+			}
+			//隐藏当前;
+			plus.webview.hide(activeTab);
+			//更改当前活跃的选项卡  ['view/monitor.html', 'view/query.html', 'view/analysis.html', 'view/warning.html','view/maintain.html'];
+			//更改当前活跃的选项卡
+			if(targetTab == 'view/monitor.html' && LoginValue == 'null' || targetTab == 'view/query.html' && LoginValue == 'null' 
+			|| targetTab == 'view/analysis.html' && LoginValue == 'null' || targetTab == 'view/warning.html' && LoginValue == 'null' 
+			|| targetTab == 'view/maintain.html' && LoginValue == 'null'){
+				mui.toast('请登录');
+				LocalUrl();
+			}
+			activeTab = targetTab;
+		});
+		function LocalUrl(){
+			mui.openWindow({
+			    url: 'login.html',
+			    id: 'login.html',
+			    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+			    waiting:{
+			      autoShow:true,//自动显示等待框，默认为true
+			      title:'正在加载...',//等待对话框上显示的提示内容
+			    }
+			});
+			mui.back();
+		}
+		//头像点击事件
+		mui('.mui-bar-nav').on('tap', '.userImg', function(e) {
+			mui.openWindow({
+			    url: 'setting.html',
+			    id: 'setting.html',
+			    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+			    waiting:{
+			      autoShow:true,//自动显示等待框，默认为true
+			      title:'正在加载...',//等待对话框上显示的提示内容
+			    }
+			});
+		});
+		
 	</script>
 </html>

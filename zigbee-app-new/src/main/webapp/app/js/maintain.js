@@ -141,28 +141,31 @@ app.controller('maintain', function ($scope, $location, $http, $timeout, $rootSc
     
     
     /*tab切换*/
-   $(".mylog").click(function (event) {
+    $(".mylog").click(function () {
         var _index = $(this).index();
+        $scope.golist(_index);
+    });
+    $scope.golist = function (_index) {
         $('.mainTainBottomL>div').eq(_index).show().siblings().hide();
-        $(this).addClass('current').siblings().removeClass('current');
+        $(".mylog").eq(_index).addClass('current').siblings().removeClass('current');
         $scope.setp=1;$scope.st=null;$scope.rep=null;
-       if(_index==2){
-        	//维修记录
-        	$scope.status="6"; 
-        	$scope.initData();
+        if(_index==2){
+            //维修记录
+            $scope.status="6";
+            $scope.initData();
         }else{
-        //维修
-	        if( $scope.user.type==2){
-	       	  //维修商
-	      	  $scope.status="1,2,3,4,5"; 
-	      	  $scope.initData_notice();
-	      	}else{
-	      	  //冷库主
-	      	  $scope.status="0,1,2,3,4,5"; 
-	      	  $scope.initData();
-	      	}
-	    }
-    })
+            //维修
+            if( $scope.user.type==2){
+                //维修商
+                $scope.status="1,2,3,4,5";
+                $scope.initData_notice();
+            }else{
+                //冷库主
+                $scope.status="0,1,2,3,4,5";
+                $scope.initData();
+            }
+        }
+    }
     /**
      * **********************************************************************222**********************************************************************
      * 新版维修

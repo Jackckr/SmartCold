@@ -334,7 +334,10 @@ app.controller('analysisTransport', function ($scope, $location, $http, $rootSco
                     });
                 }
             } else {
-                alert(data.message);
+                layer.open({
+                    content: data.message
+                    ,btn: '确定'
+                });
             }
         });
     }

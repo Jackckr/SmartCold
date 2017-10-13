@@ -54,7 +54,7 @@ function init_table() {
         {field: 'note', title: '客户备注', width: 80, align: 'center', sortable: true},
         {field: 'comit', title: '处理备注', width: 80, align: 'center', sortable: true},
         {field: 'status', title: '状态', width: 100, align: 'center', formatter: tool.col_isdeal},
-        {field: 'addTime', title: '添加时间', width: 80, align: 'center', sortable: true, formatter: tool.col_format}
+        {field: 'addtime', title: '添加时间', width: 80, align: 'center', sortable: true, formatter: tool.col_format}
     ]];
     initTable("预约演示", "icon-yy", "POST", "../../i/appointment/getList", queryParams, '#appion_filter', null, col, true, onDblClickRow);
 //    objTable.datagrid({singleSelect: true});//设置为单选

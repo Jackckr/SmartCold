@@ -1,1 +1,84 @@
-维修
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>监控</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/style/common.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/style/monitor.css"/>
+</head>
+<body>
+	<div class="mui-content">
+		<div class="rlTab">
+			<a href="" class="activeTab"><span class="mui-icon iconfont red">&#xe67f;</span><b>温度</b></a>
+			<a href="#power"><span class="mui-icon iconfont green">&#xe78c;</span><b>能耗</b></a>
+			<a href="#transportManage"><span class="mui-icon iconfont gold">&#xe6ed;</span><b>运管</b></a>
+			<a href="#cool"><span class="mui-icon iconfont blue">&#xe7b6;</span><b>制冷</b></a>
+		</div>
+		<div id="power" class="mui-popover">
+		  <ul class="mui-table-view">
+		    <li class="mui-table-view-cell"><a href="#">电耗</a></li>
+		    <li class="mui-table-view-cell"><a href="#">水耗</a></li>
+		  </ul>
+		</div>
+		<div id="transportManage" class="mui-popover">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell"><a href="#">冷库门</a></li>
+				<li class="mui-table-view-cell"><a href="#">月台门</a></li>
+				<li class="mui-table-view-cell"><a href="#">货物</a></li>
+				<li class="mui-table-view-cell"><a href="#">照明</a></li>
+				<li class="mui-table-view-cell"><a href="#">其他设施</a></li>
+			</ul>
+		</div>
+		<div id="cool" class="mui-popover">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell"><a href="#">制冷机组</a></li>
+				<li class="mui-table-view-cell"><a href="#">排气温度及液位</a></li>
+				<li class="mui-table-view-cell"><a href="#">冷凝系统</a></li>				
+				<li class="mui-table-view-cell"><a href="#">蒸发系统</a></li>
+			</ul>
+		</div>
+	</div>
+	<script src="../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/jquery-1.9.0.js" type="text/javascript"></script>
+	<script src="../js/controller/index.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		mui.init();
+		mui.ready(function() {
+			localtionURL("HY_My_Visit", "HY_My_Visit.html");
+			localtionURL("EidtData", "EidtData.html");
+			localtionURL("HY_My_Details", "HY_My_Details.html");
+			localtionURL("HY_My_Mdou", "HY_My_Mdou.html");
+			localtionURL("HY_My_Wallet", "HY_My_Wallet.html");
+			localtionURL("HY_My_HeiYue", "HY_My_HeiYue.html");
+		});
+		
+		/*特殊tab处理---温度*/
+		$('.rlTab a').eq(0).on("tap",function(){
+		  $('.rlTab').find("b").css('color','#555');
+		  $(this).addClass('activeTab').siblings().removeClass('activeTab');
+		  $(this).children('b').css('color','#EB5A4A');
+		});
+		mui('.mui-popover').on('tap', 'ul>li>a', function(e) {
+			var tap_html = this.innerHTML;
+			var tab_id = this.parentNode.parentNode.parentNode.id;
+					
+			for(var i=0;i<$('.rlTab a').length;i++){
+				var a_href = $('.rlTab').children('a').eq(i).attr('href');
+				var b_color = $('.rlTab').find("b").css('color','#555');
+				if('#' + tab_id == a_href){
+					var i_color = $('.rlTab').children('a').eq(i).children('span').css('color');
+					$('.rlTab').children('a').eq(i).children('b').html(tap_html).css('color',i_color);
+					$('.rlTab').children('a').eq(i).addClass('activeTab').siblings().removeClass('activeTab');
+					mui('.mui-popover').popover('hide');
+					return
+				}
+			}			
+		});
+	</script>
+</body>
+</html>
