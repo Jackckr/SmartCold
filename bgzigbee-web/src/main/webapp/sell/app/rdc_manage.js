@@ -332,7 +332,7 @@ function coldValidation(vo) {
         return false;
     }
     var phoneNumRex =  /^1[34578]\d{9}$/;
-    var cellPhoneRex=/^0{1}\d{2,3}-{1}\d{7,8}$/;
+    var cellPhoneRex=/^\d{3,4}-{1}\d{7,8}$/;
     if (!phoneNumRex.test(vo.phoneNum)&&!cellPhoneRex.test(vo.phoneNum)) {
     	alert_errmsg("联系电话输入有误！(座机如：021-67189203)");
         return false;
