@@ -20,13 +20,22 @@
     margin-top: 10px;
 }
 
-.approve li a {
-    display: inline-block;
-    width: 155px;
-    height: 191.5px;
-    padding: 0;
+@media only screen and (max-width: 361px) {
+    .approve li a {
+	    display: inline-block;
+	    width: 155px;
+	    height: 191.5px;
+	    padding: 0;
+	}
 }
-
+@media only screen and (min-width: 361px) {
+    .approve li a {
+	    display: inline-block;
+	    width: 185px;
+	    height: 231.6532258064516px;
+	    padding: 0;
+	}
+}
 .approve li:nth-child(1) a {
     background: url(../../images/kz.png) no-repeat center;
     background-size: cover;
