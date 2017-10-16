@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.smartcold.bgzigbee.manage.dao.RdcSpiderMapper" >
+
+    <insert id="addSpider">
+        INSERT INTO `rdcspider` (`rdcid`,`mapping`,`addtime`) VALUES (#{rdcid},#{mapping},#{addtime})
+    </insert>
+    <update id="updateSpider">
+        UPDATE `rdcspider`
+        <set>
+            <if test="rdcid != null and rdcid !=''">`mapping`=#{mapping},</if>
+        </set>
+        WHERE `rdcid`=#{rdcid}
+    </update>
+    <select id="selectByRdcId" resultType="com.smartcold.bgzigbee.manage.entity.RdcSpider">
+        SELECT * FROM `rdcspider` WHERE  `rdcid`=#{rdcId}
+    </select>
+</mapper>
