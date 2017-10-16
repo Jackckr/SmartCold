@@ -7,13 +7,16 @@ import java.util.HashMap;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.session.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.smartcold.manage.cold.dao.olddb.MessageRecordMapping;
 import com.smartcold.manage.cold.dao.olddb.RdcauthMapping;
 import com.smartcold.manage.cold.dao.olddb.UserMapper;
@@ -56,18 +59,19 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	@ResponseBody
 	public Object logout(HttpServletRequest request,String token) {
-		if(StringUtil.isnotNull(token)){ 
-			cahcCacheService.cleraChace(request.getSession().getId());
-		}else{
+			HttpSession session = request.getSession();
+			session.removeAttribute("user");
+			session.invalidate();//session失效
 			Cookie[] cookies = request.getCookies();
 			if(cookies==null||cookies.length==0){return true;}
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("token")) {
 					cahcCacheService.cleraChace(cookie.getValue());
+					break;
 				}
 			}
-		}
-		return true;
+			return true;
+		
 	}
 	
 	@RequestMapping(value = "/login")
@@ -78,7 +82,6 @@ public class UserController extends BaseController {
 		if (user.getId() != 0) {
 			String cookie = EncodeUtil.encode("sha1", String.format("%s%s", userName, new Date().getTime()));
 			RoleUser roleUser = roleUserService.getRoleIdByUserId(user.getId());
-			user.setPassword(null);
 			user.setRole(roleUser==null?0:roleUser.getRoleid());
 			cahcCacheService.putDataTocache(cookie, user);
 			if(roleUser==null){//判断有没有申请
@@ -105,27 +108,33 @@ public class UserController extends BaseController {
 	
 	@RequestMapping(value = "/userlogin",method= RequestMethod.POST)
 	@ResponseBody
-	public Object userlogin(HttpServletRequest request,  String userName,String password, int sik,Boolean isAuto) {
+	public Object userlogin(HttpServletRequest request,String userName,String password, int sik,Boolean isAuto) {
 		try {
 			if(StringUtil.isNull(userName)||StringUtil.isNull(password)||sik!=Calendar.getInstance().get(Calendar.HOUR_OF_DAY)){ return new ResultDto(1, "请输入完整信息！");}
 			if(isAuto==null||!isAuto){password = EncodeUtil.encodeByMD5(password);}else{password =StringUtil.MD5pwd(null, password);  }
 			UserEntity user = userDao.Login(userName, password);
 			if (user != null) {
-				if (user.getLevel()==-1) {
-					return ResponseData.newFailure("用户名或者密码不正确！");	
-				}
+				if (user.getLevel()==-1) {return new ResultDto(1, "用户名或密码错误！");	}
+				RoleUser roleUser = roleUserService.getRoleIdByUserId(user.getId());
+				user.setRole(roleUser==null?0:roleUser.getRoleid());
 				String cookie =  EncodeUtil.encode("sha1", String.format("%s%s", userName, new Date().getTime()));
 				user.setToken(cookie);
-				cahcCacheService.putDataTocache(cookie, user);//缓存token 
-				HashMap<String, Object> resdata=new HashMap<String, Object>();
-				resdata.put("user", user);
-				resdata.put("systoke", StringUtil.MD5pwd(password, cookie));
-				return	ResponseData.newSuccess(resdata);
+				user.setSystoke( StringUtil.MD5pwd(password, cookie));
+				request.getSession().setAttribute("user",user);
+				cahcCacheService.putDataTocache(cookie, user);
+				if(roleUser==null){//判断有没有申请
+					if(user.getType()==0){
+						return new ResultDto(this.rdcauthMapping.getRdcAuthByUid(user.getId())==0?2:3, String.format("token=%s", cookie));//未授权
+					}else{
+						return new ResultDto(this.messageRecordMapping.getUserAuth(user.getId())==0?2:3, String.format("token=%s", cookie));//未授权
+					}
+				}
+				return new ResultDto(0, String.format("token=%s", cookie));
 			}
-			return ResponseData.newFailure("用户名或者密码不正确！");
+			return new ResultDto(1, "用户名或密码错误！");	
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseData.newFailure("数据连接异常！请稍后重试！");
+			return new ResultDto(1, "网络异常！请稍后重试！");
 		}
 	}
 
@@ -169,12 +178,19 @@ public class UserController extends BaseController {
 		return i>0;
 	}
 
-
+	/**
+	 * 备注：将使用spring session 统一托管
+	 * @param request
+	 * @param token
+	 * @return
+	 */
 	@RequestMapping(value = "/findUser", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findUser(HttpServletRequest request,String token) {
+		UserEntity user =	(UserEntity) request.getSession().getAttribute("user");
+		if(user!=null){  System.err.println("server-B-session:"+user);   return user; }
 		if(StringUtil.isnotNull(token)){
-			UserEntity user = cahcCacheService.getDataFromCache(token);
+			 user = cahcCacheService.getDataFromCache(token);
 			if(user!=null){return user;}
 		}
 		if(StringUtil.isNull(token)){
@@ -185,7 +201,7 @@ public class UserController extends BaseController {
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("token")) {
 					token=cookie.getValue();
-					UserEntity user = cahcCacheService.getDataFromCache(token);
+					 user = cahcCacheService.getDataFromCache(token);
 					if(user!=null){return user;}else{return new UserEntity();}
 				}
 			}

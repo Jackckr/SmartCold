@@ -71,8 +71,7 @@
         login: 'login'
     };
     window.localStorage.companyLoad=JSON.stringify(lk360Entity);
-    var mainHeight = $(window).height();
-    var url=["/main.html" ,"","/autIdentity.html","/audit.html"];
+    var mainHeight = $(window).height(), url=["/main.html" ,"","/autIdentity.html","/audit.html"];
     $(".loginBody").height(mainHeight - 160);
     window.onresize = function () {
         var mainHeight = $(window).height();
@@ -112,8 +111,8 @@
         $.ajax({
             type: "POST",
             dataType: "json",
-            url: "/i/user/login",
-            data: {userName: userName, password: password},
+            url: "/i/user/userlogin",
+            data: {userName: userName, password: password,sik:new Date().getHours()},
             complete: function (e) { $(me).text("登录"); $(me).delay(500).data("isLoading", false); },
             success: function (data) {
                 if (data.status==1) {
