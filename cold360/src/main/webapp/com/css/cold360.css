@@ -250,6 +250,7 @@ section {
     text-align: left;
     color: #EC594A;
     font-size: 1.8em;
+    word-break: break-all;
 }
 
 div[id^="main"], .actually + div[id] {

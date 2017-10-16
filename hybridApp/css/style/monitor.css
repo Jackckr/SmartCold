@@ -1,3 +1,4 @@
+/*tab二级下拉样式*/
 .topTab{
 	top: 0;
 	bottom: auto;
@@ -36,4 +37,24 @@
 	font-weight: 400;
 	font-size: 15px;
 	margin-left: 2px;
+}
+/*主显示区域样式*/
+#box li{
+	display: none;
+}
+#box li:first-child{
+	display: block;
+}
+.curTxt{
+	padding: 10px 10px 0;
+}
+.curTxt .blue{
+	font-weight: bold;
+	font-size: 1em;
+}
+.curTxt .red{
+	font-size: 1.6em;
+	word-break: break-all;
+	line-height: 1.5;
+	margin-bottom: 0;
 }

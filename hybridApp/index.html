@@ -100,12 +100,12 @@
 			plus.webview.hide(activeTab);
 			//更改当前活跃的选项卡  ['view/monitor.html', 'view/query.html', 'view/analysis.html', 'view/warning.html','view/maintain.html'];
 			//更改当前活跃的选项卡
-			if(targetTab == 'view/monitor.html' && LoginValue == 'null' || targetTab == 'view/query.html' && LoginValue == 'null' 
+			/*if(targetTab == 'view/monitor.html' && LoginValue == 'null' || targetTab == 'view/query.html' && LoginValue == 'null' 
 			|| targetTab == 'view/analysis.html' && LoginValue == 'null' || targetTab == 'view/warning.html' && LoginValue == 'null' 
-			|| targetTab == 'view/maintain.html' && LoginValue == 'null'){
+			|| targetTab == 'view/maintain.html' && LoginValue == 'null'){*/
 				mui.toast('请登录');
 				LocalUrl();
-			}
+			//}
 			activeTab = targetTab;
 		});
 		function LocalUrl(){
