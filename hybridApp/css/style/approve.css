@@ -117,7 +117,16 @@
     margin-top: 0 !important;
     color: #007AFF !important;
 }
-
+.mui-search{
+	margin-top: 20px;
+	padding: 0 10px;
+}
+.mui-search.mui-active:before{
+	left: 15px;
+}
+.mui-input-row.mui-search .mui-icon-clear{
+	right: 5px;
+}
 /**
  * mui-pages 
  * style
