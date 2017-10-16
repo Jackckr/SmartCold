@@ -11,20 +11,17 @@
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/fonts/iconfont.css">
-    <link rel="stylesheet" id="link" href="app/css/login.css">
+    <link rel="stylesheet" id="link" href="assets/yili/yili.css">
 </head>
 <body class="hold-transition login-page login_new">
 <!-- new login -->
 <div class="smartCold">
     <div class="loginDiv">
-        <h2>逸励实业</h2>
-    </div>
-    <div class="divide-wrap">
-
-        <div class="colorbar"></div>
+        <h2></h2>
     </div>
     <div class="loginBody login-box">
         <div class="loginArea">
+            <h1>用户名密码登录</h1>
             <div class="userinfo">
                 <i class="icon iconfont">&#xe6be;</i>
                 <input type="text" id="username" placeholder="用户名">
@@ -35,27 +32,24 @@
             </div>
             <div class="row">
                 <div class="col-xs-12" style="text-align: left;height: 30px;font-size: 12px;">
-                    <a style="color:red" id="mention"></a>
+                    <p style="color:#3c96c9" id="mention"></p>
                 </div>
             </div>
-            <div class="clearfix">
-                <!--<p class="pull-left"><a href="passwordEdit.html">忘记密码</a></p>-->
-                <!--<p class="pull-right"><a href="register.html">免费注册</a></p>-->
+            <div style="height: 40px;line-height: 40px">
+                <!--<p class="pull-left"><a href="passwordEdit.html" style="color: #555;">忘记密码</a></p>-->
+                <p class="pull-right"><a href="yiliReg.html" style="color: #555;">免费注册</a></p>
             </div>
-            <div class="row noM">
-                <div class="col-xs-12 col-lg-12">
-                    <div class="checkbox icheck">
-                    </div>
-                </div>
-                <div class="col-lg-12 loginBtn">
+            <div class="noM">
+                <div class="checkbox icheck"></div>
+                <div class="loginBtn">
                     <button id="submit" onclick="login();" class="btn btn-primary btn-block btn-flat">登录</button>
                 </div>
             </div>
         </div>
     </div>
-    <div id="loginCopyR" class="loginCopyR">
+    <!--<div id="loginCopyR" class="loginCopyR">
         <p>&copy;2016&nbsp;逸励实业&nbsp;&nbsp;&nbsp;&nbsp;</p>
-    </div>
+    </div>-->
 </div>
 <script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <script type="text/javascript">

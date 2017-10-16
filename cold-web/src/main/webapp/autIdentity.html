@@ -89,7 +89,7 @@
 					<p id="auCode">
 						尊敬的用户，您已提交成功，受理编号为<span id="proNo">LS23423432</span>。
 					</p>
-					<p class="btn_p"><a href="login.html" class="btn gohome">返回登录页</a></p>
+					<p class="btn_p"><a ng-click="gohome()" class="btn gohome">返回登录页</a></p>
 				</div>
 			</div>
 		</div>
@@ -114,7 +114,15 @@
         app.controller("autIdentity", function ($rootScope, $scope, $http, Upload) {
     	$scope.user=undefined;
     	$scope.words=null;
-   		$scope.setType=function(type){$scope.user.type=type;step.nextStep();	};	
+		$scope.companyLoad=JSON.parse(localStorage.companyLoad);
+        $scope.gohome=function () {
+            if($scope.companyLoad){
+                window.location.href=$scope.companyLoad.login+'.html'
+			}else{
+                window.location.href='login.html'
+			}
+        };
+   		$scope.setType=function(type){$scope.user.type=type;step.nextStep();	};
     	$scope.finduser=function(){ $http({method:'GET',url:'/i/user/findUser'}).success(function (data) {if(data.id!=0){ $scope.user=data;}else{window.location.href ="login.html";return; }}); };
        	
         $scope.totalauthfiles = [];
