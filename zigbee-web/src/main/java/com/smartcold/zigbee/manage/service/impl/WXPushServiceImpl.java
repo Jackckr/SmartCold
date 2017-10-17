@@ -27,12 +27,12 @@ public class WXPushServiceImpl implements WXPushService{
 
     @Scheduled(cron = "0 0 */2 * * ?")
     public void updateWXToken(){
-        System.out.println("=============获取微信公众号token============ 时间："+TimeUtil.getDateTime());
+        /*System.out.println("=============获取微信公众号token============ 时间："+TimeUtil.getDateTime());
         HttpService httpService = new HttpServiceImpl();
         String s = httpService.sendGet("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx57e766b379bdd9f7&secret=0e82c94e0c21f0ba8e106a4a2bc016ef");
         HashMap hashMap = JSONObject.parseObject(s, HashMap.class);
         redisService.delWXToken();
-        redisService.putWXToken(hashMap.get("access_token").toString());
+        redisService.putWXToken(hashMap.get("access_token").toString());*/
     }
 
     @Override
