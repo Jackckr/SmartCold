@@ -275,6 +275,7 @@ function initRentRdc() {
                 }
                 var price="",rdcAddress='';
                 rentRdc.cityname==0||rentRdc.cityname==undefined?rdcAddress=rentRdc.provincename:rdcAddress=rentRdc.provincename+'-'+rentRdc.cityname;
+                rdcAddress==undefined?rdcAddress=rentRdc.detlAddress:rdcAddress=rdcAddress;
                 if(rentRdc.unit1&&rentRdc.unit2&&rentRdc.unit1!=""&&rentRdc.unit2!=""){
                     price = rentRdc.unitPrice == 0 ? '面议' : rentRdc.unitPrice+"元/"+rentRdc.unit1+"·"+rentRdc.unit2;
                 }else {
@@ -389,6 +390,7 @@ function initGoodsList() {
                 }
                 var price = goods.unitPrice == 0 ? '面议' : goods.unitPrice + '元/' + unitPush[goods.publishunit],rdcAddress='';
                 goods.cityname==0||goods.cityname==undefined?rdcAddress=goods.provincename:rdcAddress=goods.provincename+'-'+goods.cityname;
+                rdcAddress==undefined?rdcAddress=goods.detlAddress:rdcAddress=rdcAddress;
                 goodsArr.push('<ul class="msgBody clearfix"><li><img src="' + goods.logo + '" onclick="openurl(' + goods.id + ')"></li><li class="msgTitle"><p class="blue" onclick="openurl(' + goods.id + ')">' + goods.title + '</p>' +
                     '<p><i class="iconfont">&#xe648;</i>' + rdcAddress + '</p></li><li>' + goods.sqm + unitPush[goods.publishunit] + '</li>' +
                     '<li>' + price + '</li><li>' + goodsAllType[goods.codeLave1] + '</li><li>' + validStartTime + '</li><li>' + validEndTime + '</li>' +

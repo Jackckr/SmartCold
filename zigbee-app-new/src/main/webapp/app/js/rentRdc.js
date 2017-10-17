@@ -305,6 +305,7 @@ $().ready(function () {
                 loseEffice = '<i class="iconfont loseEffice">&#xe667;</i>';
             }
             rdc.cityname==0||rdc.cityname==undefined?rdcAddress=rdc.provincename:rdcAddress=rdc.provincename+'-'+rdc.cityname;
+            rdcAddress==undefined?rdcAddress=rdc.detlAddress:rdcAddress=rdcAddress;
             var score = [
                 '<li class="imgCell"><a href="storehousedetail.html?id=' + rdc.id + '"  onclick="getSoll()">' + loseEffice + '<span><img src="' + rdc.logo + '" alt=""></span><div>' +
                 '<p class="ellipsis">' + rdc.title + '</p><em>信息完整度<i class="blue">' + rdc.infoIntegrity + '%</i></em><p class="position omg">' + approve + '</p>' +
