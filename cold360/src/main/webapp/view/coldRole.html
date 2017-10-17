@@ -42,7 +42,7 @@
         </li>
     </ul>
 </section>
-<h2 class="oH2">SmartCold</h2>
+<h2 class="oH2">角色认证</h2>
 <!--第一步：选择角色-->
    <div class="role_choose" ng-if="step==1">
        <h3>请先选择您的角色</h3>
@@ -50,7 +50,7 @@
            <div class="fl"><a ng-click="goStep2(0)"></a></div>
            <div class="fl"><a ng-click="goStep2(1)"></a></div>
            <div class="fl"><a ng-click="goStep2(2)"></a></div>
-           <div class="fl"><a href="../index.html"></a></div>
+           <div class="fl"><a ng-click="goSign()"></a></div>
        </div>
    </div>
 <!--第二步：选择冷库-->
@@ -88,7 +88,7 @@
             </p>
         </h3>
         <div class="role_div">
-            <button class="oHome" onclick="location.href='../index.html'"></button>
+            <button class="oHome" ng-click="goSign()"></button>
         </div>
     </div>
 

@@ -50,6 +50,7 @@ public class UserEntity implements Serializable {
 
 	public void setRole(int role) {
 		this.role = role;
+		this.roleid=role;
 	}
 
 	public int getRoleid() {

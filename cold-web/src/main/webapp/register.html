@@ -304,22 +304,23 @@ function checkUserName(){
 		}
 		checkinfo();
 	}
-	function getviercode(){
-	    if(!victdata.victel||!vsphone($("#txt_telephone").val())){checktelephone(); return ;}
-		$.ajax({
-			type : "POST",
-			url : "http://liankur.com/" + '/i/user/getVerCode',
-			data : {
-				key : victdata.key,
-				reg : window.location.pathname,
-				telephone : $("#txt_telephone").val().trim()
-			},
-			success : function(data) {
-				alert("验证码已发送~");
-				victdata.code = data;
-			}
-		});
-		};
+    function getviercode(){
+        if(!victdata.victel||!vsphone($("#txt_telephone").val())){checktelephone(); return ;}
+        $.ajax({
+            type : "POST",
+            url : "http://liankur.com/" + '/i/ShareRdcController/sharvistPhone.json',
+            data : {
+                key : 'signUpCode',
+                telephone : $("#txt_telephone").val().trim()
+            },
+            success : function(data) {
+                if (data.success) {
+                    victdata.code = data.entity;
+                }
+                alert(data.message);
+            }
+        });
+    };
 
 //验证手机号码
 function checktelephone(){
@@ -421,6 +422,7 @@ function reguser(){
 	    	      }
 	    		}).success(function(data){
     				   if(data.success){
+    				        alert('恭喜你，注册成功~');
     					    document.cookie = data.message;
     	                    window.sessionStorage.sikey = data.message;
     	                    window.location.href  = "/autIdentity.html";

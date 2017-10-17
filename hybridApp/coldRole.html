@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>角色认证</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/style/approve.css">
+    <link rel="stylesheet" type="text/css" href="css/feedback.css"/>
+</head>
+
+<body class="mui-fullscreen">
+<!--页面主结构开始-->
+<div id="app" class="mui-views">
+    <div class="mui-view">
+        <div class="mui-navbar">
+        </div>
+        <div class="mui-pages">
+        </div>
+    </div>
+</div>
+<!--页面主结构结束-->
+<!--单页面开始-->
+<div id="setting" class="mui-page">
+    <!--页面标题栏开始-->
+    <div class="mui-navbar-inner mui-bar mui-bar-nav">
+        <button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+            <span class="mui-icon mui-icon-left-nav"></span>
+        </button>
+        <h1 class="mui-center mui-title">角色认证</h1>
+    </div>
+    <!--页面标题栏结束-->
+    <!--页面主内容区开始-->
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll approve">
+                <ul class="mui-row">
+                    <li class="mui-col-sm-6 mui-col-xs-6">
+                        <a href="#kz"></a>
+                    </li>
+                    <li class="mui-col-sm-6 mui-col-xs-6">
+                        <a href="#hz"></a>
+                    </li>
+                    <li class="mui-col-sm-6 mui-col-xs-6">
+                        <a href="#wxs"></a>
+                    </li>
+                    <li class="mui-col-sm-6 mui-col-xs-6">
+                        <a class="mui-action-back"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--页面主内容区结束-->
+</div>
+<!--单页面结束-->
+<div id="kz" class="mui-page">
+    <div class="mui-navbar-inner mui-bar mui-bar-nav">
+        <button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+            <span class="mui-icon mui-icon-left-nav"></span>
+        </button>
+        <h1 class="mui-center mui-title">我是冷库主</h1>
+    </div>
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <ul class="mui-table-view">
+                    <li class="mui-table-view-cell">
+                        <p>选择冷库</p>
+                        <a href="#rdc" class="rdcShow" data-index="0">选择冷库</a>
+                        </a>
+                    </li>
+                    <li class="mui-table-view-cell">
+                        <p>上传照片</p>
+                        <div class="upImg">
+                            <input type="file" accept="image/gif, image/bmp, image/jpg ,image/jpeg, image/png"
+                                   placeholder="选择冷库"/>
+                            <img src="images/256.fw.png" alt=""/>
+                        </div>
+                        <p>说明：如果您有冷库，请找到您的冷库进行认证；否则，请先添加冷库！</p>
+                    </li>
+                    <li class="mui-table-view-cell" style="text-align: center;">
+                        <button class="prev mui-action-back">上一步</button>
+                        <button class="subimt">提交</button>
+                    </li>
+                    <li class="mui-table-view-cell">
+                        <h5>温馨提示</h5>
+                        <p>1、该认证需要库主授权，授权后方可进行操作。</p>
+                        <p>2、账号认证时间为1~3工作日，请您耐心等待。</p>
+                        <p>3、任何问题，请随时拨打客服电话 021-23560068，或发邮件至kefu@smartcold.cn，我们将第一时间解决。</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="hz" class="mui-page">
+    <div class="mui-navbar-inner mui-bar mui-bar-nav">
+        <button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+            <span class="mui-icon mui-icon-left-nav"></span>
+        </button>
+        <h1 class="mui-center mui-title">我是货主</h1>
+    </div>
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <ul class="mui-table-view">
+                    <li class="mui-table-view-cell">
+                        <p>选择冷库</p>
+                        <a href="#rdc" class="rdcShow" data-index="1">选择冷库</a>
+                        </a>
+                    </li>
+                    <li class="mui-table-view-cell" style="text-align: center;">
+                        <button class="prev mui-action-back">上一步</button>
+                        <button class="subimt">提交</button>
+                    </li>
+                    <li class="mui-table-view-cell">
+                        <h5>温馨提示</h5>
+                        <p>1、该认证需要库主授权，授权后方可进行操作。</p>
+                        <p>2、账号认证时间为1~3工作日，请您耐心等待。</p>
+                        <p>3、任何问题，请随时拨打客服电话 021-23560068，或发邮件至kefu@smartcold.cn，我们将第一时间解决。</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="wxs" class="mui-page">
+    <div class="mui-navbar-inner mui-bar mui-bar-nav">
+        <button type="button" class="mui-left mui-action-back mui-btn mui-btn-link mui-btn-nav mui-pull-left">
+            <span class="mui-icon mui-icon-left-nav"></span>
+        </button>
+        <h1 class="mui-center mui-title">我是维修商</h1>
+    </div>
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-scroll">
+                <ul class="mui-table-view">
+                    <li class="mui-table-view-cell">
+                        <p>选择冷库</p>
+                        <a href="#rdc" class="rdcShow" data-index="2">选择冷库</a>
+                        </a>
+                    </li>
+                    <li class="mui-table-view-cell" style="text-align: center;">
+                        <button class="prev mui-action-back">上一步</button>
+                        <button class="subimt">提交</button>
+                    </li>
+                    <li class="mui-table-view-cell">
+                        <h5>温馨提示</h5>
+                        <p>1、该认证需要库主授权，授权后方可进行操作。</p>
+                        <p>2、账号认证时间为1~3工作日，请您耐心等待。</p>
+                        <p>3、任何问题，请随时拨打客服电话 021-23560068，或发邮件至kefu@smartcold.cn，我们将第一时间解决。</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="rdc" class="mui-page">
+    <div class="mui-navbar-inner mui-bar mui-bar-nav">
+        <button type="button" class="mui-left mui-action-back mui-btn mui-btn-link mui-btn-nav mui-pull-left">
+            <span class="mui-icon mui-icon-left-nav"></span>
+        </button>
+        <h1 class="mui-center mui-title">选择冷库</h1>
+    </div>
+    <div class="mui-page-content">
+        <div class="mui-scroll-wrapper">
+            <div class="mui-input-row mui-search">
+                <input type="search" id="search" class="mui-input-clear" placeholder="">
+            </div>
+            <ul class="mui-table-view" id="rdcList">
+                <li class="mui-table-view-cell mui-action-back">冷库1</li>
+                <li class="mui-table-view-cell mui-action-back">冷库1</li>
+                <li class="mui-table-view-cell mui-action-back">冷库1</li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+<script src="js/mui.min.js"></script>
+<script src="js/mui.view.js"></script>
+<script>
+    mui.init();
+    //初始化单页view
+    var viewApi = mui('#app').view({
+        defaultPage: '#setting'
+    });
+    //初始化单页的区域滚动
+    mui('.mui-scroll-wrapper').scroll();
+    (function ($) {
+        //处理view的后退与webview后退
+        var oldBack = $.back;
+        $.back = function () {
+            if (viewApi.canBack()) { //如果view可以后退，则执行view的后退
+                viewApi.back();
+            } else { //执行webview后退
+                oldBack();
+            }
+        };
+    })(mui);
+
+</script>
+
+</html>

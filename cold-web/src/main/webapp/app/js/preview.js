@@ -211,6 +211,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
 	    
 	    //=================================================================end======================================================================================================
 	    $scope.full=function(){  
+	    	$scope.rdcnam=[];
 	        angular.forEach($scope.allrdc,function(obj,i){ 
 	        	if(obj!=null){
 	        		$scope.rdcnam.push(obj.name+"");
@@ -218,6 +219,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
 	        		$scope.rdcnam.push("");
 	        	}
 	        });
+	        $("#fp-nav ul li").remove();
 	        $('#dowebok').fullpage({ 
 		    	'navigation': true, 
 		    	continuousVertical: true,
@@ -252,7 +254,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
 		   if($rootScope.user.roleid==2){
 			   if( !$scope.allrdc){   
 				   $scope.allrdc= $rootScope.vm.allUserRdcs; 
-				   }
+				  }
 			   $scope.getRdc();
 			   if( $scope.fullpage){
 				   $.fn.fullpage.moveTo($scope.index+1) ;

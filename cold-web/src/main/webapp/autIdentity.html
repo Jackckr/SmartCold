@@ -123,7 +123,7 @@
 			}
         };
    		$scope.setType=function(type){$scope.user.type=type;step.nextStep();	};
-    	$scope.finduser=function(){ $http({method:'GET',url:'/i/user/findUser'}).success(function (data) {if(data.id!=0){ $scope.user=data;}else{window.location.href ="login.html";return; }}); };
+    	$scope.finduser=function(){ $http({method:'GET',url:'/i/user/findUser'}).success(function (data) {if(data.id!=0){ $scope.user=data;}else{$scope.gohome();return; }}); };
        	
         $scope.totalauthfiles = [];
         $scope.isDisabled = false;
