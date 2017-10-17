@@ -60,7 +60,7 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public Object logout(HttpServletRequest request,String token) {
 			HttpSession session = request.getSession();
-			session.removeAttribute("user");
+//			session.removeAttribute("user");
 			session.invalidate();//session失效
 			Cookie[] cookies = request.getCookies();
 			if(cookies==null||cookies.length==0){return true;}
@@ -120,7 +120,7 @@ public class UserController extends BaseController {
 				String cookie =  EncodeUtil.encode("sha1", String.format("%s%s", userName, new Date().getTime()));
 				user.setToken(cookie);
 				user.setSystoke( StringUtil.MD5pwd(password, cookie));
-				request.getSession().setAttribute("user",user);
+//				request.getSession().setAttribute("user",user);
 				cahcCacheService.putDataTocache(cookie, user);
 				if(roleUser==null){//判断有没有申请
 					if(user.getType()==0){
@@ -188,7 +188,7 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public Object findUser(HttpServletRequest request,String token) {
 		UserEntity user =	(UserEntity) request.getSession().getAttribute("user");
-		if(user!=null){  System.err.println("server-B-session:"+user);   return user; }
+		if(user!=null){  return user; }
 		if(StringUtil.isnotNull(token)){
 			 user = cahcCacheService.getDataFromCache(token);
 			if(user!=null){return user;}
