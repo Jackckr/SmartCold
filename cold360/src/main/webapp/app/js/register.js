@@ -1,6 +1,7 @@
 var app=angular.module('app', []).controller('register',function($http, $location, $scope) {
     $http.defaults.withCredentials = true;$http.defaults.headers = {'Content-Type' : 'application/x-www-form-urlencoded'};
     var victdata={victtl:false,extname:false,victyzm:false,victpwd:false,tel:null,usefulName:false};
+    $scope.company=localStorage.company;
     $scope.vsphone = function(telephone) {// 验证手机号码
         var length = (telephone + '').length;
         var mobile = /^(13[0-9]|14[0-9]|15[0-9]|17[0-9]|18[0-9])\d{8}$/;
@@ -135,7 +136,7 @@ var app=angular.module('app', []).controller('register',function($http, $locatio
     };
     $scope.ischeck=true;
     $scope.savedata = function () {// 修改密码
-        if ($scope.ischeck == false) {
+        if ($scope.ischeck == false&&$scope.company==360) {
             layer.open({
                 content: "请确认您已同意冷库360使用协议~"
                 ,btn: '确定'
@@ -160,6 +161,13 @@ var app=angular.module('app', []).controller('register',function($http, $locatio
                         content: data.message
                         , btn: '确定'
                         , yes: function () {
+                            if($scope.company=='sx'){
+                                window.location.href = "../sx.html";
+                                return
+                            }else if($scope.company=='yili'){
+                                window.location.href = "../yili.html";
+                                return
+                            }
                             window.location.href = "../index.html";
                         }
                     });

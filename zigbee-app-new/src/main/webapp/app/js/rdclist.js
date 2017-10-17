@@ -320,6 +320,7 @@ $().ready(function () {
     function gethtml(rdc) {
         var rdcAddress='';
         rdc.cityname==0||rdc.cityname==undefined?rdcAddress=rdc.provincename:rdcAddress=rdc.provincename+'-'+rdc.cityname;
+        rdcAddress==undefined?rdcAddress=rdc.address:rdcAddress=rdcAddress;
         if(localStorage.isStand!=1){
             if (rdc.audit == -1) {
                 return false

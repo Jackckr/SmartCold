@@ -13,13 +13,7 @@
 </head>
 <body>
     <div id="div_tool" style="display: none">
-        <select class="easyui-combobox" name="state" id="valType" style="width:200px;">
-            <option value="0">冷库1</option>
-            <option value="0">冷库2</option>
-            <option value="0">冷库3</option>
-            <option value="0">冷库4</option>
-            <option value="0">冷库5</option>
-        </select>
+        <select id="sel_rdc_slid" name="rdcId" class="easyui-combobox" data-options="valueField:'id', textField:'text', panelHeight:'200'"></select>
         <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon_add'" onclick="openWindow()">添加</a>
         <div id="typeForm" class="easyui-window" title="添加类型"
               data-options="modal:true,closed:true,iconCls:'icon-save',closable:true"
@@ -33,8 +27,24 @@
                     onclick="submit_config()">提交</button>
         </div>
         <div class="easyui-tabs" style="width:100%;height:auto;">
-            <div title="添加监控属性" style="padding:10px">
-                <p>开发进行中.......</p>
+            <div title="rdcSpider" style="padding:10px">
+                <div style="margin-bottom:20px">
+                    <form onsubmit="return false">
+                        <table cellpadding="5">
+                            <tr>
+                                <td>配置文件:</td>
+                                <td><input type="file" id="importXls" style="width:200px"/>
+                                    <button onclick="submitXls()" class="btn" >导入</button></td>
+                            </tr>
+                        </table>
+                    </form>
+                    <div id="chooseCol" style="display: none">
+                        请选择设备名称列：<select id="dev_name" data-options="valueField:'nameId', textField:'name'" class="easyui-combobox" panelHeight="auto" style="width:100px"></select>
+                        请选择数据关联列：<select id="data_relating" data-options="valueField:'nameId', textField:'name'" class="easyui-combobox" panelHeight="auto" style="width:100px"></select>
+                        <button class="btn" onclick="loadSpiderTable()">加载表格</button>
+                    </div>
+                    <table id="rdcSpiderTable"  style="width:500px;height:300px"></table>
+                </div>
             </div>
             <div title="添加监控对象"></div>
             <div title="冷库配置"></div>

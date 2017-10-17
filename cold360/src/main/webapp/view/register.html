@@ -44,10 +44,10 @@
 	    	<div class="inputBd">
 	    		<input type="password" name="" id="txt_repsword" ng-keyup="checkpwd()" value="" placeholder="确认密码"/>
 	    	</div>
-			<div class="inputBd">
+			<div class="inputBd" ng-if="company==360">
 				<p style="font-size: .7rem;line-height: 1.75;margin-top: .8rem;">
 					<label class="check_icon on" ng-class="{true: 'on', false: ''}[ischeck]">
-						<input ng-model="ischeck" type="checkbox" >
+						<input ng-model="$parent.ischeck" type="checkbox" >
 						<i class="iconfont"></i>
 					</label>
 					我已阅读并同意
