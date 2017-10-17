@@ -125,7 +125,7 @@ myApp.controller('coldRole',function ($scope, $http, Upload) {
     };
     $scope.companyLoad=localStorage.company;
     $scope.goSign=function () {
-        if($scope.companyLoad){
+        if($scope.companyLoad&&$scope.companyLoad!=360){
             window.location.href='../'+$scope.companyLoad+'.html'
         }else{
             window.location.href='../index.html'

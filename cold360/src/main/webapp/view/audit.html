@@ -22,7 +22,17 @@
         <img src="../com/img/ok.png" alt="">
     </div>
     <p class="audit_p">您提交的申请正在处理中，请您耐心等待！^_^</p>
-    <button class="rolo_btn" onclick="location.href='../index.html'">切换账户</button>
+    <button class="rolo_btn" onclick="goindex()">切换账户</button>
 </section>
+<script>
+    companyLoad=localStorage.company;
+    var goindex=function () {
+        if(companyLoad&&companyLoad!=360){
+            window.location.href='../'+companyLoad+'.html'
+        }else{
+            window.location.href='../index.html'
+        }
+    };
+</script>
 </body>
 </html>

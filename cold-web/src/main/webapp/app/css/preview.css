@@ -160,6 +160,39 @@
     line-height: 1.8;
     margin-top: 6px;
 }
+.unitAnimate{
+    -webkit-animation:bgAnimate 2s infinite;
+    -moz-animation: bgAnimate 2s infinite;
+    -ms-animation: bgAnimate 2s infinite;
+    animation: bgAnimate 2s infinite;
+}
+@keyframes bgAnimate
+{
+    0% {background:darkred;}
+    50% {background:orangered;}
+    100% {background:darkred;}
+}
+
+@-moz-keyframes bgAnimate /* Firefox */
+{
+    0% {background:darkred;}
+    50% {background:orangered;}
+    100% {background:darkred;}
+}
+
+@-webkit-keyframes bgAnimate /* Safari and Chrome */
+{
+    0% {background:darkred;}
+    50% {background:orangered;}
+    100% {background:darkred;}
+}
+
+@-o-keyframes bgAnimate /* Opera */
+{
+    0% {background:darkred;}
+    50% {background:orangered;}
+    100% {background:darkred;}
+}
 /*电量模块*/
 .electricModel{
     padding: 0 20px;
@@ -477,4 +510,8 @@
     left:50%;
     margin-left: -10px;
     background-color: #cc4b4b;
+}
+/*模块轮播点样式更改*/
+#fp-nav.right{
+    right:34px!important;
 }

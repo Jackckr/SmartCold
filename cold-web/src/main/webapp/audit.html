@@ -51,9 +51,21 @@
 	</body>
 <script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <script type="text/javascript">
-function chanUser(){
-  $.ajax({ type: "get",url:"i/user/logout", success: function(data) {window.location.href ="login.html"; } });
-}
+    companyLoad=JSON.parse(localStorage.companyLoad);
+    var gohome=function () {
+        if(companyLoad){
+            window.location.href=companyLoad.login+'.html'
+        }else{
+            window.location.href='login.html'
+        }
+    };
+    function chanUser() {
+        $.ajax({
+            type: "get", url: "i/user/logout", success: function (data) {
+                gohome();
+            }
+        });
+    }
 
 </script>
 </html>

@@ -278,7 +278,7 @@
                         alert('恭喜你，注册成功~');
                         document.cookie = data.message;
                         window.sessionStorage.sikey = data.message;
-                        //window.location.href  = "/autIdentity.html";
+                        window.location.href  = "/autIdentity.html";
                         window.event.returnValue=false;
                     }else{
                         alert(dta.message);
