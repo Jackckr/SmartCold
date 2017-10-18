@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>冷库搜索</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../css/mui.min.css">
+    <link rel="stylesheet" href="../css/style/common.css"/>
+    <style>
+    	.mui-toast-container{
+    		bottom: auto;
+    		top: 100px;
+    	}
+    </style>
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav head2">
+    <button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+        <span class="mui-icon mui-icon-left-nav"></span>
+    </button>
+    <div class="mui-input-row">
+        <input type="text" class="mui-input-clear" id="searchBox" autofocus="autofocus" placeholder="请输入冷库名称">
+    </div>
+</header>
+<div class="mui-content">
+    <div class="mui-scroll-wrapper">
+        <div class="mui-scroll">
+            <!--这里放置真实显示的DOM内容-->
+            <ul class="mui-table-view" id="rdcList">
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../js/mui.min.js"></script>
+<script src="../js/jquery-1.9.0.js"></script>
+<script src="../js/controller/index.js"></script>
+<script>
+    mui.init({  
+	    beforeback: function() {  
+		    //获得列表界面的webview  
+		    var list = plus.webview.currentWebview().opener();  
+		    //触发列表界面的自定义事件（refresh）,从而进行数据刷新  
+		    if($.trim($("#searchBox").val())){
+		    	mui.fire(list, 'refresh'); 
+		    }		     
+		    //返回true，继续页面关闭逻辑  
+		    return true;  
+	    }  
+	});  
+    mui('.mui-scroll-wrapper').scroll({
+        deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+    });
+    if(window.plus){   
+        plusReady();   
+    }else{   
+        document.addEventListener("plusready",plusReady,false);   
+    }   
+    function plusReady(){
+         mui("body").on("tap",".jump",function(){   
+            var currentRdc={
+            	id:$(this).attr('data-id'),
+                name:$(this).html()
+            };
+            localStorage.currentRdc=JSON.stringify(currentRdc);
+            mui.back(); 
+         })   
+    }   
+    
+    document.getElementById("searchBox").addEventListener('input',function(){
+		rdcAjax(this.value);
+	});
+	mui("body").on("tap", ".mui-icon-clear", function() {
+		$("#rdcList").empty();
+	})
+    function rdcAjax(searchContent){
+        mui.ajax(smartCold + '/i/rdc/searchRdc',{
+            data:{
+                type:1,
+                filter:searchContent
+            },
+            dataType:'json',//服务器返回json格式数据
+            type:'get',//HTTP请求类型
+            success:function(data){
+                var rdcArry=[];
+                if (data && data.length > 0) {
+                    storages = data;
+					mui.each(storages,function(index,item){
+					  rdcArry.push('<li class="mui-table-view-cell jump" data-id='+item.id+'>'+item.name+'</li>')
+					});
+                }else{
+                	rdcArry.push('<li class="mui-table-view-cell jump" data-id="0">没有搜索到相关冷库，请更换关键词~</li>');
+                }
+				$("#rdcList").empty();
+				$("#rdcList").append(rdcArry.join(''))
+            }
+        });
+    };
+</script>
+
+</html>
