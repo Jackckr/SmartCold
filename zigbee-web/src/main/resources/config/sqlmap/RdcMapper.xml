@@ -291,4 +291,10 @@
     <select id="getById" resultType="com.smartcold.zigbee.manage.entity.RdcEntity">
         SELECT * FROM  `rdc` WHERE `id`=#{id}
     </select>
+    <select id="findMapRdc" parameterType="map" resultType="map">
+      SELECT r.id,r.`name`,r.address ad,r.longitude x,r.latitude y,r.audit,r.istemperaturestandard db ,f.location url  from rdc r LEFT JOIN filedata f on r.id=f.belongid
+       <if test="audit!=null"> where audit=#{audit} </if>
+       <if test="istemperaturestandard!=null"> where istemperaturestandard=#{istemperaturestandard} </if>
+       ;
+    </select>
 </mapper>

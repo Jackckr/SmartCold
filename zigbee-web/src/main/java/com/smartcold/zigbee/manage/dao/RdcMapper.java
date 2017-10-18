@@ -16,6 +16,10 @@ public interface RdcMapper {
     List<RdcEntity> findRdcList();
 
     List<RdcEntity> findRDCByRDCId(@Param("rdcID") int rdcID);
+    
+  
+    
+    
 
     int insertRdc(RdcEntity rdc);
 
@@ -45,4 +49,6 @@ public interface RdcMapper {
     Page<RdcEntityDTO> getNewRdcList(Map<String, Object> parameters);
 
     RdcEntity getById(Integer id);
+    
+    List<Object> findMapRdc(@Param("audit")Integer audit,@Param("istemperaturestandard")Integer istemperaturestandard);
 }

@@ -12,13 +12,17 @@ import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.JFileChooser;
 
 import com.alibaba.fastjson.JSONObject;
 import com.smartcold.zigbee.manage.dao.*;
 import com.smartcold.zigbee.manage.entity.*;
 import com.smartcold.zigbee.manage.service.RedisService;
 import com.smartcold.zigbee.manage.util.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +48,7 @@ import com.smartcold.zigbee.manage.service.impl.WebvistsService;
 
 @Controller
 @RequestMapping(value = "/rdc")
+@CacheConfig(cacheNames = "rdc")
 public class RdcController {
 
     private static String baseDir = "picture";
@@ -101,7 +106,26 @@ public class RdcController {
 
     @Autowired
     private RedisService redisService;
-
+    
+    
+    /**
+	 * 获得
+	 * @return
+	 */
+	@RequestMapping(value = "/finRdcdMapData", method = RequestMethod.GET)
+	@ResponseBody
+	@Cacheable(key="'finRdcdMapData'+args[0]+'_'+args[1]")
+	public Object finRdcdMapData(Integer audit,Integer istemperaturestandard) {
+		try {
+			System.err.println("getRdcMap");
+			return rdcMapper.findMapRdc(audit,istemperaturestandard);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+    
+    
     @RequestMapping(value = "/attestationRdc", method = RequestMethod.POST)
     @ResponseBody
     public ResultDto attestationRdc(int userId, String userName, int rdcId, int type, MultipartFile authfile) {
