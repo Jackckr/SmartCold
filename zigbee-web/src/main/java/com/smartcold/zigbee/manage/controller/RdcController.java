@@ -360,12 +360,10 @@ public class RdcController {
         rdcExtEntity.setStoragelihuoarea(rdcAddDTO.getLihuoArea());
         rdcExtEntity.setStoragerefreg((byte) rdcAddDTO.getStorageRefreg());
         rdcExtEntity.setStoragetempmonitor((byte) rdcAddDTO.getTemperRecord());
-        String capacity = "1:" + rdcAddDTO.getCapacity1() + ",2:" + rdcAddDTO.getCapacity2() + ",3:"
-                + rdcAddDTO.getCapacity3() + ",4:" + rdcAddDTO.getCapacity4() + ",5:" + rdcAddDTO.getCapacity5();
-        String capacityheight = "1:" + rdcAddDTO.getHeight1() + ",2:" + rdcAddDTO.getHeight2() + ",3:"
-                + rdcAddDTO.getHeight3() + ",4:" + rdcAddDTO.getHeight4() + ",5:" + rdcAddDTO.getHeight5();
+        String capacity = rdcAddDTO.getCapacity1()+":"+rdcAddDTO.getHeight1() + ","+rdcAddDTO.getCapacity2()+":"
+                + rdcAddDTO.getHeight2()+ "," + rdcAddDTO.getCapacity3()+":"+rdcAddDTO.getHeight3() + ","
+                + rdcAddDTO.getCapacity4()+":"+rdcAddDTO.getHeight4();
         rdcExtEntity.setStoragecapacity(capacity);
-        rdcExtEntity.setStoragecapacityheight(capacityheight);
         String truck = "1:" + rdcAddDTO.getColdTruck1() + ",2:" + rdcAddDTO.getColdTruck2() + ",3:"
                 + rdcAddDTO.getColdTruck3() + ",4:" + rdcAddDTO.getColdTruck4();
         rdcExtEntity.setStoragetruck(truck);
@@ -466,6 +464,13 @@ public class RdcController {
         rdcEntity.setRentSqm(rdcAddDTO.getRentSqm());
         rdcEntity.setOpenLIne(rdcAddDTO.getOpenLIne());
         rdcEntity.setIsJoinStand(rdcAddDTO.getIsJoinStand());
+        rdcEntity.setTotalcapacity(rdcAddDTO.getTotalcapacity());
+        rdcEntity.setCapacityunit(rdcAddDTO.getCapacityunit());
+        rdcEntity.setRentcapacityunit(rdcAddDTO.getRentcapacityunit());
+        rdcEntity.setProductcategory(rdcAddDTO.getProductcategory());
+        rdcEntity.setBuildtype(rdcAddDTO.getBuildtype());
+        rdcEntity.setBuildfloors(rdcAddDTO.getBuildfloors());
+        rdcEntity.setWebsite(rdcAddDTO.getWebsite());
         if (rdcAddDTO.getRemark() != null) {
             rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
         }
@@ -509,12 +514,10 @@ public class RdcController {
         rdcExtEntity.setStoragelihuoarea(rdcAddDTO.getLihuoArea());
         rdcExtEntity.setStoragerefreg((byte) rdcAddDTO.getStorageRefreg());
         rdcExtEntity.setStoragetempmonitor((byte) rdcAddDTO.getTemperRecord());
-        String capacity = "1:" + rdcAddDTO.getCapacity1() + ",2:" + rdcAddDTO.getCapacity2() + ",3:"
-                + rdcAddDTO.getCapacity3() + ",4:" + rdcAddDTO.getCapacity4() + ",5:" + rdcAddDTO.getCapacity5();
-        String capacityheight = "1:" + rdcAddDTO.getHeight1() + ",2:" + rdcAddDTO.getHeight2() + ",3:"
-                + rdcAddDTO.getHeight3() + ",4:" + rdcAddDTO.getHeight4() + ",5:" + rdcAddDTO.getHeight5();
+        String capacity = rdcAddDTO.getCapacity1()+":"+rdcAddDTO.getHeight1() + ","+rdcAddDTO.getCapacity2()+":"
+                + rdcAddDTO.getHeight2()+ "," + rdcAddDTO.getCapacity3()+":"+rdcAddDTO.getHeight3() + ","
+                + rdcAddDTO.getCapacity4()+":"+rdcAddDTO.getHeight4();
         rdcExtEntity.setStoragecapacity(capacity);
-        rdcExtEntity.setStoragecapacityheight(capacityheight);
         String truck = "1:" + rdcAddDTO.getColdTruck1() + ",2:" + rdcAddDTO.getColdTruck2() + ",3:"
                 + rdcAddDTO.getColdTruck3() + ",4:" + rdcAddDTO.getColdTruck4();
         rdcExtEntity.setStoragetruck(truck);
@@ -632,6 +635,13 @@ public class RdcController {
         rdcEntity.setIsJoinStand(rdcAddDTO.getIsJoinStand());
         rdcEntity.setProvinceid(rdcAddDTO.getProvinceId());
         rdcEntity.setCityid(rdcAddDTO.getCityId());
+        rdcEntity.setTotalcapacity(rdcAddDTO.getTotalcapacity());
+        rdcEntity.setCapacityunit(rdcAddDTO.getCapacityunit());
+        rdcEntity.setRentcapacityunit(rdcAddDTO.getRentcapacityunit());
+        rdcEntity.setProductcategory(rdcAddDTO.getProductcategory());
+        rdcEntity.setBuildtype(rdcAddDTO.getBuildtype());
+        rdcEntity.setBuildfloors(rdcAddDTO.getBuildfloors());
+        rdcEntity.setWebsite(rdcAddDTO.getWebsite());
         Map<String, String> lngLatMap = rdcService.geocoderLatitude(rdcEntity);
         if (SetUtil.isNotNullMap(lngLatMap)) {
             rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
@@ -660,12 +670,10 @@ public class RdcController {
         rdcExtEntity.setStoragelihuoarea(rdcAddDTO.getLihuoArea());
         rdcExtEntity.setStoragerefreg((byte) rdcAddDTO.getStorageRefreg());
         rdcExtEntity.setStoragetempmonitor((byte) rdcAddDTO.getTemperRecord());
-        String capacity = "1:" + rdcAddDTO.getCapacity1() + ",2:" + rdcAddDTO.getCapacity2() + ",3:"
-                + rdcAddDTO.getCapacity3() + ",4:" + rdcAddDTO.getCapacity4() + ",5:" + rdcAddDTO.getCapacity5();
-        String capacityheight = "1:" + rdcAddDTO.getHeight1() + ",2:" + rdcAddDTO.getHeight2() + ",3:"
-                + rdcAddDTO.getHeight3() + ",4:" + rdcAddDTO.getHeight4() + ",5:" + rdcAddDTO.getHeight5();
+        String capacity = rdcAddDTO.getCapacity1()+":"+rdcAddDTO.getHeight1() + ","+rdcAddDTO.getCapacity2()+":"
+                + rdcAddDTO.getHeight2()+ "," + rdcAddDTO.getCapacity3()+":"+rdcAddDTO.getHeight3() + ","
+                + rdcAddDTO.getCapacity4()+":"+rdcAddDTO.getHeight4();
         rdcExtEntity.setStoragecapacity(capacity);
-        rdcExtEntity.setStoragecapacityheight(capacityheight);
         String truck = "1:" + rdcAddDTO.getColdTruck1() + ",2:" + rdcAddDTO.getColdTruck2() + ",3:"
                 + rdcAddDTO.getColdTruck3() + ",4:" + rdcAddDTO.getColdTruck4();
         rdcExtEntity.setStoragetruck(truck);
@@ -785,12 +793,10 @@ public class RdcController {
         rdcExtEntity.setStoragelihuoarea(rdcAddDTO.getLihuoArea());
         rdcExtEntity.setStoragerefreg((byte) rdcAddDTO.getStorageRefreg());
         rdcExtEntity.setStoragetempmonitor((byte) rdcAddDTO.getTemperRecord());
-        String capacity = "1:" + rdcAddDTO.getCapacity1() + ",2:" + rdcAddDTO.getCapacity2() + ",3:"
-                + rdcAddDTO.getCapacity3() + ",4:" + rdcAddDTO.getCapacity4() + ",5:" + rdcAddDTO.getCapacity5();
-        String capacityheight = "1:" + rdcAddDTO.getHeight1() + ",2:" + rdcAddDTO.getHeight2() + ",3:"
-                + rdcAddDTO.getHeight3() + ",4:" + rdcAddDTO.getHeight4() + ",5:" + rdcAddDTO.getHeight5();
+        String capacity = rdcAddDTO.getCapacity1()+":"+rdcAddDTO.getHeight1() + ","+rdcAddDTO.getCapacity2()+":"
+                + rdcAddDTO.getHeight2()+ "," + rdcAddDTO.getCapacity3()+":"+rdcAddDTO.getHeight3() + ","
+                + rdcAddDTO.getCapacity4()+":"+rdcAddDTO.getHeight4();
         rdcExtEntity.setStoragecapacity(capacity);
-        rdcExtEntity.setStoragecapacityheight(capacityheight);
         String truck = "1:" + rdcAddDTO.getColdTruck1() + ",2:" + rdcAddDTO.getColdTruck2() + ",3:"
                 + rdcAddDTO.getColdTruck3() + ",4:" + rdcAddDTO.getColdTruck4();
         rdcExtEntity.setStoragetruck(truck);
@@ -1137,76 +1143,29 @@ public class RdcController {
     }
 
     private int getRdcInfoIntegrity(RdcAddDTO rdcAddDTO) {
-        int infoIntegrity = 54;
-        if (rdcAddDTO.getColdTruck1() != 0) {
-            infoIntegrity += 2;
-        }
-        if (rdcAddDTO.getColdTruck2() != 0) {
-            infoIntegrity += 2;
-        }
-        if (rdcAddDTO.getColdTruck3() != 0) {
-            infoIntegrity += 2;
-        }
-        if (rdcAddDTO.getColdTruck4() != 0) {
-            infoIntegrity += 2;
-        }
-        if (!StringUtil.isNull(rdcAddDTO.getRemark())) {
-            infoIntegrity += 2;
-        }
-        if (rdcAddDTO.getStructure() != 0) {
-            infoIntegrity += 2;
-        }
-        if (rdcAddDTO.getPlatform() != 0) {
-            infoIntegrity += 2;
-        }
-        if (rdcAddDTO.getLihuoRoom() != 0) {
-            infoIntegrity += 2;
-        }
-        if (rdcAddDTO.getLihuoArea() != 0) {
-            infoIntegrity += 2;
-        }
-        if (rdcAddDTO.getLihuoTemperCtr() != 0) {
-            infoIntegrity += 2;
-        }
-        if (rdcAddDTO.getStorageRefreg() != 0) {
-            infoIntegrity += 2;
-        }
-        if (rdcAddDTO.getTemperRecord() != 0) {
-            infoIntegrity += 2;
-        }
-        if (!StringUtil.isNull(rdcAddDTO.getFacility())) {
-            infoIntegrity += 2;
-        }
-        if (rdcAddDTO.getCapacity1() != 0) {
-            infoIntegrity += 2;
-        }
-        if (rdcAddDTO.getCapacity2() != 0) {
-            infoIntegrity += 2;
-        }
-        if (rdcAddDTO.getCapacity3() != 0) {
-            infoIntegrity += 2;
-        }
-        if (rdcAddDTO.getCapacity4() != 0) {
-            infoIntegrity += 2;
-        }
-        if (rdcAddDTO.getCapacity5() != 0) {
-            infoIntegrity += 2;
-        }
-        if (rdcAddDTO.getHeight1() != 0) {
-            infoIntegrity += 2;
-        }
-        if (rdcAddDTO.getHeight2() != 0) {
-            infoIntegrity += 2;
-        }
-        if (rdcAddDTO.getHeight3() != 0) {
-            infoIntegrity += 2;
-        }
-        if (rdcAddDTO.getHeight4() != 0) {
-            infoIntegrity += 2;
-        }
-        if (rdcAddDTO.getHeight5() != 0) {
-            infoIntegrity += 2;
-        }
+        int infoIntegrity=56;
+        if (rdcAddDTO.getColdTruck1()!=0){infoIntegrity+=2;}
+        if (rdcAddDTO.getColdTruck2()!=0){infoIntegrity+=2;}
+        if (rdcAddDTO.getColdTruck3()!=0){infoIntegrity+=2;}
+        if (rdcAddDTO.getColdTruck4()!=0){infoIntegrity+=2;}
+        if (!StringUtil.isNull(rdcAddDTO.getRemark())){infoIntegrity+=2;}
+        if (rdcAddDTO.getStructure()!=0){infoIntegrity+=2;}
+        if (rdcAddDTO.getPlatform()!=0){infoIntegrity+=2;}
+        if (rdcAddDTO.getLihuoRoom()!=0){infoIntegrity+=2;}
+        if (rdcAddDTO.getLihuoArea()!=0){infoIntegrity+=2;}
+        if (rdcAddDTO.getLihuoTemperCtr()!=0){infoIntegrity+=2;}
+        if (rdcAddDTO.getStorageRefreg()!=0){infoIntegrity+=2;}
+        if (rdcAddDTO.getTemperRecord()!=0){infoIntegrity+=2;}
+        if (!StringUtil.isNull(rdcAddDTO.getFacility())){infoIntegrity+=2;}
+        if (rdcAddDTO.getCapacity1()!=0){infoIntegrity+=2;}
+        if (rdcAddDTO.getCapacity2()!=0){infoIntegrity+=2;}
+        if (rdcAddDTO.getCapacity3()!=0){infoIntegrity+=2;}
+        if (rdcAddDTO.getCapacity4()!=0){infoIntegrity+=2;}
+        if (rdcAddDTO.getHeight1()!=null && !rdcAddDTO.getHeight1().trim().equals("")){infoIntegrity+=2;}
+        if (rdcAddDTO.getHeight2()!=null && !rdcAddDTO.getHeight2().trim().equals("")){infoIntegrity+=2;}
+        if (rdcAddDTO.getHeight3()!=null && !rdcAddDTO.getHeight3().trim().equals("")){infoIntegrity+=2;}
+        if (rdcAddDTO.getHeight4()!=null && !rdcAddDTO.getHeight4().trim().equals("")){infoIntegrity+=2;}
+        if (rdcAddDTO.getWebsite()!=null && !rdcAddDTO.getWebsite().trim().equals("")){infoIntegrity+=2;}
         return infoIntegrity;
     }
 }

@@ -169,6 +169,7 @@ function ck(id) {
             if (rdc.facility == "undefined") {
                 rdc.facility = "";
             };
+            rdc.buildtype==2?$("#buildfloors").show():$("#buildfloors").hide();
             $("#coldButton").html("修改冷库信息");
             $('#addCold').panel({title: "修改冷库"});
             if (rdc.honorPics){
@@ -284,16 +285,22 @@ function coldValidation(vo) {
     	alert_errmsg("冷库图片,最多上传五张图片");
         return false;
     }
-    if (vo.name.trim() == "" || vo.provinceId.trim() == "" || vo.cityId.trim() == "" || vo.address.trim() == "" || vo.area.trim() == ""
+    if (vo.name.trim() == "" || vo.provinceId.trim() == "" || vo.cityId.trim() == "" || vo.address.trim() == "" || vo.totalcapacity.trim() == ""
         || vo.manageType.trim() == "" || vo.storageType.trim() == "" || vo.temperType.trim() == "" || vo.phoneNum.trim() == ""
-        ||vo.rentSqm.trim()==""||vo.height.trim()=="") {
+        ||vo.rentSqm.trim()==""||vo.height.trim()==""||vo.capacityunit.trim()==""||vo.rentcapacityunit.trim()==""||vo.buildtype.trim()==""
+        ||vo.structure.trim()==""||vo.platform.trim()=="") {
     	alert_errmsg("请完善冷库信息！");
         return false;
     }
     var areaRex = /^[0-9]{1}[\d]{0,10}\.*[\d]{0,2}$/;
     var countRex = /^[0-9]\d*$/;
+    var urlRegex=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/;
     if (!areaRex.test(vo.area)) {
     	alert_errmsg("面积输入有误！(小数点后最多保留两位，如：15.28)");
+        return false;
+    }
+    if (vo.website!=''&&!urlRegex.test(vo.website)) {
+        alert_errmsg("企业网址输入有误！(如：http://liankur.com)");
         return false;
     }
     if(vo.area<10){
@@ -304,14 +311,25 @@ function coldValidation(vo) {
         alert_errmsg("冷库净高度输入已超出（3m~40m）范围");
         return false;
     }
-    if(!areaRex.test(vo.rentSqm)){alert_errmsg("可出租面积输入有误！(小数点后最多保留两位，如：15.28)");}
-    if(!areaRex.test(vo.height)){alert_errmsg("冷库净高度！(小数点后最多保留两位，如：15.28)");}
+    if(!areaRex.test(vo.rentSqm)){alert_errmsg("可出租容积输入有误！(小数点后最多保留两位，如：15.28)");}
+    if(!areaRex.test(vo.height)){alert_errmsg("冷库总净高度！(小数点后最多保留两位，如：15.28)");}
     if (vo.capacity1 != "" && !areaRex.test(vo.capacity1) || vo.capacity2 != "" && !areaRex.test(vo.capacity2) ||
-        vo.capacity3 != "" && !areaRex.test(vo.capacity3) || vo.capacity4 != "" && !areaRex.test(vo.capacity4) ||
-        vo.capacity5 != "" && !areaRex.test(vo.capacity5) || vo.height1 != "" && !areaRex.test(vo.height1) ||
-        vo.height2 != "" && !areaRex.test(vo.height2) || vo.height3 != "" && !areaRex.test(vo.height3) ||
-        vo.height4 != "" && !areaRex.test(vo.height4) || vo.height5 != "" && !areaRex.test(vo.height5)) {
-    	alert_errmsg("冷库容积输入有误！(小数点后最多保留两位，如：15.28)");
+        vo.capacity3 != "" && !areaRex.test(vo.capacity3) || vo.capacity4 != "" && !areaRex.test(vo.capacity4)) {
+    	alert_errmsg("冷库分库容积输入有误！(小数点后最多保留两位，如：15.28)");
+        return false;
+    }
+    if(((vo.capacity1 != ""&&vo.capacity1!=0) && (vo.height1==""||vo.height1==undefined)) ||
+        ((vo.capacity2 != ""&&vo.capacity2!=0) && (vo.height2==""||vo.height2==undefined)) ||
+        ((vo.capacity3 != ""&&vo.capacity3!=0) && (vo.height3==""||vo.height3==undefined))||
+        ((vo.capacity4 != ""&&vo.capacity4!=0) && (vo.height4==""||vo.height4==undefined))){
+        alert_errmsg("冷库分库容积中，单位未填写！");
+        return false;
+    }
+    if(((vo.capacity1 == "" ||vo.capacity1==0) && (vo.height1!=""&&vo.height1!=undefined)) ||
+        ((vo.capacity2 == "" ||vo.capacity2==0) && (vo.height2!=""&&vo.height2!=undefined)) ||
+        ((vo.capacity3 == "" ||vo.capacity3==0) && (vo.height3!=""&&vo.height3!=undefined))||
+        ((vo.capacity4 == "" ||vo.capacity4==0) && (vo.height4!=""&&vo.height4!=undefined))){
+        alert_errmsg("冷库分库容积中，容积未填写！");
         return false;
     }
     if (vo.coldTruck1 != "" && !countRex.test(vo.coldTruck1) || vo.coldTruck2 != "" && !countRex.test(vo.coldTruck2) ||
@@ -323,14 +341,18 @@ function coldValidation(vo) {
         alert_errmsg("请输入理货区面积！");
         return false;
     }
+    if(vo.buildtype==2&& (!countRex.test(vo.buildfloors)||vo.buildfloors<2)){
+        alert_errmsg("请输入正确的楼层数！");
+        return false;
+    }
     if (vo.lihuoArea != "" && !areaRex.test(vo.lihuoArea)) {
     	alert_errmsg("理货区面积输入有误！(小数点后最多保留两位，如：15.28)");
         return false;
     }
-    if (vo.rentSqm-vo.sqm>0) {
-        alert_errmsg("可出租面积不能大于总面积！");
-        return false;
-    }
+    /*if (vo.rentSqm-vo.sqm>0) {
+     alert_errmsg("可出租面积不能大于总面积！");
+     return false;
+     }*/
     var phoneNumRex =  /^1[34578]\d{9}$/;
     var cellPhoneRex=/^\d{3,4}-{1}\d{7,8}$/;
     if (!phoneNumRex.test(vo.phoneNum)&&!cellPhoneRex.test(vo.phoneNum)) {
@@ -353,6 +375,10 @@ function addColdSubmit() {
     if(vo.lihuoRoom!=1){
         vo["lihuoArea"]="";
     }
+    if(vo.buildtype!=2){
+        vo.buildfloors="";
+    }
+    vo.productcategory=$('#productcategory').combobox('getValues').join();
     var flag = coldValidation(vo);
     if (flag) {
         var formdata = new FormData();
@@ -395,6 +421,10 @@ function doUpdateCold() {
     $.each(parnArray, function (index, item) {
         vo[item.name] = item.value;
     });
+    vo.productcategory=$('#productcategory').combobox('getValues').join();
+    if(vo.buildtype!=2){
+        vo.buildfloors="";
+    }
     var flag = coldValidation(vo);
   //  vo.rdcId = id;
     if (flag) {
@@ -551,12 +581,18 @@ function loadCityByProId(id) {
         }
     });
 }
+function initProductCategory() {
+    $.ajax({url:"http://liankur.com/i/ShareRdcController/getGDFilterData",type:"get",success:function (data) {
+        $("#productcategory").combobox('loadData',data.entity.gt);
+    }})
+}
 //初始化数据
 var saveProvince="";
 $().ready(function () {
     getStorageManage();
     getStructures();
     getTemperTypes();
+    initProductCategory();
     getStorageTypes();
     getStorageRefregs();
     init_table();
@@ -597,4 +633,13 @@ $().ready(function () {
             }
         }
     });
+    $("#buildtype").combobox({
+        onSelect:function (record) {
+            if(record.value==2){
+                $("#buildfloors").show();
+            }else {
+                $("#buildfloors").hide();
+            }
+        }
+    })
 });//初始化数据

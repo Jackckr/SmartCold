@@ -59,6 +59,13 @@
         `openLIne`,
         `infoIntegrity`,
         `isJoinStand`,
+        `totalcapacity`,
+        `capacityunit`,
+        `rentcapacityunit`,
+        `productcategory`,
+        `buildtype`,
+        `website`,
+        `buildfloors`,
         `updatetime`
         )
         VALUES
@@ -88,6 +95,13 @@
         #{openLIne},
         #{infoIntegrity},
         #{isJoinStand},
+        #{totalcapacity},
+        #{capacityunit},
+        #{rentcapacityunit},
+        #{productcategory},
+        #{buildtype},
+        #{website},
+        #{buildfloors},
         now()
         );
     </insert>
@@ -150,7 +164,28 @@
                 `cityid` = #{cityid,jdbcType=INTEGER},
             </if>
             <if test="clickcount != null">
-                `clickcount`=#{clickcount,jdbcType=INTEGER}
+                `clickcount`=#{clickcount,jdbcType=INTEGER},
+            </if>
+            <if test="totalcapacity != null">
+                `totalcapacity` = #{totalcapacity},
+            </if>
+            <if test="capacityunit != null">
+                `capacityunit` = #{capacityunit},
+            </if>
+            <if test="rentcapacityunit != null">
+                `rentcapacityunit` = #{rentcapacityunit},
+            </if>
+            <if test="productcategory != null">
+                `productcategory` = #{productcategory},
+            </if>
+            <if test="buildtype != null">
+                `buildtype` = #{buildtype},
+            </if>
+            <if test="website != null">
+                `website` = #{website},
+            </if>
+            <if test="buildfloors != null">
+                `buildfloors` = #{buildfloors},
             </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
