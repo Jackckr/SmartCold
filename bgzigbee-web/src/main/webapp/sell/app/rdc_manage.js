@@ -11,6 +11,9 @@ var saveRdcName="";
 var rFilter = /^(image\/jpeg|image\/png|image\/gif|image\/bmp|image\/jpg)$/i;
 var msg = "*.gif,*.jpg,*.jpeg,*.png,*.bmp";
 
+/*检查冷库名字是否重复*/
+var addRdcFlag = true;
+
 
 /*设置图片*/
 function setPic() {
@@ -147,6 +150,7 @@ function refresh() {
 
 /*冷库修改*/
 function ck(id) {
+    addRdcFlag=true;
     honorOriginalLength=0;
     storageOriginalLength=0;
     honorPicsArr=[];
@@ -246,6 +250,7 @@ function rdc_upstand() {
 
 /*添加冷库*/
 function addCold() {
+    addRdcFlag=true;
     honorPicsArr=[];
     storagePicsArr=[];
     honorOriginalLength=0;
@@ -269,8 +274,6 @@ function addCold() {
     $("#arrangePicDiv").hide();
     $("#filesDiv").hide();*/
 }
-/*检查冷库名字是否重复*/
-var addRdcFlag = true;
 /*提交冷库验证方法*/
 function coldValidation(vo) {
     if (!addRdcFlag) {
