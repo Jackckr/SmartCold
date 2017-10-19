@@ -306,7 +306,7 @@ function getProductCategory() {
     $.ajax({url:"/i/ShareRdcController/getGDFilterData",type:"get",success:function (data) {
         var gt = data.entity.gt;
         $.each(gt,function (index,item) {
-            productCategory.push('<input type="checkbox" value="'+item.type_name+'" name="productcategory" />'+item.type_name);
+            productCategory.push('<label class="labelGroup"><input type="checkbox" value="'+item.type_name+'" name="productcategory" />'+item.type_name+'</label>');
         });
         $("#productcategoryTr").empty().append(productCategory.join(''));
     }});

@@ -21,11 +21,7 @@ var rdcId;
 var user=window.localStorage.lkuser;
 localStorage.OURL=document.URL;
 function getRdcInfo() {
-    var smallImg=[];
-    var bigImg=[];
-    var baseInfo=[];
-    var otherInfo=[];
-    var manageType=[""];
+    var smallImg=[],bigImg=[], baseInfo=[],otherInfo=[],typeInfo=[],numInfo=[],moreInfo=[],manageType=[""];
     $.ajax({url:"/i/rdc/findAllManageType",type:"get",success:function (data) {
         supportForeach();
         data.forEach(function (val, index) {
@@ -141,57 +137,65 @@ function getRdcInfo() {
         }
 
         if(window.lkuser && window.lkuser.vipType>0||window.lkuser&&window.lkuser.id==rdc.userid){
-           // var structure=null, platform=null, lihuoRoom=null, lihuoArea=null, lihuoTemperCtr=null, storageRefreg=null, temperRecord=null,facility=null,remark=null;
-            rdc.structure==0?structure='':structure='<td> <span>建筑结构：</span>'+struct[rdc.structure]+' </td>';
-            rdc.platform==0?platform='':platform='<td> <span>是否有封闭月台：</span>'+isHave[rdc.platform]+' </td>';
-            rdc.lihuoRoom==0?lihuoRoom='':lihuoRoom='<td> <span>是否有理货区：</span>'+isHave[rdc.lihuoRoom]+'</td>';
-            rdc.lihuoArea==0?lihuoArea='':lihuoArea='<td> <span>理货区面积：</span>'+rdc.lihuoArea+'㎡ </td>';
-            rdc.lihuoTemperCtr==0?lihuoTemperCtr='':lihuoTemperCtr=' <td> <span>理货区有无温控：</span>'+isHave[rdc.lihuoTemperCtr]+' </td>';
-            rdc.storageRefreg==0?storageRefreg='':storageRefreg='<td> <span>制冷剂类型：</span>'+refreg[rdc.storageRefreg]+' </td>';
-            rdc.temperRecord==0?temperRecord='':temperRecord='<td> <span>有无温度记录：</span>'+isHave[rdc.temperRecord]+' </td>';
-            rdc.facility==""||rdc.facility=="undefined"?facility='':facility='<td colspan="2"> <span>周边设施：</span>'+rdc.facility+' </td>';
-            rdc.remark==""||rdc.remark=="undefined"?remark='':remark='<td colspan="2"> <span>备注：</span>'+rdc.remark+' </td>';
-            rdc.totalcapacity==0||!rdc.totalcapacity?totalcapacity='':totalcapacity='<td> <span>总容量：</span>'+rdc.totalcapacity+rdc.capacityunit+' </td>';
-            rdc.rentSqm==0||!rdc.rentSqm?rentcapacity='':rentcapacity='<td> <span>可出租容量：</span>'+rdc.rentSqm+rdc.rentcapacityunit+' </td>';
-            rdc.productcategory==""||!rdc.productcategory?productcategory='':productcategory='<td> <span>存放产品品类：</span>'+rdc.productcategory+' </td>';
-            rdc.buildtype==0||!rdc.buildtype?buildfloors='':buildfloors='<td> <span>冷库楼层数：</span>'+floors+' 层</td>';
-            !rdc.website||rdc.website==""?website='':website='<td> <span>企业网址：</span>'+rdc.website+'</td>';
-            rdc.coldTruck1==0?coldTruck1='':coldTruck1='<p> <span>小于1.8T：</span>'+rdc.coldTruck1+' 辆</p>';
-            rdc.capacity1==0?capacity1='':capacity1='<p> <span>常温库：</span> '+rdc.capacity1+rdc.height1+'</p> ';
-            rdc.coldTruck2==0?coldTruck2='':coldTruck2='<p> <span>1.8 ～ 6T：</span>'+rdc.coldTruck2+' 辆</p>';
-            rdc.capacity2==0?capacity2='':capacity2='<p> <span>冷藏库：</span> '+rdc.capacity2+rdc.height2+'</p> ';
-            rdc.coldTruck3==0?coldTruck3='':coldTruck3='<p> <span>6 ～ 14T：</span>'+rdc.coldTruck3+' 辆</p>';
-            rdc.capacity3==0?capacity3='':capacity3='<p> <span>冷冻库：</span> '+rdc.capacity3+rdc.height3+'</p> ';
-            rdc.coldTruck4==0?coldTruck4='':coldTruck4='<p> <span>大于14T：</span>'+rdc.coldTruck4+' 辆</p>';
-            rdc.capacity4==0?capacity4='':capacity4='<p> <span>超低温库：</span> '+rdc.capacity4+rdc.height4+'</p> ';
+            //冷库相关类型
+            rdc.structure==0?structure='':structure='<li><div>建筑结构:</div><div>'+struct[rdc.structure]+'</div></li>';
+            rdc.storageRefreg==0?storageRefreg='':storageRefreg='<li><div>制冷剂类型:</div><div>'+refreg[rdc.storageRefreg]+'</div></li>';
+            rdc.productcategory==""||!rdc.productcategory?productcategory='':productcategory='<li><div>存放产品品类:</div><div>'+rdc.productcategory+'</div></li>';
+
+            //冷库相关数据
+            rdc.totalcapacity==0||!rdc.totalcapacity?totalcapacity='':totalcapacity='<li><div>总容量:</div><div>'+rdc.totalcapacity+rdc.capacityunit+'</div></li>';
+            rdc.rentSqm==0||!rdc.rentSqm?rentcapacity='':rentcapacity='<li><div>可出租容量:</div><div>'+rdc.rentSqm+rdc.rentcapacityunit+'</div></li>';
+            rdc.buildtype==0||!rdc.buildtype?buildfloors='':buildfloors='<li><div>冷库楼层数:</div><div>'+floors+'层</div></li>';
+            rdc.coldTruck1==0?coldTruck1='':coldTruck1='<li><div>小于1.8T：</div><div>'+rdc.coldTruck1+'辆</div></li>';
+            rdc.coldTruck1==0?coldTruck2='':coldTruck2='<li><div>1.8 ～ 6T：</div><div>'+rdc.coldTruck2+'辆</div></li>';
+            rdc.coldTruck1==0?coldTruck3='':coldTruck3='<li><div>6 ～ 14T：</div><div>'+rdc.coldTruck3+'辆</div></li>';
+            rdc.coldTruck1==0?coldTruck4='':coldTruck4='<li><div>大于14T：</div><div>'+rdc.coldTruck4+'辆</div></li>';
             coldTruck = coldTruck1+coldTruck2+coldTruck3+coldTruck4;
+            rdc.capacity1==0?capacity1='':capacity1='<li><div>常温库：</div><div>'+rdc.capacity1+rdc.height1+'</div></li>';
+            rdc.capacity2==0?capacity2='':capacity2='<li><div>冷藏库：</div><div>'+rdc.capacity2+rdc.height2+'</div></li>';
+            rdc.capacity3==0?capacity3='':capacity3='<li><div>冷冻库：</div><div>'+rdc.capacity3+rdc.height3+'</div></li>';
+            rdc.capacity4==0?capacity4='':capacity4='<li><div>超低温库：</div><div>'+rdc.capacity4+rdc.height4+'</div></li>';
             capacity=capacity1+capacity2+capacity3+capacity4;
+
+            //冷库其他数据
+            rdc.platform==0?platform='':platform='<li><div>是否有封闭月台：</div><div>'+isHave[rdc.platform]+'</div></li>';
+            rdc.lihuoRoom==0?lihuoRoom='':lihuoRoom='<li><div>是否有理货区：</div><div>'+isHave[rdc.lihuoRoom]+'</div></li>';
+            rdc.lihuoArea==0?lihuoArea='':lihuoArea='<li><div>理货区面积：</div><div>'+rdc.lihuoArea+'㎡</div></li>';
+            rdc.lihuoTemperCtr==0?lihuoTemperCtr='':lihuoTemperCtr='<li><div>理货区有无温控：</div><div>'+isHave[rdc.lihuoTemperCtr]+'</div></li>';
+            rdc.temperRecord==0?temperRecord='':temperRecord='<li><div>有无温度记录：</div><div>'+isHave[rdc.temperRecord]+'</div></li>';
+            rdc.facility==""||rdc.facility==undefined?facility='':facility='<li><div>周边设施：</div><div>'+rdc.facility+'</div></li>';
+            rdc.remark==""||rdc.remark==undefined?remark='':remark='<li><div>备注：</div><div>'+rdc.remark+'</div></li>';
+            !rdc.website||rdc.website==""?website='':website='<li><div>企业网址：</div><div><a class="orange" href='+rdc.website+' target="_blank">'+rdc.website+'</a></div></li>';
+
             if(rdc.coldTruck1==0&&rdc.coldTruck2==0&&rdc.coldTruck3==0&&rdc.coldTruck4==0){
-                carNum='<td> <span>冷藏车数量：</span>库主未填写</td>'
+                carNum='<li><div>冷藏车数量：</div><div>库主未填写</div></li>'
             }else{
-                carNum='<td> <span>冷藏车数量：</span></td>'
+                carNum='<li><div>冷藏车数量：</div></li>'+coldTruck;
             }
             if(capacity1==''&&capacity2==''&&capacity3==''&&capacity4==''){
-                rdcCapacity='<td> <span>冷库容积：</span>库主未填写</td> '
+                rdcCapacity='<li><div>冷库分库容积：</div><div>库主未填写</div></li>'
             }else{
-                rdcCapacity='<td> <span>冷库容积：</span> </td> '
+                rdcCapacity='<li><div>冷库分库容积：</div></li>'+capacity;
             }
-            otherInfo.push('<table><tbody><tr><td><span>冷库经营类型：</span>'+manageType[rdc.manageType]+' </td> ' +
-                '<td> <span>冷库温度类型：</span>'+tempType[rdc.temperType]+' </td> </tr> ' +
-                '<tr><td> <span>商品存放类型：</span>'+saveType[rdc.storageType]+'</td> '+structure+' </tr> ' +
-                '<tr>'+platform + lihuoRoom +'</tr>'+
-                '<tr>'+totalcapacity + rentcapacity +'</tr>'+
-                '<tr>'+productcategory + buildfloors +'</tr>'+
-                '<tr>'+lihuoArea+lihuoTemperCtr +'</tr>'+
-                '<tr>'+storageRefreg+temperRecord+'</tr>'+
-                '<tr> '+carNum+rdcCapacity+'</tr> ' +
-                '<tr> '+website+'</tr> ' +
-                '<tr> <td>'+coldTruck+'</td>' +
-                '<tr>'+remark+'</tr>' +'</tbody></table>');
+
+           typeInfo.push('<li><div>冷库经营类型:</div><div>'+manageType[rdc.manageType]+'</div></li>'+
+               '<li><div>冷库温度类型:</div><div>'+tempType[rdc.temperType]+'</div></li>'+
+               '<li><div>商品存放类型:</div><div>'+saveType[rdc.storageType]+'</div></li>'+structure+storageRefreg+productcategory);
+           numInfo.push(buildfloors+totalcapacity+rentcapacity+rdcCapacity+carNum);
+           moreInfo.push(website+platform+lihuoRoom+lihuoArea+lihuoTemperCtr+temperRecord+facility+remark);
+
+            $("#typeInfo").empty().append(typeInfo.join(''));
+            $("#numInfo").empty().append(numInfo.join(''));
+            $("#moreInfo").empty().append(moreInfo.join(''));
+
         }else if(window.lkuser && window.lkuser.vipType==0&&window.lkuser&&window.lkuser.id!=rdc.userid){
             otherInfo.push('<b>您尚未实名认证，现在去<a href="../html/authentication.html" class="blue">实名认证</a></b>');
+            $("#typeInfo,#numInfo,#moreInfo").remove();
+            $("#otherInfo").empty().append(otherInfo.join(''));
         }else{
             otherInfo.push('<a class="blue" href="../../login.html">登录</a>方可查看更多');
+            $("#typeInfo,#numInfo,#moreInfo").remove();
+            $("#otherInfo").empty().append(otherInfo.join(''));
         }
         $("#baseInfo").empty().append(baseInfo.join(''));
         $("#divimginfog_imgPlayer").empty().append(bigImg.join(''));
@@ -199,9 +203,8 @@ function getRdcInfo() {
             photos: '#divimginfog_imgPlayer'
             ,anim:5//0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
         });
-
         $("#divpageinfog_imgPlayer").empty().append(smallImg.join(''));
-        $("#otherInfo").empty().append(otherInfo.join(''));
+
         /*缩略图轮播*/
         foucsbox(2500);
     }});
@@ -304,6 +307,9 @@ function flushPage(index) {
         });
     });
 }
+layui.use('element', function(){
+    var element = layui.element;
+});
 /*发布评论*/
 function goComment() {
     window.location.href='rdccomment.html?id='+rdcId;
@@ -327,4 +333,7 @@ $("#aboutRdcRelease ul li").click(function () {
 $(function () {
     rdcId = getUrlParam("rdcId");
     getRdcInfo();
+    layui.use('element', function(){
+        var element = layui.element();
+    });
 });
