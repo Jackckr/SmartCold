@@ -117,7 +117,6 @@ public class RdcController {
 	@Cacheable(key="'finRdcdMapData'+args[0]+'_'+args[1]")
 	public Object finRdcdMapData(Integer audit,Integer istemperaturestandard) {
 		try {
-			System.err.println("getRdcMap");
 			return rdcMapper.findMapRdc(audit,istemperaturestandard);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -22,75 +22,46 @@
         z-index: 999;
         color: #fff;
     }
-    #login{
-        position:absolute;
-        width:300px;
-        height:40px;
-        left:50%;
-        top:50%;
-        margin:-40px 0 0 -150px;
-    }
-    #login input[type=password]{
-        width:200px;
-        height:30px;
-        padding:3px;
-        line-height:30px;
-        border:1px solid #000;
-    }
-    #login input[type=submit]{
-        width:80px;
-        height:38px;
-        display:inline-block;
-        line-height:38px;
-    }
+ #searchTips{
+    display: block;
+    width: 291px;
+    height: auto;
+    background: red;
+    float: left;
+    position: absolute;
+    z-index: 99;
+ }
   </style>
-  <script src="../plugins/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="../plugins/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=PljdkOFpwmjpU00lFQhakTbjilGaH0or"></script>
   	<script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
 	<link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css" />
-<!--   <script type="text/javascript" src="http://lbsyun.baidu.com/jsdemo/data/points-sample-data.js"></script> -->
 </head>
 <body>
+<!-- <div  id="searchTips" > -->
+<!--     <ul></ul> -->
+<!--     <input type="hidden" id="hidSearchOption" /> -->
+<!-- </div> -->
    <div id="map"></div>
-       <div id="content" class="content">
-        <input type="text" value="" id="keyword" />
-        <input type="button" name="" id="" value="查询" onclick="search()" />
-        <div style="width:600px;height:500px;border:0px solid gray" id="container"></div>
-       
-    </div>
     <script type="text/javascript">
      var map=undefined ,
      defrdc=[], autrdc=[],temsrrdc=[] ;
      var options1 = {//达标冷库配置  //绿色
            size: BMAP_POINT_SIZE_BIG,
-           shape: BMAP_POINT_SHAPE_STAR,
-           color: 'Green'
+           shape: BMAP_POINT_SHAPE_CIRCLE,
+           color: '#7FFF00'
        },
        options2 = {//认证冷库配置 //
                size: BMAP_POINT_SIZE_BIG,
-               shape: BMAP_POINT_SHAPE_STAR,
-               color: '#CD00CD'
+               shape: BMAP_POINT_SHAPE_CIRCLE,
+               color: '#00B2EE'
            }
      ,
      options3 = {//
              size: BMAP_POINT_SIZE_BIG,
-             shape: BMAP_POINT_SHAPE_STAR,
-             color: '#76EE00'
-         }
-     , options = {
-               fillStyle: 'rgba(255, 50, 50, 0.6)',
-               shadowColor: 'rgba(255, 50, 50, 1)',
-               shadowBlur: 100,
-               globalCompositeOperation: 'lighter',
-               methods: {
-                   click: function (item) {
-                       console.log(item);
-                   }
-               },
-               size: 100,
-               draw: 'simple'
-           };
-    
+             shape: BMAP_POINT_SHAPE_CIRCLE,
+             color: '#8B8878'
+         };
     
     function initdata(){
     	 $.ajax({
@@ -108,12 +79,6 @@
             map = new BMap.Map("map", {});                        // 创建Map实例
     	    map.centerAndZoom(new BMap.Point(105.000, 38.000), 5);     // 初始化地图,设置中心点坐标和地图级别
     	    map.enableScrollWheelZoom();                        //启用滚轮放大缩小
-    	    //添加缩略图控件
-            map.addControl(new BMap.OverviewMapControl({isOpen:false,anchor:BMAP_ANCHOR_BOTTOM_RIGHT}));
-            //添加缩放平移控件
-            map.addControl(new BMap.NavigationControl());
-            //添加比例尺控件
-            map.addControl(new BMap.ScaleControl());
     	    if (document.createElement('canvas').getContext) {  // 判断当前浏览器是否支持绘制海量点
     	    	allrdc();
     	    } else {
@@ -139,21 +104,24 @@
 	        		defrdc.push(point);
 	        	};
 	        }
-	        var pointCollection = new BMap.PointCollection(temsrrdc, options1);  // 初始化PointCollection--达标冷库
-	        pointCollection.addEventListener('mouseover', function (e) {showrdcinfo(e.point);});
+	        var  pointCollection = new BMap.PointCollection(defrdc, options3);  // 初始化PointCollection--其他冷库
+	        pointCollection.addEventListener('click', function (e) {showrdcinfo(e.point);});
 	        map.addOverlay(pointCollection);  // 添加Overlay
+	      
 	        pointCollection = new BMap.PointCollection(autrdc, options2);  // 初始化PointCollection--认证冷库
-	        pointCollection.addEventListener('mouseover', function (e) {showrdcinfo(e.point);});
+	        pointCollection.addEventListener('click', function (e) {showrdcinfo(e.point);});
 	        map.addOverlay(pointCollection);  // 添加Overlay
-	        pointCollection = new BMap.PointCollection(defrdc, options3);  // 初始化PointCollection--其他冷库
-	        pointCollection.addEventListener('mouseover', function (e) {showrdcinfo(e.point);});
-	        map.addOverlay(pointCollection);  // 添加Overlay
+	        
+	        pointCollection = new BMap.PointCollection(temsrrdc, options1);  // 初始化PointCollection--达标冷库
+	        pointCollection.addEventListener('click', function (e) {showrdcinfo(e.point);});
+	        map.addOverlay(pointCollection);  // 添加Overlay mouseover
+	       
     }
     
     function showrdcinfo(point){
     	   var content = ['<div style="margin:0;line-height:20px;padding:2px;">' ,
     	                    '<img src="',point.data.url,'"  style="float:right;zoom:1;overflow:hidden;width:100px;height:100px;margin-left:3px;"/>' ,
-    	                    '地址：',point.data.ad ,'</br>','状态：',point.msg,
+    	                    '地址：',point.data.ad ,'</br>','状态：',point.msg,'</br>',' <a href="rdcinfo.html?rdcId=', point.data.id,'">查看详情</a>',
     	                  '</div>'].join('');
     	    var searchInfoWindow = null;
     	    searchInfoWindow = new BMapLib.SearchInfoWindow(map, content, {
@@ -179,8 +147,11 @@
       local.search(keyword);
     }
     
+	
+    
     
     initdata();
+    
     
     
     

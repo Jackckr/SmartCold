@@ -34,7 +34,7 @@ import com.smartcold.manage.cold.util.TimeUtil;
  * 
  * 仅238执行
  **/
-@Service
+//@Service
 public class WarningTaskService  {
 	
 	@Autowired
@@ -150,6 +150,7 @@ public class WarningTaskService  {
 			if(StringUtil.isNull(colditem.getTids())){ Blacklist.add(key);  continue;}//过滤无效数据
 		    baseTemp=colditem.getTempdiff()+colditem.getStartTemperature();
 		    colditem.setBaseTemp(baseTemp);//计算基线温度
+		    
 		    String deviceid = colditem.getDeviceids();
 		    if(StringUtil.isnotNull(deviceid)&&deviceid.indexOf("'")==-1){
 		    	String[] split = deviceid.split(",");
@@ -218,7 +219,7 @@ public class WarningTaskService  {
 					Date Lt[] = { null, null, null, null, null, null, null };  // 各个级别报警开始时间
 					int Lv[] = { 0, 0, 0, 0, 0 }, Tv[] = { 240,180,120,60,30 };// 各个级别出现的次数// 各个级别错误告警时间
 					ColdStorageSetEntity colditem = job.getColdStorageSetEntity();
-					double basTemp = colditem.getBaseTemp();
+					double basTemp =colditem.getStartTemperature()+colditem.getTempdiff()/2;
 					String starttime=TimeUtil.getDateTime(job.getStartTime());
 					List<ItemValue> tempList = tempWarningServer.getOverTempList(colditem.getTids(), null,colditem.getDeviceids(),starttime,TimeUtil.getDateTime());// 获得所有超温数据
 					if (SetUtil.isnotNullList(tempList) && tempList.size() > 5) {//过滤掉坏的数据
