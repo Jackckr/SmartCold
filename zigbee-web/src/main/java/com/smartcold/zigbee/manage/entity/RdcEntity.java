@@ -65,6 +65,20 @@ public class RdcEntity {
     private int clickcount;
 
     private String logo="http://139.196.189.93:8089/app/rdcHeader.jpg";
+
+    private Double totalcapacity;//冷库总容量
+
+    private String capacityunit;//冷库总容量单位
+
+    private String rentcapacityunit;//可出租容量单位
+
+    private String productcategory;//存放商品品类
+
+    private Integer buildtype;//建筑类型
+
+    private String website;//企业网址
+
+    private Integer buildfloors;//建筑层数
 	
 	public int getUserId() {
 		return userid;
@@ -312,5 +326,61 @@ public class RdcEntity {
 
     public void setClickcount(int clickcount) {
         this.clickcount = clickcount;
+    }
+
+    public Double getTotalcapacity() {
+        return totalcapacity;
+    }
+
+    public void setTotalcapacity(Double totalcapacity) {
+        this.totalcapacity = totalcapacity;
+    }
+
+    public String getCapacityunit() {
+        return capacityunit;
+    }
+
+    public void setCapacityunit(String capacityunit) {
+        this.capacityunit = capacityunit;
+    }
+
+    public String getRentcapacityunit() {
+        return rentcapacityunit;
+    }
+
+    public void setRentcapacityunit(String rentcapacityunit) {
+        this.rentcapacityunit = rentcapacityunit;
+    }
+
+    public String getProductcategory() {
+        return productcategory;
+    }
+
+    public void setProductcategory(String productcategory) {
+        this.productcategory = productcategory;
+    }
+
+    public Integer getBuildtype() {
+        return buildtype;
+    }
+
+    public void setBuildtype(Integer buildtype) {
+        this.buildtype = buildtype;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public Integer getBuildfloors() {
+        return buildfloors;
+    }
+
+    public void setBuildfloors(Integer buildfloors) {
+        this.buildfloors = buildfloors;
     }
 }

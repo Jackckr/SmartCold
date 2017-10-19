@@ -60,12 +60,10 @@ public class RdcAddDTO {
 	private float capacity2;
 	private float capacity3;
 	private float capacity4;
-	private float capacity5;
-	private float height1;//冷库容积-面积
-	private float height2;
-	private float height3;
-	private float height4;
-	private float height5;
+	private String height1;//冷库容积-面积
+	private String height2;
+	private String height3;
+	private String height4;
 
 	private String facility;
 
@@ -101,44 +99,50 @@ public class RdcAddDTO {
 
 	private List<RdcAuthDTO> authPics;
 
-	public float getHeight1() {
+	private Double totalcapacity;//冷库总容量
+
+	private String capacityunit;//冷库总容量单位
+
+	private String rentcapacityunit;//可出租容量单位
+
+	private String productcategory;//存放商品品类
+
+	private Integer buildtype;//建筑类型
+
+	private String website;//企业网址
+
+	private Integer buildfloors;//建筑层数
+
+	public String getHeight1() {
 		return height1;
 	}
 
-	public void setHeight1(float height1) {
+	public void setHeight1(String height1) {
 		this.height1 = height1;
 	}
 
-	public float getHeight2() {
+	public String getHeight2() {
 		return height2;
 	}
 
-	public void setHeight2(float height2) {
+	public void setHeight2(String height2) {
 		this.height2 = height2;
 	}
 
-	public float getHeight3() {
+	public String getHeight3() {
 		return height3;
 	}
 
-	public void setHeight3(float height3) {
+	public void setHeight3(String height3) {
 		this.height3 = height3;
 	}
 
-	public float getHeight4() {
+	public String getHeight4() {
 		return height4;
 	}
 
-	public void setHeight4(float height4) {
+	public void setHeight4(String height4) {
 		this.height4 = height4;
-	}
-
-	public float getHeight5() {
-		return height5;
-	}
-
-	public void setHeight5(float height5) {
-		this.height5 = height5;
 	}
 
 	public FileDataEntity getArrangePic() {
@@ -398,13 +402,6 @@ public class RdcAddDTO {
 		this.capacity4 = capacity4;
 	}
 
-	public float getCapacity5() {
-		return capacity5;
-	}
-
-	public void setCapacity5(float capacity5) {
-		this.capacity5 = capacity5;
-	}
 
 	public String getFacility() {
 		return facility;
@@ -516,5 +513,61 @@ public class RdcAddDTO {
 
 	public void setHeight(float height) {
 		this.height = height;
+	}
+
+	public Double getTotalcapacity() {
+		return totalcapacity;
+	}
+
+	public void setTotalcapacity(Double totalcapacity) {
+		this.totalcapacity = totalcapacity;
+	}
+
+	public String getCapacityunit() {
+		return capacityunit;
+	}
+
+	public void setCapacityunit(String capacityunit) {
+		this.capacityunit = capacityunit;
+	}
+
+	public String getRentcapacityunit() {
+		return rentcapacityunit;
+	}
+
+	public void setRentcapacityunit(String rentcapacityunit) {
+		this.rentcapacityunit = rentcapacityunit;
+	}
+
+	public String getProductcategory() {
+		return productcategory;
+	}
+
+	public void setProductcategory(String productcategory) {
+		this.productcategory = productcategory;
+	}
+
+	public Integer getBuildtype() {
+		return buildtype;
+	}
+
+	public void setBuildtype(Integer buildtype) {
+		this.buildtype = buildtype;
+	}
+
+	public String getWebsite() {
+		return website;
+	}
+
+	public void setWebsite(String website) {
+		this.website = website;
+	}
+
+	public Integer getBuildfloors() {
+		return buildfloors;
+	}
+
+	public void setBuildfloors(Integer buildfloors) {
+		this.buildfloors = buildfloors;
 	}
 }

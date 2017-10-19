@@ -107,6 +107,14 @@ function addColdSubmit() {
     $.each(parnArray, function (index, item) {
         vo[item.name] = item.value;
     });
+    if(vo.buildtype!=2){
+        vo.buildfloors="";
+    }
+    var productcategory=[];
+    $.each($('input[name="productcategory"]:checked'),function (index, item) {
+       productcategory.push(item.value);
+    });
+    vo.productcategory=productcategory.join();
     var flag = coldValidation(vo);
     if(flag){
         vo['userid']=window.lkuser.id;
@@ -153,7 +161,7 @@ function getFormValue(rdcId) {
     $.ajax({url:"/i/rdc/findRDCDTOByRDCId",type:"get",data:{"rdcID":rdcId,"uid":window.lkuser.id},success:function (data) {
         var rdc=data[0];
         initCityList(rdc.provinceId);
-        getDataToForm($("#submitRdc [name]").not("[name=openLIne],[name=isJoinStand]"),rdc);
+        getDataToForm($("#submitRdc [name]").not("[name=openLIne],[name=isJoinStand],[name=productcategory]"),rdc);
         if(rdc.openLIne){$("#submitRdc input[name=openLIne][value='"+rdc.openLIne+"']").attr("checked","checked");}
         if(rdc.isJoinStand){$("#submitRdc input[name=isJoinStand][value='"+rdc.isJoinStand+"']").attr("checked","checked");}
         if(rdc.isJoinStand==1){$("#li1").show()}
@@ -163,7 +171,14 @@ function getFormValue(rdcId) {
         }else if(rdc.auditType==2){
             $("#coldAudit").hide();$("#coldAuditing").show();
         }
-
+        if(rdc.buildtype!=2){
+            $('#buildfloors').hide();
+        }
+        if(rdc.productcategory&&rdc.productcategory!=''){
+            $.each(rdc.productcategory.split(','),function (index, item) {
+               $('input[name="productcategory"][value="'+item+'"]').attr('checked','checked');
+            });
+        }
         if(rdc.standType==1){
             $("#tempStandDiv,#tempStandUl").hide();
             $("#successStand").show();
@@ -194,6 +209,14 @@ function updateColdSubmit() {
     $.each(parnArray, function (index, item) {
         vo[item.name] = item.value;
     });
+    if(vo.buildtype!=2){
+        vo.buildfloors="";
+    }
+    var productcategory=[];
+    $.each($('input[name="productcategory"]:checked'),function (index, item) {
+        productcategory.push(item.value);
+    });
+    vo.productcategory=productcategory.join();
     var flag = coldValidation(vo);
     if(flag){
         vo['userid']=window.lkuser.id;
@@ -232,6 +255,14 @@ function updateColdSubmit() {
     }
 }
 
+function changeBuildType(mark) {
+    if(mark.value ==2 ){
+        $("#buildfloors").show();
+    }else {
+        $("#buildfloors").hide();
+    }
+}
+
 // 获取冷库经营类型
 function getStorageManage() {
     var manageList=[];
@@ -266,6 +297,18 @@ function getTemperTypes() {
             temperTypes.push('<option value="'+val.id+'">'+val.type+'</option>');
         });
         $("#temperType").empty().append(temperTypes.join(''));
+    }});
+}
+
+//获取商品品类
+function getProductCategory() {
+    var productCategory=[];
+    $.ajax({url:"/i/ShareRdcController/getGDFilterData",type:"get",success:function (data) {
+        var gt = data.entity.gt;
+        $.each(gt,function (index,item) {
+            productCategory.push('<input type="checkbox" value="'+item.type_name+'" name="productcategory" />'+item.type_name);
+        });
+        $("#productcategoryTr").empty().append(productCategory.join(''));
     }});
 }
 
@@ -333,16 +376,22 @@ function coldValidation(vo) {
         layer.alert('冷库图片,最少上传三张图片！', {icon: 2});
         return false;
     }
-    if (vo.name.trim() == "" || vo.provinceId.trim() == "" || vo.cityId.trim() == "" || vo.address.trim() == "" || vo.area.trim() == ""
-        || vo.manageType.trim() == "" || vo.storageType.trim() == "" || vo.temperType.trim() == ""||vo.rentSqm.trim()==""||
-        vo.height.trim()=="" || vo.phoneNum.trim() == "") {
+    if (vo.name.trim() == "" || vo.provinceId.trim() == "" || vo.cityId.trim() == "" || vo.address.trim() == "" || vo.totalcapacity.trim() == ""
+        || vo.manageType.trim() == "" || vo.storageType.trim() == "" || vo.temperType.trim() == "" || vo.phoneNum.trim() == ""
+        ||vo.rentSqm.trim()==""||vo.height.trim()==""||vo.capacityunit.trim()==""||vo.rentcapacityunit.trim()==""||vo.buildtype.trim()==""
+        ||vo.structure.trim()==""||vo.platform.trim()==""||vo.productcategory.trim()=="") {
         layer.alert('请完善冷库信息！', {icon: 2});
         return false;
     }
     var areaRex = /^[0-9]{1}[\d]{0,10}\.*[\d]{0,2}$/;
     var countRex = /^[0-9]\d*$/;
+    var urlRegex=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/;
     if (!areaRex.test(vo.area)) {
         layer.alert('面积输入有误！(小数点后最多保留两位，如：15.28)', {icon: 2});
+        return false;
+    }
+    if (vo.website!=''&&!urlRegex.test(vo.website)) {
+        layer.alert('企业网址输入有误！(如：http://liankur.com)', {icon: 2});
         return false;
     }
     if(vo.area<10){
@@ -350,11 +399,11 @@ function coldValidation(vo) {
         return false;
     }
     if (!areaRex.test(vo.rentSqm)) {
-        layer.alert('可出租面积输入有误！(小数点后最多保留两位，如：15.28)', {icon: 2});
+        layer.alert('可出租容积输入有误！(小数点后最多保留两位，如：15.28)', {icon: 2});
         return false;
     }
     if (!areaRex.test(vo.height)) {
-        layer.alert('冷库净高度输入有误！(小数点后最多保留两位，如：15.28)', {icon: 2});
+        layer.alert('冷库总净高度输入有误！(小数点后最多保留两位，如：15.28)', {icon: 2});
         return false;
     }
     if(vo.height<3||vo.height>40){
@@ -362,11 +411,22 @@ function coldValidation(vo) {
         return false;
     }
     if (vo.capacity1 != "" && !areaRex.test(vo.capacity1) || vo.capacity2 != "" && !areaRex.test(vo.capacity2) ||
-        vo.capacity3 != "" && !areaRex.test(vo.capacity3) || vo.capacity4 != "" && !areaRex.test(vo.capacity4) ||
-        vo.capacity5 != "" && !areaRex.test(vo.capacity5) || vo.height1 != "" && !areaRex.test(vo.height1) ||
-        vo.height2 != "" && !areaRex.test(vo.height2) || vo.height3 != "" && !areaRex.test(vo.height3) ||
-        vo.height4 != "" && !areaRex.test(vo.height4) || vo.height5 != "" && !areaRex.test(vo.height5)) {
-        layer.alert('冷库容积输入有误！(小数点后最多保留两位，如：15.28)', {icon: 2});
+        vo.capacity3 != "" && !areaRex.test(vo.capacity3) || vo.capacity4 != "" && !areaRex.test(vo.capacity4)) {
+        layer.alert('冷库分库容积输入有误！(小数点后最多保留两位，如：15.28)', {icon: 2});
+        return false;
+    }
+    if(((vo.capacity1 != ""&&vo.capacity1!=0) && (vo.height1==""||vo.height1==undefined)) ||
+        ((vo.capacity2 != ""&&vo.capacity2!=0) && (vo.height2==""||vo.height2==undefined)) ||
+        ((vo.capacity3 != ""&&vo.capacity3!=0) && (vo.height3==""||vo.height3==undefined))||
+        ((vo.capacity4 != ""&&vo.capacity4!=0) && (vo.height4==""||vo.height4==undefined))){
+        layer.alert('冷库分库容积中，单位未填写！', {icon: 2});
+        return false;
+    }
+    if(((vo.capacity1 == "" ||vo.capacity1==0) && (vo.height1!=""&&vo.height1!=undefined)) ||
+        ((vo.capacity2 == "" ||vo.capacity2==0) && (vo.height2!=""&&vo.height2!=undefined)) ||
+        ((vo.capacity3 == "" ||vo.capacity3==0) && (vo.height3!=""&&vo.height3!=undefined))||
+        ((vo.capacity4 == "" ||vo.capacity4==0) && (vo.height4!=""&&vo.height4!=undefined))){
+        layer.alert('冷库分库容积中，容积未填写！', {icon: 2});
         return false;
     }
     if (vo.coldTruck1 != "" && !countRex.test(vo.coldTruck1) || vo.coldTruck2 != "" && !countRex.test(vo.coldTruck2) ||
@@ -374,14 +434,18 @@ function coldValidation(vo) {
         layer.alert('冷藏车数量输入有误！', {icon: 2});
         return false;
     }
+    if(vo.buildtype==2&& (!countRex.test(vo.buildfloors)||vo.buildfloors<2)){
+        layer.alert('请输入正确的楼层数！', {icon: 2});
+        return false;
+    }
     if (vo.lihuoArea != "" && !areaRex.test(vo.lihuoArea)) {
         layer.alert('理货区面积输入有误！(小数点后最多保留两位，如：15.28)', {icon: 2});
         return false;
     }
-    if(vo.area-vo.rentSqm<0){
+    /*if(vo.area-vo.rentSqm<0){
         layer.alert('冷库的可出租面积不能大于冷库的总面积！', {icon: 2});
         return false;
-    }
+    }*/
     var phoneNumRex =  /^1[34578]\d{9}$/;
     var cellPhoneRex=/^0{1}\d{2,3}-{1}\d{7,8}$/;
     if (!phoneNumRex.test(vo.phoneNum)&&!cellPhoneRex.test(vo.phoneNum)) {
@@ -416,6 +480,7 @@ $(function () {
     getStorageManage();
     getStructures();
     getTemperTypes();
+    getProductCategory();
     getStorageTypes();
     getStorageRefregs();
     getProvinceList();

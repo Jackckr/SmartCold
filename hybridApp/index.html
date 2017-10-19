@@ -14,11 +14,10 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<a class="mui-icon mui-pull-left userImg" href="setting.html"><img src="images/cbd.jpg"/></a>
+			<a class="mui-icon mui-pull-left userImg"><img src="images/cbd.jpg"/></a>
 			<h1 class="mui-title">上海众萃冷链物流有限公司合肥RDC</h1>
-			<a class="mui-pull-right"><span class="mui-icon iconfont">&#xe73d;</span></a>
+			<a class="mui-pull-right searchBtn mui-hidden"><span class="mui-icon iconfont">&#xe73d;</span></a>
 		</header>
-		
 		<!--底部菜单-->
 		<nav class="mui-bar mui-bar-tab">
 			<a data-index="0" class="mui-tab-item mui-active" href="view/monitor.html">
@@ -47,6 +46,43 @@
 	<script src="js/jquery-1.9.0.js"></script>
 	<script>
 		mui.init();
+		var user = JSON.parse(localStorage.user);
+		var smartCold = "http://www.smartcold.org.cn/";
+        mui.ajax(smartCold + 'i/rdc/findRDCsByUserid', {
+            data: {
+                userid: user.id
+            },
+            dataType: 'json', //服务器返回json格式数据
+            type: 'get', //HTTP请求类型
+            timeout: 10000, //超时时间设置为10秒；
+            crossDomain: true,
+            success: function (data) {
+                rdc = data[0];
+           		localStorage.rdc=JSON.stringify(rdc);
+                if(localStorage.currentRdc){//切换rdc
+                	$("header>h1").html(JSON.parse(localStorage.currentRdc).name);
+                }else{
+                	$("header>h1").html(rdc.name); 
+                }
+            }
+        });
+		mui.ready(function(){//管理员和超级管理员可见搜索框
+		    if(user.role == 2 || user.role == 3){
+		        $(".searchBtn").removeClass('mui-hidden');
+			}else{
+                $(".searchBtn").addClass('mui-hidden');
+			}
+		})
+		/**
+		 * 搜索页面返回回来要执行的方法
+		 */	
+        //切换rdc之后 刷新页面
+        window.addEventListener('refresh', function(e) {  
+	        location.reload();  
+	    })  
+		/**
+		 *底部菜单栏初始化
+		 */
 		var subpages = ['view/monitor.html', 'view/query.html', 'view/analysis.html', 'view/warning.html','view/maintain.html'];
 		var subpage_style = {
 			top: '44px',
@@ -54,9 +90,7 @@
 		};
 		
 		var aniShow = {};
-		
-		var index = localStorage.getItem('subpages');
-		
+		var index = localStorage.getItem('subpages');		
 		 //创建子页面，首个选项卡页面显示，其它均隐藏；
 		mui.plusReady(function() {
 			var self = plus.webview.currentWebview();
@@ -97,14 +131,7 @@
 			}
 			//隐藏当前;
 			plus.webview.hide(activeTab);
-			//更改当前活跃的选项卡  ['view/monitor.html', 'view/query.html', 'view/analysis.html', 'view/warning.html','view/maintain.html'];
-			//更改当前活跃的选项卡
-			/*if(targetTab == 'view/monitor.html' && LoginValue == 'null' || targetTab == 'view/query.html' && LoginValue == 'null' 
-			|| targetTab == 'view/analysis.html' && LoginValue == 'null' || targetTab == 'view/warning.html' && LoginValue == 'null' 
-			|| targetTab == 'view/maintain.html' && LoginValue == 'null'){*/
-				//mui.toast('请登录');
-				//LocalUrl();
-			//}
+			//更改当前活跃的选项卡			
 			activeTab = targetTab;
 		});
 		function LocalUrl(){
@@ -119,11 +146,13 @@
 			});
 			mui.back();
 		}
-		//头像点击事件
+		/**
+		 * 打开新页面
+		 */
 		mui('.mui-bar-nav').on('tap', '.userImg', function(e) {
 			mui.openWindow({
-			    url: 'setting.html',
-			    id: 'setting.html',
+			    url: 'view/setting.html',
+			    id: 'view/setting.html',
 			    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
 			    waiting:{
 			      autoShow:true,//自动显示等待框，默认为true
@@ -131,6 +160,16 @@
 			    }
 			});
 		});
-		
+		mui('.mui-bar-nav').on('tap', '.searchBtn', function(e) {
+			mui.openWindow({
+			    url: 'view/search.html',
+			    id: 'view/search.html',
+			    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+			    waiting:{
+			      autoShow:true,//自动显示等待框，默认为true
+			      title:'正在加载...',//等待对话框上显示的提示内容
+			    }
+			});
+		});		
 	</script>
 </html>

@@ -13,6 +13,18 @@
     <script type="text/javascript"  src="../../comm/imgview/viewer.min.js"></script>
     <script type="text/javascript" src="../app/comm.js"></script>
     <script type="text/javascript" src="../app/rdc_manage.js"></script>
+    <style>
+        #capacityunit+span{
+            width: 30%!important;
+        }
+        #rentcapacityunit+span{
+             width: 30%!important;
+         }
+        #buildtype+span{
+            width: 40%!important;
+        }
+
+    </style>
 </head>
 <body class="easyui-layout">
 <div data-options="region:'center'">
@@ -124,9 +136,21 @@
             </div>
         </div>
         <div class="formCtr">
-            <div class="formTitle">面积：<b>*</b></div>
+            <div class="formTitle">面积：</div>
             <div class="formContain">
                 <input placeholder="冷库面积（平方米）" type="text" name="area" id="area">
+            </div>
+        </div>
+        <div class="formCtr">
+            <div class="formTitle">总容积：<b>*</b></div>
+            <div class="formContain">
+                <input placeholder="冷库容积" type="text" name="totalcapacity" id="totalcapacity" style="width: 69%">
+                <select class="easyui-combobox" name="capacityunit" id="capacityunit">
+                    <option value=""></option>
+                    <option value="m³">m³</option>
+                    <option value="吨">吨</option>
+                    <option value="pai">pai</option>
+                </select>
             </div>
         </div>
         <div class="formCtr">
@@ -142,13 +166,20 @@
             </div>
         </div>
         <div class="formCtr">
-            <div class="formTitle">可出租面积：<b>*</b></div>
+            <div class="formTitle">可出租容量：<b>*</b></div>
             <div class="formContain">
-                <input placeholder="冷库面积（平方米）" type="text" name="rentSqm" id="rentSqm">
+                <input placeholder="冷库可出租容积" style="width: 69%" type="text" name="rentSqm" id="rentSqm">
+                <select class="easyui-combobox" name="rentcapacityunit" id="rentcapacityunit">
+                    <option value=""></option>
+                    <option value="㎡">㎡</option>
+                    <option value="m³">m³</option>
+                    <option value="吨">吨</option>
+                    <option value="pai">pai</option>
+                </select>
             </div>
         </div>
         <div class="formCtr">
-            <div class="formTitle">净高度：<b>*</b></div>
+            <div class="formTitle">冷库总净高：<b>*</b></div>
             <div class="formContain">
                 <input placeholder="请输入冷库净高(只能输数字)/m" type="text" name="height" id="height">
             </div>
@@ -191,7 +222,7 @@
             </div>
         </div>
         <div class="formCtr">
-            <div class="formTitle">建筑结构：</div>
+            <div class="formTitle">建筑结构：<b>*</b></div>
             <div class="formContain">
                 <select class="easyui-combobox" name="structure" id="structure">
 
@@ -199,13 +230,35 @@
             </div>
         </div>
         <div class="formCtr">
-            <div class="formTitle">是否有封闭月台：</div>
+            <div class="formTitle">建筑类型：<b>*</b></div>
+            <div class="formContain">
+                <select class="easyui-combobox" name="buildtype" id="buildtype">
+                    <option value="0"></option>
+                    <option value="1">单层库</option>
+                    <option value="2">多层库</option>
+                </select>
+                <input  placeholder="如果选择多层，请输入层数" name="buildfloors" id="buildfloors" type="text" style="width: 59%">
+            </div>
+        </div>
+        <div class="formCtr">
+            <div class="formTitle">是否有封闭月台：<b>*</b></div>
             <div class="formContain">
                 <select class="easyui-combobox" name="platform" id="platform">
                     <option value="0"></option>
                     <option value="1">有</option>
                     <option value="2" selected="selected">无</option>
                 </select>
+            </div>
+        </div>
+        <div class="formCtr">
+            <div class="formTitle">存放商品品类：<b>*</b></div>
+            <div class="formContain">
+                <input class="easyui-combobox" name="productcategory" id="productcategory" data-options="
+					valueField:'type_name',
+					textField:'type_name',
+					multiple:true,
+					panelHeight:'auto'
+			"/>
             </div>
         </div>
         <div class="formCtr">
@@ -264,6 +317,12 @@
                 <textarea placeholder="" name="remark" id="remark"></textarea>
             </div>
         </div>
+        <div class="formCtr">
+            <div class="formTitle">企业网址：</div>
+            <div class="formContain">
+                <input name="website" id="website" type="text">
+            </div>
+        </div>
         <div class="formCtr" style="width: 100%">
             <div class="formTitle">冷藏车数量:</div>
             <div class="formContain clearfix">
@@ -290,42 +349,47 @@
             </div>
         </div>
         <div class="formCtr" style="width: 100%;margin-left: 0;">
-            <div class="formTitle">冷库容积:</div>
+            <div class="formTitle">冷库分库容积:</div>
             <div class="formContain clearfix">
                 <div class="input_group">
-                    <span class="bgFl fl">12~25℃</span>
-                    <input class="bgCenter fl" type="text" name="capacity1" id="capacity1">
-                    <span class="bgFr fl">面积/㎡</span>
-                    <input class="bgCenter fl" type="text" name="height1" id="height1">
-                    <span class="bgFr fl">高度/m</span>
+                    <span class="bgFl fl">常温库</span>
+                    <input class="bgCenter fl" type="text" name="capacity1" id="capacity1" style="border-right: 0;">
+                    <select name="height1" id="height1" style="width:60px;height: 28px;background-color: #ecf4ff">
+                        <option value=""></option>
+                        <option value="m³">m³</option>
+                        <option value="吨">吨</option>
+                        <option value="pai">pai</option>
+                    </select>
                 </div>
                 <div class="input_group">
-                    <span class="bgFl fl">-2~12℃</span>
-                    <input class="bgCenter fl" type="text" name="capacity2" id="capacity2">
-                    <span class="bgFr fl">面积/㎡</span>
-                    <input class="bgCenter fl" type="text" name="height2" id="height2">
-                    <span class="bgFr fl">高度/m</span>
+                    <span class="bgFl fl">冷藏库</span>
+                    <input class="bgCenter fl" type="text" name="capacity2" id="capacity2" style="border-right: 0;">
+                    <select name="height2" id="height2" style="width:60px;height: 28px;background-color: #ecf4ff">
+                        <option value=""></option>
+                        <option value="m³">m³</option>
+                        <option value="吨">吨</option>
+                        <option value="pai">pai</option>
+                    </select>
                 </div>
                 <div class="input_group">
-                    <span class="bgFl fl">-22~-15℃</span>
-                    <input class="bgCenter fl" type="text" name="capacity3" id="capacity3">
-                    <span class="bgFr fl">面积/㎡</span>
-                    <input class="bgCenter fl" type="text" name="height3" id="height3">
-                    <span class="bgFr fl">高度/m</span>
+                    <span class="bgFl fl">冷冻库</span>
+                    <input class="bgCenter fl" type="text" name="capacity3" id="capacity3" style="border-right: 0;">
+                    <select name="height3" id="height3" style="width:60px;height: 28px;background-color: #ecf4ff">
+                        <option value=""></option>
+                        <option value="m³">m³</option>
+                        <option value="吨">吨</option>
+                        <option value="pai">pai</option>
+                    </select>
                 </div>
                 <div class="input_group">
-                    <span class="bgFl fl">-30~-22℃</span>
-                    <input class="bgCenter fl" type="text" name="capacity4" id="capacity4">
-                    <span class="bgFr fl">面积/㎡</span>
-                    <input class="bgCenter fl" type="text" name="height4" id="height4">
-                    <span class="bgFr fl">高度/m</span>
-                </div>
-                <div class="input_group">
-                    <span class="bgFl fl">-30℃以下</span>
-                    <input class="bgCenter fl" type="text" name="capacity5" id="capacity5">
-                    <span class="bgFr fl">面积/㎡</span>
-                    <input class="bgCenter fl" type="text" name="height5" id="height5">
-                    <span class="bgFr fl">高度/m</span>
+                    <span class="bgFl fl">超低温库</span>
+                    <input class="bgCenter fl" type="text" name="capacity4" id="capacity4" style="border-right: 0;">
+                    <select name="height4" id="height4" style="width:60px;height: 28px;background-color: #ecf4ff">
+                        <option value=""></option>
+                        <option value="m³">m³</option>
+                        <option value="吨">吨</option>
+                        <option value="pai">pai</option>
+                    </select>
                 </div>
             </div>
         </div>

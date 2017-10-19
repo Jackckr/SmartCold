@@ -168,6 +168,13 @@ public class RdcServiceImpl implements RdcService {
             rdcAddDTO.setTonnage(rdcEntity.getCapacity());
             rdcAddDTO.setHeight(rdcEntity.getHeight());
             rdcAddDTO.setRentSqm(rdcEntity.getRentSqm());
+			rdcAddDTO.setTotalcapacity(rdcEntity.getTotalcapacity());
+			rdcAddDTO.setCapacityunit(rdcEntity.getCapacityunit());
+			rdcAddDTO.setRentcapacityunit(rdcEntity.getRentcapacityunit());
+			rdcAddDTO.setProductcategory(rdcEntity.getProductcategory());
+			rdcAddDTO.setBuildtype(rdcEntity.getBuildtype());
+			rdcAddDTO.setBuildfloors(rdcEntity.getBuildfloors());
+			rdcAddDTO.setWebsite(rdcEntity.getWebsite());
             List<FileDataEntity> authFiles = fileDataDao.findByBelongIdAndCategory(rdcID, FileDataMapper.CATEGORY_AUTH_PIC);
 			if (authFiles!=null&&!CollectionUtils.isEmpty(authFiles)) {
 				List<RdcAuthDTO> rdcAuthDTOs = Lists.newArrayList();
@@ -243,37 +250,26 @@ public class RdcServiceImpl implements RdcService {
                     rdcAddDTO.setColdTruck4(Integer.parseInt(truckItem[1]));
                 }
             }
-            String[] capacity = rdcExtEntity.getStoragecapacity().split(",");// 1:2,2:2,3:2,4:1,5:1
-            for (int i = 0; i < capacity.length; i++) {
-                String[] capacityItem = capacity[i].split(":");
-                if (capacityItem[0].equalsIgnoreCase("1")) {
-                    rdcAddDTO.setCapacity1(Float.parseFloat(capacityItem[1]));
-                } else if (capacityItem[0].equalsIgnoreCase("2")) {
-                    rdcAddDTO.setCapacity2(Float.parseFloat(capacityItem[1]));
-                } else if (capacityItem[0].equalsIgnoreCase("3")) {
-                    rdcAddDTO.setCapacity3(Float.parseFloat(capacityItem[1]));
-                } else if (capacityItem[0].equalsIgnoreCase("4")) {
-                    rdcAddDTO.setCapacity4(Float.parseFloat(capacityItem[1]));
-                } else if (capacityItem[0].equalsIgnoreCase("5")) {
-                    rdcAddDTO.setCapacity5(Float.parseFloat(capacityItem[1]));
-                }
-            }
-            if(StringUtil.isnotNull( rdcExtEntity.getStoragecapacityheight())){
-				String[] capacityheight = rdcExtEntity.getStoragecapacityheight().split(",");// 1:2,2:2,3:2,4:1,5:1
-				if (capacityheight.length > 0){
-					for (int i = 0; i < capacityheight.length; i++) {
-						String[] capacityheightItem = capacityheight[i].split(":");
-						if (capacityheightItem[0].equalsIgnoreCase("1")) {
-							rdcAddDTO.setHeight1(Float.parseFloat(capacityheightItem[1]));
-						} else if (capacityheightItem[0].equalsIgnoreCase("2")) {
-							rdcAddDTO.setHeight2(Float.parseFloat(capacityheightItem[1]));
-						} else if (capacityheightItem[0].equalsIgnoreCase("3")) {
-							rdcAddDTO.setHeight3(Float.parseFloat(capacityheightItem[1]));
-						} else if (capacityheightItem[0].equalsIgnoreCase("4")) {
-							rdcAddDTO.setHeight4(Float.parseFloat(capacityheightItem[1]));
-						} else if (capacityheightItem[0].equalsIgnoreCase("5")) {
-							rdcAddDTO.setHeight5(Float.parseFloat(capacityheightItem[1]));
-						}
+            if(rdcExtEntity.getStoragecapacity()!=null&&!rdcExtEntity.getStoragecapacity().equals("")){
+				String[] capacity = rdcExtEntity.getStoragecapacity().split(",");// 1:2,2:2,3:2,4:1,5:1
+				for (int i = 0; i < capacity.length; i++) {
+					String[] capacityItem = capacity[i].split(":");
+					if (i==0) {
+						rdcAddDTO.setCapacity1(Float.parseFloat(capacityItem[0]));
+						String unit=capacityItem.length==1?"":capacityItem[1];
+						rdcAddDTO.setHeight1(unit);
+					} else if (i==1) {
+						rdcAddDTO.setCapacity2(Float.parseFloat(capacityItem[0]));
+						String unit=capacityItem.length==1?"":capacityItem[1];
+						rdcAddDTO.setHeight2(unit);
+					} else if (i==2) {
+						rdcAddDTO.setCapacity3(Float.parseFloat(capacityItem[0]));
+						String unit=capacityItem.length==1?"":capacityItem[1];
+						rdcAddDTO.setHeight3(unit);
+					} else if (i==3) {
+						rdcAddDTO.setCapacity4(Float.parseFloat(capacityItem[0]));
+						String unit=capacityItem.length==1?"":capacityItem[1];
+						rdcAddDTO.setHeight4(unit);
 					}
 				}
 			}

@@ -54,6 +54,33 @@ header>.mui-pull-right{
 	margin: 20px 5px 0px;
 	padding: 0px;
 }
+.head2 span{
+	color: #fff;
+}
+.head2 button{
+	margin: 0 1em 0 0!important;
+}
+.head2 div{
+	display: inline-block;
+	margin-left: 5%;
+	width: 85%!important;
+}
+.head2 input{	
+	height:36px;
+	margin-bottom: 0;
+	margin-top: 4px;
+	padding: 3px 15px;
+	font-size: 16px;
+}
+.head2 .mui-input-row .mui-input-clear~.mui-icon-clear{
+	width: 26px;
+	height: 26px;
+	right: 15px;
+	top: 3px;
+}
+#rdcList{
+	margin-top: 45px!important;
+}
 /*默认颜色*/
 .red{
 	color: #EB5A4A!important;

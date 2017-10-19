@@ -32,7 +32,7 @@ public class RdcLogInterceptor implements HandlerInterceptor{
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		HandlerMethod handlerMethod = (HandlerMethod)handler;
+		/*HandlerMethod handlerMethod = (HandlerMethod)handler;
 		String methodName = handlerMethod.getMethod().getName();
 		OperationLog operationLog = null;
 		if (methodName.equals("add")) {
@@ -60,7 +60,7 @@ public class RdcLogInterceptor implements HandlerInterceptor{
 		} 
 		if (operationLog != null) {
 			operationLogDao.insert(operationLog);
-		}
+		}*/
 	
 	}
 
