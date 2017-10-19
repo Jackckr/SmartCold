@@ -118,7 +118,7 @@ function getRdcInfo() {
             baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%'+auditButton+'</td></tr>' +
                 '<tr><td>地址</td><td>'+address.join('')+rdc.address+'</td> </tr> ' +
                 '<tr> <td>价格</td> <td>'+price+'</td> </tr> ' +
-                '<tr> <td>总面积/空置面积</td> <td>'+rdc.area+'㎡/'+rentSqm+'</td> </tr>' +
+                '<tr> <td>总面积</td> <td>'+rdc.area+'㎡</td> </tr>' +
                 '<tr> <td>冷库净高</td> <td>'+rdc.height+' m</td> </tr>' +
                 ' <tr> <td>联系电话</td> <td class="orange"> <b>'+rdc.phoneNum+'</b></td> </tr>' +
                 ' <tr> <td>实时温度</td> <td class="blue"><span style="cursor: pointer;" onclick="realTimeTem('+rdc.id+',\''+rdc.name+'\')">点击查看实时温度</span></td> </tr> </table>');
@@ -130,7 +130,7 @@ function getRdcInfo() {
                 baseInfo.push('</h2><table><tr><td>信息完整度</td><td>'+rdc.infoIntegrity+'%'+auditButton+'</td></tr>' +
                     '<tr><td>地址</td><td>'+address.join('')+rdc.address+'</td> </tr> ' +
                     '<tr> <td>价格</td> <td>'+price+'</td> </tr> ' +
-                    '<tr> <td>总面积/空置面积</td> <td>'+rdc.area+'㎡/'+rentSqm+'</td> </tr>' +
+                    '<tr> <td>总面积</td> <td>'+rdc.area+'㎡</td> </tr>' +
                     '<tr> <td>冷库净高</td> <td>'+rdc.height+' m</td> </tr>' +
                     ' <tr> <td>联系电话</td> <td class="orange"> <b>'+rdc.phoneNum+'</b></td> </tr>' +openLIne+'</table>');
             }
