@@ -68,7 +68,7 @@
 			</form>
 			
 			<div class="mui-content-padded">
-				<a href="coldRole.html" style="display:block;width:100%;" class="mui-btn mui-btn-success">认证</a>
+				<a href="view/coldRole.html" style="display:block;width:100%;" class="mui-btn mui-btn-success">认证</a>
 				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>				
 				<div class="link-area tac">
 					<a id='reg' href="reg.html">注册账号</a>
@@ -113,9 +113,10 @@
 						} else {
 							document.cookie = data.message;
 							mui.ajax(smartCold + '/i/user/findUser', {
-								headers: {
-									'Cookie': "JSESSIONID=" +document.cookie.token
-								},
+								/*headers: {
+									'Cookie': "JSESSIONID=" +document.cookie.substr(6)
+								},*/
+								data:{token:document.cookie.substr(6)},
 								dataType: 'json', //服务器返回json格式数据
 								type: 'get', //HTTP请求类型
 								timeout: 10000, //超时时间设置为10秒；

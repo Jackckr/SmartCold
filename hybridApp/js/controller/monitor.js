@@ -26,7 +26,7 @@ mui('.mui-popover').on('tap', 'ul>li>a', function (e) {
             return
         }
     }
-});
+}); 
 /*公共图表封装js*/
 var getOption = function (title, xData, yData, yName, yUnit, chartType, tipName, legend, yMin, yMax) {
     var option = {
@@ -40,42 +40,17 @@ var getOption = function (title, xData, yData, yName, yUnit, chartType, tipName,
     };
     return option;
 };
-var rdc = mystorages = null;
+var mask=mui.createMask();
+var rdc=JSON.parse(localStorage.rdc),mystorages = null;
 var tempsets = [];
 var setInit = {
-    //获取用户冷库信息
-    initRdc: function () {
-        mui.ajax(smartCold + 'i/rdc/findRDCsByUserid', {
-            data: {
-                userid: user.id
-            },
-            dataType: 'json', //服务器返回json格式数据
-            type: 'get', //HTTP请求类型
-            timeout: 10000, //超时时间设置为10秒；
-            crossDomain: true,
-            success: function (data) {
-                rdc = data;
-                rdc = {
-                    "id": 1063,
-                    "name": "上海众萃冷链物流有限公司合肥RDC",
-                    "userid": 702,
-                    "address": "安徽省合肥市小庙工业园皇嘉路青龙路口",
-                    "type": 0,
-                    "capacity": 0,
-                    "sqm": 0,
-                    "provinceId": 0,
-                    "cityId": 0
-                }
-                setInit.initRdcList(rdc);
-            }
-        });
-    },
-    //初始化rdc列表
+    //初始化rdc列表//
     initRdcList: function (rdc) {
+    	if(localStorage.currentRdc){
+    		rdc.id=JSON.parse(localStorage.currentRdc).id
+    	}
         mui.ajax(smartCold + 'i/coldStorageSet/findStorageSetByRdcId', {
-            data: {
-                rdcID: rdc.id
-            },
+            data: {rdcID: rdc.id},
             dataType: 'json', //服务器返回json格式数据
             type: 'get', //HTTP请求类型
             crossDomain: true,
@@ -87,10 +62,18 @@ var setInit = {
                         dataType: 'json', //服务器返回json格式数据
                         type: 'get', //HTTP请求类型
                         crossDomain: true,
+                        beforeSend: function() {
+					        plus.nativeUI.showWaiting('加载中，请稍后……');
+					        mask.show();//显示遮罩层
+					    },
+					    complete: function() {
+					        plus.nativeUI.closeWaiting();
+					        mask.close();//关闭遮罩层
+					    },
                         success: function (data) {
                             tempsets = data;
                             for (var i = 0; i < mystorages.length; i++) {
-                                firstLoad(mystorages[i], rdc, tempsets, false);
+                                firstLoad(mystorages[i], tempsets, false);
                             }
                         }
                     });
@@ -106,14 +89,14 @@ var setInit = {
         });
     }
 }
-setInit.initRdc()
+setInit.initRdcList(rdc)
 /**
  * 温度模块js
  **/
 
-var swiper = 0, getOids = [], getNames = [];
+var getOids = [], getNames = [];
 //初次加载温度模块
-var firstLoad = function (storage, rdc, tempsets, isreload) {
+var firstLoad = function (storage, tempsets, isreload) {
     var storageID = storage.id;
     var oids = [], names = [];
     var endTime = new Date(), startTime = new Date(endTime.getTime() - 1.5 * 60 * 60 * 1000);
@@ -132,7 +115,6 @@ var firstLoad = function (storage, rdc, tempsets, isreload) {
         getNames[storageID] = names;
     }
     tempChart(storage, oids, names, startTime, endTime);
-
 }
 var tempChart = function (storage, oids, names, startTime, endTime) {
     if (oids.length == 0) {
@@ -237,16 +219,17 @@ var tempChart = function (storage, oids, names, startTime, endTime) {
 
 }
 
-
 /*定时刷新功能*/
+function clearSwiper() {
+    $(".swiper-wrapper,.swiper-pagination").empty();
+}
 clearInterval(DiDa);
 var DiDa = setInterval(function () {
     var didaIndex = Number(localStorage.showIndex);
+    clearSwiper();
     switch (didaIndex) {
         case 0:
-            for (var i = 0; i < mystorages.length; i++) {
-                firstLoad(mystorages[i], rdc, tempsets, false);
-            }
+            setInit.initRdcList(rdc);
             console.log(didaIndex)
             break;
         case 1:
