@@ -275,7 +275,7 @@
                 <label>是否有理货区</label>
                 <div class="mySelect">
                     <select ng-model="lihuoRoom" ng-change="ChangLihuoState(lihuoRoom)"
-                            ng-options="x.id as x.name for x in haveOrNots"></select>
+                            ng-options="x.id as x.name for x in haveOrNots"><option value="" selected hidden></option></select>
                 </div>
                 <i class="iconfont fr moreinfo">&#xe697;</i>
             </li>
@@ -287,7 +287,7 @@
                 <label>有无温控</label>
                 <div class="mySelect">
                     <select ng-model="lihuoTemperCtr"
-                            ng-options="x.id as x.name for x in haveOrNots"></select>
+                            ng-options="x.id as x.name for x in haveOrNots"><option value="" selected hidden></option></select>
                 </div>
                 <i class="iconfont fr moreinfo">&#xe697;</i>
             </li>
@@ -296,7 +296,7 @@
                 <div class="mySelect">
                     <select ng-model="storageRefreg"
                             ng-change="StorageRefregSelected(storageRefreg)"
-                            ng-options="x.id as x.type for x in storageRefregs"></select>
+                            ng-options="x.id as x.type for x in storageRefregs"><option value="" selected hidden></option></select>
                 </div>
                 <i class="iconfont fr moreinfo">&#xe697;</i>
             </li>
@@ -304,7 +304,7 @@
                 <label>有无温度记录</label>
                 <div class="mySelect">
                     <select ng-model="temperRecord"
-                            ng-options="x.id as x.name for x in haveOrNots"></select>
+                            ng-options="x.id as x.name for x in haveOrNots"><option value="" selected hidden></option></select>
                 </div>
                 <i class="iconfont fr moreinfo">&#xe697;</i>
             </li>
@@ -319,11 +319,11 @@
                 <label>常温库</label>
                 <input type="number" step="0.01" ng-model="capacity1" placeholder="可选，默认m³">
                 <span>单位：</span>
-                <select ng-model="height1">
-                    <option value=""></option>
-                    <option value="m³">m³</option>
-                    <option value="托">托</option>
-                    <option value="吨">吨</option>
+                <select ng-model="height1" ng-init="height1='m³'">
+                    <option value="" ng-if="capacity1==''||capacity1==0"></option>
+                    <option value="m³" ng-if="capacity1>0">m³</option>
+                    <option value="托" ng-if="capacity1>0">托</option>
+                    <option value="吨" ng-if="capacity1>0">吨</option>
                 </select>
             </li>
             <li class="groupRdc">
@@ -331,10 +331,10 @@
                 <input type="number" step="0.01" ng-model="capacity2" placeholder="可选，默认m³">
                 <span>单位：</span>
                 <select ng-model="height2">
-                    <option value=""></option>
-                    <option value="m³">m³</option>
-                    <option value="托">托</option>
-                    <option value="吨">吨</option>
+                    <option value="" ng-if="capacity2==''||capacity2==0"></option>
+                    <option value="m³" ng-if="capacity2>0">m³</option>
+                    <option value="托" ng-if="capacity2>0">托</option>
+                    <option value="吨" ng-if="capacity2>0">吨</option>
                 </select>
             </li>
             <li class="groupRdc">
@@ -342,10 +342,10 @@
                 <input type="number" step="0.01" ng-model="capacity3" placeholder="可选，默认m³">
                 <span>单位：</span>
                 <select ng-model="height3">
-                    <option value=""></option>
-                    <option value="m³">m³</option>
-                    <option value="托">托</option>
-                    <option value="吨">吨</option>
+                    <option value="" ng-if="capacity3==''||capacity3==0"></option>
+                    <option value="m³" ng-if="capacity3>0">m³</option>
+                    <option value="托" ng-if="capacity3>0">托</option>
+                    <option value="吨" ng-if="capacity3>0">吨</option>
                 </select>
             </li>
             <li class="groupRdc">
@@ -353,10 +353,10 @@
                 <input type="number" step="0.01" ng-model="capacity4" placeholder="可选，默认m³">
                 <span>单位：</span>
                 <select ng-model="height4">
-                    <option value=""></option>
-                    <option value="m³">m³</option>
-                    <option value="托">托</option>
-                    <option value="吨">吨</option>
+                    <option value="" ng-if="capacity4==''||capacity4==0"></option>
+                    <option value="m³" ng-if="capacity4>0">m³</option>
+                    <option value="托" ng-if="capacity4>0">托</option>
+                    <option value="吨" ng-if="capacity4>0">吨</option>
                 </select>
             </li>
             <li>
@@ -914,20 +914,6 @@
                         $scope.capacity3 != undefined && $scope.capacity3 != "" && !areaRex.test($scope.capacity3) ||
                         $scope.capacity4 != undefined && $scope.capacity4 != "" && !areaRex.test($scope.capacity4)) {
                         layer.open({content: '冷库分库容积输入有误！(小数点后最多保留两位，如：15.28)', btn: '确定'});
-                        return false;
-                    }
-                    if((($scope.capacity1 != ""&& $scope.capacity1!=0) && ($scope.height1==""||$scope.height1==undefined||$scope.height1=="null")) ||
-                        (($scope.capacity2 != ""&&$scope.capacity2!=0) && ($scope.height2==""||$scope.height2==undefined||$scope.height1=="null")) ||
-                        (($scope.capacity3 != ""&&$scope.capacity3!=0) && ($scope.height3==""||$scope.height3==undefined||$scope.height1=="null"))||
-                        (($scope.capacity4 != ""&&$scope.capacity4!=0) && ($scope.height4==""||$scope.height4==undefined||$scope.height1=="null"))){
-                        layer.open({content: '冷库分库容积中，单位未填写！', btn: '确定'});
-                        return false;
-                    }
-                    if((( $scope.capacity1 == "" ||$scope.capacity1==0) && ($scope.height1!=""&&$scope.height1!=undefined&&$scope.height1!="null")) ||
-                        (($scope.capacity2 == "" ||$scope.capacity2==0) && ($scope.height2!=""&&$scope.height2!=undefined&&$scope.height1!="null")) ||
-                        (($scope.capacity3 == "" ||$scope.capacity3==0) && ($scope.height3!=""&&$scope.height3!=undefined&&$scope.height1!="null"))||
-                        (($scope.capacity4 == "" ||$scope.capacity4==0) && ($scope.height4!=""&&$scope.height4!=undefined&&$scope.height1!="null"))){
-                        layer.open({content: '冷库分库容积中，容积未填写！', btn: '确定'});
                         return false;
                     }
                     if ($scope.coldTruck1 != undefined && $scope.coldTruck1 != "" && !countRex.test($scope.coldTruck1) || $scope.coldTruck2 != undefined && $scope.coldTruck2 != "" && !countRex.test($scope.coldTruck2) ||

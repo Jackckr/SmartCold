@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <title>个人信息</title>
@@ -174,6 +173,7 @@
     mui('.mui-scroll-wrapper').scroll();
 
     setTimeout(function () {
+    	console.log(user);
         document.getElementById("head-img").src = user.avatar;
         document.getElementById("userName").innerHTML = user.username;
         if(user.nickName){document.getElementById("nickName").innerHTML = user.nickName;}
@@ -193,6 +193,21 @@
             }
         };
     })(mui);
+    document.getElementById('loginOut').addEventListener('tap', function() {
+		mui.get(smartCold+'/i/user/logout',function(data){
+			localStorage.clear();
+			mui.openWindow({
+			    url: '../login.html',
+			    id: '../login.html',
+			    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+			    waiting:{
+			      autoShow:true,//自动显示等待框，默认为true
+			      title:'正在加载...',//等待对话框上显示的提示内容
+			    }
+			});
+			//mui.back();
+		},'json');
+	})
     //更换头像
     mui(".mui-table-view-cell").on("tap", "#head", function (e) {
         if (mui.os.plus) {

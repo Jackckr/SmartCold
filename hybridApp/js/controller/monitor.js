@@ -41,7 +41,22 @@ var getOption = function (title, xData, yData, yName, yUnit, chartType, tipName,
     return option;
 };
 var mask=mui.createMask();
-var rdc=JSON.parse(localStorage.rdc),mystorages = null;
+var rdc=null,mystorages = null;
+if(localStorage.rdc){
+	rdc=JSON.parse(localStorage.rdc)
+}else{
+	 mask.show();
+	 mui.alert('当前账号没有冷库')
+	 mui.openWindow({
+	    url: 'login.html',
+	    id: 'login.html',
+	    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
+	    waiting:{
+	      autoShow:true,//自动显示等待框，默认为true
+	      title:'正在加载...',//等待对话框上显示的提示内容
+	    }
+	});
+}
 var tempsets = [];
 var setInit = {
     //初始化rdc列表//
