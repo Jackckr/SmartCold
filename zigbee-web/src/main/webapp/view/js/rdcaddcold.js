@@ -108,7 +108,7 @@ function addColdSubmit() {
         vo[item.name] = item.value;
     });
     if(vo.buildtype!=2){
-        vo.buildfloors="";
+        vo.buildfloors=1;
     }
     var productcategory=[];
     $.each($('input[name="productcategory"]:checked'),function (index, item) {
@@ -210,7 +210,7 @@ function updateColdSubmit() {
         vo[item.name] = item.value;
     });
     if(vo.buildtype!=2){
-        vo.buildfloors="";
+        vo.buildfloors=1;
     }
     var productcategory=[];
     $.each($('input[name="productcategory"]:checked'),function (index, item) {
@@ -386,7 +386,7 @@ function coldValidation(vo) {
     var areaRex = /^[0-9]{1}[\d]{0,10}\.*[\d]{0,2}$/;
     var countRex = /^[0-9]\d*$/;
     var urlRegex=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/;
-    if (!areaRex.test(vo.area)) {
+    if (vo.area!="" && !areaRex.test(vo.area)) {
         layer.alert('面积输入有误！(小数点后最多保留两位，如：15.28)', {icon: 2});
         return false;
     }
@@ -394,8 +394,8 @@ function coldValidation(vo) {
         layer.alert('企业网址输入有误！(如：http://liankur.com)', {icon: 2});
         return false;
     }
-    if(vo.area<10){
-        layer.alert('面积不能小于10㎡', {icon: 2});
+    if(vo.totalcapacity<10){
+        layer.alert('总容量不能小于10', {icon: 2});
         return false;
     }
     if (!areaRex.test(vo.rentSqm)) {

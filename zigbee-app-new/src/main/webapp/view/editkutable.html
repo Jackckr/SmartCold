@@ -78,7 +78,7 @@
                     <select ng-model="capacityunit">
                         <option value=""></option>
                         <option value="m³">m³</option>
-                        <option value="pai">pai</option>
+                        <option value="托">托</option>
                         <option value="吨">吨</option>
                     </select>
                 </div>
@@ -95,7 +95,7 @@
                         <option value=""></option>
                         <option value="㎡">㎡</option>
                         <option value="m³">m³</option>
-                        <option value="pai">pai</option>
+                        <option value="托">托</option>
                         <option value="吨">吨</option>
                     </select>
                 </div>
@@ -322,7 +322,7 @@
                 <select ng-model="height1">
                     <option value=""></option>
                     <option value="m³">m³</option>
-                    <option value="pai">pai</option>
+                    <option value="托">托</option>
                     <option value="吨">吨</option>
                 </select>
             </li>
@@ -333,7 +333,7 @@
                 <select ng-model="height2">
                     <option value=""></option>
                     <option value="m³">m³</option>
-                    <option value="pai">pai</option>
+                    <option value="托">托</option>
                     <option value="吨">吨</option>
                 </select>
             </li>
@@ -344,7 +344,7 @@
                 <select ng-model="height3">
                     <option value=""></option>
                     <option value="m³">m³</option>
-                    <option value="pai">pai</option>
+                    <option value="托">托</option>
                     <option value="吨">吨</option>
                 </select>
             </li>
@@ -355,7 +355,7 @@
                 <select ng-model="height4">
                     <option value=""></option>
                     <option value="m³">m³</option>
-                    <option value="pai">pai</option>
+                    <option value="托">托</option>
                     <option value="吨">吨</option>
                 </select>
             </li>
@@ -877,12 +877,12 @@
                         layer.open({content: '企业网址输入有误！(如：http://liankur.com)', btn: '确定'});
                         return false;
                     }
-                    if (!areaRex.test($scope.area)) {
+                    if ($scope.area!=undefined&&$scope.area!=""&&!areaRex.test($scope.area)) {
                         layer.open({content: '面积输入有误！(小数点后最多保留两位，如：15.28)', btn: '确定'});
                         return false;
                     }
-                    if ($scope.area < 10) {
-                        layer.open({content: '面积不能小于10㎡', btn: '确定'});
+                    if ($scope.totalcapacity < 10) {
+                        layer.open({content: '总容积不能小于10', btn: '确定'});
                         return false;
                     }
                     if ($scope.height < 3 || $scope.height > 40) {
@@ -916,17 +916,17 @@
                         layer.open({content: '冷库分库容积输入有误！(小数点后最多保留两位，如：15.28)', btn: '确定'});
                         return false;
                     }
-                    if((($scope.capacity1 != ""&& $scope.capacity1!=0) && ($scope.height1==""||$scope.height1==undefined)) ||
-                        (($scope.capacity2 != ""&&$scope.capacity2!=0) && ($scope.height2==""||$scope.height2==undefined)) ||
-                        (($scope.capacity3 != ""&&$scope.capacity3!=0) && ($scope.height3==""||$scope.height3==undefined))||
-                        (($scope.capacity4 != ""&&$scope.capacity4!=0) && ($scope.height4==""||$scope.height4==undefined))){
+                    if((($scope.capacity1 != ""&& $scope.capacity1!=0) && ($scope.height1==""||$scope.height1==undefined||$scope.height1=="null")) ||
+                        (($scope.capacity2 != ""&&$scope.capacity2!=0) && ($scope.height2==""||$scope.height2==undefined||$scope.height1=="null")) ||
+                        (($scope.capacity3 != ""&&$scope.capacity3!=0) && ($scope.height3==""||$scope.height3==undefined||$scope.height1=="null"))||
+                        (($scope.capacity4 != ""&&$scope.capacity4!=0) && ($scope.height4==""||$scope.height4==undefined||$scope.height1=="null"))){
                         layer.open({content: '冷库分库容积中，单位未填写！', btn: '确定'});
                         return false;
                     }
-                    if((( $scope.capacity1 == "" ||$scope.capacity1==0) && ($scope.height1!=""&&$scope.height1!=undefined)) ||
-                        (($scope.capacity2 == "" ||$scope.capacity2==0) && ($scope.height2!=""&&$scope.height2!=undefined)) ||
-                        (($scope.capacity3 == "" ||$scope.capacity3==0) && ($scope.height3!=""&&$scope.height3!=undefined))||
-                        (($scope.capacity4 == "" ||$scope.capacity4==0) && ($scope.height4!=""&&$scope.height4!=undefined))){
+                    if((( $scope.capacity1 == "" ||$scope.capacity1==0) && ($scope.height1!=""&&$scope.height1!=undefined&&$scope.height1!="null")) ||
+                        (($scope.capacity2 == "" ||$scope.capacity2==0) && ($scope.height2!=""&&$scope.height2!=undefined&&$scope.height1!="null")) ||
+                        (($scope.capacity3 == "" ||$scope.capacity3==0) && ($scope.height3!=""&&$scope.height3!=undefined&&$scope.height1!="null"))||
+                        (($scope.capacity4 == "" ||$scope.capacity4==0) && ($scope.height4!=""&&$scope.height4!=undefined&&$scope.height1!="null"))){
                         layer.open({content: '冷库分库容积中，容积未填写！', btn: '确定'});
                         return false;
                     }
@@ -953,7 +953,7 @@
                     $("#but_savedata").text("提交中……");
                     $scope.isDisabled = true;
                     if($scope.buildtype!=2){
-                        $scope.buildfloors='';
+                        $scope.buildfloors=1;
                     }
                     data = {
                         file0: null,

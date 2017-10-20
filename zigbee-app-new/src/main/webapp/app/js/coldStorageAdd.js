@@ -318,7 +318,7 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 layer.open({content: '企业网址输入有误！(如：http://liankur.com)', btn: '确定'});
                 return false;
             }
-            if (!areaRex.test($scope.area)) {
+            if ($scope.area!=undefined&&$scope.area!=""&&!areaRex.test($scope.area)) {
                 layer.open({content:'面积输入有误！(小数点后最多保留两位，如：15.28)',btn: '确定'});
                 return false;
             }
@@ -326,8 +326,8 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 layer.open({content:'可出租面积输入有误！(小数点后最多保留两位，如：15.28)',btn: '确定'});
                 return false;
             }
-            if ($scope.area<10) {
-                layer.open({content:'面积不能小于10㎡',btn: '确定'});
+            if ($scope.totalcapacity<10) {
+                layer.open({content:'总容量不能小于10',btn: '确定'});
                 return false;
             }
             if ($scope.height<3||$scope.height>40) {
@@ -378,6 +378,9 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
         		,shadeClose:false
 		    });
             $scope.isDisabled = true;
+            if($scope.buildtype!=2){
+                $scope.buildfloors=1;
+            }
             data = {
                 file0: null,
                 file1: null,

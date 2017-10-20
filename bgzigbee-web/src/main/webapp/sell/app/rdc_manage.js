@@ -298,7 +298,7 @@ function coldValidation(vo) {
     var areaRex = /^[0-9]{1}[\d]{0,10}\.*[\d]{0,2}$/;
     var countRex = /^[0-9]\d*$/;
     var urlRegex=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/;
-    if (!areaRex.test(vo.area)) {
+    if (vo.area !="" && !areaRex.test(vo.area)) {
     	alert_errmsg("面积输入有误！(小数点后最多保留两位，如：15.28)");
         return false;
     }
@@ -306,8 +306,8 @@ function coldValidation(vo) {
         alert_errmsg("企业网址输入有误！(如：http://liankur.com)");
         return false;
     }
-    if(vo.area<10){
-        alert_errmsg("面积不能小于10㎡");
+    if(vo.totalcapacity<10){
+        alert_errmsg("总容积不能小于10");
         return false;
     }
     if(vo.height<3||vo.height>40){
@@ -379,7 +379,7 @@ function addColdSubmit() {
         vo["lihuoArea"]="";
     }
     if(vo.buildtype!=2){
-        vo.buildfloors="";
+        vo.buildfloors=1;
     }
     vo.productcategory=$('#productcategory').combobox('getValues').join();
     var flag = coldValidation(vo);
@@ -426,7 +426,7 @@ function doUpdateCold() {
     });
     vo.productcategory=$('#productcategory').combobox('getValues').join();
     if(vo.buildtype!=2){
-        vo.buildfloors="";
+        vo.buildfloors=1;
     }
     var flag = coldValidation(vo);
   //  vo.rdcId = id;
