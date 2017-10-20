@@ -512,7 +512,7 @@ public class RdcController {
 		rdcEntity.setBuildtype(rdcAddDTO.getBuildtype());
 		rdcEntity.setBuildfloors(rdcAddDTO.getBuildfloors());
 		rdcEntity.setWebsite(rdcAddDTO.getWebsite());
-		rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
+		rdcEntity.setCommit(rdcAddDTO.getRemark());
 		Map<String, String> lngLatMap = rdcService.geocoderLatitude(rdcEntity);
 		if (SetUtil.isNotNullMap(lngLatMap)) {
 			rdcEntity.setLongitude(Double.parseDouble(lngLatMap.get("lng")));
