@@ -906,6 +906,7 @@ border-bottom: 0;
 	height: 14em;
 	overflow: hidden;
 	position: relative;
+	border-bottom: 2px solid #f6f6f6;
 }
 
 .main_image {

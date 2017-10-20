@@ -88,3 +88,34 @@
 .houseinfo>.unitgroup>select{
     color: #4287ff;
 }
+/*发布新加项目*/
+.lableGroup{
+    width: 50%;
+    float: left;
+    position: relative;
+    font-size: 0.75rem;
+    line-height: 1.8;
+}
+.lableGroup input{
+    position: absolute;
+    top: 0;
+    left: -1rem;
+}
+.lableGroup i{
+    font-size: 0.75rem;
+}
+.groupRdc label{
+    width: 4rem!important;
+}
+.groupRdc input{
+    min-width: 6rem!important;
+    max-width: 6rem!important;
+    width: 6rem!important;
+}
+.groupRdc select{
+    width: 3rem!important;
+    display: inline-block!important;
+}
+.groupRdc span{
+    color: #999;
+}

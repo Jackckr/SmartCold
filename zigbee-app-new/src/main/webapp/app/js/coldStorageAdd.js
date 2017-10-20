@@ -90,6 +90,8 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
     $scope.totalhonorfiles = [];
     $scope.tempStandPic = [];
     $scope.auditPic = [];
+    $scope.buildtype=1;
+    $scope.capacityunit=$scope.rentcapacityunit="m³";
     $scope.addFiles = function (files) {
     	for(var j=0,fileLen=files.length;j<fileLen;j++){
     		var _file=files[j].name;
@@ -312,7 +314,7 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
             var areaRex = /^[0-9]{1}[\d]{0,10}\.*[\d]{0,2}$/;
             var countRex = /^[0-9]\d*$/;
             var urlRegex=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/;
-            if (($scope.website==undefined||$scope.website!='')&&!urlRegex.test($scope.website)) {
+            if (($scope.website!=undefined&&$scope.website!='')&&!urlRegex.test($scope.website)) {
                 layer.open({content: '企业网址输入有误！(如：http://liankur.com)', btn: '确定'});
                 return false;
             }
