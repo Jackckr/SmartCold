@@ -3,16 +3,16 @@
 <mapper namespace="com.smartcold.bgzigbee.manage.dao.RdcSpiderMapper" >
 
     <insert id="addSpider">
-        INSERT INTO `rdcspider` (`rdcid`,`mapping`,`addtime`) VALUES (#{rdcid},#{mapping},#{addtime})
+        INSERT INTO `rdcdevconf` (`rdcid`,`mapping`,`addtime`) VALUES (#{rdcid},#{mapping},#{addtime})
     </insert>
     <update id="updateSpider">
-        UPDATE `rdcspider`
+        UPDATE `rdcdevconf`
         <set>
             <if test="rdcid != null and rdcid !=''">`mapping`=#{mapping},</if>
         </set>
         WHERE `rdcid`=#{rdcid}
     </update>
     <select id="selectByRdcId" resultType="com.smartcold.bgzigbee.manage.entity.RdcSpider">
-        SELECT * FROM `rdcspider` WHERE  `rdcid`=#{rdcId}
+        SELECT * FROM `rdcdevconf` WHERE  `rdcid`=#{rdcId}
     </select>
 </mapper>

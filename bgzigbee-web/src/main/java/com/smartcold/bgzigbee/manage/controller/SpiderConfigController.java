@@ -490,21 +490,17 @@ public class SpiderConfigController {
         String[] names = new String[csvFileList.size() - 1];
         String[] dataTypes = new String[csvFileList.size() - 1];
         String[] isReader = new String[csvFileList.size() - 1];
-        Pattern writeCompile = Pattern.compile("(写+?)");
-        Pattern floatCompile = Pattern.compile("(Float+?)");
-        Pattern shortCompile = Pattern.compile("(Short+?)");
         for (int row = 0; row < csvFileList.size(); row++) {
             // 取得第row行第0列的数据
             String[] cell = csvFileList.get(row);
             if (row != 0) {
                 names[row - 1] = cell[nameId];
-                isReader[row - 1] = writeCompile.matcher(cell[dataId]).find() ? "RW" : "OR";
-                if (floatCompile.matcher(cell[dataId]).find()) {
-                    dataTypes[row - 1] = "INT";
-                } else if (shortCompile.matcher(cell[dataId]).find()) {
-                    dataTypes[row - 1] = "FLOAT";
-                } else {
-                    dataTypes[row - 1] = "BIT";
+                if(cell[dataId].split(" ").length<13){
+                    dataTypes[row-1]="";
+                    isReader[row-1]="";
+                }else {
+                    dataTypes[row-1]=cell[dataId].split(" ")[9];
+                    isReader[row-1]=cell[dataId].split(" ")[2];
                 }
             }
         }

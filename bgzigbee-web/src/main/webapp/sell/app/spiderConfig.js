@@ -76,6 +76,7 @@ function loadSpiderTable() {
 
 function initSpiderTable(url,params) {
     $("#saveConfig").remove();
+    $('#rdcSpiderDiv').show();
     $("#rdcSpiderTable").datagrid({
         title: '列表',
         url: url,
@@ -93,17 +94,17 @@ function initSpiderTable(url,params) {
                 editor: {
                     type: 'combobox', options: {
                         valueField: "value", textField: "text",
-                        data: [{value: 'RW', text: 'RW'}, {value: 'OR', text: 'OR'}]
+                        data: [{value: '读写', text: '读写'}, {value: '只读', text: '只读'}]
                     }
                 }
             },
             {
-                field: 'dataType', title: '数据类型', width: 80, editor: {
+                field: 'dataType', title: '数据类型', width: 80/*, editor: {
                 type: 'combobox', options: {
                     valueField: "value", textField: "text",
                     data: [{value: 'INT', text: 'INT'}, {value: 'FLOAT', text: 'FLOAT'}, {value: 'BIT', text: 'BIT'}]
                 }
-            }
+            }*/
             }
         ]]
     });
@@ -143,6 +144,8 @@ function getRdcSpider(rdcId) {
     $.ajax({url:"/i/rdcSpider/getSpiderMapping",type:"post",data:{rdcId:rdcId},success:function (data) {
         if(data&&data!=''){
             initSpiderTable('/i/rdcSpider/getSpiderMapping',{rdcId:rdcId});
+        }else {
+            $('#rdcSpiderDiv').hide();
         }
     }});
 }

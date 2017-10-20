@@ -43,7 +43,10 @@
                         请选择数据关联列：<select id="data_relating" data-options="valueField:'nameId', textField:'name'" class="easyui-combobox" panelHeight="auto" style="width:100px"></select>
                         <button class="btn" onclick="loadSpiderTable()">加载表格</button>
                     </div>
-                    <table id="rdcSpiderTable"  style="width:500px;height:300px"></table>
+                    <div id="rdcSpiderDiv" style="display: none">
+                        <table id="rdcSpiderTable"  style="width:500px;height:300px"></table>
+                    </div>
+
                 </div>
             </div>
             <div title="添加监控对象"></div>
