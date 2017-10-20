@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-   <!--  <meta http-equiv="refresh" content="10"> -->
+    <!--  <meta http-equiv="refresh" content="10"> -->
     <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
     <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
     <title>修改库</title>
     <link rel="stylesheet" type="text/css" href="../com/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="../com/datepicker/date.css">
@@ -17,878 +18,1066 @@
     <script type="text/javascript" src="../com/js/jquery-3.1.0.min.js"></script>
     <script type="text/javascript" src="../com/js/common.js"></script>
     <script type="text/javascript" src="../com/js/layer.js"></script>
-    <script type="text/javascript" src="../com/js/jquery.city.select.min.js" ></script>
-    <script type="text/javascript" src="../com/js/prettify.js" ></script>
+    <script type="text/javascript" src="../com/js/jquery.city.select.min.js"></script>
+    <script type="text/javascript" src="../com/js/prettify.js"></script>
 </head>
-<body ng-app="app"  ng-controller="coldStorageEdit" ng-cloak>
-    <!-- header -->
-        <header>
+<body ng-app="app" ng-controller="coldStorageEdit" ng-cloak>
+<!-- header -->
+<header>
 
-            <div class="area fl">
-                <a onclick="goback()"><i class="iconfont">&#xe602;</i></a>
-            </div>
-            <div class="txt">修改库</div>
-        </header>
-    <!-- header end-->
-    <section class="releaseCold">
-        <div class="releaseImg"></div>
-        <form name="rdcForm">
-            <ul class="houseinfo">
-                <li style="position: relative;">
-                    <label for="name">名称<em>*</em></label>
-                    <input type="text" ng-model="name" name="name"
-                                   ng-remote-validate="http://liankur.com/i/rdc/checkName"
-                                   ng-remote-method="GET">
-                            <em ng-show="rdcForm.name.$error.ngRemoteValidate" style="font-size:0.5rem;position: absolute;top: 0;right: 0;"
-                                ng-bind="againTxt='冷库名已被用'"></em>
-                </li>
-                <li>
-                    <label for="province">省<em>*</em></label>
-                    <div class="mySelect">
-                         <select ng-model="provinceId"  ng-change="provinceSelected(provinceId)"  ng-options="x.provinceId as x.provinceName for x in provinces"></select>
-                    </div>
-                    <i class="iconfont fr moreinfo">&#xe697;</i>                    
-                </li>
-                <li>
-                    <label for="city">市<em>*</em></label>
-                    <div class="mySelect">
-                        <select ng-model="cityId" ng-change="citySelected(cityId)" ng-options="x.cityID as x.cityName for x in citys"></select>
-                    </div>
-                    <i class="iconfont fr moreinfo">&#xe697;</i>
-                </li>
-                <li>
-                    <label for="geographic">地理位置<em>*</em></label>
-                    <input type="text"  ng-model="address" />
-                </li>
-                <li>
-                    <label for="area">总面积<em>*</em></label>
-                    <input type="number" step="0.01" ng-model="area" placeholder="冷库面积(㎡)"/>
-                </li>
-                <li>
-                    <label for="area">可出租面积<em>*</em></label>
-                    <input type="number" step="0.01" ng-model="rentSqm" placeholder="可出租面积(㎡)"/>
-                </li>
-                <li>
-                    <label for="area">冷库净高<em>*</em></label>
-                    <input type="number" step="0.01" ng-model="height" placeholder="冷库净高(m)"/>
-                </li>
-                <li>
-                    <label for="operateType">经营类型<em>*</em></label>
-                    <div class="mySelect">
-                        <select ng-model="manageType"
-                                    ng-change="ManageTypeSelected(manageType)"
-                                    ng-options="x.id as x.type for x in manageTypes"></select>
-                    </div>
-                    <i class="iconfont fr moreinfo">&#xe697;</i>
-                </li>
-                <li>
-                    <label for="storageType">商品存放类型<em>*</em></label>                    
-                    <div class="mySelect">
-                        <select ng-model="storageType"
-                                    ng-change="StorageTypeSelected(storageType)"
-                                    ng-options="x.id as x.type for x in storageTypes"></select>
-                    </div>
-                    <i class="iconfont fr moreinfo">&#xe697;</i>
-                </li>
-                <li>
-                    <label for="temperatureType">温度类型<em>*</em></label>
-                    <div class="mySelect">
-                        <select ng-model="temperType" ng-options="x.id as x.type for x in temperTypes"></select>
-                    </div>
-                    <i class="iconfont fr moreinfo">&#xe697;</i>
-                </li>
-                <li style="border:0;">
-                    <label>冷库图片<em>*</em></label>
-                    <label class="pic">
-                        <input type="file" accept="image/gif, image/bmp, image/jpg ,image/jpeg, image/png" ngf-select="addFiles($files)" ng-model="files" ngf-multiple="true" name="files" accept="image/png,image/gif,image/jpeg" >
-                    </label>
-                    <label style="font-size: .5rem">
-                        <small class="text-warning">上传3-5张实体图片，不能重复上传，每张小于10M</small>
-                    </label>
-                </li>
-                <li class="clearfix">
-                    <div class="form-group" ng-if="storagePicShow.length>0">
-                        <div class="pull-left" ng-repeat="item in storagePicShow" style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
-                            <img ng-src="{{item.location}}" style="width:100%;height:100%" ng-click="goPicDetail(item)" alt="" />
-                            <i class="fa fa-times danger"  aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="deletePic(item)"></i>
-                        </div>
-                    </div>
-                    <div class="form-group" ng-if="totalfiles.length>0">
-                        <div class="pull-left" ng-repeat="file in totalfiles" style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
-                            <img ngf-src="file" style="width:100%;height:100%"  alt="{{file.name}}" title="{{file.name}}"/>
-                            <i class="fa fa-times danger" aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="drop(file)"></i>
-                        </div>
-                    </div>
-                </li>
+    <div class="area fl">
+        <a onclick="goback()"><i class="iconfont">&#xe602;</i></a>
+    </div>
+    <div class="txt">修改库</div>
+</header>
+<!-- header end-->
+<section class="releaseCold">
+    <div class="releaseImg"></div>
+    <form name="rdcForm">
+        <ul class="houseinfo">
+            <li style="position: relative;">
+                <label for="name">名称<em>*</em></label>
+                <input type="text" ng-model="name" name="name"
+                       ng-remote-validate="http://liankur.com/i/rdc/checkName"
+                       ng-remote-method="GET">
+                <em ng-show="rdcForm.name.$error.ngRemoteValidate"
+                    style="font-size:0.5rem;position: absolute;top: 0;right: 0;"
+                    ng-bind="againTxt='冷库名已被用'"></em>
+            </li>
+            <li>
+                <label for="province">省<em>*</em></label>
+                <div class="mySelect">
+                    <select ng-model="provinceId" ng-change="provinceSelected(provinceId)"
+                            ng-options="x.provinceId as x.provinceName for x in provinces"></select>
+                </div>
+                <i class="iconfont fr moreinfo">&#xe697;</i>
+            </li>
+            <li>
+                <label for="city">市<em>*</em></label>
+                <div class="mySelect">
+                    <select ng-model="cityId" ng-change="citySelected(cityId)"
+                            ng-options="x.cityID as x.cityName for x in citys"></select>
+                </div>
+                <i class="iconfont fr moreinfo">&#xe697;</i>
+            </li>
+            <li>
+                <label for="geographic">地理位置<em>*</em></label>
+                <input type="text" ng-model="address"/>
+            </li>
+            <li>
+                <label for="area">总面积</label>
+                <input type="number" step="0.01" ng-model="area" placeholder="冷库面积(㎡)"/>
+            </li>
+            <li>
+                <label for="area">总容量<em>*</em></label>
+                <input type="number" step="0.01" ng-model="totalcapacity" placeholder="冷库容量"/>
+                <select ng-model="capacityunit">
+                    <option value=""></option>
+                    <option value="m³">m³</option>
+                    <option value="pai">pai</option>
+                    <option value="吨">吨</option>
+                </select>
+            </li>
+            <li>
+                <label for="area">可出租容量<em>*</em></label>
+                <input type="number" step="0.01" ng-model="rentSqm" placeholder="可出租容量"/>
+                <select ng-model="rentcapacityunit">
+                    <option value=""></option>
+                    <option value="㎡">㎡</option>
+                    <option value="m³">m³</option>
+                    <option value="pai">pai</option>
+                    <option value="吨">吨</option>
+                </select>
+            </li>
+            <li>
+                <label for="area">冷库总净高<em>*</em></label>
+                <input type="number" step="0.01" ng-model="height" placeholder="冷库净高(m)"/>
+            </li>
+            <li>
+                <label for="operateType">经营类型<em>*</em></label>
+                <div class="mySelect">
+                    <select ng-model="manageType"
+                            ng-change="ManageTypeSelected(manageType)"
+                            ng-options="x.id as x.type for x in manageTypes"></select>
+                </div>
+                <i class="iconfont fr moreinfo">&#xe697;</i>
+            </li>
+            <li>
+                <label for="storageType">商品存放类型<em>*</em></label>
+                <div class="mySelect">
+                    <select ng-model="storageType"
+                            ng-change="StorageTypeSelected(storageType)"
+                            ng-options="x.id as x.type for x in storageTypes"></select>
+                </div>
+                <i class="iconfont fr moreinfo">&#xe697;</i>
+            </li>
+            <li>
+                <label for="temperatureType">温度类型<em>*</em></label>
+                <div class="mySelect">
+                    <select ng-model="temperType" ng-options="x.id as x.type for x in temperTypes"></select>
+                </div>
+                <i class="iconfont fr moreinfo">&#xe697;</i>
+            </li>
+            <li>
+                <label for="structure">建筑结构<em>*</em></label>
+                <div class="mySelect">
+                    <select ng-model="structure"
+                            ng-options="x.id as x.type for x in structures"></select>
+                </div>
+                <i class="iconfont fr moreinfo">&#xe697;</i>
+            </li>
+            <li>
+                <label for="structure">建筑类型<em>*</em></label>
+                <div class="mySelect">
+                    <select ng-model="buildtype" ng-change="changeBuildType()">
+                        <option value="0"></option>
+                        <option value="1">单层库</option>
+                        <option value="2">多层库</option>
+                    </select>
+                    <span ng-show="isBuildFloors">
+                        <input type="number" ng-model="buildfloors" placeholder="请输入冷库层数"/>
+                    </span>
+                </div>
+                <i class="iconfont fr moreinfo">&#xe697;</i>
+            </li>
+            <li>
+                <label for="moon">是否有封闭月台<em>*</em></label>
+                <div class="mySelect">
+                    <select ng-model="platform"
+                            ng-options="x.id as x.name for x in haveOrNots"></select>
+                </div>
+                <i class="iconfont fr moreinfo">&#xe697;</i>
+            </li>
+            <li>
+                <label for="moon">存放商品品类<em>*</em></label>
+                <div>
+                        <span ng-repeat="pro in productCategorys">
+                     <input type="checkbox" name="productcategory"
+                            value="{{pro.type_name}}"
+                            ng-click="updateSelection($event,pro.type_name)"
+                            ng-checked="isSelected(pro.type_name)"/>
 
-                <li>
-                    <label for="phone">联系电话<em>*</em></label>
-                    <input type="number"  ng-model="phoneNum"/>
-                </li>
-                
-            </ul>
-            <ul class="houseinfo black">
-
-                <li>
-                    <label for="note">备注</label>
-                    <!-- <input type="text" style="width:80%" ng-model="remark"/> -->
-                    <textarea style="width:80%"class="autoText" ng-model="remark"></textarea>
-                </li>
-                <li class="rdcImg">
-                    <label>冷链委温度达标库</label>
-                    <label ng-if="standType==-1" style="font-size: .5rem;" class="orange">未通过。原因：{{standMsg}}。<br>如有疑问，请拨打400-8535606或者重新提交材料</label>
-                    <label ng-if="standType==1" class="orange">已通过</label>
-                    <label ng-if="standType==2" class="orange">审核中</label>
-                    <div id="tempStandDiv" ng-if="standType==0 || standType==-1" style="display: inline-block">
-                        <label><input ng-value="1" type="radio" name="isJoinStand" ng-model="$parent.isJoinStand">是</label>
-                        <label><input ng-value="2" type="radio" ng-click="droptempStandPic()" name="isJoinStand" ng-model="$parent.isJoinStand">愿意申报</label>
-                        <label><input ng-value="3" type="radio" ng-click="droptempStandPic()" name="isJoinStand" ng-model="$parent.isJoinStand">否</label>
+                     <label>{{pro.type_name}}</label>
+                 </span>
+                </div>
+                <i class="iconfont fr moreinfo">&#xe697;</i>
+            </li>
+            <li style="border:0;">
+                <label>冷库图片<em>*</em></label>
+                <label class="pic">
+                    <input type="file" accept="image/gif, image/bmp, image/jpg ,image/jpeg, image/png"
+                           ngf-select="addFiles($files)" ng-model="files" ngf-multiple="true" name="files"
+                           accept="image/png,image/gif,image/jpeg">
+                </label>
+                <label style="font-size: .5rem">
+                    <small class="text-warning">上传3-5张实体图片，不能重复上传，每张小于10M</small>
+                </label>
+            </li>
+            <li class="clearfix">
+                <div class="form-group" ng-if="storagePicShow.length>0">
+                    <div class="pull-left" ng-repeat="item in storagePicShow"
+                         style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
+                        <img ng-src="{{item.location}}" style=" width:100%;height:100%" ng-click="goPicDetail(item)"
+                             alt=""/>
+                        <i class="fa fa-times danger" aria-hidden="true"
+                           style="color:red;cursor: pointer;position:absolute;right:0;top:0"
+                           ng-click="deletePic(item)"></i>
                     </div>
-                    <ul id="tempStandUl" ng-if="standType==0 || standType==-1">
-                        <li ng-if="isJoinStand==1">
-                            <label class="pic">
-                                <input type="file" ngf-select="addTempStandPic($files)" ng-model="tempStandfile" ngf-multiple="false"
-                                       accept="image/gif, image/bmp, image/jpg, image/jpeg, image/png"
-                                       name="tempStandfile">
-                            </label>
-                            <output class="img_list">
+                </div>
+                <div class="form-group" ng-if="totalfiles.length>0">
+                    <div class="pull-left" ng-repeat="file in totalfiles"
+                         style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
+                        <img ngf-src="file" style="width:100%;height:100%" alt="{{file.name}}" title="{{file.name}}"/>
+                        <i class="fa fa-times danger" aria-hidden="true"
+                           style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="drop(file)"></i>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <label for="phone">联系电话<em>*</em></label>
+                <input type="number" ng-model="phoneNum"/>
+            </li>
+
+        </ul>
+        <ul class="houseinfo black">
+
+            <li>
+                <label for="note">备注</label>
+                <!-- <input type="text" style="width:80%" ng-model="remark"/> -->
+                <textarea style="width:80%" class="autoText" ng-model="remark"></textarea>
+            </li>
+            <li class="rdcImg">
+                <label>冷链委温度达标库</label>
+                <label ng-if="standType==-1" style="font-size: .5rem;" class="orange">未通过。原因：{{standMsg}}。<br>如有疑问，请拨打400-8535606或者重新提交材料</label>
+                <label ng-if="standType==1" class="orange">已通过</label>
+                <label ng-if="standType==2" class="orange">审核中</label>
+                <div id="tempStandDiv" ng-if="standType==0 || standType==-1" style="display: inline-block">
+                    <label><input ng-value="1" type="radio" name="isJoinStand" ng-model="$parent.isJoinStand">是</label>
+                    <label><input ng-value="2" type="radio" ng-click="droptempStandPic()" name="isJoinStand"
+                                  ng-model="$parent.isJoinStand">愿意申报</label>
+                    <label><input ng-value="3" type="radio" ng-click="droptempStandPic()" name="isJoinStand"
+                                  ng-model="$parent.isJoinStand">否</label>
+                </div>
+                <ul id="tempStandUl" ng-if="standType==0 || standType==-1">
+                    <li ng-if="isJoinStand==1">
+                        <label class="pic">
+                            <input type="file" ngf-select="addTempStandPic($files)" ng-model="tempStandfile"
+                                   ngf-multiple="false"
+                                   accept="image/gif, image/bmp, image/jpg, image/jpeg, image/png"
+                                   name="tempStandfile">
+                        </label>
+                        <output class="img_list">
                                 <span ng-repeat="tempStand in tempStandPic">
                                     <img class="thumb" ngf-src="tempStand" title="{{tempStand}}">
                                     <i ng-click="droptempStandPic()">×</i>
                                 </span>
-                            </output>
-                            <label style="font-size: .5rem">
-                                <small class="text-warning">请上传温度达标冷库认证铜牌或证书，小于10M</small>
-                            </label>
-                        </li>
-                        <li ng-if="isJoinStand==2">
-                            <span>请拨打400-853-5606  申报</span>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <label>是否愿意公开冷库温度曲线</label>
-                    <label style="margin-right: 0.3rem"><input ng-value="1" ng-model="openLIne" type="radio" name="openLIne">是</label>
-                    <label><input ng-value="2" ng-model="openLIne" type="radio" name="openLIne">否</label>
-                </li>
-                <li class="number tac">
-                    <label>冷藏车数量</label>
+                        </output>
+                        <label style="font-size: .5rem">
+                            <small class="text-warning">请上传温度达标冷库认证铜牌或证书，小于10M</small>
+                        </label>
+                    </li>
+                    <li ng-if="isJoinStand==2">
+                        <span>请拨打400-853-5606  申报</span>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <label>是否愿意公开冷库温度曲线</label>
+                <label style="margin-right: 0.3rem"><input ng-value="1" ng-model="openLIne" type="radio"
+                                                           name="openLIne">是</label>
+                <label><input ng-value="2" ng-model="openLIne" type="radio" name="openLIne">否</label>
+            </li>
+            <li class="number tac">
+                <label>冷藏车数量</label>
+                <div>
+                    <div><span><1.8T</span><input type="number" ng-model="coldTruck1"><span>辆</span></div>
+                    <div><span>1.8T-6T</span><input type="number" ng-model="coldTruck2"><span>辆</span></div>
+                    <div><span>6T-14T</span><input type="number" ng-model="coldTruck3"><span>辆</span></div>
+                    <div><span>>14T</span><input type="number" ng-model="coldTruck4"><span>辆</span></div>
+                </div>
+            </li>
+            <li>
+                <label for="cleanroom">是否有理货区</label>
+                <div class="mySelect">
+                    <select ng-model="lihuoRoom" ng-change="ChangLihuoState(lihuoRoom)"
+                            ng-options="x.id as x.name for x in haveOrNots"></select>
+                </div>
+                <i class="iconfont fr moreinfo">&#xe697;</i>
+            </li>
+            <li ng-show="islihuoRoom">
+                <label for="cleanarea">理货区面积</label>
+                <input type="number" step="0.01" ng-model="lihuoArea">
+            </li>
+            <li>
+                <label for="temperatureTypeCtr">有无温控</label>
+                <div class="mySelect">
+                    <select ng-model="lihuoTemperCtr"
+                            ng-options="x.id as x.name for x in haveOrNots"></select>
+                </div>
+                <i class="iconfont fr moreinfo">&#xe697;</i>
+            </li>
+            <li>
+                <label for="cryogen">制冷剂类型</label>
+                <div class="mySelect">
+                    <select ng-model="storageRefreg"
+                            ng-change="StorageRefregSelected(storageRefreg)"
+                            ng-options="x.id as x.type for x in storageRefregs"></select>
+                </div>
+                <i class="iconfont fr moreinfo">&#xe697;</i>
+            </li>
+            <li>
+                <label for="temperatureRecord">有无温度记录</label>
+                <div class="mySelect">
+                    <select ng-model="temperRecord"
+                            ng-options="x.id as x.name for x in haveOrNots"></select>
+                </div>
+                <i class="iconfont fr moreinfo">&#xe697;</i>
+            </li>
+            <li>
+                <label for="cleanarea">企业网址</label>
+                <input type="text" ng-model="website"/>
+            </li>
+            <li class="number">
+                <label>冷库分库容积</label>
+                <div>
                     <div>
-                        <div><span><1.8T</span><input type="number" ng-model="coldTruck1"><span>辆</span></div>
-                        <div><span>1.8T-6T</span><input type="number" ng-model="coldTruck2"><span>辆</span></div>
-                        <div><span>6T-14T</span><input type="number" ng-model="coldTruck3"><span>辆</span></div>
-                        <div><span>>14T</span><input type="number" ng-model="coldTruck4"><span>辆</span></div>
+                        <span class="nowrap">常温库</span><input type="number" step="0.01" ng-model="capacity1">
+                        <select ng-model="height1">
+                            <option value=""></option>
+                            <option value="m³">m³</option>
+                            <option value="pai">pai</option>
+                            <option value="吨">吨</option>
+                        </select>
                     </div>
-                </li>
-                <li>
-                    <label for="structure">建筑结构</label>                    
-                    <div class="mySelect">
-                        <select ng-model="structure"
-                                        ng-options="x.id as x.type for x in structures"></select>
-                    </div>
-                    <i class="iconfont fr moreinfo">&#xe697;</i>
-                </li>
-                <li>
-                    <label for="moon">是否有封闭月台</label>                    
-                    <div class="mySelect">
-                        <select ng-model="platform"
-                                        ng-options="x.id as x.name for x in haveOrNots"></select>
-                    </div>
-                    <i class="iconfont fr moreinfo">&#xe697;</i>
-                </li>
-                <li>
-                    <label for="cleanroom">是否有理货区</label>
-                    <div class="mySelect">
-                        <select ng-model="lihuoRoom" ng-change="ChangLihuoState(lihuoRoom)"
-                                        ng-options="x.id as x.name for x in haveOrNots"></select>
-                     </div>  
-                     <i class="iconfont fr moreinfo">&#xe697;</i>                 
-                </li>
-                <li ng-show="islihuoRoom">
-                    <label for="cleanarea">理货区面积</label>                    
-                    <input type="number" step="0.01" ng-model="lihuoArea">
-                </li>
-                <li>
-                    <label for="temperatureTypeCtr">有无温控</label>                    
-                    <div class="mySelect">
-                        <select ng-model="lihuoTemperCtr"
-                                        ng-options="x.id as x.name for x in haveOrNots"></select>
-                    </div>
-                    <i class="iconfont fr moreinfo">&#xe697;</i>
-                </li>
-                <li>
-                    <label for="cryogen">制冷剂类型</label>                    
-                    <div class="mySelect">
-                        <select ng-model="storageRefreg"
-                                        ng-change="StorageRefregSelected(storageRefreg)"
-                                        ng-options="x.id as x.type for x in storageRefregs"></select>
-                    </div>
-                    <i class="iconfont fr moreinfo">&#xe697;</i>
-                </li>
-                <li>
-                    <label for="temperatureRecord">有无温度记录</label>                    
-                    <div class="mySelect">
-                        <select ng-model="temperRecord"
-                                        ng-options="x.id as x.name for x in haveOrNots"></select>
-                    </div>
-                    <i class="iconfont fr moreinfo">&#xe697;</i>
-                </li>
-                <li class="number">
-                     <label>冷库容积</label>
                     <div>
-                        <div>
-							<span class="nowrap">8~25℃</span><input type="number" step="0.01" ng-model="capacity1"><span class="nowrap">面积㎡</span><input type="number" step="0.01" ng-model="height1"><span class="nowrap fr">高m</span>
-						</div>
-                        <div>
-							<span class="nowrap">2~8℃</span><input type="number" step="0.01" ng-model="capacity2"><span class="nowrap">面积㎡</span><input type="number" step="0.01" ng-model="height2"><span class="nowrap fr">高m</span>
-						</div>
-                        <div>
-                            <span class="nowrap">-2~-18℃</span><input type="number" step="0.01" ng-model="capacity3"><span class="nowrap">面积㎡</span><input type="number" step="0.01" ng-model="height3"><span class="nowrap fr">高m</span>
-                        </div>
-                        <div>
-                            <span class="nowrap">-18~-30℃</span><input type="number" step="0.01" ng-model="capacity4"><span class="nowrap">面积㎡</span><input type="number" step="0.01" ng-model="height4"><span class="nowrap fr">高m</span>
-                        </div>
-                        <div>
-                            <span class="nowrap">&lt;-50℃</span><input type="number" step="0.01" ng-model="capacity5"><span class="nowrap">面积㎡</span><input type="number" step="0.01" ng-model="height5"><span class="nowrap fr">高m</span>
-                        </div>
-                        <!-- <div style="width: auto"></div> -->
+                        <span class="nowrap">冷藏库</span><input type="number" step="0.01" ng-model="capacity2">
+                        <select ng-model="height2">
+                            <option value=""></option>
+                            <option value="m³">m³</option>
+                            <option value="pai">pai</option>
+                            <option value="吨">吨</option>
+                        </select>
                     </div>
-                </li>
-                <li>
-                    <label>周边设施：</label>
-                    <div class="mySelect">
-                        <textarea type="text" ng-model="facility" placeholder="交通、加油站、宾馆、银行、餐饮、距市区和高速的距离等.."></textarea>
+                    <div>
+                        <span class="nowrap">冷冻库</span><input type="number" step="0.01" ng-model="capacity3">
+                        <select ng-model="height3">
+                            <option value=""></option>
+                            <option value="m³">m³</option>
+                            <option value="pai">pai</option>
+                            <option value="吨">吨</option>
+                        </select>
                     </div>
-                </li>
-                 <li style="border:0;">
-                    <label>资质荣誉图：
-                             <small class="text-warning" style="width: 100px">*最多八张</small>
-                             <label class="pic">
-		    					<input type="file" accept="image/gif, image/bmp, image/jpg, image/jpeg, image/png" ngf-select="addHonorFiles($files)" ng-model="honorfiles"  ngf-multiple="true" name="honorfiles" accept="image/png,image/gif,image/jpeg">
-						    </label>
-                             </label>                 
-                </li>
-                <li class="clearfix">
-                   <div class="form-group" ng-if="honorPicShow.length>0">
-                            <div class="pull-left" ng-repeat="item in honorPicShow" style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
-                                <img ng-src="{{item.location}}" style="width:100%;height:100%"  />
-                                <i class="fa fa-times danger" aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="deleteHonorPic(item)"></i>
-                            </div>
+                    <div>
+                        <span class="nowrap">超低温库</span><input type="number" step="0.01" ng-model="capacity4">
+                        <select ng-model="height4">
+                            <option value=""></option>
+                            <option value="m³">m³</option>
+                            <option value="pai">pai</option>
+                            <option value="吨">吨</option>
+                        </select>
                     </div>
-                     <div class="form-group" ng-if="totalhonorfiles.length>0">
-                            <div class="pull-left" ng-repeat="honorfile in totalhonorfiles" style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
-                                <img ngf-src="honorfile" style="width:100%;height:100%"  alt="{{honorfile.name}}" title="{{honorfile.name}}"/>
-                                <i class="fa fa-times danger" aria-hidden="true" style="color:red;cursor: pointer;position:absolute;right:0;top:0" ng-click="drophonor(honorfile)"></i>
-                            </div>
-                    </div>
-                </li>
-                <li style="line-height: 1.7">
-                    <label>冷库认证</label>
-                    <label ng-if="auditType==-1" style="font-size: .5rem;" class="orange">未通过。{{auditMsg}}。<br>如有疑问，请拨打400-8535606或者重新提交材料</label>
-                    <label ng-if="auditType==1" class="orange">已通过</label>
-                    <label ng-if="auditType==2" class="orange">审核中</label>
-                    <label class="pic" ng-if="auditType==0||auditType==-1">
-                        <input type="file" accept="image/gif, image/bmp, image/jpg, image/jpeg, image/png" ngf-select="addAuditPic($files)" ng-model="auditfile" ngf-multiple="false" name="auditfile">
+                    <!-- <div style="width: auto"></div> -->
+                </div>
+            </li>
+            <li>
+                <label>周边设施：</label>
+                <div class="mySelect">
+                    <textarea type="text" ng-model="facility" placeholder="交通、加油站、宾馆、银行、餐饮、距市区和高速的距离等.."></textarea>
+                </div>
+            </li>
+            <li style="border:0;">
+                <label>资质荣誉图：
+                    <small class="text-warning" style="width: 100px">*最多八张</small>
+                    <label class="pic">
+                        <input type="file" accept="image/gif, image/bmp, image/jpg, image/jpeg, image/png"
+                               ngf-select="addHonorFiles($files)" ng-model="honorfiles" ngf-multiple="true"
+                               name="honorfiles" accept="image/png,image/gif,image/jpeg">
                     </label>
-                    <output class="img_list">
+                </label>
+            </li>
+            <li class="clearfix">
+                <div class="form-group" ng-if="honorPicShow.length>0">
+                    <div class="pull-left" ng-repeat="item in honorPicShow"
+                         style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
+                        <img ng-src="{{item.location}}" style="width:100%;height:100%"/>
+                        <i class="fa fa-times danger" aria-hidden="true"
+                           style="color:red;cursor: pointer;position:absolute;right:0;top:0"
+                           ng-click="deleteHonorPic(item)"></i>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="totalhonorfiles.length>0">
+                    <div class="pull-left" ng-repeat="honorfile in totalhonorfiles"
+                         style="position:relative;padding:5px;width: 86px;height:48px;background-size:cover;">
+                        <img ngf-src="honorfile" style="width:100%;height:100%" alt="{{honorfile.name}}"
+                             title="{{honorfile.name}}"/>
+                        <i class="fa fa-times danger" aria-hidden="true"
+                           style="color:red;cursor: pointer;position:absolute;right:0;top:0"
+                           ng-click="drophonor(honorfile)"></i>
+                    </div>
+                </div>
+            </li>
+            <li style="line-height: 1.7">
+                <label>冷库认证</label>
+                <label ng-if="auditType==-1" style="font-size: .5rem;" class="orange">未通过。{{auditMsg}}。<br>如有疑问，请拨打400-8535606或者重新提交材料</label>
+                <label ng-if="auditType==1" class="orange">已通过</label>
+                <label ng-if="auditType==2" class="orange">审核中</label>
+                <label class="pic" ng-if="auditType==0||auditType==-1">
+                    <input type="file" accept="image/gif, image/bmp, image/jpg, image/jpeg, image/png"
+                           ngf-select="addAuditPic($files)" ng-model="auditfile" ngf-multiple="false" name="auditfile">
+                </label>
+                <output class="img_list">
 						<span ng-repeat="audit in auditPic">
 							<img class="thumb" ngf-src="audit" title="{{audit}}">
 							<i ng-click="dropAuditPic(audit)">×</i>
 						</span>
-                    </output>
-                    <label style="font-size: .5rem;line-height: 1.7;" ng-if="auditType==0||auditType==-1">
-                        <small class="text-warning">1、请上传企业营业执照,冷库认证通过之后，将显示绿色盾牌标识，提高信任度和搜索排名</small><br>
-                        <small class="text-warning">2、只有已认证的冷库，才可以发布出租信息，否则不能够发布出租信息</small>
-                    </label>
-                </li>
-             </ul>
-            <!--双箭头下拉-->
-            <div class="next"><i class="iconfont">&#xe649;</i></div>
-            <button id="but_savedata" class="mybtn" ng-click="submit()">提交</button>
-        </form>
-    </section>
+                </output>
+                <label style="font-size: .5rem;line-height: 1.7;" ng-if="auditType==0||auditType==-1">
+                    <small class="text-warning">1、请上传企业营业执照,冷库认证通过之后，将显示绿色盾牌标识，提高信任度和搜索排名</small>
+                    <br>
+                    <small class="text-warning">2、只有已认证的冷库，才可以发布出租信息，否则不能够发布出租信息</small>
+                </label>
+            </li>
+        </ul>
+        <!--双箭头下拉-->
+        <div class="next"><i class="iconfont">&#xe649;</i></div>
+        <button id="but_savedata" class="mybtn" ng-click="submit()">提交</button>
+    </form>
+</section>
 
 <script src="../bower_components/angular/angular.min.js"></script>
 <script src="../bower_components/ng-remote-validate/release/ngRemoteValidate.0.6.1.min.js"></script>
 <script type="text/javascript" src="../bower_components/ng-file-upload/ng-file-upload-all.min.js"></script>
 <script type="text/javascript">
-checkLogin();
-var delIds=[];
-$(function () {
-    $('.rdcImg').children('div').eq(0).children('label').click(function () {
-        var oLabel = $(this).index();
-        if (oLabel != 2) {
-            $(this).parent().siblings('ul').show().children('li').eq(oLabel).show().siblings('li').hide();
-        } else {
-            $(this).parent().siblings('ul').hide();
-        }
+    checkLogin();
+    var delIds = [];
+    $(function () {
+        $('.rdcImg').children('div').eq(0).children('label').click(function () {
+            var oLabel = $(this).index();
+            if (oLabel != 2) {
+                $(this).parent().siblings('ul').show().children('li').eq(oLabel).show().siblings('li').hide();
+            } else {
+                $(this).parent().siblings('ul').hide();
+            }
+        })
     })
-})
- var app = angular.module("app", ["remoteValidation","ngFileUpload"]);
- app.controller("coldStorageEdit", function ($scope,$http, Upload) {
-     $scope.ChangLihuoState=function (val) {
-         if(val==2){
-             $scope.islihuoRoom=false;
-         }else {
-             $scope.islihuoRoom=true;
-         }
-     }
-    $scope.editable = true;
-    $scope.isDisabled = false;
-    $scope.totalfiles = [];
-    $scope.totalhonorfiles = [];
-    $scope.tempStandPic = [];
-    $scope.auditPic = [];
-    $scope.haveOrNots = [{id: 2,name: "无"},{ id: 1,name: "有"}];
-    $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
-    // 获取省列表
-    $http.get(ER.root+"/i/city/findProvinceList").success(function (data) {
-        $scope.provinces = data;
-    });
-
-    // 根据省ID查询城市列表
-    $scope.provinceSelected = function () {
-        $http.get(ER.root+"/i/city/findCitysByProvinceId", {params: {"provinceID": $scope.provinceId} }).success(function (data) {
-            $scope.citys = data;
+    var app = angular.module("app", ["remoteValidation", "ngFileUpload"]);
+    app.controller("coldStorageEdit", function ($scope, $http, Upload) {
+        $scope.ChangLihuoState = function (val) {
+            if (val == 2) {
+                $scope.islihuoRoom = false;
+            } else {
+                $scope.islihuoRoom = true;
+            }
+        }
+        $scope.changeBuildType=function () {
+            $scope.isBuildFloors=$scope.buildtype==2?true:false;
+        }
+        $scope.editable = true;
+        $scope.isDisabled = false;
+        $scope.totalfiles = [];
+        $scope.totalhonorfiles = [];
+        $scope.tempStandPic = [];
+        $scope.auditPic = [];
+        $scope.selected = [];
+        $scope.haveOrNots = [{id: 2, name: "无"}, {id: 1, name: "有"}];
+        $http.defaults.withCredentials = true;
+        $http.defaults.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
+        // 获取省列表
+        $http.get(ER.root + "/i/city/findProvinceList").success(function (data) {
+            $scope.provinces = data;
         });
-    };
 
+        // 根据省ID查询城市列表
+        $scope.provinceSelected = function () {
+            $http.get(ER.root + "/i/city/findCitysByProvinceId", {params: {"provinceID": $scope.provinceId}}).success(function (data) {
+                $scope.citys = data;
+            });
+        };
+        $scope.allBuildType = [{value: "", text: ""}, {value: "1", text: "单层库"}, {value: "2", text: "多层库"}];
 
-    // 获取冷库经营类型
-    $http.get(ER.root+"/i/rdc/findAllManageType").success(function (data) {
-        $scope.manageTypes = data;
-        $scope.manageType = data[0].id;
-    });
+        // 获取冷库经营类型
+        $http.get(ER.root + "/i/rdc/findAllManageType").success(function (data) {
+            $scope.manageTypes = data;
+            $scope.manageType = data[0].id;
+        });
 
-    $scope.ManageTypeSelected = function () {
-    };
+        //获取商品品类
+        $http.get(ER.root + "/i/ShareRdcController/getGDFilterData").success(function (data) {
+            $scope.productCategorys = data.entity.gt;
+        });
+
+        var updateSelected = function (action, id, name) {
+            id = "" + id + "";
+            if (action == 'add' && $scope.selected.indexOf(id) == -1) {
+                $scope.selected.push(id);
+            }
+            if (action == 'remove' && $scope.selected.indexOf(id) != -1) {
+                var idx = $scope.selected.indexOf(id);
+                $scope.selected.splice(idx, 1);
+            }
+            //alert($scope.selected);
+        }
+        //判断是在集合$scope.selected里去掉此id，还是加上id
+        $scope.updateSelection = function ($event, id) {
+            var checkbox = $event.target;
+            var action = (checkbox.checked ? 'add' : 'remove');
+            updateSelected(action, id, checkbox.name);
+        }
+        //设置复选框的选中状态
+        $scope.isSelected = function (id) {
+            return $scope.selected.indexOf(id) >= 0;
+        }
+
+        $scope.ManageTypeSelected = function () {
+        };
 
 // 获取冷库结构类型
-    $http.get(ER.root+"/i/rdc/findAllStorageStructureType").success(function (data) {
-        $scope.structures = data;
-        $scope.structure = data[0].id;
-    });
-    // 获取商品存放类型
-    $http.get(ER.root+"/i/rdc/findAllTemperType").success(function (data) {
-        $scope.temperTypes = data;
-        $scope.temperType = data[0].id;
-    });
-
-    $scope.TemperTypeSelected = function () {
-    };
-
-    // 获取冷库温度类型
-    $http.get(ER.root+"/i/rdc/findAllStorageType").success(function (data) {
-        $scope.storageTypes = data;
-        $scope.storageType = data[0].id;
-    });
-
-    $scope.StorageTypeSelected = function () {
-    };
-
-    $scope.moreInfos = true;
-
-    $scope.addMore = function () {
-        $scope.moreInfos = !$scope.moreInfos;
-    };
-
-   /*  // 获取冷链设施类型
-    $http.get(ER.root+"/i/rdc/findAllCompanyDevice").success(function (data) {
-        $scope.companyDevices = data;
-        $scope.companyDevice = data[0].id;
-    }); */
-
-    $scope.CompanyDeviceSelected = function () {
-    };
-
-    // 制冷剂类型
-    $http.get(ER.root+"/i/rdc/findAllStorageRefreg").success(function (data) {
-        $scope.storageRefregs = data;
-        $scope.storageRefreg = data[0].id;
-    });
-
-    $scope.StorageRefregSelected = function () {
-    };
-
-
-
-    $scope.rdcId =getUrlParam("id");
-    // 获取当前冷库的详情
-     if($scope.rdcId){
-	    $http.get(ER.root+"/i/rdc/findRDCDTOByRDCId", {
-	        params: { "rdcID":  $scope.rdcId,"uid":window.user.id }
-	    }).success(function (data) {
-	        $scope.name = data[0].name;
-	        $scope.address = data[0].address;
-	        $scope.provinceId = data[0].provinceId;
-            $scope.provinceSelected();
-	        $scope.cityId = data[0].cityId;
-	        $scope.area = data[0].area;
-	        $scope.manageType = data[0].manageType;
-	        $scope.storageType = data[0].storageType;
-	        $scope.temperType = data[0].temperType;
-	        $scope.phoneNum = parseInt(data[0].phoneNum);
-	        $scope.remark = data[0].remark?data[0].remark:"";
-	       // $scope.tonnage = data[0].tonnage;
-	        $scope.structure = data[0].structure;
-	       // $scope.companyDevice = data[0].companyDevice;
-	        $scope.platform = data[0].platform;
-	        $scope.lihuoRoom = data[0].lihuoRoom;
-	        $scope.arrangePic = data[0].arrangepiclocation;
-	        $scope.storagePicShow = data[0].storagePics;
-	        $scope.honorPicShow = data[0].honorPics;
-	        $scope.storagePic = angular.fromJson( data[0].storagePicLocation);
-	        $scope.lihuoArea = data[0].lihuoArea;
-	        $scope.lihuoTemperCtr = data[0].lihuoTemperCtr;
-	        $scope.storageRefreg = data[0].storageRefreg;
-	        $scope.temperRecord = data[0].temperRecord;
-	        $scope.capacity1 = data[0].capacity1;
-	        $scope.capacity2 = data[0].capacity2;
-	        $scope.capacity3 = data[0].capacity3;
-	        $scope.capacity4 = data[0].capacity4;
-	        $scope.capacity5 = data[0].capacity5;
-	        $scope.height1 = data[0].height1;
-            $scope.height2 = data[0].height2;
-       		$scope.height3 = data[0].height3;
-            $scope.height4 = data[0].height4;
-            $scope.height5 = data[0].height5;
-	        $scope.coldTruck1 = data[0].coldTruck1;
-	        $scope.coldTruck2 = data[0].coldTruck2;
-	        $scope.coldTruck3 = data[0].coldTruck3;
-	        $scope.coldTruck4 = data[0].coldTruck4;
-	        $scope.facility = data[0].facility;
-	        $scope.openLIne=data[0].openLIne;
-	        $scope.isJoinStand=data[0].isJoinStand;
-	        $scope.rentSqm=data[0].rentSqm;
-	        $scope.height=data[0].height;
-	        $scope.auditType=data[0].auditType;
-            $scope.auditMsg=data[0].auditMsg;
-	        $scope.standType=data[0].standType;
-	        $scope.standMsg=data[0].standMsg;
-	        if($scope.lihuoRoom==1){$scope.islihuoRoom=true;}
-           /* if(data[0].istemperaturestandard==1){$scope.tempStandLi=false;}else {$scope.tempStandLi=true;}
-            if(data[0].audit==2){$scope.auditLi=false;}else{$scope.auditLi=true;}*/
-	        if($scope.remark=="undefined")
-	        $scope.remark = "";
-	        if($scope.facility=="undefined")
-	        $scope.facility = "";
-	     });
-	   }else{
-	     //alert("非法访问！");
-	      layer.open({
-		    content: '非法访问~~'
-		    ,btn: '确定'
-		  });
-	     return ;
-	   }
-    $scope.drop = function(file){
-        angular.forEach($scope.totalfiles,function(item, key){
-            if(item == file){
-                $scope.totalfiles.splice(key,1);
-            }
+        $http.get(ER.root + "/i/rdc/findAllStorageStructureType").success(function (data) {
+            $scope.structures = data;
+            $scope.structure = data[0].id;
         });
-    };
-     $scope.dropAuditPic = function(){
-         $scope.auditPic.splice(0,1);
-     }
-     $scope.droptempStandPic = function(){
-         $scope.tempStandPic.splice(0,1);
-     }
-    $scope.dropcutt = function(file){//删除平面图
+        // 获取商品存放类型
+        $http.get(ER.root + "/i/rdc/findAllTemperType").success(function (data) {
+            $scope.temperTypes = data;
+            $scope.temperType = data[0].id;
+        });
+
+        $scope.TemperTypeSelected = function () {
+        };
+
+        // 获取冷库温度类型
+        $http.get(ER.root + "/i/rdc/findAllStorageType").success(function (data) {
+            $scope.storageTypes = data;
+            $scope.storageType = data[0].id;
+        });
+
+        $scope.StorageTypeSelected = function () {
+        };
+
+        $scope.moreInfos = true;
+
+        $scope.addMore = function () {
+            $scope.moreInfos = !$scope.moreInfos;
+        };
+
+        /*  // 获取冷链设施类型
+         $http.get(ER.root+"/i/rdc/findAllCompanyDevice").success(function (data) {
+         $scope.companyDevices = data;
+         $scope.companyDevice = data[0].id;
+         }); */
+
+        $scope.CompanyDeviceSelected = function () {
+        };
+
+        // 制冷剂类型
+        $http.get(ER.root + "/i/rdc/findAllStorageRefreg").success(function (data) {
+            $scope.storageRefregs = data;
+            $scope.storageRefreg = data[0].id;
+        });
+
+        $scope.StorageRefregSelected = function () {
+        };
+
+
+        $scope.rdcId = getUrlParam("id");
+        // 获取当前冷库的详情
+        if ($scope.rdcId) {
+            $http.get(ER.root + "/i/rdc/findRDCDTOByRDCId", {
+                params: {"rdcID": $scope.rdcId, "uid": window.user.id}
+            }).success(function (data) {
+                $scope.name = data[0].name;
+                $scope.address = data[0].address;
+                $scope.provinceId = data[0].provinceId;
+                $scope.provinceSelected();
+                $scope.cityId = data[0].cityId;
+                $scope.area = data[0].area;
+                $scope.manageType = data[0].manageType;
+                $scope.storageType = data[0].storageType;
+                $scope.temperType = data[0].temperType;
+                $scope.phoneNum = parseInt(data[0].phoneNum);
+                $scope.remark = data[0].remark ? data[0].remark : "";
+                // $scope.tonnage = data[0].tonnage;
+                $scope.structure = data[0].structure;
+                // $scope.companyDevice = data[0].companyDevice;
+                $scope.platform = data[0].platform;
+                $scope.lihuoRoom = data[0].lihuoRoom;
+                $scope.arrangePic = data[0].arrangepiclocation;
+                $scope.storagePicShow = data[0].storagePics;
+                $scope.honorPicShow = data[0].honorPics;
+                $scope.storagePic = angular.fromJson(data[0].storagePicLocation);
+                $scope.lihuoArea = data[0].lihuoArea;
+                $scope.lihuoTemperCtr = data[0].lihuoTemperCtr;
+                $scope.storageRefreg = data[0].storageRefreg;
+                $scope.temperRecord = data[0].temperRecord;
+                $scope.capacity1 = data[0].capacity1;
+                $scope.capacity2 = data[0].capacity2;
+                $scope.capacity3 = data[0].capacity3;
+                $scope.capacity4 = data[0].capacity4;
+                $scope.height1 = data[0].height1;
+                $scope.height2 = data[0].height2;
+                $scope.height3 = data[0].height3;
+                $scope.height4 = data[0].height4;
+                $scope.coldTruck1 = data[0].coldTruck1;
+                $scope.coldTruck2 = data[0].coldTruck2;
+                $scope.coldTruck3 = data[0].coldTruck3;
+                $scope.coldTruck4 = data[0].coldTruck4;
+                $scope.facility = data[0].facility;
+                $scope.openLIne = data[0].openLIne;
+                $scope.isJoinStand = data[0].isJoinStand;
+                $scope.rentSqm = data[0].rentSqm;
+                $scope.height = data[0].height;
+                $scope.auditType = data[0].auditType;
+                $scope.auditMsg = data[0].auditMsg;
+                $scope.standType = data[0].standType;
+                $scope.standMsg = data[0].standMsg;
+                $scope.totalcapacity = data[0].totalcapacity;
+                $scope.capacityunit = data[0].capacityunit;
+                $scope.rentcapacityunit = data[0].rentcapacityunit;
+                $scope.buildtype = data[0].buildtype + '';
+                $scope.website = data[0].website;
+                $scope.buildfloors = data[0].buildfloors;
+                if(data[0].productcategory&&data[0].productcategory!=''){
+                    $scope.selected=data[0].productcategory.split(',');
+                }
+                if ($scope.lihuoRoom == 1) {
+                    $scope.islihuoRoom = true;
+                }
+                /* if(data[0].istemperaturestandard==1){$scope.tempStandLi=false;}else {$scope.tempStandLi=true;}
+                 if(data[0].audit==2){$scope.auditLi=false;}else{$scope.auditLi=true;}*/
+                $scope.isBuildFloors=$scope.buildtype==2?true:false;
+                if ($scope.remark == "undefined")
+                    $scope.remark = "";
+                if ($scope.facility == "undefined")
+                    $scope.facility = "";
+            });
+        } else {
+            //alert("非法访问！");
+            layer.open({
+                content: '非法访问~~'
+                , btn: '确定'
+            });
+            return;
+        }
+        $scope.drop = function (file) {
+            angular.forEach($scope.totalfiles, function (item, key) {
+                if (item == file) {
+                    $scope.totalfiles.splice(key, 1);
+                }
+            });
+        };
+        $scope.dropAuditPic = function () {
+            $scope.auditPic.splice(0, 1);
+        }
+        $scope.droptempStandPic = function () {
+            $scope.tempStandPic.splice(0, 1);
+        }
+        $scope.dropcutt = function (file) {//删除平面图
 //         angular.forEach($scope.totalfiles,function(item, key){
 //             if(item == file){
 //                 $scope.totalfiles.splice(key,1);
 //             }
 //         });
-         $scope.newarrangePic=null;
-    };
-    $scope.drophonor = function(honorfile){
-        angular.forEach($scope.totalhonorfiles,function(item, key){
-            if(item == honorfile){
-                $scope.totalhonorfiles.splice(key,1);
-            }
-        });
-    };
-    function checkCommit(){
-    	if($scope.remark.length>250)
-    		return false;
-    	else
-    		return true;
-    }
-
-    function checkInput(){
-        var flag = true;
-        // 检查必须填写项
-        if ($scope.name == undefined || $scope.name == "") {
-            flag = false;
-        }
-        if ($scope.provinceId == undefined || $scope.provinceId == "") {
-            flag = false;
-        }
-        if ($scope.cityId == undefined || $scope.cityId == "") {
-            flag = false;
-        }
-        if ($scope.address == undefined || $scope.address == "") {
-            flag = false;
-        }
-        if ($scope.area == undefined || $scope.area == "") {
-            flag = false;
-        }
-
-        if ($scope.manageType == undefined || $scope.manageType == "") {
-            flag = false;
-        }
-
-        if ($scope.storageType == undefined || $scope.storageType == "") {
-            flag = false;
-        }
-
-        if ($scope.temperType == undefined || $scope.temperType == "") {
-            flag = false;
-        }
-
-        if ($scope.phoneNum == undefined || $scope.phoneNum == "") {
-            flag = false;
-        }
-
-        return flag;
-    }
-     $scope.addTempStandPic= function (files) {
-         for(var j=0,fileLen=files.length;j<fileLen;j++){
-             var _file=files[j].name;
-             var i=_file.lastIndexOf('.');
-             var len=_file.length;
-             var extEndName=_file.substring(i+1, len);
-             var extName="GIF,BMP,JPG,JPEG,PNG";
-             //首先对格式进行验证
-             if(extName.indexOf(extEndName.toUpperCase())==-1) {
-                 layer.open({content: "只能上传"+extName+"格式的文件",btn: '确定'});
-                 return false
-             }else if(files[j].size > 10485760){
-                 layer.open({content: "最大只能上传10M的图片",btn: '确定'});
-                 return false
-             }
-         }
-         if($scope.tempStandPic.length + files.length > 1){
-             //alert("最多上传八张图片");
-             layer.open({
-                 content: '只能上传一张图片哦'
-                 ,btn: '确定'
-             });
-             return;
-         }
-         $scope.tempStandPic = $scope.tempStandPic.concat(files);
-     }
-     $scope.addAuditPic= function (files) {
-         for(var j=0,fileLen=files.length;j<fileLen;j++){
-             var _file=files[j].name;
-             var i=_file.lastIndexOf('.');
-             var len=_file.length;
-             var extEndName=_file.substring(i+1, len);
-             var extName="GIF,BMP,JPG,JPEG,PNG";
-             //首先对格式进行验证
-             if(extName.indexOf(extEndName.toUpperCase())==-1) {
-                 layer.open({content: "只能上传"+extName+"格式的文件",btn: '确定'});
-                 return false
-             }else if(files[j].size > 10485760){
-                 layer.open({content: "最大只能上传10M的图片",btn: '确定'});
-                 return false
-             }
-         }
-         if($scope.auditPic.length + files.length > 1){
-             //alert("最多上传八张图片");
-             layer.open({
-                 content: '只能上传一张图片哦'
-                 ,btn: '确定'
-             });
-             return;
-         }
-         $scope.auditPic = $scope.auditPic.concat(files);
-     }
-    $scope.addFiles = function (files) {
-    	for(var j=0,fileLen=files.length;j<fileLen;j++){
-    		var _file=files[j].name;
-    		var i=_file.lastIndexOf('.');
-    		var len=_file.length;
-    		var extEndName=_file.substring(i+1, len);
-    		var extName="GIF,BMP,JPG,JPEG,PNG";
-        	//首先对格式进行验证
-        	if(extName.indexOf(extEndName.toUpperCase())==-1) {
-        		layer.open({content: "只能上传"+extName+"格式的文件",btn: '确定'});
-        		return false
-        	}else if(files[j].size > 10485760){
-        		layer.open({content: "最大只能上传10M的图片",btn: '确定'});
-        		return false
-        	}
-    	}
-        if(($scope.storagePicShow.length +$scope.totalfiles.length+ files.length) > 5){
-           // alert("最多上传五张图片");
-             layer.open({
-			    content: '最多上传五张图片哦'
-			    ,btn: '确定'
-			  });            
-            return;
-        }
-        $scope.totalfiles = $scope.totalfiles.concat(files);
-    };
-     $scope.newarrangePic=null;
-    $scope.addArrangePic = function (files) {//平面图
-    	for(var j=0,fileLen=files.length;j<fileLen;j++){
-    		var _file=files[j].name;
-    		var i=_file.lastIndexOf('.');
-    		var len=_file.length;
-    		var extEndName=_file.substring(i+1, len);
-    		var extName="GIF,BMP,JPG,JPEG,PNG";
-        	//首先对格式进行验证
-        	if(extName.indexOf(extEndName.toUpperCase())==-1) {
-        		layer.open({content: "只能上传"+extName+"格式的文件",btn: '确定'});
-        		return false
-        	}else if(files[j].size > 10485760){
-        		layer.open({content: "最大只能上传10M的图片",btn: '确定'});
-        		return false
-        	}
-    	}
-       if(files!=null){
-         $scope.newarrangePic=[];
-          $scope.newarrangePic =$scope.newarrangePic.concat(files);
-        }
-    };
-    $scope.addHonorFiles = function (files) {
-    	for(var j=0,fileLen=files.length;j<fileLen;j++){
-    		var _file=files[j].name;
-    		var i=_file.lastIndexOf('.');
-    		var len=_file.length;
-    		var extEndName=_file.substring(i+1, len);
-    		var extName="GIF,BMP,JPG,JPEG,PNG";
-        	//首先对格式进行验证
-        	if(extName.indexOf(extEndName.toUpperCase())==-1) {
-        		layer.open({content: "只能上传"+extName+"格式的文件",btn: '确定'});
-        		return false
-        	}else if(files[j].size > 10485760){
-        		layer.open({content: "最大只能上传10M的图片",btn: '确定'});
-        		return false
-        	}
-    	}
-        if( $scope.honorPicShow.length+ $scope.totalhonorfiles.length + files.length > 8){
-            //alert("最多上传八张图片");
-            layer.open({
-			    content: '最多上传八张图片哦'
-			    ,btn: '确定'
-			  });  
-            return;
-        }
-        $scope.totalhonorfiles = $scope.totalhonorfiles.concat(files);
-    };
-
-    $scope.submit = function(){
-    if($scope.rdcForm.name.$error.ngRemoteValidate){
-        layer.open({content:'该冷库名已被占用，请重新输入~',btn: '确定'});
-        return false
-    }
-    if(checkCommit()){
-        if (checkInput()){
-        	if(checkMobile($scope.phoneNum.toString().trim()) == false){
-				layer.open({content:'请输入正确的手机号码或者座机号码~',btn: '确定'});
-				return false
-			}
-            if($scope.isJoinStand==1&&$scope.tempStandPic.length<1&&$scope.standType==0){
-                layer.open({content:'请上传冷库温度达标认证图！',btn: '确定'});
-                return false;
-            }
-            var areaRex = /^[0-9]{1}[\d]{0,10}\.*[\d]{0,2}$/;
-            var countRex = /^[0-9]\d*$/;
-            if (!areaRex.test($scope.area)) {
-                layer.open({content:'面积输入有误！(小数点后最多保留两位，如：15.28)',btn: '确定'});
-                return false;
-            }
-            if ($scope.area<10) {
-                layer.open({content:'面积不能小于10㎡',btn: '确定'});
-                return false;
-            }
-            if ($scope.height<3||$scope.height>40) {
-                layer.open({content:'冷库净高度输入已超出（3m~40m）范围',btn: '确定'});
-                return false;
-            }
-            if (!areaRex.test($scope.rentSqm)) {
-                layer.open({content:'可出租面积输入有误！(小数点后最多保留两位，如：15.28)',btn: '确定'});
-                return false;
-            }
-            if($scope.rentSqm>$scope.area){
-                layer.open({content:'可出租面积不能超过总面积~',btn: '确定'});
-                return false;
-            }
-            if($scope.height<=0){
-                layer.open({content:'冷库高度不合法，请重新输入~',btn: '确定'});
-                return false
-            }
-            if (!areaRex.test($scope.height)) {
-                layer.open({content:'冷库净高度输入有误！(小数点后最多保留两位，如：15.28)',btn: '确定'});
-                return false;
-            }
-            if ($scope.capacity1!=undefined &&$scope.capacity1 != "" && !areaRex.test($scope.capacity1) ||$scope.capacity2!=undefined && $scope.capacity2 != "" && !areaRex.test($scope.capacity2) ||
-                $scope.capacity3!=undefined &&$scope.capacity3 != "" && !areaRex.test($scope.capacity3) ||$scope.capacity4!=undefined && $scope.capacity4 != "" && !areaRex.test($scope.capacity4) ||
-                $scope.capacity5!=undefined && $scope.capacity5 != "" && !areaRex.test($scope.capacity5) ||$scope.height1!=undefined && $scope.height1 != "" && !areaRex.test($scope.height1) ||
-                $scope.height2!=undefined && $scope.height2 != "" && !areaRex.test($scope.height2) ||$scope.height3!=undefined &&  $scope.height3 != "" && !areaRex.test($scope.height3) ||
-                $scope.height4!=undefined && $scope.height4 != "" && !areaRex.test($scope.height4) ||$scope.height5!=undefined &&  $scope.height5 != "" && !areaRex.test($scope.height5)) {
-                layer.open({content:'冷库容积输入有误！(小数点后最多保留两位，如：15.28)',btn: '确定'});
-                return false;
-            }
-            if ($scope.coldTruck1!=undefined&&$scope.coldTruck1 != "" && !countRex.test($scope.coldTruck1) ||$scope.coldTruck2!=undefined&& $scope.coldTruck2 != "" && !countRex.test($scope.coldTruck2) ||
-                $scope.coldTruck3!=undefined&&$scope.coldTruck3 != "" && !countRex.test($scope.coldTruck3) ||$scope.coldTruck4!=undefined&& $scope.coldTruck4 != "" && !countRex.test($scope.coldTruck4)) {
-                layer.open({content:'冷藏车数量输入有误！',btn: '确定'});
-                return false;
-            }
-            if ($scope.lihuoArea != undefined &&$scope.lihuoArea != "" && !areaRex.test($scope.lihuoArea)) {
-                layer.open({content:'理货区面积输入有误！(小数点后最多保留两位，如：15.28)',btn: '确定'});
-                return false;
-            }
-            if($scope.storagePicShow.length +$scope.totalfiles.length<3){
-                layer.open({content:'冷库图片至少上传三张！',btn: '确定'});
-                return false;
-            }
-        	layer.open({
-        		type: 2
-        		,content: '努力加载中~~~'
-        		,shadeClose:false
-		    });
-        if( $scope.issubmit)return; $scope.issubmit=true;$("#but_savedata").text("提交中……");
-            $scope.isDisabled = true;
-            data = {
-                file0: null,
-                file1: null,
-                file2: null,
-                file3: null,
-                file4: null,
-                honor0: null,
-                honor1: null,
-                honor2: null,
-                honor3: null,
-                honor4: null,
-                honor5: null,
-                honor6: null,
-                honor7: null,
-                name : encodeURI($scope.name,"UTF-8"),
-                provinceId : $scope.provinceId,
-                cityId : $scope.cityId,
-                address : encodeURI($scope.address,"UTF-8"),
-                area : $scope.area,
-                manageType : $scope.manageType,
-                storageType : $scope.storageType,
-                temperType : $scope.temperType,
-                coldTruck1 : $scope.coldTruck1,
-                coldTruck2 : $scope.coldTruck2,
-                coldTruck3 : $scope.coldTruck3,
-                coldTruck4 : $scope.coldTruck4,
-                phoneNum : $scope.phoneNum,
-                remark : $scope.structure == undefined ? "" : encodeURI($scope.remark, "UTF-8"),
-                structure : $scope.structure == undefined ? "" : encodeURI($scope.structure, "UTF-8"),
-                platform : $scope.platform,
-                lihuoRoom : $scope.lihuoRoom,
-                lihuoArea : $scope.lihuoArea,
-                lihuoTemperCtr : $scope.lihuoTemperCtr,
-                storageRefreg : $scope.storageRefreg,
-                temperRecord : $scope.temperRecord,
-                capacity1 : $scope.capacity1,
-                capacity2 : $scope.capacity2,
-                capacity3 : $scope.capacity3,
-                capacity4 : $scope.capacity4,
-                capacity5 : $scope.capacity5,
-                 height1 : $scope.height1,
-                height2 : $scope.height2,
-                height3 : $scope.height3,
-                height4 : $scope.height4,
-                height5 : $scope.height5,
-                facility : $scope.structure == undefined ? "" : encodeURI($scope.facility, "UTF-8"),
-                rdcId:  $scope.rdcId,
-                userid : window.user.id,
-                rentSqm:$scope.rentSqm,
-                height:$scope.height,
-                openLIne:$scope.openLIne,
-                isJoinStand:$scope.isJoinStand,
-                standPic:null,
-                auditPic:null,
-                delIds:delIds.join()
-            };
-            for(var i = 0; i < $scope.totalfiles.length; i++){
-                data["file" + i] = $scope.totalfiles[i];
-            }
-            for(var j = 0; j < $scope.totalhonorfiles.length; j++){
-                data["honor" + j] = $scope.totalhonorfiles[j];
-            }
-            data["standPic"]=$scope.tempStandPic[0];
-            data["auditPic"]=$scope.auditPic[0];
-            Upload.upload({
-                url: ER.root+'/i/rdc/newUpdateRdc',
-                headers :{ "Content-Transfer-Encoding": "utf-8" },
-                data: data
-            }).then(function (resp) {
-                $scope.issubmit=false;$("#but_savedata").text("提交");      
-                $scope.isDisabled = false;
-                $('.mybtn').attr('disabled',true);
-            	$('.mybtn').css('backgroundColor','gray');
-               // alert("修改成功");
-                layer.closeAll();
-                layer.open({
-				    content: '修改成功'
-				    ,btn: '确定'
-				    ,shadeClose:false
-				    ,yes:function(){
-				    	goback();
-				    }
-				  });    
-				      
-            }, function (resp) {
-                console.log("Error status: " + resp.status);
-            }, function (evt) {
-                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                console.log("progress: " + progressPercentage + "% " + evt.name);
+            $scope.newarrangePic = null;
+        };
+        $scope.drophonor = function (honorfile) {
+            angular.forEach($scope.totalhonorfiles, function (item, key) {
+                if (item == honorfile) {
+                    $scope.totalhonorfiles.splice(key, 1);
+                }
             });
-        } else {
-            //alert("请填写标记*的必选项在提交!");
-            layer.open({
-			    content: '请填写标记<em>*</em>的必选项再提交哦'
-			    ,btn: '确定'
-			  }); 
+        };
+        function checkCommit() {
+            if ($scope.remark.length > 250)
+                return false;
+            else
+                return true;
         }
-    }
-    else{
-    	//alert("备注长度不得250字符!");
-    	layer.open({
-		    content: '备注长度不得250字符哦'
-		    ,btn: '确定'
-		  });
-    }
-   };
 
-    $scope.goPicDetail = function(item){
-        var modalInstance = $uibModal.open({
-            templateUrl: "myModelContent.html",  //指向上面创建的视图
-            controller: "ModalInstanceCtrl",// 初始化模态范围
-            resolve: {
-                itemPic: function () {
-                    return item;
+        function checkInput() {
+            var flag = true;
+            // 检查必须填写项
+            if ($scope.name == undefined || $scope.name == "") {
+                flag = false;
+            }
+            if ($scope.provinceId == undefined || $scope.provinceId == "") {
+                flag = false;
+            }
+            if ($scope.cityId == undefined || $scope.cityId == "") {
+                flag = false;
+            }
+            if ($scope.address == undefined || $scope.address == "") {
+                flag = false;
+            }
+            if ($scope.totalcapacity == undefined || $scope.totalcapacity == "") {
+                flag = false;
+            }
+
+            if ($scope.manageType == undefined || $scope.manageType == "") {
+                flag = false;
+            }
+
+            if ($scope.storageType == undefined || $scope.storageType == "") {
+                flag = false;
+            }
+
+            if ($scope.temperType == undefined || $scope.temperType == "") {
+                flag = false;
+            }
+            if ($scope.structure == undefined || $scope.structure == "") {
+                flag = false;
+            }
+            if ($scope.platform == undefined || $scope.platform == "") {
+                flag = false;
+            }
+
+            if ($scope.phoneNum == undefined || $scope.phoneNum == "") {
+                flag = false;
+            }
+            if ($scope.capacityunit == undefined || $scope.capacityunit == "") {
+                flag = false;
+            }
+            if ($scope.rentcapacityunit == undefined || $scope.rentcapacityunit == "") {
+                flag = false;
+            }
+            if ($scope.buildtype == undefined || $scope.buildtype == "") {
+                flag = false;
+            }
+            if ($scope.selected == undefined || $scope.selected == "" ||$scope.selected.length==0) {
+                flag = false;
+            }
+            return flag;
+        }
+
+        $scope.addTempStandPic = function (files) {
+            for (var j = 0, fileLen = files.length; j < fileLen; j++) {
+                var _file = files[j].name;
+                var i = _file.lastIndexOf('.');
+                var len = _file.length;
+                var extEndName = _file.substring(i + 1, len);
+                var extName = "GIF,BMP,JPG,JPEG,PNG";
+                //首先对格式进行验证
+                if (extName.indexOf(extEndName.toUpperCase()) == -1) {
+                    layer.open({content: "只能上传" + extName + "格式的文件", btn: '确定'});
+                    return false
+                } else if (files[j].size > 10485760) {
+                    layer.open({content: "最大只能上传10M的图片", btn: '确定'});
+                    return false
                 }
             }
-        });
-        modalInstance.result.then(function (selectedItem) {
-            $scope.selected = selectedItem;
-        }, function () {
-            $log.info("Modal dismissed at: " + new Date());
-        });
-    };
+            if ($scope.tempStandPic.length + files.length > 1) {
+                //alert("最多上传八张图片");
+                layer.open({
+                    content: '只能上传一张图片哦'
+                    , btn: '确定'
+                });
+                return;
+            }
+            $scope.tempStandPic = $scope.tempStandPic.concat(files);
+        }
+        $scope.addAuditPic = function (files) {
+            for (var j = 0, fileLen = files.length; j < fileLen; j++) {
+                var _file = files[j].name;
+                var i = _file.lastIndexOf('.');
+                var len = _file.length;
+                var extEndName = _file.substring(i + 1, len);
+                var extName = "GIF,BMP,JPG,JPEG,PNG";
+                //首先对格式进行验证
+                if (extName.indexOf(extEndName.toUpperCase()) == -1) {
+                    layer.open({content: "只能上传" + extName + "格式的文件", btn: '确定'});
+                    return false
+                } else if (files[j].size > 10485760) {
+                    layer.open({content: "最大只能上传10M的图片", btn: '确定'});
+                    return false
+                }
+            }
+            if ($scope.auditPic.length + files.length > 1) {
+                //alert("最多上传八张图片");
+                layer.open({
+                    content: '只能上传一张图片哦'
+                    , btn: '确定'
+                });
+                return;
+            }
+            $scope.auditPic = $scope.auditPic.concat(files);
+        }
+        $scope.addFiles = function (files) {
+            for (var j = 0, fileLen = files.length; j < fileLen; j++) {
+                var _file = files[j].name;
+                var i = _file.lastIndexOf('.');
+                var len = _file.length;
+                var extEndName = _file.substring(i + 1, len);
+                var extName = "GIF,BMP,JPG,JPEG,PNG";
+                //首先对格式进行验证
+                if (extName.indexOf(extEndName.toUpperCase()) == -1) {
+                    layer.open({content: "只能上传" + extName + "格式的文件", btn: '确定'});
+                    return false
+                } else if (files[j].size > 10485760) {
+                    layer.open({content: "最大只能上传10M的图片", btn: '确定'});
+                    return false
+                }
+            }
+            if (($scope.storagePicShow.length + $scope.totalfiles.length + files.length) > 5) {
+                // alert("最多上传五张图片");
+                layer.open({
+                    content: '最多上传五张图片哦'
+                    , btn: '确定'
+                });
+                return;
+            }
+            $scope.totalfiles = $scope.totalfiles.concat(files);
+        };
+        $scope.newarrangePic = null;
+        $scope.addArrangePic = function (files) {//平面图
+            for (var j = 0, fileLen = files.length; j < fileLen; j++) {
+                var _file = files[j].name;
+                var i = _file.lastIndexOf('.');
+                var len = _file.length;
+                var extEndName = _file.substring(i + 1, len);
+                var extName = "GIF,BMP,JPG,JPEG,PNG";
+                //首先对格式进行验证
+                if (extName.indexOf(extEndName.toUpperCase()) == -1) {
+                    layer.open({content: "只能上传" + extName + "格式的文件", btn: '确定'});
+                    return false
+                } else if (files[j].size > 10485760) {
+                    layer.open({content: "最大只能上传10M的图片", btn: '确定'});
+                    return false
+                }
+            }
+            if (files != null) {
+                $scope.newarrangePic = [];
+                $scope.newarrangePic = $scope.newarrangePic.concat(files);
+            }
+        };
+        $scope.addHonorFiles = function (files) {
+            for (var j = 0, fileLen = files.length; j < fileLen; j++) {
+                var _file = files[j].name;
+                var i = _file.lastIndexOf('.');
+                var len = _file.length;
+                var extEndName = _file.substring(i + 1, len);
+                var extName = "GIF,BMP,JPG,JPEG,PNG";
+                //首先对格式进行验证
+                if (extName.indexOf(extEndName.toUpperCase()) == -1) {
+                    layer.open({content: "只能上传" + extName + "格式的文件", btn: '确定'});
+                    return false
+                } else if (files[j].size > 10485760) {
+                    layer.open({content: "最大只能上传10M的图片", btn: '确定'});
+                    return false
+                }
+            }
+            if ($scope.honorPicShow.length + $scope.totalhonorfiles.length + files.length > 8) {
+                //alert("最多上传八张图片");
+                layer.open({
+                    content: '最多上传八张图片哦'
+                    , btn: '确定'
+                });
+                return;
+            }
+            $scope.totalhonorfiles = $scope.totalhonorfiles.concat(files);
+        };
 
-    $scope.deletePic = function(filedata){
-        delIds.push(filedata.id);
-        var index = $scope.storagePicShow.indexOf(filedata);
-        if(index>=0)
-            $scope.storagePicShow.splice(index,1);
-    };
-    $scope.deleteHonorPic = function(filedata){
-        delIds.push(filedata.id);
-        var index = $scope.honorPicShow.indexOf(filedata);
-        if(index>=0)
-            $scope.honorPicShow.splice(index,1);
-    };
-});
+        $scope.submit = function () {
+            if ($scope.rdcForm.name.$error.ngRemoteValidate) {
+                layer.open({content: '该冷库名已被占用，请重新输入~', btn: '确定'});
+                return false
+            }
+            if (checkCommit()) {
+                if (checkInput()) {
+                    if (checkMobile($scope.phoneNum.toString().trim()) == false) {
+                        layer.open({content: '请输入正确的手机号码或者座机号码~', btn: '确定'});
+                        return false
+                    }
+                    if ($scope.isJoinStand == 1 && $scope.tempStandPic.length < 1 && $scope.standType == 0) {
+                        layer.open({content: '请上传冷库温度达标认证图！', btn: '确定'});
+                        return false;
+                    }
+                    var areaRex = /^[0-9]{1}[\d]{0,10}\.*[\d]{0,2}$/;
+                    var countRex = /^[0-9]\d*$/;
+                    var urlRegex=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/;
+                    if (($scope.website==undefined||$scope.website!='')&&!urlRegex.test($scope.website)) {
+                        layer.open({content: '企业网址输入有误！(如：http://liankur.com)', btn: '确定'});
+                        return false;
+                    }
+                    if (!areaRex.test($scope.area)) {
+                        layer.open({content: '面积输入有误！(小数点后最多保留两位，如：15.28)', btn: '确定'});
+                        return false;
+                    }
+                    if ($scope.area < 10) {
+                        layer.open({content: '面积不能小于10㎡', btn: '确定'});
+                        return false;
+                    }
+                    if ($scope.height < 3 || $scope.height > 40) {
+                        layer.open({content: '冷库净高度输入已超出（3m~40m）范围', btn: '确定'});
+                        return false;
+                    }
+                    if (!areaRex.test($scope.rentSqm)) {
+                        layer.open({content: '可出租面积输入有误！(小数点后最多保留两位，如：15.28)', btn: '确定'});
+                        return false;
+                    }
+                    /*if ($scope.rentSqm > $scope.area) {
+                        layer.open({content: '可出租面积不能超过总面积~', btn: '确定'});
+                        return false;
+                    }*/
+                    if ($scope.height <= 0) {
+                        layer.open({content: '冷库高度不合法，请重新输入~', btn: '确定'});
+                        return false
+                    }
+                    if (!areaRex.test($scope.height)) {
+                        layer.open({content: '冷库净高度输入有误！(小数点后最多保留两位，如：15.28)', btn: '确定'});
+                        return false;
+                    }
+                    if($scope.buildtype==2&&!countRex.test($scope.buildfloors)&&$scope.buildfloors<2){
+                        layer.open({content: '请填写正确的库层高度！', btn: '确定'});
+                        return false;
+                    }
+                    if ($scope.capacity1 != undefined && $scope.capacity1 != "" && !areaRex.test($scope.capacity1) ||
+                        $scope.capacity2 != undefined && $scope.capacity2 != "" && !areaRex.test($scope.capacity2) ||
+                        $scope.capacity3 != undefined && $scope.capacity3 != "" && !areaRex.test($scope.capacity3) ||
+                        $scope.capacity4 != undefined && $scope.capacity4 != "" && !areaRex.test($scope.capacity4)) {
+                        layer.open({content: '冷库分库容积输入有误！(小数点后最多保留两位，如：15.28)', btn: '确定'});
+                        return false;
+                    }
+                    if((($scope.capacity1 != ""&& $scope.capacity1!=0) && ($scope.height1==""||$scope.height1==undefined)) ||
+                        (($scope.capacity2 != ""&&$scope.capacity2!=0) && ($scope.height2==""||$scope.height2==undefined)) ||
+                        (($scope.capacity3 != ""&&$scope.capacity3!=0) && ($scope.height3==""||$scope.height3==undefined))||
+                        (($scope.capacity4 != ""&&$scope.capacity4!=0) && ($scope.height4==""||$scope.height4==undefined))){
+                        layer.open({content: '冷库分库容积中，单位未填写！', btn: '确定'});
+                        return false;
+                    }
+                    if((( $scope.capacity1 == "" ||$scope.capacity1==0) && ($scope.height1!=""&&$scope.height1!=undefined)) ||
+                        (($scope.capacity2 == "" ||$scope.capacity2==0) && ($scope.height2!=""&&$scope.height2!=undefined)) ||
+                        (($scope.capacity3 == "" ||$scope.capacity3==0) && ($scope.height3!=""&&$scope.height3!=undefined))||
+                        (($scope.capacity4 == "" ||$scope.capacity4==0) && ($scope.height4!=""&&$scope.height4!=undefined))){
+                        layer.open({content: '冷库分库容积中，容积未填写！', btn: '确定'});
+                        return false;
+                    }
+                    if ($scope.coldTruck1 != undefined && $scope.coldTruck1 != "" && !countRex.test($scope.coldTruck1) || $scope.coldTruck2 != undefined && $scope.coldTruck2 != "" && !countRex.test($scope.coldTruck2) ||
+                        $scope.coldTruck3 != undefined && $scope.coldTruck3 != "" && !countRex.test($scope.coldTruck3) || $scope.coldTruck4 != undefined && $scope.coldTruck4 != "" && !countRex.test($scope.coldTruck4)) {
+                        layer.open({content: '冷藏车数量输入有误！', btn: '确定'});
+                        return false;
+                    }
+                    if ($scope.lihuoArea != undefined && $scope.lihuoArea != "" && !areaRex.test($scope.lihuoArea)) {
+                        layer.open({content: '理货区面积输入有误！(小数点后最多保留两位，如：15.28)', btn: '确定'});
+                        return false;
+                    }
+                    if ($scope.storagePicShow.length + $scope.totalfiles.length < 3) {
+                        layer.open({content: '冷库图片至少上传三张！', btn: '确定'});
+                        return false;
+                    }
+                    layer.open({
+                        type: 2
+                        , content: '努力加载中~~~'
+                        , shadeClose: false
+                    });
+                    if ($scope.issubmit)return;
+                    $scope.issubmit = true;
+                    $("#but_savedata").text("提交中……");
+                    $scope.isDisabled = true;
+                    if($scope.buildtype!=2){
+                        $scope.buildfloors='';
+                    }
+                    data = {
+                        file0: null,
+                        file1: null,
+                        file2: null,
+                        file3: null,
+                        file4: null,
+                        honor0: null,
+                        honor1: null,
+                        honor2: null,
+                        honor3: null,
+                        honor4: null,
+                        honor5: null,
+                        honor6: null,
+                        honor7: null,
+                        name: encodeURI($scope.name, "UTF-8"),
+                        provinceId: $scope.provinceId,
+                        cityId: $scope.cityId,
+                        address: encodeURI($scope.address, "UTF-8"),
+                        area: $scope.area,
+                        manageType: $scope.manageType,
+                        storageType: $scope.storageType,
+                        temperType: $scope.temperType,
+                        coldTruck1: $scope.coldTruck1,
+                        coldTruck2: $scope.coldTruck2,
+                        coldTruck3: $scope.coldTruck3,
+                        coldTruck4: $scope.coldTruck4,
+                        phoneNum: $scope.phoneNum,
+                        remark: $scope.structure == undefined ? "" : encodeURI($scope.remark, "UTF-8"),
+                        structure: $scope.structure == undefined ? "" : encodeURI($scope.structure, "UTF-8"),
+                        platform: $scope.platform,
+                        lihuoRoom: $scope.lihuoRoom,
+                        lihuoArea: $scope.lihuoArea,
+                        lihuoTemperCtr: $scope.lihuoTemperCtr,
+                        storageRefreg: $scope.storageRefreg,
+                        temperRecord: $scope.temperRecord,
+                        capacity1: $scope.capacity1,
+                        capacity2: $scope.capacity2,
+                        capacity3: $scope.capacity3,
+                        capacity4: $scope.capacity4,
+                        height1: $scope.height1,
+                        height2: $scope.height2,
+                        height3: $scope.height3,
+                        height4: $scope.height4,
+                        facility: $scope.structure == undefined ? "" : encodeURI($scope.facility, "UTF-8"),
+                        rdcId: $scope.rdcId,
+                        userid: window.user.id,
+                        rentSqm: $scope.rentSqm,
+                        height: $scope.height,
+                        openLIne: $scope.openLIne,
+                        isJoinStand: $scope.isJoinStand,
+                        totalcapacity: $scope.totalcapacity,
+                        capacityunit: $scope.capacityunit,
+                        rentcapacityunit: $scope.rentcapacityunit,
+                        productcategory: $scope.selected.join(),
+                        buildtype: $scope.buildtype,
+                        website: $scope.website,
+                        buildfloors: $scope.buildfloors,
+                        standPic: null,
+                        auditPic: null,
+                        delIds: delIds.join()
+                    };
+                    for (var i = 0; i < $scope.totalfiles.length; i++) {
+                        data["file" + i] = $scope.totalfiles[i];
+                    }
+                    for (var j = 0; j < $scope.totalhonorfiles.length; j++) {
+                        data["honor" + j] = $scope.totalhonorfiles[j];
+                    }
+                    data["standPic"] = $scope.tempStandPic[0];
+                    data["auditPic"] = $scope.auditPic[0];
+                    Upload.upload({
+                        url: ER.root + '/i/rdc/newUpdateRdc',
+                        headers: {"Content-Transfer-Encoding": "utf-8"},
+                        data: data
+                    }).then(function (resp) {
+                        $scope.issubmit = false;
+                        $("#but_savedata").text("提交");
+                        $scope.isDisabled = false;
+                        $('.mybtn').attr('disabled', true);
+                        $('.mybtn').css('backgroundColor', 'gray');
+                        // alert("修改成功");
+                        layer.closeAll();
+                        layer.open({
+                            content: '修改成功'
+                            , btn: '确定'
+                            , shadeClose: false
+                            , yes: function () {
+                                goback();
+                            }
+                        });
+
+                    }, function (resp) {
+                        console.log("Error status: " + resp.status);
+                    }, function (evt) {
+                        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                        console.log("progress: " + progressPercentage + "% " + evt.name);
+                    });
+                } else {
+                    //alert("请填写标记*的必选项在提交!");
+                    layer.open({
+                        content: '请填写标记<em>*</em>的必选项再提交哦'
+                        , btn: '确定'
+                    });
+                }
+            }
+            else {
+                //alert("备注长度不得250字符!");
+                layer.open({
+                    content: '备注长度不得250字符哦'
+                    , btn: '确定'
+                });
+            }
+        };
+
+        $scope.goPicDetail = function (item) {
+            var modalInstance = $uibModal.open({
+                templateUrl: "myModelContent.html",  //指向上面创建的视图
+                controller: "ModalInstanceCtrl",// 初始化模态范围
+                resolve: {
+                    itemPic: function () {
+                        return item;
+                    }
+                }
+            });
+            modalInstance.result.then(function (selectedItem) {
+                $scope.selected = selectedItem;
+            }, function () {
+                $log.info("Modal dismissed at: " + new Date());
+            });
+        };
+
+        $scope.deletePic = function (filedata) {
+            delIds.push(filedata.id);
+            var index = $scope.storagePicShow.indexOf(filedata);
+            if (index >= 0)
+                $scope.storagePicShow.splice(index, 1);
+        };
+        $scope.deleteHonorPic = function (filedata) {
+            delIds.push(filedata.id);
+            var index = $scope.honorPicShow.indexOf(filedata);
+            if (index >= 0)
+                $scope.honorPicShow.splice(index, 1);
+        };
+    });
 </script>
 </body>

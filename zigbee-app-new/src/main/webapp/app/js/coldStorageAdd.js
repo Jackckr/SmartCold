@@ -4,6 +4,7 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
 	 $http.defaults.withCredentials=true;$http.defaults.headers={'Content-Type': 'application/x-www-form-urlencoded'};
 	$scope.phoneNum = parseFloat(window.user.telephone);
 	$scope.haveOrNots = [{id: 1,name: "有"},{ id: 2,name: "无"}];
+    $scope.selected = [];
     // 获取省列表
 	$.ajax({ url: ER.root+"/i/UtilController/setVisited",type: "POST",data:{type:6}});
     $http.get(ER.root+'/i/city/findProvinceList').success(function (data) {
@@ -30,6 +31,32 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
         $scope.structures = data;
         $scope.structure = data[0].id;
     });
+    //获取商品品类
+    $http.get(ER.root + "/i/ShareRdcController/getGDFilterData").success(function (data) {
+        $scope.productCategorys = data.entity.gt;
+    });
+
+    var updateSelected = function (action, id, name) {
+        id = "" + id + "";
+        if (action == 'add' && $scope.selected.indexOf(id) == -1) {
+            $scope.selected.push(id);
+        }
+        if (action == 'remove' && $scope.selected.indexOf(id) != -1) {
+            var idx = $scope.selected.indexOf(id);
+            $scope.selected.splice(idx, 1);
+        }
+        //alert($scope.selected);
+    }
+    //判断是在集合$scope.selected里去掉此id，还是加上id
+    $scope.updateSelection = function ($event, id) {
+        var checkbox = $event.target;
+        var action = (checkbox.checked ? 'add' : 'remove');
+        updateSelected(action, id, checkbox.name);
+    }
+    //设置复选框的选中状态
+    $scope.isSelected = function (id) {
+        return $scope.selected.indexOf(id) >= 0;
+    }
     // 获取商品存放类型
     $http.get(ER.root+'/i/rdc/findAllTemperType').success(function (data) {
         $scope.temperTypes = data;
@@ -202,7 +229,7 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
         if ($scope.address == undefined || $scope.address == '') {
             flag = false;
         }
-        if ($scope.area == undefined || $scope.area == '') {
+        if ($scope.totalcapacity == undefined || $scope.totalcapacity == '') {
             flag = false;
         }
         if ($scope.manageType == undefined || $scope.manageType == '') {
@@ -214,6 +241,12 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
         if ($scope.temperType == undefined || $scope.temperType == '') {
             flag = false;
         }
+        if ($scope.structure == undefined || $scope.structure == "") {
+            flag = false;
+        }
+        if ($scope.platform == undefined || $scope.platform == "") {
+            flag = false;
+        }
         if ($scope.phoneNum == undefined || $scope.phoneNum == '') {
             flag = false;
         }
@@ -221,6 +254,18 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
             flag = false;
         }
         if ($scope.rentSqm == undefined || $scope.rentSqm == '') {
+            flag = false;
+        }
+        if ($scope.capacityunit == undefined || $scope.capacityunit == "") {
+            flag = false;
+        }
+        if ($scope.rentcapacityunit == undefined || $scope.rentcapacityunit == "") {
+            flag = false;
+        }
+        if ($scope.buildtype == undefined || $scope.buildtype == "") {
+            flag = false;
+        }
+        if ($scope.selected == undefined || $scope.selected == "" ||$scope.selected.length==0) {
             flag = false;
         }
         return flag;
@@ -231,6 +276,9 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
         }else {
             $scope.islihuoRoom=true;
         }
+    }
+    $scope.changeBuildType=function () {
+        $scope.isBuildFloors=$scope.buildtype==2?true:false;
     }
     $scope.submit = function(){
         if($scope.rdcForm.name.$error.ngRemoteValidate){
@@ -250,10 +298,10 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
             return false
         }
         if (checkInput()){
-            if($scope.area-$scope.rentSqm<0){
+            /*if($scope.area-$scope.rentSqm<0){
                 layer.open({content:'总面积不能小于可出租面积！',btn: '确定'});
                 return false
-            }
+            }*/
             if($scope.isJoinStand==1&&$scope.tempStandPic.length<1){
                 layer.open({content:'请上传冷库温度达标认证图！',btn: '确定'});
                 return false;
@@ -263,6 +311,11 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
 	        }
             var areaRex = /^[0-9]{1}[\d]{0,10}\.*[\d]{0,2}$/;
             var countRex = /^[0-9]\d*$/;
+            var urlRegex=/(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/;
+            if (($scope.website==undefined||$scope.website!='')&&!urlRegex.test($scope.website)) {
+                layer.open({content: '企业网址输入有误！(如：http://liankur.com)', btn: '确定'});
+                return false;
+            }
             if (!areaRex.test($scope.area)) {
                 layer.open({content:'面积输入有误！(小数点后最多保留两位，如：15.28)',btn: '确定'});
                 return false;
@@ -283,12 +336,29 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 layer.open({content:'冷库净高度输入有误！(小数点后最多保留两位，如：15.28)',btn: '确定'});
                 return false;
             }
-            if ($scope.capacity1!=undefined &&$scope.capacity1 != "" && !areaRex.test($scope.capacity1) ||$scope.capacity2!=undefined && $scope.capacity2 != "" && !areaRex.test($scope.capacity2) ||
-                $scope.capacity3!=undefined &&$scope.capacity3 != "" && !areaRex.test($scope.capacity3) ||$scope.capacity4!=undefined && $scope.capacity4 != "" && !areaRex.test($scope.capacity4) ||
-                $scope.capacity5!=undefined && $scope.capacity5 != "" && !areaRex.test($scope.capacity5) ||$scope.height1!=undefined && $scope.height1 != "" && !areaRex.test($scope.height1) ||
-                $scope.height2!=undefined && $scope.height2 != "" && !areaRex.test($scope.height2) ||$scope.height3!=undefined &&  $scope.height3 != "" && !areaRex.test($scope.height3) ||
-                $scope.height4!=undefined && $scope.height4 != "" && !areaRex.test($scope.height4) ||$scope.height5!=undefined &&  $scope.height5 != "" && !areaRex.test($scope.height5)) {
-                layer.open({content:'冷库容积输入有误！(小数点后最多保留两位，如：15.28)',btn: '确定'});
+            if($scope.buildtype==2&&!countRex.test($scope.buildfloors)&&$scope.buildfloors<2){
+                layer.open({content: '请填写正确的库层高度！', btn: '确定'});
+                return false;
+            }
+            if ($scope.capacity1 != undefined && $scope.capacity1 != "" && !areaRex.test($scope.capacity1) ||
+                $scope.capacity2 != undefined && $scope.capacity2 != "" && !areaRex.test($scope.capacity2) ||
+                $scope.capacity3 != undefined && $scope.capacity3 != "" && !areaRex.test($scope.capacity3) ||
+                $scope.capacity4 != undefined && $scope.capacity4 != "" && !areaRex.test($scope.capacity4)) {
+                layer.open({content: '冷库分库容积输入有误！(小数点后最多保留两位，如：15.28)', btn: '确定'});
+                return false;
+            }
+            if((($scope.capacity1 != ""&& $scope.capacity1!=0) && ($scope.height1==""||$scope.height1==undefined)) ||
+                (($scope.capacity2 != ""&&$scope.capacity2!=0) && ($scope.height2==""||$scope.height2==undefined)) ||
+                (($scope.capacity3 != ""&&$scope.capacity3!=0) && ($scope.height3==""||$scope.height3==undefined))||
+                (($scope.capacity4 != ""&&$scope.capacity4!=0) && ($scope.height4==""||$scope.height4==undefined))){
+                layer.open({content: '冷库分库容积中，单位未填写！', btn: '确定'});
+                return false;
+            }
+            if((( $scope.capacity1 == "" ||$scope.capacity1==0) && ($scope.height1!=""&&$scope.height1!=undefined)) ||
+                (($scope.capacity2 == "" ||$scope.capacity2==0) && ($scope.height2!=""&&$scope.height2!=undefined)) ||
+                (($scope.capacity3 == "" ||$scope.capacity3==0) && ($scope.height3!=""&&$scope.height3!=undefined))||
+                (($scope.capacity4 == "" ||$scope.capacity4==0) && ($scope.height4!=""&&$scope.height4!=undefined))){
+                layer.open({content: '冷库分库容积中，容积未填写！', btn: '确定'});
                 return false;
             }
             if ($scope.coldTruck1!=undefined&&$scope.coldTruck1 != "" && !countRex.test($scope.coldTruck1) ||$scope.coldTruck2!=undefined&& $scope.coldTruck2 != "" && !countRex.test($scope.coldTruck2) ||
@@ -359,6 +429,13 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 height5 : $scope.height5,
                 facility: $scope.structure == undefined ? '' : encodeURI($scope.facility, "UTF-8"),
                 userid : window.user.id,
+                totalcapacity: $scope.totalcapacity,
+                capacityunit: $scope.capacityunit,
+                rentcapacityunit: $scope.rentcapacityunit,
+                productcategory: $scope.selected.join(),
+                buildtype: $scope.buildtype,
+                website: $scope.website,
+                buildfloors: $scope.buildfloors,
                 standPic:null,
                 auditPic:null
             }

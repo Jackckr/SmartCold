@@ -71,15 +71,32 @@
             <input type="text" ng-model="address" placeholder="请输入地理位置"/>
         </li>
         <li>
-            <label for="area">总面积<em>*</em></label>
+            <label for="area">总面积</label>
             <input type="number" step="0.01" ng-model="area" placeholder="冷库面积(㎡)"/>
         </li>
         <li>
-            <label for="area">可出租面积<em>*</em></label>
-            <input type="number" step="0.01" ng-model="rentSqm" placeholder="可出租面积(㎡)"/>
+            <label for="area">总容量<em>*</em></label>
+            <input type="number" step="0.01" ng-model="totalcapacity" placeholder="冷库容量"/>
+            <select ng-model="capacityunit">
+                <option value=""></option>
+                <option value="m³">m³</option>
+                <option value="pai">pai</option>
+                <option value="吨">吨</option>
+            </select>
         </li>
         <li>
-            <label for="area">冷库净高<em>*</em></label>
+            <label for="area">可出租容量<em>*</em></label>
+            <input type="number" step="0.01" ng-model="rentSqm" placeholder="可出租容量"/>
+            <select ng-model="rentcapacityunit">
+                <option value=""></option>
+                <option value="㎡">㎡</option>
+                <option value="m³">m³</option>
+                <option value="pai">pai</option>
+                <option value="吨">吨</option>
+            </select>
+        </li>
+        <li>
+            <label for="area">冷库总净高<em>*</em></label>
             <input type="number" step="0.01" ng-model="height" placeholder="冷库净高(m)"/>
         </li>
         <li>
@@ -104,6 +121,49 @@
             <label for="temperatureType">温度类型<em>*</em></label>
             <div class="mySelect">
                 <select ng-model="temperType" ng-options="x.id as x.type for x in temperTypes"></select>
+            </div>
+            <i class="iconfont fr moreinfo">&#xe697;</i>
+        </li>
+        <li>
+            <label for="structure">建筑结构<em>*</em></label>
+            <div class="mySelect">
+                <select ng-model="structure"
+                        ng-options="x.id as x.type for x in structures"></select>
+            </div>
+            <i class="iconfont fr moreinfo">&#xe697;</i>
+        </li>
+        <li>
+            <label for="structure">建筑类型<em>*</em></label>
+            <div class="mySelect">
+                <select ng-model="buildtype" ng-change="changeBuildType()">
+                    <option value="0"></option>
+                    <option value="1">单层库</option>
+                    <option value="2">多层库</option>
+                </select>
+                <span ng-show="isBuildFloors">
+                        <input type="number" ng-model="buildfloors" placeholder="请输入冷库层数"/>
+                    </span>
+            </div>
+            <i class="iconfont fr moreinfo">&#xe697;</i>
+        </li>
+        <li>
+            <label for="moon">是否有封闭月台<em>*</em></label>
+            <div class="mySelect">
+                <select ng-model="platform"
+                        ng-options="x.id as x.name for x in haveOrNots"></select>
+            </div>
+            <i class="iconfont fr moreinfo">&#xe697;</i>
+        </li>
+        <li>
+            <label for="moon">存放商品品类<em>*</em></label>
+            <div>
+                        <span ng-repeat="pro in productCategorys">
+                     <input type="checkbox" name="productcategory"
+                            value="{{pro.type_name}}"
+                            ng-click="updateSelection($event,pro.type_name)"
+                            ng-checked="isSelected(pro.type_name)"/>
+                     <label>{{pro.type_name}}</label>
+                 </span>
             </div>
             <i class="iconfont fr moreinfo">&#xe697;</i>
         </li>
@@ -195,22 +255,6 @@
             </div>
         </li>
         <li>
-            <label for="structure">建筑结构</label>
-            <div class="mySelect">
-                <select ng-model="structure"
-                        ng-options="x.id as x.type for x in structures"></select>
-            </div>
-            <i class="iconfont fr moreinfo">&#xe697;</i>
-        </li>
-        <li>
-            <label for="moon">是否有封闭月台</label>
-            <div class="mySelect">
-                <select ng-model="platform"
-                        ng-options="x.id as x.name for x in haveOrNots"></select>
-            </div>
-            <i class="iconfont fr moreinfo">&#xe697;</i>
-        </li>
-        <li>
             <label for="cleanroom">是否有理货区</label>
             <div class="mySelect">
                 <select ng-model="lihuoRoom" ng-change="ChangLihuoState(lihuoRoom)"
@@ -247,35 +291,48 @@
             </div>
             <i class="iconfont fr moreinfo">&#xe697;</i>
         </li>
+        <li>
+            <label for="cleanarea">企业网址</label>
+            <input type="text" ng-model="website"/>
+        </li>
         <li class="number">
-            <label style="white-space: nowrap;">冷库容积</label>
+            <label>冷库分库容积</label>
             <div>
                 <div>
-                    <span class="nowrap">8~25℃</span><input type="number" step="0.01"
-                                                            ng-model="capacity1"><span class="nowrap">面积㎡</span><input
-                        type="number" step="0.01" ng-model="height1"><span class="nowrap fr">高m</span>
+                    <span class="nowrap">常温库</span><input type="number" step="0.01" ng-model="capacity1">
+                    <select ng-model="height1">
+                        <option value=""></option>
+                        <option value="m³">m³</option>
+                        <option value="pai">pai</option>
+                        <option value="吨">吨</option>
+                    </select>
                 </div>
                 <div>
-                    <span class="nowrap">2~8℃</span><input type="number" step="0.01"
-                                                           ng-model="capacity2"><span class="nowrap">面积㎡</span><input
-                        type="number" step="0.01" ng-model="height2"><span class="nowrap fr">高m</span>
+                    <span class="nowrap">冷藏库</span><input type="number" step="0.01" ng-model="capacity2">
+                    <select ng-model="height2">
+                        <option value=""></option>
+                        <option value="m³">m³</option>
+                        <option value="pai">pai</option>
+                        <option value="吨">吨</option>
+                    </select>
                 </div>
                 <div>
-                    <span class="nowrap">-2~-18℃</span><input type="number" step="0.01"
-                                                              ng-model="capacity3"><span class="nowrap">面积㎡</span><input
-                        type="number" step="0.01" ng-model="height3"><span class="nowrap fr">高m</span>
+                    <span class="nowrap">冷冻库</span><input type="number" step="0.01" ng-model="capacity3">
+                    <select ng-model="height3">
+                        <option value=""></option>
+                        <option value="m³">m³</option>
+                        <option value="pai">pai</option>
+                        <option value="吨">吨</option>
+                    </select>
                 </div>
                 <div>
-                    <span class="nowrap">-18~-30℃</span><input type="number" step="0.01"
-                                                               ng-model="capacity4"><span
-                        class="nowrap">面积㎡</span><input
-                        type="number" step="0.01" ng-model="height4"><span class="nowrap fr">高m</span>
-                </div>
-                <div>
-                    <span class="nowrap">&lt;-50℃</span><input type="number" step="0.01"
-                                                               ng-model="capacity5"><span
-                        class="nowrap">面积㎡</span><input
-                        type="number" step="0.01" ng-model="height5"><span class="nowrap fr">高m</span>
+                    <span class="nowrap">超低温库</span><input type="number" step="0.01" ng-model="capacity4">
+                    <select ng-model="height4">
+                        <option value=""></option>
+                        <option value="m³">m³</option>
+                        <option value="pai">pai</option>
+                        <option value="吨">吨</option>
+                    </select>
                 </div>
                 <!-- <div style="width: auto"></div> -->
             </div>
