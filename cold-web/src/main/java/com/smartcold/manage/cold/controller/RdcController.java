@@ -22,7 +22,8 @@ public class RdcController {
 
 	@Autowired
 	private RdcService rdcService;
-
+	
+	
 	
 	@RequestMapping(value = "/findRdcList", method = RequestMethod.GET)
 	@ResponseBody

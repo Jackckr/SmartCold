@@ -52,6 +52,7 @@
                     <li><a href="rdcmatch.html">需求匹配</a></li>
                     <li><a href="rdctrace.html">温度追溯</a></li>
                     <li><a href="http://www.smartcold.org.cn/">冷库360</a></li>
+                    <li><a href="map.html">冷库地图</a></li>
                 </ul>
             </div>
         </div>
@@ -89,8 +90,8 @@
                     <tr>
                         <td>总容积：<b class="blue">*</b></td>
                         <td><input name="totalcapacity" id="totalcapacity" type="number" step="0.01"
-                                   placeholder="请输入冷库容积" style="width: 28%">
-                            <select name="capacityunit" id="capacityunit" style="width: 10%">
+                                   placeholder="请输入冷库容积"
+                           style="width: 180px;"><select name="capacityunit" id="capacityunit" style="width: 140px;margin-left: 10px;">
                                 <option value=""></option>
                                 <option value="m³">m³</option>
                                 <option value="pai">pai</option>
@@ -99,9 +100,9 @@
                     </tr>
                     <tr>
                         <td>可出租容积：<b class="blue">*</b></td>
-                        <td><input name="rentSqm" type="number" step="0.01" placeholder="请输入可出租容积,没有填写0"
-                                   style="width: 28%">
-                            <select name="rentcapacityunit" id="rentcapacityunit" style="width: 10%">
+                        <td><input name="rentSqm" type="number" step="0.01" placeholder="出租容积,没有填写0"
+                                   style="width: 180px;"><select name="rentcapacityunit"
+                             id="rentcapacityunit" style="width: 140px;margin-left: 10px;">
                                 <option value=""></option>
                                 <option value="㎡">㎡</option>
                                 <option value="m³">m³</option>
@@ -159,7 +160,7 @@
                     <!--上传图片end-->
                     <tr>
                         <td>联系电话：<b class="blue">*</b></td>
-                        <td><input type="tel" placeholder="请输入联系电话" name="phoneNum" id="phoneNum"></td>
+                        <td><input type="tel" placeholder="请输入联系电话" name="phoneNum" id="phoneNum" maxlength="11"></td>
                     </tr>
                     <tr>
                         <td>建筑结构：<b class="blue">*</b></td>
@@ -172,12 +173,11 @@
                     <tr>
                         <td>建筑类型：<b class="blue">*</b></td>
                         <td>
-                            <select name="buildtype" id="buildtype" onchange="changeBuildType(this)">
+                            <select name="buildtype" id="buildtype" onchange="changeBuildType(this)" style="width: 180px;">
                                 <option value="0"></option>
                                 <option value="1">单层库</option>
                                 <option value="2">多层库</option>
-                            </select>
-                            <input step="1" id="buildfloors" name="buildfloors" type="number" placeholder="请输入层数" style="width: 20%"/>
+                            </select><input step="1" id="buildfloors" name="buildfloors" type="number" placeholder="请输入层数" style="width: 140px;margin-left: 10px;"/>
                         </td>
                     </tr>
                     <tr>
@@ -207,26 +207,30 @@
                     <tbody class="moreInfo hide">
                     <tr>
                         <td>冷藏车数量：</td>
-                        <td class="oTd">
-                            <div class="oInline"><span class="compare"><1.8T</span><input name="coldTruck1"
-                                                                                          id="coldTruck1" step="1"
-                                                                                          type="number"><span
-                                    class="oUnit">辆</span>
-                            </div>
-                            <div class="oInline"><span class="compare">1.8~6T</span><input name="coldTruck2"
-                                                                                           id="coldTruck2" step="1"
-                                                                                           type="number"><span
-                                    class="oUnit">辆</span>
-                            </div>
-                            <div class="oInline"><span class="compare">6~14T</span><input name="coldTruck3"
-                                                                                          id="coldTruck3" step="1"
-                                                                                          type="number"><span
-                                    class="oUnit">辆</span>
-                            </div>
-                            <div class="oInline"><span class="compare"><14T</span><input name="coldTruck4"
-                                                                                         id="coldTruck4" step="1"
-                                                                                         type="number"><span
-                                    class="oUnit">辆</span>
+                        <td class="oTd layui-form-pane">
+                            <div class="layui-inline">
+                                <label class="layui-form-label"><1.8T</label>
+                                <div class="layui-input-inline">
+                                    <input name="coldTruck1" id="coldTruck1" step="1" type="number" class="layui-input">
+                                </div><div class="layui-input-inline"><label class="layui-form-label">辆</label></div>
+                            </div><br>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">1.8~6T</label>
+                                <div class="layui-input-inline">
+                                    <input name="coldTruck2" id="coldTruck2" step="1" type="number" class="layui-input">
+                                </div><div class="layui-input-inline"><label class="layui-form-label">辆</label></div>
+                            </div><br>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">6~14T</label>
+                                <div class="layui-input-inline">
+                                    <input name="coldTruck3" id="coldTruck3" step="1" type="number" class="layui-input">
+                                </div><div class="layui-input-inline"><label class="layui-form-label">辆</label></div>
+                            </div><br>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">6~14T</label>
+                                <div class="layui-input-inline">
+                                    <input name="coldTruck4" id="coldTruck4" step="1" type="number" class="layui-input">
+                                </div><div class="layui-input-inline"><label class="layui-form-label">辆</label></div>
                             </div>
                         </td>
                     </tr>
@@ -334,43 +338,58 @@
                     </tr>
                     <tr>
                         <td>冷库分库容积：</td>
-                        <td class="oTd oC">
-                            <div class="oInline"><span class="compare">常温库</span><input type="number" step="0.01"
-                                                                                        name="capacity1" id="capacity1">
-                                <select name="height1" id="height1" style="width: 200px">
-                                    <option value=""></option>
-                                    <option value="m³">m³</option>
-                                    <option value="pai">pai</option>
-                                    <option value="吨">吨</option>
-                                </select>
-                            </div>
-                            <div class="oInline"><span class="compare">冷藏库</span><input type="number" step="0.01"
-                                                                                        name="capacity2" id="capacity2">
-                                <select name="height2" id="height2" style="width: 200px">
-                                    <option value=""></option>
-                                    <option value="m³">m³</option>
-                                    <option value="pai">pai</option>
-                                    <option value="吨">吨</option>
-                                </select>
-                            </div>
-                            <div class="oInline"><span class="compare">冷冻库</span><input type="number" step="0.01"
-                                                                                        name="capacity3" id="capacity3">
-                                <select name="height3" id="height3" style="width: 200px">
-                                    <option value=""></option>
-                                    <option value="m³">m³</option>
-                                    <option value="pai">pai</option>
-                                    <option value="吨">吨</option>
-                                </select>
-                            </div>
-                            <div class="oInline"><span class="compare">超低温库</span><input type="number" step="0.01"
-                                                                                         name="capacity4"
-                                                                                         id="capacity4">
-                                <select name="height4" id="height4" style="width: 200px">
-                                    <option value=""></option>
-                                    <option value="m³">m³</option>
-                                    <option value="pai">pai</option>
-                                    <option value="吨">吨</option>
-                                </select>
+                        <td class="oTd oC layui-form-pane">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">常温库</label>
+                                <div class="layui-input-inline">
+                                    <input type="number" step="0.01" name="capacity1" id="capacity1" class="layui-input">
+                                </div><div class="layui-input-inline">
+                                    <select name="height1" id="height1">
+                                        <option value=""></option>
+                                        <option value="m³">m³</option>
+                                        <option value="pai">pai</option>
+                                        <option value="吨">吨</option>
+                                    </select>
+                                </div>
+                            </div><br>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">冷藏库</label>
+                                <div class="layui-input-inline">
+                                    <input type="number" step="0.01" name="capacity2" id="capacity2" class="layui-input">
+                                </div><div class="layui-input-inline">
+                                    <select name="height2" id="height2">
+                                        <option value=""></option>
+                                        <option value="m³">m³</option>
+                                        <option value="pai">pai</option>
+                                        <option value="吨">吨</option>
+                                    </select>
+                                </div>
+                            </div><br>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">冷冻库</label>
+                                <div class="layui-input-inline">
+                                    <input type="number" step="0.01" name="capacity3" id="capacity3" class="layui-input">
+                                </div><div class="layui-input-inline">
+                                    <select name="height3" id="height3">
+                                        <option value=""></option>
+                                        <option value="m³">m³</option>
+                                        <option value="pai">pai</option>
+                                        <option value="吨">吨</option>
+                                    </select>
+                                </div>
+                            </div><br>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">超低温库</label>
+                                <div class="layui-input-inline">
+                                    <input type="number" step="0.01" name="capacity4" id="capacity4" class="layui-input">
+                                </div><div class="layui-input-inline">
+                                    <select name="height4" id="height4">
+                                        <option value=""></option>
+                                        <option value="m³">m³</option>
+                                        <option value="pai">pai</option>
+                                        <option value="吨">吨</option>
+                                    </select>
+                                </div>
                             </div>
                         </td>
                     </tr>

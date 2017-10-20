@@ -189,6 +189,23 @@
 .oC .oInline{
     min-width: 491px;
 }
+.layui-form-pane .layui-input,
+.oC select{
+    width: 120px;
+    margin-left: 0;
+}
+.oC select{
+    width: 100px;
+}
+.layui-form-pane .layui-inline{
+    margin-bottom: 8px;
+    margin-left: -10px;
+}
+.layui-collapse.infoModal{
+    padding:0;
+    border: 0;
+}
+
 /*文字+输入框 end*/
 .moreInfo textarea{
     resize: vertical;
@@ -366,3 +383,11 @@
 .commentlist .filled{
     color: #ff7800;
 }
+.labelGroup{
+    width: 330px;
+    display: block;
+}
+.labelGroup input{
+    width: 30px;
+}
+.oInline
