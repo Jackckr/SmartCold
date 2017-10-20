@@ -349,20 +349,6 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 layer.open({content: '冷库分库容积输入有误！(小数点后最多保留两位，如：15.28)', btn: '确定'});
                 return false;
             }
-            if((($scope.capacity1 != ""&& $scope.capacity1!=0) && ($scope.height1==""||$scope.height1==undefined)) ||
-                (($scope.capacity2 != ""&&$scope.capacity2!=0) && ($scope.height2==""||$scope.height2==undefined)) ||
-                (($scope.capacity3 != ""&&$scope.capacity3!=0) && ($scope.height3==""||$scope.height3==undefined))||
-                (($scope.capacity4 != ""&&$scope.capacity4!=0) && ($scope.height4==""||$scope.height4==undefined))){
-                layer.open({content: '冷库分库容积中，单位未填写！', btn: '确定'});
-                return false;
-            }
-            if((( $scope.capacity1 == "" ||$scope.capacity1==0) && ($scope.height1!=""&&$scope.height1!=undefined)) ||
-                (($scope.capacity2 == "" ||$scope.capacity2==0) && ($scope.height2!=""&&$scope.height2!=undefined)) ||
-                (($scope.capacity3 == "" ||$scope.capacity3==0) && ($scope.height3!=""&&$scope.height3!=undefined))||
-                (($scope.capacity4 == "" ||$scope.capacity4==0) && ($scope.height4!=""&&$scope.height4!=undefined))){
-                layer.open({content: '冷库分库容积中，容积未填写！', btn: '确定'});
-                return false;
-            }
             if ($scope.coldTruck1!=undefined&&$scope.coldTruck1 != "" && !countRex.test($scope.coldTruck1) ||$scope.coldTruck2!=undefined&& $scope.coldTruck2 != "" && !countRex.test($scope.coldTruck2) ||
                 $scope.coldTruck3!=undefined&&$scope.coldTruck3 != "" && !countRex.test($scope.coldTruck3) ||$scope.coldTruck4!=undefined&& $scope.coldTruck4 != "" && !countRex.test($scope.coldTruck4)) {
                 layer.open({content:'冷藏车数量输入有误！',btn: '确定'});

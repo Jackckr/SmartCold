@@ -47,40 +47,34 @@
 	<script>
 		mui.init();
 		var user = null, rdc = null, smartCold = "http://www.smartcold.org.cn/";
-        
-		mui.ready(function(){//管理员和超级管理员可见搜索框
-			if(localStorage.user){
-				alert(1)
-				console.log(localStorage.user)
-				user = JSON.parse(localStorage.user);				
-			    if(user.role == 2 || user.role == 3){
-			        $(".searchBtn").removeClass('mui-hidden');
-				}else{
-	                $(".searchBtn").addClass('mui-hidden');
-				}
-				mui.ajax(smartCold + 'i/rdc/findRDCsByUserid', {
-		            data: {
-		                userid: user.id
-		            },
-		            dataType: 'json', //服务器返回json格式数据
-		            type: 'get', //HTTP请求类型
-		            timeout: 10000, //超时时间设置为10秒；
-		            crossDomain: true,
-		            success: function (data) {
-		                rdc = data[0];
-		           		localStorage.rdc=JSON.stringify(rdc);
-		                if(localStorage.currentRdc){//切换rdc
-		                	$("header>h1").html(JSON.parse(localStorage.currentRdc).name);
-		                }else{
-		                	$("header>h1").html(rdc.name); 
-		                }
-		            }
-		        });
+        if(localStorage.user){
+			user = JSON.parse(localStorage.user);				
+		    if(user.role == 2 || user.role == 3){
+		        $(".searchBtn").removeClass('mui-hidden');
 			}else{
-				alert(2)
-				LocalUrl();
+                $(".searchBtn").addClass('mui-hidden');
 			}
-		})
+			mui.ajax(smartCold + 'i/rdc/findRDCsByUserid', {
+	            data: {
+	                userid: user.id
+	            },
+	            dataType: 'json', //服务器返回json格式数据
+	            type: 'get', //HTTP请求类型
+	            timeout: 10000, //超时时间设置为10秒；
+	            crossDomain: true,
+	            success: function (data) {
+	                rdc = data[0];
+	           		localStorage.rdc=JSON.stringify(rdc);
+	                if(localStorage.currentRdc){//切换rdc
+	                	$("header>h1").html(JSON.parse(localStorage.currentRdc).name);
+	                }else{
+	                	$("header>h1").html(rdc.name); 
+	                }
+	            }
+	        });
+		}else{
+			LocalUrl();
+		}
 		/**
 		 * 搜索页面返回回来要执行的方法
 		 */	

@@ -99,7 +99,8 @@
 .lableGroup input{
     position: absolute;
     top: 0;
-    left: -1rem;
+    left:0;
+    opacity:0;
 }
 .lableGroup i{
     font-size: 0.75rem;
