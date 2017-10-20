@@ -163,8 +163,8 @@ function getRdcInfo() {
             rdc.lihuoArea==0?lihuoArea='':lihuoArea='<li><div>理货区面积：</div><div>'+rdc.lihuoArea+'㎡</div></li>';
             rdc.lihuoTemperCtr==0?lihuoTemperCtr='':lihuoTemperCtr='<li><div>理货区有无温控：</div><div>'+isHave[rdc.lihuoTemperCtr]+'</div></li>';
             rdc.temperRecord==0?temperRecord='':temperRecord='<li><div>有无温度记录：</div><div>'+isHave[rdc.temperRecord]+'</div></li>';
-            rdc.facility==""||rdc.facility==undefined?facility='':facility='<li><div>周边设施：</div><div>'+rdc.facility+'</div></li>';
-            rdc.remark==""||rdc.remark==undefined?remark='':remark='<li><div>备注：</div><div>'+rdc.remark+'</div></li>';
+            rdc.facility==""||rdc.facility==undefined||rdc.facility=='undefined'?facility='':facility='<li><div>周边设施：</div><div>'+rdc.facility+'</div></li>';
+            rdc.remark==""||rdc.remark==undefined||rdc.remark=='undefined'?remark='':remark='<li><div>备注：</div><div>'+rdc.remark+'</div></li>';
             !rdc.website||rdc.website==""?website='':website='<li><div>企业网址：</div><div><a class="orange" href='+rdc.website+' target="_blank">'+rdc.website+'</a></div></li>';
 
             if(rdc.coldTruck1==0&&rdc.coldTruck2==0&&rdc.coldTruck3==0&&rdc.coldTruck4==0){
