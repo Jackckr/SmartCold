@@ -39,7 +39,7 @@
     <div class="releaseImg"></div>
     <ul class="houseinfo">
         <li>
-            <label for="name">名称<em>*</em></label>
+            <label>名称<em>*</em></label>
             <form name="rdcForm" class="fr" style="width:85%;">
                 <input type="text" ng-model="name" ng-disabled="editable" name="name"
                        ng-remote-validate="http://liankur.com/i/rdc/checkName"
@@ -49,7 +49,7 @@
             </form>
         </li>
         <li>
-            <label for="province">省<em>*</em></label>
+            <label>省<em>*</em></label>
             <div class="mySelect">
                 <select ng-model="provinceId" ng-disabled="editable"
                         ng-change="provinceSelected(provinceId)"
@@ -58,7 +58,7 @@
             <i class="iconfont fr moreinfo">&#xe697;</i>
         </li>
         <li>
-            <label for="city">市<em>*</em></label>
+            <label>市<em>*</em></label>
             <div class="mySelect">
                 <select ng-model="cityId"
                         ng-change="citySelected(cityId)"
@@ -67,40 +67,52 @@
             <i class="iconfont fr moreinfo">&#xe697;</i>
         </li>
         <li>
-            <label for="geographic">地理位置<em>*</em></label>
+            <label>地理位置<em>*</em></label>
             <input type="text" ng-model="address" placeholder="请输入地理位置"/>
         </li>
         <li>
-            <label for="area">总面积</label>
+            <label>总面积</label>
             <input type="number" step="0.01" ng-model="area" placeholder="冷库面积(㎡)"/>
         </li>
         <li>
-            <label for="area">总容量<em>*</em></label>
+            <label>总容量<em>*</em></label>
             <input type="number" step="0.01" ng-model="totalcapacity" placeholder="冷库容量"/>
-            <select ng-model="capacityunit">
-                <option value=""></option>
-                <option value="m³">m³</option>
-                <option value="pai">pai</option>
-                <option value="吨">吨</option>
-            </select>
         </li>
         <li>
-            <label for="area">可出租容量<em>*</em></label>
+            <label>容量单位<em>*</em></label>
+            <div class="mySelect">
+                <select ng-model="capacityunit" ng-init="capacityunit='m³'">
+                    <option value=""></option>
+                    <option value="m³" ng-selected="1">m³</option>
+                    <option value="pai">pai</option>
+                    <option value="吨">吨</option>
+                </select>
+            </div>
+            <i class="iconfont fr moreinfo">&#xe697;</i>
+        </li>
+        <li>
+            <label>可出租容量<em>*</em></label>
             <input type="number" step="0.01" ng-model="rentSqm" placeholder="可出租容量"/>
-            <select ng-model="rentcapacityunit">
-                <option value=""></option>
-                <option value="㎡">㎡</option>
-                <option value="m³">m³</option>
-                <option value="pai">pai</option>
-                <option value="吨">吨</option>
-            </select>
         </li>
         <li>
-            <label for="area">冷库总净高<em>*</em></label>
+            <label>容量单位<em>*</em></label>
+            <div class="mySelect">
+                <select ng-model="rentcapacityunit" ng-init="rentcapacityunit='m³'">
+                    <option value=""></option>
+                    <option value="㎡">㎡</option>
+                    <option value="m³" ng-selected="1">m³</option>
+                    <option value="pai">pai</option>
+                    <option value="吨">吨</option>
+                </select>
+            </div>
+            <i class="iconfont fr moreinfo">&#xe697;</i>
+        </li>
+        <li>
+            <label>冷库总净高<em>*</em></label>
             <input type="number" step="0.01" ng-model="height" placeholder="冷库净高(m)"/>
         </li>
         <li>
-            <label for="operateType">经营类型<em>*</em></label>
+            <label>经营类型<em>*</em></label>
             <div class="mySelect">
                 <select ng-model="manageType"
                         ng-change="ManageTypeSelected(manageType)"
@@ -109,7 +121,7 @@
             <i class="iconfont fr moreinfo">&#xe697;</i>
         </li>
         <li>
-            <label for="storageType">商品存放类型<em>*</em></label>
+            <label>商品存放类型<em>*</em></label>
             <div class="mySelect">
                 <select ng-model="storageType"
                         ng-change="StorageTypeSelected(storageType)"
@@ -118,14 +130,14 @@
             <i class="iconfont fr moreinfo">&#xe697;</i>
         </li>
         <li>
-            <label for="temperatureType">温度类型<em>*</em></label>
+            <label>温度类型<em>*</em></label>
             <div class="mySelect">
                 <select ng-model="temperType" ng-options="x.id as x.type for x in temperTypes"></select>
             </div>
             <i class="iconfont fr moreinfo">&#xe697;</i>
         </li>
         <li>
-            <label for="structure">建筑结构<em>*</em></label>
+            <label>建筑结构<em>*</em></label>
             <div class="mySelect">
                 <select ng-model="structure"
                         ng-options="x.id as x.type for x in structures"></select>
@@ -133,21 +145,22 @@
             <i class="iconfont fr moreinfo">&#xe697;</i>
         </li>
         <li>
-            <label for="structure">建筑类型<em>*</em></label>
+            <label>建筑类型<em>*</em></label>
             <div class="mySelect">
-                <select ng-model="buildtype" ng-change="changeBuildType()">
+                <select ng-model="buildtype" ng-change="changeBuildType()" ng-init="buildtype=1">
                     <option value="0"></option>
-                    <option value="1">单层库</option>
+                    <option value="1" ng-selected="1">单层库</option>
                     <option value="2">多层库</option>
                 </select>
-                <span ng-show="isBuildFloors">
-                        <input type="number" ng-model="buildfloors" placeholder="请输入冷库层数"/>
-                    </span>
             </div>
             <i class="iconfont fr moreinfo">&#xe697;</i>
         </li>
+        <li ng-show="isBuildFloors">
+            <label>冷库层数<em>*</em></label>
+            <input type="number" ng-model="buildfloors" placeholder="请输入冷库层数"/>
+        </li>
         <li>
-            <label for="moon">是否有封闭月台<em>*</em></label>
+            <label>是否有封闭月台<em>*</em></label>
             <div class="mySelect">
                 <select ng-model="platform"
                         ng-options="x.id as x.name for x in haveOrNots"></select>
@@ -155,15 +168,17 @@
             <i class="iconfont fr moreinfo">&#xe697;</i>
         </li>
         <li>
-            <label for="moon">存放商品品类<em>*</em></label>
-            <div>
-                        <span ng-repeat="pro in productCategorys">
+            <label>存放商品品类<em>*</em></label>
+            <div class="clearfix">
+                <label ng-repeat="pro in productCategorys" class="omg lableGroup">
                      <input type="checkbox" name="productcategory"
                             value="{{pro.type_name}}"
                             ng-click="updateSelection($event,pro.type_name)"
                             ng-checked="isSelected(pro.type_name)"/>
-                     <label>{{pro.type_name}}</label>
-                 </span>
+                     <i class="iconfont" ng-if="!isSelected(pro.type_name)">&#xe61b;</i>
+                     <i class="iconfont" style="color: #4287ff;" ng-if="isSelected(pro.type_name)">&#xe61b;</i>
+                     <span>{{pro.type_name}}</span>
+                </label>
             </div>
             <i class="iconfont fr moreinfo">&#xe697;</i>
         </li>
@@ -174,10 +189,10 @@
                        accept="image/gif, image/bmp, image/jpg, image/jpeg, image/png" name="files">
             </label>
             <output class="img_list">
-						<span ng-repeat="file in totalfiles">
-							<img class="thumb" ngf-src="file" title="{{file.name}}">
-							<i ng-click="drop(file)">×</i>
-						</span>
+                <span ng-repeat="file in totalfiles">
+                    <img class="thumb" ngf-src="file" title="{{file.name}}">
+                    <i ng-click="drop(file)">×</i>
+                </span>
             </output>
             <label style="font-size: .5rem">
                 <small class="text-warning">上传3-5张实体图片，不能重复上传，每张小于10M</small>
@@ -185,13 +200,13 @@
         </li>
 
         <li>
-            <label for="phone">联系电话<em>*</em></label>
+            <label>联系电话<em>*</em></label>
             <input type="number" ng-model="phoneNum" placeholder="请输入联系方式"/>
         </li>
     </ul>
     <ul class="houseinfo black">
         <li>
-            <label for="note">备注</label>
+            <label>备注</label>
             <input type="text" ng-model="remark" placeholder="选填"/>
         </li>
         <li class="rdcImg">
@@ -255,7 +270,7 @@
             </div>
         </li>
         <li>
-            <label for="cleanroom">是否有理货区</label>
+            <label>是否有理货区</label>
             <div class="mySelect">
                 <select ng-model="lihuoRoom" ng-change="ChangLihuoState(lihuoRoom)"
                         ng-options="x.id as x.name for x in haveOrNots"></select>
@@ -267,7 +282,7 @@
                 <input type="number" step="0.01" ng-model="$parent.lihuoArea" placeholder="面积" style="font-size: 0.75rem;text-indent: 1em;">
         </li>
         <li>
-            <label for="temperatureTypeCtr">有无温控</label>
+            <label>有无温控</label>
             <div class="mySelect">
                 <select ng-model="lihuoTemperCtr"
                         ng-options="x.id as x.name for x in haveOrNots"></select>
@@ -275,7 +290,7 @@
             <i class="iconfont fr moreinfo">&#xe697;</i>
         </li>
         <li>
-            <label for="cryogen">制冷剂类型</label>
+            <label>制冷剂类型</label>
             <div class="mySelect">
                 <select ng-model="storageRefreg"
                         ng-change="StorageRefregSelected(storageRefreg)"
@@ -284,7 +299,7 @@
             <i class="iconfont fr moreinfo">&#xe697;</i>
         </li>
         <li>
-            <label for="temperatureRecord">有无温度记录</label>
+            <label>有无温度记录</label>
             <div class="mySelect">
                 <select ng-model="temperRecord"
                         ng-options="x.id as x.name for x in haveOrNots"></select>
@@ -292,50 +307,55 @@
             <i class="iconfont fr moreinfo">&#xe697;</i>
         </li>
         <li>
-            <label for="cleanarea">企业网址</label>
-            <input type="text" ng-model="website"/>
+            <label>企业网址</label>
+            <input type="text" ng-model="website" placeholder="格式：http://www.baidu.com"/>
         </li>
-        <li class="number">
+        <li>
             <label>冷库分库容积</label>
-            <div>
-                <div>
-                    <span class="nowrap">常温库</span><input type="number" step="0.01" ng-model="capacity1">
-                    <select ng-model="height1">
-                        <option value=""></option>
-                        <option value="m³">m³</option>
-                        <option value="pai">pai</option>
-                        <option value="吨">吨</option>
-                    </select>
-                </div>
-                <div>
-                    <span class="nowrap">冷藏库</span><input type="number" step="0.01" ng-model="capacity2">
-                    <select ng-model="height2">
-                        <option value=""></option>
-                        <option value="m³">m³</option>
-                        <option value="pai">pai</option>
-                        <option value="吨">吨</option>
-                    </select>
-                </div>
-                <div>
-                    <span class="nowrap">冷冻库</span><input type="number" step="0.01" ng-model="capacity3">
-                    <select ng-model="height3">
-                        <option value=""></option>
-                        <option value="m³">m³</option>
-                        <option value="pai">pai</option>
-                        <option value="吨">吨</option>
-                    </select>
-                </div>
-                <div>
-                    <span class="nowrap">超低温库</span><input type="number" step="0.01" ng-model="capacity4">
-                    <select ng-model="height4">
-                        <option value=""></option>
-                        <option value="m³">m³</option>
-                        <option value="pai">pai</option>
-                        <option value="吨">吨</option>
-                    </select>
-                </div>
-                <!-- <div style="width: auto"></div> -->
-            </div>
+        </li>
+        <li class="groupRdc">
+            <label>常温库</label>
+            <input type="number" step="0.01" ng-model="capacity1" placeholder="可选，默认m³">
+            <span>单位：</span>
+            <select ng-model="height1">
+                <option value=""></option>
+                <option value="m³">m³</option>
+                <option value="pai">pai</option>
+                <option value="吨">吨</option>
+            </select>
+        </li>
+        <li class="groupRdc">
+            <label>冷藏库</label>
+            <input type="number" step="0.01" ng-model="capacity2" placeholder="可选，默认m³">
+            <span>单位：</span>
+            <select ng-model="height2">
+                <option value=""></option>
+                <option value="m³">m³</option>
+                <option value="pai">pai</option>
+                <option value="吨">吨</option>
+            </select>
+        </li>
+        <li class="groupRdc">
+            <label>冷冻库</label>
+            <input type="number" step="0.01" ng-model="capacity3" placeholder="可选，默认m³">
+            <span>单位：</span>
+            <select ng-model="height3">
+                <option value=""></option>
+                <option value="m³">m³</option>
+                <option value="pai">pai</option>
+                <option value="吨">吨</option>
+            </select>
+        </li>
+        <li class="groupRdc">
+            <label>超低温库</label>
+            <input type="number" step="0.01" ng-model="capacity4" placeholder="可选，默认m³">
+            <span>单位：</span>
+            <select ng-model="height4">
+                <option value=""></option>
+                <option value="m³">m³</option>
+                <option value="pai">pai</option>
+                <option value="吨">吨</option>
+            </select>
         </li>
         <li>
             <label>周边设施：</label>
