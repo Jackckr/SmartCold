@@ -75,7 +75,7 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
     // 制冷剂类型
     $http.get(ER.root+'/i/rdc/findAllStorageRefreg').success(function (data) {
         $scope.storageRefregs = data;
-        $scope.storageRefreg = data[0].id;
+       // $scope.storageRefreg = data[0].id;
     });
     $scope.coldTruck1 = 0;
     $scope.coldTruck2 = 0;
