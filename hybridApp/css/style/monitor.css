@@ -58,3 +58,20 @@
 	line-height: 1.5;
 	margin-bottom: 0;
 }
+@-webkit-keyframes magentaPulse {
+    from {background-color: #630030;}
+    50% {background-color: #a9014b;}
+    to {background-color: #630030;}
+}
+@keyframes magentaPulse {
+     from {background-color: #630030;}
+    50% {background-color: #a9014b;}
+    to {background-color: #630030;}
+}
+.overTemp{
+	-webkit-animation: magentaPulse 3s infinite;
+	animation: magentaPulse 3s infinite;
+	padding: 10px;
+	font-size: 14px;
+	margin-top: 10px;
+}

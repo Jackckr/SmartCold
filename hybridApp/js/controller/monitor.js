@@ -13,7 +13,8 @@ mui('.mui-popover').on('tap', 'ul>li>a', function (e) {
     var tab_id = this.parentNode.parentNode.parentNode.id;
     var index = parseInt(this.getAttribute("data-index"));
     localStorage.showIndex = index;
-    $('#box li').eq(index).show().siblings().hide();
+    $('#box li').eq(index).show().siblings().hide();    
+    switchFn(index);
     //下面的循环  纯粹是操作样式代码
     for (var i = 0; i < $('.rlTab a').length; i++) {
         var a_href = $('.rlTab').children('a').eq(i).attr('href');
@@ -26,7 +27,7 @@ mui('.mui-popover').on('tap', 'ul>li>a', function (e) {
             return
         }
     }
-}); 
+});
 /*公共图表封装js*/
 var getOption = function (title, xData, yData, yName, yUnit, chartType, tipName, legend, yMin, yMax) {
     var option = {
@@ -44,6 +45,9 @@ var mask=mui.createMask();
 var rdc=null,mystorages = null;
 if(localStorage.rdc){
 	rdc=JSON.parse(localStorage.rdc)
+	if(localStorage.currentRdc){
+		rdc.id=JSON.parse(localStorage.currentRdc).id
+	}
 }else{
 	 mask.show();
 	 mui.alert('当前账号没有冷库')
@@ -57,13 +61,22 @@ if(localStorage.rdc){
 	    }
 	});
 }
-var tempsets = [];
+var tempsets = [],powers = [],mySwiper=null;
 var setInit = {
+	//初始化swiper
+	swiper:function(id){
+		clearSwiper();
+        mySwiper = new Swiper($(id).parents('.swiper-container'), {
+        	initialSlide :0, 
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            spaceBetween: 30,
+            observer: true,//修改swiper自己或子元素时，自动初始化swiper
+            observeParents: true//修改swiper的父元素时，自动初始化swiper
+        });
+	},
     //初始化rdc列表+默认展示温度监控图表
-    initTemp: function (rdc) {
-    	if(localStorage.currentRdc){
-    		rdc.id=JSON.parse(localStorage.currentRdc).id
-    	}
+    temp: function (rdc) {    	
         mui.ajax(smartCold + 'i/coldStorageSet/findStorageSetByRdcId', {
             data: {rdcID: rdc.id},
             dataType: 'json', //服务器返回json格式数据
@@ -78,35 +91,46 @@ var setInit = {
                         type: 'get', //HTTP请求类型
                         crossDomain: true,
                         success: function (data) {
+                            setInit.swiper('#tem');
                             tempsets = data;
                             for (var i = 0; i < mystorages.length; i++) {
-                                firstLoad(mystorages[i], tempsets, false);
+                                tempLoad(mystorages[i], tempsets, false);
                             }
                         }
-                    });
-                    var mySwiper = new Swiper('.swiper-container', {
-                        pagination: '.swiper-pagination',
-                        paginationClickable: true,
-                        spaceBetween: 30,
-                        observer: true,//修改swiper自己或子元素时，自动初始化swiper
-                        observeParents: true//修改swiper的父元素时，自动初始化swiper
                     });
                 }
             }
         });
     },
-    initElectric:function(){
-    	
+    //初始化电量
+    electric:function(rdcId){
+		mui.ajax(smartCold + 'i/power/findByRdcId',{
+			data:{
+				rdcId:rdcId
+			},
+			dataType:'json',//服务器返回json格式数据
+			type:'get',//HTTP请求类型
+			timeout:10000,//超时时间设置为10秒；
+			success:function(data){
+				if (data && data.length > 0) {
+                    setInit.swiper('#elec');
+	                powers = data;
+	                for (var i = 0; i < powers.length; i++) {
+	                    elecLoad(powers[i]);
+	                }
+	            }
+			}
+		});
     }
 }
-setInit.initTemp(rdc)
+setInit.temp(rdc);
 /**
  * 温度模块js
  **/
 
 var getOids = [], getNames = [];
 //初次加载温度模块
-var firstLoad = function (storage, tempsets, isreload) {
+var tempLoad = function (storage, tempsets, isreload) {
     var storageID = storage.id;
     var oids = [], names = [];
     var endTime = new Date(), startTime = new Date(endTime.getTime() - 1.5 * 60 * 60 * 1000);
@@ -127,10 +151,18 @@ var firstLoad = function (storage, tempsets, isreload) {
     tempChart(storage, oids, names, startTime, endTime);
 }
 var tempChart = function (storage, oids, names, startTime, endTime) {
-    if (oids.length == 0) {
-        return
-    }
-    ;
+    if (oids.length == 0) {return};
+    var isOverTempDiv='';
+    mui.get('http://139.224.16.238/i/util/getColdAlarmStatus',{
+    		oid:storage.id
+    	},function(data){
+    		if(data.isBlack){
+    			isOverTempDiv="<h4 class='red overTemp'>由于该冷库长时超温,系统自动静默！</h4>"
+    		}else{
+    			isOverTempDiv=''
+    		}
+    	},'json'
+    );
     mui.ajax(smartCold + 'i/temp/getTempByTime', {
         data: {
             'oid': storage.id,
@@ -147,7 +179,7 @@ var tempChart = function (storage, oids, names, startTime, endTime) {
         success: function (result) {
             var name = result.name;
             var curtemper = [], xData = [], series = [], yData = [], tempData = [], maxTime = endTime.getTime(),
-                tempMap = result.tempMap, isadd = true,
+                tempMap = result.tempMap, isadd = true, ymax=null,ymin=null;
                 systime = result.systime;
             var datumTemp = parseFloat(result.startTemperature) + 0.5 * parseFloat(result.tempdiff);//基准温度
             var i = 0, tempList = newdata = [], vo = cuttime = lasttime = null;
@@ -180,11 +212,14 @@ var tempChart = function (storage, oids, names, startTime, endTime) {
                     symbol: 'circle',
                     data: [
                         [
-                            {name: '基准温度', value: datumTemp, xAxis: 0, yAxis: datumTemp},
-                            {name: '', xAxis: 10e99, yAxis: datumTemp}
+                            {name: '基准温度', value: datumTemp, xAxis: 0, yAxis: datumTemp, itemStyle:{normal:{color:'#dc143c'}}},
+                            {name: '', xAxis: 10e99, yAxis: datumTemp, itemStyle:{normal:{color:'#dc143c'}}}
                         ],
                     ]
                 };
+				var ser=series[0].data.join(",").split(",");//转化为一维数组
+				ymax=Math.max.apply(null,ser)+0.3;//最大值
+				ymin=Math.min.apply(null,ser)-0.3;//最小值
             }else{
             	series= {data:[]}//为了无数据能够显示气泡
             }
@@ -192,10 +227,11 @@ var tempChart = function (storage, oids, names, startTime, endTime) {
             if ($("#" + mainId).length > 0) {//已经创建
                 $("#tm" + mainId).html(curtemper + "℃");
             } else {
-                var divStr = '<div class="swiper-slide"><div class="curTxt"><p class="blue">' + storage.name + '</p><p class="red" id="tm' + mainId + '">' + curtemper + '℃</p></div><div class="chart" id=' + mainId + '></div></div>';
+                var divStr = '<div class="swiper-slide"><div class="curTxt"><p class="blue">' + storage.name + '</p>' +
+                    '<p class="red" id="tm' + mainId + '">' + curtemper + 'kWh</p></div><div class="chart" id=' + mainId + '></div>' +isOverTempDiv+'</div>';
                 $("#tem").last().append(divStr);
             }
-
+            
             var myChart = echarts.init(document.getElementById(mainId));            
             // 指定图表的配置项和数据
             var option = {
@@ -211,14 +247,22 @@ var tempChart = function (storage, oids, names, startTime, endTime) {
 				},
                 backgroundColor: '#d2d6de',
                 tooltip: {trigger: 'axis', textStyle: {fontSize: 13, fontWeight: '400'}},
-                grid: {x: 40, x2: 40, y: 20, y2: 50},
+                grid: {x: 50, x2: 40, y: 20, y2: 50},
                 xAxis: {
                     type: 'category',
                     data: xData
                 },
 		        yAxis: {
                     name: '温度(℃)',
-                    nameLocation: 'end'
+                    nameLocation: 'end',
+                    max:ymax,
+                    min:ymin,
+                    type : 'value',
+             		axisLabel: {                   
+	                    formatter: function (value, index) {           
+	                 		return value.toFixed(1);      
+	                  	}                
+		            }
                 },
                 series: series
             };
@@ -229,37 +273,94 @@ var tempChart = function (storage, oids, names, startTime, endTime) {
 
 }
 
+/**
+ * 加载电量模块js
+ **/
+var elecLoad = function(powerSet){
+	var powerid = powerSet.id;
+    var endTime = getFormatTimeString();
+    var startTime = getFormatTimeString(-1 * 60 * 60 * 1000);
+    mui.get(smartCold + "i/baseInfo/getKeyValueDataByTime",{
+    		type:10,
+    		oid:powerid,
+    		key:'PWC',
+    		startTime:startTime,
+    		endTime:endTime
+    	},function(data){
+    		var powerData = data;
+	        var xData = [];
+	        var yData = [];
+	        mui.each(powerData, function (i,item) {
+	            xData.unshift(formatTimeToMinute(item.addtime).split(' ')[1]);
+	            yData.unshift(item.value * powerSet.radio.toFixed(1))
+	        });
+	        var currentPower = '';
+	        if (data.length > 0) {
+	            currentPower = data[data.length - 1] ? parseFloat(data[data.length - 1].value * powerSet.radio).toFixed(1) : '';
+	        };
+	        var mainId = 'power' + powerid;
+            var divStr = '<div class="swiper-slide"><div class="curTxt"><p class="blue">' + powerSet.name + '</p><p class="red">' + currentPower + '℃</p></div><div class="chart" id=' + mainId + '></div></div>';
+            $("#elec").last().append(divStr);
+            var lineChart = echarts.init(document.getElementById(mainId));
+            var option = elecChart('累积电量实时监控', xData, yData, '电量', 'kW.h', '电量', 'line');
+            lineChart.setOption(option);
+    	},'json'
+    );
+}
+var elecChart = function (title, xData, yData, yName, yUnit, lineName, type, yMin, yMax) {
+    yMin = yMax = yData.length > 0?yData[0]:0;
+    mui.each(yData,function(index,item){
+        yMin = Math.min(yMin,item);
+        yMax = Math.max(yMax,item);
+    });
+    var option = {
+    	noDataLoadingOption: {text: '暂无数据',textStyle:{fontSize:16},effect: 'bubble',effectOption: {effect: {n:30}}},
+        backgroundColor: '#D2D6DE',
+        tooltip: {trigger: 'axis', textStyle: {fontSize: 13, fontWeight: '400'}},
+        title: {text: title,x: 'left',textStyle: {fontSize: 13,fontWeight: '400'}},
+        grid: {x: 70,y: 40,x2: 40},
+        xAxis: [{type: 'category',data: xData}],
+        yAxis: [{type: 'value',axisLabel: { formatter: function (value, index) { return value.toFixed(1);  } },name: yName + "(" + yUnit + ")", min : yMin, max : yMax,minInterval : 1}],
+        series: [{name: lineName,type: type,data: yData,smooth:true,symbol: "none"}]
+    };
+    return option
+}
 /*定时刷新功能*/
 function clearSwiper() {
+    mySwiper=null;
     $(".swiper-wrapper,.swiper-pagination").empty();
 }
 clearInterval(DiDa);
 var DiDa = setInterval(function () {
-    var didaIndex = Number(localStorage.showIndex);
-    clearSwiper();
-    switch (didaIndex) {
-        case 0:
-            setInit.initTemp(rdc);
-            console.log(didaIndex)
-            break;
-        case 1:
-            console.log(didaIndex)
-            break;
-        case 2:
-            console.log(didaIndex)
-            break;
-        case 3:
-            console.log(didaIndex)
-            break;
-        case 4:
-            console.log(didaIndex)
-            break;
-        case 5:
-            console.log(didaIndex)
-            break;
-        case 6:
-            console.log(didaIndex)
-            break;
-    }
+    var didaIndex = Number(localStorage.showIndex);    
+    switchFn(didaIndex);
 }, 30000);
+
+function switchFn(didaIndex){
+	switch (didaIndex) {
+	    case 0:
+	        setInit.temp(rdc);
+	        console.log(didaIndex);
+	        break;
+	    case 1:
+	    	setInit.electric(rdc.id);
+	        console.log(didaIndex);
+	        break;
+	    case 2:
+	        console.log(didaIndex);
+	        break;
+	    case 3:
+	        console.log(didaIndex);
+	        break;
+	    case 4:
+	        console.log(didaIndex);
+	        break;
+	    case 5:
+	        console.log(didaIndex);
+	        break;
+	    case 6:
+	        console.log(didaIndex);
+	        break;
+	}	
+}
 

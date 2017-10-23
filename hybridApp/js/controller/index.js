@@ -26,3 +26,8 @@ function LocalUrl(){
  function formatTimeToMinute(timeString) {
     return formatTime(timeString).substring(0, 16);
 }
+
+var getFormatTimeString = function (delta) {
+    delta = delta ? delta + 8 * 60 * 60 * 1000 : 8 * 60 * 60 * 1000;
+    return new Date(new Date().getTime() + delta).toISOString().replace("T", " ").replace(/\..*/, "")
+}
