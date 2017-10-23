@@ -176,7 +176,7 @@ function getFormValue(rdcId) {
         }
         if(rdc.productcategory&&rdc.productcategory!=''){
             $.each(rdc.productcategory.split(','),function (index, item) {
-               $('input[name="productcategory"][value="'+item+'"]').attr('checked','checked');
+               $('input[name="productcategory"][value="'+item+'"]').attr('checked','checked').siblings('i').addClass('blue');
             });
         }
         if(rdc.standType==1){
@@ -306,10 +306,21 @@ function getProductCategory() {
     $.ajax({url:"/i/ShareRdcController/getGDFilterData",type:"get",success:function (data) {
         var gt = data.entity.gt;
         $.each(gt,function (index,item) {
-            productCategory.push('<label class="labelGroup"><input type="checkbox" value="'+item.type_name+'" name="productcategory" />'+item.type_name+'</label>');
+
+           productCategory.push('<label class="labelGroup" onclick="checkBox(this)"><i class="iconfont">&#xe661;</i><input type="checkbox" value="'+item.type_name+'" name="productcategory" />'+item.type_name+'</label>');
+            // productCategory.push('<label class="labelGroup"><input type="checkbox" value="'+item.type_name+'" name="productcategory" />'+item.type_name+'</label>');
+
         });
         $("#productcategoryTr").empty().append(productCategory.join(''));
     }});
+}
+function checkBox(em) {
+    event.stopPropagation();
+    if($(em).children('input').prop('checked')){
+        $(em).children('i').addClass('blue')
+    }else{
+        $(em).children('i').removeClass('blue')
+    }
 }
 
 // 获取商品存放类型
