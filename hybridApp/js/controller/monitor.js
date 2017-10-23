@@ -77,14 +77,6 @@ var setInit = {
                         dataType: 'json', //服务器返回json格式数据
                         type: 'get', //HTTP请求类型
                         crossDomain: true,
-                        beforeSend: function() {
-					        plus.nativeUI.showWaiting('加载中，请稍后……');
-					        mask.show();//显示遮罩层
-					    },
-					    complete: function() {
-					        plus.nativeUI.closeWaiting();
-					        mask.close();//关闭遮罩层
-					    },
                         success: function (data) {
                             tempsets = data;
                             for (var i = 0; i < mystorages.length; i++) {
