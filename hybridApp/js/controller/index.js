@@ -1,4 +1,4 @@
-var smartCold = "http://www.smartcold.org.cn/";
+var smartCold = "http://cold360.cn/";
 if(localStorage.user){
 	var user = JSON.parse(localStorage.user);
 }else{
