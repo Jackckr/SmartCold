@@ -85,7 +85,7 @@
 		/**
 		 *底部菜单栏初始化
 		 */
-		var subpages = ['view/monitor.html', 'view/query.html', 'view/analysis.html', 'view/warning.html','view/maintain.html'];
+		var subpages = ['monitor.html', 'query.html', 'analysis.html', 'warning.html','maintain.html'];
 		var subpage_style = {
 			top: '44px',
 			bottom: '53px'
@@ -153,8 +153,8 @@
 		 */
 		mui('.mui-bar-nav').on('tap', '.userImg', function(e) {
 			mui.openWindow({
-			    url: 'view/setting.html',
-			    id: 'view/setting.html',
+			    url: 'setting.html',
+			    id: 'setting.html',
 			    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
 			    waiting:{
 			      autoShow:true,//自动显示等待框，默认为true
@@ -164,8 +164,8 @@
 		});
 		mui('.mui-bar-nav').on('tap', '.searchBtn', function(e) {
 			mui.openWindow({
-			    url: 'view/search.html',
-			    id: 'view/search.html',
+			    url: 'search.html',
+			    id: 'search.html',
 			    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
 			    waiting:{
 			      autoShow:true,//自动显示等待框，默认为true

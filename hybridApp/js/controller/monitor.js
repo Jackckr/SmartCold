@@ -59,8 +59,8 @@ if(localStorage.rdc){
 }
 var tempsets = [];
 var setInit = {
-    //初始化rdc列表//
-    initRdcList: function (rdc) {
+    //初始化rdc列表+默认展示温度监控图表
+    initTemp: function (rdc) {
     	if(localStorage.currentRdc){
     		rdc.id=JSON.parse(localStorage.currentRdc).id
     	}
@@ -102,9 +102,12 @@ var setInit = {
                 }
             }
         });
+    },
+    initElectric:function(){
+    	
     }
 }
-setInit.initRdcList(rdc)
+setInit.initTemp(rdc)
 /**
  * 温度模块js
  **/
@@ -244,7 +247,7 @@ var DiDa = setInterval(function () {
     clearSwiper();
     switch (didaIndex) {
         case 0:
-            setInit.initRdcList(rdc);
+            setInit.initTemp(rdc);
             console.log(didaIndex)
             break;
         case 1:
