@@ -2,7 +2,6 @@ package com.smartcold.manage.cold.controller;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -10,13 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.session.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
 import com.smartcold.manage.cold.dao.olddb.MessageRecordMapping;
 import com.smartcold.manage.cold.dao.olddb.RdcauthMapping;
 import com.smartcold.manage.cold.dao.olddb.UserMapper;
@@ -46,14 +43,10 @@ public class UserController extends BaseController {
 	private RdcauthMapping rdcauthMapping;
 	@Autowired
 	private MessageRecordMapping messageRecordMapping;
-
 	@Autowired
 	private UserMapper userDao;
-
 	@Autowired
 	private CacheService cahcCacheService;
-	
-	
 	
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -105,7 +98,6 @@ public class UserController extends BaseController {
 	 * @param isAuto：是否为自动登录
 	 * @return
 	 */
-	
 	@RequestMapping(value = "/userlogin",method= RequestMethod.POST)
 	@ResponseBody
 	public Object userlogin(HttpServletRequest request,String userName,String password, int sik,Boolean isAuto) {
@@ -186,7 +178,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "/findUser", method = RequestMethod.GET)
 	@ResponseBody
-	public Object findUser(HttpServletRequest request,String token) {
+	public UserEntity findUser(HttpServletRequest request,String token) {
 		UserEntity user =	(UserEntity) request.getSession().getAttribute("user");
 		if(user!=null){  return user; }
 		if(StringUtil.isnotNull(token)){
@@ -215,7 +207,6 @@ public class UserController extends BaseController {
 	public Object signup(HttpServletRequest request,String username, String password,String telephone,String signUpCode) {
 		if (StringUtil.isNull(username)||StringUtil.isNull(password)||StringUtil.isNull(telephone)||StringUtil.isNull(signUpCode)) {return  ResponseData.newFailure("请输入必填信息！");}
 		try {
-			
 			UserEntity user = new UserEntity();
 			user.setUsername(username);
 			user.setPassword(EncodeUtil.encodeByMD5(password));
@@ -261,4 +252,25 @@ public class UserController extends BaseController {
 		}
 		return pwd.equals(user.getPassword());
 	}
+	
+	/**
+	 * 
+	 * @param request
+	 * @param token
+	 * @param rdcId
+	 * @param isgetConf
+	 */
+	@RequestMapping(value = "/getWiseconfByRdc")
+	@ResponseBody
+	public Object getWiseconfByRdc(HttpServletRequest request,String token ,int rdcId ,boolean isgetConf){
+	     UserEntity user = this.findUser(request, token);
+		 if(user.getId()==0){return ResponseData.newFailure(); }
+		 
+		 
+		 
+	     
+		return null;
+	
+	}
+	
 }

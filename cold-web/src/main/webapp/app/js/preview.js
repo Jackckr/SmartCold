@@ -83,7 +83,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
 			       				  temp+=data[obj][0]['value']; sccount++;
 			       			  }
 	       		      });
-	       		      if(temp!=0){temp=temp/sccount;}else{temp='--'; }
+	       		      if(temp!=0){temp=(temp/sccount).toFixed(2);}else{temp='--'; }
 	       		      item.temp=temp;
 	       	     });
 				if($scope.priveseting.isOverTemp){//加载告警
@@ -285,7 +285,7 @@ coldWeb.controller('preview', function($scope, $location, $stateParams,$timeout,
 	    clearInterval($rootScope.timeTicket);
 	    $rootScope.timeTicket = setInterval( $scope.gonex, 15000);
 	    $scope.$on('$destroy',function(){ $("#fp-nav").remove(); $('body,html').attr('style','');
-  clearInterval($rootScope.timeTicket);  });
+         clearInterval($rootScope.timeTicket);  });
 });
 
 

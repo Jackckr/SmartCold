@@ -114,8 +114,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http','$cookies',funct
 					      			$rootScope.aclmap[obj.id]=obj.acl;
 					      			if(obj.acl){
 //					      				if(!obj.hasnode){  
-					      					// 技术原因，无法处理(本想动态创建coldWeb)
-//					      					coldWeb.stateProvider.state(obj.controller,{url:obj.tourl,controller: obj.controller,  templateUrl: obj.templateUrl });
+//					      					coldWeb.stateProvider.state(obj.controller,{url:obj.tourl,controller: obj.controller,  templateUrl: obj.templateUrl });//无法处理(本想动态创建coldWeb)
 //					      				}
 					      			}else{
 					      				$("#lfmenu [mid=ml_acl"+obj.id+"]").addClass("quanxian");
@@ -125,7 +124,9 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http','$cookies',funct
 					      			}
 					      		});
 					      		$("#lefaside").removeClass("hide");
-		        	});
+		        	   });
+		        	 
+		        	 
 		        	  $http({method:'POST',url:'i/messageRecord/getTallMsgByRdcId',params:{userId: $rootScope.user.id,type: $rootScope.user.type, rdcId: $rootScope.rdcId}}).success(function (data) {
 		        		  $rootScope.messageList=data;
 		        	  });
@@ -157,7 +158,13 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http','$cookies',funct
 		            	 $rootScope.alarm.totl = data.CC+data.SC+data.TC;
 		                 if($rootScope.alarm.totl>0){$("#div_errmsg").removeClass("hide");}
 		             });
-//		             $state.go('preview');
+		             $http.get('/i/AlarmController/getAlarmMsgByUser',{params:{  userId: $rootScope.user.id, role: $rootScope.user.role, rdcIds:$rootScope.userrdcids,isgetMsg:false} }).success( function(data,status,headers,config){ //  初始化月台门
+		            	 $rootScope.alarm = data;
+		            	 $rootScope.alarm.totl = data.CC+data.SC+data.TC;
+		                 if($rootScope.alarm.totl>0){$("#div_errmsg").removeClass("hide");}
+		             });
+		             
+		             $state.go('preview');
         	};
         	$rootScope.changeRdc = function(value){
         		if(value){

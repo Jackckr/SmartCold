@@ -3,21 +3,19 @@ package com.smartcold.manage.cold.entity.comm;
 import java.util.Date;
 
 /**
- * 基类信息
+ * 配置基类信息
  * 
  * @author Administrator
  * 
  */
-public class ItemObject {
+public class ItemConf {
 	private int id;
 	private int rdcid;
-	private int isRunning;
-	private int coldStorageId;
 	private String name;
+	private String devid;
 	private double power;
 	private String mapping;
 	private Date addTime;
-	
 	public int getId() {
 		return id;
 	}
@@ -36,18 +34,17 @@ public class ItemObject {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getDevid() {
+		return devid;
+	}
+	public void setDevid(String devid) {
+		this.devid = devid;
+	}
 	public double getPower() {
 		return power;
 	}
 	public void setPower(double power) {
 		this.power = power;
-	}
-	
-	public int getIsRunning() {
-		return isRunning;
-	}
-	public void setIsRunning(int isRunning) {
-		this.isRunning = isRunning;
 	}
 	public String getMapping() {
 		return mapping;
@@ -61,10 +58,5 @@ public class ItemObject {
 	public void setAddTime(Date addTime) {
 		this.addTime = addTime;
 	}
-	public int getColdStorageId() {
-		return coldStorageId;
-	}
-	public void setColdStorageId(int coldStorageId) {
-		this.coldStorageId = coldStorageId;
-	}
+	
 }

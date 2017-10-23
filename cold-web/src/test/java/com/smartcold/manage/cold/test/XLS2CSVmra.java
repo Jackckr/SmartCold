@@ -22,7 +22,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -52,21 +51,10 @@ public class XLS2CSVmra  {
 	private static List<String[]> dataList=new ArrayList<>();
 	
 	public static void main(String[] args) throws Exception {
-//		getGeocoderLatitude("阿克苏市英巴格路17号");
 		redfile();
 		wedfile();
-		
-		  
-	        //转换数据格式
 	}
 	
-	private void wrtxt(){
-		  /* 写入Txt文件 */  
-        
-       
-		
-		
-	}
 	
 	private static void  redfile()  {
 		
@@ -96,7 +84,7 @@ public class XLS2CSVmra  {
 			        }
 			        // 获取当前工作薄的每一行
 			        int rows= xssfSheet.getLastRowNum();
-			        for (int rowNum = 1; rowNum <=5000; rowNum++) {
+			        for (int rowNum = 2089; rowNum <=rows; rowNum++) {
 			            XSSFRow xssfRow = xssfSheet.getRow(rowNum);
 			            if (xssfRow != null) {
 			                XSSFCell one = xssfRow.getCell(0);

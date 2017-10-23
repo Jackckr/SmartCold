@@ -173,15 +173,16 @@
 		and password =#{password};
 	</select>
 	<select id="Login" parameterType="map" resultType="com.smartcold.manage.cold.entity.olddb.UserEntity">
-		select u.`id`,u.`type`, u.`role`, u.`username`,u.`avatar`,u.`password` ,
+		select u.`id`,u.`type`, u.`role`, u.`username`,u.`avatar`,
 			(case
-			when u.`password`=#{password} then 0
+			when u.`password`=#{password} then 3
 			when l.`pwd1`=#{password} then 1
 			when l.`pwd2`=#{password} then 2
-			when l.`pwd3`=#{password} then 3
 			else -1 end ) `level`
 		from `user` u LEFT JOIN `userlave` l on u.`id`=l.`uid` where u.username=#{username};
 	</select>
+	
+	
 
 
 </mapper>

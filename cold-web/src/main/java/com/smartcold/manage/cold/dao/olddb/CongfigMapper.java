@@ -4,11 +4,18 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.xmlbeans.impl.xb.xmlconfig.NamespaceList.Member2.Item;
+import org.junit.runners.Parameterized.Parameters;
 
+import com.smartcold.manage.cold.entity.comm.ItemConf;
 import com.smartcold.manage.cold.entity.olddb.ConversionEntity;
 
 
 public interface CongfigMapper {
+	
+	
+	public ItemConf  findRdcConfByDevId(@Param("devid")String devid);
+	
 	//1.获得常规配置
 	public List<HashMap<String, Object>>  getObjMappingByRdcId(@Param("table") String table ,@Param("rdcId") String rdcId);
 	//2.获得风机配置

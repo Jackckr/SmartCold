@@ -23,8 +23,7 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(UserEntity record);
 
     int updateByPrimaryKey(UserEntity record);
-    
-    List<UserEntity> findUserByNAndP(UserEntity user);
+  
     
     UserEntity findUserByName(@Param("username") String username);
 	
@@ -38,7 +37,10 @@ public interface UserMapper {
 
     UserEntity findUserByTelephone(String phone);
     
+    
 	public UserEntity Login(@Param("username") String username, @Param("password") String password);
+	@Deprecated
+	List<UserEntity> findUserByNAndP(UserEntity user);
 	@Deprecated
 	public UserEntity findByPassword(@Param("username") String username, @Param("password") String password);
 }

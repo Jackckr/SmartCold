@@ -4,15 +4,16 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.smartcold.manage.cold.entity.newdb.DFSDataCollectionEntity;
+import com.smartcold.manage.cold.entity.comm.ItemValue;
+
 
 
 
 public interface DFSDataCollectionMapper {
 
-	public void additem(DFSDataCollectionEntity data);
+	public void additem(ItemValue data);
 	
-	public void adddataList(@Param("table")String table,@Param("list")List<DFSDataCollectionEntity> data);
+	public void adddataList(@Param("table")String table,@Param("list")List<ItemValue> data);
 	
 	
 }

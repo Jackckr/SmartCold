@@ -160,7 +160,7 @@ public class WarningTaskService  {
 			if(minTempData==null){ continue;	}//故障  没数据
 			ScheduleJob job =getJob(key); 
 			long cutttTime=System.currentTimeMillis();
-			if(minTempData.getValue()<baseTemp){
+			if((Double)minTempData.getValue()<baseTemp){
 				if(job==null){
 				   continue; //
 				 }else{
@@ -172,7 +172,7 @@ public class WarningTaskService  {
 					}
 				}
 			}else {
-				int lavel = (int) Math.rint(minTempData.getValue()- baseTemp+0.5 )/ 2;
+				int lavel = (int) Math.rint((Double)minTempData.getValue()- baseTemp+0.5 )/ 2;
 				if(lavel>5){lavel=5;}//判断当前冷库超温级别
 				if(job==null){
 					 ItemValue  overStrtTime = this.tempWarningServer.getOverStrtTime(colditem.getTids(), baseTemp, colditem.getDeviceids(), starttime, endtime);
@@ -225,8 +225,8 @@ public class WarningTaskService  {
 					if (SetUtil.isnotNullList(tempList) && tempList.size() > 5) {//过滤掉坏的数据
 							for (ItemValue temp : tempList) {
 								if(isreturn){break;}
-								if(temp.getValue()<basTemp){ Lv =new int[]{ 0, 0, 0, 0, 0 };continue;}//温度恢复后
-								int leve = (int) Math.floor(temp.getValue() - basTemp+0.5 )/ 2;
+								if((Double)temp.getValue()<basTemp){ Lv =new int[]{ 0, 0, 0, 0, 0 };continue;}//温度恢复后
+								int leve = (int) Math.floor((Double)temp.getValue() - basTemp+0.5 )/ 2;
 								if (leve > 4) {leve = 4;}
 								for (int i = 0; i <=leve; i++) {//记录同级超温次数
 									 Lv[i] ++;//Lv[i] =

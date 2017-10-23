@@ -33,7 +33,7 @@ max-width: 50%;
    </div>
     <div id="dtid_ap2" style="float: right;display: block;border: 1px solid #cccccc;    width: 19%;">
 			    <div style="border: 1px solid #cccccc;">
-			     <p>apid：<input id="txt_apid" value="400333444"></p>                        
+			     <p>apid：<input id="txt_apid" value="4000001"></p>                        
 				  <p>                          频率：<input id="txt_pl">        </p> 
 				  <p>       key：<input   id  ="txt_key" value="点2">                      </p> 
 				  <p>       val：<input   id  ="txt_val" value="10">                      </p> 
@@ -48,9 +48,9 @@ max-width: 50%;
 <script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <script type="text/javascript">
 
-var pl=30,p4=200,iswert=false;
-
-
+var pl=10,p4=200,iswert=false;
+var qt1={apID:"4000001",time:new Date().getTime(),infos:[{tagname:"点2",value:200},{tagname:"CO2机组_低压压力",value:40}]}
+, qt2="{'apID':'40000002','time':'"+new Date().getTime()+"','infos':[{'tagname':'点1','value':'10'},{'tagname':'s力','value':'40'}]}";
 
 function timegetdata(){
 	getData();
@@ -72,29 +72,31 @@ function setConfig(){
 	   }
     }});
 }
-function getConfig(apid){
-     $.ajax({type : "POST",url : "i/QTDEVConfig",contentType: "application/json; charset=utf-8",data:"{'apID':'"+apid+"'}" ,success : function(data) { alert("收到配置信息："+data) ; }});
+//==========================================================================================================================================================
+function getConfig(){
+     $.ajax({type : "POST",url : "i/QTDEVConfig",contentType: "application/json; charset=utf-8",data:"{'apID':'"+$("#txt_apid").val() +"'}" ,success : function(data) { 
+    	 console.log("收到回写数据");
+    	   $.each( data.infos, function(i, vo){
+    		   $.each(  qt1.infos, function(i, vo1){
+        		  if(vo.tagname==vo1.tagname){
+        			  vo1.value=vo.value;
+        			  return false;
+        		  }
+        	   });
+    		   
+    	   });
+    	 
+     }});
 }
-
-
-
 
 function senddata1(){
-	
-	var qt1="{'apID':'400333444','time':'"+new Date().getTime()+"','infos':[{'tagname':'点4','value':'200'},{'tagname':'CO2机组_低压压力','value':'40'}]}";
-	  $.ajax({type : "POST",dataType : "json",contentType: "application/json;charset=utf-8",url : "i/QTDataCollection",data :qt1,success : function(data) { 
+	  $.ajax({type : "POST",dataType : "json",contentType: "application/json;charset=utf-8",url : "i/QTDataCollection",data :JSON.stringify(qt1),success : function(data) { 
 		  if(data.updateConf){ 
-			  alert("收到配置更新指令！准备更新配置！");
-	           getConfig("400333444");
-	       }}});
+			  console.log("服务器准备更新数据");
+	          getConfig();
+	  }}});
 }
-function senddata2(){
-    	var qt2="{'apID':'210333444','time':'"+new Date().getTime()+"','infos':[{'tagname':'点1','value':'10'},{'tagname':'s力','value':'40'}]}";
-	  $.ajax({type : "POST",dataType : "json", contentType: "application/json;charset=utf-8",url : "i/QTDataCollection",data :qt2,success : function(data) {
-		  if(data.updateConf){  
-			  alert("收到配置更新指令！准备更新配置！");
-			  getConfig("210333444");
-			}}});}
+
 /**/
 
 $().ready(function () {
@@ -118,9 +120,8 @@ $().ready(function () {
 	   $("#logtext").height(width);
 	   
 
-	   window.setInterval(timegetdata,10000); 
-	   
-// 	  window.setInterval(senddata1,pl*1000); 
+	   window.setInterval(timegetdata,3000); 
+	    window.setInterval(senddata1,pl*1000); 
 // 	  window.setInterval(senddata2,20000); 
 	
 });
