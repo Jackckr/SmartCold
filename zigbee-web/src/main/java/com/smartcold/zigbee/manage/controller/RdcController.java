@@ -548,7 +548,6 @@ public class RdcController {
         rdcEntity.setType(0);
         rdcEntity.setStoragetype("");
         rdcEntity.setColdtype("");
-        rdcEntity.setContact("");
         rdcEntity.setPosition("");
         rdcEntity.setPowerConsume(0);
         Map<String, String> lngLatMap = rdcService.geocoderLatitude(rdcEntity);
