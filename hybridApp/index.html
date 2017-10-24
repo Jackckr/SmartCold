@@ -64,11 +64,16 @@
 	            crossDomain: true,
 	            success: function (data) {
 	                rdc = data[0];
-	           		localStorage.rdc=JSON.stringify(rdc);
-	                if(localStorage.currentRdc){//切换rdc
-	                	$("header>h1").html(JSON.parse(localStorage.currentRdc).name);
+	                if(rdc){
+		           		localStorage.rdc=JSON.stringify(rdc);
+		                if(localStorage.currentRdc){//切换rdc
+		                	$("header>h1").html(JSON.parse(localStorage.currentRdc).name);
+		                }else{
+		                	$("header>h1").html(rdc.name); 
+		                }	                	
 	                }else{
-	                	$("header>h1").html(rdc.name); 
+	                	mui.toast('当前账号没有冷库，无法使用本应用的相关功能！');
+	 					LocalUrl();
 	                }
 	            }
 	        });
@@ -137,6 +142,7 @@
 			activeTab = targetTab;
 		});
 		function LocalUrl(){
+			clearCookie();
 			mui.openWindow({
 			    url: 'login.html',
 			    id: 'login.html',
@@ -173,5 +179,13 @@
 			    }
 			});
 		});		
+		function clearCookie(){//清除cookie和localstorage
+		    var keys=document.cookie.match(/[^ =;]+(?=\=)/g);
+		    localStorage.clear();
+		    if (keys) {
+		        for (var i =  keys.length; i--;)
+		            document.cookie=keys[i]+'=0;expires=' + new Date( 0).toUTCString()
+		    }    
+		}
 	</script>
 </html>

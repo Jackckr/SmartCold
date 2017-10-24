@@ -76,27 +76,50 @@
 		$("#rdcList").empty();
 	})
     function rdcAjax(searchContent){
-        mui.ajax(smartCold + '/i/rdc/searchRdc',{
-            data:{
-                type:1,
-                filter:searchContent
-            },
-            dataType:'json',//服务器返回json格式数据
-            type:'get',//HTTP请求类型
-            success:function(data){
-                var rdcArry=[];
-                if (data && data.length > 0) {
-                    storages = data;
-					mui.each(storages,function(index,item){
-					  rdcArry.push('<li class="mui-table-view-cell jump" data-id='+item.id+'>'+item.name+'</li>')
-					});
-                }else{
-                	rdcArry.push('<li class="mui-table-view-cell jump" data-id="0">没有搜索到相关冷库，请更换关键词~</li>');
-                }
-				$("#rdcList").empty();
-				$("#rdcList").append(rdcArry.join(''))
-            }
-        });
+    	if(user.role==3){//超级管理员
+	        mui.ajax(smartCold + 'i/rdc/searchRdc',{
+	            data:{
+	                type:1,
+	                filter:searchContent
+	            },
+	            dataType:'json',//服务器返回json格式数据
+	            type:'get',//HTTP请求类型
+	            success:function(data){
+	                var rdcArry=[];
+	                if (data && data.length > 0) {
+	                    storages = data;
+						mui.each(storages,function(index,item){
+						  rdcArry.push('<li class="mui-table-view-cell jump" data-id='+item.id+'>'+item.name+'</li>')
+						});
+	                }else{
+	                	rdcArry.push('<li class="mui-table-view-cell jump" data-id="0">没有搜索到相关冷库，请更换关键词~</li>');
+	                }
+					$("#rdcList").empty();
+					$("#rdcList").append(rdcArry.join(''))
+	            }
+	        });    		
+    	}else{
+    		mui.ajax(smartCold + 'i/rdc/findRDCsByUserid',{
+	            data:{
+	                userid:user.id
+	            },
+	            dataType:'json',//服务器返回json格式数据
+	            type:'get',//HTTP请求类型
+	            success:function(data){
+	                var rdcArry=[];
+	                if (data && data.length > 0) {
+	                    storages = data;
+						mui.each(storages,function(index,item){
+						  rdcArry.push('<li class="mui-table-view-cell jump" data-id='+item.id+'>'+item.name+'</li>')
+						});
+	                }else{
+	                	rdcArry.push('<li class="mui-table-view-cell jump" data-id="0">没有搜索到相关冷库，请更换关键词~</li>');
+	                }
+					$("#rdcList").empty();
+					$("#rdcList").append(rdcArry.join(''))
+	            }
+	        });
+    	}
     };
 </script>
 

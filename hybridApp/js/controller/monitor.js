@@ -7,6 +7,7 @@ $('.rlTab a').eq(0).on("tap", function () {
     $(this).children('b').css('color', '#EB5A4A');
     $('#box li').eq(0).show().siblings().hide();
     localStorage.showIndex = 0;
+    setInit.temp(rdc.id)
 });
 mui('.mui-popover').on('tap', 'ul>li>a', function (e) {
     var tap_html = this.innerHTML;
@@ -48,18 +49,6 @@ if(localStorage.rdc){
 	if(localStorage.currentRdc){
 		rdc.id=JSON.parse(localStorage.currentRdc).id
 	}
-}else{
-	 mask.show();
-	 mui.alert('当前账号没有冷库')
-	 mui.openWindow({
-	    url: 'login.html',
-	    id: 'login.html',
-	    createNew:false,//是否重复创建同样id的webview，默认为false:不重复创建，直接显示
-	    waiting:{
-	      autoShow:true,//自动显示等待框，默认为true
-	      title:'正在加载...',//等待对话框上显示的提示内容
-	    }
-	});
 }
 var tempsets = [],powers = [],mySwiper=null;
 var setInit = {
@@ -369,6 +358,9 @@ var powerChart = function (title, xData, yData, yName, yUnit, lineName, type, gr
         yMin = Math.min(yMin,item);
         yMax = Math.max(yMax,item);
     });
+    if(yMin==yMax&&yMin>0){
+    	yMin=yMin-5
+    }
     var option = {
         noDataLoadingOption: {text: '暂无数据',textStyle:{fontSize:16},effect: 'bubble',effectOption: {effect: {n:30}}},
         backgroundColor: '#D2D6DE',

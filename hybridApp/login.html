@@ -79,7 +79,6 @@
 			
 		</div>
 		<script src="js/mui.min.js"></script>
-		<script src="js/mui.enterfocus.js"></script>
 		<script>
 			(function($, doc) {
 				$.init({
@@ -88,14 +87,15 @@
 			}(mui, document));
 			var smartCold = "http://cold360.cn/";
 			document.getElementById('login').addEventListener('tap', function() {
+				clearCookie();
 				var account = document.getElementById('account').value;
 				var password = document.getElementById("password").value;
 				if(account.length == 0 || password.length == 0) {
 					mui.alert('用户名或密码不能为空', '提示', '确认');
 					return false;
 				}
-				this.innerText = '登录中...';
-				this.setAttribute('disabled', true);
+				/*this.innerText = '登录中...';
+				this.setAttribute('disabled', true);*/
 				var loginButton = this;
 				mui.ajax(smartCold + '/i/user/login', {
 					data: {
@@ -127,7 +127,7 @@
 										id: 'index',
 										waiting: {
 											autoShow: true, //自动显示等待框，默认为true
-											title: '正在加载...' //等待对话框上显示的提示内容}})
+											title: '正在加载....' //等待对话框上显示的提示内容}})
 										}
 									})
 								}
@@ -136,6 +136,14 @@
 					}
 				});
 			})
+			function clearCookie(){//清除cookie和localstorage
+			    var keys=document.cookie.match(/[^ =;]+(?=\=)/g);
+			    localStorage.clear();
+			    if (keys) {
+			        for (var i =  keys.length; i--;)
+			            document.cookie=keys[i]+'=0;expires=' + new Date( 0).toUTCString()
+			    }    
+			}
 		</script>
 	</body>
 

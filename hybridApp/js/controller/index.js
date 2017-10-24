@@ -5,6 +5,7 @@ if(localStorage.user){
 	LocalUrl();
 }
 function LocalUrl(){
+	clearCookie();
 	mui.openWindow({
 	    url: 'login.html',
 	    id: 'login.html',
@@ -23,11 +24,19 @@ function LocalUrl(){
         return new Date(timeString.getTime() + 8 * 60 * 60 * 1000).toISOString().replace("T", " ").replace(/\..*/, "");
     }
 };
- function formatTimeToMinute(timeString) {
+function formatTimeToMinute(timeString) {
     return formatTime(timeString).substring(0, 16);
 }
 
 var getFormatTimeString = function (delta) {
     delta = delta ? delta + 8 * 60 * 60 * 1000 : 8 * 60 * 60 * 1000;
     return new Date(new Date().getTime() + delta).toISOString().replace("T", " ").replace(/\..*/, "")
+}
+function clearCookie(){//清除cookie和localstorage
+    var keys=document.cookie.match(/[^ =;]+(?=\=)/g);
+    localStorage.clear();
+    if (keys) {
+        for (var i =  keys.length; i--;)
+            document.cookie=keys[i]+'=0;expires=' + new Date( 0).toUTCString()
+    }    
 }
