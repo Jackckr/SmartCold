@@ -243,7 +243,7 @@ public class RdcController {
             WebvistsService.rdcClickCount.put(rdcID,1);
         }
         List<RdcAddDTO> rdcdtoByRDCId = rdcService.findRDCDTOByRDCId(rdcID, uid);
-    if(uid!=rdcdtoByRDCId.get(0).getUserid()){
+    if(uid==null||(uid!=null&&uid!=rdcdtoByRDCId.get(0).getUserid())){
             if(uid!=null&&uid!=0){
                 HashMap<Integer, Long> integerIntegerHashMap = redisService.putPhoneClick(null);
                 if (integerIntegerHashMap!=null){
