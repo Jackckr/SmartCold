@@ -246,9 +246,9 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
         if ($scope.structure == undefined || $scope.structure == "") {
             flag = false;
         }
-        if ($scope.platform == undefined || $scope.platform == "") {
+        /*if ($scope.platform == undefined || $scope.platform == "") {
             flag = false;
-        }
+        }*/
         if ($scope.phoneNum == undefined || $scope.phoneNum == '') {
             flag = false;
         }
@@ -272,13 +272,13 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
         }
         return flag;
     }
-    $scope.ChangLihuoState=function (val) {
+    /*$scope.ChangLihuoState=function (val) {
         if(val==2){
             $scope.islihuoRoom=false;
         }else {
             $scope.islihuoRoom=true;
         }
-    }
+    }*/
     $scope.changeBuildType=function () {
         $scope.isBuildFloors=$scope.buildtype==2?true:false;
     }
@@ -354,10 +354,10 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 layer.open({content:'冷藏车数量输入有误！',btn: '确定'});
                 return false;
             }
-            if ($scope.lihuoArea != undefined &&$scope.lihuoArea != "" && !areaRex.test($scope.lihuoArea)) {
+            /*if ($scope.lihuoArea != undefined &&$scope.lihuoArea != "" && !areaRex.test($scope.lihuoArea)) {
                 layer.open({content:'理货区面积输入有误！(小数点后最多保留两位，如：15.28)',btn: '确定'});
                 return false;
-            }
+            }*/
         	layer.open({
         		type: 2
         		,content: '努力加载中~~~'
@@ -405,6 +405,7 @@ angular.module('rdcadd', ['remoteValidation','ngFileUpload']).controller('coldSt
                 platform : $scope.platform,
                 lihuoRoom : $scope.lihuoRoom,
                 lihuoArea : $scope.lihuoArea,
+                contact : $scope.contact,
                 lihuoTemperCtr : $scope.lihuoTemperCtr,
                 storageRefreg : $scope.storageRefreg,
                 temperRecord : $scope.temperRecord,

@@ -3,6 +3,8 @@ package com.smartcold.zigbee.manage.service;
 
 import com.smartcold.zigbee.manage.entity.UserEntity;
 
+import java.util.HashMap;
+
 /**
  * Created by qiangzi on 2017/8/29.
  */
@@ -19,6 +21,10 @@ public interface RedisService {
     String putUserId(Integer userId,String token);
 
     String putWXToken(String access_token);
+
+    HashMap<Integer,Long> putPhoneClick(HashMap<Integer,Long> userMap);
+
+    void delPhoneClick();
 
     void delWXToken();
 }

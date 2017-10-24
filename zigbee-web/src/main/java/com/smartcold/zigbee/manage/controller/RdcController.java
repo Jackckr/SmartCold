@@ -2,11 +2,7 @@ package com.smartcold.zigbee.manage.controller;
 
 import java.io.File;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -106,6 +102,12 @@ public class RdcController {
 
     @Autowired
     private RedisService redisService;
+
+    @Autowired
+    private ProvinceListMapper provinceListMapper;
+
+    @Autowired
+    private CityListMapper cityListMapper;
     
     
     /**
@@ -232,6 +234,7 @@ public class RdcController {
     @RequestMapping(value = "/findRDCDTOByRDCId", method = RequestMethod.GET)
     @ResponseBody
     public Object findRDCDTOByRDCId(@RequestParam int rdcID, HttpSession session, Integer uid,HttpServletRequest request) {
+        boolean flag=false;
         if (WebvistsService.rdcClickCount.containsKey(rdcID)){
             Integer count = WebvistsService.rdcClickCount.get(rdcID);
             count++;
@@ -239,7 +242,40 @@ public class RdcController {
         }else {
             WebvistsService.rdcClickCount.put(rdcID,1);
         }
-        return rdcService.findRDCDTOByRDCId(rdcID,uid);
+        List<RdcAddDTO> rdcdtoByRDCId = rdcService.findRDCDTOByRDCId(rdcID, uid);
+    if(uid!=rdcdtoByRDCId.get(0).getUserid()){
+            if(uid!=null&&uid!=0){
+                HashMap<Integer, Long> integerIntegerHashMap = redisService.putPhoneClick(null);
+                if (integerIntegerHashMap!=null){
+                    Long integer = integerIntegerHashMap.get(uid);
+                    if(integer!=null){
+                        if(integer<=10){
+                            integerIntegerHashMap.put(uid,integerIntegerHashMap.get(uid)+1);
+                        }else {
+                            flag=true;
+                        }
+                    }else {
+                        integerIntegerHashMap.put(uid, (long) 1);
+                    }
+                }else {
+                    integerIntegerHashMap=new HashMap<Integer,Long>();
+                    integerIntegerHashMap.put(-1,new Date().getTime());
+                    integerIntegerHashMap.put(uid, (long) 1);
+                }
+                redisService.delPhoneClick();
+                if(new Date().getTime()-integerIntegerHashMap.get(-1)<86400000){
+                    redisService.putPhoneClick(integerIntegerHashMap);
+                }else {
+                    flag=false;
+                }
+            }else {
+                rdcdtoByRDCId.get(0).setPhoneNum("请登录！");
+            }
+        }
+        if(flag){
+            rdcdtoByRDCId.get(0).setPhoneNum("您今日已查阅10条冷库电话信息！");
+        }
+        return rdcdtoByRDCId;
     }
 
     @RequestMapping(value = "/findAllRdcDtos", method = RequestMethod.GET)
@@ -486,6 +522,7 @@ public class RdcController {
         rdcEntity.setHeight(rdcAddDTO.getHeight());
         rdcEntity.setRentSqm(rdcAddDTO.getRentSqm());
         rdcEntity.setOpenLIne(rdcAddDTO.getOpenLIne());
+        rdcEntity.setContact(rdcAddDTO.getContact());
         rdcEntity.setIsJoinStand(rdcAddDTO.getIsJoinStand());
         rdcEntity.setTotalcapacity(rdcAddDTO.getTotalcapacity());
         rdcEntity.setCapacityunit(rdcAddDTO.getCapacityunit());
@@ -661,6 +698,7 @@ public class RdcController {
         rdcEntity.setTotalcapacity(rdcAddDTO.getTotalcapacity());
         rdcEntity.setCapacityunit(rdcAddDTO.getCapacityunit());
         rdcEntity.setRentcapacityunit(rdcAddDTO.getRentcapacityunit());
+        rdcEntity.setContact(rdcAddDTO.getContact());
         rdcEntity.setProductcategory(rdcAddDTO.getProductcategory());
         rdcEntity.setBuildtype(rdcAddDTO.getBuildtype());
         rdcEntity.setBuildfloors(rdcAddDTO.getBuildfloors());
@@ -1143,7 +1181,19 @@ public class RdcController {
                 CollectEntity byRdcId = collectMapper.getByRdcId(rdcEntityDTO.getId(), Integer.parseInt(uid));
                 rdcEntityDTO.setCollectType(byRdcId == null ? 0 : 1);
             }
-            rdcEntityDTO.setCollectUserIds(collectMapper.getUsersIdByRdcId(rdcEntityDTO.getId()));
+            RdcExtEntity rdcExtEntity = rdcExtDao.findRDCExtByRDCId(rdcEntityDTO.getId()).size()==0?null:rdcExtDao.findRDCExtByRDCId(rdcEntityDTO.getId()).get(0);
+            String manageTypeStr =rdcExtEntity==null?"":storageManageTypeDao.getTypeById(rdcExtEntity.getManagetype());
+            String tempTypeStr = rdcExtEntity==null?"":storageTemperTypeDao.findTypeById(rdcExtEntity.getStoragetempertype());
+            String provinceName = provinceListMapper.findNameById(rdcEntityDTO.getProvinceid());
+            String cityName =rdcEntityDTO.getCityid()==0?"":cityListMapper.findCityById(rdcEntityDTO.getCityid()).getCityName();
+            List<FileDataEntity> storagePic = fileDataDao.findByBelongIdAndCategory(rdcEntityDTO.getId(), "storagePic");
+            if(storagePic.size()>0){
+                rdcEntityDTO.setLogo(storagePic.get(0).getLocation());
+            }
+            rdcEntityDTO.setTempTypeStr(tempTypeStr);
+            rdcEntityDTO.setManageTypeStr(manageTypeStr);
+            rdcEntityDTO.setProvincename(provinceName);
+            rdcEntityDTO.setCityname(cityName);
         }
         return ResponseData.newSuccess(data);
     }

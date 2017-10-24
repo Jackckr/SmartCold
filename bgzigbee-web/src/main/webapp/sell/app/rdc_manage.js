@@ -291,7 +291,7 @@ function coldValidation(vo) {
     if (vo.name.trim() == "" || vo.provinceId.trim() == "" || vo.cityId.trim() == "" || vo.address.trim() == "" || vo.totalcapacity.trim() == ""
         || vo.manageType.trim() == "" || vo.storageType.trim() == "" || vo.temperType.trim() == "" || vo.phoneNum.trim() == ""
         ||vo.rentSqm.trim()==""||vo.height.trim()==""||vo.capacityunit.trim()==""||vo.rentcapacityunit.trim()==""||vo.buildtype.trim()==""
-        ||vo.structure.trim()==""||vo.platform.trim()=="") {
+        ||vo.structure.trim()=="") {
     	alert_errmsg("请完善冷库信息！");
         return false;
     }
@@ -308,6 +308,10 @@ function coldValidation(vo) {
     }
     if(vo.totalcapacity<10){
         alert_errmsg("总容积不能小于10");
+        return false;
+    }
+    if(vo.contact&&vo.contact.length>10){
+        alert_errmsg("联系人不能超过10个字符！");
         return false;
     }
     if(vo.height<3||vo.height>40){
@@ -335,23 +339,23 @@ function coldValidation(vo) {
         alert_errmsg("冷库分库容积中，容积未填写！");
         return false;
     }
-    if (vo.coldTruck1 != "" && !countRex.test(vo.coldTruck1) || vo.coldTruck2 != "" && !countRex.test(vo.coldTruck2) ||
+    /*if (vo.coldTruck1 != "" && !countRex.test(vo.coldTruck1) || vo.coldTruck2 != "" && !countRex.test(vo.coldTruck2) ||
         vo.coldTruck3 != "" && !countRex.test(vo.coldTruck3) || vo.coldTruck4 != "" && !countRex.test(vo.coldTruck4)) {
     	alert_errmsg("冷藏车数量输入有误！");
         return false;
-    }
-    if(vo.lihuoRoom==1&&vo.lihuoArea.trim()==""){
+    }*/
+    /*if(vo.lihuoRoom==1&&vo.lihuoArea.trim()==""){
         alert_errmsg("请输入理货区面积！");
         return false;
-    }
+    }*/
     if(vo.buildtype==2&& (!countRex.test(vo.buildfloors)||vo.buildfloors<2)){
         alert_errmsg("请输入正确的楼层数！");
         return false;
     }
-    if (vo.lihuoArea != "" && !areaRex.test(vo.lihuoArea)) {
+    /*if (vo.lihuoArea != "" && !areaRex.test(vo.lihuoArea)) {
     	alert_errmsg("理货区面积输入有误！(小数点后最多保留两位，如：15.28)");
         return false;
-    }
+    }*/
     /*if (vo.rentSqm-vo.sqm>0) {
      alert_errmsg("可出租面积不能大于总面积！");
      return false;

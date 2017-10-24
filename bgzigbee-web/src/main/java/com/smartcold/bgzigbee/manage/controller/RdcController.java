@@ -365,6 +365,7 @@ public class RdcController {
 		rdcEntity.setCityid(rdcAddDTO.getCityId());
 		rdcEntity.setCellphone(rdcAddDTO.getPhoneNum());
 		rdcEntity.setHeight(rdcAddDTO.getHeight());
+		rdcEntity.setContact(rdcAddDTO.getContact());
 		rdcEntity.setRentSqm(rdcAddDTO.getRentSqm());
 		// rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
 		rdcEntity.setCommit(URLDecoder.decode(rdcAddDTO.getRemark(), "UTF-8"));
@@ -502,6 +503,7 @@ public class RdcController {
 		rdcEntity.setProvinceid(rdcAddDTO.getProvinceId());
 		rdcEntity.setCityid(rdcAddDTO.getCityId());
 		rdcEntity.setCellphone(rdcAddDTO.getPhoneNum());
+		rdcEntity.setContact(rdcAddDTO.getContact());
 		rdcEntity.setPhone(rdcAddDTO.getTelphoneNum());
 		rdcEntity.setHeight(rdcAddDTO.getHeight());
 		rdcEntity.setRentSqm(rdcAddDTO.getRentSqm());

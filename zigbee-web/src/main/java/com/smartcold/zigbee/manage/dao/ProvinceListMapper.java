@@ -12,4 +12,5 @@ public interface ProvinceListMapper {
 
     List<ProvinceListEntity> findProvinceList();
 
+    String findNameById(int provinceId);
 }

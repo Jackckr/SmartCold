@@ -26,7 +26,5 @@ public interface CollectMapper {
 
     CollectEntity getByRdcId(@Param("rdcId") Integer rdcId,@Param("uid") Integer uid);
 
-    List<Integer> getUsersIdByRdcId(Integer rdcId);
-
     int delByRdcId(int rdcId);
 }

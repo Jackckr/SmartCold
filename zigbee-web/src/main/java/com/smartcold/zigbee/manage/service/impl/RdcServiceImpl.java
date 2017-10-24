@@ -203,6 +203,7 @@ public class RdcServiceImpl implements RdcService {
             rdcAddDTO.setIstemperaturestandard(rdcEntity.getIstemperaturestandard());
             rdcAddDTO.setRentSqm(rdcEntity.getRentSqm());
             rdcAddDTO.setHeight(rdcEntity.getHeight());
+            rdcAddDTO.setContact(rdcEntity.getContact());
             rdcAddDTO.setOpenLIne(rdcEntity.getOpenLIne());
             rdcAddDTO.setIsJoinStand(rdcEntity.getIsJoinStand());
             rdcAddDTO.setTotalcapacity(rdcEntity.getTotalcapacity());

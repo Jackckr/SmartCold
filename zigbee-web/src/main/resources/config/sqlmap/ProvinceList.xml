@@ -8,5 +8,8 @@
         SELECT *
         FROM `provincelist` WHERE `ProvinceID` &lt;= 34
     </select>
+    <select id="findNameById" resultType="java.lang.String">
+        SELECT `ProvinceName` FROM `provincelist` WHERE `ProvinceId`=#{provinceId}
+    </select>
 
 </mapper>

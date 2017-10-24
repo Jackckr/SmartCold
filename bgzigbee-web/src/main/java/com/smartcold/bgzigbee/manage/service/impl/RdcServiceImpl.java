@@ -169,6 +169,7 @@ public class RdcServiceImpl implements RdcService {
             rdcAddDTO.setHeight(rdcEntity.getHeight());
             rdcAddDTO.setRentSqm(rdcEntity.getRentSqm());
 			rdcAddDTO.setTotalcapacity(rdcEntity.getTotalcapacity());
+			rdcAddDTO.setContact(rdcEntity.getContact());
 			rdcAddDTO.setCapacityunit(rdcEntity.getCapacityunit());
 			rdcAddDTO.setRentcapacityunit(rdcEntity.getRentcapacityunit());
 			rdcAddDTO.setProductcategory(rdcEntity.getProductcategory());

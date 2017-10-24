@@ -29,7 +29,7 @@ public class RdcAddDTO {
 
 	private String address;
 	
-	
+	private String contact;
 
 	private int coldTruck1;
 	private int coldTruck2;
@@ -205,6 +205,14 @@ public class RdcAddDTO {
 
 	public void setRdcId(int rdcId) {
 		this.rdcId = rdcId;
+	}
+
+	public String getContact() {
+		return contact;
+	}
+
+	public void setContact(String contact) {
+		this.contact = contact;
 	}
 
 	public int getManageType() {

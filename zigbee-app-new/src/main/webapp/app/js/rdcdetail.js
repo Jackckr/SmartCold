@@ -120,7 +120,8 @@
          };
 		$scope.initdata=function(){
 	       //获得数据
-	    	$http.get(ER.root+'/i/rdc/findRDCDTOByRDCId', { params: {"rdcID": id}}).success(function(data) {//withCredentials: true , headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            var uid=window.user?window.user.id:window.user;
+	    	$http.get(ER.root+'/i/rdc/findRDCDTOByRDCId', { params: {"rdcID": id,"uid":uid}}).success(function(data) {//withCredentials: true , headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 	    		if(data){
 	    			$scope.vo=data[0];
                     $http.get(ER.root+"/i/city/findProvinceById",{params:{provinceId:$scope.vo.provinceId}}).success(function (data) {

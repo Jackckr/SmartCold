@@ -121,6 +121,9 @@
             <if test="struct != null" >
                 struct = #{struct,jdbcType=VARCHAR},
             </if>
+            <if test="contact != null">
+                contact = #{contact,jdbcType=VARCHAR},
+            </if>
             <if test="capacity != null" >
                 capacity = #{capacity,jdbcType=FLOAT},
             </if>
@@ -229,18 +232,10 @@
         r.audit,
         r.istemperaturestandard,
         r.infoIntegrity,
-        cl.CityName,
-        pl.ProvinceName,
-        st.type tempTypeStr,
-        sm.type manageTypeStr,
         (SELECT location FROM filedata f WHERE f.belongid = r.id AND f.category='storagePic' ORDER BY id DESC LIMIT 1 ) as logo
         FROM
         rdc r
         LEFT JOIN rdcext t on r.id=t.RDCID
-        LEFT JOIN storagetempertype st on st.id=t.storagetempertype
-        LEFT JOIN storagemanagetype sm on sm.id=t.managetype
-        LEFT JOIN provincelist pl on pl.ProvinceId=r.provinceid
-        LEFT JOIN citylist cl on cl.CityId=r.cityid
         <where>
             r.audit!=-1
             <if test="sqm !=null and  sqm != ''"> and ${sqm} </if>
@@ -301,8 +296,7 @@
 			t.rdcscore score,
 			t.rdccommentcnt userCommentCount,
 			t.rdcrecommendpercent userRecommendPercent,
-			t.pageview,
-			( SELECT location 	FROM 	filedata f WHERE f.belongid = r.id AND f.category = 'storagePic' ORDER BY id DESC LIMIT 1) AS logo
+			t.pageview
 		FROM
 			Rdc r
 		LEFT JOIN rdcext t ON t.RDCID = r.id
@@ -314,7 +308,7 @@
     		<if test="storageType !=null and  storageType != ''">  and t.storagetype in(${storageType}) </if><!-- 存放类型-->
     		<if test="storagetempertype !=null and  storagetempertype != ''">  and t.storagetempertype in(${storagetempertype}) </if><!-- 温度类型-->
     		<if test="hasCar !=null and  hasCar != ''"> and <if test="hasCar ==1">!</if> ISNULL(t.storagetruck) </if><!-- 有无车辆-->
-        ORDER BY r.`updatetime` DESC,r.id DESC
+        ORDER BY r.`updatetime` DESC
 	</select>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         select

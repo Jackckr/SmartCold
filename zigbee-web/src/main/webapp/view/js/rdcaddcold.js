@@ -390,7 +390,7 @@ function coldValidation(vo) {
     if (vo.name.trim() == "" || vo.provinceId.trim() == "" || vo.cityId.trim() == "" || vo.address.trim() == "" || vo.totalcapacity.trim() == ""
         || vo.manageType.trim() == "" || vo.storageType.trim() == "" || vo.temperType.trim() == "" || vo.phoneNum.trim() == ""
         ||vo.rentSqm.trim()==""||vo.height.trim()==""||vo.capacityunit.trim()==""||vo.rentcapacityunit.trim()==""||vo.buildtype.trim()==""
-        ||vo.structure.trim()==""||vo.platform.trim()==""||vo.productcategory.trim()=="") {
+        ||vo.structure.trim()==""||vo.productcategory.trim()=="") {
         layer.alert('请完善冷库信息！', {icon: 2});
         return false;
     }
@@ -440,19 +440,19 @@ function coldValidation(vo) {
         layer.alert('冷库分库容积中，容积未填写！', {icon: 2});
         return false;
     }
-    if (vo.coldTruck1 != "" && !countRex.test(vo.coldTruck1) || vo.coldTruck2 != "" && !countRex.test(vo.coldTruck2) ||
+    /*if (vo.coldTruck1 != "" && !countRex.test(vo.coldTruck1) || vo.coldTruck2 != "" && !countRex.test(vo.coldTruck2) ||
         vo.coldTruck3 != "" && !countRex.test(vo.coldTruck3) || vo.coldTruck4 != "" && !countRex.test(vo.coldTruck4)) {
         layer.alert('冷藏车数量输入有误！', {icon: 2});
         return false;
-    }
+    }*/
     if(vo.buildtype==2&& (!countRex.test(vo.buildfloors)||vo.buildfloors<2)){
         layer.alert('请输入正确的楼层数！', {icon: 2});
         return false;
     }
-    if (vo.lihuoArea != "" && !areaRex.test(vo.lihuoArea)) {
+    /*if (vo.lihuoArea != "" && !areaRex.test(vo.lihuoArea)) {
         layer.alert('理货区面积输入有误！(小数点后最多保留两位，如：15.28)', {icon: 2});
         return false;
-    }
+    }*/
     /*if(vo.area-vo.rentSqm<0){
         layer.alert('冷库的可出租面积不能大于冷库的总面积！', {icon: 2});
         return false;
