@@ -20,23 +20,23 @@
 		</header>
 		<!--底部菜单-->
 		<nav class="mui-bar mui-bar-tab">
-			<a data-index="0" class="mui-tab-item mui-active" href="view/monitor.html">
+			<a data-index="0" class="mui-tab-item mui-active" href="monitor.html">
 				<span class="mui-icon iconfont">&#xe68d;</span>
 				<span class="mui-tab-label">监控</span>
 			</a>
-			<a data-index="1" class="mui-tab-item" href="view/query.html">
+			<a data-index="1" class="mui-tab-item" href="query.html">
 				<span class="mui-icon iconfont">&#xe709;</span>
 				<span class="mui-tab-label">查询</span>
 			</a>
-			<a data-index="2" class="mui-tab-item" href="view/analysis.html">
+			<a data-index="2" class="mui-tab-item" href="analysis.html">
 				<span class="mui-icon iconfont">&#xe682;</span>
 				<span class="mui-tab-label">分析</span>
 			</a>
-			<a data-index="3" class="mui-tab-item" href="view/warning.html">
+			<a data-index="3" class="mui-tab-item" href="warning.html">
 				<span class="mui-icon iconfont">&#xe697;</span>
 				<span class="mui-tab-label">告警</span>
 			</a>
-			<a data-index="4" class="mui-tab-item" href="view/maintain.html">
+			<a data-index="4" class="mui-tab-item" href="maintain.html">
 				<span class="mui-icon iconfont">&#xe6a5;</span>
 				<span class="mui-tab-label">维护</span>
 			</a>
@@ -115,13 +115,11 @@
 		});
 		 //当前激活选项
 		var activeTab = subpages[0];
-		var title = document.getElementById("title");
 		 //选项卡点击事件
 		mui('.mui-bar-tab').on('tap', 'a', function(e) {
 			var LoginValue = localStorage.getItem('user');
 			var targetTab = this.getAttribute('href');
 			var index = parseInt(this.getAttribute("data-index"));
-		
 			if (targetTab == activeTab) {
 				return;
 			}

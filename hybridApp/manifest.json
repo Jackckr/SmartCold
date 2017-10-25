@@ -236,20 +236,16 @@
 	},
 	"dependencies": {
 		"pages": {
-			"view/monitor_electric.html": {
-				"href": "view/monitor_electric.html",
-				"priority": 0
-			},
-			"view/maintain.html": {
-				"href": "view/maintain.html",
+			"maintain.html": {
+				"href": "maintain.html",
 				"priority": 1
 			},
-			"view/warning.html": {
-				"href": "view/warning.html",
+			"warning.html": {
+				"href": "warning.html",
 				"priority": 2
 			},
-			"view/monitor.html": {
-				"href": "view/monitor.html",
+			"monitor.html": {
+				"href": "monitor.html",
 				"priority": 3,
 				"resources": [
 					"css/style/monitor.css",
@@ -262,16 +258,12 @@
 				],
 				"refer": []
 			},
-			"view/monitor_water.html": {
-				"href": "view/monitor_water.html",
-				"priority": 4
-			},
-			"view/analysis.html": {
-				"href": "view/analysis.html",
+			"analysis.html": {
+				"href": "analysis.html",
 				"priority": 5
 			},
-			"view/query.html": {
-				"href": "view/query.html",
+			"query.html": {
+				"href": "query.html",
 				"priority": 6
 			},
 			"setting.html": {
@@ -315,16 +307,14 @@
 					"css/style/monitor.css",
 					"images/cbd.jpg",
 					"js/jquery-1.9.0.js",
-					"view/monitor.html",
+					"monitor.html",
 					"js/mui.min.js"
 				],
 				"refer": [
-					"view/monitor_electric.html",
-					"view/maintain.html",
-					"view/warning.html",
-					"view/monitor_water.html",
-					"view/analysis.html",
-					"view/query.html",
+					"maintain.html",
+					"warning.html",
+					"analysis.html",
+					"query.html",
 					"setting.html",
 					"login.html"
 				],
@@ -370,16 +360,6 @@
 				],
 				"priority": 0
 			}
-		},
-		"idle": {
-			"resources": [
-				"view/monitor_tem.html",
-				"fonts/iconfont.css",
-				"fonts/iconfont.js",
-				"js/components/mui.locker.js",
-				"js/components/feedback-page.js",
-				"css/mui.css"
-			]
 		}
 	}
 }

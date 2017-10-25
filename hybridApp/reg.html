@@ -6,7 +6,6 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<title></title>
 		<link href="css/mui.min.css" rel="stylesheet" />
-		<link href="css/style.css" rel="stylesheet" />
 		<style>
 			.area {
 				margin: 20px auto 0px auto;
@@ -74,54 +73,52 @@
 			</div>
 		</div>
 		<script src="js/mui.min.js"></script>
-		<script src="js/app.js"></script>
 		<script>
-			(function($, doc) {
-				$.init();
-				$.plusReady(function() {
-					var settings = app.getSettings();
-					var regButton = doc.getElementById('reg');
-					var accountBox = doc.getElementById('account');
-					var passwordBox = doc.getElementById('password');
-					var passwordConfirmBox = doc.getElementById('password_confirm');
-					var emailBox = doc.getElementById('email');
-					regButton.addEventListener('tap', function(event) {
-						var regInfo = {
-							account: accountBox.value,
-							password: passwordBox.value,
-							email: emailBox.value
-						};
-						var passwordConfirm = passwordConfirmBox.value;
-						if (passwordConfirm != regInfo.password) {
-							plus.nativeUI.toast('密码两次输入不一致');
-							return;
-						}
-						app.reg(regInfo, function(err) {
-							if (err) {
-								plus.nativeUI.toast(err);
-								return;
-							}
-							plus.nativeUI.toast('注册成功');
-							/*
-							 * 注意：
-							 * 1、因本示例应用启动页就是登录页面，因此注册成功后，直接显示登录页即可；
-							 * 2、如果真实案例中，启动页不是登录页，则需修改，使用mui.openWindow打开真实的登录页面
-							 */
-							plus.webview.getLaunchWebview().show("pop-in",200,function () {
-								plus.webview.currentWebview().close("none");
-							});
-							//若启动页不是登录页，则需通过如下方式打开登录页
-//							$.openWindow({
-//								url: 'login.html',
-//								id: 'login',
-//								show: {
-//									aniShow: 'pop-in'
-//								}
-//							});
-						});
-					});
-				});
-			}(mui, document));
+			mui.init();
+			mui.plusReady(function(){
+            var username=document.getElementById("username");
+            var password=document.getElementById("password");
+            var nickname=document.getElementById("nickname");
+            var reg=document.getElementById("reg");
+            reg.addEventListener('tap',function(){
+            	mui.alert(1)
+                if(username.value.length==0){
+                    plus.ui.toast("用户名不能为空");
+                    return;
+                }
+                if(password.value.length==0){
+                    plus.ui.toast("密码不能为空");
+                    return;
+                }
+                if(nickname.value.length==0){
+                    plus.ui.toast("昵称不能为空");
+                    return;
+                }
+                mui.ajax('http://192.168.0.7/newssystem/index.php/Home/User/reg',{
+                    data:{
+                        username:username.value,
+                        password:password.value,
+                        nickname:nickname.value
+                    },
+                    dataType:'json',//数据格式类型
+                    type:'POST',//http请求类型
+                    timeout:10000,//超时设置
+                    success:function(data){
+                        //处理成功返回的数据
+                        //{'result':1,'data':"注册成功"}
+                        if(data.result==1){
+                            plus.ui.toast(data.data);
+                            mui.back();
+                        }else{
+                            plus.ui.toast(data.data);
+                        }
+                    },
+                    error:function(){
+
+                    }
+                })
+            })
+        })
 		</script>
 	</body>
 

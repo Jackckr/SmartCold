@@ -8,13 +8,50 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
-		
+		<link rel="stylesheet" href="libs/swiper-3.4.2.min.css">
+		<link rel="stylesheet" type="text/css" href="css/style/common.css"/>
+		<link rel="stylesheet" type="text/css" href="css/style/monitor.css"/>
 </head>
 <body>
-	<h1>维护页面</h1>
+	<div class="mui-content">
+		<div class="rlTab">
+			<a class="activeTab"><span class="mui-icon iconfont red">&#xe79c;</span><b>维护提醒</b></a>
+			<a><span class="mui-icon iconfont green">&#xe639;</span><b>维修</b></a>
+			<a><span class="mui-icon iconfont gold">&#xe79b;</span><b>维修记录</b></a>
+		</div>
+		<ul id="box">
+			<li>	
+				<h1>维护提醒</h1><h1>维护提醒</h1><h1>维护提醒</h1><h1>维护提醒</h1><h1>维护提醒</h1>
+				<h1>维护提醒</h1><h1>维护提醒</h1><h1>维护提醒</h1><h1>维护提醒</h1><h1>维护提醒</h1>
+				<h1>维护提醒</h1><h1>维护提醒</h1><h1>维护提醒</h1><h1>维护提醒</h1><h1>维护提醒</h1>
+			</li>
+			<li>
+				<h1>维修</h1><h1>维修</h1><h1>维修</h1><h1>维修</h1><h1>维修</h1><h1>维修</h1><h1>维修</h1><h1>维修</h1>
+				<h1>维修</h1><h1>维修</h1><h1>维修</h1><h1>维修</h1><h1>维修</h1><h1>维修</h1><h1>维修</h1><h1>维修</h1>
+			</li>
+			<li>
+				<h1>维修记录</h1><h1>维修记录</h1><h1>维修记录</h1>
+			</li>
+		</ul>
+	</div>
+	<div class="mui-content">
+				
+	</div>
 	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
-	<script type="text/javascript">
+	<script src="js/jquery-1.9.0.js" type="text/javascript"></script>
+	<script src="libs/echarts-all.js" type="text/javascript"></script>
+	<script src="libs/swiper-3.4.2.min.js" type="text/javascript"></script>
+	<script src="js/controller/index.js" type="text/javascript"></script>
+	<script>
 		mui.init();
+		$('.rlTab a').on("tap", function () {
+			var index=$(this).index();
+		    $('.rlTab').find("b").css('color', '#555');
+		    $(this).addClass('activeTab').siblings().removeClass('activeTab');
+		    var i_color = $(this).children('span').css('color');
+		    $(this).children('b').css('color', i_color);
+		    $('#box li').eq(index).show().siblings().hide();    
+		});
 	</script>
 </body>
 </html>
