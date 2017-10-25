@@ -19,6 +19,8 @@ public class RdcAddDTO {
 
 	private float area; // 面积
 
+	private String contact;//联系人
+
 	private int provinceId;
 
 	private int cityId;
@@ -169,6 +171,13 @@ public class RdcAddDTO {
 		this.arrangepiclocation = arrangepiclocation;
 	}
 
+	public String getContact() {
+		return contact;
+	}
+
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
 
 	public int getRdcId() {
 		return rdcId;

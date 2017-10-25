@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.smartcold.zigbee.manage.entity.UserEntity;
 import com.smartcold.zigbee.manage.service.RedisService;
 
+import java.util.HashMap;
+
 /**
  * Created by qiangzi on 2017/8/29.
  */
@@ -48,6 +50,18 @@ public class RedisServiceImpl implements RedisService{
     @Cacheable(key = "'access_token'",value = "access_token")
     public String putWXToken(String access_token) {
         return access_token;
+    }
+
+    @Override
+    @Cacheable(key="'putPhoneClick'",value="permissions")
+    public HashMap<Integer, Long> putPhoneClick(HashMap<Integer, Long> userMap) {
+        return userMap;
+    }
+
+    @Override
+    @CacheEvict(value = "permissions",allEntries = true)
+    public void delPhoneClick() {
+
     }
 
     @Override

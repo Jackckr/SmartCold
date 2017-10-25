@@ -76,6 +76,7 @@
         </div>
     </div>
     <div class="flex" ng-if="user&&user.vipType!=0 || user&&user.id==vo.userid">
+        <p class="item" ng-if="vo.contact!=''&&vo.contact!=undefined"><span>联系人</span>{{vo.contact}}</div>
         <div class="item"><span>联系电话</span><b class="blue">
             <!--<a href="login.html" class="blue" ng-if="checkUserLogin()==false">登录后显示</a>
             <a href="login.html" class="grey" ng-if="user.vipType==0">实名认证后可见</a>-->
@@ -131,19 +132,19 @@
     <p><span>温度类型</span>{{tempType[vo.temperType]}}</p>
     <p><span>存放类型</span>{{saveType[vo.storageType]}}</p>
     <div ng-if="oSwitch">
-        <p ng-hide="vo.coldTruck1==0&&vo.coldTruck2==0&&vo.coldTruck3==0&&vo.coldTruck4==0"><span>冷藏车数量</span></p>
+        <!--<p ng-hide="vo.coldTruck1==0&&vo.coldTruck2==0&&vo.coldTruck3==0&&vo.coldTruck4==0"><span>冷藏车数量</span></p>
         <p ng-if="vo.coldTruck1>0"><span>小于&nbsp;1.8T:</span>{{vo.coldTruck1}}辆</p>
         <p ng-if="vo.coldTruck2>0"><span>1.8T&nbsp;~&nbsp;6T:</span>{{vo.coldTruck2}}辆</p>
         <p ng-if="vo.coldTruck3>0"><span>6T&nbsp;~&nbsp;14T:</span>{{vo.coldTruck3}}辆</p>
-        <p ng-if="vo.coldTruck4>0"><span>大于&nbsp;&nbsp;14T:</span>{{vo.coldTruck4}}辆</p>
+        <p ng-if="vo.coldTruck4>0"><span>大于&nbsp;&nbsp;14T:</span>{{vo.coldTruck4}}辆</p>-->
         <p ng-if="vo.structure"><span>建筑结构</span>{{struct[vo.structure]}}</p>
         <p ng-if="vo.buildtype && vo.buildtype!=''"><span>冷库层数</span>{{vo.buildfloors}}层</p>
         <div ng-if="vo.productcategory && vo.productcategory!=undefined" class="flex"><span class="item">商品品类</span><p class="item">{{vo.productcategory}}</p></div>
         <p ng-if="vo.website && vo.website!=undefined"><span>企业网址</span><a href="{{vo.website}}">{{vo.website}}</a></p>
         <p ng-if="vo.platform"><span>有无月台</span>{{vo.platform==1?'有':'无'}}</p>
         <p ng-if="vo.lihuoRoom"><span>有无理货区</span>{{vo.lihuoRoom==1?'有':'无'}}</p>
-        <p ng-if="vo.lihuoRoom==1"><span>理货区面积</span>{{vo.lihuoArea==0?'未填写':vo.lihuoArea}}</p>
-        <p ng-if="vo.lihuoTemperCtr"><span>理货区温控</span>{{vo.lihuoTemperCtr==1?'有':'无'}}</p>
+        <!--<p ng-if="vo.lihuoRoom==1"><span>理货区面积</span>{{vo.lihuoArea==0?'未填写':vo.lihuoArea}}</p>
+        <p ng-if="vo.lihuoTemperCtr"><span>理货区温控</span>{{vo.lihuoTemperCtr==1?'有':'无'}}</p>-->
         <p ng-if="vo.storageRefreg"><span>制冷剂类型</span>{{refreg[vo.storageRefreg]}}</p>
         <p ng-if="vo.temperRecord"><span>温度记录</span>{{isHave[vo.temperRecord]}}</p>
         <p ng-hide="vo.capacity1==0&&vo.capacity2==0&&vo.capacity3==0&&vo.capacity4==0"><span>分库容积</span></p>

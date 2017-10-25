@@ -157,6 +157,10 @@
                             </ul>
                         </td>
                     </tr>
+                    <tr>
+                        <td>联系人：</td>
+                        <td><input type="tel" placeholder="请输入联系人" name="contact" id="contact" maxlength="11"></td>
+                    </tr>
                     <!--上传图片end-->
                     <tr>
                         <td>联系电话：<b class="blue">*</b></td>
@@ -177,17 +181,7 @@
                                 <option value="0"></option>
                                 <option value="1">单层库</option>
                                 <option value="2">多层库</option>
-                            </select><input step="1" id="buildfloors" name="buildfloors" type="number" placeholder="请输入层数" style="width: 140px;margin-left: 10px;"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>有无封闭月台：<b class="blue">*</b></td>
-                        <td>
-                            <select name="platform" id="platform">
-                                <option value="0"></option>
-                                <option value="1">有</option>
-                                <option value="2">无</option>
-                            </select>
+                            </select><input step="1" id="buildfloors" name="buildfloors" type="number" placeholder="请输入层数" style="display:none;width: 140px;margin-left: 10px;"/>
                         </td>
                     </tr>
                     <tr>
@@ -205,7 +199,7 @@
                     <!--以上为必填项====================================================================-->
                     <!--以下非必填======================================================================-->
                     <tbody class="moreInfo hide">
-                    <tr>
+                    <!--<tr>
                         <td>冷藏车数量：</td>
                         <td class="oTd layui-form-pane">
                             <div class="layui-inline">
@@ -233,11 +227,21 @@
                                 </div><div class="layui-input-inline"><label class="layui-form-label">辆</label></div>
                             </div>
                         </td>
-                    </tr>
+                    </tr>-->
                     <tr>
                         <td>备注：</td>
                         <td>
                             <textarea placeholder="备注" name="remark" id="remark"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>有无封闭月台：</td>
+                        <td>
+                            <select name="platform" id="platform">
+                                <option value="0"></option>
+                                <option value="1">有</option>
+                                <option value="2">无</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
@@ -290,7 +294,7 @@
                             </select>
                         </td>
                     </tr>
-                    <tr id="lihuoAreaTr" style="display: none">
+                    <!--<tr id="lihuoAreaTr" style="display: none">
                         <td>理货区面积：</td>
                         <td>
                             <input name="lihuoArea" id="lihuoArea" type="number" placeholder="请输入冷库面积(只能输数字)/㎡">
@@ -305,7 +309,7 @@
                                 <option value="2">无</option>
                             </select>
                         </td>
-                    </tr>
+                    </tr>-->
                     <tr>
                         <td>制冷剂类型：</td>
                         <td>
