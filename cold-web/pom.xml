@@ -201,7 +201,7 @@
             <artifactId>spring-context-support</artifactId>
             <version>${spring.version}</version>
         </dependency>
-        	 <!-- https://mvnrepository.com/artifact/redis.clients/jedis redis 缓存管理2-->
+        <!-- https://mvnrepository.com/artifact/redis.clients/jedis redis 缓存管理2-->
 		<dependency>
            <groupId>org.springframework.data</groupId>
            <artifactId>spring-data-redis</artifactId>
