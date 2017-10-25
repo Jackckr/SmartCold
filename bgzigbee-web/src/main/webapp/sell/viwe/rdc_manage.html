@@ -136,6 +136,24 @@
             </div>
         </div>
         <div class="formCtr">
+            <div class="formTitle">省：<b>*</b></div>
+            <div class="formContain">
+                <select class="easyui-combobox" name="provinceId" id="provinceId" ></select>
+            </div>
+        </div>
+        <div class="formCtr">
+            <div class="formTitle">市：<b>*</b></div>
+            <div class="formContain">
+                <select class="easyui-combobox" name="cityId" id="cityId"></select>
+            </div>
+        </div>
+        <div class="formCtr">
+            <div class="formTitle">地理位置：<b>*</b></div>
+            <div class="formContain">
+                <input name="address" id="address" type="text">
+            </div>
+        </div>
+        <div class="formCtr">
             <div class="formTitle">面积：</div>
             <div class="formContain">
                 <input placeholder="冷库面积（平方米）" type="text" name="area" id="area">
@@ -153,18 +171,7 @@
                 </select>
             </div>
         </div>
-        <div class="formCtr">
-            <div class="formTitle">省：<b>*</b></div>
-            <div class="formContain">
-                <select class="easyui-combobox" name="provinceId" id="provinceId" ></select>
-            </div>
-        </div>
-        <div class="formCtr">
-            <div class="formTitle">市：<b>*</b></div>
-            <div class="formContain">
-                <select class="easyui-combobox" name="cityId" id="cityId"></select>
-            </div>
-        </div>
+
         <div class="formCtr">
             <div class="formTitle">可出租容量：<b>*</b></div>
             <div class="formContain">
@@ -176,54 +183,6 @@
                     <option value="吨">吨</option>
                     <option value="托">托</option>
                 </select>
-            </div>
-        </div>
-        <div class="formCtr">
-            <div class="formTitle">冷库总净高：<b>*</b></div>
-            <div class="formContain">
-                <input placeholder="请输入冷库净高(只能输数字)/m" type="text" name="height" id="height">
-            </div>
-        </div>
-        <div class="formCtr">
-            <div class="formTitle">地理位置：<b>*</b></div>
-            <div class="formContain">
-                <input name="address" id="address" type="text">
-            </div>
-        </div>
-        <div class="formCtr">
-            <div class="formTitle">冷库经营类型：<b>*</b></div>
-            <div class="formContain">
-                <select class="easyui-combobox" name="manageType" id="manageType">
-
-                </select>
-            </div>
-        </div>
-        <div class="formCtr">
-            <div class="formTitle">商品存放类型：<b>*</b></div>
-            <div class="formContain">
-                <select class="easyui-combobox" name="storageType" id="storageType">
-
-                </select>
-            </div>
-        </div>
-        <div class="formCtr">
-            <div class="formTitle">冷库温度类型：<b>*</b></div>
-            <div class="formContain">
-                <select class="easyui-combobox" name="temperType" id="temperType">
-
-                </select>
-            </div>
-        </div>
-        <div class="formCtr">
-            <div class="formTitle">联系人：</div>
-            <div class="formContain">
-                <input placeholder="请输入联系人姓名" type="text" name="contact" id="contact">
-            </div>
-        </div>
-        <div class="formCtr">
-            <div class="formTitle">联系电话：<b>*</b></div>
-            <div class="formContain">
-                <input placeholder="请输入联系方式" type="text" name="phoneNum" id="phoneNum">
             </div>
         </div>
         <div class="formCtr">
@@ -246,6 +205,47 @@
             </div>
         </div>
         <div class="formCtr">
+            <div class="formTitle">冷库总净高：<b>*</b></div>
+            <div class="formContain">
+                <input placeholder="请输入冷库净高(只能输数字)/m" type="text" name="height" id="height">
+            </div>
+        </div>
+
+        <div class="formCtr">
+            <div class="formTitle">冷库经营类型：<b>*</b></div>
+            <div class="formContain">
+                <select class="easyui-combobox" name="manageType" id="manageType">
+
+                </select>
+            </div>
+        </div>
+        <div class="formCtr">
+            <div class="formTitle">冷库温度类型：<b>*</b></div>
+            <div class="formContain">
+                <select class="easyui-combobox" name="temperType" id="temperType">
+
+                </select>
+            </div>
+        </div>
+        <div class="formCtr">
+            <div class="formTitle">有无温度记录：</div>
+            <div class="formContain">
+                <select class="easyui-combobox" name="temperRecord" id="temperRecord">
+                    <option value="0"></option>
+                    <option value="1">有</option>
+                    <option value="2" selected="selected">无</option>
+                </select>
+            </div>
+        </div>
+        <div class="formCtr">
+            <div class="formTitle">商品存放类型：<b>*</b></div>
+            <div class="formContain">
+                <select class="easyui-combobox" name="storageType" id="storageType">
+
+                </select>
+            </div>
+        </div>
+        <div class="formCtr">
             <div class="formTitle">存放商品品类：<b>*</b></div>
             <div class="formContain">
                 <input class="easyui-combobox" name="productcategory" id="productcategory" data-options="
@@ -257,12 +257,10 @@
             </div>
         </div>
         <div class="formCtr">
-            <div class="formTitle">是否有理货区：</div>
+            <div class="formTitle">制冷剂类型：</div>
             <div class="formContain">
-                <select class="easyui-combobox" name="lihuoRoom" id="lihuoRoom">
-                    <option value="0"></option>
-                    <option value="1">有</option>
-                    <option value="2" selected="selected">无</option>
+                <select class="easyui-combobox" name="storageRefreg" id="storageRefreg">
+
                 </select>
             </div>
         </div>
@@ -276,6 +274,32 @@
                 </select>
             </div>
         </div>
+        <div class="formCtr">
+            <div class="formTitle">是否有理货区：</div>
+            <div class="formContain">
+                <select class="easyui-combobox" name="lihuoRoom" id="lihuoRoom">
+                    <option value="0"></option>
+                    <option value="1">有</option>
+                    <option value="2" selected="selected">无</option>
+                </select>
+            </div>
+        </div>
+        <div class="formCtr">
+            <div class="formTitle">联系人：</div>
+            <div class="formContain">
+                <input placeholder="请输入联系人姓名" type="text" name="contact" id="contact">
+            </div>
+        </div>
+        <div class="formCtr">
+            <div class="formTitle">联系电话：<b>*</b></div>
+            <div class="formContain">
+                <input placeholder="请输入联系方式" type="text" name="phoneNum" id="phoneNum">
+            </div>
+        </div>
+
+
+
+
         <!--<div class="formCtr">
             <div class="formTitle">理货区面积：</div>
             <div class="formContain">
@@ -293,23 +317,12 @@
             </div>
         </div>-->
         <div class="formCtr">
-            <div class="formTitle">制冷剂类型：</div>
+            <div class="formTitle">企业网址：</div>
             <div class="formContain">
-                <select class="easyui-combobox" name="storageRefreg" id="storageRefreg">
+                <input name="website" id="website" type="text">
+            </div>
+        </div>
 
-                </select>
-            </div>
-        </div>
-        <div class="formCtr">
-            <div class="formTitle">有无温度记录：</div>
-            <div class="formContain">
-                <select class="easyui-combobox" name="temperRecord" id="temperRecord">
-                    <option value="0"></option>
-                    <option value="1">有</option>
-                    <option value="2" selected="selected">无</option>
-                </select>
-            </div>
-        </div>
         <div class="formCtr">
             <div class="formTitle">周边设施：</div>
             <div class="formContain">
@@ -322,12 +335,7 @@
                 <textarea placeholder="" name="remark" id="remark"></textarea>
             </div>
         </div>
-        <div class="formCtr">
-            <div class="formTitle">企业网址：</div>
-            <div class="formContain">
-                <input name="website" id="website" type="text">
-            </div>
-        </div>
+
         <!--<div class="formCtr" style="width: 100%">
             <div class="formTitle">冷藏车数量:</div>
             <div class="formContain clearfix">
