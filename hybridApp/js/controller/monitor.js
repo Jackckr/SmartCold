@@ -15,7 +15,7 @@ mui('.mui-popover').on('tap', 'ul>li>a', function (e) {
     var index = parseInt(this.getAttribute("data-index"));
     localStorage.showIndex = index;
     $('#box li').eq(index).show().siblings().hide();    
-    switchFn(index);
+    switchFn(index,false);
     //下面的循环  纯粹是操作样式代码
     for (var i = 0; i < $('.rlTab a').length; i++) {
         var a_href = $('.rlTab').children('a').eq(i).attr('href');
@@ -65,8 +65,13 @@ var setInit = {
         });
 	},
     //初始化rdc列表+默认展示温度监控图表
-    temp: function (rdc) {    	
-        mui.ajax(smartCold + 'i/coldStorageSet/findStorageSetByRdcId', {
+    temp: function (rdc,isreload) {
+    	  if(tempsets){
+    	  	  for (var i = 0; i < mystorages.length; i++) {
+                                tempLoad(mystorages[i], tempsets, false);
+               }
+    	  }else{
+    	  	 mui.ajax(smartCold + 'i/coldStorageSet/findStorageSetByRdcId', {
             data: {rdcID: rdc.id},
             dataType: 'json', //服务器返回json格式数据
             type: 'get', //HTTP请求类型
@@ -90,6 +95,8 @@ var setInit = {
                 }
             }
         });
+    	  }
+       
     },
     //初始化电量
     electric:function(rdcId){
@@ -382,21 +389,21 @@ function clearSwiper() {
 clearInterval(DiDa);
 var DiDa = setInterval(function () {
     var didaIndex = Number(localStorage.showIndex);    
-    switchFn(didaIndex);
+    switchFn(didaIndex,true);
 }, 30000);
 
-function switchFn(didaIndex){
+function switchFn(didaIndex,isreload){
 	switch (didaIndex) {
 	    case 0:
-	        setInit.temp(rdc);
+	        setInit.temp(rdc,isreload);
 	        console.log(didaIndex);
 	        break;
 	    case 1:
-	    	setInit.electric(rdc.id);
+	    	setInit.electric(rdc.id,isreload));
 	        console.log(didaIndex);
 	        break;
 	    case 2:
-            setInit.water(rdc.id);
+            setInit.water(rdc.id,isreload));
 	        console.log(didaIndex);
 	        break;
 	    case 3:
