@@ -8,17 +8,110 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<!--标准mui.css-->
 		<link rel="stylesheet" href="css/mui.min.css">
-		
+		<link rel="stylesheet" type="text/css" href="css/mui.picker.min.css"/>	
+		<link rel="stylesheet" type="text/css" href="css/style/query.css"/>		
 </head>
 <body>
-	<h1>查询页面</h1>
-	<h1>查询页面</h1>
-	<h1>查询页面</h1>
-	<h1>查询页面</h1>
-	<h1>查询页面</h1>
+	<div class="mui-content">
+	    <div class="mui-scroll-wrapper">
+	        <div class="mui-scroll query">
+	            <h4>请选择需要查询的项目：</h4>
+	            <div id="project">
+					<button data-index="0" class="mui-btn mui-btn-success">冷库温度</button>
+					<button data-index="1" class="mui-btn">冷库温度</button>
+					<button data-index="2" class="mui-btn">冷库门</button>
+					<button data-index="3" class="mui-btn">月台门</button>
+					<button data-index="4" class="mui-btn">压缩机组</button>
+					<button data-index="5" class="mui-btn">压缩机-排气温度</button>
+				</div>
+				
+				<h4>您所选择的项目是：</h4>
+				<a>冷库电量-{电表1,电表2,电表3,电表4,数据流量表(b),GPRS信号强度表(>17)}</a>
+				
+				<h4>请选择时间范围：</h4>
+				<ul class="mui-row dateUl">
+					<li class="mui-col-sm-3 mui-col-xs-3 mui-text-right">开始时间:</li>
+					<li class="mui-col-sm-9 mui-col-xs-9 dateInput" id='start' data-options='{}'>请选择开始时间</li>
+				</ul>
+				<ul class="mui-row dateUl">
+					<li class="mui-col-sm-3 mui-col-xs-3 mui-text-right">结束时间:</li>
+					<li class="mui-col-sm-9 mui-col-xs-9 dateInput" id='end' data-options='{}'>请选择结束时间</li>
+				</ul>
+				<button class="btn mui-btn mui-btn-primary mui-btn-block" id="btnSubmit">查询</button>
+				<div id="historyChart"></div>				
+	        </div>
+	    </div>
+	</div>
+	<div class="mui-hidden" id="formDiv">
+		<!--弹框选项-->
+		<div class="mui-input-group">
+			<div class="mui-input-row mui-checkbox">
+				<label>低温库</label>
+				<input name="checkbox1" value="Item 3" type="checkbox" >
+			</div>
+			<div class="mui-input-row mui-checkbox">
+				<label>变温库</label>
+				<input name="checkbox1" value="Item 4" type="checkbox" checked>
+			</div>
+			<div class="mui-input-row mui-radio">
+				<label>低温库</label>
+				<input name="radio1" type="radio">
+			</div>
+			<div class="mui-input-row mui-radio">
+				<label>变温库</label>
+				<input name="radio1" type="radio">
+			</div>
+		</div>
+		<div id="btnSure">
+			<button class="btn mui-btn mui-btn-danger mui-btn-block" data-index='0'>取消</button>
+			<button class="btn mui-btn mui-btn-success mui-btn-block" data-index='1'>查询</button>
+		</div>
+	</div>
 	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery-1.9.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/mui.picker.min.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
-		mui.init()
+        (function($) {
+            $.init();
+            var btns = $('.dateInput');
+            btns.each(function(i, btn) {
+                btn.addEventListener('tap', function() {
+                    var _self = this;
+                    if(_self.picker) {
+                        _self.picker.show(function (rs) {
+                            _self.innerHTML =  rs.text;
+                            _self.picker.dispose();
+                            _self.picker = null;
+                        });
+                    } else {
+                        var optionsJson = this.getAttribute('data-options') || '{}';
+                        var options = JSON.parse(optionsJson);
+                        var id = this.getAttribute('id');
+                        _self.picker = new $.DtPicker(options);
+                        _self.picker.show(function(rs) {
+                            _self.innerHTML =  rs.text;
+                            _self.picker.dispose();
+                            _self.picker = null;
+                        });
+                    }
+                }, false);
+            });
+        })(mui);
+        mui('.mui-scroll-wrapper').scroll({
+            deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
+        });
+        mui("#project").on('tap','button',function(){
+            $(this).addClass("mui-btn-success").siblings().removeClass("mui-btn-success")
+            $("#formDiv").removeClass('mui-hidden');
+        })
+        mui("#btnSure").on('tap','button',function(){
+            var index=this.getAttribute('data-index');
+            if(index==1){//确定查询
+
+            }
+            $("#formDiv").addClass('mui-hidden');
+        })
+
 	</script>
 </body>
 </html>
