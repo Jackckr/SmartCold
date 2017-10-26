@@ -82,7 +82,7 @@ public class QTCollectionController extends BaseController {
 				 rdcid=rdcspconf.getRdcid();
 				 //计算设备有没有告警
 				 if(splittimeHashMap.containsKey(apID)){ exptime = cutime-splittimeHashMap.get(apID);}splittimeHashMap.put(apID, cutime);restAp(apID);
-				 this.cacheService.putDataTocache("dev_data_"+apID, data);//缓存数据 -----防止需要
+				 this.cacheService.putDataTocache("dev_data:"+apID, data);//缓存数据 -----防止需要
 				 this.batchData(Integer.toString(rdcid),dataMap);//保存数据  建议由数据中心处理  ---和丹弗斯一样
 			}
 			if(isupdate.containsKey(apID)){cisupdat=true;isupdate.remove(apID);}
@@ -112,7 +112,7 @@ public class QTCollectionController extends BaseController {
 	    	//当前是告警信息
 	    	if(name.indexOf("警")>-1){if("1".equals(info.get("currentvalue"))){wardataList.add(new WarningsInfo(name,Integer.parseInt(rdcid),1,date));}continue;}
 	    	newdata = config.get(name);if(newdata==null){ continue;}
-	    	if(unitConvers.containsKey(name)){//unitConvers 数据转换集合->电压  ，压力转换
+	    	if(unitConvers!=null&&unitConvers.containsKey(name)){//unitConvers 数据转换集合->电压  ，压力转换
 			     if(! counsValue(unitConvers, newdata, info, name)){ continue;}//  加入转换对象
 	    	}else{
 	    		 newdata.setValue(info.get("currentvalue"));
@@ -220,7 +220,7 @@ public class QTCollectionController extends BaseController {
 	@RequestMapping(value = "/updateConfig")
 	@ResponseBody
 	public boolean updateConfig(String apid,Integer pl,String key,String val) {
-		 plMap.put(apid, pl);
+		if(pl!=null){plMap.put(apid, pl);}
 		 isupdate.put(apid, true);
 		 HashMap<String, Object> dataHashMap=new HashMap<>();
          dataHashMap.put("tagname", key);
@@ -266,7 +266,7 @@ public class QTCollectionController extends BaseController {
 	@RequestMapping(value = "/getQTData")
 	@ResponseBody
 	public ResponseData<String>  getQTData(String apid) {
-			String data=cacheService.getDataFromCache("dev_data_"+apid);
+			String data=cacheService.getDataFromCache("dev_data:"+apid);
 			if(StringUtil.isnotNull(data)){
 				return ResponseData.newSuccess(data);
 			}
