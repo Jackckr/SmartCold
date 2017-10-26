@@ -19,15 +19,16 @@
             classpath*:config/core/appcontext-core.xml
         </param-value>
 	</context-param>
-<!-- 	spring session filter -->
+    <!-- 	spring session filter -->
 	<filter>
 	    <filter-name>springSessionRepositoryFilter</filter-name>
 	    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 	</filter>
 	<filter-mapping>
 	    <filter-name>springSessionRepositoryFilter</filter-name>
-	    <url-pattern>/*</url-pattern>
+	    <url-pattern>/i/*</url-pattern>
 	</filter-mapping> 
+	
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
@@ -41,19 +42,6 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-
- <!-- 配置登陆过滤器 -->
-<!--    <filter> -->
-<!--        <filter-name>login</filter-name> -->
-<!--        <filter-class>com.jingxing.oa.filter.LoginFilter</filter-class> -->
-<!--    </filter> -->
-<!--    <filter-mapping> -->
-<!--        <filter-name>login</filter-name> -->
-<!--        <url-pattern>/a/*</url-pattern> -->
-<!--    </filter-mapping> -->
-
-
-
 
 	 <filter>
 		  <filter-name>characterEncodingFilter</filter-name>
@@ -94,6 +82,7 @@
 		<filter-name>noheader</filter-name>
 		<url-pattern>/api/*</url-pattern>
 	</filter-mapping>
+	
 	<filter-mapping> 
 		<filter-name>companyFilter</filter-name>
 		<url-pattern>*.html</url-pattern>

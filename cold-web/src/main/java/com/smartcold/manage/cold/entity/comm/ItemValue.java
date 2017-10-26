@@ -22,8 +22,6 @@ public class ItemValue implements Cloneable,Serializable {
 		super();
 	}
 	
-	
-
 
 
 	public ItemValue(String table,String key) {

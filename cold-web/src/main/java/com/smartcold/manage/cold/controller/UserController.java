@@ -59,12 +59,11 @@ public class UserController extends BaseController {
 			if(cookies==null||cookies.length==0){return true;}
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("token")) {
-					cahcCacheService.removeKey(cookie.getValue());
+					cahcCacheService.removeKey("user:token:"+cookie.getValue());
 					break;
 				}
 			}
 			return true;
-		
 	}
 	
 	@RequestMapping(value = "/login")
@@ -76,7 +75,7 @@ public class UserController extends BaseController {
 			String cookie = EncodeUtil.encode("sha1", String.format("%s%s", userName, new Date().getTime()));
 			RoleUser roleUser = roleUserService.getRoleIdByUserId(user.getId());
 			user.setRole(roleUser==null?0:roleUser.getRoleid());
-			cahcCacheService.putData(cookie, user);
+			cahcCacheService.putData("user:token:"+cookie, user);
 			if(roleUser==null){//判断有没有申请
 				if(user.getType()==0){
 					return new ResultDto(this.rdcauthMapping.getRdcAuthByUid(user.getId())==0?2:3, String.format("token=%s", cookie));//未授权
