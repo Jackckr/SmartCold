@@ -37,7 +37,7 @@ public class RdcConfServiceImpl implements RdcConfService {
 	private static Gson gson = new Gson();
 	
 	@Override
-	@Cacheable(key="'findRdcConfByDevId'+args[0]")
+	@Cacheable(key="'dev_rdcconf:'+args[0]")
 	public ItemConf findRdcConfByDevId(String apID){
 		return congfigMapper.findRdcConfByDevId(apID);
 	}

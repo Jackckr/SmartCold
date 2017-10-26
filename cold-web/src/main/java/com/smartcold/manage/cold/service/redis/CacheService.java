@@ -8,11 +8,11 @@ package com.smartcold.manage.cold.service.redis;
 public interface CacheService
 {
 	
-	public void cleraChace(String key);
+	public void removeKey(String key);
    
-    public <V> V getDataFromCache(String key);
+    public <V> V getData(String key);
    
-	public void putDataTocache(String key,Object  value);
+	public void putData(String key,Object  value);
 	
 	
 }

@@ -16,21 +16,36 @@ public class CacheServiceImpl implements CacheService{
 
    @Resource
    private RedisTemplate<String,Object> template;
-   
-	
-	public void cleraChace(String key){
-    	template.delete(key);
-    }
-	
-   @SuppressWarnings("unchecked")
-   public <V> V getDataFromCache(String key){
-   	BoundValueOperations<String, Object> boundValueOps = template.boundValueOps(key);
-   	return (V)boundValueOps.get();
-   }
-   
-	public void putDataTocache(String key,Object value){
-	    	BoundValueOperations<String, Object> boundHashOps=template.boundValueOps(key);
-	    	boundHashOps.set(value);
+
+	@Override
+	public void removeKey(String key) {
+		try {
+			template.delete(key);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public <V> V getData(String key) {
+		try {
+			BoundValueOperations<String, Object> boundValueOps = template.boundValueOps(key);
+			return (V)boundValueOps.get();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public void putData(String key, Object value) {
+		try {
+			BoundValueOperations<String, Object> boundHashOps=template.boundValueOps(key);
+			boundHashOps.set(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	 
 

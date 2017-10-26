@@ -37,7 +37,7 @@
         <property name="hostName" value="192.168.1.138"/>
         <property name="port" value="6379"/>
         <property name="password" value="sc12qwaszx"/>
-      <property name="database" value="14"/> 
+      <property name="database" value="13"/> 
         <property name="poolConfig" ref="poolConfig"/>
     </bean>
  

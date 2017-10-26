@@ -52,10 +52,10 @@ public class QTCollectionController extends BaseController {
 	@Autowired
 	private DFSDataCollectionMapper dataservice;
 	
-	private static HashMap<String, Long> splittimeHashMap=new HashMap<>();
-	private static HashMap<String, Boolean> isupdate=new HashMap<String, Boolean>();
-	private static HashMap<String, List<String>> updateLog=new HashMap<String, List<String>>();
-	private static HashMap<String, Integer> plMap=new HashMap<String, Integer>();
+//	private static HashMap<String, Long> splittimeHashMap=new HashMap<>();
+//	private static HashMap<String, Boolean> isupdate=new HashMap<String, Boolean>();
+//	private static HashMap<String, List<String>> updateLog=new HashMap<String, List<String>>();
+//	private static HashMap<String, Integer> plMap=new HashMap<String, Integer>();
 	private static HashMap<String, List<String []>> errMap=new HashMap<String ,List<String []>>();
 	private static HashMap<String, List<HashMap<String, Object>>> updateData=new HashMap<String, List<HashMap<String, Object>>>();
 
@@ -70,22 +70,24 @@ public class QTCollectionController extends BaseController {
 	@RequestMapping(value = "/QTDataCollection", method = RequestMethod.POST)
 	@ResponseBody
 	public Object QTDataCollection(@RequestBody String data) {		
-		long cutime=System.currentTimeMillis(),exptime=0;boolean cisupdat=false;;
-		 String apID="";int rdcid=0;
+		String apID="";int rdcid=0;
+		long cutime=System.currentTimeMillis(),exptime=0;Boolean cisupdat=false;;
 		try {
 			if(StringUtil.isNull(data)){return DataResultDto.newFailure();}
 			Map<String, Object> dataMap = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 			if(dataMap.containsKey("infos")){
 				 apID = dataMap.get("apID").toString();
+				 this.cacheService.putData("dev_data:"+apID, data);//缓存数据 -----防止需要
 				 ItemConf rdcspconf = this.rdcConfService.findRdcConfByDevId(apID);
 				 if(rdcspconf==null){ return  DataResultDto.newSuccess();}
 				 rdcid=rdcspconf.getRdcid();
 				 //计算设备有没有告警
-				 if(splittimeHashMap.containsKey(apID)){ exptime = cutime-splittimeHashMap.get(apID);}splittimeHashMap.put(apID, cutime);restAp(apID);
-				 this.cacheService.putDataTocache("dev_data:"+apID, data);//缓存数据 -----防止需要
+//				 if(splittimeHashMap.containsKey(apID)){ exptime = cutime-splittimeHashMap.get(apID);}splittimeHashMap.put(apID, cutime);restAp(apID);
 				 this.batchData(Integer.toString(rdcid),dataMap);//保存数据  建议由数据中心处理  ---和丹弗斯一样
 			}
-			if(isupdate.containsKey(apID)){cisupdat=true;isupdate.remove(apID);}
+			
+			cisupdat = this.cacheService.getData("dev_isup:"+apID);
+			if(cisupdat!=null&&cisupdat){cisupdat=true;  cacheService.removeKey("dev_isup:"+apID);}
 			System.err.println("收到 QT数据："+apID+"====================间隔时间："+exptime+" 是否更新数据："+cisupdat+"时间"+TimeUtil.getDateTime());
 		   return DataResultDto.newSuccess(cisupdat);//更新数据服务
 		} catch (Exception e) {
@@ -183,7 +185,9 @@ public class QTCollectionController extends BaseController {
 			resMap.put("status","200");
 			resMap.put("time", TimeUtil.getMillTime());
 			//判断是否有PL
-			if(plMap.containsKey(apID)&&plMap.get(apID)!=null){	resMap.put("PL", Integer.toString(plMap.get(apID)));}
+			
+			Integer  pl = this.cacheService.getData("dev_PL:"+apID);
+			if(pl!=null){	resMap.put("PL", pl);}
 			List<HashMap<String, Object>> infoHashMaps=new ArrayList<HashMap<String, Object>>();
 			if(updateData.containsKey(apID)){
 				infoHashMaps= updateData.get(apID);
@@ -194,15 +198,15 @@ public class QTCollectionController extends BaseController {
 		    resMap.put("infos", infoHashMaps);
 	     	String msg=  TimeUtil.getDateTime()+  "更新"+apID+"配置:"+JSON.toJSONString(infoHashMaps)+"\r\n";
 			System.err.println(msg);
-			if(updateLog.containsKey(apID)){
-			     List<String> list = updateLog.get(apID);
-			     list.clear();
-			     list.add(msg);
-			}else{
-				List<String> loglist=new ArrayList<>(); 
-				loglist.add(msg);
-				updateLog.put(apID, loglist);	
-			}
+//			if(updateLog.containsKey(apID)){
+//			     List<String> list = updateLog.get(apID);
+//			     list.clear();
+//			     list.add(msg);
+//			}else{
+//				List<String> loglist=new ArrayList<>(); 
+//				loglist.add(msg);
+//				updateLog.put(apID, loglist);	
+//			}
 			return resMap;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -220,8 +224,13 @@ public class QTCollectionController extends BaseController {
 	@RequestMapping(value = "/updateConfig")
 	@ResponseBody
 	public boolean updateConfig(String apid,Integer pl,String key,String val) {
-		if(pl!=null){plMap.put(apid, pl);}
-		 isupdate.put(apid, true);
+		if(pl!=null){
+			 this.cacheService.putData("dev_PL:"+apid, pl);//缓存数据 -----防止需要
+		}
+//		 isupdate.put(apid, true);
+		 
+		 this.cacheService.putData("dev_isup:"+apid, true);//缓存数据 -----防止需要
+		 
 		 HashMap<String, Object> dataHashMap=new HashMap<>();
          dataHashMap.put("tagname", key);
          dataHashMap.put("value", val);
@@ -253,7 +262,7 @@ public class QTCollectionController extends BaseController {
 	public HashMap<String, Object>  getQTConfig(String apid) {
 		 List<HashMap<String, Object>> list = updateData.get(apid);
 		 HashMap<String, Object> hashMap = new HashMap<>();
-		 hashMap.put("PL", plMap.get(apid));
+		 hashMap.put("PL",this.cacheService.getData("dev_PL:"+apid));
 		 list.add(hashMap);
 		return hashMap;
 	}
@@ -266,7 +275,7 @@ public class QTCollectionController extends BaseController {
 	@RequestMapping(value = "/getQTData")
 	@ResponseBody
 	public ResponseData<String>  getQTData(String apid) {
-			String data=cacheService.getDataFromCache("dev_data:"+apid);
+			String data=cacheService.getData("dev_data:"+apid);
 			if(StringUtil.isnotNull(data)){
 				return ResponseData.newSuccess(data);
 			}
@@ -293,66 +302,66 @@ public class QTCollectionController extends BaseController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = "/getQTUPlog")
-	@ResponseBody
-	public Object getQTUPlog(String apid) {
-			return updateLog.get(apid);
-	}
+//	@RequestMapping(value = "/getQTUPlog")
+//	@ResponseBody
+//	public Object getQTUPlog(String apid) {
+//			return updateLog.get(apid);
+//	}
 	
-	 /**
-	 * 10分钟检查一次
-	 * Task:检查AP
-	 * 超过系统规定时间 ，发送短信通知。。
-	 * 
-	 */
-	@Scheduled(cron = "0 0/1 * * * ?")
-	public void checkAPStatus() {
-		try {
-			for (String key : splittimeHashMap.keySet()) {
-			  if(	System.currentTimeMillis()-	splittimeHashMap.get(key)>60000){
-				
-				  if(errMap.containsKey(key)){
-						List<String[]> list = errMap.get(key);
-						if(list.size()>0){
-							String [] longs = list.get(list.size()-1);//取末端数据
-							if(StringUtil.isNull(longs[0])){
-								longs[0]=TimeUtil.getDateTime();
-							}
-							else if(StringUtil.isNull(longs[2])){
-								longs[1]=(Integer.parseInt(longs[1])+1)+"";
-							}else{
-								String [] longs1 =new String[]{TimeUtil.getDateTime(),"1",""};
-								list.add(longs1);
-							}
-						}else{
-							String [] longs =new String[]{TimeUtil.getDateTime(),"1",""};
-							list.add(longs);
-						}
-					}else{
-						String [] longs =new String[]{TimeUtil.getDateTime(),"1",""};
-						List<String []> list=new ArrayList<String []>();
-						list.add(longs);
-						errMap.put(key, list);
-					}
-			  }
-			}
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	private void restAp(String apid){
-		if(errMap.containsKey(apid)){
-			List<String[]> list = errMap.get(apid);
-			if(list.size()>0){
-				String [] longs = list.get(list.size()-1);//取末端数据
-				if(StringUtil.isNull(longs[2])){
-					longs[2]=TimeUtil.getDateTime();
-				}
-			}
-		}
-	}
+//	 /**
+//	 * 10分钟检查一次
+//	 * Task:检查AP
+//	 * 超过系统规定时间 ，发送短信通知。。
+//	 * 
+//	 */
+//	@Scheduled(cron = "0 0/1 * * * ?")
+//	public void checkAPStatus() {
+//		try {
+//			for (String key : splittimeHashMap.keySet()) {
+//			  if(	System.currentTimeMillis()-	splittimeHashMap.get(key)>60000){
+//				
+//				  if(errMap.containsKey(key)){
+//						List<String[]> list = errMap.get(key);
+//						if(list.size()>0){
+//							String [] longs = list.get(list.size()-1);//取末端数据
+//							if(StringUtil.isNull(longs[0])){
+//								longs[0]=TimeUtil.getDateTime();
+//							}
+//							else if(StringUtil.isNull(longs[2])){
+//								longs[1]=(Integer.parseInt(longs[1])+1)+"";
+//							}else{
+//								String [] longs1 =new String[]{TimeUtil.getDateTime(),"1",""};
+//								list.add(longs1);
+//							}
+//						}else{
+//							String [] longs =new String[]{TimeUtil.getDateTime(),"1",""};
+//							list.add(longs);
+//						}
+//					}else{
+//						String [] longs =new String[]{TimeUtil.getDateTime(),"1",""};
+//						List<String []> list=new ArrayList<String []>();
+//						list.add(longs);
+//						errMap.put(key, list);
+//					}
+//			  }
+//			}
+//		} catch (NumberFormatException e) {
+//			e.printStackTrace();
+//		}
+//		
+//	}
+//	
+//	private void restAp(String apid){
+//		if(errMap.containsKey(apid)){
+//			List<String[]> list = errMap.get(apid);
+//			if(list.size()>0){
+//				String [] longs = list.get(list.size()-1);//取末端数据
+//				if(StringUtil.isNull(longs[2])){
+//					longs[2]=TimeUtil.getDateTime();
+//				}
+//			}
+//		}
+//	}
 	
 	
 	/**

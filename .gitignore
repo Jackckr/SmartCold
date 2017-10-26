@@ -97,7 +97,9 @@ store-web/src/main/resources/config/properties
 store-web/src/main/resources/config/properties
 store-web/src/main/resources/config/spring
 store-web/src/main/resources/config/springmvc
-
+cold-web/src/main/resources/config
+cold-web/src/main/resources/config/core/appcontext-core.xml
+#doc/*.txt # 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
 
 Servers
 cold-web/target

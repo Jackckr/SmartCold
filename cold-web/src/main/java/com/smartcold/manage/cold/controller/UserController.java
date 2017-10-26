@@ -59,7 +59,7 @@ public class UserController extends BaseController {
 			if(cookies==null||cookies.length==0){return true;}
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("token")) {
-					cahcCacheService.cleraChace(cookie.getValue());
+					cahcCacheService.removeKey(cookie.getValue());
 					break;
 				}
 			}
@@ -76,7 +76,7 @@ public class UserController extends BaseController {
 			String cookie = EncodeUtil.encode("sha1", String.format("%s%s", userName, new Date().getTime()));
 			RoleUser roleUser = roleUserService.getRoleIdByUserId(user.getId());
 			user.setRole(roleUser==null?0:roleUser.getRoleid());
-			cahcCacheService.putDataTocache(cookie, user);
+			cahcCacheService.putData(cookie, user);
 			if(roleUser==null){//判断有没有申请
 				if(user.getType()==0){
 					return new ResultDto(this.rdcauthMapping.getRdcAuthByUid(user.getId())==0?2:3, String.format("token=%s", cookie));//未授权
@@ -113,7 +113,7 @@ public class UserController extends BaseController {
 				user.setToken(cookie);
 				user.setSystoke( StringUtil.MD5pwd(password, cookie));
 				request.getSession().setAttribute("user",user);
-				cahcCacheService.putDataTocache(cookie, user);
+				cahcCacheService.putData("user:token:"+cookie, user);
 				if(roleUser==null){//判断有没有申请
 					if(user.getType()==0){
 						return new ResultDto(this.rdcauthMapping.getRdcAuthByUid(user.getId())==0?2:3, String.format("token=%s", cookie));//未授权
@@ -182,7 +182,7 @@ public class UserController extends BaseController {
 		UserEntity user =	(UserEntity) request.getSession().getAttribute("user");
 		if(user!=null){  return user; }
 		if(StringUtil.isnotNull(token)){
-			 user = cahcCacheService.getDataFromCache(token);
+			 user = cahcCacheService.getData("user:token:"+token);
 			if(user!=null){return user;}
 		}
 		if(StringUtil.isNull(token)){
@@ -193,7 +193,7 @@ public class UserController extends BaseController {
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("token")) {
 					token=cookie.getValue();
-					 user = cahcCacheService.getDataFromCache(token);
+					 user = cahcCacheService.getData("user:token:"+token);
 					if(user!=null){return user;}else{return new UserEntity();}
 				}
 			}
@@ -244,7 +244,7 @@ public class UserController extends BaseController {
 	public boolean checkOldPassword(HttpServletRequest request,String pwd,String token){
 		if(StringUtil.isNull(pwd)||StringUtil.isNull(token)){return false;};
 		pwd=EncodeUtil.encodeByMD5(pwd);
-		UserEntity user = cahcCacheService.getDataFromCache(token);
+		UserEntity user = cahcCacheService.getData("user:token:"+token);
 		if(user!=null){
 			user = userDao.findById(user.getId());
 		}else{
