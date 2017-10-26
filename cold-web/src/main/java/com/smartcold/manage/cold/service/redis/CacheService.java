@@ -1,4 +1,4 @@
-package com.smartcold.manage.cold.service;
+package com.smartcold.manage.cold.service.redis;
 
 
 

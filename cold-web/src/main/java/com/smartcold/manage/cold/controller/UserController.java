@@ -20,10 +20,10 @@ import com.smartcold.manage.cold.dao.olddb.UserMapper;
 import com.smartcold.manage.cold.dto.ResultDto;
 import com.smartcold.manage.cold.entity.olddb.RoleUser;
 import com.smartcold.manage.cold.entity.olddb.UserEntity;
-import com.smartcold.manage.cold.service.CacheService;
 import com.smartcold.manage.cold.service.RoleService;
 import com.smartcold.manage.cold.service.RoleUserService;
 import com.smartcold.manage.cold.service.UserService;
+import com.smartcold.manage.cold.service.redis.CacheService;
 import com.smartcold.manage.cold.util.EncodeUtil;
 import com.smartcold.manage.cold.util.ResponseData;
 import com.smartcold.manage.cold.util.StringUtil;
@@ -53,7 +53,7 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public Object logout(HttpServletRequest request,String token) {
 			HttpSession session = request.getSession();
-//			session.removeAttribute("user");
+			session.removeAttribute("user");
 			session.invalidate();//session失效
 			Cookie[] cookies = request.getCookies();
 			if(cookies==null||cookies.length==0){return true;}
@@ -112,7 +112,7 @@ public class UserController extends BaseController {
 				String cookie =  EncodeUtil.encode("sha1", String.format("%s%s", userName, new Date().getTime()));
 				user.setToken(cookie);
 				user.setSystoke( StringUtil.MD5pwd(password, cookie));
-//				request.getSession().setAttribute("user",user);
+				request.getSession().setAttribute("user",user);
 				cahcCacheService.putDataTocache(cookie, user);
 				if(roleUser==null){//判断有没有申请
 					if(user.getType()==0){

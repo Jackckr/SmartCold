@@ -10,12 +10,12 @@ import com.alibaba.fastjson.JSON;
 public class Client {
 	
 	public static void main(String[] args) throws Exception {
-		User user=new User(1,25,1,"HH");
+//		User user=new User(1,25,1,"HH");
 		Socket	server = new Socket("192.168.1.138", 2196);
 		BufferedReader in = new BufferedReader(new InputStreamReader( server.getInputStream()));
 		PrintWriter out = new PrintWriter(server.getOutputStream());
-	    String jsonString = JSON.toJSONString(user);
-		out.println(jsonString);
+//	    String jsonString = JSON.toJSONString(user);
+		out.println("");
 		out.flush();
 		System.out.println("返回时间："+in.readLine());
 		

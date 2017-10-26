@@ -26,8 +26,8 @@ import com.smartcold.manage.cold.entity.comm.ItemConf;
 import com.smartcold.manage.cold.entity.comm.ItemValue;
 import com.smartcold.manage.cold.entity.newdb.WarningsInfo;
 import com.smartcold.manage.cold.entity.olddb.ConversionEntity;
-import com.smartcold.manage.cold.service.CacheService;
 import com.smartcold.manage.cold.service.RdcConfService;
+import com.smartcold.manage.cold.service.redis.CacheService;
 import com.smartcold.manage.cold.util.ResponseData;
 import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.StringUtil;
@@ -42,7 +42,6 @@ import com.smartcold.manage.cold.util.TimeUtil;
 public class QTCollectionController extends BaseController {
 
 	private static Gson gson = new Gson();
-	
 	@Autowired
 	private CacheService cacheService;
 	@Autowired
@@ -83,7 +82,7 @@ public class QTCollectionController extends BaseController {
 				 rdcid=rdcspconf.getRdcid();
 				 //计算设备有没有告警
 				 if(splittimeHashMap.containsKey(apID)){ exptime = cutime-splittimeHashMap.get(apID);}splittimeHashMap.put(apID, cutime);restAp(apID);
-				 this.cacheService.putDataTocache("rdc_dev_data_"+rdcid, data);//缓存数据 -----防止需要
+				 this.cacheService.putDataTocache("dev_data_"+apID, data);//缓存数据 -----防止需要
 				 this.batchData(Integer.toString(rdcid),dataMap);//保存数据  建议由数据中心处理  ---和丹弗斯一样
 			}
 			if(isupdate.containsKey(apID)){cisupdat=true;isupdate.remove(apID);}
@@ -103,6 +102,7 @@ public class QTCollectionController extends BaseController {
         Date date = new Date();
 	    ArrayList<ItemValue> dataList = null;
 	    String table =null;  ItemValue newdata=null;
+	    String cutttime=TimeUtil.getDateTime();
 	    ArrayList<WarningsInfo> wardataList = new ArrayList<WarningsInfo>();
 	    HashMap<String, ArrayList<ItemValue>> tempMap=new HashMap<String, ArrayList<ItemValue>>();
 	    List<Map<String, String>> dataMapList=   ((List<Map<String, String>>) dataMap.get("infos"));
@@ -111,15 +111,15 @@ public class QTCollectionController extends BaseController {
 	    	
 	    	//当前是告警信息
 	    	if(name.indexOf("警")>-1){if("1".equals(info.get("currentvalue"))){wardataList.add(new WarningsInfo(name,Integer.parseInt(rdcid),1,date));}continue;}
-	    	
 	    	newdata = config.get(name);if(newdata==null){ continue;}
 	    	if(unitConvers.containsKey(name)){//unitConvers 数据转换集合->电压  ，压力转换
 			     if(! counsValue(unitConvers, newdata, info, name)){ continue;}//  加入转换对象
 	    	}else{
 	    		 newdata.setValue(info.get("currentvalue"));
-				 newdata.setTime( info.get("lasttime"));
+				 newdata.setTime(cutttime);//info.get("lasttime")
 	    	}
 			 table = newdata.getTable();
+			
 			 if(StringUtil.isnotNull(table)){
 				 if(tempMap.containsKey(table)){//存在异常代码块
 					 tempMap.get(table).add(newdata);
@@ -148,6 +148,7 @@ public class QTCollectionController extends BaseController {
 		if(SetUtil.isNotNullMap(tempMap)){
 			for (String key : tempMap.keySet()) {
 				try {
+					System.err.println(key+":"+gson.toJson( tempMap.get(key)));
 					this.dataservice.adddataList(key,  tempMap.get(key));
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -265,7 +266,7 @@ public class QTCollectionController extends BaseController {
 	@RequestMapping(value = "/getQTData")
 	@ResponseBody
 	public ResponseData<String>  getQTData(String apid) {
-			String data=cacheService.getDataFromCache(apid);
+			String data=cacheService.getDataFromCache("dev_data_"+apid);
 			if(StringUtil.isnotNull(data)){
 				return ResponseData.newSuccess(data);
 			}

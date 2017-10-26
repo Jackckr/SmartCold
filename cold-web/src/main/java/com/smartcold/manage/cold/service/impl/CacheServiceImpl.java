@@ -6,7 +6,7 @@ import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import com.smartcold.manage.cold.service.CacheService;
+import com.smartcold.manage.cold.service.redis.CacheService;
 
 /**
  * Created by maqiang34 on 2017/6/19.
