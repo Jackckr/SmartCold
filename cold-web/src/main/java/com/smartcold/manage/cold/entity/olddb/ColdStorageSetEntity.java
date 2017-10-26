@@ -1,9 +1,11 @@
 package com.smartcold.manage.cold.entity.olddb;
 
+import java.io.Serializable;
+
 /**
  * Author: qiunian.sun Date: qiunian.sun(2016-03-19 16:25)
  */
-public class ColdStorageSetEntity {
+public class ColdStorageSetEntity implements Serializable{
 
 	private int id;
 
@@ -33,6 +35,7 @@ public class ColdStorageSetEntity {
 	private String deviceids;//附加属性
 	private double baseTemp;//附加属性 :基准温度
 	
+	private static final long serialVersionUID = -7808658583346043792L;
 	public int getId() {
 		return id;
 	}

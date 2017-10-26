@@ -139,6 +139,9 @@ public class WarningTaskService  {
 		Date sttime = TimeUtil.getBeforeMinute(10);
 		String endtime =TimeUtil.getDateTime();
 		String starttime =TimeUtil.getDateTime(sttime);
+		
+		
+		
 		if(allMonitorTempSet.size()==0||excute>12){
 			rdcCacheHashMap.clear();
 			allMonitorTempSet = this.tempWarningServer.getAllMonitorTempSet();//1.获得正常监控温度信息
