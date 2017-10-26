@@ -26,7 +26,7 @@
 				</div>
 				
 				<h4>您所选择的项目是：</h4>
-				<a>冷库电量-{电表1,电表2,电表3,电表4,数据流量表(b),GPRS信号强度表(>17)}</a>
+				<a id="showChecked"></a>
 				
 				<h4>请选择时间范围：</h4>
 				<ul class="mui-row dateUl">
@@ -45,21 +45,21 @@
 	<div class="mui-hidden" id="formDiv">
 		<!--弹框选项-->
 		<div class="mui-input-group">
+			<div class="mui-input-row mui-radio">
+				<label>压缩机组</label>
+				<input name="radio1" type="radio" value="2">
+			</div>
+			<div class="mui-input-row mui-radio">
+				<label>冷库门一</label>
+				<input name="radio1" type="radio" value="3">
+			</div>
 			<div class="mui-input-row mui-checkbox">
 				<label>低温库</label>
-				<input name="checkbox1" value="Item 3" type="checkbox" >
+				<input name="checkbox1" value="0" type="checkbox" >
 			</div>
 			<div class="mui-input-row mui-checkbox">
 				<label>变温库</label>
-				<input name="checkbox1" value="Item 4" type="checkbox" checked>
-			</div>
-			<div class="mui-input-row mui-radio">
-				<label>低温库</label>
-				<input name="radio1" type="radio">
-			</div>
-			<div class="mui-input-row mui-radio">
-				<label>变温库</label>
-				<input name="radio1" type="radio">
+				<input name="checkbox1" value="1" type="checkbox" checked>
 			</div>
 		</div>
 		<div id="btnSure">
@@ -89,6 +89,7 @@
                         var id = this.getAttribute('id');
                         _self.picker = new $.DtPicker(options);
                         _self.picker.show(function(rs) {
+                        	//时间选择展示
                             _self.innerHTML =  rs.text;
                             _self.picker.dispose();
                             _self.picker = null;
@@ -106,12 +107,28 @@
         })
         mui("#btnSure").on('tap','button',function(){
             var index=this.getAttribute('data-index');
+            var btnVal = $('#project button.mui-btn-success').html();
+			var checkedNum=[],radioNum='',checkedVal=[],radioVal='';
             if(index==1){//确定查询
-
+				for(var i=0;i<$('.mui-input-group input').length;i++){
+					var _thisObj = $('.mui-input-group input').eq(i)[0];
+					if(_thisObj.checked==true){
+						if(_thisObj.getAttribute('type')=='checkbox'){
+							checkedNum.push(_thisObj.value);
+							checkedVal.push(_thisObj.previousSibling.previousSibling.innerHTML);
+						}else{
+							radioNum=_thisObj.value;
+							radioVal=_thisObj.previousSibling.previousSibling.innerHTML;
+						}
+						
+					}
+					document.getElementById("showChecked").innerHTML = btnVal+'-'+radioVal+'-{'+checkedVal.join(',')+'}';
+				}
+				
+				mui.alert('多选选择的是：'+checkedNum.join(',')+'\n单选选择的是：'+radioNum)
             }
             $("#formDiv").addClass('mui-hidden');
-        })
-
+        });
 	</script>
 </body>
 </html>

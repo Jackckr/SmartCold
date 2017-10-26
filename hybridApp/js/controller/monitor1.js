@@ -39,7 +39,7 @@ mui('.mui-popover').on('tap', 'ul>li>a', function (e) {
 //=======================================================================================温度模块start=======================================================================================
 var temp = {
         init: function () {
-            if (rdc.mystorages) {//刷新数据
+            if (rdc&&rdc.mystorages) {//刷新数据
                 temp.refdata();
             } else {
                 temp.initStorageset();//初始化数据
@@ -377,8 +377,189 @@ var temp = {
             }
             var compressorGroup = rdc.compressorGroups[mySwiper.activeIndex];
             water.initdata(compressorGroup);
-        },
+        }
 
+    },
+    coldDoor = {
+        init: function () {
+            coldDoor.initColdDoorSet();
+        },
+        initColdDoorSet: function () {
+            mui.ajax(smartCold + 'i/coldStorageSet/findHasDoorStorageSetByRdcId', {
+                data: {rdcID: rdc.id},
+                dataType: 'json',//服务器返回json格式数据
+                type: 'get',//HTTP请求类型
+                timeout: 10000,//超时时间设置为10秒；
+                success: function (data) {
+                    if (data && data.length > 0) {
+                        rdc.coldDoors = data;
+                       $("#box li").empty().append('<div  class="swiper-container"> <div class="swiper-wrapper" id="dev_obj"></div><div class="swiper-pagination"></div></div>');
+                        for (var i = 0; i < data.length; i++) {
+                            coldDoor.initdata(data[i]);
+                        }
+                         mySwiper = new Swiper('.swiper-container', {
+			                initialSlide: 0,
+			                pagination: '.swiper-pagination',
+			                paginationClickable: true,
+			                spaceBetween: 30,
+			                observer: true,//修改swiper自己或子元素时，自动初始化swiper
+			                observeParents: true,//修改swiper的父元素时，自动初始化swiper
+			            });
+                    } else {//
+                        mui.alert("没有配置冷库门开关采集模块！")
+                    }
+                }
+            });
+        },
+        initdata: function (coldDoorObj) {
+            var coldDoorid = coldDoorObj.id;
+            var endTime = getFormatTimeString();
+            var startTime = getFormatTimeString(-1.5 * 60 * 60 * 1000);
+            mui.get(smartCold + "i/coldStorageDoor/findByStorageId", {
+                    storageID: coldDoorid
+                }, function (data) {
+                    if (data.length > 0) {
+                        var coldStorageDoors = data;
+                        if (coldStorageDoors) {
+                            mui.each(coldStorageDoors, function (i, obj) {
+                                var doorId = obj.id;
+                                var mainId = 'chart_' + doorId;
+                                var doorName=coldStorageDoors.length==1?coldDoorObj.name:coldDoorObj.name + '--' + obj.name;                                
+                                $("#dev_obj").last().append('<div class="swiper-slide"><div class="curTxt"><p class="blue">' + doorName + '</p></div><div class="chart" id="' + mainId + '"></div></div>');
+                                mui.get(smartCold + "i/baseInfo/getKeyValueData", {
+                                        "oid": doorId,
+                                        type: 2,
+                                        key: 'Switch',
+                                        startTime: startTime,
+                                        endTime: endTime
+                                    }, function (result) {
+                                        var xData = [];
+                                        var yData = [];
+                                        mui.each(result, function (i, item) {
+                                            xData.unshift(formatTimeToMinute(item.addtime).split(' ')[1]);
+                                            yData.unshift(item.value)
+                                        });
+
+                                        var lineChart = echarts.init(document.getElementById(mainId));
+                                        var option = coldDoor.getOption(obj.name + '开关监控', xData, yData);
+                                        lineChart.setOption(option);
+                                        coldDoor.lasttime = new Date().getTime();
+                                    }, 'json'
+                                );
+                            })
+                        }
+                    }
+                }, 'json'
+            );
+        },
+        getOption: function (title,xData,yData) {
+            var option = {
+                backgroundColor: '#D2D6DE',
+                title: {text: title, x: 'center', textStyle: {fontSize: 13, fontWeight: '400'}},
+                tooltip : {
+                    trigger: 'axis',
+                    textStyle: {fontSize: 13, fontWeight: '400'},
+                    formatter: function(params) {
+		                var res = params[0].name+'<br/>';
+		                params[0].data=params[0].data==0?'关':'开'
+		                res=res+params[0].series.name+':'+params[0].data
+		                return res;
+		            }
+                },
+                grid:{x: 40, y: 40, x2: 30},
+                xAxis : [{type : 'category',boundaryGap : false,data:xData}],
+                yAxis : [
+                    {
+                        type : 'value',
+                        name: '门状态',
+                        max: 1,
+                        min: 0,
+                        splitNumber:1,
+                        axisLabel:{
+		                    formatter: function (value, index) {
+		                     var texts = [];
+		                        if (value === 0) {texts.push('关');}
+		                        if (value === 1) {texts.push('开');}
+		                        return texts;
+		                    }
+		                }                        
+                    }
+                ],
+                series : [
+                    {
+                        name:'门状态',
+                        type:'line',
+                        smooth:true,
+                        symbol: "none",
+                        itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                        data:yData
+                    }
+                ]
+            };
+            return option
+        }
+    },
+    platDoor = {
+        init: function () {
+            if (rdc.platformDoors) {
+                platDoor.refdata();
+            } else {
+                platDoor.initPlatDoorSet();
+            }
+        },
+        initPlatDoorSet: function () {
+            mui.ajax(smartCold + 'i/platformDoor/findByRdcId', {
+                data: {rdcId: 1716},
+                dataType: 'json',//服务器返回json格式数据
+                type: 'get',//HTTP请求类型
+                timeout: 10000,//超时时间设置为10秒；
+                success: function (data) {
+                    if (data && data.length > 0) {
+                        rdc.platformDoors = data;
+                        page.initSwiper(rdc.platformDoors);
+                        platDoor.refdata();
+                    } else {//
+                        mui.alert("没有配置月台门开关采集模块！")
+                    }
+                }
+            });
+
+        },
+        initdata: function (platDoorObj) {
+            if (platDoorObj.lasttime && new Date().getTime() - platDoorObj.lasttime < 30000 && $("#chart_" + platDoorObj.id + " canvas").length > 0) {
+                return;
+            }
+            var platDoorId = platDoorObj.id;
+            var endTime = getFormatTimeString();
+            var startTime = getFormatTimeString(-1 * 60 * 60 * 1000);
+            mui.get(smartCold + "i/baseInfo/getKeyValueDataByTime", {
+                    type: 11,
+                    oid: platDoorId,
+                    key: 'Switch',
+                    startTime: startTime,
+                    endTime: endTime
+                }, function (data) {
+                    var platData = data;
+                    var xData = [];
+                    var yData = [];
+                    mui.each(platData, function (i, item) {
+                        xData.unshift(formatTimeToMinute(item.addtime).split(' ')[1]);
+                        yData.unshift(item.value)
+                    });
+                    var lineChart = echarts.init(document.getElementById('chart_' + platDoorId));
+                    var option = coldDoor.getOption(platDoorObj.name + '开关监控', xData, yData);
+                    lineChart.setOption(option);
+                    platDoorObj.lasttime = new Date().getTime();
+                }, 'json'
+            );
+        },
+        refdata: function () {
+            if (mySwiper && mySwiper.pageindex != pagedata.index) {
+                page.initSwiper(rdc.platformDoors)
+            }
+            var platformDoor = rdc.platformDoors[mySwiper.activeIndex]
+            platDoor.initdata(platformDoor);
+        }
     },
     //=======================================================================================能耗 end=======================================================================================
     page = {
@@ -418,8 +599,10 @@ var temp = {
                     water.init();
                     break;
                 case 3:
+                	coldDoor.init();
                     break;
                 case 4:
+                    platDoor.init();
                     break;
                 case 5:
                     break;
@@ -433,5 +616,5 @@ page.initpage();
 clearInterval(DiDa);
 var DiDa = setInterval(function () {
     page.initpage();
-}, 10000);
+}, 30000);
 
