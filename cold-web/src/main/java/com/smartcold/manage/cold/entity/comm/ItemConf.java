@@ -1,5 +1,6 @@
 package com.smartcold.manage.cold.entity.comm;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Date;
  * @author Administrator
  * 
  */
-public class ItemConf {
+public class ItemConf implements Serializable {
 	private int id;
 	private int rdcid;
 	private String name;
@@ -16,6 +17,8 @@ public class ItemConf {
 	private double power;
 	private String mapping;
 	private Date addTime;
+	private static final long serialVersionUID = -6729909449392408307L;
+	
 	public int getId() {
 		return id;
 	}

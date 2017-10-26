@@ -1,9 +1,13 @@
 package com.smartcold.manage.cold.entity.comm;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ItemValue implements Cloneable {
+public class ItemValue implements Cloneable,Serializable {
 
+	/**
+	 * 
+	 */
 	private int id;
 	private String key;
 	private String name;
@@ -11,6 +15,7 @@ public class ItemValue implements Cloneable {
 	private Object value;
 	private String time;//采集时间
 	private Date addtime;
+	private static final long serialVersionUID = -6385769548005386256L;
 	
 	
 	public ItemValue() {

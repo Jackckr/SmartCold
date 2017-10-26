@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,15 +51,6 @@ public class QTCollectionController extends BaseController {
 	@Autowired
 	private DFSDataCollectionMapper dataservice;
 	
-//	private static HashMap<String, Long> splittimeHashMap=new HashMap<>();
-//	private static HashMap<String, Boolean> isupdate=new HashMap<String, Boolean>();
-//	private static HashMap<String, List<String>> updateLog=new HashMap<String, List<String>>();
-//	private static HashMap<String, Integer> plMap=new HashMap<String, Integer>();
-	private static HashMap<String, List<String []>> errMap=new HashMap<String ,List<String []>>();
-	private static HashMap<String, List<HashMap<String, Object>>> updateData=new HashMap<String, List<HashMap<String, Object>>>();
-
-	
-	
 	/**
 	 *http DEV数据上传接口
 	 * @param data
@@ -71,24 +61,23 @@ public class QTCollectionController extends BaseController {
 	@ResponseBody
 	public Object QTDataCollection(@RequestBody String data) {		
 		String apID="";int rdcid=0;
-		long cutime=System.currentTimeMillis(),exptime=0;Boolean cisupdat=false;;
+		long cutime=System.currentTimeMillis(),exptime=0;
 		try {
 			if(StringUtil.isNull(data)){return DataResultDto.newFailure();}
 			Map<String, Object> dataMap = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 			if(dataMap.containsKey("infos")){
 				 apID = dataMap.get("apID").toString();
-				 this.cacheService.putData("dev_data:"+apID, data);//缓存数据 -----防止需要
+				 this.cacheService.putData("dev:dev_data:"+apID, data);//缓存数据 -----防止需要
+				 this.cacheService.putData("dev:dev_status:"+apID, cutime);//记录设备最后通讯时间
 				 ItemConf rdcspconf = this.rdcConfService.findRdcConfByDevId(apID);
 				 if(rdcspconf==null){ return  DataResultDto.newSuccess();}
 				 rdcid=rdcspconf.getRdcid();
-				 //计算设备有没有告警
-//				 if(splittimeHashMap.containsKey(apID)){ exptime = cutime-splittimeHashMap.get(apID);}splittimeHashMap.put(apID, cutime);restAp(apID);
 				 this.batchData(Integer.toString(rdcid),dataMap);//保存数据  建议由数据中心处理  ---和丹弗斯一样
 			}
 			
-			cisupdat = this.cacheService.getData("dev_isup:"+apID);
-			if(cisupdat!=null&&cisupdat){cisupdat=true;  cacheService.removeKey("dev_isup:"+apID);}
-			System.err.println("收到 QT数据："+apID+"====================间隔时间："+exptime+" 是否更新数据："+cisupdat+"时间"+TimeUtil.getDateTime());
+			Boolean cisupdat = this.cacheService.getData("dev:dev_isup:"+apID);
+			if(cisupdat!=null&&cisupdat){cisupdat=true;  cacheService.removeKey("dev:dev_isup:"+apID);}else{cisupdat=false;}
+//			System.err.println("收到 QT数据："+apID+"====================间隔时间："+exptime+" 是否更新数据："+cisupdat+"时间"+TimeUtil.getDateTime());
 		   return DataResultDto.newSuccess(cisupdat);//更新数据服务
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -96,76 +85,7 @@ public class QTCollectionController extends BaseController {
 			return DataResultDto.newFailure();
 		}
 	} 
-	private void batchData(String rdcid,Map<String, Object> dataMap){
-		if(!DFSCollectionController.configchcateHashMap.containsKey(rdcid)){this.rdcConfService.getConfigByRdcId(rdcid); this.rdcConfService.getConverByrdcId(rdcid); }
-		HashMap<String, ItemValue> config = DFSCollectionController.configchcateHashMap.get(rdcid);
-		HashMap<String, ConversionEntity> unitConvers = DFSCollectionController.unitConversMap.get(rdcid);
-        if(config==null){return;}
-        Date date = new Date();
-	    ArrayList<ItemValue> dataList = null;
-	    String table =null;  ItemValue newdata=null;
-	    String cutttime=TimeUtil.getDateTime();
-	    ArrayList<WarningsInfo> wardataList = new ArrayList<WarningsInfo>();
-	    HashMap<String, ArrayList<ItemValue>> tempMap=new HashMap<String, ArrayList<ItemValue>>();
-	    List<Map<String, String>> dataMapList=   ((List<Map<String, String>>) dataMap.get("infos"));
-	    for (Map<String, String> info : dataMapList) {
-	    	String name = info.get("tagname");
-	    	
-	    	//当前是告警信息
-	    	if(name.indexOf("警")>-1){if("1".equals(info.get("currentvalue"))){wardataList.add(new WarningsInfo(name,Integer.parseInt(rdcid),1,date));}continue;}
-	    	newdata = config.get(name);if(newdata==null){ continue;}
-	    	if(unitConvers!=null&&unitConvers.containsKey(name)){//unitConvers 数据转换集合->电压  ，压力转换
-			     if(! counsValue(unitConvers, newdata, info, name)){ continue;}//  加入转换对象
-	    	}else{
-	    		 newdata.setValue(info.get("currentvalue"));
-				 newdata.setTime(cutttime);//info.get("lasttime")
-	    	}
-			 table = newdata.getTable();
-			
-			 if(StringUtil.isnotNull(table)){
-				 if(tempMap.containsKey(table)){//存在异常代码块
-					 tempMap.get(table).add(newdata);
-				}else{
-					 dataList = new ArrayList<ItemValue>();
-					 dataList.add(newdata);
-					 tempMap.put(table, dataList);
-				}
-				if("isRunning,isDefrosting".indexOf(newdata.getKey())>-1){
-						ItemValue clone  = (ItemValue) newdata.clone();
-						if(clone!=null){
-							if("isRunning".equals(newdata.getKey())){
-								clone.setKey("isDefrosting");
-								clone.setValue(0);
-							}else{
-								clone.setKey("isRunning");
-								clone.setValue(0);
-							}
-							tempMap.get(table).add(clone);
-						}
-				}
-			 }else{
-				 System.err.println("未知保存对象"+gson.toJson(newdata));
-			 }
-		}
-		if(SetUtil.isNotNullMap(tempMap)){
-			for (String key : tempMap.keySet()) {
-				try {
-					System.err.println(key+":"+gson.toJson( tempMap.get(key)));
-					this.dataservice.adddataList(key,  tempMap.get(key));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		if(SetUtil.isnotNullList(wardataList)){
-			try {
-				this.warningsInfoMapper.addwarningsinfos(wardataList);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
 	
-	}
 	
 	/**
 	 * DEV更新配置
@@ -185,28 +105,27 @@ public class QTCollectionController extends BaseController {
 			resMap.put("status","200");
 			resMap.put("time", TimeUtil.getMillTime());
 			//判断是否有PL
-			
-			Integer  pl = this.cacheService.getData("dev_PL:"+apID);
-			if(pl!=null){	resMap.put("PL", pl);}
-			List<HashMap<String, Object>> infoHashMaps=new ArrayList<HashMap<String, Object>>();
-			if(updateData.containsKey(apID)){
-				infoHashMaps= updateData.get(apID);
-			}else{
-				//去数据库查。。。分布式--》  出现这种情况 ---->必须
-				
+			Integer  pl = this.cacheService.getData("dev:dev_PL:"+apID);if(pl!=null){	resMap.put("PL", pl);}
+			List<HashMap<String, Object>> infoHashMaps = this.cacheService.getData("dev:dev_upconf:"+apID);
+			this.cacheService.removeKey("dev_isup:"+apID);
+			this.cacheService.removeKey("dev:dev_PL:"+apID);
+			this.cacheService.removeKey("dev:dev_upconf:"+apID);
+			if(SetUtil.isNullList(infoHashMaps)){
+				 System.err.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+				 return null;
 			}
+			
+			
+			
 		    resMap.put("infos", infoHashMaps);
-	     	String msg=  TimeUtil.getDateTime()+  "更新"+apID+"配置:"+JSON.toJSONString(infoHashMaps)+"\r\n";
+		    String msg=	TimeUtil.getDateTime()+  "更新"+apID+"配置:"+JSON.toJSONString(infoHashMaps)+"\r\n";
 			System.err.println(msg);
-//			if(updateLog.containsKey(apID)){
-//			     List<String> list = updateLog.get(apID);
-//			     list.clear();
-//			     list.add(msg);
-//			}else{
-//				List<String> loglist=new ArrayList<>(); 
-//				loglist.add(msg);
-//				updateLog.put(apID, loglist);	
-//			}
+			//系统记录日志
+			 List<String> loglist=	this.cacheService.getData("dev:dev_upconlog:"+apID);
+			 if(SetUtil.isNullList(loglist)){loglist=new ArrayList<>();}
+			 loglist.add(msg);
+			 this.cacheService.putData("dev:dev_upconlog:"+apID,loglist);
+			 
 			return resMap;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -224,29 +143,46 @@ public class QTCollectionController extends BaseController {
 	@RequestMapping(value = "/updateConfig")
 	@ResponseBody
 	public boolean updateConfig(String apid,Integer pl,String key,String val) {
-		if(pl!=null){
-			 this.cacheService.putData("dev_PL:"+apid, pl);//缓存数据 -----防止需要
-		}
-//		 isupdate.put(apid, true);
-		 
-		 this.cacheService.putData("dev_isup:"+apid, true);//缓存数据 -----防止需要
-		 
+		if(pl!=null){ this.cacheService.putData("dev:dev_PL:"+apid, pl);}
 		 HashMap<String, Object> dataHashMap=new HashMap<>();
          dataHashMap.put("tagname", key);
          dataHashMap.put("value", val);
-         if(updateData.containsKey(apid)){
-        	 List<HashMap<String, Object>> list = updateData.get(apid);
-        	 list.add(dataHashMap);
-         }else{//单次回写
-        	 List<HashMap<String, Object>> list = new ArrayList<>();
-        	 list.add(dataHashMap);
-        	 updateData.put(apid, list);
-         }
+         this.cacheService.putData("dev:dev_isup:"+apid, true);//缓存数据 -----防止需要
+         List<HashMap<String, Object>> list = this.cacheService.getData("dev:dev_upconf:"+apid);
+         if(SetUtil.isNullList(list)){ list=new ArrayList<>(); }
+         list.add(dataHashMap);
+         this.cacheService.putData("dev:dev_upconf:"+apid,list);
 	     return true;
 	} 
 	
 	
+	/**
+	 *获得设备最后上传的数据
+	 * @param data
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/getQTData")
+	@ResponseBody
+	public ResponseData<String>  getQTData(String apid) {
+			String data=cacheService.getData("dev:dev_data:"+apid);
+			if(StringUtil.isnotNull(data)){
+				return ResponseData.newSuccess(data);
+			}
+			return ResponseData.newSuccess("");
+	}
 	
+	/**
+	 *获得dev 操作日志
+	 * @param data
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/getQTUPlog")
+	@ResponseBody
+	public Object getQTUPlog(String apid) {
+			return this.cacheService.getData("dev:dev_upconlog:"+apid);
+	}
 	
 	//============================================================================================================================================================================================================================================================
 
@@ -257,56 +193,32 @@ public class QTCollectionController extends BaseController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = "/getQTConfig")
-	@ResponseBody
-	public HashMap<String, Object>  getQTConfig(String apid) {
-		 List<HashMap<String, Object>> list = updateData.get(apid);
-		 HashMap<String, Object> hashMap = new HashMap<>();
-		 hashMap.put("PL",this.cacheService.getData("dev_PL:"+apid));
-		 list.add(hashMap);
-		return hashMap;
-	}
-	/**
-	 *http DEV数据上传接口
-	 * @param data
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(value = "/getQTData")
-	@ResponseBody
-	public ResponseData<String>  getQTData(String apid) {
-			String data=cacheService.getData("dev_data:"+apid);
-			if(StringUtil.isnotNull(data)){
-				return ResponseData.newSuccess(data);
-			}
-			return ResponseData.newSuccess("");
-	}
-	/**
-	 *http DEV数据上传接口
-	 * @param data
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(value = "/getQTERRMsg")
-	@ResponseBody
-	public Object getQTERRMsg(String apid) {
-		if(errMap.containsKey(apid)){
-			return errMap.get(apid);
-		}
-		return ResponseData.newFailure("没有数据");
-	}
-	
-	/**
-	 *http DEV数据上传接口
-	 * @param data
-	 * @param response
-	 * @return
-	 */
-//	@RequestMapping(value = "/getQTUPlog")
+//	@RequestMapping(value = "/getQTConfig")
 //	@ResponseBody
-//	public Object getQTUPlog(String apid) {
-//			return updateLog.get(apid);
+//	public HashMap<String, Object>  getQTConfig(String apid) {
+//		 List<HashMap<String, Object>> list = updateData.get(apid);
+//		 HashMap<String, Object> hashMap = new HashMap<>();
+//		 hashMap.put("PL",this.cacheService.getData("dev:dev_PL:"+apid));
+//		 list.add(hashMap);
+//		return hashMap;
 //	}
+
+//	/**
+//	 *http DEV数据上传接口
+//	 * @param data
+//	 * @param response
+//	 * @return
+//	 */
+//	@RequestMapping(value = "/getQTERRMsg")
+//	@ResponseBody
+//	public Object getQTERRMsg(String apid) {
+//		if(errMap.containsKey(apid)){
+//			return errMap.get(apid);
+//		}
+//		return ResponseData.newFailure("没有数据");
+//	}
+	
+
 	
 //	 /**
 //	 * 10分钟检查一次
@@ -411,7 +323,79 @@ public class QTCollectionController extends BaseController {
 						return false;
 					}
 	} 
-
+	 /**
+	  * 数据保存接口
+	  * @param rdcid
+	  * @param dataMap
+	  */
+	 private void batchData(String rdcid,Map<String, Object> dataMap){
+			HashMap<String, ItemValue> config =this.rdcConfService.getConfigByRdcId(rdcid);
+			HashMap<String, ConversionEntity> unitConvers = this.rdcConfService.getConverByrdcId(rdcid);
+	        if(config==null){return;}
+	        Date date = new Date();
+		    ArrayList<ItemValue> dataList = null;
+		    String table =null;  ItemValue newdata=null;
+		    String cutttime=TimeUtil.getDateTime();
+		    ArrayList<WarningsInfo> wardataList = new ArrayList<WarningsInfo>();
+		    HashMap<String, ArrayList<ItemValue>> tempMap=new HashMap<String, ArrayList<ItemValue>>();
+		    List<Map<String, String>> dataMapList=   ((List<Map<String, String>>) dataMap.get("infos"));
+		    for (Map<String, String> info : dataMapList) {
+		    	String name = info.get("tagname");
+		    	//当前是告警信息
+		    	if(name.indexOf("警")>-1){if("1".equals(info.get("currentvalue"))){wardataList.add(new WarningsInfo(name,Integer.parseInt(rdcid),1,date));}continue;}
+		    	newdata = config.get(name);if(newdata==null){ continue;}
+		    	if(unitConvers!=null&&unitConvers.containsKey(name)){//unitConvers 数据转换集合->电压  ，压力转换
+				     if(! counsValue(unitConvers, newdata, info, name)){ continue;}//  加入转换对象
+		    	}else{
+		    		 newdata.setValue(info.get("currentvalue"));
+					 newdata.setTime(cutttime);//info.get("lasttime")
+		    	}
+				 table = newdata.getTable();
+				
+				 if(StringUtil.isnotNull(table)){
+					 if(tempMap.containsKey(table)){//存在异常代码块
+						 tempMap.get(table).add(newdata);
+					}else{
+						 dataList = new ArrayList<ItemValue>();
+						 dataList.add(newdata);
+						 tempMap.put(table, dataList);
+					}
+					if("isRunning,isDefrosting".indexOf(newdata.getKey())>-1){
+							ItemValue clone  = (ItemValue) newdata.clone();
+							if(clone!=null){
+								if("isRunning".equals(newdata.getKey())){
+									clone.setKey("isDefrosting");
+									clone.setValue(0);
+								}else{
+									clone.setKey("isRunning");
+									clone.setValue(0);
+								}
+								tempMap.get(table).add(clone);
+							}
+					}
+				 }else{
+					 System.err.println("未知保存对象"+gson.toJson(newdata));
+				 }
+			}
+			if(SetUtil.isNotNullMap(tempMap)){
+				for (String key : tempMap.keySet()) {
+					try {
+						this.dataservice.adddataList(key,  tempMap.get(key));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			if(SetUtil.isnotNullList(wardataList)){
+				try {
+					this.warningsInfoMapper.addwarningsinfos(wardataList);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		
+		}
+		
 	
 	
 }

@@ -7,19 +7,18 @@ import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
-import com.smartcold.manage.cold.api.DFSCollectionController;
 import com.smartcold.manage.cold.dao.olddb.CongfigMapper;
 import com.smartcold.manage.cold.entity.comm.ItemConf;
 import com.smartcold.manage.cold.entity.comm.ItemValue;
 import com.smartcold.manage.cold.entity.olddb.ConversionEntity;
 import com.smartcold.manage.cold.enums.SetTables;
 import com.smartcold.manage.cold.service.RdcConfService;
+import com.smartcold.manage.cold.service.redis.CacheService;
 import com.smartcold.manage.cold.util.SetUtil;
 
 /**
@@ -30,16 +29,24 @@ import com.smartcold.manage.cold.util.SetUtil;
 @Service
 @CacheConfig(cacheNames = "rdcConfService")
 public class RdcConfServiceImpl implements RdcConfService {
-	
+	@Autowired
+	private CacheService cacheService;
 	@Autowired
 	private CongfigMapper congfigMapper;
-	
 	private static Gson gson = new Gson();
 	
 	@Override
-	@Cacheable(key="'dev_rdcconf:'+args[0]")
 	public ItemConf findRdcConfByDevId(String apID){
-		return congfigMapper.findRdcConfByDevId(apID);
+		String key="dev:dev_rdcconf:"+apID;
+		ItemConf item	= this.cacheService.getData(key);
+		if(item!=null){
+		   	return item.getId()==-1?null:item;
+		}else{
+			item = congfigMapper.findRdcConfByDevId(apID);
+			if(item==null){item=new ItemConf();item.setId(-1);  }; 
+			this.cacheService.putData(key, item);
+			return item;
+		}
 	}
 
 	private HashMap<String , ConversionEntity> getConver(String rdcId) {
@@ -113,15 +120,23 @@ public class RdcConfServiceImpl implements RdcConfService {
 	 * 初始化类型转换配置
 	 * @param rdcId
 	 */
-	public void getConverByrdcId(String rdcId){
+	public HashMap<String, ConversionEntity> getConverByrdcId(String rdcId){
 		try {
-			HashMap<String, ConversionEntity> conver =this.getConver(rdcId) ;
+			HashMap<String, ConversionEntity> conver=this.cacheService.getData("rdc:rdc_cou:"+rdcId);
 			if(conver!=null){
-				DFSCollectionController.unitConversMap.put(rdcId, conver);
+				return conver.size()>0? conver:null;
 			}
+			conver =this.getConver(rdcId) ;
+			if(conver!=null){
+				 this.cacheService.putData("rdc:rdc_cou:"+rdcId, conver);//缓存数据 -----防止需要
+			}else{
+				this.cacheService.putData("rdc:rdc_cou:"+rdcId, new HashMap<String, ConversionEntity>());//防止反复读取 注意缓存雪崩
+			}
+			return conver;
 		} catch (JsonSyntaxException e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
 	
@@ -130,8 +145,28 @@ public class RdcConfServiceImpl implements RdcConfService {
 	 * 初始化Mapp配置
 	 * @param rdcId
 	 */
-	public  void getConfigByRdcId(String rdcId){
-			DFSCollectionController.configchcateHashMap.put(rdcId, 	this.getConfig(rdcId));
+	public HashMap<String, ItemValue> getConfigByRdcId(String rdcId){
+		try {
+			String key="rdc:rdc_cof:"+rdcId;
+			HashMap<String, ItemValue> config =this.cacheService.getData(key);
+			if(config!=null){
+				return config.size()>0? config:null;
+			}else{
+				config = this.getConfig(rdcId);
+				if(config!=null){
+					 this.cacheService.putData(key, config);//缓存数据 -----防止需要
+				}else{
+					 this.cacheService.putData(key, new HashMap<String, ItemValue>() );//防止反复读取 注意缓存雪崩
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+		
+		
+		
+		
 	}
 	
 }

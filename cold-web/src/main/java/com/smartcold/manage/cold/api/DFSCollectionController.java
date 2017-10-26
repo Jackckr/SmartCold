@@ -47,8 +47,7 @@ public class DFSCollectionController extends BaseController {
 	private DFSDataCollectionMapper dataservice;
 	
 	public static String dfsdata=null;
-	public static  HashMap<String,HashMap<String, ConversionEntity>> unitConversMap=new HashMap<String,HashMap<String, ConversionEntity>>();
-	public static  HashMap<String,HashMap<String,ItemValue>> configchcateHashMap=new HashMap<String,HashMap<String,ItemValue>>();
+	
 	
 	/**
 	 *http DEV数据上传接口
@@ -66,9 +65,8 @@ public class DFSCollectionController extends BaseController {
 			Date date = new Date();
 			Map<String, Object> dataCollectionBatchEntity =DFSCollectionController.gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 			String rdcid = dataCollectionBatchEntity.get("rdcId").toString();
-            if(!DFSCollectionController.configchcateHashMap.containsKey(rdcid)){this.rdcConfService.getConfigByRdcId(rdcid); this.rdcConfService.getConverByrdcId(rdcid); }
-			HashMap<String, ItemValue> config = configchcateHashMap.get(rdcid);
-			HashMap<String, ConversionEntity> unitConvers = unitConversMap.get(rdcid);
+			HashMap<String, ItemValue> config =this.rdcConfService.getConfigByRdcId(rdcid);
+			HashMap<String, ConversionEntity> unitConvers = this.rdcConfService.getConverByrdcId(rdcid);
 		    if(config==null){return  DataResultDto.newSuccess();}
 		    ArrayList<ItemValue> dataList = null;
 		    String table =null;  ItemValue newdata=null;

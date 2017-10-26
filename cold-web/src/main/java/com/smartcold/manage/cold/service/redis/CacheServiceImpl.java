@@ -1,12 +1,10 @@
-package com.smartcold.manage.cold.service.impl;
+package com.smartcold.manage.cold.service.redis;
 
 import javax.annotation.Resource;
 
 import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-
-import com.smartcold.manage.cold.service.redis.CacheService;
 
 /**
  * Created by maqiang34 on 2017/6/19.
@@ -47,7 +45,28 @@ public class CacheServiceImpl implements CacheService{
 			e.printStackTrace();
 		}
 	}
-	 
+	
+	
+//	@Resource
+//	private CacheManager cm;
+//
+//	@Override
+//	public <V> V cacheResult(String key, String cacheName) {
+//		ValueWrapper valueWrapper = cm.getCache(cacheName).get(key);
+//		return valueWrapper == null ? null :(V) valueWrapper.get();
+//	}
+//
+//	@Override
+//	public void cacheRemove(String key, String cacheName) {
+//		cm.getCache(cacheName).evict(key);
+//	}
+//
+//	@Override
+//	public <V> void cachePut(String key, V value, String cacheName) {
+//		cm.getCache(cacheName).put(key, value);
+//
+//	}
+//	 
 
 	
 }

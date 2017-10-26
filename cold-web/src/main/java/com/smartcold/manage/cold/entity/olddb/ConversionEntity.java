@@ -1,13 +1,17 @@
 package com.smartcold.manage.cold.entity.olddb;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 
 /*
  * 
  */
-public class ConversionEntity {
+public class ConversionEntity  implements Serializable{
 
+	/**
+	 * 
+	 */
 	private int id         ;
 	private int kv       ;
 	private int type       ;
@@ -17,6 +21,7 @@ public class ConversionEntity {
 	private Date addtime    ;
 	private HashMap<String,String[]> unit;
 	
+	private static final long serialVersionUID = 8534796432237535437L;
 	public int getId() {
 		return id;
 	}

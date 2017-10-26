@@ -37,10 +37,6 @@ public class UtilController extends BaseController {
 	public ResponseData<String> getDFSData()  {return ResponseData.newSuccess(DFSCollectionController.dfsdata); }
 	 @RequestMapping(value = "/gettoke")
 	 public String gettoke(String toke){if(("admin"+TimeUtil.getDateHour()).equals(toke)){ return EncodeUtil.encodeByMD5("toke"+TimeUtil.getDateHour());}return null;}
-	 @RequestMapping(value = "/get_dfsconfig")
-	 public Object getconfig(String toke,String rdcid){if(StringUtil.verifyToken(toke)&&StringUtil.isnotNull(rdcid)){ return  DFSCollectionController.configchcateHashMap.get(rdcid);} return -1; }
-	 @RequestMapping(value = "/del_dfsconfig")
-	 public Object delconfig(String toke,String rdcid){if(StringUtil.verifyToken(toke)&&StringUtil.isnotNull(rdcid)){ if("ALL".equals(rdcid)){ DFSCollectionController.configchcateHashMap.clear();  DFSCollectionController.unitConversMap.clear(); }else { DFSCollectionController.configchcateHashMap.remove(rdcid);DFSCollectionController.unitConversMap.remove(rdcid);}return true;}return false;}
 	 
 	//=====================================================洲斯数据接口管理==========================================================================================================================
 	 @RequestMapping("/getZSDevStatssaveTime")//

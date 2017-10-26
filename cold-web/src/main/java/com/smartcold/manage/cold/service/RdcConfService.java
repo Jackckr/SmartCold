@@ -1,6 +1,10 @@
 package com.smartcold.manage.cold.service;
 
+import java.util.HashMap;
+
 import com.smartcold.manage.cold.entity.comm.ItemConf;
+import com.smartcold.manage.cold.entity.comm.ItemValue;
+import com.smartcold.manage.cold.entity.olddb.ConversionEntity;
 
 
 /*
@@ -13,9 +17,9 @@ public interface RdcConfService {
 	
 	public ItemConf findRdcConfByDevId(String apID);
 	
-	public  void getConfigByRdcId(String rdcId);
+	public HashMap<String, ItemValue> getConfigByRdcId(String rdcId);
 	
-	public void getConverByrdcId(String rdcId);
+	public HashMap<String, ConversionEntity>  getConverByrdcId(String rdcId);
 	
 	
 }
