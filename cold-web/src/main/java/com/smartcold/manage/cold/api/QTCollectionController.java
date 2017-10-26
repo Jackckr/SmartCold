@@ -107,7 +107,7 @@ public class QTCollectionController extends BaseController {
 			//判断是否有PL
 			Integer  pl = this.cacheService.getData("dev:dev_PL:"+apID);if(pl!=null){	resMap.put("PL", pl);}
 			List<HashMap<String, Object>> infoHashMaps = this.cacheService.getData("dev:dev_upconf:"+apID);
-			this.cacheService.removeKey("dev_isup:"+apID);
+			this.cacheService.removeKey("dev:dev_isup:"+apID);
 			this.cacheService.removeKey("dev:dev_PL:"+apID);
 			this.cacheService.removeKey("dev:dev_upconf:"+apID);
 			if(SetUtil.isNullList(infoHashMaps)){
