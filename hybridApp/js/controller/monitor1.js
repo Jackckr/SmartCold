@@ -4,7 +4,7 @@ if (localStorage.rdc) {
     if (localStorage.currentRdc) {
         rdc.id = JSON.parse(localStorage.currentRdc).id;
     }
-}
+}       //  rdc.id=1590
 mui.init();
 mui('.mui-scroll-wrapper').scroll({
 	deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
@@ -130,6 +130,8 @@ var temp = {
                                 }
                             }
                             $("#cuttval_" + mystorage.id).append([key, tempData[tempData.length - 1].toFixed(2)].join(":") + "℃  ");
+
+
                             series.push({name: key, type: 'line', data: tempData, smooth: true, symbol: "none"});
                             isadd = false;
                         }
@@ -448,6 +450,8 @@ var temp = {
                                 );
                             })
                         }
+                    }else{
+                    	mui.alert('没有数据')
                     }
                 }, 'json'
             );
@@ -509,7 +513,7 @@ var temp = {
         },
         initPlatDoorSet: function () {
             mui.ajax(smartCold + 'i/platformDoor/findByRdcId', {
-                data: {rdcId: 1716},
+                data: {rdcId: rdc.id},
                 dataType: 'json',//服务器返回json格式数据
                 type: 'get',//HTTP请求类型
                 timeout: 10000,//超时时间设置为10秒；
@@ -561,6 +565,152 @@ var temp = {
             platDoor.initdata(platformDoor);
         }
     },
+    goods = {//初始化货物模块
+        init: function () {
+            if (rdc&&rdc.coldDoors) {//刷新数据
+                goods.refdata();
+            } else {
+                goods.initStorageset();//初始化数据
+            }
+        },
+        refdata: function () {
+            if (mySwiper && mySwiper.pageindex != pagedata.index) {
+                page.initSwiper(rdc.coldDoors)
+            }
+            var mystorage = rdc.coldDoors[mySwiper.activeIndex];
+            goods.initdata(mystorage);
+        },
+        initStorageset: function () {
+            mui.ajax(smartCold + 'i/coldStorageSet/findHasDoorStorageSetByRdcId', {
+                data: {rdcID: rdc.id}, dataType: 'json', type: 'get', crossDomain: true, success: function (data) {
+                    if (data && data.length > 0) {
+                        rdc.coldDoors = data;
+                        goods.initGoodsSet();
+                    };
+                }
+            });
+        },
+        initGoodsSet: function () {
+            var count=0;
+            $.each(rdc.coldDoors, function (i, mystorage) {
+                mui.ajax(smartCold + '/i/temp/getTempsetByStorageID', {
+                    data: {oid: mystorage.id},
+                    dataType: 'json', //服务器返回json格式数据
+                    type: 'get', //HTTP请求类型
+                    crossDomain: true,
+                    success: function (data) {
+                        count++
+                        if (count == rdc.coldDoors.length) {
+                            page.initSwiper(rdc.coldDoors);
+                            goods.refdata();
+                        }
+                    }
+                });
+            });
+
+        },
+        initdata: function (mystorage) {
+            if (mystorage.lasttime && new Date().getTime() - mystorage.lasttime < 30000 && $("#chart_" + mystorage.id + " canvas").length > 0) {
+                return;
+            };
+            var totalTime = 10, series = [], time = [], timeMap = {}, legend = [];
+            for(var i=0; i< totalTime;i++){
+                xTime = formatTimeToDay(getFormatTimeString(-i* 24 * 60 * 60 * 1000))
+                time.unshift(xTime.slice(5));
+                timeMap[xTime] = totalTime - i - 1
+            }
+            var startDate = formatTimeToDay(getFormatTimeString(-10 * 24 * 60 * 60 * 1000))
+            var endDate = getFormatTimeString();
+            mui.ajax(smartCold + 'i/other/findGoodsByDate', {
+                data: {
+                    'coldstorageId': mystorage.id,
+                    'startCollectionTime': startDate/*'2016-09-15'*/,
+                    'endCollectionTime': endDate/*'2016-10-14 09:33:55'*/
+                }, dataType: 'json', type: 'get', timeout: 10000, traditional: true, success: function (data) {
+                    if (Object.keys(data).length > 0) {
+                        mui.each(data,function(i,obj){
+                            outData = {name:i+'出货量',type:'bar',data:new Array(totalTime+1).join("-").split("")};
+                            inData = {name:i+'进货量',type:'bar',data:new Array(totalTime+1).join("-").split("")}
+                            inTemp = {name:i+'进货温度',type:'line',yAxisIndex: 1,data:new Array(totalTime+1).join("-").split("")}
+                            legend.push(i+'出货量',i+'进货量',i+'进货温度');
+                            mui.each(obj,function(j,item){
+                                var date = new Date(item.date);
+                                var dateStr = date.Format("yyyy-MM-dd");
+                                outData.data[timeMap[dateStr]] = item['outputQUantity'];
+                                inData.data[timeMap[dateStr]] = item['inputQuantity'];
+                                inTemp.data[timeMap[dateStr]] = item['inputTemperature'];
+                            })
+                            series.push(outData,inData,inTemp)
+                        })
+                    }else{
+                    	mui.alert('没有数据')
+                    }
+                    mystorage.lasttime = new Date().getTime();
+                    goods.initchart(mystorage.id,'日均货物流通监控',legend, series,time)
+                }
+            });
+        },
+        initchart: function (storageid,title, legend, series, time) {
+            var myChart = echarts.init(document.getElementById("chart_" + storageid));
+            // 指定图表的配置项和数据
+            var option = {
+                noDataLoadingOption: {
+                    text: '暂无数据,请排查原因\n1、设备通讯异常，请检查设备',
+                    textStyle: {fontSize: 16},
+                    effect: 'bubble',
+                    effectOption: {effect: {n: 30}}
+                },
+                backgroundColor: '#d2d6de',
+                legend: {data:legend,y:'top',},
+                tooltip: {trigger: 'axis', textStyle: {fontSize: 13, fontWeight: '400'}},
+                grid: {x: 40, x2: 40, y: 20, y2: 50},
+                xAxis: {type: 'category', data: time},
+                /*yAxis:[ {
+                    name: '货物量(kg)',
+                    nameLocation: 'end',
+                    type: 'value',
+                    axisLabel: {
+                        formatter: function (value, index) {
+                            if (value) {
+                                return parseFloat(value).toFixed(1);
+                            }
+                            return ;
+                        }
+                    }
+                }, {
+                    name: '温度(℃)',
+                    nameLocation: 'end',
+                    type: 'value',
+                    axisLabel: {
+                        formatter: function (value, index) {
+                            if (value) {
+                                return parseFloat(value).toFixed(1);
+                            }
+                            return 0;
+                        }
+                    }
+                }],*/
+                yAxis : [
+                    {
+                        type : 'value',
+                        name : '货物量(kg)',
+                        axisLabel : {
+                            formatter: '{value}'
+                        }
+                    },
+                    {
+                        type : 'value',
+                        name : '温度(°C)',
+                        axisLabel : {
+                            formatter: '{value}'
+                        }
+                    }
+                ],
+                series: series
+            };
+            myChart.setOption(option);  // 使用刚指定的配置项和数据显示图表。
+        }
+    },
     //=======================================================================================能耗 end=======================================================================================
     page = {
         nodatamsg: function (msg) {
@@ -605,6 +755,7 @@ var temp = {
                     platDoor.init();
                     break;
                 case 5:
+                    goods.init();
                     break;
                 case 6:
                     break;

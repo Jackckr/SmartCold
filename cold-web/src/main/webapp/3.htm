@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<head>
+<meta charset="utf-8">
+<meta http-equiv=”X-UA-Compatible” content=”IE=Edge,chrome=1″>
+<meta name="renderer" content="webkit|ie-stand" />
+<meta name="renderer" content="webkit">
+<title>冷库360-冷库能效在线管理系统</title>
+<meta charset="utf-8" name="keywords" content="冷库360,冷库监控,冷库智能管理,冷库能效评估，冷库认证与能耗管理" />
+<meta charset="utf-8" name="description" content="冷库360-冷库能效在线管理系统" />
+<!-- Tell the browser to be responsive to screen width -->
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<style type="text/css">
+/* #logtext{height: 100%;width:50%;} */
+
+
+.logtext {
+width: 100%;
+background: black;
+color: white;
+}
+#dtid_ap2 input{
+width: auto;
+max-width: 50%;
+}
+
+</style>
+</head>
+<body>
+   <div id="dtid_ap1" style="width: 80%;display: block;    float: left;">
+	   <textarea id="logtext" class="logtext"></textarea>
+   </div>
+    <div id="dtid_ap2" style="float: right;display: block;border: 1px solid #cccccc;    width: 19%;">
+			    <div style="border: 1px solid #cccccc;">
+			     <p>apid：<input id="txt_apid" value="4000001"></p>                        
+				  <p>                          频率：<input id="txt_pl">        </p> 
+				  <p>       key：<input   id  ="txt_key" value="LTA-1 1L1aS">                      </p> 
+				  <p>       val：<input   id  ="txt_val" value="-13.88">                      </p> 
+				  <p>       <button onclick="setConfig()">回写</button><button onclick=" $('#logtext').val('')">清屏</button>    </p> 
+			    </div>
+                <div>
+			        <textarea id="updateLog" class="logtext" style="margin: 0px;  height: 500px;"></textarea>
+               </div>
+      </div><!--  -->
+   <div id="dtid_ap3"></div>
+</body>
+<script src="assets/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+<script type="text/javascript">
+
+var pl=30,p4=200,iswert=false,isupdate=false,update=undefined,
+
+
+qt3={"apID":"4000001","infos":[{"tagname":"LTA-1 1L1aS","currentvalue":"0","lasttime":"2017-06-02 09:52:34"},{"tagname":"LTA-1 1L1aT","currentvalue":"0","lasttime":"2017-06-02 09:52:34"},{"tagname":"LTA-1 1L1bS","currentvalue":"0","lasttime":"2017-06-02 09:52:34"},{"tagname":"LTA-1 1L1bT","currentvalue":"-14.5","lasttime":"2017-06-02 09:52:34"},{"tagname":"LTA-1 1L2aS","currentvalue":"0","lasttime":"2017-06-02 09:52:08"},{"tagname":"LTA-1 1L2aT","currentvalue":"3.3","lasttime":"2017-06-02 09:52:08"},{"tagname":"LTA-1 1L2bS","currentvalue":"11","lasttime":"2017-06-02 09:52:08"},{"tagname":"LTA-1 1L2bT","currentvalue":"3.1","lasttime":"2017-06-02 09:52:08"},{"tagname":"LTA-1 1L3aS","currentvalue":"14","lasttime":"2017-06-02 09:52:09"},{"tagname":"LTA-1 1L3aT","currentvalue":"-17.2","lasttime":"2017-06-02 09:52:09"},{"tagname":"LTA-1 1L3bS","currentvalue":"4","lasttime":"2017-06-02 09:52:09"},{"tagname":"LTA-1 1L3bT","currentvalue":"-2.7","lasttime":"2017-06-02 09:52:09"},{"tagname":"LTA-1 1L4aS","currentvalue":"0","lasttime":"2017-06-02 09:52:09"},{"tagname":"LTA-1 1L4aT","currentvalue":"-17.4","lasttime":"2017-06-02 09:52:09"},{"tagname":"LTA-1 1L4bS","currentvalue":"0","lasttime":"2017-06-02 09:52:09"},{"tagname":"LTA-1 1L4bT","currentvalue":"-18.8","lasttime":"2017-06-02 09:52:09"},{"tagname":"LTA-1 1L4cS","currentvalue":"0","lasttime":"2017-06-02 09:52:10"},{"tagname":"LTA-1 1L4cT","currentvalue":"-17.5","lasttime":"2017-06-02 09:52:10"},{"tagname":"LTA-1 1L4dS","currentvalue":"0","lasttime":"2017-06-02 09:52:10"},{"tagname":"LTA-1 1L4dT","currentvalue":"-17.6","lasttime":"2017-06-02 09:52:10"},{"tagname":"LTA-1 1L1aS","currentvalue":"0","lasttime":"2017-06-02 09:52:34"},{"tagname":"LTA-1 1L1aT","currentvalue":"-13.8","lasttime":"2017-06-02 09:52:34"},{"tagname":"LTA-1 1L1bS","currentvalue":"0","lasttime":"2017-06-02 09:52:34"},{"tagname":"LTA-1 1L1bT","currentvalue":"-14.5","lasttime":"2017-06-02 09:52:34"},{"tagname":"MTB-1 2M1aS","currentvalue":"0","lasttime":"2017-06-02 09:52:11"},{"tagname":"MTB-1 2M1aT","currentvalue":"4.6","lasttime":"2017-06-02 09:52:11"},{"tagname":"MTB-1 2M1bS","currentvalue":"0","lasttime":"2017-06-02 09:52:11"},{"tagname":"MTB-1 2M1bT","currentvalue":"3.8","lasttime":"2017-06-02 09:52:11"},{"tagname":"MTB-1 2M1cS","currentvalue":"0","lasttime":"2017-06-02 09:52:12"},{"tagname":"MTB-1 2M1cT","currentvalue":"4.2","lasttime":"2017-06-02 09:52:12"},{"tagname":"MTB-2 2M2aS","currentvalue":"11","lasttime":"2017-06-02 09:52:12"},{"tagname":"MTB-2 2M2aT","currentvalue":"0.7","lasttime":"2017-06-02 09:52:12"},{"tagname":"MTB-3 BM3S","currentvalue":"0","lasttime":"2017-06-02 09:52:13"},{"tagname":"MTB-3 BM3T","currentvalue":"1.6","lasttime":"2017-06-02 09:52:13"},{"tagname":"MTB-2 2M2bS","currentvalue":"11","lasttime":"2017-06-02 09:52:13"},{"tagname":"MTB-2 2M2bT","currentvalue":"0.8","lasttime":"2017-06-02 09:52:13"},{"tagname":"MTB-4 BM4S","currentvalue":"14","lasttime":"2017-06-02 09:52:14"},{"tagname":"MTB-4 BM4T","currentvalue":"17.5","lasttime":"2017-06-02 09:52:14"},{"tagname":"MTC-1 CM1S","currentvalue":"0","lasttime":"2017-06-02 09:52:14"},{"tagname":"MTC-1 CM1T","currentvalue":"7.0","lasttime":"2017-06-02 09:52:14"},{"tagname":"MTD-1 DM1S","currentvalue":"0","lasttime":"2017-06-02 09:52:14"},{"tagname":"MTD-1 DM1T","currentvalue":"5.4","lasttime":"2017-06-02 09:52:14"},{"tagname":"MTC-2 CM2S","currentvalue":"0","lasttime":"2017-06-02 09:52:14"},{"tagname":"MTC-2 CM2T","currentvalue":"2.0","lasttime":"2017-06-02 09:52:14"},{"tagname":"MTD-3 5M3aS","currentvalue":"14","lasttime":"2017-06-02 09:52:16"},{"tagname":"MTD-3 5M3aT","currentvalue":"16.8","lasttime":"2017-06-02 09:52:16"},{"tagname":"MTD-3 5M3bS","currentvalue":"14","lasttime":"2017-06-02 09:52:16"},{"tagname":"MTD-3 5M3bT","currentvalue":"22.9","lasttime":"2017-06-02 09:52:16"},{"tagname":"MTD-4 5M4aS","currentvalue":"11","lasttime":"2017-06-02 09:52:16"},{"tagname":"MTD-4 5M4aT","currentvalue":"7.4","lasttime":"2017-06-02 09:52:16"},{"tagname":"MTD-4 5M4bS","currentvalue":"0","lasttime":"2017-06-02 09:52:16"},{"tagname":"MTD-4 5M4bT","currentvalue":"7.4","lasttime":"2017-06-02 09:52:16"},{"tagname":"MTD-5 5M5aS","currentvalue":"0","lasttime":"2017-06-02 09:52:17"},{"tagname":"MTD-5 5M5aT","currentvalue":"10.1","lasttime":"2017-06-02 09:52:17"},{"tagname":"MTD-5 5M5bS","currentvalue":"0","lasttime":"2017-06-02 09:52:17"},{"tagname":"MTD-5 5M5bT","currentvalue":"6.6","lasttime":"2017-06-02 09:52:17"},{"tagname":"MTD-6 5M6aS","currentvalue":"0","lasttime":"2017-06-02 09:52:18"},{"tagname":"MTD-6 5M6aT","currentvalue":"5.5","lasttime":"2017-06-02 09:52:18"},{"tagname":"MTD-6 5M6bS","currentvalue":"14","lasttime":"2017-06-02 09:52:18"},{"tagname":"MTD-6 5M6bT","currentvalue":"10.8","lasttime":"2017-06-02 09:52:18"},{"tagname":"MTD-7 5M7aS","currentvalue":"11","lasttime":"2017-06-02 09:52:19"},{"tagname":"MTD-7 5M7aT","currentvalue":"6.5","lasttime":"2017-06-02 09:52:19"},{"tagname":"MTD-7 5M7bS","currentvalue":"0","lasttime":"2017-06-02 09:52:19"},{"tagname":"MTD-7 5M7bT","currentvalue":"5.7","lasttime":"2017-06-02 09:52:19"},{"tagname":"MTD-8 5M8aS","currentvalue":"0","lasttime":"2017-06-02 09:52:19"},{"tagname":"MTD-8 5M8aT","currentvalue":"9.2","lasttime":"2017-06-02 09:52:19"},{"tagname":"MTD-8 5M8bS","currentvalue":"0","lasttime":"2017-06-02 09:52:19"},{"tagname":"MTD-8 5M8bT","currentvalue":"8.1","lasttime":"2017-06-02 09:52:19"},{"tagname":"MTD-9 5M9aS","currentvalue":"11","lasttime":"2017-06-02 09:52:20"},{"tagname":"MTD-9 5M9aT","currentvalue":"7.9","lasttime":"2017-06-02 09:52:20"},{"tagname":"MTD-9 5M9bS","currentvalue":"0","lasttime":"2017-06-02 09:52:20"},{"tagname":"MTD-9 5M9bT","currentvalue":"7.3","lasttime":"2017-06-02 09:52:20"},{"tagname":"MTD-8 5M8cS","currentvalue":"0","lasttime":"2017-06-02 09:52:20"},{"tagname":"MTD-8 5M8cT","currentvalue":"16.1","lasttime":"2017-06-02 09:52:20"},{"tagname":"MTD-9 5M9cS","currentvalue":"11","lasttime":"2017-06-02 09:52:20"},{"tagname":"MTD-9 5M9cT","currentvalue":"7.9","lasttime":"2017-06-02 09:52:20"},{"tagname":"MTD-10 5M10aS","currentvalue":"0","lasttime":"2017-06-02 09:52:21"},{"tagname":"MTD-10 5M10aT","currentvalue":"7.8","lasttime":"2017-06-02 09:52:21"}]};
+;
+
+function timegetdata(){
+	getData();
+	updateLog();
+}
+
+
+function getData(){
+   $.ajax({type : "GET",url : "i/getQTData",contentType: "application/json; charset=utf-8", data:{apid:$("#txt_apid").val()  },success : function(data) {
+	$("#logtext").val(JSON.stringify(data));
+   }
+   });
+}
+function updateLog(){
+   $.ajax({type : "GET",url : "i/getQTUPlog",contentType: "application/json; charset=utf-8", data:{apid:$("#txt_apid").val()  },success : function(data) {$("#updateLog").val(data);}});
+}
+
+//==========================================================================================================================================================
+//1
+function setConfig(){
+	var data={apid:$("#txt_apid").val(),pl:$("#txt_pl").val(),key:$("#txt_key").val(),val:$("#txt_val").val()};
+     $.ajax({type : "POST",url : "i/updateConfig",data:data ,success : function(data) {
+	   if(data){
+		  alert("指令已发送！等待请求更新！");
+	   }
+    }});
+}
+	
+//2
+function senddata1(){
+	if(isupdate){alert("回写成功:！:"+JSON.stringify(update)); $("#logtext").val("");}isupdate=false;
+     var data=	JSON.stringify(qt3);
+	  $.ajax({type : "POST",dataType : "json",contentType: "application/json;charset=utf-8",url : "i/QTDataCollection",data :data,success : function(data) { //JSON.stringify(qt3)
+		  if(data.updateConf){ 
+	          getConfig();
+	       }
+	  }});
+}
+//3
+function getConfig(){
+    $.ajax({type : "POST",url : "i/QTDEVConfig",contentType: "application/json; charset=utf-8",data:"{'apID':'"+$("#txt_apid").val() +"'}" ,success : function(data) { 
+   	   console.log("收到回写数据");
+   	   $.each( data.infos, function(i, vo){
+   		   $.each(  qt3.infos, function(i, vo1){
+       		  if(vo.tagname==vo1.tagname){
+       			  vo1.currentvalue=vo.value;
+       		  }
+       	   });
+   		   
+   	   });
+   	   console.log("回写数完成！！！！！！"); 
+   	   isupdate=true;
+   	   update=data;
+    }});
+}
+/**/
+
+$().ready(function () {
+	if (window.innerWidth)
+		winWidth = window.innerWidth;
+		else if ((document.body) && (document.body.clientWidth))
+		winWidth = document.body.clientWidth;
+		// 获取窗口高度
+		if (window.innerHeight)
+		winHeight = window.innerHeight;
+		else if ((document.body) && (document.body.clientHeight))
+		winHeight = document.body.clientHeight;
+		// 通过深入 Document 内部对 body 进行检测，获取窗口大小
+		if (document.documentElement && document.documentElement.clientHeight && document.documentElement.clientWidth)
+		{
+		winHeight = document.documentElement.clientHeight;
+		winWidth = document.documentElement.clientWidth;
+	   }
+		width=winHeight-20;
+		width=width>500?width:500;
+	     $("#logtext").height(width);
+	     window.setInterval(timegetdata,10000); 
+// 	     window.setInterval(senddata1,pl*1000); 
+//	     senddata1();//1
+	
+	
+});
+
+
+
+
+   
+
+
+</script>
+</html>

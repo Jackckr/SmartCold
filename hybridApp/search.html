@@ -41,14 +41,14 @@
 <script src="js/controller/index.js"></script>
 <script>
     mui.init({  
-	    beforeback: function() {  
+	   /* beforeback: function() {  
 		    //获得列表界面的webview  
 		    var list = plus.webview.currentWebview().opener();  
 		    //触发列表界面的自定义事件（refresh）,从而进行数据刷新  
 	    	mui.fire(list, 'refresh'); 
 		    //返回true，继续页面关闭逻辑  
 		    return true;  
-	    }  
+	    }  */
 	});  
     mui('.mui-scroll-wrapper').scroll({
         deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
@@ -65,7 +65,13 @@
                 name:$(this).html()
             };
             localStorage.currentRdc=JSON.stringify(currentRdc);
-            mui.back(); 
+           // mui.back(); 
+            
+            
+            var view=plus.webview.getWebviewById("index.html");//注意  HBuilder是上个页面的ID你自己要替换掉   
+                           
+            mui.fire(view,'doit',currentRdc);   
+            mui.back()   
          })   
     }   
     
