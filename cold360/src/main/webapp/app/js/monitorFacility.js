@@ -302,7 +302,7 @@ app.controller('monitorFacility', function ($scope, $location, $http, $rootScope
         var startDate = formatTimeToDay(getFormatTimeString(-10 * 24 * 60 * 60 * 1000))
         var endDate = getFormatTimeString();
         var url = ER.coldroot + "/i/other/findGoodsByDate?coldstorageId=" + storage.id +
-            "&startCollectionTime=" + startDate + "&endCollectionTime=" + endDate;
+            "&startCollectionTime=" + '2017-03-15' + "&endCollectionTime=" + '2017-04-05 09:33:55';
         $http.get(url).success(function (data) {
             if (Object.keys(data).length > 0) {
                 var mainId = "barChart" + storage.id;

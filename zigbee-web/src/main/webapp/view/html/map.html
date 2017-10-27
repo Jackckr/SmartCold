@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="../css/common.css" />
     <link rel="stylesheet" href="../css/media.css" />
     <style type="text/css">
+        input[type='text']{width: auto;padding: 0;
+            height:auto;}
+        img{border: none;width: auto;height: auto;vertical-align: middle;}
         html, body {
             margin: 0;
             width: 100%;
@@ -49,6 +52,12 @@
         .BMapLib_trans{
             width: 58px;
             height: 31px;
+        }
+       #BMapLib_transBox0 tbody tr:nth-child(1) td:nth-child(1){
+           width: 50px!important;
+       }
+        #BMapLib_transBox0 tbody tr:nth-child(1) td:nth-child(3){
+            width: 130px!important;
         }
     </style>
     <script type="text/javascript" src="../plugins/jquery-3.2.1.min.js"></script>
@@ -190,7 +199,7 @@
         var searchInfoWindow = null;
         searchInfoWindow = new BMapLib.SearchInfoWindow(map, content, {
             title: point.data.name,      //标题
-            width: 290,             //宽度
+            width: 350,             //宽度
             height: 105,              //高度
             panel: "panel",         //检索结果面板
             enableAutoPan: true,     //自动平移
