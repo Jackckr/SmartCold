@@ -25,7 +25,7 @@ public class CacheCrashTest {
 	@Resource
 	private TempMapper tempServer;
 	//并发线程量
-	private static final int threadNum = 10;
+	private static final int threadNum = 2000;
 	
 	private static final int oid=1;
 	
@@ -36,7 +36,7 @@ public class CacheCrashTest {
 	
 	private Date starttime=TimeUtil.pasDate("2017-09-13 06:00:00");
 	
-   private Date endtime=TimeUtil.pasDate("2017-09-13 14:00:00");
+    private Date endtime=TimeUtil.pasDate("2017-09-13 14:00:00");
    
    private List<Long> longs=new ArrayList<Long>();
 	
@@ -79,10 +79,11 @@ public class CacheCrashTest {
 				e.printStackTrace();
 			}
 			Long sttine=System.currentTimeMillis();
-			List<ItemValue> TempList = tempServer.findVTByTime( oid, "Temp",starttime,endtime );
-			 sttine=System.currentTimeMillis()-sttine;
-			 
+		
+			 synchronized (this) {
 				 avgtime+=sttine;
+		    }
+				 
 //				 System.err.println(longs);
 //				 longs.add(sttine);
 //			System.out.println(Thread.currentThread().getName()+"==============>"+TempList.size()+"=============="+sttine);

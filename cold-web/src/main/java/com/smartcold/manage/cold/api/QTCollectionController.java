@@ -70,14 +70,14 @@ public class QTCollectionController extends BaseController {
 				 this.cacheService.putData("dev:dev_data:"+apID, data);//缓存数据 -----防止需要
 				 this.cacheService.putData("dev:dev_status:"+apID, cutime);//记录设备最后通讯时间
 				 ItemConf rdcspconf = this.rdcConfService.findRdcConfByDevId(apID);
-				 if(rdcspconf==null){ return  DataResultDto.newSuccess();}
-				 rdcid=rdcspconf.getRdcid();
-				 this.batchData(Integer.toString(rdcid),dataMap);//保存数据  建议由数据中心处理  ---和丹弗斯一样
+				 if(rdcspconf!=null){ 
+					 rdcid=rdcspconf.getRdcid();
+					 this.batchData(Integer.toString(rdcid),dataMap);//保存数据  建议由数据中心处理  ---和丹弗斯一样
+				 }
 			}
-			
 			Boolean cisupdat = this.cacheService.getData("dev:dev_isup:"+apID);
 			if(cisupdat!=null&&cisupdat){cisupdat=true;  cacheService.removeKey("dev:dev_isup:"+apID);}else{cisupdat=false;}
-//			System.err.println("收到 QT数据："+apID+"====================间隔时间："+exptime+" 是否更新数据："+cisupdat+"时间"+TimeUtil.getDateTime());
+			System.err.println("收到 QT数据："+apID+"====================间隔时间："+exptime+" 是否更新数据："+cisupdat+"时间"+TimeUtil.getDateTime());
 		   return DataResultDto.newSuccess(cisupdat);//更新数据服务
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -106,17 +106,19 @@ public class QTCollectionController extends BaseController {
 			resMap.put("time", TimeUtil.getMillTime());
 			//判断是否有PL
 			Integer  pl = this.cacheService.getData("dev:dev_PL:"+apID);if(pl!=null){	resMap.put("PL", pl);}
-			List<HashMap<String, Object>> infoHashMaps = this.cacheService.getData("dev:dev_upconf:"+apID);
+			HashMap<String, Object> confdata= this.cacheService.getData("dev:dev_upconf:"+apID);
 			this.cacheService.removeKey("dev:dev_isup:"+apID);
 			this.cacheService.removeKey("dev:dev_PL:"+apID);
 			this.cacheService.removeKey("dev:dev_upconf:"+apID);
-			if(SetUtil.isNullList(infoHashMaps)){
-				 System.err.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-				 return null;
+			if(confdata==null){ System.err.println(" 配置异常====");return resMap;}
+			HashMap<String, Object> tempmap=null;
+			List<HashMap<String, Object>> infoHashMaps=new ArrayList<>();
+			for (String key : confdata.keySet()) {
+				tempmap=new HashMap<>();
+				tempmap.put("tagname", key);
+				tempmap.put("value", confdata.get(key));
+				infoHashMaps.add(tempmap);
 			}
-			
-			
-			
 		    resMap.put("infos", infoHashMaps);
 		    String msg=	TimeUtil.getDateTime()+  "更新"+apID+"配置:"+JSON.toJSONString(infoHashMaps)+"\r\n";
 			System.err.println(msg);
@@ -144,14 +146,11 @@ public class QTCollectionController extends BaseController {
 	@ResponseBody
 	public boolean updateConfig(String apid,Integer pl,String key,String val) {
 		if(pl!=null){ this.cacheService.putData("dev:dev_PL:"+apid, pl);}
-		 HashMap<String, Object> dataHashMap=new HashMap<>();
-         dataHashMap.put("tagname", key);
-         dataHashMap.put("value", val);
          this.cacheService.putData("dev:dev_isup:"+apid, true);//缓存数据 -----防止需要
-         List<HashMap<String, Object>> list = this.cacheService.getData("dev:dev_upconf:"+apid);
-         if(SetUtil.isNullList(list)){ list=new ArrayList<>(); }
-         list.add(dataHashMap);
-         this.cacheService.putData("dev:dev_upconf:"+apid,list);
+         HashMap<String, Object> confdata=this.cacheService.getData("dev:dev_upconf:"+apid);
+         if(SetUtil.isNullMap(confdata)){ confdata=new HashMap<>(); } confdata.put(key,val);
+         //记录操作者日志 
+         this.cacheService.putData("dev:dev_upconf:"+apid,confdata);
 	     return true;
 	} 
 	
@@ -166,10 +165,7 @@ public class QTCollectionController extends BaseController {
 	@ResponseBody
 	public ResponseData<String>  getQTData(String apid) {
 			String data=cacheService.getData("dev:dev_data:"+apid);
-			if(StringUtil.isnotNull(data)){
-				return ResponseData.newSuccess(data);
-			}
-			return ResponseData.newSuccess("");
+			return ResponseData.newSuccess(data);
 	}
 	
 	/**

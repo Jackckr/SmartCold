@@ -22,6 +22,7 @@ import com.smartcold.manage.cold.dao.newdb.DevStatusMapper;
 import com.smartcold.manage.cold.dao.newdb.StorageDataCollectionMapper;
 import com.smartcold.manage.cold.dto.DataResultDto;
 import com.smartcold.manage.cold.entity.newdb.StorageDataCollectionEntity;
+import com.smartcold.manage.cold.service.redis.CacheService;
 import com.smartcold.manage.cold.util.SetUtil;
 import com.smartcold.manage.cold.util.StringUtil;
 import com.smartcold.manage.cold.util.TimeUtil;
@@ -38,7 +39,8 @@ public class WLXCollectionController extends BaseController {
 	
 	@Autowired
 	public   DevStatusMapper devplset;
-	
+	@Autowired
+	private CacheService cacheService;
 	@Autowired
 	private StorageDataCollectionMapper storageDataCollectionDao;
 
@@ -59,6 +61,7 @@ public class WLXCollectionController extends BaseController {
 			Map<String, Object> dataCollectionBatchEntity = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 			if(dataCollectionBatchEntity.containsKey("infos")){
 				String apID = dataCollectionBatchEntity.get("apID").toString();
+				this.cacheService.putData("dev:dev_data:"+apID,data);
 				ArrayList<StorageDataCollectionEntity> arrayList = new ArrayList<StorageDataCollectionEntity>();
 				for (Map<String, String> info : (List<Map<String, String>>) dataCollectionBatchEntity.get("infos")) {
 					Date time = new Date(Long.parseLong(info.remove("time")) * 1000);
