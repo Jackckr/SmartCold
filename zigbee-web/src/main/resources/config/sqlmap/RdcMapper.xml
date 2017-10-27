@@ -321,7 +321,7 @@
         SELECT * FROM  `rdc` WHERE `id`=#{id}
     </select>
     <select id="findMapRdc" parameterType="map" resultType="map">
-      SELECT r.id,r.`name`,r.address ad,r.longitude x,r.latitude y,r.audit,r.istemperaturestandard db ,(SELECT location from filedata where belongid=r.id LIMIT 1 ) url  from rdc r
+      SELECT r.id,r.`name`,r.address ad,r.longitude x,r.latitude y,r.audit,r.istemperaturestandard db ,(SELECT location from filedata where belongid=r.id  AND f.category = 'storagePic'  LIMIT 1 ) url  from rdc r
        <if test="audit!=null"> where audit=#{audit} </if>
        <if test="istemperaturestandard!=null"> where istemperaturestandard=#{istemperaturestandard} </if>
        ;
