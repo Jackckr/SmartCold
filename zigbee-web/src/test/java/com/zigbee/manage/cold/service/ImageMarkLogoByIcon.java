@@ -1,3 +1,4 @@
+/*
 package com.zigbee.manage.cold.service;
 
 import java.awt.AlphaComposite;  
@@ -12,17 +13,21 @@ import java.io.OutputStream;
 import javax.imageio.ImageIO;  
 import javax.swing.ImageIcon;  
     
-/**   
+*/
+/**
  * 图片加水印，设置透明度 
  * http://blog.csdn.net/hfmbook 
  * @author Gary  
  * 创建日期：2014年12月16日 22:45:17 
- */    
+ *//*
+
 public class ImageMarkLogoByIcon {     
     
-    /**   
+    */
+/**
      * @param args   
-     */    
+     *//*
+
     public static void main(String[] args) {     
         String srcImgPath = "D:/1.jpg";     
         String iconPath = "D:/logo.png";     
@@ -32,23 +37,27 @@ public class ImageMarkLogoByIcon {
         ImageMarkLogoByIcon.markImageByIcon(iconPath, srcImgPath, targerPath , -45);    
         System.err.println(System.currentTimeMillis()-starttime);
     }     
-    /**   
+    */
+/**
      * 给图片添加水印   
      * @param iconPath 水印图片路径   
      * @param srcImgPath 源图片路径   
      * @param targerPath 目标图片路径   
-     */    
+     *//*
+
     public static void markImageByIcon(String iconPath, String srcImgPath,     
             String targerPath) {     
         markImageByIcon(iconPath, srcImgPath, targerPath, null) ;   
     }     
-    /**   
+    */
+/**
      * 给图片添加水印、可设置水印图片旋转角度   
      * @param iconPath 水印图片路径   
      * @param srcImgPath 源图片路径   
      * @param targerPath 目标图片路径   
      * @param degree 水印图片旋转角度 
-     */    
+     *//*
+
     public static void markImageByIcon(String iconPath, String srcImgPath,     
             String targerPath, Integer degree) {     
         OutputStream os = null;     
@@ -99,4 +108,4 @@ public class ImageMarkLogoByIcon {
             }     
         }     
     }     
-}   
+}   */
