@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<version>0.0.1</version>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.bgzigbee.manage</groupId>
@@ -25,7 +25,7 @@
 			<version>1.9.5</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -76,9 +76,9 @@
 			<version>1.2.2</version>
 		</dependency>
 		<dependency>
-		    <groupId>commons-dbcp</groupId>
-		    <artifactId>commons-dbcp</artifactId>
-		    <version>1.2.2</version>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.2.2</version>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
@@ -97,9 +97,9 @@
 			<version>0.7.2</version>
 		</dependency>
 		<dependency>
-		    <groupId>com.github.pagehelper</groupId>
-		    <artifactId>pagehelper</artifactId>
-		    <version>4.1.6</version>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+			<version>4.1.6</version>
 		</dependency>
 		<!-- log -->
 		<dependency>
@@ -122,7 +122,7 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.14</version>
 		</dependency>
-		
+
 		<!-- other -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -130,9 +130,9 @@
 			<version>2.5</version>
 		</dependency>
 		<dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>fastjson</artifactId>
-				<version>1.2.3</version>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.3</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -150,12 +150,12 @@
 			<version>2.2.4</version>
 		</dependency>
 		<dependency>
-		    <groupId>commons-fileupload</groupId>
-		    <artifactId>commons-fileupload</artifactId>
-		    <version>1.3</version>
-	    </dependency>
-	    <dependency>
-	    <groupId>commons-net</groupId>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-net</groupId>
 			<artifactId>commons-net</artifactId>
 			<version>2.2</version>
 			<scope>compile</scope>
@@ -167,34 +167,34 @@
 			<artifactId>guava</artifactId>
 			<version>18.0</version>
 		</dependency>
-		
-		<!--json-lib-->  
-         <dependency>  
-          <groupId>net.sf.json-lib</groupId>  
-          <artifactId>json-lib</artifactId>  
-          <version>2.4</version>  
-          <scope>system</scope>
-	      <systemPath>${project.basedir}/lib/json.jar</systemPath>
-         </dependency>
-		
+
+		<!--json-lib-->
+		<dependency>
+			<groupId>net.sf.json-lib</groupId>
+			<artifactId>json-lib</artifactId>
+			<version>2.4</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/json.jar</systemPath>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/redis.clients/jedis redis 缓存管理2-->
 		<dependency>
-           <groupId>org.springframework.data</groupId>
-           <artifactId>spring-data-redis</artifactId>
-           <version>1.7.1.RELEASE</version>
-       </dependency>
-       <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
-		<dependency>
-		    <groupId>redis.clients</groupId>
-		    <artifactId>jedis</artifactId>
-		    <version>2.9.0</version>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<version>1.7.1.RELEASE</version>
 		</dependency>
-        
-			<dependency>                                
-			    <groupId>org.apache.poi</groupId>       
-			    <artifactId>poi-ooxml</artifactId>      
-			    <version>3.10-FINAL</version>           
-			</dependency>
+		<!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.9.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.10-FINAL</version>
+		</dependency>
 
 		<!--读取csv文件jar包-->
 		<dependency>
@@ -206,16 +206,16 @@
 
 
 		<!-- 支持富文本编辑器  -->
-	    <dependency>
-	      <groupId>com.baidu.ueditor</groupId>
-	      <artifactId>ueditor</artifactId>
-	      <version>1.1.2</version>
-	      <scope>system</scope>
-	      <systemPath>${project.basedir}/lib/ueditor.jar</systemPath>
-	    </dependency>
-	    
-	    
-	    
+		<dependency>
+			<groupId>com.baidu.ueditor</groupId>
+			<artifactId>ueditor</artifactId>
+			<version>1.1.2</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/ueditor.jar</systemPath>
+		</dependency>
+
+
+
 	</dependencies>
 
 	<build>
@@ -266,12 +266,12 @@
 							<targetPath>WEB-INF/classes</targetPath>
 						</resource>
 						<resource>
-	                        <directory>lib/</directory>
-	                        <targetPath>WEB-INF/lib</targetPath>
-	                        <includes>
-	                            <include>*.jar</include>
-	                        </includes>
-                       </resource>
+							<directory>lib/</directory>
+							<targetPath>WEB-INF/lib</targetPath>
+							<includes>
+								<include>*.jar</include>
+							</includes>
+						</resource>
 						<resource>
 							<directory>src/main/webapp</directory>
 							<filtering>false</filtering>

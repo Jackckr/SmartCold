@@ -1,3 +1,4 @@
+/*
 package com.zigbee.manage.cold.service;
 
 import org.springframework.util.StringUtils;
@@ -8,20 +9,24 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLEncoder;
 
+*/
 /**
  * Author: qiunian.sun
  * Date: qiunian.sun(2016-07-16 17:32)
- */
+ *//*
+
 public class MapTest {
 
     public static void main(String[] args) {
         getGeocoderLatitude("合肥新站区胜利路89");
     }
 
-    /**
+    */
+/**
      * 输入地址返回经纬度坐标
      * key lng(经度),lat(纬度)
-     */
+     *//*
+
     public static void getGeocoderLatitude(String address) {
         BufferedReader in = null;
         try {
@@ -54,4 +59,4 @@ public class MapTest {
             }
         }
     }
-}
+}*/
