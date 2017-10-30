@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>追溯</title>
+	    <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
+	    <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
+	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+	    <link rel="stylesheet" type="text/css" href="../com/css/bootstrap.min.css">
+	    <link rel="stylesheet" type="text/css" href="../com/css/font-awesome.min.css">
+	    <link rel="stylesheet" type="text/css" href="../com/css/timeline.css">
+	    <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+	    <link rel="stylesheet" href="../com/css/review.css" />
+	    <script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
+	    <script type="text/javascript" src="../com/js/bootstrap.min.js"></script>
+	    <script type="text/javascript" src="../com/js/echarts.min.js" ></script>	    
+	    <script type="text/javascript" src="../com/js/angular.min.js"></script>
+	    <script type="text/javascript" src="../com/js/common.js"></script>
+	    <script type="text/javascript" src="../app/js/controller-search.js"></script>
+	</head>
+	<body ng-app="app"  ng-controller="multi-query" style="background: #fff">
+		<!-- header -->
+		    <header>
+	        	<div class="area fl">
+	        		<a href="../index.html"><i class="iconfont">&#xe60e;</i></a>
+	        	</div>
+	        	
+	        	<div class="search review_s"><!-- 可用：(10)2401(241)3021(21)300001 -->
+	        		<input type="text" ng-model="key" onclick="inputFocus(this)" placeholder="请输入订单号或商品编号"/>
+	        		<i class="iconfont"><span ng-click="singleSearch()">&#xe62f;</span></i>
+	        		<ul class="searchList">
+	        			<li><a href="javaScript:;" onclick="tapA (this)">按订单号或商品编号搜索</a></li>
+	        			<li><a href="javaScript:;" onclick="tapA (this)">按车辆编号、冷库/冷柜编号搜索</a></li>
+	        		</ul>
+	        	</div>
+		    </header>
+		<!-- header end-->
+			<section class="main recentSearch">
+				<ul class="listDad clearfix">
+					<li class="fl" style="color:#666">最近查询</li>
+				</ul>
+				<p style="font-size: .75rem" class="delete">暂无查询记录</p>
+	
+			</section>
+	<section class="main searchResult black">
+		<ul id="myTab" class="nav nav-tabs">
+			<li class="active dropdown">
+				<a href="#" id="danjian" class="dropdown-toggle" data-toggle="dropdown">
+					单件查询<b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1">
+					<li><a href="#wendu" tabindex="-1" data-toggle="tab">温度</a></li>
+					<li><a href="#zhuizong" tabindex="-1" data-toggle="tab">追踪</a></li>
+					<li><a href="#fenxi" tabindex="-1" data-toggle="tab">分析</a></li>
+				</ul>
+			</li>
+			<li ng-click="batchSearch()"><a href="#pici" data-toggle="tab">批次查询</a></li>
+		</ul>
+		<div id="myTabContent" class="tab-content">
+			<div class="tab-pane fade in active" id="wendu">
+				<div id="wenduChart"></div>
+			</div>
+			<div class="tab-pane fade" id="zhuizong">
+				<p style="margin: 0.3rem 0;text-align: center;">物品开始运输</p>
+				<ul class="list timeline">
+					<li ng-repeat="item in singleInfo.ananysis">
+						<div
+							class="timeline-badge {{item.highestTemperature>-9?'down':'up'}}">
+							<i class="fa fa-truck bg-blue"></i> <span class="icon-truck"
+								aria-hidden="true"></span>
+						</div>
+						<div class="timeline-panel">
+							<div class="timeline-heading">
+								<h4 class="timeline-title">{{item.startTime}}&nbsp;至&nbsp;{{item.endTime}}</h4>
+							</div>
+							<div class="timeline-body">
+								<!---Time Line Body&Content--->
+								<p>{{item.location}},温度&nbsp;({{item.lowestTemperature}}°C ~
+									{{item.highestTemperature}}°C)</p>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="tab-pane fade" id="fenxi">
+				<div class="bgBLue">
+					<p>货物流转</p>
+					<p><b>{{singleInfo.ananysis.length}}</b>个冷藏点</p>
+				</div>
+				<div class="bgBLue">
+					<p>冷藏存储</p>
+					<p><b>36</b>小时</p>
+				</div>
+				<div class="bgBLue">
+					<p>超标时长</p>
+					<p><b>9</b>小时</p>
+				</div>
+				<div class="result">
+					<p>分析结果:</p>
+					<p><b>可能存在变质风险。</b></p>
+				</div>
+			</div>
+			<div class="tab-pane fade" id="pici">
+				<ul class="list-group">
+					<li class="list-group-item list-group-item-default">品名：<b
+						ng-bind="'未知'"></b></li>
+					<li class="list-group-item list-group-item-default">生产商：<b
+						ng-bind="'未知'"></b></li>
+					<li class="list-group-item list-group-item-default">批次数量：<b
+						ng-bind="batchData.length"></b></li>
+					<li class="list-group-item list-group-item-danger">超温数量：<b
+						ng-bind="warnings"></b></li>
+					<li class="list-group-item list-group-item-default">客户编号：<a
+						href="">3021</a></li>
+				</ul>				
+				<p>货品列表:</p>
+				<ul class="list-group">
+					 <li ng-click="singleSearch2(bdata.key)" class="list-group-item list-group-item-default" ng-repeat="bdata in batchData" 
+					     ng-if="bdata.overTemperatureTimes > 0" >
+					     <a class="text-danger" ng-bind="bdata.key"></a></li>
+	    				 <li ng-click="singleSearch2(bdata.key)" class="list-group-item list-group-item-default" ng-repeat="bdata in batchData" 
+	    				 ng-if="bdata.overTemperatureTimes == 0"><a
+	    				 class="text-info" ng-bind="bdata.key"></a></li>
+				</ul>
+				<div id="HSChart"></div>
+			</div>			
+		</div>
+	</section>
+	<script>
+			function inputFocus (ops) {
+				$(".searchList").show()
+				event.stopPropagation();
+			};
+			function tapA (ops){
+				var $val = $(ops).html();
+				$(".search input").attr("placeholder",$val);
+				$(".search input").val("");
+				$(".search input").focus()
+				$(".searchList").hide();
+			}
+
+			$(function() {
+				$(document).click(function(){
+					$(".searchList").hide();
+					event.stopPropagation();
+				})
+				$(".search i").click(function(event) {
+					$(".searchList").hide();
+					$(".recentSearch").hide();
+					$(".searchResult").show();
+					event.stopPropagation();
+				});
+			});
+		</script>
+	</body>
+</html>
+

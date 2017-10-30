@@ -817,4 +817,3 @@ var DiDa = setInterval(function () {
     page.initpage();
 }, 30000);
 
-/*hulve*/

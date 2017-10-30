@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
+    <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <title>冷库地图</title>
+    <link rel="stylesheet" type="text/css" href="../com/css/common.css">
+	<link rel="stylesheet" type="text/css" href="../com/css/coldlist.css" />
+	<script type="text/javascript" src="../com/js/jquery-1.12.0.min.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=1b7XOzUYmHvOTXlchvZuDzns"></script>
+	<script type="text/javascript" src="../com/js/TextIconOverlay_min.js"></script>
+	<script type="text/javascript" src="../com/js/MarkerClusterer_min.js"></script>
+	<script type="text/javascript" src="../com/js/angular.min.js"></script>
+	<script type="text/javascript" src="../com/js/common.js"></script>
+	<script type="text/javascript" src="../app/js/coldmap.js"></script>
+</head>
+<body ng-app="app" ng-controller="coldmap" ng-cloak>
+    <!-- header -->
+        <header>
+        	
+            <div class="area fl">
+                <a onclick="goback()"><i class="iconfont">&#xe60e;</i></a>
+            </div>
+            <div class="txt">
+                	冷库地图
+            </div>
+        </header>
+    <!-- header end-->
+    <section style="height: 32rem">
+    	<div id="rdcMapChart" style="width: 100%;height: 100%"></div>
+    </section>
+</body>
+</html>

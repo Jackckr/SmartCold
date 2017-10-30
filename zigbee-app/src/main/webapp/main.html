@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta charset="UTF-8">
+    <meta charset="utf-8" name="keywords" content="链库,链库网,冷库360,冷库,冷链,智慧冷库,冷库节能,冷库监控,冷库智能管理,冷库能效评估,温度追溯,冷链物流,冷链电商"/>
+    <meta charset="utf-8" name="description" content="冷库智能管理与云服务平台。国内最大、最权威的冷库信息平台，以及冷库管理可视化与能效在线评估系统。"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <title>链库网</title>
+		<style type="text/css">
+		[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+.body{
+    background: black;
+}
+.view-container{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    -webkit-perspective: 1200px;
+    perspective: 1200px;
+}
+.view-page{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+}
+.view-page{
+    display: -webkit-box;
+    display: -ms-flex;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.view-page{
+    color: #fff;
+}
+.view-1{
+    background: #b3c589;
+}
+.view-2{
+    background: #8fc241;
+}
+.view-3{
+    background: #e2a04c;
+}
+.view-4{
+    background: #81add2;
+}
+
+/* View animations */
+.view-1.ng-enter{
+    -webkit-transform-origin: 50% 0%;
+    transform-origin: 50% 0%;
+    -webkit-animation: rotateCubeTopIn .5s ease-in both;
+    animation: rotateCubeTopIn .5s ease-in both;
+}
+.view-1.ng-leave{
+    -webkit-animation: moveToLeft .5s both;
+    animation: moveToLeft .5s both;
+}
+.view-2.ng-enter{
+    -webkit-animation: moveFromRight .5s both;
+    animation: moveFromRight .5s both;
+}
+.view-2.ng-leave{
+    -webkit-animation: scaleDown .5s both;
+    animation: scaleDown .5s both;
+}
+.view-3.ng-enter{
+    -webkit-animation: moveFromBottom .5s both;
+    animation: moveFromBottom .5s both;
+    z-index: 200;
+}
+.view-3.ng-leave{
+    -webkit-transform-origin: 0% 0%;
+    transform-origin: 0% 0%;
+    -webkit-animation: rotateFall 1s ease-in both;
+    animation: rotateFall 1s ease-in both;
+    z-index: 200;
+}
+.view-4.ng-enter{
+    -webkit-animation: scaleUp .5s both;
+    animation: scaleUp .5s both;
+}
+.view-4.ng-leave{
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+    -webkit-animation: rotateCubeTopOut .5s ease-in both;
+    animation: rotateCubeTopOut .5s ease-in both;
+}
+
+/* Animation keyframes. */
+@-webkit-keyframes moveToLeft {
+    from { }
+    to { -webkit-transform: translateX(-100%); }
+}
+@keyframes moveToLeft {
+    from { }
+    to { -webkit-transform: translateX(-100%); transform: translateX(-100%); }
+}
+
+@-webkit-keyframes moveFromRight {
+    from { -webkit-transform: translateX(100%); }
+}
+@keyframes moveFromRight {
+    from { -webkit-transform: translateX(100%); transform: translateX(100%); }
+}
+
+@-webkit-keyframes scaleDown {
+    from { }
+    to { opacity: 0; -webkit-transform: scale(.8); }
+}
+@keyframes scaleDown {
+    from { }
+    to { opacity: 0; -webkit-transform: scale(.8); transform: scale(.8); }
+}
+
+@-webkit-keyframes moveFromBottom {
+    from { -webkit-transform: translateY(100%); }
+}
+@keyframes moveFromBottom {
+    from { -webkit-transform: translateY(100%); transform: translateY(100%); }
+}
+
+@-webkit-keyframes rotateFall {
+    0% { -webkit-transform: rotateZ(0deg); }
+    20% { -webkit-transform: rotateZ(10deg); -webkit-animation-timing-function: ease-out; }
+    40% { -webkit-transform: rotateZ(17deg); }
+    60% { -webkit-transform: rotateZ(16deg); }
+    100% { -webkit-transform: translateY(100%) rotateZ(17deg); }
+}
+@keyframes rotateFall {
+    0% { -webkit-transform: rotateZ(0deg); transform: rotateZ(0deg); }
+    20% { -webkit-transform: rotateZ(10deg); transform: rotateZ(10deg); -webkit-animation-timing-function: ease-out; animation-timing-function: ease-out; }
+    40% { -webkit-transform: rotateZ(17deg); transform: rotateZ(17deg); }
+    60% { -webkit-transform: rotateZ(16deg); transform: rotateZ(16deg); }
+    100% { -webkit-transform: translateY(100%) rotateZ(17deg); transform: translateY(100%) rotateZ(17deg); }
+}
+
+@-webkit-keyframes scaleUp {
+    from { opacity: 0; -webkit-transform: scale(.8); }
+}
+@keyframes scaleUp {
+    from { opacity: 0; -webkit-transform: scale(.8); transform: scale(.8); }
+}
+
+@-webkit-keyframes rotateCubeTopOut {
+    0% { }
+    50% { -webkit-animation-timing-function: ease-out; -webkit-transform: translateY(-50%) translateZ(-200px) rotateX(45deg); }
+    100% { opacity: .3; -webkit-transform: translateY(-100%) rotateX(90deg); }
+}
+@keyframes rotateCubeTopOut {
+    0% {}
+    50% { -webkit-animation-timing-function: ease-out; animation-timing-function: ease-out; -webkit-transform: translateY(-50%) translateZ(-200px) rotateX(45deg); transform: translateY(-50%) translateZ(-200px) rotateX(45deg); }
+    100% { opacity: .3; -webkit-transform: translateY(-100%) rotateX(90deg); transform: translateY(-100%) rotateX(90deg); }
+}
+
+@-webkit-keyframes rotateCubeTopIn {
+    0% { opacity: .3; -webkit-transform: translateY(100%) rotateX(-90deg); }
+    50% { -webkit-animation-timing-function: ease-out; -webkit-transform: translateY(50%) translateZ(-200px) rotateX(-45deg); }
+}
+@keyframes rotateCubeTopIn {
+    0% { opacity: .3; -webkit-transform: translateY(100%) rotateX(-90deg); transform: translateY(100%) rotateX(-90deg); }
+    50% { -webkit-animation-timing-function: ease-out; animation-timing-function: ease-out; -webkit-transform: translateY(50%) translateZ(-200px) rotateX(-45deg); transform: translateY(50%) translateZ(-200px) rotateX(-45deg); }
+}
+		
+		</style>
+		
+	</head>
+	<!-- This is a another test try ,please ignore it ^_^ -->
+	<body ng-app="morin" ng-strict-di>
+		<div class="view-container" ng-controller="viewController as view" ng-switch="view.current" ng-cloak>
+			<div class="view-page view-1" ng-switch-when="haru" ng-click="view.next()">
+					haru
+			</div>
+			<div class="view-page view-2" ng-switch-when="natsu" ng-click="view.next()">
+					natsu
+			</div>
+			<div class="view-page view-3" ng-switch-when="aki" ng-click="view.next()">
+					aki
+			</div>
+			<div class="view-page view-4" ng-switch-when="fuyu" ng-click="view.next()">
+					fuyu
+			</div>
+	</div>
+		<script type="text/javascript" src="com/js/angular.min.js"></script>
+		<script src="http://sandbox.runjs.cn/uploads/rs/138/iix7ikzj/angular-animate.min.js"></script>
+	</body>
+	<script type="text/javascript">
+		(function(){
+		    angular.module("morin", ["ngAnimate"]).controller("viewController", viewController);
+		    function viewController(){
+		        var view = this,
+		        nameArray = ["haru", "natsu", "aki", "fuyu"],
+		        indexCurrent = 0;
+
+		        view.next = next;
+		        view.current = nameArray[indexCurrent];
+
+		        function next(){
+		            indexCurrent = (indexCurrent + 1) % nameArray.length;
+		            view.current = nameArray[indexCurrent];
+		        }
+		    }
+		}());
+		</script>
+</html>
