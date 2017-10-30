@@ -4,7 +4,8 @@ if (localStorage.rdc) {
     if (localStorage.currentRdc) {
         rdc.id = JSON.parse(localStorage.currentRdc).id;
     }
-}       //  rdc.id=1590
+}
+/*rdc.id=1775*/
 mui.init();
 mui('.mui-scroll-wrapper').scroll({
 	deceleration: 0.0005 //flick 减速系数，系数越大，滚动速度越慢，滚动距离越小，默认值0.0006
@@ -26,9 +27,11 @@ mui('.mui-popover').on('tap', 'ul>li>a', function (e) {
     for (var i = 0; i < $('.rlTab a').length; i++) {
         var a_href = $('.rlTab').children('a').eq(i).attr('href');
         var b_color = $('.rlTab').find("b").css('color', '#555');
+        $(this).parents('.mui-popover').find('a').css('color', '#555');
         if ('#' + tab_id == a_href) {
             var i_color = $('.rlTab').children('a').eq(i).children('span').css('color');
             $('.rlTab').children('a').eq(i).children('b').html(tap_html).css('color', i_color);
+            $(this).css('color', i_color);
             $('.rlTab').children('a').eq(i).addClass('activeTab').siblings().removeClass('activeTab');
             mui('.mui-popover').popover('hide');
             return
@@ -58,8 +61,9 @@ var temp = {
                     if (data && data.length > 0) {
                         rdc.mystorages = data;
                         temp.initTempSet();
+                    }else{
+                    	mui.alert("没有数据")
                     }
-                    ;
                 }
             });
         },
@@ -96,7 +100,7 @@ var temp = {
             mui.get(smartCold + 'i/util/getColdAlarmStatus', {oid: mystorage.id}, function (data) {
                 $("#errmsg_" + mystorage.id).html(data.isBlack ? "<h4 class='red overTemp'>由于该冷库长时超温,系统自动静默！</h4>" : "");
             }, 'json');
-            $("#cuttval_" + mystorage.id).empty();
+            $("#cuttval_" + mystorage.id).html('');
             var endTime = new Date(), startTime = new Date(endTime.getTime() - 1.5 * 60 * 60 * 1000);
             mui.ajax(smartCold + 'i/temp/getTempByTime', {
                 data: {
@@ -129,9 +133,7 @@ var temp = {
                                     ymin = vo.value
                                 }
                             }
-                            $("#cuttval_" + mystorage.id).append([key, tempData[tempData.length - 1].toFixed(2)].join(":") + "℃  ");
-
-
+                        	$("#cuttval_" + mystorage.id).append([key, tempData[tempData.length - 1].toFixed(2)].join(": ") + "℃   ");
                             series.push({name: key, type: 'line', data: tempData, smooth: true, symbol: "none"});
                             isadd = false;
                         }
@@ -249,11 +251,7 @@ var temp = {
                     var currentPower = '';
                     if (data.length > 0) {
                         currentPower = data[data.length - 1] ? parseFloat(data[data.length - 1].value * powerSet.radio).toFixed(1) : '';
-                    }
-                    ;
-                    /*  var divStr = '<div class="swiper-slide"><div class="curTxt"><p class="blue">' + powerSet.name + '</p><p class="red">' + currentPower + ' kW.h</p></div><div class="chart" id=' + mainId + '></div></div>';
-                      $("#elec").last().append(divStr);*/
-
+                    };
                     $("#cuttval_" + powerSet.id).empty().append(currentPower + " kW.h");
                     var lineChart = echarts.init(document.getElementById('chart_' + powerid));
                     var grid = {x: 70, y: 40, x2: 40};
@@ -586,7 +584,10 @@ var temp = {
                     if (data && data.length > 0) {
                         rdc.coldDoors = data;
                         goods.initGoodsSet();
-                    };
+                    }else{
+                    	mui.alert('没有数据');
+                    	$('#dev_obj').empty().append('<div class="mui-center"><img src="images/noData.jpg"/></div>');
+                    }
                 }
             });
         },
@@ -643,7 +644,8 @@ var temp = {
                             series.push(outData,inData,inTemp)
                         })
                     }else{
-                    	mui.alert('没有数据')
+                    	mui.alert('没有数据');
+                    	return
                     }
                     mystorage.lasttime = new Date().getTime();
                     goods.initchart(mystorage.id,'日均货物流通监控',legend, series,time)
@@ -665,31 +667,6 @@ var temp = {
                 tooltip: {trigger: 'axis', textStyle: {fontSize: 13, fontWeight: '400'}},
                 grid: {x: 40, x2: 40, y: 20, y2: 50},
                 xAxis: {type: 'category', data: time},
-                /*yAxis:[ {
-                    name: '货物量(kg)',
-                    nameLocation: 'end',
-                    type: 'value',
-                    axisLabel: {
-                        formatter: function (value, index) {
-                            if (value) {
-                                return parseFloat(value).toFixed(1);
-                            }
-                            return ;
-                        }
-                    }
-                }, {
-                    name: '温度(℃)',
-                    nameLocation: 'end',
-                    type: 'value',
-                    axisLabel: {
-                        formatter: function (value, index) {
-                            if (value) {
-                                return parseFloat(value).toFixed(1);
-                            }
-                            return 0;
-                        }
-                    }
-                }],*/
                 yAxis : [
                     {
                         type : 'value',
@@ -709,6 +686,76 @@ var temp = {
                 series: series
             };
             myChart.setOption(option);  // 使用刚指定的配置项和数据显示图表。
+        }
+    },
+    lighting = {//初始化货物模块
+        init: function () {
+            if (rdc&&rdc.coldDoors) {//刷新数据
+                lighting.refdata();
+            } else {
+                lighting.initStorageset();//初始化数据
+            }
+        },
+        refdata: function () {
+            if (mySwiper && mySwiper.pageindex != pagedata.index) {
+                page.initSwiper(rdc.coldDoors)
+            }
+            var mystorage = rdc.coldDoors[mySwiper.activeIndex];
+            lighting.initdata(mystorage);
+        },
+        initStorageset: function () {
+            mui.ajax(smartCold + 'i/coldStorageSet/findHasDoorStorageSetByRdcId', {
+                data: {rdcID: rdc.id}, dataType: 'json', type: 'get', crossDomain: true, success: function (data) {
+                    if (data && data.length > 0) {
+                        rdc.coldDoors = data;
+                        page.initSwiper(rdc.coldDoors);
+                        lighting.refdata();
+                    }else{
+                    	mui.alert("没有数据")
+                    }
+                }
+            });
+        },
+        initdata: function (mystorage) {
+            if(rdc.lightGroups){
+            	lighting.initLight(rdc.lightGroups,mystorage);
+            }else{
+            	mui.ajax(smartCold + 'i/lightGroupController/findByRdcId', {
+	                data: {
+	                    'rdcId': rdc.id
+	                }, dataType: 'json', type: 'get', timeout: 10000, traditional: true, success: function (data) {
+	                	rdc.lightGroups=data;
+	                    lighting.initLight(rdc.lightGroups,mystorage);
+	                }
+	            });
+            }            
+        },
+        initLight:function(data,mystorage){
+        	var lightGroups=[];
+        	if(data.length>0){
+            	rdc.lightGroups=data;
+                mui.each(data, function (i,obj) {
+                    if (obj.coldStorageId == mystorage.id) {
+                        lightGroups.push(obj);
+                    }
+                });
+                mystorage.lightGroups=lightGroups;
+            }else{
+                mui.alert('没有照明数据');
+                return
+            }
+            lighting.initchart(mystorage)
+        },
+        initchart: function (mystorage) {
+            var bubles=[];
+            mui.each(mystorage.lightGroups,function (i,obj) {
+                var bulbe = '<div class="fl" ><p><b>'+obj.name+'</b></p><img src="images/bulb_'+obj.isRunning+'.png" ></div>'
+                bubles.push(bulbe);
+            });
+            $("#chart_" + mystorage.id).addClass('mui-clearfix');
+            $("#chart_" + mystorage.id).empty().append(bubles.join(''));
+
+
         }
     },
     //=======================================================================================能耗 end=======================================================================================
@@ -758,6 +805,7 @@ var temp = {
                     goods.init();
                     break;
                 case 6:
+                    lighting.init();
                     break;
             }
         }

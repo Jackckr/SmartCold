@@ -10,7 +10,7 @@
 		"name": "1.0.0",/*应用版本名称*/
 		"code": "83"
 	},
-	"description": "",/*应用描述信息*/
+	"description": "混合APP",/*应用描述信息*/
 	"icons": {
 		"72": "icon.png"
 	},

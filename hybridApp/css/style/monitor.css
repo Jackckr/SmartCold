@@ -83,3 +83,29 @@
 	font-size: 14px;
 	margin-top: 10px;
 }
+.chart.mui-clearfix{
+	min-height: 400px;
+}
+.chart .fl{
+	width: 33%;
+	float: left;
+	padding: 10px 5px;
+}
+.chart .fl img{
+	width: 100%;
+}
+.chart .fl p{
+	text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+#dev_obj .mui-center{
+	display: block;
+	width: 100%;
+	text-align: center;
+	margin-top: 20px;
+}
+#dev_obj .mui-center img{
+	width: 200px;
+}
