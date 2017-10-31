@@ -177,24 +177,13 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http','$cookies',funct
         	
             if ($rootScope.user != null && $rootScope.user!='' && $rootScope.user!= undefined && $rootScope.user.id != 0){
             	if(window.sessionStorage.cactrdcdata&& window.sessionStorage.smrdcId){
-//            		var data=JSON.parse(window.sessionStorage.cactrdcdata),cutrdc=parseInt(sessionStorage.smrdcId);
-//           		    angular.forEach(data,function(obj,i){if(cutrdc==obj.id){cutrdc=obj;}});
-//            		$rootScope.vm = {choserdc:cutrdc,allUserRdcs:data};
-//    				$rootScope.userrdcids=JSON.parse(window.sessionStorage.userrdcids);
-//    				$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
-    				var data=JSON.parse(window.sessionStorage.cactrdcdata);
+            		var cutrdc=null, data=JSON.parse(window.sessionStorage.cactrdcdata);
     				 angular.forEach(data,function(obj,i){
     					 if(sessionStorage.smrdcId&& obj &&window.sessionStorage.smrdcId==obj.id){ cutrdc=obj; }});
             		$rootScope.vm = {choserdc:cutrdc,allUserRdcs:data};
     				$rootScope.userrdcids=JSON.parse(window.sessionStorage.userrdcids);
     				$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
             	}else{
-//            		$http.get('/i/rdc/findRDCsByUserid?userid=' + $rootScope.user.id).success(function(data,status,headers,config){
-//        				if(data==null||data.length == 0){document.location.href = "/notAudit.html";return;}
-//        				window.sessionStorage.cactrdcdata=JSON.stringify(data);
-//        				$rootScope.vm = {choserdc:data[0],allUserRdcs:data};
-//        				$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
-//        	       });
             		$http.get('/i/rdc/findRDCsByUserid?userid=' + $rootScope.user.id).success(function(data,status,headers,config){
         				if(data.length == 0){document.location.href = "/notAudit.html";return;}
         				window.sessionStorage.cactrdcdata=JSON.stringify(data);
