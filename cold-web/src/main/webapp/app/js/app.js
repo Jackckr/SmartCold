@@ -101,7 +101,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http','$cookies',funct
         		     console.log("rdc:"+rdcId);
         		     $rootScope.rdcId = rdcId;
         		     window.sessionStorage.smrdcId=rdcId;//缓存rdcid
-        		     window.sessionStorage.cactrdc=JSON.stringify($rootScope.vm.choserdc);
+        		    // window.sessionStorage.cactrdc=JSON.stringify($rootScope.vm.choserdc);
         		     if($rootScope.user.role==3){ $rootScope.userrdcids=[$rootScope.vm.choserdc.id];  window.sessionStorage.userrdcids=JSON.stringify($rootScope.userrdcids);}else{
         		    	 $rootScope.userrdcids=[];
     					 angular.forEach($rootScope.vm.allUserRdcs,function(obj,i){ $rootScope.userrdcids.push(obj.id);});
@@ -176,14 +176,15 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http','$cookies',funct
         	};
         	
             if ($rootScope.user != null && $rootScope.user!='' && $rootScope.user!= undefined && $rootScope.user.id != 0){
-            	if(window.sessionStorage.cactrdcdata&&window.sessionStorage.cactrdc){
+            	if(window.sessionStorage.cactrdcdata&& window.sessionStorage.smrdcId){
 //            		var data=JSON.parse(window.sessionStorage.cactrdcdata),cutrdc=parseInt(sessionStorage.smrdcId);
 //           		    angular.forEach(data,function(obj,i){if(cutrdc==obj.id){cutrdc=obj;}});
 //            		$rootScope.vm = {choserdc:cutrdc,allUserRdcs:data};
 //    				$rootScope.userrdcids=JSON.parse(window.sessionStorage.userrdcids);
 //    				$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
-    				var data=JSON.parse(window.sessionStorage.cactrdcdata), cutrdc=JSON.parse(window.sessionStorage.cactrdc);
-    				 angular.forEach(data,function(obj,i){if(cutrdc==obj.id){cutrdc=obj;}});
+    				var data=JSON.parse(window.sessionStorage.cactrdcdata);
+    				 angular.forEach(data,function(obj,i){
+    					 if(sessionStorage.smrdcId&& obj &&window.sessionStorage.smrdcId==obj.id){ cutrdc=obj; }});
             		$rootScope.vm = {choserdc:cutrdc,allUserRdcs:data};
     				$rootScope.userrdcids=JSON.parse(window.sessionStorage.userrdcids);
     				$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);

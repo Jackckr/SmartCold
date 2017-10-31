@@ -62,7 +62,7 @@ function timegetdata(){
 
 function getData(){
    $.ajax({type : "GET",url : "i/getQTData",contentType: "application/json; charset=utf-8", data:{apid:$("#txt_apid").val()  },success : function(data) {
-	$("#logtext").val(JSON.stringify(data));
+	$("#logtext").val(data);
    }
    });
 }
@@ -130,8 +130,8 @@ $().ready(function () {
 		width=width>500?width:500;
 	     $("#logtext").height(width);
 	     window.setInterval(timegetdata,10000); 
-// 	     window.setInterval(senddata1,pl*1000); 
-//	     senddata1();//1
+	     window.setInterval(senddata1,pl*1000); 
+	     senddata1();//1
 	
 	
 });

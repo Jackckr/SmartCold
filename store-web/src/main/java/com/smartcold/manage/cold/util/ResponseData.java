@@ -3,7 +3,6 @@ package com.smartcold.manage.cold.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.pagehelper.PageInfo;
 
 /**
  * JSON格式返回数据载体
@@ -58,14 +57,6 @@ public class ResponseData<T> {
 		return newSuccess(data, "Success");
 	}
 
-	/**
-	 * 获取当前可用的ResponseData对象(SUCCESS)
-	 * @param data
-	 * @return
-	 */
-	public static <T> ResponseData<T> newSuccess(PageInfo<T> data) {
-		return newSuccess(data, "Success");
-	}
 
 	/**
 	 * 获取当前可用的ResponseData对象(SUCCESS)
@@ -119,28 +110,7 @@ public class ResponseData<T> {
 		return rd;
 	}
 
-	/**
-	 * 获取当前可用的ResponseData对象(SUCCESS)
-	 * @param data
-	 * @param message
-	 * @return
-	 */
-	public static <T> ResponseData<T> newSuccess(PageInfo<T> data, String message) {
-		ResponseData<T> rd = getInstance();
-		rd.setSuccess(true);
-		rd.setMessage(message);
-		rd.setExp(null);
 
-		rd.setEntity(null);
-		List<T> _tmp = data.getList();
-		rd.setData(_tmp == null?new ArrayList<T>():data.getList());
-		rd.setTotal(data.getTotal());
-		rd.setPageNum(data.getPageNum());
-		rd.setPageSize(data.getPageSize());
-		rd.setTotalPages(data.getPages());
-
-		return rd;
-	}
 
 	/**
 	 * 获取当前可用的ResponseData对象(FAILURE)
