@@ -49,6 +49,11 @@ coldWeb.factory('baseTools',['$rootScope',function(){
 		formatTimeToDay: function(timeString){
 			return this.formatTime(timeString).substring(0,10);
 		},
+		
+		defformatTime: function (date) { //author: meizz 
+			var fmt=new Date(date);
+		    return  [fmt.getFullYear(),"-"	, fmt.getMonth( )+ 1, "-", fmt.getDate(), " ",fmt.getHours(), ":", fmt.getMinutes(),":",  fmt.getSeconds()  ].join("");
+		},
 		getEchartSingleOption: function(title, xData, yData, yName, yUnit, lineName, type,yMin,yMax){
 			min = max = yData.length > 0?yData[0]:0;
 			angular.forEach(yData,function(item,index){
@@ -101,11 +106,15 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http','$cookies',funct
         		     console.log("rdc:"+rdcId);
         		     $rootScope.rdcId = rdcId;
         		     window.sessionStorage.smrdcId=rdcId;//缓存rdcid
-        		    // window.sessionStorage.cactrdc=JSON.stringify($rootScope.vm.choserdc);
-        		     if($rootScope.user.role==3){ $rootScope.userrdcids=[$rootScope.vm.choserdc.id];  window.sessionStorage.userrdcids=JSON.stringify($rootScope.userrdcids);}else{
+        		     if($rootScope.user.role==3){
+        		    	 $rootScope.userrdcids=[$rootScope.vm.choserdc.id]; 
+        		    	 window.sessionStorage.userrdcids=JSON.stringify($rootScope.userrdcids);
+        		     }else{
         		    	 $rootScope.userrdcids=[];
-    					 angular.forEach($rootScope.vm.allUserRdcs,function(obj,i){ $rootScope.userrdcids.push(obj.id);});
-    					  window.sessionStorage.userrdcids=JSON.stringify($rootScope.userrdcids);
+    					 angular.forEach($rootScope.vm.allUserRdcs,function(obj,i){ 
+    						 $rootScope.userrdcids.push(obj.id);
+    					 });
+    					 window.sessionStorage.userrdcids=JSON.stringify($rootScope.userrdcids);
         		     }
 		        	 $http({method:'POST',url:'i/acl/getRUACL',params:{rdcid : $rootScope.rdcId,uid : $rootScope.user.id}}).success(function (data) {
 		        			    $rootScope.aclml=data.aclml;
@@ -171,16 +180,20 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http','$cookies',funct
         		if(value){
         			if(value.originalObject == $rootScope.vm.choserdc){return;}
             		$rootScope.vm.choserdc = value.originalObject;
+            		sessionStorage.cactrdcdata=JSON.stringify([$rootScope.vm.choserdc ]);
         		}
         		$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
         	};
         	
             if ($rootScope.user != null && $rootScope.user!='' && $rootScope.user!= undefined && $rootScope.user.id != 0){
             	if(window.sessionStorage.cactrdcdata&& window.sessionStorage.smrdcId){
-            		var cutrdc=null, data=JSON.parse(window.sessionStorage.cactrdcdata);
-    				 angular.forEach(data,function(obj,i){
-    					 if(sessionStorage.smrdcId&& obj &&window.sessionStorage.smrdcId==obj.id){ cutrdc=obj; }});
-            		$rootScope.vm = {choserdc:cutrdc,allUserRdcs:data};
+            		var choserdc=null,  data=JSON.parse(window.sessionStorage.cactrdcdata);
+            		if(data.length==1){
+            			choserdc=data[0];
+            		}else{
+       				 angular.forEach(data,function(obj,i){ if(sessionStorage.smrdcId&& obj &&window.sessionStorage.smrdcId==obj.id){ choserdc=obj; }});
+            		}
+            		$rootScope.vm = {choserdc:choserdc,allUserRdcs:data};
     				$rootScope.userrdcids=JSON.parse(window.sessionStorage.userrdcids);
     				$rootScope.initAllByRdcId($rootScope.vm.choserdc.id);
             	}else{
@@ -226,7 +239,7 @@ coldWeb.factory('userService', ['$rootScope', '$state', '$http','$cookies',funct
             	$rootScope.pwdRex=/^[0-9A-Za-z]{3,16}$/;
             	if($rootScope.oldPassword==undefined||$rootScope.newPassword==undefined||$rootScope.reNewPassword==undefined){
             		alert('密码不能为空哦~');
-            		return false
+            		return false;
 				}
             	if(!$rootScope.oldPwdErr){
                     $rootScope.pwdLengthErr=!$rootScope.pwdRex.test($rootScope.newPassword);
@@ -248,23 +261,25 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     coldWeb.stateProvider=$stateProvider;
     //index
     $stateProvider
-    .state('preview',{//预览
+    .state('preview',{//0.预览
 		url:'/preview',
 		controller: 'preview',
 	    templateUrl: 'app/template/preview.htm'
-    }).state('cold360Physical',{//体检
+    }).state('cold360Physical',{//1.体检
 		url:'/cold360Physical/{rdcId}',
 		controller: 'cold360Physical',
 	    templateUrl: 'app/template/cold360Physical.htm'
-    }).state('coldStorageTemper', {//温度监控
+    })
+     //==============================监控1===============================f
+    .state('coldStorageTemper', {//1.1温度监控
         url: '/coldStorageTemper/:storageID',
         controller: 'coldStorageTemper',
         templateUrl: 'app/template/coldStorageTemper.htm'
-    }).state('coldStorageHumidity', {//湿度监控
+    }).state('coldStorageHumidity', {//1.2湿度监控
         url: '/coldStorageHumidity/:storageID',
         controller: 'coldStorageHumidity',
         templateUrl: 'app/template/coldStorageHumidity.htm'
-    }).state('powerAnalysis',{ //分析--->电耗分析=============================================================f
+    }).state('powerAnalysis',{
 		url:'/powerAnalysis/{rdcId}',
 		controller: 'powerAnalysis',
 	    templateUrl: 'app/template/powerAnalysis.htm'
@@ -344,6 +359,7 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	controller: 'monthReport',
         templateUrl: 'app/template/monthReport.htm'
     })
+  
     //============================================================分析报告================================================================
     .state('tempReport',{//温度分析报告  -分析报告--jhy--2017-06-19 新版
         url: '/tempReport/{rdcId}',
@@ -401,8 +417,7 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
     	url:'/alarmTemp',
     	controller: 'alarmTemp',
         templateUrl: 'app/template/alarmTemp.htm'
-    })
-    .state('alarmTempDatil',{//告警预览--》针对集团多账号
+    }).state('alarmTempDatil',{//告警预览--》针对集团多账号
     	url:'/alarmTempDatil',
     	controller: 'alarmTempDatil',
         templateUrl: 'app/template/alarmTempDatil.htm'
@@ -438,10 +453,14 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
         url:'/message',
         controller: 'message',
         templateUrl: 'app/template/message.htm'
-    })
+    }).state('warnLog',{//告警日志
+	   url:'/warnLog',
+	   controller: 'warnLog',
+       templateUrl: 'app/template/warnLog.htm'
+    });
     
     
-    ;
+
 //    .state('rdcPower', {//rdc用电量----Temp
 //        url: '/rdcPower/:rdcId',
 //        controller: 'rdcPower',

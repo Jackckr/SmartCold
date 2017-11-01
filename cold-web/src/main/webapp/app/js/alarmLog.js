@@ -89,6 +89,28 @@ coldWeb.controller('alarmLog', function($rootScope, $scope, $http,$timeout) {
 
 
 
+/**
+ * 
+ * 　　系统报警
+ *  //根据rdcid查询该rdc的报警信息
+ */
+coldWeb.controller('warnLog', function($rootScope, $scope, $http,$timeout,baseTools) {
+	
+	$(".mainHeight").height( $(".content-wrapper").height());
+	$scope.initData=function(){
+		$http.get('/i/warlog/findByRdcId', {params: { "rdcId": $rootScope.rdcId ,point:100 } }).success(function (data) {
+            
+            angular.forEach(data,function(obj,i){ 
+            	obj.addtime=baseTools.defformatTime(obj.addtime);
+            });
+           $scope.warLog = data; 
+            
+        });
+	};
+    $scope.initData();
+});
+
+
 
 
 

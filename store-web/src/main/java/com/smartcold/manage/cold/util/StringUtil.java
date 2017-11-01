@@ -1,6 +1,7 @@
 package com.smartcold.manage.cold.util;
 
 import java.util.Arrays;
+import java.util.Date;
 
 
 /*
@@ -36,7 +37,11 @@ public class StringUtil
 	}
 	
 
-
+    /**
+     * 
+     * @param str
+     * @return
+     */
 	public static String countNull(final Object str)
 	{
 		if(str==null||"null".equals(str)){
@@ -46,7 +51,11 @@ public class StringUtil
 		}
 	}
 	
-	
+	/**
+	 * 
+	 * @param oids
+	 * @return
+	 */
 	public static String getIdS(int [] oids)
 	{
 		if(oids!=null){
@@ -55,6 +64,11 @@ public class StringUtil
 		}
 		return "";
 	}
+	/**
+	 * 
+	 * @param oids
+	 * @return
+	 */
 	public static int [] getIdS(String oids)
 	{
 		if(isnotNull(oids)){
@@ -68,13 +82,47 @@ public class StringUtil
 		return null;
 	}
 	
-	
-	 public synchronized static boolean verifyToken(String toke){
+	/**
+	 * 
+	 * @return
+	 */
+	 public  static String getsysToken(){
+		  return EncodeUtil.encodeByMD5("token"+TimeUtil.getDateHour());
+     }
+	 
+	/**
+	 * 
+	 * @param toke
+	 * @return
+	 */
+	 public synchronized static boolean verifysysToken(String toke){
 		   if(isnotNull(toke)){
 			   String mdtokn = EncodeUtil.encodeByMD5("toke"+TimeUtil.getDateHour());
 			   return mdtokn.equals(toke);
 		   }
 		   return false;
 	}
+	
+	 /**
+	  * 
+	  * @param userName
+	  * @return
+	  */
+	 public synchronized static String getUserTaoken(String userName){
+			return EncodeUtil.encode("sha1", String.format("%s%s", userName, new Date().getTime()));
+     }
+	 
+	 /**
+	  * 
+	  * @param pwd
+	  * @param toke
+	  * @return
+	  */
+	 public synchronized static String MD5pwd(String pwd,String toke){
+		   if(StringUtil.isnotNull(pwd)){
+			   return toke.substring(0, 20)+pwd.substring(0, 18)+toke.substring(20)+pwd.substring(18);
+		   }
+		   return toke.substring(20, 38)+toke.substring(58);
+	 }
 	
 }

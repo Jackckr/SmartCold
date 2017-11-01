@@ -1,0 +1,33 @@
+<link rel="stylesheet" href="assets/plugins/datatables/dataTables.bootstrap.css">
+<div class="page-header">
+  &nbsp;&nbsp;系统报警
+</div>
+<div class="box" style="
+    background: rgba(139,137,137,0.2);
+    margin: 10px;
+    border-radius: 13px;
+
+">
+  <div  class="tab-content">
+    <div class="tab-pane fade in active" >
+      <div class="box-body table-responsive">
+		<table class="table table-bordered">
+		    <thead>
+		        <tr>
+		            <th>id</th>
+		            <th>告警内容</th>
+		            <th>告警时间</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		        <tr ng-repeat="obj in warLog">
+		            <td>{{obj.id}}</td>
+		            <td>{{obj.warningname}}</td>
+		            <td>{{obj.addtime}}</td>
+		        </tr>
+		    </tbody>
+		</table>
+      </div>
+    </div>
+</div>
+

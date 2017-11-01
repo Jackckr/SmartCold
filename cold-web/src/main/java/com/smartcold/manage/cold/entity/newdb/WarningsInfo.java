@@ -15,11 +15,8 @@ public class WarningsInfo {
 	private int objId;
 
 	private int level;
-
+    
 	private Date addtime;
-
-	
-	
 	
 	public WarningsInfo() {
 		super();

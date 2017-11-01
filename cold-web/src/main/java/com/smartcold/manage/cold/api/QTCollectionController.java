@@ -61,14 +61,15 @@ public class QTCollectionController extends BaseController {
 	@ResponseBody
 	public Object QTDataCollection(@RequestBody String data) {		
 		String apID="";int rdcid=0;
-		long cutime=System.currentTimeMillis(),exptime=0;
+//		long cutime=System.currentTimeMillis(),exptime=0;
 		try {
 			if(StringUtil.isNull(data)){return DataResultDto.newFailure();}
+			 this.cacheService.putData("dev:dev_data:"+apID, data);//缓存数据 -----防止需要
 			Map<String, Object> dataMap = gson.fromJson(data, new TypeToken<Map<String, Object>>() {}.getType());
 			if(dataMap.containsKey("infos")){
 				 apID = dataMap.get("apID").toString();
-				 this.cacheService.putData("dev:dev_data:"+apID, data);//缓存数据 -----防止需要
-				 this.cacheService.putData("dev:dev_status:"+apID, cutime);//记录设备最后通讯时间
+				 this.cacheService.putData("dev_data_"+apID, data);//缓存数据 -----防止需要
+//				 this.cacheService.putData("dev:dev_status:"+apID, cutime);//记录设备最后通讯时间
 				 ItemConf rdcspconf = this.rdcConfService.findRdcConfByDevId(apID);
 				 if(rdcspconf!=null){ 
 					 rdcid=rdcspconf.getRdcid();
@@ -77,7 +78,7 @@ public class QTCollectionController extends BaseController {
 			}
 			Boolean cisupdat = this.cacheService.getData("dev:dev_isup:"+apID);
 			if(cisupdat!=null&&cisupdat){cisupdat=true;  cacheService.removeKey("dev:dev_isup:"+apID);}else{cisupdat=false;}
-			System.err.println("收到 QT数据："+apID+"====================间隔时间："+exptime+" 是否更新数据："+cisupdat+"时间"+TimeUtil.getDateTime());
+			System.err.println("收到 QT数据："+apID+"==================== 是否更新数据："+cisupdat+"时间"+TimeUtil.getDateTime()+data);
 		   return DataResultDto.newSuccess(cisupdat);//更新数据服务
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -324,30 +325,34 @@ public class QTCollectionController extends BaseController {
 	  * @param rdcid
 	  * @param dataMap
 	  */
+	 @SuppressWarnings("unchecked")
 	 private void batchData(String rdcid,Map<String, Object> dataMap){
+		   System.err.println(rdcid+":"+dataMap);
 			HashMap<String, ItemValue> config =this.rdcConfService.getConfigByRdcId(rdcid);
-			HashMap<String, ConversionEntity> unitConvers = this.rdcConfService.getConverByrdcId(rdcid);
-	        if(config==null){return;}
+//			HashMap<String, ConversionEntity> unitConvers = this.rdcConfService.getConverByrdcId(rdcid);
+	        if(config==null||config.size()==0){return;}
 	        Date date = new Date();
 		    ArrayList<ItemValue> dataList = null;
 		    String table =null;  ItemValue newdata=null;
 		    String cutttime=TimeUtil.getDateTime();
 		    ArrayList<WarningsInfo> wardataList = new ArrayList<WarningsInfo>();
 		    HashMap<String, ArrayList<ItemValue>> tempMap=new HashMap<String, ArrayList<ItemValue>>();
-		    List<Map<String, String>> dataMapList=   ((List<Map<String, String>>) dataMap.get("infos"));
+		 
+			List<Map<String, String>> dataMapList=   ((List<Map<String, String>>) dataMap.get("infos"));
 		    for (Map<String, String> info : dataMapList) {
-		    	String name = info.get("tagname");
+		    	for (Map.Entry<String, String> entry : info.entrySet()) {
+					String name=entry.getKey(),  valueString=entry.getValue();
 		    	//当前是告警信息
-		    	if(name.indexOf("警")>-1){if("1".equals(info.get("currentvalue"))){wardataList.add(new WarningsInfo(name,Integer.parseInt(rdcid),1,date));}continue;}
-		    	newdata = config.get(name);if(newdata==null){ continue;}
-		    	if(unitConvers!=null&&unitConvers.containsKey(name)){//unitConvers 数据转换集合->电压  ，压力转换
-				     if(! counsValue(unitConvers, newdata, info, name)){ continue;}//  加入转换对象
-		    	}else{
-		    		 newdata.setValue(info.get("currentvalue"));
+			    	if(name.indexOf("警")>-1){if("1".equals(valueString)){wardataList.add(new WarningsInfo(name,Integer.parseInt(rdcid),1,date));}continue;}
+			    	newdata = config.get(name);
+			    	if(newdata==null){ continue;}
+//		    	if(unitConvers!=null&&unitConvers.containsKey(name)){//unitConvers 数据转换集合->电压  ，压力转换
+//				     if(! counsValue(unitConvers, newdata, info, name)){ continue;}//  加入转换对象
+//		    	}else{
+		    		 newdata.setValue(valueString);
 					 newdata.setTime(cutttime);//info.get("lasttime")
-		    	}
+//		    	}
 				 table = newdata.getTable();
-				
 				 if(StringUtil.isnotNull(table)){
 					 if(tempMap.containsKey(table)){//存在异常代码块
 						 tempMap.get(table).add(newdata);
@@ -372,6 +377,7 @@ public class QTCollectionController extends BaseController {
 				 }else{
 					 System.err.println("未知保存对象"+gson.toJson(newdata));
 				 }
+		    	}
 			}
 			if(SetUtil.isNotNullMap(tempMap)){
 				for (String key : tempMap.keySet()) {

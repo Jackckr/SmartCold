@@ -4,7 +4,9 @@
 
 <mapper namespace="com.smartcold.manage.cold.dao.olddb.UserMapper">
 
+	<select id="login" parameterType="map" resultType="com.smartcold.manage.cold.entity.olddb.UserEntity">
+		select u.`id`,u.`type`, u.`role`, u.`username`,u.`avatar` from `user` u  where u.username=#{username} and password =#{password};;
+	</select>
 	
-
-
+	
 </mapper>

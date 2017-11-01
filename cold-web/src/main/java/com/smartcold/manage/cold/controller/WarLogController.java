@@ -19,23 +19,28 @@ import com.smartcold.manage.cold.dao.newdb.WarningsInfoMapper;
  */
 @Controller
 @RequestMapping(value = "/warlog")
-@Deprecated
 public class WarLogController extends BaseController {
 	@Autowired
 	private WarningLogMapper warningLogMapper;
 	@Autowired
 	private WarningsInfoMapper warningsInfoMapper;
 
+	
+	@RequestMapping(value = "/findByRdcId", method = RequestMethod.GET)
+	@ResponseBody
+	public Object findLastWarningsByRdcId(int rdcId, int point) {
+		return  warningsInfoMapper.findLastNWarningInfo(rdcId, point);
+	}
+	
+	
 	@RequestMapping(value = "/findWarningLogsByRdcID", method = RequestMethod.GET)
 	@ResponseBody
-	@Deprecated
 	public Object findWarningLogsByRdcID(@RequestParam int rdcId) {
 		return warningLogMapper.findAllWarningLog(rdcId);
 	}
 	
 	@RequestMapping(value = "/getWarningInfoByRdcID", method = RequestMethod.GET)
 	@ResponseBody
-	@Deprecated
 	public Object getWarningInfoByRdcID(@RequestParam int rdcId) {
 		HashMap<String, Object> alldataMapp=new HashMap<String, Object>();
 		alldataMapp.put("warLog",this.warningLogMapper.findAllWarningLog(rdcId));

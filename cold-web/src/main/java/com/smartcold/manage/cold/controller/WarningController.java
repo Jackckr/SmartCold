@@ -26,9 +26,9 @@ public class WarningController extends BaseController {
 	@RequestMapping(value = "/findAllWarningsInfoByRdcId", method = RequestMethod.GET)
 	@ResponseBody
 	public Object findAllWarningsInfo(int rdcId) {
-		List<WarningsInfo> warningsInfoList = warningsInfoDao.findAllWarningInfo(rdcId);
-		return warningsInfoList;
+		return warningsInfoDao.findAllWarningInfo(rdcId);
 	}
+
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@RequestMapping(value = "/findLastNWarningsInfoByRdcId", method = RequestMethod.GET)
