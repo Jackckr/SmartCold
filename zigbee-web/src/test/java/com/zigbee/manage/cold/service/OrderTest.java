@@ -1,3 +1,4 @@
+/*
 package com.zigbee.manage.cold.service;
 
 import com.google.common.collect.Lists;
@@ -6,10 +7,12 @@ import com.google.common.primitives.Ints;
 
 import java.util.List;
 
+*/
 /**
  * Author: qiunian.sun
  * Date: qiunian.sun(2016-06-25 11:40)
- */
+ *//*
+
 public class OrderTest {
     public static void main(String[] args) {
         List<Integer> rdcEntityDTOList = Lists.newArrayList();
@@ -29,3 +32,4 @@ public class OrderTest {
         }
     }
 }
+*/

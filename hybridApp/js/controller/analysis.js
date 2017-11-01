@@ -23,12 +23,14 @@ mui('.mui-popover').on('tap', 'ul>li>a', function (e) {
     pagedata.index = index;
     page.initpage();
     //下面的循环  纯粹是操作样式代码
-    for (var i = 0; i < $('.rlTab a').length; i++) {
+   for (var i = 0; i < $('.rlTab a').length; i++) {
         var a_href = $('.rlTab').children('a').eq(i).attr('href');
         var b_color = $('.rlTab').find("b").css('color', '#555');
+        $(this).parents('.mui-popover').find('a').css('color', '#555');
         if ('#' + tab_id == a_href) {
             var i_color = $('.rlTab').children('a').eq(i).children('span').css('color');
             $('.rlTab').children('a').eq(i).children('b').html(tap_html).css('color', i_color);
+            $(this).css('color', i_color);
             $('.rlTab').children('a').eq(i).addClass('activeTab').siblings().removeClass('activeTab');
             mui('.mui-popover').popover('hide');
             return
