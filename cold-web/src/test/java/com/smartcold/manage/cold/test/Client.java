@@ -5,8 +5,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import com.alibaba.fastjson.JSON;
-
 public class Client {
 	
 	public static void main(String[] args) throws Exception {
@@ -32,6 +30,7 @@ public class Client {
 		}
 		server.close();
 
+		
 	}
 
 

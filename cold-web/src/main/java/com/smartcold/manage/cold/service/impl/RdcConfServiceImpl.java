@@ -35,6 +35,9 @@ public class RdcConfServiceImpl implements RdcConfService {
 	private CongfigMapper congfigMapper;
 	private static Gson gson = new Gson();
 	
+	
+	
+	
 	@Override
 	public ItemConf findRdcConfByDevId(String apID){
 		String key="dev:dev_rdcconf:"+apID;
@@ -122,7 +125,10 @@ public class RdcConfServiceImpl implements RdcConfService {
 	 */
 	public HashMap<String, ConversionEntity> getConverByrdcId(String rdcId){
 		try {
+			long starttime = System.currentTimeMillis();
 			HashMap<String, ConversionEntity> conver=this.cacheService.getData("rdc:rdc_cou:"+rdcId);
+			starttime=System.currentTimeMillis()-starttime;
+			System.err.println("用时："+starttime);
 			if(conver!=null){
 				return conver.size()>0? conver:null;
 			}
@@ -148,7 +154,10 @@ public class RdcConfServiceImpl implements RdcConfService {
 	public HashMap<String, ItemValue> getConfigByRdcId(String rdcId){
 		try {
 			String key="rdc:rdc_cof:"+rdcId;
+			long starttime = System.currentTimeMillis();
 			HashMap<String, ItemValue> config =this.cacheService.getData(key);
+			starttime=System.currentTimeMillis()-starttime;
+			System.err.println("用时："+starttime);
 			if(config!=null){
 				return config.size()>0? config:null;
 			}else{

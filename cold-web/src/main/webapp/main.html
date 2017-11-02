@@ -283,7 +283,16 @@ a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-
 						   <li onclick="activeLi(this)"><a href="#/baoyangReminder"><i class="icon iconfont"></i><span class="menu-title">机组保养提醒</span></a></li>
 						</ul> 
 					</li>
-<!-- 					<li mid="ml_acl400" class="treeview"><a href="#designStorage"><i class="icon iconfont" style="color:#ffffff"></i> <span id="mlul5" class="menu-title text-white" style="font-size: large">选型</span></a></li> -->
+					<li mid="ml_acl300" class="treeview"><a href="#/about"><i
+							class="icon iconfont" style="color:#ffffff"></i> <span
+							class="menu-title text-white" style="font-size: large">设置</span></a>
+						<ul class="treeview-menu">
+							<li  onclick="activeLi(this)" ng-if="user.level==3"><a href="#/accessConfiguration"><i class="icon iconfont"></i><span class="menu-title">授权</span></a></li>
+							<li  onclick="activeLi(this)"><a href="#/paramConf"><i class="iconfont">&#xe7a4;</i><span class="menu-title">参数配置</span></a></li>
+						</ul>
+					</li>
+					
+					<!-- 					<li mid="ml_acl400" class="treeview"><a href="#designStorage"><i class="icon iconfont" style="color:#ffffff"></i> <span id="mlul5" class="menu-title text-white" style="font-size: large">选型</span></a></li> -->
 				</ul>
 			</section>
 		</aside>
@@ -416,6 +425,9 @@ a.disabled{color:#aaa!important;text-decoration:none;cursor:not-allowed;pointer-
 		document.write("<scr"+"ipt src=\"app/js/maintainRequest.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"app/js/maintainRepair.js\"></sc"+"ript>");
 		document.write("<scr"+"ipt src=\"app/js/message.js\"></sc"+"ript>");
+		
+		document.write("<scr"+"ipt src=\"app/js/accessConfiguration.js\"></sc"+"ript>");
+		document.write("<scr"+"ipt src=\"app/js/paramConf.js\"></sc"+"ript>");
 		
 		document.write("<scr"+"ipt src=\"assets/plugins/chartjs/Chart.min.js\"></sc"+"ript>");//
 		document.write("<scr"+"ipt src=\"assets/plugins/fastclick/fastclick.min.js\"></sc"+"ript>");//

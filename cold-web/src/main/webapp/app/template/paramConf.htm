@@ -1,0 +1,97 @@
+<style>
+    .alert {
+        padding: 8px;
+    }
+    .dbTable{
+        padding:10px;
+    }
+    .dbTable table{
+        background-color: #efefef;
+        -webkit-border-radius:4px;
+        -moz-border-radius:4px;
+        border-radius:4px;
+        color: #555;
+    }
+    .dbTable table caption{
+        color: #3c8dbc;
+    }
+    .table>tbody>tr>td{
+        border-top:1px solid #555;
+        border-right:1px solid #555 ;
+    }
+    .table>tbody>tr>td button{
+        width: 40px;
+    }
+    .table>tbody>tr>td:nth-child(6n+4),
+    .table>tbody>tr>td:nth-child(6n+5),
+    .table>tbody>tr>td:nth-child(6n+6){
+        border-bottom: 1px solid #555;
+    }
+    .table>tbody>tr>td:nth-child(6n){
+        border-right: 0;
+    }
+</style>
+<div class="page-content">
+    <div class="page-header">
+        参数回写
+    </div>
+    <section class="content" ng-init="aclFlag=true">
+        <div class="row dbTable">
+            <h1 ng-if="rdcConfArr==''">当前RDC尚未配置，请联系链库管理员对其进行配置~！</h1>
+            <table class="table" ng-repeat="conf in rdcConfArr" ng-if="rdcConfArr!=''" ng-init="outerIndex=$index">
+                <caption ng-if="rdcConfArr!=''">设备号：{{conf.devId}}</caption>
+                <tr>
+                    <td>参数名称</td>
+                    <td>参数值</td>
+                    <td>参数类型</td>
+                    <td>参数名称</td>
+                    <td>参数值</td>
+                    <td>参数类型</td>
+                </tr>
+                <tr ng-repeat="rdcConf in conf.mapping track by $index" ng-if="$index%2==0">
+                    <td ng-if="rdcConf.rw==1" ng-click="rollWrite(rdcConf.key,rdcConf.value,rdcConfArr[outerIndex].devId,rdcConf.type)" style="color: #00a65a">{{rdcConf.key}}</td>
+                    <td ng-if="rdcConf.rw==0">{{rdcConf.key}}</td>
+                    <td ng-if="rdcConf.rw==1" ng-click="rollWrite(rdcConf.key,rdcConf.value,rdcConfArr[outerIndex].devId,rdcConf.type)" style="color: #00a65a">{{rdcConf.value}}</td>
+                    <td ng-if="rdcConf.rw==0">{{rdcConf.value}}</td>
+                    <td ng-if="rdcConf.rw==1" ng-click="rollWrite(rdcConf.key,rdcConf.value,rdcConfArr[outerIndex].devId,rdcConf.type)" style="color: #00a65a">{{rdcConf.type}}</td>
+                    <td ng-if="rdcConf.rw==0">{{rdcConf.type}}</td>
+                    <td style="color: #00a65a" ng-click="rollWrite(conf.mapping[$index+1].key,conf.mapping[$index+1].value,rdcConfArr[outerIndex].devId,conf.mapping[$index+1].type)" ng-if="conf.mapping.length>$index+1&&conf.mapping[$index+1].rw==1">{{conf.mapping[$index+1].key}}</td>
+                    <td ng-if="conf.mapping.length>$index+1&&conf.mapping[$index+1].rw==0">{{conf.mapping[$index+1].key}}</td>
+                    <td style="color: #00a65a" ng-click="rollWrite(conf.mapping[$index+1].key,conf.mapping[$index+1].value,rdcConfArr[outerIndex].devId,conf.mapping[$index+1].type)" ng-if="conf.mapping.length>$index+1&&conf.mapping[$index+1].rw==1">{{conf.mapping[$index+1].value}}</td>
+                    <td ng-if="conf.mapping.length>$index+1&&conf.mapping[$index+1].rw==0">{{conf.mapping[$index+1].value}}</td>
+                    <td style="color: #00a65a" ng-click="rollWrite(conf.mapping[$index+1].key,conf.mapping[$index+1].value,rdcConfArr[outerIndex].devId,conf.mapping[$index+1].type)" ng-if="conf.mapping.length>$index+1&&conf.mapping[$index+1].rw==1">{{conf.mapping[$index+1].type}}</td>
+                    <td ng-if="conf.mapping.length>$index+1&&conf.mapping[$index+1].rw==0">{{conf.mapping[$index+1].type}}</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+    <div class="modal fade" id="rollWriteData" style="color: black" tabindex="-1" role="dialog" aria-labelledby="rollWriteData" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3>回写参数</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>设备Id</label>
+                        <input type="text" ng-model="rollDevId" class="form-control" disabled="disabled">
+                    </div>
+                    <div class="form-group">
+                        <label>参数名称</label>
+                        <input type="text" class="form-control" ng-model="rollKey" disabled="disabled">
+                    </div>
+                    <div class="form-group">
+                        <label>参数值</label>
+                        <input class="form-control" ng-model="rollValue" type="text">
+                        <span ng-init="checkRollWrite=false" ng-show="checkRollWrite" style="color: red">请输入正确的参数进行回写！！！</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" ng-click="submitRollData()">提交更改</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+</div>

@@ -457,6 +457,15 @@ coldWeb.config(function ($stateProvider, $urlRouterProvider) {
 	   url:'/warnLog',
 	   controller: 'warnLog',
        templateUrl: 'app/template/warnLog.htm'
+    })	//==================================================设置================================================
+	.state('accessConfiguration',{//权限配置
+        url:'/accessConfiguration',
+        controller: 'accessConfiguration',
+        templateUrl: 'app/template/accessConfiguration.htm'
+    }).state('paramConf',{//参数回写
+        url:'/paramConf',
+        controller: 'paramConf',
+        templateUrl: 'app/template/paramConf.htm'
     });
     
     

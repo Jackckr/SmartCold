@@ -69,7 +69,7 @@
         <property name="hostName" value="${redis.hostName}"/>
         <property name="port" value="${redis.port}"/>
         <property name="password" value="${redis.password}"/>
-        <property name="database" value="15"/>
+        <property name="database" value="8"/>
         <property name="poolConfig" ref="poolConfig"/>
     </bean>
 	<cache:annotation-driven/> 
