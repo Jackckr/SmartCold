@@ -1,6 +1,5 @@
-
 var user, coldWeb = angular.module('ColdWeb', ['ui.bootstrap', 'ui.router', 'ui.checkbox','ngSanitize','ui.select', 'ngCookies', 'xeditable','ngFileUpload','angucomplete-alt','angular-table', 'bsTable']);
-angular.element(document).ready(function($ngCookies, $location,$rootScope,$http) {
+angular.element(document).ready(function() {
 	   $.ajax({url: '/i/user/findUser',type: "GET", dataType: 'json',cache: false}).success(function(data){user = data;
 	    	if(user.username == null){
 	    		var bakurl="login";

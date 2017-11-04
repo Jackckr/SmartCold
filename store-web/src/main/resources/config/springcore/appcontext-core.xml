@@ -16,49 +16,46 @@
 
 
     
- <!--     ============================================================================我是分隔线========================================================================================================================= -->
-    <!-- 数据源配置 -->
-    
-	<bean id="storedataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-		<!-- 基本属性 url、user、password -->
+ <!--  数据源1：门店配置   ============================================================================我是分隔线========================================================================================================================= -->
+	<bean id="storeinfoSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
 		<property name="driverClassName" value="${jdbc.driver}" />
 		<property name="url" value="${jdbc.url_store}" />
 		<property name="username" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
-		<!-- 配置初始化大小、最小、最大 -->
 		<property name="initialSize" value="${initialSize}" />
 		<property name="minIdle" value="${minIdle}" />
 		<property name="maxActive" value="${maxActive}" />
-		<!-- 配置获取连接等待超时的时间 -->
 		<property name="maxWait" value="${maxWait}" />
-		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
 		<property name="timeBetweenEvictionRunsMillis" value="60000" />
-		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
 		<property name="minEvictableIdleTimeMillis" value="300000" />
 		<property name="validationQuery" value="SELECT 'x'" />
 		<property name="testWhileIdle" value="true" />
 		<property name="testOnBorrow" value="false" />
 		<property name="testOnReturn" value="false" />
-		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
 		<property name="poolPreparedStatements" value="true" />
 		<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
-		<!-- 配置监控统计拦截的filters -->
 		<property name="filters" value="stat" />
 	</bean>
-	
 	 <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
        <property name="basePackage" value="com.smartcold.manage.cold.dao.olddb" />    
        <property name="sqlSessionFactoryBeanName" value="storesetdbSqlSessionFactory"/>
     </bean> 
    
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" name="storesetdbSqlSessionFactory">  
-       <property name="dataSource" ref="storedataSource" />  
+       <property name="dataSource" ref="storeinfoSource" />  
        <property name="mapperLocations" value="classpath*:config/sqlmap/*.xml"/>  
        <property name="typeAliasesPackage" value="com.smartcold.manage.cold.entity.olddb" />  
     </bean>  
-    
+    <!--  2.influxdv数据源配置   ============================================================================我是分隔线========================================================================================================================= -->
+	<bean id="influxDBProperties" class="com.smartcold.manage.cold.entity.newdb.InfluxDBProperties" >
+          <property name="url" value="${infx.url_store}"></property>
+          <property name="username" value="${infx.username}"></property>
+          <property name="password" value="${infx.password}"></property>
+          <property name="database" value="${infx.database}"></property>
+          <property name="retentionPolicy" value="${infx.retentionPolicy}"></property>
+	</bean>
+	
 <!--     ============================================================================我是分隔线========================================================================================================================= -->
-    
 	<bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
         <property name="maxIdle" value="300"/>
         <property name="maxTotal" value="600"/>
@@ -69,7 +66,7 @@
         <property name="hostName" value="${redis.hostName}"/>
         <property name="port" value="${redis.port}"/>
         <property name="password" value="${redis.password}"/>
-        <property name="database" value="8"/>
+        <property name="database" value="6"/>
         <property name="poolConfig" ref="poolConfig"/>
     </bean>
 	<cache:annotation-driven/> 
@@ -86,13 +83,15 @@
 	<bean id="cacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
 	   <constructor-arg index="0" ref="redisTemplate"></constructor-arg>
 	   <property name="defaultExpiration" value="21600"></property>
+	   <property name="expires">
+			<map>
+				<entry key="user/token/*" value="20"></entry>
+				<entry key="user:token:*" value="20"></entry>
+			</map>
+		</property>
 	</bean>
 	
 	<bean id="redisHttpSessionConfiguration" class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
             <property name="maxInactiveIntervalInSeconds" value="600"/>
     </bean>
-   
-	
-	
-	
 </beans>

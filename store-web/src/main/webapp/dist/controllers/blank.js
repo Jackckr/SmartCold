@@ -1,2 +1,2 @@
-storeWeb.controller('blank', function($scope,$http, $rootScope) {
+app.controller('blank', function($scope,$http, $rootScope) {
 });

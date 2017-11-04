@@ -35,7 +35,7 @@ public class ACLController extends BaseController {
 	@ResponseBody
 	public Object getRUACL(int uid,int rdcid){
 		HashMap<String, Object> respData=new HashMap<String, Object>();
-		 String ruacl = this.aclService.getRUAclByRUID( rdcid,uid);
+		 String ruacl = this.aclService.getRUAclByRUID(rdcid,uid);
 		 List<ACLTreeNode> allaclNode = this.aclService.getALLACLNode(ruacl);
 		 respData.put("nacl", ruacl);
 		 respData.put("aclml", allaclNode);
