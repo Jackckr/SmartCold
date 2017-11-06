@@ -82,7 +82,7 @@
 	</bean>
 	<bean id="cacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
 	   <constructor-arg index="0" ref="redisTemplate"></constructor-arg>
-	   <property name="defaultExpiration" value="21600"></property>
+	   <property name="defaultExpiration" value="5"></property>
 	   <property name="expires">
 			<map>
 				<entry key="user/token/*" value="20"></entry>

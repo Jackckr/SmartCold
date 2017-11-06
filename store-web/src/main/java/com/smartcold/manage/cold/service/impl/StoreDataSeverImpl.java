@@ -148,7 +148,12 @@ public class StoreDataSeverImpl implements StoreDataSever {
 	 * @return
 	 */
 	public QueryResult query(String command) {
-		return this.getConnection().query(new Query(command, this.getDatabase()));
+		InfluxDB con = this.getConnection();
+		long currentTimeMillis = System.currentTimeMillis();
+		 QueryResult query = con.query(new Query(command, this.getDatabase()));
+		  currentTimeMillis = System.currentTimeMillis()-currentTimeMillis;
+		  System.err.println("AA:"+currentTimeMillis);
+		  return query;
 	}
 
 	/**

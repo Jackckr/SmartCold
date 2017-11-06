@@ -76,7 +76,7 @@ public class StoreController extends BaseController {
 	@RequestMapping(value = "/getdata")
 	@ResponseBody
 	public Object getdata() {	
-	        QueryResult results = this.storeDataSever.query("select * from Temp") ;  
+	        QueryResult results = this.storeDataSever.query("select CREATED_AT,ID from Temp") ;  
 	        return  results;
   }
 	

@@ -7,7 +7,7 @@
   <meta charset="utf-8" name="keywords" content="冷库360,冷库监控,冷库智能管理,冷库能效评估，冷库认证与能耗管理" />
   <meta charset="utf-8" name="description" content="冷库360-冷库能效在线管理系统" />
   <title>门店360</title>
-<!--   <script type="text/javascript">if(window.sessionStorage.sikey){ document.location.href = "index.html";} </script> -->
+  <script type="text/javascript">if(!window.sessionStorage.sikey){ document.location.href = "login.html";} </script>
   <link rel="shortcut icon" href="dist/img/favicon.ico" />
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -249,13 +249,13 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Alexander Pierce</span>
+              <img ng-src="{{user.avatar}}" class="user-image" alt="User Image">
+              <span class="hidden-xs">{{user.username}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img ng-src="{{user.avatar}}" class="img-circle" alt="User Image">
 
                 <p>
                   Alexander Pierce - Web Developer
@@ -283,7 +283,7 @@
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="login.html" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="#" ng-click="logout()" class="btn btn-default btn-flat"> 退出 </a>
                 </div>
               </li>
             </ul>
@@ -326,7 +326,7 @@
               <ul class="treeview-menu">
                 <li class="active"><a href="#/humiture"><i class="fa fa-circle-o"></i> 温湿度</a></li>
                 <li><a href="#/blank"><i class="fa fa-circle-o"></i> 电量</a></li>
-                <li><a href="#"><i class="fa fa-circle-o"></i> 风机</a></li>
+                <li><a href="#/storeTemp"><i class="fa fa-circle-o"></i> 风机</a></li>
               </ul>
             </li>
             <li class="treeview">

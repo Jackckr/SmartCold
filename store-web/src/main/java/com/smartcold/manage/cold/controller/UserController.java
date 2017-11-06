@@ -38,7 +38,7 @@ public class UserController extends BaseController {
 			if(cookies==null||cookies.length==0){return true;}
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("token")) {
-					cahcCacheService.removeKey("user:token:",cookie.getValue());
+					cahcCacheService.removeKey("user:token:"+cookie.getValue());
 					break;
 				}
 			}
@@ -58,7 +58,7 @@ public class UserController extends BaseController {
 				user.setToken(cookie);
 				user.setSystoke( StringUtil.MD5pwd(password, cookie));
 				request.getSession().setAttribute("user",user);
-				this.cahcCacheService.putData("user:token:",cookie, user);
+				this.cahcCacheService.putData("user/token/"+cookie, user);
 				return ResponseData.newSuccess(user);
 			}
 			return ResponseData.newFailure("登录失败！");
@@ -79,13 +79,13 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public UserEntity findUser(HttpServletRequest request,String token) {
 		UserEntity user =	(UserEntity) request.getSession().getAttribute("user");if(user!=null){  return user; }
-		if(StringUtil.isnotNull(token)){user = cahcCacheService.getData("user:token:",token);if(user!=null){return user;}}
+		if(StringUtil.isnotNull(token)){user = cahcCacheService.getData("user/token/"+token);if(user!=null){return user;}}
 		if(StringUtil.isNull(token)){
 			Cookie[] cookies = request.getCookies();if (cookies == null) {return null;}
 			for (Cookie cookie : cookies) {
 				if (cookie.getName().equals("token")) {
 					token=cookie.getValue();
-					return cahcCacheService.getData("user:token:",token);
+					return cahcCacheService.getData("user/token/",token);
 				}
 			}
 		}

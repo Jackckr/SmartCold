@@ -18,10 +18,10 @@ import com.smartcold.manage.cold.service.redis.CacheService;
 @Service
 public class CacheServiceImpl implements CacheService{
 
-@Resource
+    @Resource
    private CacheManager cacheManager;
-//   @Resource
-//   private RedisTemplate<String,Object> template;
+   @Resource
+   private RedisTemplate<String,Object> template;
    
 	public <V> V getData( String cacheName,String key) {
 		ValueWrapper valueWrapper = cacheManager.getCache(cacheName).get(key);
@@ -37,33 +37,33 @@ public class CacheServiceImpl implements CacheService{
 	}
 
    
-//	public void removeKey(String key) {
-//		try {
-//			template.delete(key);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-//
-//	@SuppressWarnings("unchecked")
-//	public <V> V getData(String key) {
-//		try {
-//			BoundValueOperations<String, Object> boundValueOps = template.boundValueOps(key);
-//			return (V)boundValueOps.get();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
-//
-//	public void putData(String key, Object value) {
-//		try {
-//			BoundValueOperations<String, Object> boundHashOps=template.boundValueOps(key);
-//			boundHashOps.set(value);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
+	public void removeKey(String key) {
+		try {
+			template.delete(key);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public <V> V getData(String key) {
+		try {
+			BoundValueOperations<String, Object> boundValueOps = template.boundValueOps(key);
+			return (V)boundValueOps.get();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public void putData(String key, Object value) {
+		try {
+			BoundValueOperations<String, Object> boundHashOps=template.boundValueOps(key);
+			boundHashOps.set(value);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 
