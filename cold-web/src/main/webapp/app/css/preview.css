@@ -1,4 +1,4 @@
-/*各大模块css*/
+﻿/*各大模块css*/
 .skin-blue .wrapper, .skin-blue .main-sidebar, .skin-blue .left-side{
     -webkit-box-shadow: 1px 0 3px #0d1215;
     -moz-box-shadow: 1px 0 3px #0d1215;
@@ -26,6 +26,9 @@
 }
 .skin-blue .sidebar-menu > li > .treeview-menu{
     color: #4086aa;
+}
+.skin-blue .sidebar-menu > li > .treeview-menu a{
+    cursor: pointer;
 }
 .myDefault{
     background: #303e47!important;
